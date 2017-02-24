@@ -1,0 +1,889 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring 5.0.0框架介绍_中文版_3.9">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中文版_3.9">
+<meta property="og:url" content="noahsnail.com/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring 5.0.0框架介绍_中文版_3.9">
+<meta property="og:updated_time" content="2016-12-10T12:17:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中文版_3.9">
+<meta name="twitter:description" content="Spring 5.0.0框架介绍_中文版_3.9">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/"/>
+
+
+
+
+
+  <title> Spring 5.0.0框架介绍_中文版_3.9 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 5.0.0框架介绍_中文版_3.9
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-10T20:14:08+08:00">
+              2016-12-10
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-12-10T20:17:41+08:00">
+              2016-12-10
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring框架参考手册-5-0-0/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring框架参考手册_5.0.0</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  Spring 5.0.0框架介绍_中文版_3.9
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h3 id="3-9-基于注解的容器配置"><a href="#3-9-基于注解的容器配置" class="headerlink" title="3.9 基于注解的容器配置"></a>3.9 基于注解的容器配置</h3><blockquote>
+<p><strong>在配置Spring时注解是否比XML更好？</strong></p>
+<p>基于注解配置的引入引出了一个问题——这种方式是否比基于XML的配置更好。简短的回答是视情况而定。长一点的回答是每种方法都有它的优点和缺点，通常是由开发者决定哪一种策略更适合他们。由于注解的定义方式，注解在它们的声明中提供了许多上下文，导致配置更简短更简洁。然而，XML擅长连接组件而不必接触源代码或重新编译它们。一些开发者更喜欢接近源代码，而另一些人则认为基于注解的类不再是POJOs，此外，配置变的去中心化，而且更难控制。</p>
+<p>无论选择是什么，Spring都能容纳这两种风格，甚至可以将它们混合在一起。值得指出的是，通过它的Java配置选项，Spring允许注解以一种非入侵的方式使用，不触碰目标组件源码和那些工具，所有的配置风格由Spring工具套件支持。</p>
+</blockquote>
+<p>基于注解的配置提供了一种XML设置的可替代方式，它依赖于字节码元数据来连接组件，而不是用尖括号声明的方式。代替使用XML来描述bean连接，开发者通过将注解使用在相关的类，方法或字段声明中，将配置移动到了组件类本身的内部。正如在“Example: The RequiredAnnotationBeanPostProcessor”那节提到的那样，使用<code>BeanPostProcessor</code>与注解结合是扩展Spring IoC容器的的常见方法。例如，Spring 2.0引入了<code>@Required</code>注解来执行需要的属性的可能性。Spring 2.5使以同样地通用方法来驱动Spring的依赖注入变为可能。本质上来说，<code>@Autowired</code>提供了如3.4.5小节描述的同样的能力。“Autowiring collaborators”但更细粒度的控制和更广的应用性。Spring 2.5也添加对JSR-250注解的支持，例如，<code>@PostConstruct</code>和<code>@PreDestroy</code><br>。Spring 3.0添加了对JSR-330，包含在<code>javax.inject</code>包内的注解（Java的依赖注入）的支持，例如<code>@Inject</code>和<code>@Named</code>。关于这些注解的细节可以在相关的小节找到。</p>
+<blockquote>
+<p>注解注入在XML注入之前进行，因此对于通过两种方法进行组装的属性后者的配置会覆盖前者。</p>
+</blockquote>
+<p>跟以前一样，你可以作为单独的bean定义来注册它们，但也可以通过在一个基于XML的Spring配置（注入包含上下文命名空间）中包含下面的标签来隐式的注册它们：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/context</div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>（隐式注册的后处理器包括 <code>AutowiredAnnotationBeanPostProcessor</code>，<code>CommonAnnotationBeanPostProcessor</code>，<code>PersistenceAnnotationBeanPostProcessor</code>和前面提到的<code>RequiredAnnotationBeanPostProcessor</code>。）</p>
+<blockquote>
+<p><code>&lt;context:annotation-config/&gt;</code>仅在定义它的同样的应用上下文中寻找注解的beans。这意味着，如果你在一个为<code>DispatcherServlet</code>服务的<code>WebApplicationContext</code>中放置了<code>&lt;context:annotation-config/&gt;</code>，它只能在你的控制器中寻找<code>@Autowired</code>注解的beans，而不是在你的服务层中。更多信息请看18.2小节，“The DispatcherServlet”。</p>
+</blockquote>
+<h4 id="3-9-1-Required"><a href="#3-9-1-Required" class="headerlink" title="3.9.1 @Required"></a>3.9.1 @Required</h4><p><code>@Required</code>注解应用到bean属性的setter方法上，例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleMovieLister</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieFinder movieFinder;</div><div class="line"></div><div class="line">    <span class="meta">@Required</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieFinder</span><span class="params">(MovieFinder movieFinder)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieFinder = movieFinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个注解仅仅是表明受影响的bean属性必须在配置时通过显式的bean定义或自动组装填充。如果受影响的bean属性没有填充，容器会抛出一个异常，这允许及早明确的失败，避免<code>NullPointerExceptions</code>或后面出现类似的情况。仍然建议你在bean类本身加入断言，例如，加入到初始化方法中。这样做可以强制这些需要的引用和值，甚至是你在容器外部使用这个类的时候。</p>
+<h4 id="3-9-2-Autowired"><a href="#3-9-2-Autowired" class="headerlink" title="3.9.2 @Autowired"></a>3.9.2 @Autowired</h4><blockquote>
+<p>在下面的例子中JSR 330的<code>@Inject</code>注解可以用来代替Spring的<code>@Autowired</code>注解。</p>
+</blockquote>
+<p>你可以将<code>@Autowired</code>注解应用到构造函数上。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> CustomerPreferenceDao customerPreferenceDao;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MovieRecommender</span><span class="params">(CustomerPreferenceDao customerPreferenceDao)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.customerPreferenceDao = customerPreferenceDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>从Spring框架4.3起，如果目标bena仅定义了一个构造函数，那么<code>@Autowired</code>注解的构造函数不再是必要的。如果一些构造函数是可获得的，至少有一个必须要加上注解，以便于告诉容器使用哪一个。</p>
+</blockquote>
+<p>正如预料的那样，你也可以将<code>@Autowired</code>注解应用到“传统的”setter方法上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleMovieLister</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieFinder movieFinder;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieFinder</span><span class="params">(MovieFinder movieFinder)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieFinder = movieFinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你也可以应用注解到具有任何名字和/或多个参数的方法上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieCatalog movieCatalog;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> CustomerPreferenceDao customerPreferenceDao;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(MovieCatalog movieCatalog,</span></span></div><div class="line">            CustomerPreferenceDao customerPreferenceDao) &#123;</div><div class="line">        <span class="keyword">this</span>.movieCatalog = movieCatalog;</div><div class="line">        <span class="keyword">this</span>.customerPreferenceDao = customerPreferenceDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你也可以应用<code>@Autowired</code>到字段上，甚至可以与构造函数混合用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> CustomerPreferenceDao customerPreferenceDao;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> MovieCatalog movieCatalog;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MovieRecommender</span><span class="params">(CustomerPreferenceDao customerPreferenceDao)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.customerPreferenceDao = customerPreferenceDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过给带有数组的字段或方法添加<code>@Autowired</code>注解，也可以从<code>ApplicationContext</code>中提供一组特定类型的bean：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> MovieCatalog[] movieCatalogs;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同样也可以应用到具有同一类型的集合上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Set&lt;MovieCatalog&gt; movieCatalogs;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieCatalogs</span><span class="params">(Set&lt;MovieCatalog&gt; movieCatalogs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieCatalogs = movieCatalogs;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果你希望数组或列表中的项按指定顺序排序，你的bean可以实现<code>org.springframework.core.Ordered</code>接口，或使用<code>@Order</code>或标准<code>@Priority</code>注解。</p>
+</blockquote>
+<p>只要期望的key是<code>String</code>，那么类型化的Maps就可以自动组装。Map的值将包含所有期望类型的beans，key将包含对应的bean名字：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Map&lt;String, MovieCatalog&gt; movieCatalogs;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieCatalogs</span><span class="params">(Map&lt;String, MovieCatalog&gt; movieCatalogs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieCatalogs = movieCatalogs;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认情况下，当没有候选beans可获得时，自动组装会失败；默认的行为是将注解的方法，构造函数和字段看作指明了需要的依赖。这个行为也可以通过下面的方式去改变。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleMovieLister</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieFinder movieFinder;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span>(required=<span class="keyword">false</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieFinder</span><span class="params">(MovieFinder movieFinder)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieFinder = movieFinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>每个类只有一个构造函数可以标记为必需的，但可以注解多个非必需的构造函数。在这种情况下，会考虑这些候选者中的每一个，Spring使用最贪婪的构造函数，即依赖最满足的构造函数，具有最大数目的参数。</p>
+<p>建议在<code>@Required</code>注解之上使用<code>@Autowired</code>的<code>required</code>特性。<code>required</code>特性表明这个属性自动装配是不需要的，如果这个属性不能被自动装配，它会被忽略。另一方面<code>@Required</code>是更强大的，在它强制这个属性被任何容器支持的bean设置。如果没有值注入，会抛出对应的异常。</p>
+</blockquote>
+<p>你也可以对那些已知的具有可解析依赖的接口使用<code>@Autowired</code>：<code>BeanFactory</code>，<code>ApplicationContext</code>，<code>Environment</code>, <code>ResourceLoader</code>，<code>ApplicationEventPublisher</code>和<code>MessageSource</code>。这些接口和它们的扩展接口，例如<code>ConfigurableApplicationContext</code>或<code>ResourcePatternResolver</code>，可以自动解析，不需要特别的设置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> ApplicationContext context;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MovieRecommender</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>@Autowired</code>，<code>@Inject</code>，<code>@Resource</code>和<code>@Value</code>注解是通过Spring <code>BeanPostProcessor</code>实现处理，这反过来意味着你不能在你自己的<code>BeanPostProcessor</code>或<code>BeanFactoryPostProcessor</code>中应用这些注解（如果有的话）。这些类型必须显式的通过XML或使用Spring的<code>@Bean</code>方法来’wired up’。</p>
+</blockquote>
+<h4 id="3-9-3-用-Primary微调基于注解的自动装配"><a href="#3-9-3-用-Primary微调基于注解的自动装配" class="headerlink" title="3.9.3 用@Primary微调基于注解的自动装配"></a>3.9.3 用@Primary微调基于注解的自动装配</h4><p>因为根据类型的自动装配可能会导致多个候选目标，所以在选择过程中进行更多的控制经常是有必要的。一种方式通过Spring的<code>@Primary</code>注解来完成。当有个多个候选bean要组装到一个单值的依赖时，<code>@Primary</code>表明指定的bean应该具有更高的优先级。如果确定一个’primary’ bean位于候选目标中间，它将是那个自动装配的值。</p>
+<p>假设我们具有如下配置，将<code>firstMovieCatalog</code>定义为主要的<code>MovieCatalog</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieConfiguration</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="meta">@Primary</span></div><div class="line">    <span class="function"><span class="keyword">public</span> MovieCatalog <span class="title">firstMovieCatalog</span><span class="params">()</span> </span>&#123; ... &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> MovieCatalog <span class="title">secondMovieCatalog</span><span class="params">()</span> </span>&#123; ... &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据这样的配置，下面的<code>MovieRecommender</code>将用<code>firstMovieCatalog</code>进行自动装配。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class MovieRecommender &#123;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private MovieCatalog movieCatalog;</div><div class="line"></div><div class="line">    // ...</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的bean定义如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/context</div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span> <span class="attr">primary</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"movieRecommender"</span> <span class="attr">class</span>=<span class="string">"example.MovieRecommender"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="3-9-4-微调基于注解且带有限定符的自动装配"><a href="#3-9-4-微调基于注解且带有限定符的自动装配" class="headerlink" title="3.9.4 微调基于注解且带有限定符的自动装配"></a>3.9.4 微调基于注解且带有限定符的自动装配</h4><p>当有多个实例需要确定一个主要的候选对象时，<code>@Primary</code>是一种按类型自动装配的有效方式。当需要在选择过程中进行更多的控制时，可以使用Spring的<code>@Qualifier</code>注解。为了给每个选择一个特定的bean，你可以将限定符的值与特定的参数联系在一起，减少类型匹配集合。在最简单的情况下，这是一个纯描述性值:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@Qualifier</span>(<span class="string">"main"</span>)</div><div class="line">    <span class="keyword">private</span> MovieCatalog movieCatalog;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>@Qualifier</code>注解也可以指定单个构造函数参数或方法参数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieCatalog movieCatalog;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> CustomerPreferenceDao customerPreferenceDao;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(@Qualifier(<span class="string">"main"</span>)</span>MovieCatalog movieCatalog,</span></div><div class="line">            CustomerPreferenceDao customerPreferenceDao) &#123;</div><div class="line">        <span class="keyword">this</span>.movieCatalog = movieCatalog;</div><div class="line">        <span class="keyword">this</span>.customerPreferenceDao = customerPreferenceDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的bean定义如下。限定符值为”main”的bean被组装到有相同值的构造函数参数中。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/context</div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">value</span>=<span class="string">"main"</span>/&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">value</span>=<span class="string">"action"</span>/&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"movieRecommender"</span> <span class="attr">class</span>=<span class="string">"example.MovieRecommender"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>对于回退匹配，bean名字被认为是默认的限定符值。因此你可以定义一个id为<code>main</code>的bean来代替内嵌的限定符元素，会有同样的匹配结果。然而，尽管你可以使用这个约定根据名字引用特定的beans，但是<code>@Autowired</code>从根本上来讲是使用可选的语义限定符来进行类型驱动注入的。这意味着限定符的值，即使回退到bean名称，总是缩小语义类型匹配的集合；它们没有从语义上将一个引用表达为一个唯一的bean id。好的限定符值是”main”或”EMEA”或”persistent”，表达一个特定组件的性质，这个组件是独立于bean <code>id</code>的，即使前面例子中像这个bean一样的匿名bean会自动生成id。</p>
+<p>正如前面讨论的那样，限定符也可以应用到类型结合上，例如，<code>Set&lt;MovieCatalog&gt;</code>。在这个例子中，根据声明的限定符匹配的所有beans作为一个集合进行注入。这意味着限定符不必是唯一的；它们只是构成过滤标准。例如，你可以定义多个具有同样限定符值”action”的<code>MovieCatalog</code>，所有的这些都将注入到带有注解<code>@Qualifier(&quot;action&quot;)</code>的<code>Set&lt;MovieCatalog&gt;</code>中。</p>
+<blockquote>
+<p>如果你想通过名字表达注解驱动的注入，不要主要使用<code>@Autowired</code>，虽然在技术上能通过<code>@Qualifier</code>值引用一个bean名字。作为可替代产品，可以使用JSR-250 <code>@Resource</code>注解，它在语义上被定义为通过组件唯一的名字来识别特定的目标组件，声明的类型与匹配过程无关。<code>@Autowired</code>有不同的语义：通过类型选择候选beans，特定的<code>String</code>限定符值被认为只在类型选择的候选目标中，例如，在那些标记为具有相同限定符标签的beans中匹配一个”account”限定符。</p>
+<p>对于那些本身定义在集合/映射或数组类型中的beans来说，<code>@Resource</code>是一个很好的解决方案，适用于特定的集合或通过唯一名字区分的数组bean。也就是说，自Spring 4.3起，集合/映射和数组类型中也可以通过Spring的<code>@Autowired</code>类型匹配算法进行匹配，只要元素类型信息在<code>@Bean</code>中保留，返回类型签名或集合继承体系。在这种情况下，限定符值可以用来在相同类型的集合中选择，正如在前一段中概括的那样。</p>
+<p>自Spring 4.3起，<code>@Autowired</code>也考虑自引用注入，例如，引用返回当前注入的bean。注意自注入是备用；普通对其它组件的依赖关系总是优先的。在这个意义上，自引用不参与普通的候选目标选择，因此尤其是从不是主要的；恰恰相反，它们最终总是最低的优先级。在实践中，自引用只是作为最后的手段，例如，通过bean的事务代理调用同一实例的其它方法：在考虑抽出受影响的方法来分隔代理bean的场景中。或者，使用<code>@Resource</code>通过它的唯一名字可能得到一个返回当前bean的代理。</p>
+<p><code>@Autowired</code>可以应用到字段，构造函数和多参数方法上，允许通过限定符注解在参数层面上缩减候选目标。相比之下，<code>@Resource</code>仅支持字段和bean属性的带有单个参数的setter方法。因此，如果你的注入目标是一个构造函数或一个多参数的方法，坚持使用限定符。</p>
+</blockquote>
+<p>你可以创建自己的定制限定符注解。简单定义一个注解，在你自己的定义中提供<code>@Qualifier</code>注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.FIELD, ElementType.PARAMETER&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Genre &#123;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后你可以在自动装配的字段和参数上提供定制的限定符：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@Genre</span>(<span class="string">"Action"</span>)</div><div class="line">    <span class="keyword">private</span> MovieCatalog actionCatalog;</div><div class="line">    <span class="keyword">private</span> MovieCatalog comedyCatalog;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setComedyCatalog</span><span class="params">(@Genre(<span class="string">"Comedy"</span>)</span> MovieCatalog comedyCatalog) </span>&#123;</div><div class="line">        <span class="keyword">this</span>.comedyCatalog = comedyCatalog;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来，提供候选bean定义的信息。你可以添加<code>&lt;qualifier/&gt;</code>标记作为<code>&lt;bean/&gt;</code>标记的子元素，然后指定匹配你的定制限定符注解的类型和值。类型用来匹配注解的全限定类名称。或者，如果没有名称冲突的风险，为了方便，你可以使用简写的类名称。下面的例子证实了这些方法。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/context</div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">type</span>=<span class="string">"Genre"</span> <span class="attr">value</span>=<span class="string">"Action"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">type</span>=<span class="string">"example.Genre"</span> <span class="attr">value</span>=<span class="string">"Comedy"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"movieRecommender"</span> <span class="attr">class</span>=<span class="string">"example.MovieRecommender"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在3.10小节，“类路径扫描和管理组件”中，你将看到一个基于注解的替代方法，在XML中提供限定符元数据。特别地，看3.10.8小节，“用注解提供限定符元数据”。</p>
+<p>在某些情况下，使用没有值的注解就是足够的。当注解为了通用的目的时，这是非常有用的，可以应用到跨几个不同类型的依赖上。例如，当网络不可用时，你可以提供一个要搜索的离线目录。首先定义一个简单的注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.FIELD, ElementType.PARAMETER&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Offline &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后将注解添加到要自动装配的字段或属性上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@Offline</span></div><div class="line">    <span class="keyword">private</span> MovieCatalog offlineCatalog;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在bean定义只需要一个限定符类型：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">type</span>=<span class="string">"Offline"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>你也可以定义接收命名属性之外的定制限定符注解或代替简单的值属性。如果要注入的字段或参数指定了多个属性值，bean定义必须匹配所有的属性值才会被认为是一个可自动装配的候选目标。作为一个例子，考虑下面的注解定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Target(&#123;ElementType.FIELD, ElementType.PARAMETER&#125;)</div><div class="line">@Retention(RetentionPolicy.RUNTIME)</div><div class="line">@Qualifier</div><div class="line">public @interface MovieQualifier &#123;</div><div class="line"></div><div class="line">    String genre();</div><div class="line"></div><div class="line">    Format format();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种情况下<code>Format</code>是枚举类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Format &#123;</div><div class="line">    VHS, DVD, BLURAY</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要自动装配的字段使用定制限定符进行注解，并且包含了两个属性值：<code>genre</code>和<code>format</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@MovieQualifier</span>(format=Format.VHS, genre=<span class="string">"Action"</span>)</div><div class="line">    <span class="keyword">private</span> MovieCatalog actionVhsCatalog;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@MovieQualifier</span>(format=Format.VHS, genre=<span class="string">"Comedy"</span>)</div><div class="line">    <span class="keyword">private</span> MovieCatalog comedyVhsCatalog;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@MovieQualifier</span>(format=Format.DVD, genre=<span class="string">"Action"</span>)</div><div class="line">    <span class="keyword">private</span> MovieCatalog actionDvdCatalog;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@MovieQualifier</span>(format=Format.BLURAY, genre=<span class="string">"Comedy"</span>)</div><div class="line">    <span class="keyword">private</span> MovieCatalog comedyBluRayCatalog;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后，bean定义应该包含匹配的限定符值。这个例子也证实了bean元属性可以用来代替<code>&lt;qualifier/&gt;</code>子元素。如果可获得<code>&lt;qualifier/&gt;</code>，它和它的属性优先级更高，如果当前没有限定符，自动装配机制会将<code>&lt;meta/&gt;</code>内的值作为备用，正如下面的例子中的最后两个bean定义。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/context</div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">type</span>=<span class="string">"MovieQualifier"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">attribute</span> <span class="attr">key</span>=<span class="string">"format"</span> <span class="attr">value</span>=<span class="string">"VHS"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">attribute</span> <span class="attr">key</span>=<span class="string">"genre"</span> <span class="attr">value</span>=<span class="string">"Action"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">qualifier</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">type</span>=<span class="string">"MovieQualifier"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">attribute</span> <span class="attr">key</span>=<span class="string">"format"</span> <span class="attr">value</span>=<span class="string">"VHS"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">attribute</span> <span class="attr">key</span>=<span class="string">"genre"</span> <span class="attr">value</span>=<span class="string">"Comedy"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">qualifier</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">key</span>=<span class="string">"format"</span> <span class="attr">value</span>=<span class="string">"DVD"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">key</span>=<span class="string">"genre"</span> <span class="attr">value</span>=<span class="string">"Action"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"example.SimpleMovieCatalog"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">key</span>=<span class="string">"format"</span> <span class="attr">value</span>=<span class="string">"BLURAY"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">key</span>=<span class="string">"genre"</span> <span class="attr">value</span>=<span class="string">"Comedy"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!-- inject any dependencies required by this bean --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="3-9-5-使用泛型作为自动装配限定符"><a href="#3-9-5-使用泛型作为自动装配限定符" class="headerlink" title="3.9.5 使用泛型作为自动装配限定符"></a>3.9.5 使用泛型作为自动装配限定符</h4><p>除了<code>@Qualifier</code>注解外，也可以使用Java的泛型类型作为限定符的一种暗示方式。例如，假设你有如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class MyConfiguration &#123;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public StringStore stringStore() &#123;</div><div class="line">        return new StringStore();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public IntegerStore integerStore() &#123;</div><div class="line">        return new IntegerStore();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假设上面的beans实现了一个泛型接口，例如，<code>Store&lt;String&gt;</code>和<code>Store&lt;Integer&gt;</code>，你可以<code>@Autowire</code> <code>Store</code>接口，泛型将作为限定符使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> Store&lt;String&gt; s1; <span class="comment">// &lt;String&gt; qualifier, injects the stringStore bean</span></div><div class="line"></div><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> Store&lt;Integer&gt; s2; <span class="comment">// &lt;Integer&gt; qualifier, injects the integerStore bean</span></div></pre></td></tr></table></figure>
+<p>当自动装配<code>Lists</code>，<code>Maps</code>和<code>Arrays</code>时，也会应用泛型限定符：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Inject all Store beans as long as they have an &lt;Integer&gt; generic</span></div><div class="line"><span class="comment">// Store&lt;String&gt; beans will not appear in this list</span></div><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="keyword">private</span> List&lt;Store&lt;Integer&gt;&gt; s;</div></pre></td></tr></table></figure>
+<h4 id="3-9-6-CustomAutowireConfigurer"><a href="#3-9-6-CustomAutowireConfigurer" class="headerlink" title="3.9.6 CustomAutowireConfigurer"></a>3.9.6 CustomAutowireConfigurer</h4><p><code>CustomAutowireConfigurer</code>是一个能使你注册自己的定制限定符注解类型的<code>BeanFactoryPostProcessor</code>，即使它们不使用Spring的<code>@Qualifier</code>注解进行注解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;customAutowireConfigurer&quot;</div><div class="line">        class=&quot;org.springframework.beans.factory.annotation.CustomAutowireConfigurer&quot;&gt;</div><div class="line">    &lt;property name=&quot;customQualifierTypes&quot;&gt;</div><div class="line">        &lt;set&gt;</div><div class="line">            &lt;value&gt;example.CustomQualifier&lt;/value&gt;</div><div class="line">        &lt;/set&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<p><code>AutowireCandidateResolver</code>通过下面的方式决定自动装配的候选目标：</p>
+<ul>
+<li><p>每个bean定义的<code>autowire-candidate</code></p>
+</li>
+<li><p>在<code>&lt;beans/&gt;</code>元素可获得的任何<code>default-autowire-candidates</code>模式</p>
+</li>
+<li><p>存在<code>@Qualifier</code>注解和任何在<code>CustomAutowireConfigurer</code>中注册的定制注解</p>
+</li>
+</ul>
+<p>当多个beans符合条件成为自动装配的候选目标时，”primary” bean的决定如下：如果在候选目标中某个确定的bean中的<code>primary</code>特性被设为<code>true</code>，它将被选为目标bean。</p>
+<h4 id="3-9-7-Resource"><a href="#3-9-7-Resource" class="headerlink" title="3.9.7 @Resource"></a>3.9.7 @Resource</h4><p>Spring也支持使用JSR-250 <code>@Resource</code>对字段或bean属性setter方法进行注入。这是在Java EE 5和6中的一种通用模式，例如在JSF 1.2管理的beans或JAX-WS 2.0的端点。Spring对它管理的对象也支持这种模式。</p>
+<p><code>@Resource</code>采用名字属性，默认情况下Spring将名字值作为要注入的bean的名字。换句话说，它遵循<em>by-name</em>语义，下面的例子证实了这一点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleMovieLister</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieFinder movieFinder;</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span>(name=<span class="string">"myMovieFinder"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieFinder</span><span class="params">(MovieFinder movieFinder)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieFinder = movieFinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果没有显式的指定名字，默认名字从字段名或setter方法中取得。在字段情况下，它采用字段名称；在setter方法情况下，它采用bean的属性名。因此下面的例子将名字为<code>movieFinder</code>的bean注入到它的setter方法中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleMovieLister</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MovieFinder movieFinder;</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMovieFinder</span><span class="params">(MovieFinder movieFinder)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.movieFinder = movieFinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注解提供的名字被<code>CommonAnnotationBeanPostProcessor</code>感知的<code>ApplicationContext</code>解析为bean名字。如果你显式地配置了Spring的<code>SimpleJndiBeanFactory</code>，名字会通过JNDI解析。但是建议你依赖默认行为，简单使用Spring的JNDI查找功能保护间接查找级别。</p>
+</blockquote>
+<p>在<code>@Resource</code>特有的没有显式名字指定的情况下，类似于<code>@Autowired</code>，<code>@Resource</code>会进行主要的匹配类型来代替指定名字的bean并解析已知的可解析依赖：<code>BeanFactory</code>，<code>ApplicationContext</code>，<code>ResourceLoader</code>，<code>ApplicationEventPublisher</code>和<code>MessageSource</code>接口。</p>
+<p>因此在下面的例子中，<code>customerPreferenceDao</code>字段首先查找名字为<code>customerPreferenceDao</code>的bean，然后回退到主要的类型为<code>CustomerPreferenceDao</code>的类型匹配。”context”字段会注入基于已知的可解析依赖类型<code>ApplicationContext</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieRecommender</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> CustomerPreferenceDao customerPreferenceDao;</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> ApplicationContext context;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MovieRecommender</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-9-8-PostConstruct和-PreDestroy"><a href="#3-9-8-PostConstruct和-PreDestroy" class="headerlink" title="3.9.8 @PostConstruct和@PreDestroy"></a>3.9.8 @PostConstruct和@PreDestroy</h4><p><code>CommonAnnotationBeanPostProcessor</code>不仅识别<code>@Resource</code>注解，而且识别JSR-250生命周期注解。在Spring 2.5引入了对这些注解的支持，也提供了在初始化回调函数和销毁回调函数中描述的那些注解的一种可替代方式。假设<code>CommonAnnotationBeanPostProcessor</code>在Spring的<code>ApplicationContext</code>中注册，执行这些注解的方法在生命周期的同一点被调用，作为对应的Spring生命周期接口方法或显式声明的回调方法。在下面的例子中，缓存会预先放置接近初始化之前，并在销毁之前清除。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CachingMovieLister</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@PostConstruct</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">populateMovieCache</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// populates the movie cache upon initialization...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@PreDestroy</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearMovieCache</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// clears the movie cache upon destruction...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>关于组合各种生命周期机制的影响的更多细节，请看“组合生命周期机制”小节。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中英文对照_3.9/" rel="next" title="Spring 5.0.0框架介绍_中英文对照_3.9">
+                <i class="fa fa-chevron-left"></i> Spring 5.0.0框架介绍_中英文对照_3.9
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/12/2016-12-12-Mac下的第一个C++程序——HelloWorld/" rel="prev" title="Mac下的第一个C++程序——HelloWorld">
+                Mac下的第一个C++程序——HelloWorld <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/"
+     data-title="Spring 5.0.0框架介绍_中文版_3.9"
+     data-content=""
+     data-url="noahsnail.com/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/"
+           data-title="Spring 5.0.0框架介绍_中文版_3.9" data-url="noahsnail.com/2016/12/10/2016-12-10-Spring 5.0.0框架介绍_中文版_3.9/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-基于注解的容器配置"><span class="nav-number">1.</span> <span class="nav-text">3.9 基于注解的容器配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-1-Required"><span class="nav-number">1.1.</span> <span class="nav-text">3.9.1 @Required</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-2-Autowired"><span class="nav-number">1.2.</span> <span class="nav-text">3.9.2 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-3-用-Primary微调基于注解的自动装配"><span class="nav-number">1.3.</span> <span class="nav-text">3.9.3 用@Primary微调基于注解的自动装配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-4-微调基于注解且带有限定符的自动装配"><span class="nav-number">1.4.</span> <span class="nav-text">3.9.4 微调基于注解且带有限定符的自动装配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-5-使用泛型作为自动装配限定符"><span class="nav-number">1.5.</span> <span class="nav-text">3.9.5 使用泛型作为自动装配限定符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-6-CustomAutowireConfigurer"><span class="nav-number">1.6.</span> <span class="nav-text">3.9.6 CustomAutowireConfigurer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-7-Resource"><span class="nav-number">1.7.</span> <span class="nav-text">3.9.7 @Resource</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-8-PostConstruct和-PreDestroy"><span class="nav-number">1.8.</span> <span class="nav-text">3.9.8 @PostConstruct和@PreDestroy</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Mac," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="CURL命令介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CURL命令介绍">
+<meta property="og:url" content="noahsnail.com/2016/11/02/2016-11-2-CURL命令/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="CURL命令介绍">
+<meta property="og:updated_time" content="2016-11-03T05:35:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CURL命令介绍">
+<meta name="twitter:description" content="CURL命令介绍">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2016/11/02/2016-11-2-CURL命令/"/>
+
+
+
+
+
+  <title> CURL命令介绍 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/11/02/2016-11-2-CURL命令/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CURL命令介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-02T14:43:59+08:00">
+              2016-11-02
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-11-03T13:35:33+08:00">
+              2016-11-03
+            </time>
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/02/2016-11-2-CURL命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/2016-11-2-CURL命令/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  CURL命令介绍
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-CURL介绍"><a href="#1-CURL介绍" class="headerlink" title="1. CURL介绍"></a>1. CURL介绍</h2><p>CURL，全称Command Line URL Viewer，是一个Linux命令行工具，能从服务器下载数据，也能往服务器上发送数据，支持多种协议，支持的协议有：DICT，FILE，FTP，FTPS，GOPHER，HTTP，HTTPS，IMAP，IMAPS，LDAP，LDAPS，POP3，POP3S，RTMP，RTSP，SCP，SFTP，SMB，SMBS，SMTP，SMTPS，TELNET和TFTP。从CURL支持的协议就可以看出，CURL命令非常强大。</p>
+<h2 id="2-CURL命令用法"><a href="#2-CURL命令用法" class="headerlink" title="2. CURL命令用法"></a>2. CURL命令用法</h2><h4 id="2-1-curl-url"><a href="#2-1-curl-url" class="headerlink" title="2.1 curl url"></a>2.1 curl url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：$ curl url，访问网页，url为网页的网址，开发中可以用来查看API的返回值</span></div><div class="line"></div><div class="line"><span class="comment"># 访问百度主页，返回的是百度主页的网页源码</span></div><div class="line">$ curl www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-2-curl-o-O-filename-url"><a href="#2-2-curl-o-O-filename-url" class="headerlink" title="2.2 curl -o/-O filename url"></a>2.2 curl -o/-O filename url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：$ curl -o/-O filename url，保存访问的网页或文件，-o参数是保存，filename是要保存的文件名，-O是将远端的文件以远端文件的文件名自动保存到本地，这个命令主要是下载文件，如果需要获取多个文件，可以采用curl -O url1 -O url2</span></div><div class="line"></div><div class="line"><span class="comment"># 访问百度主页，并将访问内容保存到baidu.html中</span></div><div class="line">$ curl -o baidu.html www.baidu.com</div><div class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</div><div class="line">                                 Dload  Upload   Total   Spent    Left  Speed</div><div class="line">100  2381  100  2381    0     0  34934      0 --:--:-- --:--:-- --:--:-- 35537</div><div class="line"></div><div class="line"><span class="comment"># 从远端服务器下载一张图片，保存为1.jpg</span></div><div class="line">$ curl -o 1.jpg http://ocs628urt.bkt.clouddn.com/table_1.1.png</div><div class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</div><div class="line">                                 Dload  Upload   Total   Spent    Left  Speed</div><div class="line">100  126k  100  126k    0     0   161k      0 --:--:-- --:--:-- --:--:--  161k</div><div class="line"></div><div class="line"><span class="comment"># 从远程服务器下载一张图片，保存的文件名为图片在远程服务器上的名字</span></div><div class="line">$ curl -O http://ocs628urt.bkt.clouddn.com/table_1.1.png</div><div class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</div><div class="line">                                 Dload  Upload   Total   Spent    Left  Speed</div><div class="line">100  126k  100  126k    0     0   132k      0 --:--:-- --:--:-- --:--:--  132k</div><div class="line"></div><div class="line"><span class="comment"># 下载多个文件</span></div><div class="line">$ curl -O http://ocs628urt.bkt.clouddn.com/table_1.1.png -O http://ocs628urt.bkt.clouddn.com/table_java_2.png</div><div class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</div><div class="line">                                 Dload  Upload   Total   Spent    Left  Speed</div><div class="line">100  126k  100  126k    0     0   402k      0 --:--:-- --:--:-- --:--:--  402k</div><div class="line">100  153k  100  153k    0     0  33822      0  0:00:04  0:00:04 --:--:-- 42510</div></pre></td></tr></table></figure>
+<h4 id="2-3-curl-i-I-url"><a href="#2-3-curl-i-I-url" class="headerlink" title="2.3 curl -i/-I url"></a>2.3 curl -i/-I url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：$ curl -i url，访问网页并显示response信息，-i参数是显示response信息，-I参数是只显示response信息</span></div><div class="line"></div><div class="line"><span class="comment"># 访问百度主页，并将访问内容保存到baidu.html中</span></div><div class="line">$ curl -i www.baidu.com</div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: bfe/1.0.8.18</div><div class="line">Date: Wed, 02 Nov 2016 09:36:25 GMT</div><div class="line">Content-Type: text/html</div><div class="line">Content-Length: 2381</div><div class="line">Last-Modified: Mon, 25 Jul 2016 11:11:28 GMT</div><div class="line">Connection: Keep-Alive</div><div class="line">ETag: <span class="string">"5795f3e0-94d"</span></div><div class="line">Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</div><div class="line">Pragma: no-cache</div><div class="line">Set-Cookie: BDORZ=27315; max-age=86400; domain=.baidu.com; path=/</div><div class="line">Accept-Ranges: bytes</div><div class="line"></div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div><div class="line"></div><div class="line"><span class="comment"># 只显示response信息</span></div><div class="line">$ curl -I www.baidu.com</div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: bfe/1.0.8.18</div><div class="line">Date: Wed, 02 Nov 2016 09:38:06 GMT</div><div class="line">Content-Type: text/html</div><div class="line">Content-Length: 277</div><div class="line">Last-Modified: Mon, 13 Jun 2016 02:50:00 GMT</div><div class="line">Connection: Keep-Alive</div><div class="line">ETag: <span class="string">"575e1f58-115"</span></div><div class="line">Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</div><div class="line">Pragma: no-cache</div><div class="line">Accept-Ranges: bytes</div></pre></td></tr></table></figure>
+<p>备注：</p>
+<ul>
+<li><p>HTTP/1.1 200 OK，响应状态行</p>
+</li>
+<li><p>HTTP/1.1，访问采用的协议为HTTP，版本为1.1</p>
+</li>
+<li><p>200 OK，HTTP状态码，表示文档正确返回</p>
+</li>
+<li><p>Server，服务器应用程序软件的名称和版本</p>
+</li>
+<li><p>Date，服务器产生响应的日期</p>
+</li>
+<li><p>Content-Type，响应实体的主题是一个html文本</p>
+</li>
+<li><p>Content-Length，响应实体的主题包含了277字节的数据</p>
+</li>
+<li><p>Last-Modified，资源的最后修改日期时间</p>
+</li>
+<li><p>Connection，连接方式，close或keep-alive</p>
+</li>
+<li><p>ETag，资源的匹配信息</p>
+</li>
+<li><p>Cache-Control，控制缓存的行为</p>
+</li>
+<li><p>Pragma，报文指令</p>
+</li>
+<li><p>Accept-Ranges，是否接受字节范围请求</p>
+</li>
+</ul>
+<h4 id="2-4-curl-v-url-curl-–trace-filename-url"><a href="#2-4-curl-v-url-curl-–trace-filename-url" class="headerlink" title="2.4 curl -v url/curl –trace filename url"></a>2.4 curl -v url/curl –trace filename url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：$ crul -v url，-v参数是显示http访问的整个过程，即整个通信过程，curl --trace filename url相比-v信息更详细，并且会将访问过程输出到一个文件中</span></div><div class="line"></div><div class="line">$ curl -v www.baidu.com</div><div class="line">* Rebuilt URL to: www.baidu.com/</div><div class="line">*   Trying 61.135.169.121...</div><div class="line">* Connected to www.baidu.com (61.135.169.121) port 80 (<span class="comment">#0)</span></div><div class="line">&gt; GET / HTTP/1.1</div><div class="line">&gt; Host: www.baidu.com</div><div class="line">&gt; User-Agent: curl/7.43.0</div><div class="line">&gt; Accept: */*</div><div class="line">&gt; </div><div class="line">&lt; HTTP/1.1 200 OK</div><div class="line">&lt; Server: bfe/1.0.8.18</div><div class="line">&lt; Date: Wed, 02 Nov 2016 10:08:13 GMT</div><div class="line">&lt; Content-Type: text/html</div><div class="line">&lt; Content-Length: 2381</div><div class="line">&lt; Last-Modified: Mon, 25 Jul 2016 11:11:30 GMT</div><div class="line">&lt; Connection: Keep-Alive</div><div class="line">&lt; ETag: <span class="string">"5795f3e2-94d"</span></div><div class="line">&lt; Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</div><div class="line">&lt; Pragma: no-cache</div><div class="line">&lt; Set-Cookie: BDORZ=27315; max-age=86400; domain=.baidu.com; path=/</div><div class="line">&lt; Accept-Ranges: bytes</div><div class="line">&lt; </div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div><div class="line">* Connection <span class="comment">#0 to host www.baidu.com left intact</span></div><div class="line"></div><div class="line"><span class="comment"># 访问百度，访问的详细信息输出到output.txt文件中</span></div><div class="line">$ curl --trace output.txt www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-5-curl-–header-“Content-Type-application-json”-www-baidu-com"><a href="#2-5-curl-–header-“Content-Type-application-json”-www-baidu-com" class="headerlink" title="2.5 curl –header “Content-Type:application/json” www.baidu.com"></a>2.5 curl –header “Content-Type:application/json” www.baidu.com</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl --header "header content" url，--header主要是设置request请求的头部，Content-Type:application/json就是JS中ajax请求中的Content-Type:application/json</span></div><div class="line"></div><div class="line">$ curl --header <span class="string">"Content-Type:application/json"</span> www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-6-curl-L-url"><a href="#2-6-curl-L-url" class="headerlink" title="2.6 curl -L url"></a>2.6 curl -L url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -L url，-L是对页面进行重定向，主要用在请求的页面移动到别的站点的情况下。默认情况下CURL不会发送HTTP Location headers(重定向)</span></div><div class="line"></div><div class="line"><span class="comment"># 访问新浪，内容就不展示了，太多了，可以自己试一下</span></div><div class="line">$ curl -L www.sina.com</div></pre></td></tr></table></figure>
+<h4 id="2-7-curl-C-O-url"><a href="#2-7-curl-C-O-url" class="headerlink" title="2.7 curl -C - -O url"></a>2.7 curl -C - -O url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -C - -O url，-C -下载大文件时支持断点续传功能，-C后面要有一个整数&lt;offset&gt;，-C -/--continue-at命令等价</span></div><div class="line"></div><div class="line">$ curl -C - -O http://www.gnu.org/software/gettext/manual/gettext.html</div><div class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</div><div class="line">                                 Dload  Upload   Total   Spent    Left  Speed</div><div class="line">100 1375k  100 1375k    0     0  13479      0  0:01:44  0:01:44 --:--:--  6633</div></pre></td></tr></table></figure>
+<h4 id="2-8-curl-url-gt-gt-filename"><a href="#2-8-curl-url-gt-gt-filename" class="headerlink" title="2.8 curl url &gt;&gt; filename"></a>2.8 curl url &gt;&gt; filename</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl url &gt;&gt; filename，利用linux重定向功能将访问的内容输出到文件中</span></div><div class="line"></div><div class="line"><span class="comment"># 访问百度并将网页输出到baidu.html中，与curl -o baidu.html www.baidu.com等价</span></div><div class="line">$ curl www.baidu.com &gt;&gt; baidu.html</div><div class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</div><div class="line">                                 Dload  Upload   Total   Spent    Left  Speed</div><div class="line">100  2381  100  2381    0     0   1512      0  0:00:01  0:00:01 --:--:--  1512</div></pre></td></tr></table></figure>
+<h4 id="2-9-curl-–limit-rate-1K-url"><a href="#2-9-curl-–limit-rate-1K-url" class="headerlink" title="2.9 curl –limit-rate 1K url"></a>2.9 curl –limit-rate 1K url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">命令形式：curl --limit-rate 1K url，限制访问网络速度到1K，可用G，M，K，B</div><div class="line"></div><div class="line"><span class="comment"># 以1K的网速访问百度</span></div><div class="line">$ curl --limit-rate 1K www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-10-curl-u-username-url-curl-–user-username-password-url"><a href="#2-10-curl-u-username-url-curl-–user-username-password-url" class="headerlink" title="2.10 curl -u username url/curl –user username:password url"></a>2.10 curl -u username url/curl –user username:password url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -u username url，用用户名访问页面，当页面访问需要授权时使用，或者直接使用curl --user username:password url访问，最好用第一种形式，防止密码泄露</span></div><div class="line"></div><div class="line"><span class="comment"># 用用户名访问百度</span></div><div class="line">$ curl -u 24782*****@qq.com www.baidu.com</div><div class="line">Enter host password <span class="keyword">for</span> user <span class="string">'24782*****@qq.com'</span>:</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div><div class="line"></div><div class="line"><span class="comment"># 用户名和密码访问百度</span></div><div class="line">$ curl --user 24782*****@qq.com:****** www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-11-curl-z-date-url"><a href="#2-11-curl-z-date-url" class="headerlink" title="2.11 curl -z date url"></a>2.11 curl -z date url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -z date url，date指定时间，在date之后文件更新过之后才会下载，可以与response的last-modified联系到一起，工作中会用到，当要更新数据时，先查看last-modified</span></div><div class="line"></div><div class="line"><span class="comment"># 正常访问http://www.example.com/yy.html</span></div><div class="line">$ curl http://www.example.com/yy.html</div><div class="line">&lt;!doctype html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;Example Domain&lt;/title&gt;</div><div class="line"></div><div class="line">    &lt;meta charset=<span class="string">"utf-8"</span> /&gt;</div><div class="line">    &lt;meta http-equiv=<span class="string">"Content-type"</span> content=<span class="string">"text/html; charset=utf-8"</span> /&gt;</div><div class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width, initial-scale=1"</span> /&gt;</div><div class="line">    &lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">    body &#123;</div><div class="line">        background-color: <span class="comment">#f0f0f2;</span></div><div class="line">        margin: 0;</div><div class="line">        padding: 0;</div><div class="line">        font-family: <span class="string">"Open Sans"</span>, <span class="string">"Helvetica Neue"</span>, Helvetica, Arial, sans-serif;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    div &#123;</div><div class="line">        width: 600px;</div><div class="line">        margin: 5em auto;</div><div class="line">        padding: 50px;</div><div class="line">        background-color: <span class="comment">#fff;</span></div><div class="line">        border-radius: 1em;</div><div class="line">    &#125;</div><div class="line">    a:link, a:visited &#123;</div><div class="line">        color: <span class="comment">#38488f;</span></div><div class="line">        text-decoration: none;</div><div class="line">    &#125;</div><div class="line">    @media (max-width: 700px) &#123;</div><div class="line">        body &#123;</div><div class="line">            background-color: <span class="comment">#fff;</span></div><div class="line">        &#125;</div><div class="line">        div &#123;</div><div class="line">            width: auto;</div><div class="line">            margin: 0 auto;</div><div class="line">            border-radius: 0;</div><div class="line">            padding: 1em;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &lt;/style&gt;    </div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">&lt;div&gt;</div><div class="line">    &lt;h1&gt;Example Domain&lt;/h1&gt;</div><div class="line">    &lt;p&gt;This domain is established to be used <span class="keyword">for</span> illustrative examples <span class="keyword">in</span> documents. You may use this</div><div class="line">    domain <span class="keyword">in</span> examples without prior coordination or asking <span class="keyword">for</span> permission.&lt;/p&gt;</div><div class="line">    &lt;p&gt;&lt;a href=<span class="string">"http://www.iana.org/domains/example"</span>&gt;More information...&lt;/a&gt;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div><div class="line"><span class="comment"># 查看网页的last-modified</span></div><div class="line">$ curl -I http://www.example.com/yy.html</div><div class="line">HTTP/1.1 404 Not Found</div><div class="line">Accept-Ranges: bytes</div><div class="line">Cache-Control: max-age=604800</div><div class="line">Content-Type: text/html</div><div class="line">Date: Wed, 02 Nov 2016 14:41:48 GMT</div><div class="line">Etag: <span class="string">"359670651+gzip"</span></div><div class="line">Expires: Wed, 09 Nov 2016 14:41:48 GMT</div><div class="line">Last-Modified: Fri, 09 Aug 2013 23:54:35 GMT</div><div class="line">Server: ECS (cpm/F9B3)</div><div class="line">X-Cache: HIT</div><div class="line">x-ec-custom-error: 1</div><div class="line">Content-Length: 1270</div><div class="line"></div><div class="line"><span class="comment"># 指定时间为2016年6月18日，在那之后页面有更新才会访问</span></div><div class="line">$ curl -z 18-Jun-16 http://www.example.com/yy.html</div><div class="line">$</div></pre></td></tr></table></figure>
+<h4 id="2-12-curl-x-proxyip-port-url"><a href="#2-12-curl-x-proxyip-port-url" class="headerlink" title="2.12 curl -x proxyip:port url"></a>2.12 curl -x proxyip:port url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -x proxyip:port url，代理服务器如果是买的，需要输入用户名和密码</span></div><div class="line"></div><div class="line"><span class="comment"># 用代理访问百度，需要用户名和密码</span></div><div class="line">$ curl -u -x 138.128.***.***:8*** www.baidu.com</div><div class="line">Enter host password <span class="keyword">for</span> user <span class="string">'-x'</span>:</div><div class="line">curl: (52) Empty reply from server</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-13-curl-D-b-c-filename-url"><a href="#2-13-curl-D-b-c-filename-url" class="headerlink" title="2.13 curl -D/-b/-c filename url"></a>2.13 curl -D/-b/-c filename url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：url -D filename url，-D是将header信息(包括cookie)保存到文件中， -b是使用上次保存的Cookie信息，从文件中读取Cookie，也可指定Cookie文本，-c是接收Cookie并保存</span></div><div class="line"></div><div class="line"><span class="comment"># 访问百度并将header信息保存到test中</span></div><div class="line">$ curl -D <span class="built_in">test</span> www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div><div class="line"></div><div class="line"><span class="comment"># test文件内容</span></div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: bfe/1.0.8.18</div><div class="line">Date: Wed, 02 Nov 2016 15:08:31 GMT</div><div class="line">Content-Type: text/html</div><div class="line">Content-Length: 2381</div><div class="line">Last-Modified: Mon, 25 Jul 2016 11:11:41 GMT</div><div class="line">Connection: Keep-Alive</div><div class="line">ETag: <span class="string">"5795f3ed-94d"</span></div><div class="line">Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</div><div class="line">Pragma: no-cache</div><div class="line">Set-Cookie: BDORZ=27315; max-age=86400; domain=.baidu.com; path=/</div><div class="line">Accept-Ranges: bytes</div><div class="line"></div><div class="line"><span class="comment"># 访问百度将Cookie信息保存到test中</span></div><div class="line">$ curl -c <span class="built_in">test</span> www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 使用保存的Cookie信息test访问百度</span></div><div class="line">$ curl -b <span class="built_in">test</span> www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div><div class="line"></div><div class="line"><span class="comment"># 使用Cookie文本访问百度</span></div><div class="line">$ curl -b <span class="string">"name=test;pwd=test;"</span> www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-14-curl-G-d-“text”-url"><a href="#2-14-curl-G-d-“text”-url" class="headerlink" title="2.14 curl -G -d “text” url"></a>2.14 curl -G -d “text” url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -G -d "text" url，-G是以GET方式访问，-d "test"是指定GET的请求数据</span></div><div class="line"></div><div class="line"><span class="comment"># 以Get方式提交数据并访问百度，可以用来测试API</span></div><div class="line">$ curl -G <span class="_">-d</span> <span class="string">"name=test"</span> www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-15-curl-url"><a href="#2-15-curl-url" class="headerlink" title="2.15 curl -# url"></a>2.15 curl -# url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -# url，-#表示访问时以进度条形式显示，常用在下载中</span></div><div class="line"></div><div class="line"><span class="comment"># 下载图片并显示进度条</span></div><div class="line">$ curl -<span class="comment"># -O http://ocs628urt.bkt.clouddn.com/table_1.1.png</span></div><div class="line"><span class="comment">######################################################################## 100.0%</span></div></pre></td></tr></table></figure>
+<h4 id="2-16-curl-A-user-agent-“text”-url"><a href="#2-16-curl-A-user-agent-“text”-url" class="headerlink" title="2.16 curl -A/--user-agent “text” url"></a>2.16 curl -A/--user-agent “text” url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -A/--user-agent "text" url，-A/--user-agent "text"指定了访问者的设备信息，包括系统、CPU、浏览器版本等等。可以隐藏真正的设备信息</span></div><div class="line"></div><div class="line"><span class="comment"># 指定访问设备信息来访问百度</span></div><div class="line">$ curl -A <span class="string">"Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 5.0)"</span>  www.baidu.com</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;&lt;title&gt;302 Found&lt;/title&gt;&lt;/head&gt;</div><div class="line">&lt;body bgcolor=<span class="string">"white"</span>&gt;</div><div class="line">&lt;center&gt;&lt;h1&gt;302 Found&lt;/h1&gt;&lt;/center&gt;</div><div class="line">&lt;hr&gt;&lt;center&gt;pr-nginx_1-0-304_BRANCH Branch</div><div class="line">Time : Tue Oct 18 14:33:14 CST 2016&lt;/center&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h4 id="2-17-curl-e-referer-url1-url2"><a href="#2-17-curl-e-referer-url1-url2" class="headerlink" title="2.17 curl -e/--referer url1 url2"></a>2.17 curl -e/--referer url1 url2</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -e/--referer url1 url2，-e/--referer表明是从url1跳转访问url2的</span></div><div class="line"></div><div class="line"><span class="comment"># 从example.com跳转访问百度</span></div><div class="line">$ curl --referer example.com www.baidu.com</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;meta http-equiv=content-type content=text/html;charset=utf-8&gt;&lt;meta http-equiv=X-UA-Compatible content=IE=Edge&gt;&lt;meta content=always name=referrer&gt;&lt;link rel=stylesheet <span class="built_in">type</span>=text/css href=http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css&gt;&lt;title&gt;百度一下，你就知道&lt;/title&gt;&lt;/head&gt; &lt;body link=<span class="comment">#0000cc&gt; &lt;div id=wrapper&gt; &lt;div id=head&gt; &lt;div class=head_wrapper&gt; &lt;div class=s_form&gt; &lt;div class=s_form_wrapper&gt; &lt;div id=lg&gt; &lt;img hidefocus=true src=//www.baidu.com/img/bd_logo1.png width=270 height=129&gt; &lt;/div&gt; &lt;form id=form name=f action=//www.baidu.com/s class=fm&gt; &lt;input type=hidden name=bdorz_come value=1&gt; &lt;input type=hidden name=ie value=utf-8&gt; &lt;input type=hidden name=f value=8&gt; &lt;input type=hidden name=rsv_bp value=1&gt; &lt;input type=hidden name=rsv_idx value=1&gt; &lt;input type=hidden name=tn value=baidu&gt;&lt;span class="bg s_ipt_wr"&gt;&lt;input id=kw name=wd class=s_ipt value maxlength=255 autocomplete=off autofocus&gt;&lt;/span&gt;&lt;span class="bg s_btn_wr"&gt;&lt;input type=submit id=su value=百度一下 class="bg s_btn"&gt;&lt;/span&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=u1&gt; &lt;a href=http://news.baidu.com name=tj_trnews class=mnav&gt;新闻&lt;/a&gt; &lt;a href=http://www.hao123.com name=tj_trhao123 class=mnav&gt;hao123&lt;/a&gt; &lt;a href=http://map.baidu.com name=tj_trmap class=mnav&gt;地图&lt;/a&gt; &lt;a href=http://v.baidu.com name=tj_trvideo class=mnav&gt;视频&lt;/a&gt; &lt;a href=http://tieba.baidu.com name=tj_trtieba class=mnav&gt;贴吧&lt;/a&gt; &lt;noscript&gt; &lt;a href=http://www.baidu.com/bdorz/login.gif?login&amp;amp;tpl=mn&amp;amp;u=http%3A%2F%2Fwww.baidu.com%2f%3fbdorz_come%3d1 name=tj_login class=lb&gt;登录&lt;/a&gt; &lt;/noscript&gt; &lt;script&gt;document.write('&lt;a href="http://www.baidu.com/bdorz/login.gif?login&amp;tpl=mn&amp;u='+ encodeURIComponent(window.location.href+ (window.location.search === "" ? "?" : "&amp;")+ "bdorz_come=1")+ '" name="tj_login" class="lb"&gt;登录&lt;/a&gt;');&lt;/script&gt; &lt;a href=//www.baidu.com/more/ name=tj_briicon class=bri style="display: block;"&gt;更多产品&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div id=ftCon&gt; &lt;div id=ftConw&gt; &lt;p id=lh&gt; &lt;a href=http://home.baidu.com&gt;关于百度&lt;/a&gt; &lt;a href=http://ir.baidu.com&gt;About Baidu&lt;/a&gt; &lt;/p&gt; &lt;p id=cp&gt;&amp;copy;2016&amp;nbsp;Baidu&amp;nbsp;&lt;a href=http://www.baidu.com/duty/&gt;使用百度前必读&lt;/a&gt;&amp;nbsp; &lt;a href=http://jianyi.baidu.com/ class=cp-feedback&gt;意见反馈&lt;/a&gt;&amp;nbsp;京ICP证030173号&amp;nbsp; &lt;img src=//www.baidu.com/img/gs.gif&gt; &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="2-18-curl-X-POST-url"><a href="#2-18-curl-X-POST-url" class="headerlink" title="2.18 curl -X POST url"></a>2.18 curl -X POST url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：curl -X POST url，-X POST，指定其它形式访问url，curl默认使用的HTTP的GET方法，-X可以指定其它方法，例如POST，DELETE，PUT等，使用POST时可以使用-d "text"来指定POST的数据</span></div><div class="line"></div><div class="line"><span class="comment"># 以POST方式访问example.com</span></div><div class="line">$ curl -X POST example.com</div><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"iso-8859-1"</span>?&gt;</div><div class="line">&lt;!DOCTYPE html PUBLIC <span class="string">"-//W3C//DTD XHTML 1.0 Transitional//EN"</span></div><div class="line">         <span class="string">"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"</span>&gt;</div><div class="line">&lt;html xmlns=<span class="string">"http://www.w3.org/1999/xhtml"</span> xml:lang=<span class="string">"en"</span> lang=<span class="string">"en"</span>&gt;</div><div class="line">	&lt;head&gt;</div><div class="line">		&lt;title&gt;411 - Length Required&lt;/title&gt;</div><div class="line">	&lt;/head&gt;</div><div class="line">	&lt;body&gt;</div><div class="line">		&lt;h1&gt;411 - Length Required&lt;/h1&gt;</div><div class="line">	&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div><div class="line"><span class="comment"># 以POST+Data的方式访问example.com</span></div><div class="line">$ curl -X POST <span class="_">-d</span> <span class="string">"name=test"</span> example.com</div><div class="line">&lt;!doctype html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;Example Domain&lt;/title&gt;</div><div class="line"></div><div class="line">    &lt;meta charset=<span class="string">"utf-8"</span> /&gt;</div><div class="line">    &lt;meta http-equiv=<span class="string">"Content-type"</span> content=<span class="string">"text/html; charset=utf-8"</span> /&gt;</div><div class="line">    &lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width, initial-scale=1"</span> /&gt;</div><div class="line">    &lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">    body &#123;</div><div class="line">        background-color: <span class="comment">#f0f0f2;</span></div><div class="line">        margin: 0;</div><div class="line">        padding: 0;</div><div class="line">        font-family: <span class="string">"Open Sans"</span>, <span class="string">"Helvetica Neue"</span>, Helvetica, Arial, sans-serif;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    div &#123;</div><div class="line">        width: 600px;</div><div class="line">        margin: 5em auto;</div><div class="line">        padding: 50px;</div><div class="line">        background-color: <span class="comment">#fff;</span></div><div class="line">        border-radius: 1em;</div><div class="line">    &#125;</div><div class="line">    a:link, a:visited &#123;</div><div class="line">        color: <span class="comment">#38488f;</span></div><div class="line">        text-decoration: none;</div><div class="line">    &#125;</div><div class="line">    @media (max-width: 700px) &#123;</div><div class="line">        body &#123;</div><div class="line">            background-color: <span class="comment">#fff;</span></div><div class="line">        &#125;</div><div class="line">        div &#123;</div><div class="line">            width: auto;</div><div class="line">            margin: 0 auto;</div><div class="line">            border-radius: 0;</div><div class="line">            padding: 1em;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    &lt;/style&gt;    </div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">&lt;div&gt;</div><div class="line">    &lt;h1&gt;Example Domain&lt;/h1&gt;</div><div class="line">    &lt;p&gt;This domain is established to be used <span class="keyword">for</span> illustrative examples <span class="keyword">in</span> documents. You may use this</div><div class="line">    domain <span class="keyword">in</span> examples without prior coordination or asking <span class="keyword">for</span> permission.&lt;/p&gt;</div><div class="line">    &lt;p&gt;&lt;a href=<span class="string">"http://www.iana.org/domains/example"</span>&gt;More information...&lt;/a&gt;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>CURL的命令参数还有很多，就不一一演示了。下面是CURL的参数及功能列表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line">-a/--append 上传文件时，附加到目标文件  </div><div class="line"> -A/--user-agent &lt;string&gt;  设置用户代理发送给服务器  </div><div class="line"> - anyauth   可以使用“任何”身份验证方法  </div><div class="line"> -b/--cookie &lt;name=string/file&gt; cookie字符串或文件读取位置  </div><div class="line"> - basic 使用HTTP基本验证  </div><div class="line"> -B/--use-ascii 使用ASCII /文本传输  </div><div class="line"> -c/--cookie-jar &lt;file&gt; 操作结束后把cookie写入到这个文件中  </div><div class="line"> -C/--continue-at &lt;offset&gt;  断点续转  </div><div class="line"> -d/--data &lt;data&gt;   HTTP POST方式传送数据  </div><div class="line"> --data-ascii &lt;data&gt;  以ascii的方式post数据  </div><div class="line"> --data-binary &lt;data&gt; 以二进制的方式post数据  </div><div class="line"> --negotiate     使用HTTP身份验证  </div><div class="line"> --digest        使用数字身份验证  </div><div class="line"> --disable-eprt  禁止使用EPRT或LPRT  </div><div class="line"> --disable-epsv  禁止使用EPSV  </div><div class="line"> -D/--dump-header &lt;file&gt; 把header信息写入到该文件中  </div><div class="line"> --egd-file &lt;file&gt; 为随机数据(SSL)设置EGD socket路径  </div><div class="line"> --tcp-nodelay   使用TCP_NODELAY选项  </div><div class="line"> -e/--referer 来源网址  </div><div class="line"> -E/--cert &lt;cert[:passwd]&gt; 客户端证书文件和密码 (SSL)  </div><div class="line"> --cert-type &lt;type&gt; 证书文件类型 (DER/PEM/ENG) (SSL)  </div><div class="line"> --key &lt;key&gt;     私钥文件名 (SSL)  </div><div class="line"> --key-type &lt;type&gt; 私钥文件类型 (DER/PEM/ENG) (SSL)  </div><div class="line"> --pass  &lt;pass&gt;  私钥密码 (SSL)  </div><div class="line"> --engine &lt;eng&gt;  加密引擎使用 (SSL). &quot;--engine list&quot; for list  </div><div class="line"> --cacert &lt;file&gt; CA证书 (SSL)  </div><div class="line"> --capath &lt;directory&gt; CA目录 (made using c_rehash) to verify peer against (SSL)  </div><div class="line"> --ciphers &lt;list&gt;  SSL密码  </div><div class="line"> --compressed    要求返回是压缩的形势 (using deflate or gzip)  </div><div class="line"> --connect-timeout &lt;seconds&gt; 设置最大请求时间  </div><div class="line"> --create-dirs   建立本地目录的目录层次结构  </div><div class="line"> --crlf          上传是把LF转变成CRLF  </div><div class="line"> -f/--fail          连接失败时不显示http错误  </div><div class="line"> --ftp-create-dirs 如果远程目录不存在，创建远程目录  </div><div class="line"> --ftp-method [multicwd/nocwd/singlecwd] 控制CWD的使用  </div><div class="line"> --ftp-pasv      使用 PASV/EPSV 代替端口  </div><div class="line"> --ftp-skip-pasv-ip 使用PASV的时候,忽略该IP地址  </div><div class="line"> --ftp-ssl       尝试用 SSL/TLS 来进行ftp数据传输  </div><div class="line"> --ftp-ssl-reqd  要求用 SSL/TLS 来进行ftp数据传输  </div><div class="line"> -F/--form &lt;name=content&gt; 模拟http表单提交数据  </div><div class="line"> -form-string &lt;name=string&gt; 模拟http表单提交数据  </div><div class="line"> -g/--globoff 禁用网址序列和范围使用&#123;&#125;和[]  </div><div class="line"> -G/--get 以get的方式来发送数据  </div><div class="line"> -h/--help 帮助  </div><div class="line"> -H/--header &lt;line&gt;自定义头信息传递给服务器  </div><div class="line"> --ignore-content-length  忽略的HTTP头信息的长度  </div><div class="line"> -i/--include 输出时包括protocol头信息  </div><div class="line"> -I/--head  只显示文档信息  </div><div class="line"> 从文件中读取-j/--junk-session-cookies忽略会话Cookie  </div><div class="line"> - 界面&lt;interface&gt;指定网络接口/地址使用  </div><div class="line"> - krb4 &lt;级别&gt;启用与指定的安全级别krb4  </div><div class="line"> -j/--junk-session-cookies 读取文件进忽略session cookie  </div><div class="line"> --interface &lt;interface&gt; 使用指定网络接口/地址  </div><div class="line"> --krb4 &lt;level&gt;  使用指定安全级别的krb4  </div><div class="line"> -k/--insecure 允许不使用证书到SSL站点  </div><div class="line"> -K/--config  指定的配置文件读取  </div><div class="line"> -l/--list-only 列出ftp目录下的文件名称  </div><div class="line"> --limit-rate &lt;rate&gt; 设置传输速度  </div><div class="line"> --local-port&lt;NUM&gt; 强制使用本地端口号  </div><div class="line"> -m/--max-time &lt;seconds&gt; 设置最大传输时间  </div><div class="line"> --max-redirs &lt;num&gt; 设置最大读取的目录数  </div><div class="line"> --max-filesize &lt;bytes&gt; 设置最大下载的文件总量  </div><div class="line"> -M/--manual  显示全手动  </div><div class="line"> -n/--netrc 从netrc文件中读取用户名和密码  </div><div class="line"> --netrc-optional 使用 .netrc 或者 URL来覆盖-n  </div><div class="line"> --ntlm          使用 HTTP NTLM 身份验证  </div><div class="line"> -N/--no-buffer 禁用缓冲输出  </div><div class="line"> -o/--output 把输出写到该文件中  </div><div class="line"> -O/--remote-name 把输出写到该文件中，保留远程文件的文件名  </div><div class="line"> -p/--proxytunnel   使用HTTP代理  </div><div class="line"> --proxy-anyauth 选择任一代理身份验证方法  </div><div class="line"> --proxy-basic   在代理上使用基本身份验证  </div><div class="line"> --proxy-digest  在代理上使用数字身份验证  </div><div class="line"> --proxy-ntlm    在代理上使用ntlm身份验证  </div><div class="line"> -P/--ftp-port &lt;address&gt; 使用端口地址，而不是使用PASV  </div><div class="line"> -Q/--quote &lt;cmd&gt;文件传输前，发送命令到服务器  </div><div class="line"> -r/--range &lt;range&gt;检索来自HTTP/1.1或FTP服务器字节范围  </div><div class="line"> --range-file 读取（SSL）的随机文件  </div><div class="line"> -R/--remote-time   在本地生成文件时，保留远程文件时间  </div><div class="line"> --retry &lt;num&gt;   传输出现问题时，重试的次数  </div><div class="line"> --retry-delay &lt;seconds&gt;  传输出现问题时，设置重试间隔时间  </div><div class="line"> --retry-max-time &lt;seconds&gt; 传输出现问题时，设置最大重试时间  </div><div class="line"> -s/--silent静音模式。不输出任何东西  </div><div class="line"> -S/--show-error   显示错误  </div><div class="line"> --socks4 &lt;host[:port]&gt; 用socks4代理给定主机和端口  </div><div class="line"> --socks5 &lt;host[:port]&gt; 用socks5代理给定主机和端口  </div><div class="line"> --stderr &lt;file&gt;  </div><div class="line"> -t/--telnet-option &lt;OPT=val&gt; Telnet选项设置  </div><div class="line"> --trace &lt;file&gt;  对指定文件进行debug  </div><div class="line"> --trace-ascii &lt;file&gt; Like --跟踪但没有hex输出  </div><div class="line"> --trace-time    跟踪/详细输出时，添加时间戳  </div><div class="line"> -T/--upload-file &lt;file&gt; 上传文件  </div><div class="line"> --url &lt;URL&gt;     Spet URL to work with  </div><div class="line"> -u/--user &lt;user[:password]&gt;设置服务器的用户和密码  </div><div class="line"> -U/--proxy-user &lt;user[:password]&gt;设置代理用户名和密码  </div><div class="line"> -v/--verbose  </div><div class="line"> -V/--version 显示版本信息  </div><div class="line"> -w/--write-out [format]什么输出完成后  </div><div class="line"> -x/--proxy &lt;host[:port]&gt;在给定的端口上使用HTTP代理  </div><div class="line"> -X/--request &lt;command&gt;指定什么命令  </div><div class="line"> -y/--speed-time 放弃限速所要的时间。默认为30  </div><div class="line"> -Y/--speed-limit 停止传输速度的限制，速度时间&apos;秒  </div><div class="line"> -z/--time-cond  传送时间设置  </div><div class="line"> -0/--http1.0  使用HTTP 1.0  </div><div class="line"> -1/--tlsv1  使用TLSv1（SSL）  </div><div class="line"> -2/--sslv2 使用SSLv2的（SSL）  </div><div class="line"> -3/--sslv3         使用的SSLv3（SSL）  </div><div class="line"> --3p-quote      like -Q for the source URL for 3rd party transfer  </div><div class="line"> --3p-url        使用url，进行第三方传送  </div><div class="line"> --3p-user       使用用户名和密码，进行第三方传送  </div><div class="line"> -4/--ipv4   使用IP4  </div><div class="line"> -6/--ipv6   使用IP6  </div><div class="line"> -#/--progress-bar 用进度条显示当前的传送状态</div></pre></td></tr></table></figure>
+<p>参考文献：</p>
+<ol>
+<li><p><a href="https://curl.haxx.se/" target="_blank" rel="external">https://curl.haxx.se/</a></p>
+</li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2011/09/curl.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/09/curl.html</a></p>
+</li>
+<li><p><a href="http://www.cnblogs.com/gbyukg/p/3326825.html" target="_blank" rel="external">http://www.cnblogs.com/gbyukg/p/3326825.html</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/wangjunji34478/article/details/35988223" target="_blank" rel="external">http://blog.csdn.net/wangjunji34478/article/details/35988223</a></p>
+</li>
+<li><p><a href="http://blog.51yip.com/linux/1049.html" target="_blank" rel="external">http://blog.51yip.com/linux/1049.html</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mac/" rel="tag"># Mac</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/02/2016-11-2-Java中的Log/" rel="next" title="Java中的Log">
+                <i class="fa fa-chevron-left"></i> Java中的Log
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/02/2016-11-2-HTTP请求报文和响应报文/" rel="prev" title="HTTP请求报文和响应报文">
+                HTTP请求报文和响应报文 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/02/2016-11-2-CURL命令/"
+     data-title="CURL命令介绍"
+     data-content=""
+     data-url="noahsnail.com/2016/11/02/2016-11-2-CURL命令/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/02/2016-11-2-CURL命令/"
+           data-title="CURL命令介绍" data-url="noahsnail.com/2016/11/02/2016-11-2-CURL命令/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-CURL介绍"><span class="nav-number">1.</span> <span class="nav-text">1. CURL介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-CURL命令用法"><span class="nav-number">2.</span> <span class="nav-text">2. CURL命令用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-curl-url"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 curl url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-curl-o-O-filename-url"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 curl -o/-O filename url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-curl-i-I-url"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3 curl -i/-I url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-curl-v-url-curl-–trace-filename-url"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.4 curl -v url/curl –trace filename url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-curl-–header-“Content-Type-application-json”-www-baidu-com"><span class="nav-number">2.0.5.</span> <span class="nav-text">2.5 curl –header “Content-Type:application/json” www.baidu.com</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-curl-L-url"><span class="nav-number">2.0.6.</span> <span class="nav-text">2.6 curl -L url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-curl-C-O-url"><span class="nav-number">2.0.7.</span> <span class="nav-text">2.7 curl -C - -O url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-curl-url-gt-gt-filename"><span class="nav-number">2.0.8.</span> <span class="nav-text">2.8 curl url >> filename</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-9-curl-–limit-rate-1K-url"><span class="nav-number">2.0.9.</span> <span class="nav-text">2.9 curl –limit-rate 1K url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-10-curl-u-username-url-curl-–user-username-password-url"><span class="nav-number">2.0.10.</span> <span class="nav-text">2.10 curl -u username url/curl –user username:password url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-11-curl-z-date-url"><span class="nav-number">2.0.11.</span> <span class="nav-text">2.11 curl -z date url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-12-curl-x-proxyip-port-url"><span class="nav-number">2.0.12.</span> <span class="nav-text">2.12 curl -x proxyip:port url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-13-curl-D-b-c-filename-url"><span class="nav-number">2.0.13.</span> <span class="nav-text">2.13 curl -D/-b/-c filename url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-14-curl-G-d-“text”-url"><span class="nav-number">2.0.14.</span> <span class="nav-text">2.14 curl -G -d “text” url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-15-curl-url"><span class="nav-number">2.0.15.</span> <span class="nav-text">2.15 curl -# url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-16-curl-A-user-agent-“text”-url"><span class="nav-number">2.0.16.</span> <span class="nav-text">2.16 curl -A/--user-agent “text” url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-17-curl-e-referer-url1-url2"><span class="nav-number">2.0.17.</span> <span class="nav-text">2.17 curl -e/--referer url1 url2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-18-curl-X-POST-url"><span class="nav-number">2.0.18.</span> <span class="nav-text">2.18 curl -X POST url</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-总结"><span class="nav-number">3.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>

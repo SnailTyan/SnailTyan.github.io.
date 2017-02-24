@@ -1,0 +1,875 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring Boot," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring Boot 2.0.0参考手册_中文版_Part IV_23">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 2.0.0参考手册_中文版_Part IV_23">
+<meta property="og:url" content="noahsnail.com/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring Boot 2.0.0参考手册_中文版_Part IV_23">
+<meta property="og:updated_time" content="2016-11-17T11:07:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot 2.0.0参考手册_中文版_Part IV_23">
+<meta name="twitter:description" content="Spring Boot 2.0.0参考手册_中文版_Part IV_23">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/"/>
+
+
+
+
+
+  <title> Spring Boot 2.0.0参考手册_中文版_Part IV_23 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring Boot 2.0.0参考手册_中文版_Part IV_23
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-17T19:00:17+08:00">
+              2016-11-17
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-11-17T19:07:20+08:00">
+              2016-11-17
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring-Boot-2-0-0/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Boot 2.0.0</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  Spring Boot 2.0.0参考手册_中文版_Part IV_23
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h1 id="Part-IV-Spring-Boot特性"><a href="#Part-IV-Spring-Boot特性" class="headerlink" title="Part IV. Spring Boot特性"></a>Part IV. Spring Boot特性</h1><p>这一部分进入Spring Boot细节部分。在这部分你会了解到你想使用和定制的一些重要特性。如果你还没准备好，你可以阅读第二部分“Getting started”和第三部分“Using Spring Boot”，可以对基础知识有个较好的认识。</p>
+<h2 id="23-SpringApplication"><a href="#23-SpringApplication" class="headerlink" title="23. SpringApplication"></a>23. SpringApplication</h2><p><code>SpringApplication</code>提供了一种很方便的方式来引导Spring应用，Spring应用可以从<code>main()</code>方法中启动。许多情况下你可以委托给静态方法<code>SpringApplication.run</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    SpringApplication.run(MySpringConfiguration.class, args);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当你的应用启动时你应该看到类似于下面的东西：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> .   ____          _            __ _ _</div><div class="line"> /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</div><div class="line">( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</div><div class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</div><div class="line">  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</div><div class="line"> =========|_|==============|___/=/_/_/_/</div><div class="line"> :: Spring Boot ::   v1.4.2.RELEASE</div><div class="line"></div><div class="line">2013-07-31 00:08:16.117  INFO 56603 --- [           main] o.s.b.s.app.SampleApplication            : Starting SampleApplication v0.1.0 on mycomputer with PID 56603 (/apps/myapp.jar started by pwebb)</div><div class="line">2013-07-31 00:08:16.166  INFO 56603 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6e5a8246: startup date [Wed Jul 31 00:08:16 PDT 2013]; root of context hierarchy</div><div class="line">2014-03-04 13:09:54.912  INFO 41370 --- [           main] .t.TomcatEmbeddedServletContainerFactory : Server initialized with port: 8080</div><div class="line">2014-03-04 13:09:56.501  INFO 41370 --- [           main] o.s.b.s.app.SampleApplication            : Started SampleApplication in 2.992 seconds (JVM running for 3.658)</div></pre></td></tr></table></figure>
+<p>默认情况下会输出<code>INFO</code>日志信息，包括一些相关的启动细节例如启动应用的用户。</p>
+<h3 id="23-1-启动失败"><a href="#23-1-启动失败" class="headerlink" title="23.1 启动失败"></a>23.1 启动失败</h3><p>如果你的应用启动失败，注册<code>FailureAnalyzers</code>有可能会提供专门的错误信息和解决这个问题的具体行动。例如，如果你启动一个<code>8080</code>端口的web应用并且这个端口已经被占用，你应该会看到类似于下面的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">***************************</div><div class="line">APPLICATION FAILED TO START</div><div class="line">***************************</div><div class="line"></div><div class="line">Description:</div><div class="line"></div><div class="line">Embedded servlet container failed to start. Port 8080 was already in use.</div><div class="line"></div><div class="line">Action:</div><div class="line"></div><div class="line">Identify and stop the process that&apos;s listening on port 8080 or configure this application to listen on another port.</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Spring Boot提供了许多<code>FailureAnalyzer</code>实现，你可以很容易添加自己的<code>FailureAnalyzer</code>实现。</p>
+</blockquote>
+<p>如果没有失败分析器能处理这个异常，你仍可以显示完整的自动配置报告，从而更好的理解什么地方出问题了。为了实现这个你需要启用<code>debug</code>属性或启用<code>org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer</code>的<code>DEBUG</code>日志。</p>
+<p>例如，如果你使用<code>java -jar</code>运行应用，你可以用下面的形式启用<code>debug</code>属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -jar myproject-0.0.1-SNAPSHOT.jar --debug</div></pre></td></tr></table></figure>
+<h3 id="23-2-定制Banner"><a href="#23-2-定制Banner" class="headerlink" title="23.2 定制Banner"></a>23.2 定制Banner</h3><p>启动时打印的标语可以通过在classpath中添加一个<code>banner.txt</code>文件或者将<code>banner.location</code>设置为<code>banner.txt</code>文件的位置来修改。如果文件是一种不常见的编码方式，你可以设置<code>banner.charset</code>(默认是<code>UTF-8</code>)。除了文本文件之外，你也添加一个<code>banner.gif</code>，<code>banner.jpg</code>或<code>banner.png</code>图像文件到classpath中，或者设置一个<code>banner.image.location</code>属性。图像将被转换成ASCII艺术表示并打印在文本标语之上。</p>
+<p>在<code>banner.txt</code>内部你可以使用下面的任何占位符：</p>
+<p><strong>Table 23.1. Banner变量</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Variable</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">${application.version}</td>
+<td style="text-align:left">你的应用的版本号在<code>MANIFEST.MF</code>中声明。 例如<code>Implementation-Version: 1.0</code>打印成<code>1.0</code>.</td>
+</tr>
+<tr>
+<td style="text-align:left">${application.formatted-version}</td>
+<td style="text-align:left">在<code>MANIFEST.MF</code>中的声明的应用版本号进行格式化显示（加上前缀<code>v</code>并用括号包裹）。例如<code>(v1.0)</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left">${spring-boot.version}</td>
+<td style="text-align:left">你使用的Spring Boot版本。例如<code>1.4.2.RELEASE</code>.</td>
+</tr>
+<tr>
+<td style="text-align:left">${spring-boot.formatted-version}</td>
+<td style="text-align:left">你使用的Spring Boot版本进行格式化显示加上前缀<code>v</code>并用括号包裹）。例如<code>(v1.4.2.RELEASE)</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left">${Ansi.NAME} (or ${AnsiColor.NAME}, ${AnsiBackground.NAME}, ${AnsiStyle.NAME})</td>
+<td style="text-align:left"><code>NAME</code>是ANSI转义码的名字。更多细节请看<code>AnsiPropertySource</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left">${application.title}</td>
+<td style="text-align:left">在<code>MANIFEST.MF</code>中声明的应用标题。例如<code>Implementation-Title: MyApp</code>打印成<code>MyApp</code>.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果你想自动生成一个标语你可以使用<code>SpringApplication.setBanner(…​)</code>方法。使用<code>org.springframework.boot.Banner</code>接口并实现你自己的<code>printBanner()</code>方法。</p>
+</blockquote>
+<p>你也可以使用<code>spring.main.banner-mode</code>属性来决定标语是否必须在<code>System.out</code>（控制台）上输出，使用配置的日志（log）或一点也不用（off）。</p>
+<blockquote>
+<p>如果你想在你的应用中禁用banner，YAML会将<code>off</code>映射为<code>false</code>，因此要确保添加引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">    main:</div><div class="line">        banner-mode: &quot;off&quot;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="23-3-定制SpringApplication"><a href="#23-3-定制SpringApplication" class="headerlink" title="23.3 定制SpringApplication"></a>23.3 定制SpringApplication</h3><p>如果你不喜欢默认的<code>SpringApplication</code>，你可以创建一个本地实例并定制它。例如，关闭你写的banner：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    SpringApplication app = <span class="keyword">new</span> SpringApplication(MySpringConfiguration.class);</div><div class="line">    app.setBannerMode(Banner.Mode.OFF);</div><div class="line">    app.run(args);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<blockquote>
+<p>传给<code>SpringApplication</code>的构造函数参数是Spring beans配置源。在大多数情况下将会引用<code>@Configuration</code>类，但它们也可以引用XML配置或应该扫描的包。</p>
+</blockquote>
+<p>也可以使用<code>application.properties</code>文件配置<code>SpringApplication</code>。更多细节请看24章，『外部配置』。</p>
+<p>完整的配置选项列表，请看<code>SpringApplication</code>文档。</p>
+<h3 id="23-4-流畅的构建器API"><a href="#23-4-流畅的构建器API" class="headerlink" title="23.4 流畅的构建器API"></a>23.4 流畅的构建器API</h3><p>如果你需要构建<code>ApplicationContext</code>分层（多个具有父/子关系的上下文），或者你更喜欢使用<code>fluent</code>的构建器API，你可以使用<code>SpringApplicationBuilder</code>。</p>
+<p><code>SpringApplicationBuilder</code>允许你链接多个方法调用，包括允许你创建分层的<code>parent</code>和<code>child</code>方法。</p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> SpringApplicationBuilder()</div><div class="line">        .sources(Parent.class)</div><div class="line">        .child(Application.class)</div><div class="line">        .bannerMode(Banner.Mode.OFF)</div><div class="line">        .run(args);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>当创建<code>ApplicationContext</code>分层时有一些限制，例如，子上下文必须包含web组件，父子上下文将使用同一个<code>Environment</code>。更完整的细节请看<code>SpringApplicationBuilder</code>文档。</p>
+</blockquote>
+<h3 id="23-5-应用事件和监听器"><a href="#23-5-应用事件和监听器" class="headerlink" title="23.5 应用事件和监听器"></a>23.5 应用事件和监听器</h3><p>除了平常的Spring框架事件之外，例如<code>ContextRefreshedEvent</code>，<code>SpringApplication</code>会发送一些其它的应用事件。</p>
+<blockquote>
+<p>在<code>ApplicationContext</code>创建之前实际上会触发一些事件，因此你不能使用<code>@Bean</code>来注册这些监听器。你可以通过<code>SpringApplication.addListeners(…​)</code>或<code>SpringApplicationBuilder.listeners(…​)</code>方法来注册这些监听器。</p>
+<p>如果你想自动注册这些监听器，不管上下文的创建方式，你可以在你的工程中添加<code>META-INF/spring.factories</code>文件，并通过<code>org.springframework.context.ApplicationListener</code>作为key来引用你的监听器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">org.springframework.context.ApplicationListener=com.example.project.MyListener</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>当你的应用运行时，应用事件以下面的顺序发送：</p>
+<ol>
+<li>在运行启动时发送<code>ApplicationStartedEvent</code>，除了监听器和初始化器注册之外，在进行任何处理之前发送。</li>
+<li>当在上下文中使用的<code>Environment</code>已知时，发送<code>ApplicationEnvironmentPreparedEvent</code>，但发送是在上下文创建之前。</li>
+<li>在再刷新启动之前，但在bean定义加载之后，发送<code>ApplicationPreparedEvent</code>。</li>
+<li>在再刷新之后，发送<code>ApplicationReadyEvent</code>，任何相关的回调函数都处理完成之后，意味着应用已经准备处理服务请求了。</li>
+<li>如果启动时出现异常，发送<code>ApplicationFailedEvent</code>.</li>
+</ol>
+<blockquote>
+<p>经常你不需要使用应用事件，但知道它们的存在是便利的。Spring Boot内部使用事件来处理大量的任务。</p>
+</blockquote>
+<h3 id="23-6-Web环境"><a href="#23-6-Web环境" class="headerlink" title="23.6 Web环境"></a>23.6 Web环境</h3><p><code>SpringApplication</code>会尝试创建代表你的合适的<code>ApplicationContext</code>类型。默认情况下，会使用<code>AnnotationConfigApplicationContext</code>或<code>AnnotationConfigEmbeddedWebApplicationContext</code>，依赖于你是否在开发一个web应用。</p>
+<p>使用的决定<code>web environment</code>的算法是相对简单的（基于现有的一些类）。如果你需要覆写默认值你可以使用<code>setWebEnvironment(boolean webEnvironment)</code>。</p>
+<p>完全控制<code>ApplicationContext</code>类型也是可能的，通过调用<code>setApplicationContextClass(…​)</code>使用。</p>
+<blockquote>
+<p>当在JUnit测试时使用<code>SpringApplication</code>，经常需要调用<code>setWebEnvironment(false)</code>。</p>
+</blockquote>
+<h3 id="23-7-访问应用参数"><a href="#23-7-访问应用参数" class="headerlink" title="23.7 访问应用参数"></a>23.7 访问应用参数</h3><p>如果你需要访问传进<code>SpringApplication.run(…​)</code>中的应用参数，你可以注入<code>org.springframework.boot.ApplicationArguments</code> bean。<code>ApplicationArguments</code>接口提供了访问原始<code>String[]</code>和转换的<code>option</code>，<code>non-option</code>参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.boot.*</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.*</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.*</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBean</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyBean</span><span class="params">(ApplicationArguments args)</span> </span>&#123;</div><div class="line">        <span class="keyword">boolean</span> debug = args.containsOption(<span class="string">"debug"</span>);</div><div class="line">        List&lt;String&gt; files = args.getNonOptionArgs();</div><div class="line">        <span class="comment">// if run with "--debug logfile.txt" debug=true, files=["logfile.txt"]</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Spring Boot也在Spring <code>Environment</code>中注册<code>CommandLinePropertySource</code>。这也允许你使用<code>@Value</code>注解注入单个应对参数。</p>
+</blockquote>
+<h3 id="23-8-使用ApplicationRunner或CommandLineRunner"><a href="#23-8-使用ApplicationRunner或CommandLineRunner" class="headerlink" title="23.8 使用ApplicationRunner或CommandLineRunner"></a>23.8 使用ApplicationRunner或CommandLineRunner</h3><p>如果你需要在<code>SpringApplication</code>启动时运行一些特定的代码，你可以实现<code>ApplicationRunner</code>或<code>CommandLineRunner</code>接口。这两个接口以同样方式工作，并有一个单独的<code>run</code>方法，在<code>SpringApplication.run(…​)</code>之前会调用这个<code>run</code>方法。</p>
+<p><code>CommandLineRunner</code>接口提供了对应用参数的访问，应用参数作为一个简单的字符串数组，而<code>ApplicationRunner</code>使用前面描述的<code>ApplicationArguments</code>接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.boot.*</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.*</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBean</span> <span class="keyword">implements</span> <span class="title">CommandLineRunner</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(String... args)</span> </span>&#123;</div><div class="line">        <span class="comment">// Do something...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外，如果定义的<code>CommandLineRunner</code>或<code>ApplicationRunner</code> beans必须以指定顺序调用，你可以实现<code>org.springframework.core.Ordered</code>接口或<code>org.springframework.core.annotation.Order</code> 注解。</p>
+<h3 id="23-9-应用退出"><a href="#23-9-应用退出" class="headerlink" title="23.9 应用退出"></a>23.9 应用退出</h3><p>为了确保<code>ApplicationContext</code>在关闭时安全退出， 每个<code>SpringApplication</code>都会在JVM中注册一个关闭钩子。所有的标准Spring生命周期回调函数（例如<code>DisposableBean</code>接口，或<code>@PreDestroy</code>注解）都会被使用。</p>
+<p>另外，当应用退出时，如果它们想返回一个特定的退出码，beans可以实现<code>org.springframework.boot.ExitCodeGenerator</code>接口。</p>
+<h3 id="23-10-Admin功能"><a href="#23-10-Admin功能" class="headerlink" title="23.10 Admin功能"></a>23.10 Admin功能</h3><p>如果应用想启用admin相关的功能，可以指定<code>spring.application.admin.enabled</code>属性。这会在平台<code>MBeanServer</code>上暴露<code>SpringApplicationAdminMXBean</code>。你可以使用这个功能远程的管理你的Spring Boot应用。对于任何服务包裹的实现这是很有用的。</p>
+<blockquote>
+<p>如果你想知道应用运行的HTTP接口，通过关键字<code>local.server.port</code>可以得到这个属性。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>当启用这个功能时要非常小心，因为MBean会暴露一个关闭应用的方法。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中英文对照_Part IV_23/" rel="next" title="Spring Boot 2.0.0参考手册_中英文对照_Part IV_23">
+                <i class="fa fa-chevron-left"></i> Spring Boot 2.0.0参考手册_中英文对照_Part IV_23
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/22/2016-11-22-jQuery中，html、val与text的区别与联系/" rel="prev" title="jQuery中，html、val与text的区别与联系">
+                jQuery中，html、val与text的区别与联系 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/"
+     data-title="Spring Boot 2.0.0参考手册_中文版_Part IV_23"
+     data-content=""
+     data-url="noahsnail.com/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/"
+           data-title="Spring Boot 2.0.0参考手册_中文版_Part IV_23" data-url="noahsnail.com/2016/11/17/2016-11-17-Spring Boot 2.0.0参考手册_中文版_Part IV_23/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Part-IV-Spring-Boot特性"><span class="nav-number">1.</span> <span class="nav-text">Part IV. Spring Boot特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#23-SpringApplication"><span class="nav-number">1.1.</span> <span class="nav-text">23. SpringApplication</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#23-1-启动失败"><span class="nav-number">1.1.1.</span> <span class="nav-text">23.1 启动失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-2-定制Banner"><span class="nav-number">1.1.2.</span> <span class="nav-text">23.2 定制Banner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-3-定制SpringApplication"><span class="nav-number">1.1.3.</span> <span class="nav-text">23.3 定制SpringApplication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-4-流畅的构建器API"><span class="nav-number">1.1.4.</span> <span class="nav-text">23.4 流畅的构建器API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-5-应用事件和监听器"><span class="nav-number">1.1.5.</span> <span class="nav-text">23.5 应用事件和监听器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-6-Web环境"><span class="nav-number">1.1.6.</span> <span class="nav-text">23.6 Web环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-7-访问应用参数"><span class="nav-number">1.1.7.</span> <span class="nav-text">23.7 访问应用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-8-使用ApplicationRunner或CommandLineRunner"><span class="nav-number">1.1.8.</span> <span class="nav-text">23.8 使用ApplicationRunner或CommandLineRunner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-9-应用退出"><span class="nav-number">1.1.9.</span> <span class="nav-text">23.9 应用退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-10-Admin功能"><span class="nav-number">1.1.10.</span> <span class="nav-text">23.10 Admin功能</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>

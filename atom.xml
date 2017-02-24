@@ -1,0 +1,2538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SnailTyan</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="noahsnail.com/"/>
+  <updated>2017-02-24T04:16:15.000Z</updated>
+  <id>noahsnail.com/</id>
+  
+  <author>
+    <name>Tyan</name>
+    <email>Tyan.Liu.Git@gmail.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Caffe的solver参数介绍</title>
+    <link href="noahsnail.com/2017/02/23/2017-2-23-Caffe%E7%9A%84solver%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D/"/>
+    <id>noahsnail.com/2017/02/23/2017-2-23-Caffe的solver参数介绍/</id>
+    <published>2017-02-23T06:41:45.000Z</published>
+    <updated>2017-02-24T04:16:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Caffe的solver参数介绍
+    
+    </summary>
+    
+      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
+    
+    
+      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="noahsnail.com/2017/02/21/2017-2-21-Linux%E7%9A%84ps%E5%91%BD%E4%BB%A4/"/>
+    <id>noahsnail.com/2017/02/21/2017-2-21-Linux的ps命令/</id>
+    <published>2017-02-21T09:58:23.000Z</published>
+    <updated>2017-02-21T09:58:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="categories" content="Linux">
+<meta name="tags" content="[Linux]">
+<meta name="layout" content="post">
+<meta name="description" content="Linux的ps命令"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAzUABAAAAAAFNgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABbAAAABwAAAAcZMzaOEdERUYAAAGIAAAAHQAAACAAOQAET1MvMgAAAagAAAA+AAAAYHqhde9jbWFwAAAB6AAAAFIAAAFa4azkLWN2dCAAAAI8AAAAKAAAACgFgwioZnBnbQAAAmQAAAGxAAACZVO0L6dnYXNwAAAEGAAAAAgAAAAIAAAAEGdseWYAAAQgAAAFDgAACMz7eroHaGVhZAAACTAAAAAwAAAANgWEOEloaGVhAAAJYAAAAB0AAAAkDGEGa2htdHgAAAmAAAAAEwAAADBEgAAQbG9jYQAACZQAAAAaAAAAGgsICJBtYXhwAAAJsAAAACAAAAAgASgBD25hbWUAAAnQAAACZwAABOD4no+3cG9zdAAADDgAAABsAAAAmF+yXM9wcmVwAAAMpAAAAC4AAAAusPIrFAAAAAEAAAAAyYlvMQAAAADLVHQgAAAAAM/u9uZ4nGNgZGBg4ANiCQYQYGJgBEJuIGYB8xgABMMAPgAAAHicY2Bm42OcwMDKwMLSw2LMwMDQBqGZihmiwHycoKCyqJjB4YPDh4NsDP+BfNb3DIuAFCOSEgUGRgAKDgt4AAB4nGNgYGBmgGAZBkYGEAgB8hjBfBYGCyDNxcDBwMTA9MHhQ9SHrA8H//9nYACyQyFs/sP86/kX8HtB9UIBIxsDXICRCUgwMaACRoZhDwA3fxKSAAAAAAHyAHABJQB/AIEAdAFGAOsBIwC/ALgAxACGAGYAugBNACcA/wCIeJxdUbtOW0EQ3Q0PA4HE2CA52hSzmZDGe6EFCcTVjWJkO4XlCGk3cpGLcQEfQIFEDdqvGaChpEibBiEXSHxCPiESM2uIojQ7O7NzzpkzS8qRqnfpa89T5ySQwt0GzTb9Tki1swD3pOvrjYy0gwdabGb0ynX7/gsGm9GUO2oA5T1vKQ8ZTTuBWrSn/tH8Cob7/B/zOxi0NNP01DoJ6SEE5ptxS4PvGc26yw/6gtXhYjAwpJim4i4/plL+tzTnasuwtZHRvIMzEfnJNEBTa20Emv7UIdXzcRRLkMumsTaYmLL+JBPBhcl0VVO1zPjawV2ys+hggyrNgQfYw1Z5DB4ODyYU0rckyiwNEfZiq8QIEZMcCjnl3Mn+pED5SBLGvElKO+OGtQbGkdfAoDZPs/88m01tbx3C+FkcwXe/GUs6+MiG2hgRYjtiKYAJREJGVfmGGs+9LAbkUvvPQJSA5fGPf50ItO7YRDyXtXUOMVYIen7b3PLLirtWuc6LQndvqmqo0inN+17OvscDnh4Lw0FjwZvP+/5Kgfo8LK40aA4EQ3o3ev+iteqIq7wXPrIn07+xWgAAAAABAAH//wAPeJyFlctvG1UUh+/12DPN1B7P3JnYjj2Ox4/MuDHxJH5N3UdaEUQLqBIkfQQioJWQ6AMEQkIqsPGCPwA1otuWSmTBhjtps2ADWbJg3EpIXbGouqSbCraJw7kzNo2dRN1cnXN1ZvT7zuuiMEI7ncizyA0URofRBJpCdbQuIFShYY+GZRrxMDVtih5TwQPHtXDFFSIKoWIbuREBjLH27Ny4MsbVx+uOJThavebgVrNRLAiYx06rXsvhxLgWx9xpfHdrs/ekc2Pl2cpPCVEITQpwbj8VQhfXSq2m+Wxqaq2D73Kne5e3NjHqQNj3CRYlJlgUl/jRNP+2Gs2pNYRQiOnmUaQDqm30KqKiTTWPWjboxnTWpvgxjXo0KrtZXAHt7hwIz0YVcj88JnKlJKi3NPAwLyDwZudSmJSMMJFDYaOkaol6XtESx3Gt1VTytdZJ3DCLeaVhVnCBH1fycHTxFXwPX+l2e3d6H/TufGGmMTLTnbSJUdo00zuBswMO/nl3YLeL/wnu9/limCuD3vC54h5NBVz6Li414AI8Vx3iiosKcQXUbrvhFFiYb++HN4DaF4XzFW0fIN4XDWJ3a3XQoq9V8WiyRmdsatV9xUcHims1JloH0YUa090G3Tro3mC6c01f+YwCPquINr1PTaCP6rVTOOmf0GE2dBc7zWIhji3/5MchSuBHgDbU99RMWt3YUNMZMJmx92YP6NsHx/5/M1yvInpnkIOM3Z8fA3JQ2lW1RFC1KaBPDFXNAHYYvGy73aYZZZ3HifbeuiVZCpwA3oQBs0wGPYJbJfg60xrKEbKiNtTe1adwrpBRwlAuQ3q3VRaX0QmQ9a49BTSCuF1MLfQ6+tinOubRBZuWPNoMevGMT+V41KitO1is3D/tpMcq1JHZqDHGs8DoYGDkxJgKjHROeTCmhZvzPm9pod+ltKm4PN7Dyvvldlpsg8D+4AUJZ3F/JBstZz7cbFRxsaAGV6yX/dkcycWf8eS3QlQea+YLjdm3yrOnrhFpUyKVvFE4lpv4bO3Svx/6F/4xmiDu/RT5iI++lko18mY1oX+5UGKR6kmVjM/Zb76yfHtxy+h/SyQ0lLdpdKy/lWB6szatetQJ8nZ80A2Qt6ift6gJeavU3BO4gtxs/KCtNPVibCtYCWY3SIlSBPKXZALXiIR9oZeJ1AuMyxLpHIy/yO7vSiSE+kZvk0ihJ30HgHfzZtEMmvV58x6dtqns0XTAW7Vdm4HJ04OCp/crOO7rd9SGxQAE/mVA9xRN+kVSMRFF6S9JFGUtthkjBA5tFCWc2l4V43Ex9GmUP3SI37Jjmir9KqlaDJ4S4JB3vuM/jzyH1+8MuoZ+QGzfnvPoJb96cZlWjMcKLfgDwB7E634JTY+asjsPzS5CiVnEWY+KsrsIN5rn3mAPjqmQBxGjcGKB9f9ZxY3mYC2L85CJ2FXIxKKyHk+dg0FHbuEc7D5NzWUX32WxFcWNGRAbvwSx0RmIXVDuYySafluQBmzA/ssqJAMLnli+WIC90Gw4lm85wcp0qjArEDPJJV/sSx4P9ungTpgMw5gVC1XO4uULq0s3v1rqLi0vX/z65vlH50f8T/RHmSPTk5xxWBWOluMT6WiOy+tdvWxlV/XQb3o3c6Ssr+r6I708GsX9/nzp1tKFh0s3v7m4vAy/Hnb/KMOvc1wump6Il48K6mGDy02X9Yd65pa+nQIjk76lWxCkG8NBCP0HQS9IpAAAeJxjYGRgYGBhcCrq214Qz2/zlUGenQEEzr/77oug/zewFbB+AHI5GJhAogBwKQ0qeJxjYGRgYH3/P46BgZ0BBNgKGBgZUAEPAE/7At0AAAB4nGNngAB2IGYjhBsYBAAIYADVAAAAAAAAAAAAAFwAyAEeAaACCgKmAx4DggRmAAAAAQAAAAwAagAEAAAAAAACAAEAAgAWAAABAAChAAAAAHiclZI7bxQxFIWPd/JkUYQChEhIyAVKgdBMskm1QkKrRETpQiLRUczueB/K7HhlOxttg8LvoKPgP9DxFxANDR0tHRWi4NjrPIBEgh1p/dm+vufcawNYFWsQmP6e4jSyQB2fI9cwj++RE9wTjyPP4LYoI89iWbyLPIe6+Bh5Hs9rryMv4GbtW+RF3EhuRa7jbrIbeQkPkjdUETOLnL0Kip4FVvAhco1RXyMnSPEz8gzWxE7kWTwUp5HnsCLeR57HW/El8gJWa58iL+JO7UfkOh4l9yMv4UnyEtvQGGECgwF66MNBooF1bGCL1ELB/TYU+ZBRlvsKQ44Se6jQ4a7hef+fh72Crv25kp+8lNWGmeKoOI5jJLb1aGIGvb6TjfWNLdkqdFvJw4l1amjlXtXRZqRN7lSRylZZyhBqpVFWmTEXgWfUrpi/hZOQXdOd4rKuXOtEWT3k5IArPRzTUU5tHKjecZkTpnVbNOnt6jzN8240GD4xtikvZW56043rPMg/dS+dlOceXoR+WPbJ55Dsekq1lJpnypsMUsYOdCW30o103Ytu/lvh+5RWFLfBjm9/N8hJntPhvx92rnoE/kyHdGasGy754kw36vsVf/lFeBi+0COu+cfgQr42G3CRpeLoZ53gmfe3X6rcKt5oVxnptHR9JS8ehVUd5wvvahN2uqxOOpMXapibI5k7Zwbt4xBSaTfoKBufhAnO/uqNcfK8OTs0OQ6l7JIqFjDhYj5WcjevCnI/1DDiI8j4ndWb/5YzDZWh79yomWXeXj7Nnw70/2TIeFPTrlSh89k1ObOSRVZWZfgF0r/zJQB4nG2JUQuCQBCEd07TTg36fb2IyBaLd3vWaUh/vmSJnvpgmG8YcmS8X3Shf3R7QA4OBUocUKHGER5NNbOOEvwc1txnuWkTRb/aPjimJ5vXabI+3VfOiyS15UWvyezM2xiGOPyuMohOH8O8JiO4Af+FsAGNAEuwCFBYsQEBjlmxRgYrWCGwEFlLsBRSWCGwgFkdsAYrXFhZsBQrAAA=) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABMAAAABwAAAAca8vGTk9TLzIAAAFMAAAARAAAAFZG1VHVY21hcAAAAZAAAAA+AAABQgAP9AdjdnQgAAAB0AAAAAQAAAAEACICiGdhc3AAAAHUAAAACAAAAAj//wADZ2x5ZgAAAdwAAADRAAABEKyikaNoZWFkAAACsAAAAC0AAAA2AtXoA2hoZWEAAALgAAAAHAAAACQHngNFaG10eAAAAvwAAAAQAAAAEAwAACJsb2NhAAADDAAAAAoAAAAKALIAVG1heHAAAAMYAAAAHwAAACABEAB2bmFtZQAAAzgAAALBAAAFu3I9x/Nwb3N0AAAF/AAAAB0AAAAvaoFvbwAAAAEAAAAAzBdyYwAAAADP2IQvAAAAAM/bz7t4nGNgZGFgnMDAysDB1Ml0hoGBoR9CM75mMGLkYGBgYmBlZsAKAtJcUxgcPsR8iGF2+O/AEMPsznAYKMwIkgMA5REMOXicY2BgYGaAYBkGRgYQsAHyGMF8FgYFIM0ChED+h5j//yEk/3KoSgZGNgYYk4GRCUgwMaACRoZhDwCs7QgGAAAAIgKIAAAAAf//AAJ4nHWMMQrCQBBF/0zWrCCIKUQsTDCL2EXMohYGSSmorScInsRGL2DOYJe0Ntp7BK+gJ1BxF1stZvjz/v8DRghQzEc4kIgKwiAppcA9LtzKLSkdNhKFY3HF4lK69ExKslx7Xa+vPRVS43G98vG1DnkDMIBUgFN0MDXflU8tbaZOUkXUH0+U27RoRpOIyCKjbMCVejwypzJJG4jIwb43rfl6wbwanocrJm9XFYfskuVC5K/TPyczNU7b84CXcbxks1Un6H6tLH9vf2LRnn8Ax7A5WQAAAHicY2BkYGAA4teL1+yI57f5ysDNwgAC529f0kOmWRiYVgEpDgYmEA8AUzEKsQAAAHicY2BkYGB2+O/AEMPCAAJAkpEBFbAAADgKAe0EAAAiAAAAAAQAAAAEAAAAAAAAKgAqACoAiAAAeJxjYGRgYGBhsGFgYgABEMkFhAwM/xn0QAIAD6YBhwB4nI1Ty07cMBS9QwKlQapQW3VXySvEqDCZGbGaHULiIQ1FKgjWMxknMfLEke2A+IJu+wntrt/QbVf9gG75jK577Lg8K1qQPCfnnnt8fX1NRC/pmjrk/zprC+8D7tBy9DHgBXoWfQ44Av8t4Bj4Z8CLtBL9CniJluPXASf0Lm4CXqFX8Q84dOLnMB17N4c7tBo1AS/Qi+hTwBH4rwHHwN8DXqQ30XXAS7QaLwSc0Gn8NuAVWou/gFmnjLrEaEh9GmDdDGgL3B4JsrRPDU2hTOiMSuJUIdKQQayiAth69r6akSSFqIJuA19TrzCIaY8sIoxyrNIrL//pw7A2iMygkX5vDj+G+kuoLdX4GlGK/8Lnlz6/h9MpmoO9rafrz7ILXEHHaAx95s9lsI7AHNMBWEZHULnfAXwG9/ZqdzLI08iuwRloXE8kfhXYAvE23+23DU3t626rbs8/8adv+9DWknsHp3E17oCf+Z48rvEQNZ78paYM38qfk3v/u3l3u3GXN2Dmvmvpf1Srwk3pB/VSsp512bA/GG5i2WJ7wu430yQ5K3nFGiOqgtmSB5pJVSizwaacmUZzZhXLlZTq8qGGFY2YcSkqbth6aW1tRmlaCFs2016m5qn36SbJrqosG4uMV4aP2PHBmB3tjtmgN2izkGQyLWprekbIntJFing32a5rKWCN/SdSoga45EJykyQ7asZvHQ8PTm6cslIpwyeyjbVltNikc2HTR7YKh9LBl9DADC0U/jLcBZDKrMhUBfQBvXRzLtFtjU9eNHKin0x5InTqb8lNpfKv1s1xHzTXRqgKzek/mb7nB8RZTCDhGEX3kK/8Q75AmUM/eLkfA+0Hi908Kx4eNsMgudg5GLdRD7a84npi+YxNr5i5KIbW5izXas7cHXIMAau1OueZhfj+cOcP3P8MNIWLyYOBuxL6DRylJ4cAAAB4nGNgYoAALjDJyIAOWMCiTIxMLDmZedkABtIBygAAAA==) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>Linux的ps命令</title></head><body><article class="markdown-body"><p>文章作者：Tyan<br>
+博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>Linux中的<code>ps</code>命令是Process Status的缩写，<code>ps</code>命令用来列出系统中当前运行的那些进程。<code>ps</code>命令可以列出当前进程的运行情况（状态、时间等信息）。</p>
+<p>在Linux系统中，进程有5中状态，在<code>ps</code>命令中分别用5个大写字母表示：</p>
+<ul>
+<li>R，运行<br>
+runnable (on run queue)，运行(正在运行或在运行队列中等待) </li>
+<li>S，中断 <br>
+sleeping，中断(休眠中、阻塞、在等待某个条件的形成或接受到信号) </li>
+<li>D，不可中断<br>
+uninterruptible sleep (usually IO)，不可中断(收到信号不唤醒和不可运行, 进程必须等待直到有中断发生) </li>
+<li>T，停止<br>
+traced or stopped，停止(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行运行) </li>
+<li>Z 僵死 <br>
+a defunct (”zombie”) process，僵死(进程已终止, 但进程描述符存在, 直到父进程调用wait4()系统调用后释放) </li>
+</ul></article></body></html>]]></content>
+    
+    <summary type="html">
+    
+      &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;categories&quot; content=&quot;Linux&quot;&gt;
+&lt;meta name=&quot;tags&quot; content=&quot;[Linux]&quot;&gt;
+&lt;meta name=&quot;l
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux的ps命令</title>
+    <link href="noahsnail.com/2017/02/21/2017-2-21-Linux%E7%9A%84ps%E5%91%BD%E4%BB%A4/"/>
+    <id>noahsnail.com/2017/02/21/2017-2-21-Linux的ps命令/</id>
+    <published>2017-02-21T09:09:49.000Z</published>
+    <updated>2017-02-21T14:14:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-ps命令介绍及Linux进程状态介绍"><a href="#1-ps命令介绍及Linux进程状态介绍" class="headerlink" title="1. ps命令介绍及Linux进程状态介绍"></a>1. ps命令介绍及Linux进程状态介绍</h2><p>Linux中的<code>ps</code>命令是Process Status的缩写，<code>ps</code>命令用来列出系统中当前运行的那些进程。<code>ps</code>命令可以列出当前进程的运行情况（状态、时间等信息）。在Linux系统中，进程有5中状态，在<code>ps</code>命令中分别用5个大写字母表示：</p>
+<ul>
+<li>R (TASK_RUNNING)，可执行状态。<br>runnable (on run queue)，正在运行或在运行队列中等待的进程 </li>
+<li>S (TASK_INTERRUPTIBLE)，可中断的睡眠状态。<br>sleeping，处于这个状态的进程因为等待某某事件的发生（比如等待socket连接、等待信号量），而被挂起。</li>
+<li>D (TASK_UNINTERRUPTIBLE)，不可中断的睡眠状态。<br>uninterruptible sleep (usually IO)，进程处于睡眠状态，但是此刻进程是不可中断的。不可中断，指的并不是CPU不响应外部硬件的中断，而是指进程不响应异步信号。</li>
+<li>T (TASK_STOPPED or TASK_TRACED)，暂停状态或跟踪状态。<br>traced or stopped，进程处于睡眠状态，但是此刻进程是不可中断的。不可中断，指的并不是CPU不响应外部硬件的中断，而是指进程不响应异步信号。(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行)。 </li>
+<li>Z (TASK_DEAD - EXIT_ZOMBIE)，退出状态，进程成为僵尸进程。<br>a defunct process，在这个退出过程中，进程占有的所有资源将被回收，除了task_struct结构（以及少数资源）。</li>
+</ul>
+<p>除此之外，还有<code>ps</code>命令还有一些进程状态信息：</p>
+<ul>
+<li>&lt; 优先级高的进程</li>
+<li>l 多线程状态</li>
+<li><ul>
+<li>前台进程</li>
+</ul>
+</li>
+<li>L 锁定状态</li>
+<li>N 优先级低的进程</li>
+</ul>
+<h2 id="2-ps命令用法"><a href="#2-ps命令用法" class="headerlink" title="2. ps命令用法"></a>2. ps命令用法</h2><p>默认情况下，ps命令只会显示运行在当前控制台下的属于当前用户的进程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ ps</div><div class="line">  PID TTY           TIME CMD</div><div class="line">50498 ttys000    0:00.02 -bash</div><div class="line"></div><div class="line">$ ps -f</div><div class="line">  UID   PID  PPID   C STIME   TTY           TIME CMD</div><div class="line">  501 50498 50497   0  9:27下午 ttys000    0:00.08 -bash</div><div class="line"></div><div class="line">$ ps -l</div><div class="line">  UID   PID  PPID        F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD</div><div class="line">  501 50498 50497     4006   0  31  0  2466156   1648 -      S                   0 ttys000    0:00.08 -bash</div></pre></td></tr></table></figure>
+<p><code>ps</code>命令的结果列信息表示如下：</p>
+<ul>
+<li>UID 启动进程的用户</li>
+<li>PID 进程ID</li>
+<li>PPID 进程的父进程ID</li>
+<li>C 进程生命周期中的CPU利用率</li>
+<li>TTY 运行在哪个终端</li>
+<li>TIME 进程已用CPU时间</li>
+<li>CMD 进程的命令</li>
+<li>F 内核分配给进程的标记</li>
+<li>PRI 进程的优先级</li>
+<li>NI 谦让度值用来参与决定优先级</li>
+<li>SZ 如果进程被换出，所需要的空间大小</li>
+<li>WCHAN 进程休眠的内核函数的地址</li>
+<li>ADDR 进程的内存地址</li>
+<li>S 进程的状态，（O表示正在运行，S表示休眠，R表示运行，Z代表僵化，T代表停止）</li>
+</ul>
+<p>ps命令的常用参数有：</p>
+<ul>
+<li>-e，-A 显示所有进程</li>
+<li>-f 显示完整格式的输出</li>
+<li>-l 显示长列表</li>
+<li>-a，所有进程，加上-x参数会显示没有控制终端的进程</li>
+<li>-u username，显示指定用户的进程，例如<code>ps -u ltc</code></li>
+<li>-aux 按照CPU或者内存用量来筛选进程，例如<code>ps -aux --sort -pcpu</code>或<code>ps -aux --sort -pmem</code></li>
+<li>-C cmdlist，显示包含在cmdlist列表中的进程，例如<code>ps -C test</code></li>
+<li>-L 显示进程中的线程，例如<code>ps -L 123</code>，123为进程ID</li>
+<li>-j 显示任务信息</li>
+<li>-H 用层级显示进程，树状结构</li>
+</ul>
+<p>ps命令参数还有很多，根据需要自己查询吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux的ps命令
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spark-submit介绍</title>
+    <link href="noahsnail.com/2017/02/21/2017-2-21-spark-submit%E4%BB%8B%E7%BB%8D/"/>
+    <id>noahsnail.com/2017/02/21/2017-2-21-spark-submit介绍/</id>
+    <published>2017-02-21T03:28:56.000Z</published>
+    <updated>2017-02-22T07:09:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-spark-submit介绍"><a href="#1-spark-submit介绍" class="headerlink" title="1. spark-submit介绍"></a>1. spark-submit介绍</h2><p><code>spark-submit</code>脚本通常位于<code>/usr/local/spark/bin</code>目录下，可以用<code>which spark-submit</code>来查看它所在的位置，<code>spark-submit</code>用来启动集群中的应用，它使用统一的提交接口支持各种类型的集群服务器。为了将应用发布到集群中，通常会将应用打成<code>.jar</code>包，在运行<code>spark-submit</code>时将<code>jar</code>包当做参数提交。</p>
+<h2 id="2-spark-submit参数"><a href="#2-spark-submit参数" class="headerlink" title="2. spark-submit参数"></a>2. spark-submit参数</h2><p><code>spark-submit</code>脚本使用时有很多启动参数，启动参数说明如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameters</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">--master</td>
+<td style="text-align:left">集群master的URL，可以是spark://host:port, mesos://host:port, yarn, yarn-cluster,yarn-client, local</td>
+<td style="text-align:left"><code>--master yarn</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--class</td>
+<td style="text-align:left">主类的名称，包括完整的包路径。</td>
+<td style="text-align:left"><code>--class com.ltc.test /home/ltc/spark-test.jar</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--conf</td>
+<td style="text-align:left">任意的Spark配置属性，格式<code>key=value</code>，如果值包含空格，可以加引号<code>“key=value”</code>。</td>
+<td style="text-align:left"><code>--conf spark.cores.max=2</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--num-executors</td>
+<td style="text-align:left">该参数用于设置Spark作业总共要用多少个Executor进程来执行。Driver在向YARN集群管理器申请资源时，YARN集群管理器会尽可能按照你的设置来在集群的各个工作节点上，启动相应数量的Executor进程。</td>
+<td style="text-align:left"><code>--num-executors 100</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--executor-memory</td>
+<td style="text-align:left">该参数用于设置每个Executor进程的内存。Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。建议每个Executor进程的内存设置4G~8G较为合适。看看资源队列的最大内存限制是多少，num-executors乘以executor-memory，就代表了你的Spark作业申请到的总内存量</td>
+<td style="text-align:left"><code>--executor-memory 4G</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--executor-cores</td>
+<td style="text-align:left">该参数用于设置每个Executor进程的CPU core数量。这个参数决定了每个Executor进程并行执行task线程的能力。因为每个CPU core同一时间只能执行一个task线程，因此每个Executor进程的CPU core数量越多，越能够快速地执行完分配给自己的所有task线程。Executor的CPU core数量设置为2~4个较为合适。</td>
+<td style="text-align:left"><code>--executor-cores 4</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--driver-memory</td>
+<td style="text-align:left">Driver 程序运行时需要的内存， 默认为512M。</td>
+<td style="text-align:left"><code>--driver-memory 1G</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--name</td>
+<td style="text-align:left">应用名称</td>
+<td style="text-align:left"><code>--name application</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--conf spark.default.parallelism</td>
+<td style="text-align:left">该参数用于设置每个stage的默认task数量。这个参数极为重要，如果不设置可能会直接影响你的Spark作业性能。建议：Spark作业的默认task数量多一点。不设置这个参数是个错误，默认情况下，Spark根据底层HDFS的block数量来设置task的数量，默认是一个HDFS block对应一个task。通常来说，Spark默认设置的数量是偏少的（比如就几十个task），如果task数量偏少的话，就会导致前面设置的Executor参数作用不大。无论Executor进程有多少个，内存和CPU有多大，但是task只有1个或者10个，那么90%的Executor进程可能根本就没有task执行，会白白浪费了资源！Spark官网建议的设置原则是，设置该参数为num-executors * executor-cores的2~3倍较为合适，比如Executor的总CPU core数量为300个，那么设置1000个task是可以的，此时可以充分地利用Spark集群的资源。</td>
+<td style="text-align:left"><code>--conf spark.default.parallelism=100</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--conf spark.storage.memoryFraction</td>
+<td style="text-align:left">该参数用于设置RDD持久化数据在Executor内存中能占的比例，默认是0.6。也就是说，默认Executor 60%的内存，可以用来保存持久化的RDD数据。根据你选择的不同的持久化策略，如果内存不够时，可能数据就不会持久化，或者数据会写入磁盘。建议：如果Spark作业中，有较多的RDD持久化操作，该参数的值可以适当提高一些，保证持久化的数据能够容纳在内存中。避免内存不够缓存所有的数据，导致数据只能写入磁盘中，降低了性能。但是如果Spark作业中的shuffle类操作比较多，而持久化操作比较少，那么这个参数的值适当降低一些比较合适。此外，如果发现作业由于频繁的gc导致运行缓慢（通过spark web ui可以观察到作业的gc耗时），意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</td>
+<td style="text-align:left"><code>--conf spark.storage.memoryFraction=0.5</code></td>
+</tr>
+<tr>
+<td style="text-align:left">--conf spark.shuffle.memoryFraction</td>
+<td style="text-align:left">该参数用于设置shuffle过程中一个task拉取到上个stage的task的输出后，进行聚合操作时能够使用的Executor内存的比例，默认是0.2。也就是说，Executor默认只有20%的内存用来进行该操作。shuffle操作在进行聚合时，如果发现使用的内存超出了这个20%的限制，那么多余的数据就会溢写到磁盘文件中去，此时就会极大地降低性能。建议：如果Spark作业中的RDD持久化操作较少，shuffle操作较多时，建议降低持久化操作的内存占比，提高shuffle操作的内存占比比例，避免shuffle过程中数据过多时内存不够用，必须溢写到磁盘上，降低了性能。此外，如果发现作业由于频繁的gc导致运行缓慢，意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</td>
+<td style="text-align:left"><code>--conf spark.shuffle.memoryFraction=0.3</code></td>
+</tr>
+</tbody>
+</table>
+<p>参考资料：</p>
+<ol>
+<li><a href="http://www.jianshu.com/p/9d5234185d68" target="_blank" rel="external">http://www.jianshu.com/p/9d5234185d68</a></li>
+<li><a href="http://colobu.com/2014/12/09/spark-submitting-applications/" target="_blank" rel="external">http://colobu.com/2014/12/09/spark-submitting-applications/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      spark-submit介绍
+    
+    </summary>
+    
+      <category term="Spark" scheme="noahsnail.com/categories/Spark/"/>
+    
+    
+      <category term="Spark" scheme="noahsnail.com/tags/Spark/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Python合并lmdb文件</title>
+    <link href="noahsnail.com/2017/02/21/2017-2-21-%E4%BD%BF%E7%94%A8Python%E5%90%88%E5%B9%B6lmdb%E6%96%87%E4%BB%B6/"/>
+    <id>noahsnail.com/2017/02/21/2017-2-21-使用Python合并lmdb文件/</id>
+    <published>2017-02-21T03:11:49.000Z</published>
+    <updated>2017-02-21T03:23:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>由于Caffe使用的存储图像的数据库是lmdb，因此有时候需要对lmdb文件进行操作，本文主要讲解如何用Python合并lmdb文件。没有lmdb支持的，需要用pip命令安装。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install lmdb</div></pre></td></tr></table></figure>
+<p>代码及注释如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding=utf-8</span></div><div class="line"><span class="comment"># filename: merge_lmdb.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> lmdb</div><div class="line"></div><div class="line"><span class="comment"># 将两个lmdb文件合并成一个新的lmdb</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_lmdb</span><span class="params">(lmdb1, lmdb2, result_lmdb)</span>:</span></div><div class="line"></div><div class="line">	<span class="keyword">print</span> <span class="string">'Merge start!'</span></div><div class="line"></div><div class="line">	<span class="comment"># env代表Environment, txn代表Transaction</span></div><div class="line"></div><div class="line">	<span class="comment"># 打开lmdb文件，读模式</span></div><div class="line">	env_1 = lmdb.open(lmdb1)</div><div class="line">	env_2 = lmdb.open(lmdb2)</div><div class="line"></div><div class="line">	<span class="comment"># 创建事务</span></div><div class="line">	txn_1 = env_1.begin()</div><div class="line">	txn_2 = env_2.begin()</div><div class="line"></div><div class="line">	<span class="comment"># 打开数据库</span></div><div class="line">	database_1 = txn_1.cursor()</div><div class="line">	database_2 = txn_2.cursor()</div><div class="line"></div><div class="line">	<span class="comment"># 打开lmdb文件，写模式，</span></div><div class="line">	env_3 = lmdb.open(result_lmdb, map_size=int(<span class="number">1e12</span>))</div><div class="line">	txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	count = <span class="number">0</span></div><div class="line">	<span class="comment"># 遍历数据库</span></div><div class="line">	<span class="keyword">for</span> (key, value) <span class="keyword">in</span> database_1:</div><div class="line">		<span class="comment"># 将数据放到结果数据库事务中</span></div><div class="line">	    txn_3.put(key, value)</div><div class="line">	    count++</div><div class="line">	    <span class="keyword">if</span>(count % <span class="number">1000</span> == <span class="number">0</span>):</div><div class="line">	    	<span class="comment"># 将数据写入数据库，必须的，否则数据不会写入到数据库中</span></div><div class="line">	    	txn_3.commit()</div><div class="line">	    	count = <span class="number">0</span></div><div class="line">	    	txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(count % <span class="number">1000</span> != <span class="number">0</span>):</div><div class="line">		txn_3.commit()</div><div class="line">	    count = <span class="number">0</span></div><div class="line">	    txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (key, value) <span class="keyword">in</span> database_2:</div><div class="line">	    txn_3.put(key, value)</div><div class="line">	    <span class="keyword">if</span>(count % <span class="number">1000</span> == <span class="number">0</span>):</div><div class="line">	    	txn_3.commit()</div><div class="line">	    	count = <span class="number">0</span></div><div class="line">	    	txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	<span class="keyword">if</span>(count % <span class="number">1000</span> != <span class="number">0</span>):</div><div class="line">		txn_3.commit()</div><div class="line">	    count = <span class="number">0</span></div><div class="line">	    txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	<span class="comment"># 关闭lmdb</span></div><div class="line">	env_1.close()</div><div class="line">	env_2.close()</div><div class="line">	env_3.close()</div><div class="line"></div><div class="line">	<span class="keyword">print</span> <span class="string">'Merge success!'</span></div><div class="line"></div><div class="line">	<span class="comment"># 输出结果lmdb的状态信息，可以看到数据是否合并成功</span></div><div class="line">	<span class="keyword">print</span> env_3.stat()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    fr = open(<span class="string">'lmdb.txt'</span>)</div><div class="line">    <span class="comment"># lmdb1的目录</span></div><div class="line">    lmdb1 = fr.readline().strip()</div><div class="line">    <span class="comment"># lmdb2的目录</span></div><div class="line">    lmdb2 = fr.readline().strip()</div><div class="line">    <span class="comment"># result lmdb的目录</span></div><div class="line">    result_lmdb = fr.readline().strip()</div><div class="line">    fr.close()</div><div class="line">    merge_lmdb(lmdb1, lmdb2, result_lmdb)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      使用Python合并lmdb文件
+    
+    </summary>
+    
+      <category term="Python" scheme="noahsnail.com/categories/Python/"/>
+    
+    
+      <category term="lmdb" scheme="noahsnail.com/tags/lmdb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux的du命令</title>
+    <link href="noahsnail.com/2017/02/20/2017-2-20-Linux%E7%9A%84du%E5%91%BD%E4%BB%A4/"/>
+    <id>noahsnail.com/2017/02/20/2017-2-20-Linux的du命令/</id>
+    <published>2017-02-20T10:09:21.000Z</published>
+    <updated>2017-02-21T02:55:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><code>du</code>命令可以显示某个特定的目录的磁盘使用情况。可以用来判断系统某个目录下是否存在超大文件。默认情况下，<code>du</code>命令会显示当前目录下所有的文件、目录和子目录的磁盘使用情况，它以磁盘的块为单位来显示每个文件或目录占了多大存储。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ du</div><div class="line">264	./Chapter14</div><div class="line">16	./Chapter15/dir.C7JEUx</div><div class="line">224	./Chapter15</div><div class="line">136	./Chapter16</div><div class="line">96	./Chapter17</div><div class="line">792	.</div></pre></td></tr></table></figure>
+<p>每行开始的地方是文件或目录所占的磁盘块数，列表目录层级是自底向上，按文件、子目录、目录逐级向上。<code>du</code>命令的参数如下：</p>
+<ul>
+<li>-c，显示所有已列出文件的大小</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ du -c</div><div class="line">264	./Chapter14</div><div class="line">16	./Chapter15/dir.C7JEUx</div><div class="line">224	./Chapter15</div><div class="line">136	./Chapter16</div><div class="line">96	./Chapter17</div><div class="line">792	.</div><div class="line">792	total</div></pre></td></tr></table></figure>
+<ul>
+<li>-h，按人类可读的格式输出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ du -h</div><div class="line">132K	./Chapter14</div><div class="line">8.0K	./Chapter15/dir.C7JEUx</div><div class="line">112K	./Chapter15</div><div class="line"> 68K	./Chapter16</div><div class="line"> 48K	./Chapter17</div><div class="line">396K	.</div></pre></td></tr></table></figure>
+<ul>
+<li>-s，显示每个输出参数的总计</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ du -s</div><div class="line">792	.</div></pre></td></tr></table></figure>
+<ul>
+<li>查看当前目录各个文件所占的大小，不递归子目录，<code>*</code>是通配符，即显示当前目录下每个文件的大小</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ du -sh *</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Linux的du命令
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux的free命令</title>
+    <link href="noahsnail.com/2017/02/20/2017-2-20-Linux%E7%9A%84free%E5%91%BD%E4%BB%A4/"/>
+    <id>noahsnail.com/2017/02/20/2017-2-20-Linux的free命令/</id>
+    <published>2017-02-20T09:45:09.000Z</published>
+    <updated>2017-02-21T09:07:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><code>free</code>命令可以显示当前系统的内存使用状况，还可以显示内核使用的内存缓冲区的状况。<code>free</code>命令的参数如下：</p>
+<ul>
+<li>-b：以Byte为单位显示内存使用情况</li>
+<li>-k：以KB为单位显示内存使用情况</li>
+<li>-m：以MB为单位显示内存使用情况</li>
+<li>-o：不显示缓冲区调节列</li>
+<li>-s：持续观察内存使用状况</li>
+<li>-t：显示内存总和列</li>
+<li>-V：显示版本信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$ free</div><div class="line">			  total        used        free      shared  buff/cache   available</div><div class="line">Mem:        1016100      472864      134896        4356      408340      371844</div><div class="line">Swap:             0           0           </div><div class="line"></div><div class="line"></div><div class="line">$ free -m</div><div class="line">              total        used        free      shared  buff/cache   available</div><div class="line">Mem:            992         461         131           4         398         363</div><div class="line">Swap:             0           0           0</div><div class="line"></div><div class="line">$ free -h</div><div class="line">              total        used        free      shared  buff/cache   available</div><div class="line">Mem:           992M        461M        131M        4.3M        398M        363M</div><div class="line">Swap:            0B          0B          0B</div></pre></td></tr></table></figure>
+<p>每一列的解释如下：</p>
+<ul>
+<li>total：内存总数</li>
+<li>used：已经使用的内存数</li>
+<li>free：空闲的内存数</li>
+<li>shared：当前已经废弃不用</li>
+<li>buffers Buffer：缓存内存数</li>
+<li>cached Page：缓存内存数</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux的free命令
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux的df命令</title>
+    <link href="noahsnail.com/2017/02/20/2017-2-20-Linux%E7%9A%84df%E5%91%BD%E4%BB%A4/"/>
+    <id>noahsnail.com/2017/02/20/2017-2-20-Linux的df命令/</id>
+    <published>2017-02-20T09:44:37.000Z</published>
+    <updated>2017-02-20T10:04:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>有时候需要知道某个设备上还有多少磁盘空间，<code>df</code>命令就是用来查看所有磁盘的使用情况的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ df</div><div class="line">Filesystem    512-blocks      Used Available Capacity  iused    ifree %iused  Mounted on</div><div class="line">/dev/disk1     487849984 213179440 274158544    44% 26711428 34269818   44%   /</div><div class="line">devfs                363       363         0   100%      628        0  100%   /dev</div><div class="line">map -hosts             0         0         0   100%        0        0  100%   /net</div><div class="line">map auto_home          0         0         0   100%        0        0  100%   /home</div></pre></td></tr></table></figure>
+<p>df命令会显示每个有数据的已挂载文件系统。命令输出如下：</p>
+<ul>
+<li>设备的设备文件位置</li>
+<li>能容纳多少个1024字节的块(Linux)</li>
+<li>已用了多少个1024字节的块(Linux)</li>
+<li>还有多少个1024字节的块可用(Linux)</li>
+<li>已有空间所占的比例</li>
+<li>挂载点</li>
+</ul>
+<p><code>dh</code>命令的一个常用参数是<code>-h</code>，它会将输出中的磁盘空间按照人类可读的形式显示。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux的df命令
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux统计文件夹下的文件数目</title>
+    <link href="noahsnail.com/2017/02/07/2017-2-7-Linux%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B0%E7%9B%AE/"/>
+    <id>noahsnail.com/2017/02/07/2017-2-7-Linux统计文件夹下的文件数目/</id>
+    <published>2017-02-07T01:32:21.000Z</published>
+    <updated>2017-02-20T10:06:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>Linux下有三个命令：<code>ls</code>、<code>grep</code>、<code>wc</code>。通过这三个命令的组合可以统计目录下文件及文件夹的个数。</p>
+<ul>
+<li>统计当前目录下文件的个数（不包括目录）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls -l | grep &quot;^-&quot; | wc -l</div></pre></td></tr></table></figure>
+<ul>
+<li>统计当前目录下文件的个数（包括子目录）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls -lR| grep &quot;^-&quot; | wc -l</div></pre></td></tr></table></figure>
+<ul>
+<li>查看某目录下文件夹(目录)的个数（包括子目录）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls -lR | grep &quot;^d&quot; | wc -l</div></pre></td></tr></table></figure>
+<p><strong>命令解析：</strong></p>
+<ul>
+<li><code>ls -l</code></li>
+</ul>
+<p>长列表输出该目录下文件信息(注意这里的文件是指目录、链接、设备文件等)，每一行对应一个文件或目录，<code>ls -lR</code>是列出所有文件，包括子目录。</p>
+<ul>
+<li><p><code>grep &quot;^-&quot;</code><br>过滤<code>ls</code>的输出信息，只保留一般文件，只保留目录是<code>grep &quot;^d&quot;</code>。</p>
+</li>
+<li><p><code>wc -l</code><br>统计输出信息的行数，统计结果就是输出信息的行数，一行信息对应一个文件，所以就是文件的个数。</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux统计文件夹下的文件数目
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>感知机模型</title>
+    <link href="noahsnail.com/2017/02/04/2017-2-4-%E6%84%9F%E7%9F%A5%E6%9C%BA%E6%A8%A1%E5%9E%8B/"/>
+    <id>noahsnail.com/2017/02/04/2017-2-4-感知机模型/</id>
+    <published>2017-02-04T03:51:42.000Z</published>
+    <updated>2017-02-04T05:46:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h1 id="1-感知机模型历史"><a href="#1-感知机模型历史" class="headerlink" title="1. 感知机模型历史"></a>1. 感知机模型历史</h1><p>Perceptron，中文翻译为感知机或感知器，是Frank Rosenblatt在1957年就职于Cornell航空实验室（Cornell Aeronautical Laboratory）时所发明的一种人工神经网络。它可以被视为一种最简单形式的前馈神经网络，是一种二元线性分类器。尽管结构简单，但感知机能够学习并解决相当复杂的问题。感知机主要的本质缺陷是它不能处理线性不可分问题。</p>
+<h1 id="2-感知机定义"><a href="#2-感知机定义" class="headerlink" title="2. 感知机定义"></a>2. 感知机定义</h1><h1 id="3-感知机模型的实现"><a href="#3-感知机模型的实现" class="headerlink" title="3. 感知机模型的实现"></a>3. 感知机模型的实现</h1><h1 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h1>]]></content>
+    
+    <summary type="html">
+    
+      感知机模型
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="noahsnail.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql碰到的一些命令与错误</title>
+    <link href="noahsnail.com/2017/01/13/2017-1-13-Mysql%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%91%BD%E4%BB%A4%E4%B8%8E%E9%94%99%E8%AF%AF/"/>
+    <id>noahsnail.com/2017/01/13/2017-1-13-Mysql碰到的一些命令与错误/</id>
+    <published>2017-01-13T07:05:31.000Z</published>
+    <updated>2017-01-13T08:03:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-更新数据出错"><a href="#1-更新数据出错" class="headerlink" title="1. 更新数据出错"></a>1. 更新数据出错</h2><p>错误信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -&gt; SQL Editor and reconnect.</div></pre></td></tr></table></figure>
+<p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set SQL_SAFE_UPDATES = 0;</div></pre></td></tr></table></figure>
+<p>原因： Mysql有个叫SQL_SAFE_UPDATES的变量，为了数据库更新操作的安全性，此值默认为1。</p>
+<h2 id="2-导入CSV文件"><a href="#2-导入CSV文件" class="headerlink" title="2. 导入CSV文件"></a>2. 导入CSV文件</h2><p>导入CSV文件的命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">load data local infile &apos;/Users/ltc/Downloads/test.csv&apos; </div><div class="line">into table `test` </div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos; </div><div class="line">lines terminated by &apos;\n&apos;;</div></pre></td></tr></table></figure>
+<p>碰到的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error Code: 13. Can&apos;t get stat of &apos;/Users/ltc/Downloads/test.csv&apos; (Errcode: 13 - Permission denied)</div></pre></td></tr></table></figure>
+<p><code>infile</code>前面缺少<code>local</code>，因为导入的是本地文件。</p>
+<h2 id="3-清空某个table"><a href="#3-清空某个table" class="headerlink" title="3. 清空某个table"></a>3. 清空某个table</h2><p>命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">truncate table tablename;</div></pre></td></tr></table></figure>
+<p>上面的命令特别之处在于能清理含有自增主键的数据库表。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Mysql碰到的一些命令与错误
+    
+    </summary>
+    
+    
+      <category term="Mysql" scheme="noahsnail.com/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot的应用启动与关闭</title>
+    <link href="noahsnail.com/2017/01/13/2017-1-13-Spring%20Boot%E7%9A%84%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%85%B3%E9%97%AD/"/>
+    <id>noahsnail.com/2017/01/13/2017-1-13-Spring Boot的应用启动与关闭/</id>
+    <published>2017-01-13T02:32:11.000Z</published>
+    <updated>2017-01-13T08:04:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Spring-Boot应用打包"><a href="#1-Spring-Boot应用打包" class="headerlink" title="1. Spring Boot应用打包"></a>1. Spring Boot应用打包</h2><p>Spring Boot应用可以打成jar包，其中内嵌tomcat，因此可以直接启动使用。但是在Spring Boot应用启动之前，首先需要进行打包，本文讲述的是Maven工程的打包，打包需要的前提条件(pom.xml文件中的内容)是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">&lt;build&gt;</div><div class="line">	&lt;plugins&gt;</div><div class="line">		&lt;plugin&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;configuration&gt;</div><div class="line">				&lt;mainClass&gt;com.***.Application&lt;/mainClass&gt;</div><div class="line">			&lt;/configuration&gt;</div><div class="line">			&lt;executions&gt;</div><div class="line">				&lt;execution&gt;</div><div class="line">					&lt;goals&gt;</div><div class="line">						&lt;goal&gt;repackage&lt;/goal&gt;</div><div class="line">					&lt;/goals&gt;</div><div class="line">				&lt;/execution&gt;</div><div class="line">			&lt;/executions&gt;</div><div class="line">		&lt;/plugin&gt;</div><div class="line">	&lt;/plugins&gt;</div><div class="line">&lt;/build&gt;</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>打包命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">mvn clean package -Dmaven.test.skip=true</div><div class="line"></div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ mvn clean package -Dmaven.test.skip=true</div><div class="line">[INFO] Scanning for projects...</div><div class="line">[WARNING] </div><div class="line">[WARNING] Some problems were encountered while building the effective model for com.example:myproject:jar:0.0.1-SNAPSHOT</div><div class="line">[WARNING] &apos;build.plugins.plugin.version&apos; for org.springframework.boot:spring-boot-maven-plugin is missing. @ line 38, column 17</div><div class="line">[WARNING] </div><div class="line">[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.</div><div class="line">[WARNING] </div><div class="line">[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.</div><div class="line">[WARNING] </div><div class="line">[INFO]                                                                         </div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Building myproject 0.0.1-SNAPSHOT</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ myproject ---</div><div class="line">[INFO] Deleting /Users/ltc/Spring Boot Demo/target</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ myproject ---</div><div class="line">[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!</div><div class="line">[INFO] Copying 1 resource</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ myproject ---</div><div class="line">[INFO] Changes detected - recompiling the module!</div><div class="line">[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!</div><div class="line">[INFO] Compiling 1 source file to /Users/ltc/Spring Boot Demo/target/classes</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ myproject ---</div><div class="line">[INFO] Not copying test resources</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ myproject ---</div><div class="line">[INFO] Not compiling test sources</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ myproject ---</div><div class="line">[INFO] Tests are skipped.</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ myproject ---</div><div class="line">[INFO] Building jar: /Users/ltc/Spring Boot Demo/target/myproject-0.0.1-SNAPSHOT.jar</div><div class="line">[INFO] </div><div class="line">[INFO] --- spring-boot-maven-plugin:1.5.0.RC1:repackage (default) @ myproject ---</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] BUILD SUCCESS</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Total time: 1.861 s</div><div class="line">[INFO] Finished at: 2017-01-13T15:31:32+08:00</div><div class="line">[INFO] Final Memory: 26M/308M</div><div class="line">[INFO] ------------------------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>或在eclipse中运行<code>run -&gt; Maven build...</code>，在Goals中填写<code>clean package -Dmaven.test.skip=true</code>，运行，打包完成。</p>
+<h2 id="2-Spring-Boot应用启动"><a href="#2-Spring-Boot应用启动" class="headerlink" title="2. Spring Boot应用启动"></a>2. Spring Boot应用启动</h2><p>Spring Boot的启动命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">java -jar application.jar</div><div class="line"></div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ java -jar target/myproject-0.0.1-SNAPSHOT.jar </div><div class="line"></div><div class="line">  .   ____          _            __ _ _</div><div class="line"> /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</div><div class="line">( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</div><div class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</div><div class="line">  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</div><div class="line"> =========|_|==============|___/=/_/_/_/</div><div class="line"> :: Spring Boot ::        (v1.4.3.RELEASE)</div><div class="line"></div><div class="line">2017-01-13 15:31:36.911  INFO 62119 --- [           main] com.test.Example                         : Starting Example on CN40723-N.local with PID 62119 (/Users/ltc/Spring Boot Demo/target/myproject-0.0.1-SNAPSHOT.jar started by liutianchi in /Users/ltc/Spring Boot Demo)</div><div class="line">2017-01-13 15:31:36.916  INFO 62119 --- [           main] com.test.Example                         : No active profile set, falling back to default profiles: default</div><div class="line">2017-01-13 15:31:36.981  INFO 62119 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@b1a58a3: startup date [Fri Jan 13 15:31:36 CST 2017]; root of context hierarchy</div><div class="line">2017-01-13 15:31:38.602  INFO 62119 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)</div><div class="line">2017-01-13 15:31:38.615  INFO 62119 --- [           main] o.apache.catalina.core.StandardService   : Starting service Tomcat</div><div class="line">2017-01-13 15:31:38.616  INFO 62119 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.6</div><div class="line">2017-01-13 15:31:38.718  INFO 62119 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2017-01-13 15:31:38.718  INFO 62119 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1740 ms</div><div class="line">2017-01-13 15:31:38.927  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;metricsFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;characterEncodingFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;httpPutFormContentFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;requestContextFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;webRequestLoggingFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;applicationContextIdFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:39.217  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@b1a58a3: startup date [Fri Jan 13 15:31:36 CST 2017]; root of context hierarchy</div><div class="line">2017-01-13 15:31:39.310  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/]&#125;&quot; onto java.lang.String com.test.Example.home()</div><div class="line">2017-01-13 15:31:39.313  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error]&#125;&quot; onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)</div><div class="line">2017-01-13 15:31:39.313  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error],produces=[text/html]&#125;&quot; onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)</div><div class="line">2017-01-13 15:31:39.338  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-13 15:31:39.338  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-13 15:31:39.378  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-13 15:31:39.665  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/metrics/&#123;name:.*&#125;],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.MetricsMvcEndpoint.value(java.lang.String)</div><div class="line">2017-01-13 15:31:39.665  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/metrics || /manage/metrics.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.666  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/mappings || /manage/mappings.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.667  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/trace || /manage/trace.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.667  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/info || /manage/info.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.668  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/configprops || /manage/configprops.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.669  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/heapdump || /manage/heapdump.json],methods=[GET],produces=[application/octet-stream]&#125;&quot; onto public void org.springframework.boot.actuate.endpoint.mvc.HeapdumpMvcEndpoint.invoke(boolean,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.io.IOException,javax.servlet.ServletException</div><div class="line">2017-01-13 15:31:39.669  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/autoconfig || /manage/autoconfig.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.673  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/env/&#123;name:.*&#125;],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EnvironmentMvcEndpoint.value(java.lang.String)</div><div class="line">2017-01-13 15:31:39.673  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/env || /manage/env.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.674  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/health || /manage/health.json],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.HealthMvcEndpoint.invoke(java.security.Principal)</div><div class="line">2017-01-13 15:31:39.675  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/dump || /manage/dump.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.677  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/shutdown || /manage/shutdown.json],methods=[POST]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.ShutdownMvcEndpoint.invoke()</div><div class="line">2017-01-13 15:31:39.678  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/beans || /manage/beans.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.799  INFO 62119 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup</div><div class="line">2017-01-13 15:31:39.809  INFO 62119 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0</div><div class="line">2017-01-13 15:31:39.944  INFO 62119 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)</div><div class="line">2017-01-13 15:31:39.949  INFO 62119 --- [           main] com.test.Example                         : Started Example in 4.292 seconds (JVM running for 4.726)</div></pre></td></tr></table></figure>
+<h2 id="3-Spring-Boot应用关闭"><a href="#3-Spring-Boot应用关闭" class="headerlink" title="3. Spring Boot应用关闭"></a>3. Spring Boot应用关闭</h2><p>Spring Boot应用关闭的前提条件是<code>POM.xml</code>添加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p><code>application.properties</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#启用shutdown</div><div class="line">endpoints.shutdown.enabled=true</div><div class="line">#禁用密码验证</div><div class="line">endpoints.shutdown.sensitive=false</div></pre></td></tr></table></figure>
+<p>关闭命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">curl -X POST host:port/shutdown</div><div class="line"></div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ curl -X POST http://localhost:8080/shutdown</div><div class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</div><div class="line"></div><div class="line"></div><div class="line">$ curl -X POST http://localhost:8080/manage/shutdown</div><div class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</div></pre></td></tr></table></figure>
+<p>如果要配置路径，需要在<code>application.properties</code>中添加<code>management.context-path=/manage</code>，则关闭命令变为<code>curl -X POST host:port/manage/shutdown</code>。</p>
+<h2 id="4-安全验证"><a href="#4-安全验证" class="headerlink" title="4. 安全验证"></a>4. 安全验证</h2><p>如果在关闭时需要安全验证，则在<code>pom.xml</code>文件中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">     &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p><code>application.properties</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#开启shutdown的安全验证</div><div class="line">endpoints.shutdown.sensitive=true</div><div class="line"></div><div class="line">#验证用户名</div><div class="line">security.user.name=admin</div><div class="line"></div><div class="line">#验证密码</div><div class="line">security.user.password=admin</div><div class="line">#角色</div><div class="line">management.security.role=SUPERUSER</div><div class="line"></div><div class="line"># 指定端口</div><div class="line">management.port=8081</div><div class="line"></div><div class="line"># 指定地址</div><div class="line">management.address=127.0.0.1</div></pre></td></tr></table></figure>
+<p>关闭命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">curl -u admin:admin -X POST http://127.0.0.1:8081/manage/shutdown</div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ curl -u admin:admin -X POST http://127.0.0.1:8081/manage/shutdown</div><div class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      Spring Boot的应用启动与关闭
+    
+    </summary>
+    
+      <category term="Spring Boot 2.0.0" scheme="noahsnail.com/categories/Spring-Boot-2-0-0/"/>
+    
+    
+      <category term="Spring Boot" scheme="noahsnail.com/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux sed编辑器</title>
+    <link href="noahsnail.com/2017/01/11/2017-1-11-Linux%20sed%E7%BC%96%E8%BE%91%E5%99%A8/"/>
+    <id>noahsnail.com/2017/01/11/2017-1-11-Linux sed编辑器/</id>
+    <published>2017-01-11T13:42:39.000Z</published>
+    <updated>2017-01-11T14:44:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-sed编辑器"><a href="#1-sed编辑器" class="headerlink" title="1. sed编辑器"></a>1. sed编辑器</h2><p>sed编辑器中是Linux世界中最广泛使用的两个命令行编辑器之一。sed编辑器被称作流编辑器（stream editor），流编辑器在编辑器处理数据之前基于预先提供的一组规则来编辑数据流。sed编辑器可以根据命令来处理数据流中的数据。sed编辑器会执行以下操作：</p>
+<ol>
+<li>一次从输入中读取一行数据。</li>
+<li>根据所提供的编辑器命令匹配数据。</li>
+<li>按照命令修改流中的数据。</li>
+<li>将新的数据输出到STDOUT。</li>
+</ol>
+<p>在流编辑器将所有命令和一行数据匹配完毕后，它会读取下一行数据重复这个过程。</p>
+<h2 id="2-命令形式"><a href="#2-命令形式" class="headerlink" title="2. 命令形式"></a>2. 命令形式</h2><p>sed命令的格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sed options script file</div></pre></td></tr></table></figure>
+<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><ul>
+<li>基本处理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ echo &quot;This is a test&quot; | sed &apos;s/test/big test/&apos;</div><div class="line">This is a big test</div></pre></td></tr></table></figure>
+<p>上面的例子中使用了<code>s</code>命令，<code>s</code>命令会用斜线中的第二个文本来替换第一个文本。处理文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># test文件内容</div><div class="line"></div><div class="line">$ cat test</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line"></div><div class="line"></div><div class="line"># sed处理</div><div class="line">$ sed &apos;s/test/demo/&apos; test</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line"></div><div class="line"># test文件内容</div><div class="line">$ cat test</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div></pre></td></tr></table></figure>
+<p><strong>注：</strong>sed编辑器不会修改文本文件的数据，它只会将处理后的数据发送到STDOUT。</p>
+<ul>
+<li>执行多个命令</li>
+</ul>
+<p><code>-e</code>选项可以执行多个命令，多个命令用<code>;</code>隔开。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sed -e &apos;s/a/an/; s/test/egg/&apos; test</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div></pre></td></tr></table></figure>
+<ul>
+<li>从文件中读取命令</li>
+</ul>
+<p><code>-f</code>选项可以让sed执行文件中的命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$ cat script.sed </div><div class="line">s/a/an/</div><div class="line">s/test/egg/</div><div class="line"></div><div class="line">$ sed -f script.sed test</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div></pre></td></tr></table></figure>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>Linux命令行与shell脚本编程</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux sed编辑器
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux Shell获取文件夹下的文件名</title>
+    <link href="noahsnail.com/2017/01/11/2017-1-11-Linux%20Shell%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D/"/>
+    <id>noahsnail.com/2017/01/11/2017-1-11-Linux Shell获取文件夹下的文件名/</id>
+    <published>2017-01-11T13:32:10.000Z</published>
+    <updated>2017-01-11T13:34:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>有时候需要获取某个文件夹下的所有文件名，可以用程序实现，但是打开IDE，编译运行太麻烦，在Linux服务器中通常不能打开IDE，此时可以用几行简单的shell命令来实现，结果保存到某个文件中即可。</p>
+<p>Shell脚本如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># get all filename in specified path</span></div><div class="line"></div><div class="line">path=<span class="variable">$1</span></div><div class="line">files=$(ls <span class="variable">$path</span>)</div><div class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> <span class="variable">$files</span></div><div class="line"><span class="keyword">do</span></div><div class="line">   <span class="built_in">echo</span> <span class="variable">$filename</span> &gt;&gt; filename.txt</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux Shell获取文件夹下的文件名
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux Shell中的命令替换</title>
+    <link href="noahsnail.com/2017/01/11/2017-1-11-Linux%20Shell%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E6%9B%BF%E6%8D%A2/"/>
+    <id>noahsnail.com/2017/01/11/2017-1-11-Linux Shell中的命令替换/</id>
+    <published>2017-01-11T13:16:44.000Z</published>
+    <updated>2017-01-11T13:28:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>Shell脚本中最有用的特性之一就是可以从命令输出中提取信息，并将其赋给变量。有两种方法可以将命令输出赋值给变量。</p>
+<ul>
+<li>反引号字符(`)</li>
+</ul>
+<p>反引号字符位于键盘上ESC键的下面。赋值给变量的形式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">test</span>=`date`</div><div class="line"></div><div class="line"><span class="comment"># demo</span></div><div class="line">$ <span class="built_in">test</span>=`date`</div><div class="line">$ <span class="built_in">echo</span> <span class="variable">$test</span></div><div class="line">2017年 1月11日 星期三 21时26分04秒 CST</div></pre></td></tr></table></figure>
+<p>两个反引号字符之间是shell命令，shell命令的执行结果赋值给<code>test</code>，注意<code>=</code>两边不能有空格。</p>
+<ul>
+<li>$()形式</li>
+</ul>
+<p>赋值给变量的形式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">test</span>=$(date)</div><div class="line"></div><div class="line"><span class="comment"># demo</span></div><div class="line">$ <span class="built_in">test</span>=$(date)</div><div class="line">$ <span class="built_in">echo</span> <span class="variable">$test</span></div><div class="line">2017年 1月11日 星期三 21时26分35秒 CST</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Linux Shell中的命令替换
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 2.0.0参考手册_中英文对照_Part IV_26</title>
+    <link href="noahsnail.com/2017/01/09/2017-1-9-Spring%20Boot%202.0.0%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C_%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7_Part%20IV_26/"/>
+    <id>noahsnail.com/2017/01/09/2017-1-9-Spring Boot 2.0.0参考手册_中英文对照_Part IV_26/</id>
+    <published>2017-01-09T13:00:47.000Z</published>
+    <updated>2017-01-09T13:01:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="26-Logging"><a href="#26-Logging" class="headerlink" title="26. Logging"></a>26. Logging</h2><p>Spring Boot uses Commons Logging for all internal logging, but leaves the underlying log implementation open. Default configurations are provided for Java Util Logging, Log4J2 and Logback. In each case loggers are pre-configured to use console output with optional file output also available.</p>
+<p>Spring Boot所有的内部日志都采用Commons Logging，但开放了底层的日志实现。提供了对Java Util Logging，Log4J2和Logback的默认实现。在每个logger中都预先配置使用控制台作为输出，同时也可用可选的文件输出。</p>
+<p>By default, If you use the ‘Starters’, Logback will be used for logging. Appropriate Logback routing is also included to ensure that dependent libraries that use Java Util Logging, Commons Logging, Log4J or SLF4J will all work correctly.</p>
+<p>默认情况下，如果使用<code>Starters</code>，Logback将作为日志。也要包含恰当的Logback规则来保证依赖库使用Java Util Logging，Commons Logging，Log4J或SLF4J都能正确工作。</p>
+<blockquote>
+<p>There are a lot of logging frameworks available for Java. Don’t worry if the above list seems confusing. Generally you won’t need to change your logging dependencies and the Spring Boot defaults will work just fine.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>在Java中有许多日志框架可用。不必担心上面的列表看起来有点混乱。通常情况下你不需要改变你的日志依赖，Spring Boot默认情况下能很好的工作。</p>
+</blockquote>
+<h3 id="26-1-Log-format"><a href="#26-1-Log-format" class="headerlink" title="26.1 Log format"></a>26.1 Log format</h3><p>The default log output from Spring Boot looks like this:</p>
+<p>Spring Boot默认的日志输出看起来如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2014-03-05 10:57:51.112  INFO 45469 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/7.0.52</div><div class="line">2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1358 ms</div><div class="line">2014-03-05 10:57:51.698  INFO 45469 --- [ost-startStop-1] o.s.b.c.e.ServletRegistrationBean        : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</div><div class="line">2014-03-05 10:57:51.702  INFO 45469 --- [ost-startStop-1] o.s.b.c.embedded.FilterRegistrationBean  : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</div></pre></td></tr></table></figure>
+<p>The following items are output:</p>
+<ul>
+<li><p>Date and Time — Millisecond precision and easily sortable.</p>
+</li>
+<li><p>Log Level — ERROR, WARN, INFO, DEBUG or TRACE.</p>
+</li>
+<li><p>Process ID.</p>
+</li>
+<li><p>A <code>---</code> separator to distinguish the start of actual log messages.</p>
+</li>
+<li><p>Thread name — Enclosed in square brackets (may be truncated for console output).</p>
+</li>
+<li><p>Logger name — This is usually the source class name (often abbreviated).</p>
+</li>
+<li><p>The log message.</p>
+</li>
+</ul>
+<p>下面的是输出项：</p>
+<ul>
+<li><p>Date and Time — 精确到毫秒且容易排序。</p>
+</li>
+<li><p>Log级别 — ERROR，WARN，INFO，DEBUG或TRACE。</p>
+</li>
+<li><p>进程ID。</p>
+</li>
+<li><p><code>---</code>分隔符来区分真正的日志信息的开始。</p>
+</li>
+<li><p>线程名称 — 用方括号包裹(在控制台输出中经常是缩减的)。</p>
+</li>
+<li><p>Logger名称 — 源类名(经常是简写)。</p>
+</li>
+<li><p>日志信息。</p>
+</li>
+</ul>
+<blockquote>
+<p>Logback does not have a FATAL level (it is mapped to ERROR)</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>Logback没有FATAL级别（它映射到ERROR）。</p>
+</blockquote>
+<h3 id="26-2-Console-output"><a href="#26-2-Console-output" class="headerlink" title="26.2 Console output"></a>26.2 Console output</h3><p>The default log configuration will echo messages to the console as they are written. By default <code>ERROR</code>, <code>WARN</code> and <code>INFO</code> level messages are logged. You can also enable a “debug” mode by starting your application with a <code>--debug</code> flag.</p>
+<p>默认的日志配置会将信息输出到控制台。默认情况下会输出<code>ERROR</code>，<code>WARN</code>和<code>INFO</code>级别的信息。你也可以通过<code>--debug</code>来启动你的应用，从而启用“debug”模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -jar myapp.jar --debug</div></pre></td></tr></table></figure>
+<blockquote>
+<p>you can also specify <code>debug=true</code> in your <code>application.properties</code>.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>你也可以在<code>application.properties</code>指定<code>debug=true</code>。</p>
+</blockquote>
+<p>When the debug mode is enabled, a selection of core loggers (embedded container, Hibernate and Spring Boot) are configured to output more information. Enabling the debug mode does not configure your application to log all messages with <code>DEBUG</code> level.</p>
+<p>当启用调试模式时，配置选择的核心logger（嵌入式容器，Hibernate和Spring Boot）来输出更多的信息。启动调试模式不会将你的应用配置成输出所有<code>DEBUG</code>级别的信息。</p>
+<p>Alternatively, you can enable a “trace” mode by starting your application with a <code>--trace</code> flag (or <code>trace=true</code> in your <code>application.properties</code>). This will enable trace logging for a selection of core loggers (embedded container, Hibernate schema generation and the whole Spring portfolio).</p>
+<p>或者，你可以用<code>--trace</code>标记（或在<code>application.properties</code>中添加<code>trace=true</code>）启动你的应用，从而启用“trace”模式。这将在选择的核心logger中（嵌入式容器，Hibernate模式生成和整个Spring文件夹）启用trace日志。</p>
+<h4 id="26-2-1-Color-coded-output"><a href="#26-2-1-Color-coded-output" class="headerlink" title="26.2.1 Color-coded output"></a>26.2.1 Color-coded output</h4><p>If your terminal supports ANSI, color output will be used to aid readability. You can set <code>spring.output.ansi.enabled</code> to a supported value to override the auto detection.</p>
+<p>如果你的终端支持ANSI，颜色输出可以用来辅助阅读。你可以为<code>spring.output.ansi.enabled</code>设置一个支持值来覆盖自动检测。</p>
+<p>Color coding is configured using the <code>%clr</code> conversion word. In its simplest form the converter will color the output according to the log level, for example:</p>
+<p>颜色编码用<code>%clr</code>转换词来配置。最简单的形式是根据日志级别进行颜色输出，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%clr(%5p)</div></pre></td></tr></table></figure>
+<p>The mapping of log level to a color is as follows:</p>
+<p>日志级别与颜色的映射如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Level</th>
+<th style="text-align:left">Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FATAL</td>
+<td style="text-align:left">Red</td>
+</tr>
+<tr>
+<td style="text-align:left">ERROR</td>
+<td style="text-align:left">Red</td>
+</tr>
+<tr>
+<td style="text-align:left">WARN</td>
+<td style="text-align:left">Yellow</td>
+</tr>
+<tr>
+<td style="text-align:left">INFO</td>
+<td style="text-align:left">Green</td>
+</tr>
+<tr>
+<td style="text-align:left">DEBUG</td>
+<td style="text-align:left">Green</td>
+</tr>
+<tr>
+<td style="text-align:left">TRACE</td>
+<td style="text-align:left">Green</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively, you can specify the color or style that should be used by providing it as an option to the conversion. For example, to make the text yellow:</p>
+<p>或者，你可以通过在转换器中提供选项来指定应该试用的颜色或风格。例如，为了使文本显示黄色：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;yellow&#125;</div></pre></td></tr></table></figure>
+<p>The following colors and styles are supported:</p>
+<p>支持下面的颜色和风格：</p>
+<ul>
+<li>blue</li>
+<li>cyan</li>
+<li>faint</li>
+<li>green</li>
+<li>magenta</li>
+<li>red</li>
+<li>yellow</li>
+</ul>
+<h3 id="26-3-File-output"><a href="#26-3-File-output" class="headerlink" title="26.3 File output"></a>26.3 File output</h3><p>By default, Spring Boot will only log to the console and will not write log files. If you want to write log files in addition to the console output you need to set a <code>logging.file</code> or <code>logging.path</code> property (for example in your <code>application.properties</code>).</p>
+<p>默认情况下，Spring Boot只能输出日志到控制台，不会写入日志文件。如果你想除了控制台之外还想写日志文件，你需要设置<code>logging.file</code>或<code>logging.path</code>属性（例如，在你的<code>application.properties</code>）。</p>
+<p>The following table shows how the <code>logging.*</code> properties can be used together:</p>
+<p>下表显示了<code>logging.*</code>属性怎样在一起使用：</p>
+<p><strong>Table 26.1. Logging properties</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">logging.file</th>
+<th style="text-align:left">logging.path</th>
+<th style="text-align:left">Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(none</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left"></td>
+<td>Console only logging.</td>
+</tr>
+<tr>
+<td style="text-align:left">Specific file</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">my.log</td>
+<td>Writes to the specified log file. Names can be an exact location or relative to the current directory.</td>
+</tr>
+<tr>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">Specific directory</td>
+<td style="text-align:left">/var/log</td>
+<td>Writes <code>spring.log</code> to the specified directory. Names can be an exact location or relative to the current directory.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表 26.1. Logging属性</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">logging.file</th>
+<th style="text-align:left">logging.path</th>
+<th style="text-align:left">Example</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(none</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">只输出到控制台</td>
+</tr>
+<tr>
+<td style="text-align:left">指定文件</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">my.log</td>
+<td style="text-align:left">写入指定的日志文件。名字可以是一个绝对位置或相对于当前目录。</td>
+</tr>
+<tr>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">Specific directory</td>
+<td style="text-align:left">/var/log</td>
+<td style="text-align:left">写<code>spring.log</code>到一个指定的目录。名字可以是一个绝对位置或相对于当前目录。</td>
+</tr>
+</tbody>
+</table>
+<p>Log files will rotate when they reach 10 MB and as with console output, <code>ERROR</code>, <code>WARN</code> and <code>INFO</code> level messages are logged by default.</p>
+<p>当日志文件达到10M时日志文件将循环，至于控制台输出，默认情况下只输出<code>ERROR</code>，<code>WARN</code>和<code>INFO</code>级别的信息。</p>
+<blockquote>
+<p>The logging system is initialized early in the application lifecycle and as such logging properties will not be found in property files loaded via <code>@PropertySource</code> annotations.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>日志系统在应用程序的生命周期早期进行初始化，同样地，通过<code>@PropertySource</code>注解加载的属性文件中将不会发现日志属性。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>Logging properties are independent of the actual logging infrastructure. As a result, specific configuration keys (such as <code>logback.configurationFile</code> for Logback) are not managed by spring Boot.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>日志属性独立于真正的日志基础架构之外。因此，Spring Boot不管理特定的配置主键（例如Logback的<code>logback.configurationFile</code>）。</p>
+</blockquote>
+<h3 id="26-4-Log-Levels"><a href="#26-4-Log-Levels" class="headerlink" title="26.4 Log Levels"></a>26.4 Log Levels</h3><p>All the supported logging systems can have the logger levels set in the Spring <code>Environment</code> (so for example in <code>application.properties</code>) using ‘logging.level.*=LEVEL’ where ‘LEVEL’ is one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF. The <code>root</code> logger can be configured using <code>logging.level.root</code>. Example <code>application.properties</code>: </p>
+<p>Spring支持的所有日志系统都可以在Spring的<code>Environment</code>中设置日志级别（例如在<code>application.properties</code>设置），使用<code>logging.level.*=LEVEL</code>进行设置，<code>LEVEL</code>是TRACE，DEBUG，INFO，WARN，ERROR，FATAL，OFF中的一个。<code>root</code>日志器可以用<code>logging.level.root</code>来配置。例如在<code>application.properties</code>中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">logging.level.root=WARN</div><div class="line">logging.level.org.springframework.web=DEBUG</div><div class="line">logging.level.org.hibernate=ERROR</div></pre></td></tr></table></figure>
+<blockquote>
+<p>By default Spring Boot remaps Thymeleaf <code>INFO</code> messages so that they are logged at <code>DEBUG</code> level. This helps to reduce noise in the standard log output. See <code>LevelRemappingAppender</code> for details of how you can apply remapping in your own configuration.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>默认情况下Spring Boot重新映射Thymeleaf的<code>INFO</code>信息，为了它们能在<code>DEBUG</code>级别进行输出。这能帮助减少标准日志输出中的噪声。关于怎样在你自己的配置中使用重新映射的更多细节请看<code>LevelRemappingAppender</code>。</p>
+</blockquote>
+<h3 id="26-5-Custom-log-configuration"><a href="#26-5-Custom-log-configuration" class="headerlink" title="26.5 Custom log configuration"></a>26.5 Custom log configuration</h3><p>The various logging systems can be activated by including the appropriate libraries on the classpath, and further customized by providing a suitable configuration file in the root of the classpath, or in a location specified by the Spring <code>Environment</code> property <code>logging.config</code>.</p>
+<p>在类路径中通过包含恰当的库可以激活各种日志系统，在类路径的根目录中提供一个合适的配置文件可以对日志系统进行更进一步的定制，或者将配置文件放在Spring <code>Environment</code>的<code>logging.config</code>属性中指定的位置。</p>
+<p>You can force Spring Boot to use a particular logging system using the <code>org.springframework.boot.logging.LoggingSystem</code> system property. The value should be the fully-qualified class name of a <code>LoggingSystem</code> implementation. You can also disable Spring Boot’s logging configuration entirely by using a value of <code>none</code>.</p>
+<p>你可以使用系统属性<code>org.springframework.boot.logging.LoggingSystem</code>来强制Spring Boot使用一个特定的日志系统。它的值应该是全限定类名的<code>LoggingSystem</code>实现。你也可以通过使用值<code>none</code>来完全禁用Spring Boot的日志配置。</p>
+<blockquote>
+<p>Since logging is initialized before the <code>ApplicationContext</code> is created, it isn’t possible to control logging from <code>@PropertySources</code> in Spring <code>@Configuration</code> files. System properties and the conventional Spring Boot external configuration files work just fine.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>由于日志是在<code>ApplicationContext</code>创建之前初始化，因此不可能从Spring <code>@Configuration</code>文件中的<code>@PropertySources</code>来控制日志。系统属性和传统的Spring Boot外部配置文件可以工作的很好。</p>
+</blockquote>
+<p>Depending on your logging system, the following files will be loaded:</p>
+<p>根据你的日志系统，将会加载下面的文件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Logging System</th>
+<th style="text-align:left">Customization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Logback</td>
+<td style="text-align:left">logback-spring.xml, logback-spring.groovy, logback.xml or logback.groovy</td>
+</tr>
+<tr>
+<td style="text-align:left">Log4j2</td>
+<td style="text-align:left">log4j2-spring.xml or log4j2.xml</td>
+</tr>
+<tr>
+<td style="text-align:left">JDK (Java Util Logging)</td>
+<td style="text-align:left">logging.properties</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>When possible we recommend that you use the <code>-spring</code> variants for your logging configuration (for example <code>logback-spring.xml</code> rather than <code>logback.xml</code>). If you use standard configuration locations, Spring cannot completely control log initialization.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>我们建议你尽可能的使用<code>-spring</code>变种来进行日志配置（例如，<code>logback-spring.xml</code>而不是<code>logback.xml</code>）。如果你在使用标准的配置路径，Spring不能完全控制日志的初始化。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>There are known classloading issues with Java Util Logging that cause problems when running from an ‘executable jar’. We recommend that you avoid it if at all possible.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>在Java Java Util Logging中存在类加载问题，当从<code>executable jar</code>运行时会引起问题。我们建议你尽可能的避免它。</p>
+</blockquote>
+<p>To help with the customization some other properties are transferred from the Spring <code>Environment</code> to System properties:</p>
+<p>为了帮助定制一些其它属性，从Spring <code>Environment</code>中转移到系统属性中：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Spring Environment</th>
+<th style="text-align:left">System Property</th>
+<th style="text-align:left">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">logging.exception-conversion-word</td>
+<td style="text-align:left">LOG_EXCEPTION_CONVERSION_WORD</td>
+<td style="text-align:left">The conversion word that’s used when logging exceptions.</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.file</td>
+<td style="text-align:left">LOG_FILE</td>
+<td style="text-align:left">Used in default log configuration if defined.</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.path</td>
+<td style="text-align:left">LOG_PATH</td>
+<td style="text-align:left">Used in default log configuration if defined.</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.console</td>
+<td style="text-align:left">CONSOLE_LOG_PATTERN</td>
+<td style="text-align:left">The log pattern to use on the console (stdout). (Only supported with the default logback setup.)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.file</td>
+<td style="text-align:left">FILE_LOG_PATTERN</td>
+<td style="text-align:left">The log pattern to use in a file (if LOG_FILE enabled). (Only supported with the default logback setup.)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.level</td>
+<td style="text-align:left">LOG_LEVEL_PATTERN</td>
+<td style="text-align:left">The format to use to render the log level (default %5p). (Only supported with the default logback setup.)</td>
+</tr>
+<tr>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">The current process ID (discovered if possible and when not already defined as an OS environment variable).</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Spring Environment</th>
+<th style="text-align:left">System Property</th>
+<th style="text-align:left">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">logging.exception-conversion-word</td>
+<td style="text-align:left">LOG_EXCEPTION_CONVERSION_WORD</td>
+<td style="text-align:left">当日志出现异常时会用到这个转换词。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.file</td>
+<td style="text-align:left">LOG_FILE</td>
+<td style="text-align:left">如果定义了，会在默认的日志配置中使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.path</td>
+<td style="text-align:left">LOG_PATH</td>
+<td style="text-align:left">如果定义了，会在默认的日志配置中使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.console</td>
+<td style="text-align:left">CONSOLE_LOG_PATTERN</td>
+<td style="text-align:left">用在控制台中的日志模式(stdout)。(只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.file</td>
+<td style="text-align:left">FILE_LOG_PATTERN</td>
+<td style="text-align:left">用在文件中的日志模式 (如果启用<code>LOG_FILE</code>)。(只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.level</td>
+<td style="text-align:left">LOG_LEVEL_PATTERN</td>
+<td style="text-align:left">这种模式用来实施日志级别(默认<code>%5p</code>)。 (只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">当前的进程ID</td>
+</tr>
+</tbody>
+</table>
+<p>All the logging systems supported can consult System properties when parsing their configuration files. See the default configurations in <code>spring-boot.jar</code> for examples.</p>
+<p>当转换配置文件时，所有的日志系统都支持查询系统属性。例如<code>spring-boot.jar</code>的默认配置。</p>
+<blockquote>
+<p>If you want to use a placeholder in a logging property, you should use Spring Boot’s syntax and not the syntax of the underlying framework. Notably, if you’re using Logback, you should use <code>:</code> as the delimiter between a property name and its default value and not <code>:-</code>.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>如果你在日志属性中想使用占位符，你应该试用Spring Boot的语法而不是底层框架的语法。尤其是，如果你在使用Logback，你应该使用<code>:</code>作为属性名和默认值之间的分隔符，而不是<code>:-</code>。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>You can add MDC and other ad-hoc content to log lines by overriding only the <code>LOG_LEVEL_PATTERN</code> (or <code>logging.pattern.level</code> with Logback). For example, if you use <code>logging.pattern.level=user:%X{user} %5p</code> then the default log format will contain an MDC entry for “user” if it exists, e.g.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2015-09-30 12:30:04.031 user:juergen INFO 22174 --- [  nio-8080-exec-0] demo.Controller</div><div class="line">Handling authenticated request</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>你可以通过重写<code>LOG_LEVEL_PATTERN</code>（或Logback中的<code>logging.pattern.level</code>）来添加MDC和其它的专门内容来日志行中。例如，你可以使用<code>logging.pattern.level=user:%X{user} %5p</code>，默认的日志形式将包含MDC输入，如果它存在的话，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2015-09-30 12:30:04.031 user:juergen INFO 22174 --- [  nio-8080-exec-0] demo.Controller</div><div class="line">Handling authenticated request</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="26-6-Logback-extensions"><a href="#26-6-Logback-extensions" class="headerlink" title="26.6 Logback extensions"></a>26.6 Logback extensions</h3><p>Spring Boot includes a number of extensions to Logback which can help with advanced configuration. You can use these extensions in your <code>logback-spring.xml</code> configuration file.</p>
+<p>Spring Boot包含许多Logback的扩展，这有助于进行更高级的配置。你可以在你的<code>logback-spring.xml</code>配置文件中使用这些扩展。</p>
+<blockquote>
+<p>You cannot use extensions in the standard <code>logback.xml</code> configuration file since it’s loaded too early. You need to either use <code>logback-spring.xml</code> or define a <code>logging.config</code> property.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>你不能在标准的<code>logback.xml</code>配置文件中使用扩展，因为它加载的太早了。你需要使用<code>logback-spring.xml</code>或定义<code>logging.config</code>属性。</p>
+</blockquote>
+<h4 id="26-6-1-Profile-specific-configuration"><a href="#26-6-1-Profile-specific-configuration" class="headerlink" title="26.6.1 Profile-specific configuration"></a>26.6.1 Profile-specific configuration</h4><p>The <code>&lt;springProfile&gt;</code> tag allows you to optionally include or exclude sections of configuration based on the active Spring profiles. Profile sections are supported anywhere within the <code>&lt;configuration&gt;</code> element. Use the <code>name</code> attribute to specify which profile accepts the configuration. Multiple profiles can be specified using a comma-separated list.</p>
+<p><code>&lt;springProfile&gt;</code>标签允许你自由的包含或排除基于激活的Spring profiles的配置的一部分。在<code>&lt;configuration&gt;</code>元素的任何地方都支持Profile部分。使用<code>name</code>属性来指定哪一个profile接受配置。多个profiles可以用一个逗号分隔的列表来指定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;springProfile name=&quot;staging&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;staging&quot; profile is active --&gt;</div><div class="line">&lt;/springProfile&gt;</div><div class="line"></div><div class="line">&lt;springProfile name=&quot;dev, staging&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;dev&quot; or &quot;staging&quot; profiles are active --&gt;</div><div class="line">&lt;/springProfile&gt;</div><div class="line"></div><div class="line">&lt;springProfile name=&quot;!production&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;production&quot; profile is not active --&gt;</div><div class="line">&lt;/springProfile&gt;</div></pre></td></tr></table></figure>
+<h4 id="26-6-2-Environment-properties"><a href="#26-6-2-Environment-properties" class="headerlink" title="26.6.2 Environment properties"></a>26.6.2 Environment properties</h4><p>The <code>&lt;springProperty&gt;</code> tag allows you to surface properties from the Spring <code>Environment</code> for use within Logback. This can be useful if you want to access values from your <code>application.properties</code> file in your logback configuration. The tag works in a similar way to Logback’s standard <code>&lt;property&gt;</code> tag, but rather than specifying a direct <code>value</code> you specify the <code>source</code> of the property (from the <code>Environment</code>). You can use the <code>scope</code> attribute if you need to store the property somewhere other than in <code>local</code> scope. If you need a fallback value in case the property is not set in the <code>Environment</code>, you can use the <code>defaultValue</code> attribute.</p>
+<p><code>&lt;springProperty&gt;</code>标签允许你在Logback使用从Spring <code>Environment</code>获得的属性。如果你想在你的Logback配置中访问<code>application.properties</code>文件中的属性，这是非常有用的。这个标签与Logback的标准<code>&lt;property&gt;</code>标签的作用方式类似，但不是为你指定的<code>source</code>属性（从<code>Environment</code>中）指定一个直接的<code>value</code>。如果你需要在某个地方而不是在<code>local</code>作用域中存储属性，你可以使用<code>scope</code>属性。如果你需要一个备用值以防属性没有在<code>Environment</code>中设置，你可以使用<code>defaultValue</code>属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;springProperty scope=&quot;context&quot; name=&quot;fluentHost&quot; source=&quot;myapp.fluentd.host&quot;</div><div class="line">        defaultValue=&quot;localhost&quot;/&gt;</div><div class="line">&lt;appender name=&quot;FLUENT&quot; class=&quot;ch.qos.logback.more.appenders.DataFluentAppender&quot;&gt;</div><div class="line">    &lt;remoteHost&gt;$&#123;fluentHost&#125;&lt;/remoteHost&gt;</div><div class="line">    ...</div><div class="line">&lt;/appender&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>The <code>RelaxedPropertyResolver</code> is used to access <code>Environment</code> properties. If specify the <code>source</code> in dashed notation (<code>my-property-name</code>) all the relaxed variations will be tried (<code>myPropertyName</code>, <code>MY_PROPERTY_NAME</code> etc).</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p><code>RelaxedPropertyResolver</code>是用来访问<code>Environment</code>属性。如果在破折号符号中指定了<code>source</code>，则会尝试所有的不严格的变种（<code>myPropertyName</code>，<code>MY_PROPERTY_NAME</code>等）。</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      Spring Boot 2.0.0参考手册_中英文对照_Part IV_26
+    
+    </summary>
+    
+      <category term="Spring Boot 2.0.0" scheme="noahsnail.com/categories/Spring-Boot-2-0-0/"/>
+    
+    
+      <category term="Spring Boot" scheme="noahsnail.com/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 2.0.0参考手册_中文版_Part IV_26</title>
+    <link href="noahsnail.com/2017/01/09/2017-1-9-Spring%20Boot%202.0.0%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%89%88_Part%20IV_26/"/>
+    <id>noahsnail.com/2017/01/09/2017-1-9-Spring Boot 2.0.0参考手册_中文版_Part IV_26/</id>
+    <published>2017-01-09T13:00:35.000Z</published>
+    <updated>2017-01-09T13:01:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="26-Logging"><a href="#26-Logging" class="headerlink" title="26. Logging"></a>26. Logging</h2><p>Spring Boot所有的内部日志都采用Commons Logging，但开放了底层的日志实现。提供了对Java Util Logging，Log4J2和Logback的默认实现。在每个logger中都预先配置使用控制台作为输出，同时也可用可选的文件输出。</p>
+<p>默认情况下，如果使用<code>Starters</code>，Logback将作为日志。也要包含恰当的Logback规则来保证依赖库使用Java Util Logging，Commons Logging，Log4J或SLF4J都能正确工作。</p>
+<blockquote>
+<p>在Java中有许多日志框架可用。不必担心上面的列表看起来有点混乱。通常情况下你不需要改变你的日志依赖，Spring Boot默认情况下能很好的工作。</p>
+</blockquote>
+<h3 id="26-1-Log格式"><a href="#26-1-Log格式" class="headerlink" title="26.1 Log格式"></a>26.1 Log格式</h3><p>Spring Boot默认的日志输出看起来如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2014-03-05 10:57:51.112  INFO 45469 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/7.0.52</div><div class="line">2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1358 ms</div><div class="line">2014-03-05 10:57:51.698  INFO 45469 --- [ost-startStop-1] o.s.b.c.e.ServletRegistrationBean        : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</div><div class="line">2014-03-05 10:57:51.702  INFO 45469 --- [ost-startStop-1] o.s.b.c.embedded.FilterRegistrationBean  : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</div></pre></td></tr></table></figure>
+<p>下面的是输出项：</p>
+<ul>
+<li><p>Date and Time — 精确到毫秒且容易排序。</p>
+</li>
+<li><p>Log级别 — ERROR，WARN，INFO，DEBUG或TRACE。</p>
+</li>
+<li><p>进程ID。</p>
+</li>
+<li><p><code>---</code>分隔符来区分真正的日志信息的开始。</p>
+</li>
+<li><p>线程名称 — 用方括号包裹(在控制台输出中经常是缩减的)。</p>
+</li>
+<li><p>Logger名称 — 源类名(经常是简写)。</p>
+</li>
+<li><p>日志信息。</p>
+</li>
+</ul>
+<blockquote>
+<p>Logback没有FATAL级别（它映射到ERROR）。</p>
+</blockquote>
+<h3 id="26-2-控制台输出"><a href="#26-2-控制台输出" class="headerlink" title="26.2 控制台输出"></a>26.2 控制台输出</h3><p>默认的日志配置会将信息输出到控制台。默认情况下会输出<code>ERROR</code>，<code>WARN</code>和<code>INFO</code>级别的信息。你也可以通过<code>--debug</code>来启动你的应用，从而启用“debug”模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -jar myapp.jar --debug</div></pre></td></tr></table></figure>
+<blockquote>
+<p>你也可以在<code>application.properties</code>指定<code>debug=true</code>。</p>
+</blockquote>
+<p>当启用调试模式时，配置选择的核心logger（嵌入式容器，Hibernate和Spring Boot）来输出更多的信息。启动调试模式不会将你的应用配置成输出所有<code>DEBUG</code>级别的信息。</p>
+<p>或者，你可以用<code>--trace</code>标记（或在<code>application.properties</code>中添加<code>trace=true</code>）启动你的应用，从而启用“trace”模式。这将在选择的核心logger中（嵌入式容器，Hibernate模式生成和整个Spring文件夹）启用trace日志。</p>
+<h4 id="26-2-1-颜色编码输出"><a href="#26-2-1-颜色编码输出" class="headerlink" title="26.2.1 颜色编码输出"></a>26.2.1 颜色编码输出</h4><p>如果你的终端支持ANSI，颜色输出可以用来辅助阅读。你可以为<code>spring.output.ansi.enabled</code>设置一个支持值来覆盖自动检测。</p>
+<p>颜色编码用<code>%clr</code>转换词来配置。最简单的形式是根据日志级别进行颜色输出，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%clr(%5p)</div></pre></td></tr></table></figure>
+<p>日志级别与颜色的映射如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Level</th>
+<th style="text-align:left">Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FATAL</td>
+<td style="text-align:left">Red</td>
+</tr>
+<tr>
+<td style="text-align:left">ERROR</td>
+<td style="text-align:left">Red</td>
+</tr>
+<tr>
+<td style="text-align:left">WARN</td>
+<td style="text-align:left">Yellow</td>
+</tr>
+<tr>
+<td style="text-align:left">INFO</td>
+<td style="text-align:left">Green</td>
+</tr>
+<tr>
+<td style="text-align:left">DEBUG</td>
+<td style="text-align:left">Green</td>
+</tr>
+<tr>
+<td style="text-align:left">TRACE</td>
+<td style="text-align:left">Green</td>
+</tr>
+</tbody>
+</table>
+<p>或者，你可以通过在转换器中提供选项来指定应该试用的颜色或风格。例如，为了使文本显示黄色：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;yellow&#125;</div></pre></td></tr></table></figure>
+<p>支持下面的颜色和风格：</p>
+<ul>
+<li>blue</li>
+<li>cyan</li>
+<li>faint</li>
+<li>green</li>
+<li>magenta</li>
+<li>red</li>
+<li>yellow</li>
+</ul>
+<h3 id="26-3-文件输出"><a href="#26-3-文件输出" class="headerlink" title="26.3 文件输出"></a>26.3 文件输出</h3><p>默认情况下，Spring Boot只能输出日志到控制台，不会写入日志文件。如果你想除了控制台之外还想写日志文件，你需要设置<code>logging.file</code>或<code>logging.path</code>属性（例如，在你的<code>application.properties</code>）。</p>
+<p>下表显示了<code>logging.*</code>属性怎样在一起使用：</p>
+<p><strong>表 26.1. Logging属性</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">logging.file</th>
+<th style="text-align:left">logging.path</th>
+<th style="text-align:left">Example</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(none</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">只输出到控制台</td>
+</tr>
+<tr>
+<td style="text-align:left">指定文件</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">my.log</td>
+<td style="text-align:left">写入指定的日志文件。名字可以是一个绝对位置或相对于当前目录。</td>
+</tr>
+<tr>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">Specific directory</td>
+<td style="text-align:left">/var/log</td>
+<td style="text-align:left">写<code>spring.log</code>到一个指定的目录。名字可以是一个绝对位置或相对于当前目录。</td>
+</tr>
+</tbody>
+</table>
+<p>当日志文件达到10M时日志文件将循环，至于控制台输出，默认情况下只输出<code>ERROR</code>，<code>WARN</code>和<code>INFO</code>级别的信息。</p>
+<blockquote>
+<p>日志系统在应用程序的生命周期早期进行初始化，同样地，通过<code>@PropertySource</code>注解加载的属性文件中将不会发现日志属性。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>日志属性独立于真正的日志基础架构之外。因此，Spring Boot不管理特定的配置主键（例如Logback的<code>logback.configurationFile</code>）。</p>
+</blockquote>
+<h3 id="26-4-日志级别"><a href="#26-4-日志级别" class="headerlink" title="26.4 日志级别"></a>26.4 日志级别</h3><p>Spring支持的所有日志系统都可以在Spring的<code>Environment</code>中设置日志级别（例如在<code>application.properties</code>设置），使用<code>logging.level.*=LEVEL</code>进行设置，<code>LEVEL</code>是TRACE，DEBUG，INFO，WARN，ERROR，FATAL，OFF中的一个。<code>root</code>日志器可以用<code>logging.level.root</code>来配置。例如在<code>application.properties</code>中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">logging.level.root=WARN</div><div class="line">logging.level.org.springframework.web=DEBUG</div><div class="line">logging.level.org.hibernate=ERROR</div></pre></td></tr></table></figure>
+<blockquote>
+<p>默认情况下Spring Boot重新映射Thymeleaf的<code>INFO</code>信息，为了它们能在<code>DEBUG</code>级别进行输出。这能帮助减少标准日志输出中的噪声。关于怎样在你自己的配置中使用重新映射的更多细节请看<code>LevelRemappingAppender</code>。</p>
+</blockquote>
+<h3 id="26-5-定制日志配置"><a href="#26-5-定制日志配置" class="headerlink" title="26.5 定制日志配置"></a>26.5 定制日志配置</h3><p>在类路径中通过包含恰当的库可以激活各种日志系统，在类路径的根目录中提供一个合适的配置文件可以对日志系统进行更进一步的定制，或者将配置文件放在Spring <code>Environment</code>的<code>logging.config</code>属性中指定的位置。</p>
+<p>你可以使用系统属性<code>org.springframework.boot.logging.LoggingSystem</code>来强制Spring Boot使用一个特定的日志系统。它的值应该是全限定类名的<code>LoggingSystem</code>实现。你也可以通过使用值<code>none</code>来完全禁用Spring Boot的日志配置。</p>
+<blockquote>
+<p>由于日志是在<code>ApplicationContext</code>创建之前初始化，因此不可能从Spring <code>@Configuration</code>文件中的<code>@PropertySources</code>来控制日志。系统属性和传统的Spring Boot外部配置文件可以工作的很好。</p>
+</blockquote>
+<p>根据你的日志系统，将会加载下面的文件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Logging System</th>
+<th style="text-align:left">Customization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Logback</td>
+<td style="text-align:left">logback-spring.xml, logback-spring.groovy, logback.xml or logback.groovy</td>
+</tr>
+<tr>
+<td style="text-align:left">Log4j2</td>
+<td style="text-align:left">log4j2-spring.xml or log4j2.xml</td>
+</tr>
+<tr>
+<td style="text-align:left">JDK (Java Util Logging)</td>
+<td style="text-align:left">logging.properties</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>我们建议你尽可能的使用<code>-spring</code>变种来进行日志配置（例如，<code>logback-spring.xml</code>而不是<code>logback.xml</code>）。如果你在使用标准的配置路径，Spring不能完全控制日志的初始化。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>在Java Java Util Logging中存在类加载问题，当从<code>executable jar</code>运行时会引起问题。我们建议你尽可能的避免它。</p>
+</blockquote>
+<p>为了帮助定制一些其它属性，从Spring <code>Environment</code>中转移到系统属性中：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Spring Environment</th>
+<th style="text-align:left">System Property</th>
+<th style="text-align:left">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">logging.exception-conversion-word</td>
+<td style="text-align:left">LOG_EXCEPTION_CONVERSION_WORD</td>
+<td style="text-align:left">当日志出现异常时会用到这个转换词。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.file</td>
+<td style="text-align:left">LOG_FILE</td>
+<td style="text-align:left">如果定义了，会在默认的日志配置中使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.path</td>
+<td style="text-align:left">LOG_PATH</td>
+<td style="text-align:left">如果定义了，会在默认的日志配置中使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.console</td>
+<td style="text-align:left">CONSOLE_LOG_PATTERN</td>
+<td style="text-align:left">用在控制台中的日志模式(stdout)。(只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.file</td>
+<td style="text-align:left">FILE_LOG_PATTERN</td>
+<td style="text-align:left">用在文件中的日志模式 (如果启用<code>LOG_FILE</code>)。(只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.level</td>
+<td style="text-align:left">LOG_LEVEL_PATTERN</td>
+<td style="text-align:left">这种模式用来实施日志级别(默认<code>%5p</code>)。 (只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">当前的进程ID</td>
+</tr>
+</tbody>
+</table>
+<p>当转换配置文件时，所有的日志系统都支持查询系统属性。例如<code>spring-boot.jar</code>的默认配置。</p>
+<blockquote>
+<p>如果你在日志属性中想使用占位符，你应该试用Spring Boot的语法而不是底层框架的语法。尤其是，如果你在使用Logback，你应该使用<code>:</code>作为属性名和默认值之间的分隔符，而不是<code>:-</code>。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>你可以通过重写<code>LOG_LEVEL_PATTERN</code>（或Logback中的<code>logging.pattern.level</code>）来添加MDC和其它的专门内容来日志行中。例如，你可以使用<code>logging.pattern.level=user:%X{user} %5p</code>，默认的日志形式将包含MDC输入，如果它存在的话，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2015-09-30 12:30:04.031 user:juergen INFO 22174 --- [  nio-8080-exec-0] demo.Controller</div><div class="line">Handling authenticated request</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="26-6-Logback扩展"><a href="#26-6-Logback扩展" class="headerlink" title="26.6 Logback扩展"></a>26.6 Logback扩展</h3><p>Spring Boot包含许多Logback的扩展，这有助于进行更高级的配置。你可以在你的<code>logback-spring.xml</code>配置文件中使用这些扩展。</p>
+<blockquote>
+<p>你不能在标准的<code>logback.xml</code>配置文件中使用扩展，因为它加载的太早了。你需要使用<code>logback-spring.xml</code>或定义<code>logging.config</code>属性。</p>
+</blockquote>
+<h4 id="26-6-1-特定profile的配置"><a href="#26-6-1-特定profile的配置" class="headerlink" title="26.6.1 特定profile的配置"></a>26.6.1 特定profile的配置</h4><p><code>&lt;springProfile&gt;</code>标签允许你自由的包含或排除基于激活的Spring profiles的配置的一部分。在<code>&lt;configuration&gt;</code>元素的任何地方都支持Profile部分。使用<code>name</code>属性来指定哪一个profile接受配置。多个profiles可以用一个逗号分隔的列表来指定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;springProfile name=&quot;staging&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;staging&quot; profile is active --&gt;</div><div class="line">&lt;/springProfile&gt;</div><div class="line"></div><div class="line">&lt;springProfile name=&quot;dev, staging&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;dev&quot; or &quot;staging&quot; profiles are active --&gt;</div><div class="line">&lt;/springProfile&gt;</div><div class="line"></div><div class="line">&lt;springProfile name=&quot;!production&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;production&quot; profile is not active --&gt;</div><div class="line">&lt;/springProfile&gt;</div></pre></td></tr></table></figure>
+<h4 id="26-6-2-Environment属性"><a href="#26-6-2-Environment属性" class="headerlink" title="26.6.2 Environment属性"></a>26.6.2 Environment属性</h4><p><code>&lt;springProperty&gt;</code>标签允许你在Logback使用从Spring <code>Environment</code>获得的属性。如果你想在你的Logback配置中访问<code>application.properties</code>文件中的属性，这是非常有用的。这个标签与Logback的标准<code>&lt;property&gt;</code>标签的作用方式类似，但不是为你指定的<code>source</code>属性（从<code>Environment</code>中）指定一个直接的<code>value</code>。如果你需要在某个地方而不是在<code>local</code>作用域中存储属性，你可以使用<code>scope</code>属性。如果你需要一个备用值以防属性没有在<code>Environment</code>中设置，你可以使用<code>defaultValue</code>属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;springProperty scope=&quot;context&quot; name=&quot;fluentHost&quot; source=&quot;myapp.fluentd.host&quot;</div><div class="line">        defaultValue=&quot;localhost&quot;/&gt;</div><div class="line">&lt;appender name=&quot;FLUENT&quot; class=&quot;ch.qos.logback.more.appenders.DataFluentAppender&quot;&gt;</div><div class="line">    &lt;remoteHost&gt;$&#123;fluentHost&#125;&lt;/remoteHost&gt;</div><div class="line">    ...</div><div class="line">&lt;/appender&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>RelaxedPropertyResolver</code>是用来访问<code>Environment</code>属性。如果在破折号符号中指定了<code>source</code>，则会尝试所有的不严格的变种（<code>myPropertyName</code>，<code>MY_PROPERTY_NAME</code>等）。</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      Spring Boot 2.0.0参考手册_中文版_Part IV_26
+    
+    </summary>
+    
+      <category term="Spring Boot 2.0.0" scheme="noahsnail.com/categories/Spring-Boot-2-0-0/"/>
+    
+    
+      <category term="Spring Boot" scheme="noahsnail.com/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java的Class对象</title>
+    <link href="noahsnail.com/2017/01/09/2017-1-9-Java%E7%9A%84Class%E5%AF%B9%E8%B1%A1/"/>
+    <id>noahsnail.com/2017/01/09/2017-1-9-Java的Class对象/</id>
+    <published>2017-01-09T07:57:30.000Z</published>
+    <updated>2017-01-09T10:06:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Class对象"><a href="#1-Class对象" class="headerlink" title="1. Class对象"></a>1. Class对象</h2><p>在Java中有两种对象：Class对象和实例对象，实例对象是类的实例，通常是通过<code>new</code>关键字构建的。Class对象是JVM生成用来保存对象的类的信息的。Java程序执行之前需要经过编译、加载、链接和初始化这几个阶段，编译阶段会将源码文件编译为<code>.class</code>字节码文件，编译器同时会在<code>.class</code>文件中生成Class对象，加载阶段通过JVM内部的类加载机制，将Class对象加载到内存中。在创建对象实例之前，JVM会先检查Class对象是否在内存中存在，如果不存在，则加载Class对象，然后再创建对象实例，如果存在，则直接根据Class对象创建对象实例。JVM中只有一个Class对象，但可以根据Class对象生成多个对象实例。</p>
+<h2 id="2-Class对象的获得"><a href="#2-Class对象的获得" class="headerlink" title="2. Class对象的获得"></a>2. Class对象的获得</h2><h3 id="2-1-类名-class"><a href="#2-1-类名-class" class="headerlink" title="2.1 类名.class"></a>2.1 类名.class</h3><p>当执行<code>类名.class</code>时，JVM会先检查Class对象是否装入内存，如果没有装入内存，则将Class对象装入内存，然后返回Class对象，如果装入内存，则直接返回Class对象。在加载Class对象后，不会对Class对象进行初始化。</p>
+<ul>
+<li>Example</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		System.out.println(<span class="string">"Run static initialization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"Run nonstatic initialization block."</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * <span class="doctag">@param</span> args</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		Class t = Test.class;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">// 空</div></pre></td></tr></table></figure>
+<h3 id="2-2-Class-forName"><a href="#2-2-Class-forName" class="headerlink" title="2.2 Class.forName()"></a>2.2 Class.forName()</h3><p>当执行<code>Class.forName()</code>时，JVM也会先检查Class对象是否装入内存，如果没有装入内存，则将Class对象装入内存，然后返回Class对象，如果装入内存，则直接返回Class对象。在加载Class对象后，会对类进行初始化，即执行类的静态代码块。<code>forName()</code>方法中的参数是类名字符串，类名字符串 = 包名 + 类名。<code>Class.forName()</code>的一个很常见的用法是在加载数据库驱动的时候。</p>
+<ul>
+<li>Example</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.tyan.test;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		System.out.println(<span class="string">"Run static initialization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"Run nonstatic initialization block."</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">package</span> com.tyan.test;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * <span class="doctag">@param</span> args</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class t = Class.forName(<span class="string">"com.tyan.test.Test"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Run static initialization block.</div></pre></td></tr></table></figure>
+<h3 id="2-3-getClass"><a href="#2-3-getClass" class="headerlink" title="2.3 getClass()"></a>2.3 getClass()</h3><p><code>getClass()</code>方法的方法是在通过的类的实例调用的，即已经创建了类的实例。</p>
+<ul>
+<li>Example</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		System.out.println(<span class="string">"Run static initialization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"Run nonstatic initialization block."</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTest</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		Test t = <span class="keyword">new</span> Test();</div><div class="line">		Class test = t.getClass();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Run static initialization block.</div><div class="line">Run nonstatic initialization block.</div></pre></td></tr></table></figure>
+<h2 id="3-Class类的常用方法"><a href="#3-Class类的常用方法" class="headerlink" title="3. Class类的常用方法"></a>3. Class类的常用方法</h2><ul>
+<li>getName() </li>
+</ul>
+<p>一个Class对象描述了一个特定类的属性，Class类中最常用的方法getName以String的形式返回此Class对象所表示的实体（类、接口、数组类、基本类型或void名称。</p>
+<ul>
+<li>newInstance()</li>
+</ul>
+<p>Class还有一个有用的方法可以为类创建一个实例，这个方法叫做newInstance()。例如：<code>x.getClass.newInstance()</code>，创建了一个同<code>x</code>一样类型的新实例。<code>newInstance()</code>方法调用默认构造器（无参数构造器）初始化新建对象。</p>
+<ul>
+<li>getClassLoader() </li>
+</ul>
+<p>返回该类的类加载器。</p>
+<ul>
+<li>getComponentType() </li>
+</ul>
+<p>返回表示数组组件类型的Class。</p>
+<ul>
+<li>getSuperclass() </li>
+</ul>
+<p>返回表示此 Class 所表示的实体（类、接口、基本类型或 void）的超类的Class。</p>
+<ul>
+<li>isArray() </li>
+</ul>
+<p>判定此 Class 对象是否表示一个数组类。</p>
+<h2 id="4-反射"><a href="#4-反射" class="headerlink" title="4. 反射"></a>4. 反射</h2><p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。Class对象的获得是Java反射的基础，Java的反射是另一块内容，本文不涉及。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Java的Class对象
+    
+    </summary>
+    
+      <category term="Java" scheme="noahsnail.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="noahsnail.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java中的静态初始化和非静态初始化</title>
+    <link href="noahsnail.com/2017/01/09/2017-1-9-Java%E4%B8%AD%E7%9A%84%E9%9D%99%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%9D%9E%E9%9D%99%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+    <id>noahsnail.com/2017/01/09/2017-1-9-Java中的静态初始化和非静态初始化/</id>
+    <published>2017-01-09T06:38:19.000Z</published>
+    <updated>2017-01-09T07:35:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Java中的初始化"><a href="#1-Java中的初始化" class="headerlink" title="1. Java中的初始化"></a>1. Java中的初始化</h2><p>Java与C++的一个不同之处在于，Java不仅有构造函数，还有一个“初始化块”(Initialization Block)的概念。Java中的初始化块在创建Java对象时隐式执行，并且是在构造函数之前执行。</p>
+<h2 id="2-静态初始化"><a href="#2-静态初始化" class="headerlink" title="2. 静态初始化"></a>2. 静态初始化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 定义</div><div class="line">static &#123;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>静态初始化块执行的优先级高于非静态初始化块，在对象装载到JVM中时执行一次，仅能初始化类成员变量，即static修饰的数据成员。</p>
+<h2 id="3-非静态初始化"><a href="#3-非静态初始化" class="headerlink" title="3. 非静态初始化"></a>3. 非静态初始化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 定义</div><div class="line">&#123;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>非静态初始化块在每个对象生成时都会被执行一次，它可以初始化类的实例变量。非静态初始化块在构造函数之前执行。</p>
+<h2 id="4-Demo"><a href="#4-Demo" class="headerlink" title="4. Demo"></a>4. Demo</h2><ul>
+<li>Example</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		System.out.println(<span class="string">"Run static initailization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"Run nonstatic initailization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Run Test constructor."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		Test t = <span class="keyword">new</span> Test();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Run static initailization block.</div><div class="line">Run nonstatic initailization block.</div><div class="line">Run Test constructor.</div></pre></td></tr></table></figure>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>从某种程度上来看，初始化块是构造器的补充，初始化块总是在构造器之前执行。初始化块是一段固定执行的代码，它不能接受任何参数。因此初始化块对同一个类的所有对象所进行的初始化处理完全相同。如果有一段初始化处理代码对所有的对象完全相同，且无需接受任何参数，就可以把这段初始化处理代码提取到初始化块中。通过把多个构造器中的相同代码提取到初始化块中定义，能更好地提高初始化代码的复用。静态初始化块是类相关的，系统将在类加载时执行静态初始化块，而不是在创建对象时才执行，因此静态初始化块总是比非静态初始化块先执行。用途：例如在JNI调用时，需要加载动态链接库，就可以在静态代码块中加载。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Java中的静态初始化和非静态初始化
+    
+    </summary>
+    
+      <category term="Java" scheme="noahsnail.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="noahsnail.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP/1.1的实体首部</title>
+    <link href="noahsnail.com/2017/01/03/2017-1-3-HTTP%201.1%E7%9A%84%E5%AE%9E%E4%BD%93%E9%A6%96%E9%83%A8/"/>
+    <id>noahsnail.com/2017/01/03/2017-1-3-HTTP 1.1的实体首部/</id>
+    <published>2017-01-03T13:43:10.000Z</published>
+    <updated>2017-01-03T14:25:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>HTTP实体首部描述了HTTP报文的内容。HTTP/1.1定义了以下10个实体首部字段：</p>
+<ul>
+<li>Content-Type</li>
+</ul>
+<p>实体中所承载的对象的类型。</p>
+<ul>
+<li>Content-Length</li>
+</ul>
+<p>所传输的实体的长度或大小。</p>
+<ul>
+<li>Content-Language</li>
+</ul>
+<p>与所传送对象最相配的人类语言。</p>
+<ul>
+<li>Content-Encoding</li>
+</ul>
+<p>对象数据所做的变换（例如压缩）。</p>
+<ul>
+<li>Content-Location</li>
+</ul>
+<p>一个备用位置，请求时可通过它获得对象。</p>
+<ul>
+<li>Content-Range</li>
+</ul>
+<p>如果这是实体部分，这个首部说明它是整体的哪个部分。</p>
+<ul>
+<li>Content-MD5</li>
+</ul>
+<p>实体主体内容的校验和。</p>
+<ul>
+<li>Last-Modified</li>
+</ul>
+<p>所传输内容在服务器上创建或最后修改的时间。</p>
+<ul>
+<li>Expires</li>
+</ul>
+<p>实体数据将要失效的日期时间。</p>
+<ul>
+<li>Allow</li>
+</ul>
+<p>该资源所允许的各种请求方法，例如，GET和HEAD。</p>
+<ul>
+<li>ETag</li>
+</ul>
+<p>这份文档特定实例的唯一验证码。ETag不是正式定义的实体首部。</p>
+<ul>
+<li>Cache-Control</li>
+</ul>
+<p>指出应该如何缓存文档。Cache-Control也不是正式定义的实体首部。</p>
+<p>参考文献</p>
+<ol>
+<li>HTTP权威指南</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      HTTP/1.1的实体首部
+    
+    </summary>
+    
+      <category term="HTTP" scheme="noahsnail.com/categories/HTTP/"/>
+    
+    
+      <category term="HTTP" scheme="noahsnail.com/tags/HTTP/"/>
+    
+  </entry>
+  
+</feed>

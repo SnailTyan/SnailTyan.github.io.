@@ -1,0 +1,997 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring框架是一个为支持开发Java应用提供全面基础架构的Java平台。Spring处理基础架构，因此你可以集中精力在你有应用上。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中英文对照_第二章">
+<meta property="og:url" content="noahsnail.com/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring框架是一个为支持开发Java应用提供全面基础架构的Java平台。Spring处理基础架构，因此你可以集中精力在你有应用上。">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_figure_2.1.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_figure_2.2.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_figure_2.3.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_figure_2.4.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_figure_2.5.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_table_2.1.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/log4j_samle.png">
+<meta property="og:updated_time" content="2016-10-07T14:03:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中英文对照_第二章">
+<meta name="twitter:description" content="Spring框架是一个为支持开发Java应用提供全面基础架构的Java平台。Spring处理基础架构，因此你可以集中精力在你有应用上。">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/spring_figure_2.1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/"/>
+
+
+
+
+
+  <title> Spring 5.0.0框架介绍_中英文对照_第二章 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 5.0.0框架介绍_中英文对照_第二章
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-10T16:08:47+08:00">
+              2016-09-10
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-10-07T22:03:33+08:00">
+              2016-10-07
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring框架参考手册-5-0-0/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring框架参考手册_5.0.0</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  Spring框架是一个为支持开发Java应用提供全面基础架构的Java平台。Spring处理基础架构，因此你可以集中精力在你有应用上。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
+<h2 id="2-Introduction-to-the-Spring-Framework"><a href="#2-Introduction-to-the-Spring-Framework" class="headerlink" title="2.Introduction to the Spring Framework"></a>2.Introduction to the Spring Framework</h2><p>The Spring Framework is a Java platform that provides comprehensive infrastructure support for developing Java applications. Spring handles the infrastructure so you can focus on your application.</p>
+<p>Spring框架是一个为支持开发Java应用提供全面基础架构的Java平台。Spring处理基础架构，因此你可以集中精力在你有应用上。</p>
+<p>Spring enables you to build applications from “plain old Java objects” (POJOs) and to apply enterprise services non-invasively to POJOs. This capability applies to the Java SE programming model and to full and partial Java EE.</p>
+<p>Spring使你能创建普通Java对象(POJO)并能非侵入式的将企业服务应用到普通Java对象(POJO)上。</p>
+<p>Examples of how you, as an application developer, can benefit from the Spring platform:</p>
+<ul>
+<li>Make a Java method execute in a database transaction without having to deal with transaction APIs.</li>
+<li>Make a local Java method a remote procedure without having to deal with remote APIs.</li>
+<li>Make a local Java method a management operation without having to deal with JMX APIs.</li>
+<li>Make a local Java method a message handler without having to deal with JMS APIs.</li>
+</ul>
+<p>作为一个应用开发者，下面是一些你能从Spring平台受益的例子：</p>
+<ul>
+<li>在一个数据库业务中执行一个Java方法而不必处理业务APIs</li>
+<li>使一个本地的Java方法可以远程调用而不必处理远程APIs</li>
+<li>使一个本地Java方法变为管理操作而不必处理JMX APIs</li>
+<li>使一个本地Java方法变为消息处理器而不必处理JMS APIs</li>
+</ul>
+<h3 id="2-1-Dependency-Injection-and-Inversion-of-Control"><a href="#2-1-Dependency-Injection-and-Inversion-of-Control" class="headerlink" title="2.1 Dependency Injection and Inversion of Control"></a>2.1 Dependency Injection and Inversion of Control</h3><p>A Java application — a loose term that runs the gamut from constrained, embedded applications to n-tier, server-side enterprise applications — typically consists of objects that collaborate to form the application proper. Thus the objects in an application have <strong><em>dependencies</em></strong> on each other.</p>
+<p>Java应用——一个不精确的术语，既可以表示受限制的嵌入式应用又可以表示N层服务端的企业级应用——通常由许多对象构成，这些对象协作形成完整的应用程序。因此一个应用程序中的对象是相互<strong><em>依赖</em></strong>的。</p>
+<p>Although the Java platform provides a wealth of application development functionality, it lacks the means to organize the basic building blocks into a coherent whole, leaving that task to architects and developers. Although you can use design patterns such as <strong><em>Factory, Abstract Factory, Builder, Decorator, and Service Locator</em></strong> to compose the various classes and object instances that make up an application, these patterns are simply that: best practices given a name, with a description of what the pattern does, where to apply it, the problems it addresses, and so forth. Patterns are formalized best practices that <strong><em>you must implement yourself</em></strong> in your application.</p>
+<p>尽管Java平台提供了大量的应用开发功能，但是它缺少把这些基本构建模块组织成一个连贯整体的方法，并把组织基本构建模块的任务留给了架构师和开发者。虽然你可以使用设计模式例如<strong><em>工厂模式、抽象工厂模式、生成器模式、装饰模式、服务定位模式</em></strong>来创建构成应用的各种类和对象实例，但这些设计模式很简单：命名的最佳方法、模式的作用描述、应用模式的位置、模式解决的问题等等。模式使最佳实践形式化了，这意味着你必须在你的应用中<strong><em>自己实现它</em></strong>。</p>
+<p>The Spring Framework <strong><em>Inversion of Control</em></strong> (IoC) component addresses this concern by providing a formalized means of composing disparate components into a fully working application ready for use. The Spring Framework codifies formalized design patterns as first-class objects that you can integrate into your own application(s). Numerous organizations and institutions use the Spring Framework in this manner to engineer robust, <strong><em>maintainable</em></strong> applications.</p>
+<p>Spring框架中的<strong><em>控制反转</em></strong>(IoC)组件通过提供一种形式化方法解决了这个问题，这个形式化方法将不同的组件创建到一个随时可用的完整的工作应用中。Spring框架将形式化的设计模式编码成了你可以集成到你自己的应用中的最好对象。许多组织和机构用这种方式应用Spring框架来构建鲁棒的、<strong><em>可维护</em></strong>的应用。</p>
+<blockquote>
+<p><strong>Background</strong><br>“The question is, what aspect of control are [they] inverting?” Martin Fowler posed this question about Inversion of Control (IoC) on his site in 2004. Fowler suggested renaming the principle to make it more self-explanatory and came up with <strong><em>Dependency Injection</em></strong>.                     </p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p><strong>背景</strong><br>“问题是什么是控制反转？” 2004年Martin Fowler在他的网站上提出了这个关于控制反转(IoC)问题。Fowler建议重新命名这个原理使它更一目了然并且提出了<strong><em>依赖注入</em></strong>。</p>
+</blockquote>
+<h3 id="2-2-Modules"><a href="#2-2-Modules" class="headerlink" title="2.2 Modules"></a>2.2 Modules</h3><p>The Spring Framework consists of features organized into about 20 modules. These modules are grouped into Core Container, Data Access/Integration, Web, AOP (Aspect Oriented Programming), Instrumentation, Messaging, and Test, as shown in the following diagram.</p>
+<p>Spring框架包含的功能大约由20个模块组成。这些模块按组可分为核心容器、数据访问/集成，Web，AOP(面向切面编程)、设备、消息和测试，如下图所示。</p>
+<p><strong>Figure 2.1. Overview of the Spring Framework</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_figure_2.1.png" alt="image"></p>
+<p>The following sections list the available modules for each feature along with their artifact names and the topics they cover. Artifact names correlate to <strong><em>artifact IDs</em></strong> used in Dependency Management tools.</p>
+<p>接下来的章节列出了每个功能可用的模块、它们的工件名字以及它们包含的主题。工件名字与依赖管理工具中使用的<strong><em>artifact IDs</em></strong>有关。</p>
+<h4 id="2-2-1-Core-Container"><a href="#2-2-1-Core-Container" class="headerlink" title="2.2.1 Core Container"></a>2.2.1 Core Container</h4><p>The Core Container consists of the <code>spring-core</code>, <code>spring-beans</code>, <code>spring-context</code>, <code>spring-context-support</code>, and <code>spring-expression</code> (Spring Expression Language) modules.</p>
+<p>核心容器功能包括<code>spring-core</code>, <code>spring-beans</code>, <code>spring-context</code>, <code>spring-context-support</code>, and <code>spring-expression</code>(Spring表现语言)模块。</p>
+<p>The <code>spring-core</code> and <code>spring-beans</code> modules provide the fundamental parts of the framework, including the IoC and Dependency Injection features. The <code>BeanFactory</code> is a sophisticated implementation of the factory pattern. It removes the need for programmatic singletons and allows you to decouple the configuration and specification of dependencies from your actual program logic.</p>
+<p><code>spring-core</code>和<code>spring-beans</code>模块提供了框架的基础结构部分，包含控制反转(IoC)和依赖注入(DI)功能。<code>BeanFactory</code>是工厂模式的高级实现。它去掉了程序单例模式的需求并且允许你从实际的程序逻辑中解耦配置和依赖关系。</p>
+<p>The Context (<code>spring-context</code>) module builds on the solid base provided by the Core and Beans modules: it is a means to access objects in a framework-style manner that is similar to a JNDI registry. The Context module inherits its features from the Beans module and adds support for internationalization (using, for example, resource bundles), event propagation, resource loading, and the transparent creation of contexts by, for example, a Servlet container. The Context module also supports Java EE features such as EJB, JMX, and basic remoting. The <code>ApplicationContext</code> interface is the focal point of the Context module.<code>spring-context-support</code> provides support for integrating common third-party libraries into a Spring application context, in particular for caching (EhCache, JCache) and scheduling (CommonJ, Quartz).</p>
+<p>上下文(<code>spring-context</code>)模块建立在由Core模块和Beans模块提供的坚实基础上：它是在类似于JNDI注册表式的框架风格模式中访问对象的一种方法。上下文模块继承了Beans模块的功能，并添加了对国际化（例如使用资源捆绑）、事件传播、资源加载和上下文透明创建（例如通过Servlet容器）的支持。上下文模块也支持Java EE功能例如EJB，JMX和基本的远程。<code>ApplicationContext</code>接口是上下文模块的焦点。<code>spring-context-support</code>支持将第三方库集成进Spring应用程序上下文中，特别是缓存(EhCache, JCache)和定时执行(CommonJ, Quartz)。</p>
+<p>The <code>spring-expression</code> module provides a powerful <strong><em>Expression Language</em></strong> for querying and manipulating an object graph at runtime. It is an extension of the unified expression language (unified EL) as specified in the JSP 2.1 specification. The language supports setting and getting property values, property assignment, method invocation, accessing the content of arrays, collections and indexers, logical and arithmetic operators, named variables, and retrieval of objects by name from Spring’s IoC container. It also supports list projection and selection as well as common list aggregations.</p>
+<p><code>spring-expression</code>模块提供了强大的<strong><em>表达式语言</em></strong>用来在运行时查询和操作对象图。它是JSP 2.1规范中统一表达式语言(unified EL)的扩展。这个语言支持setting和getting属性值，属性分配，方法调用，访问数组、集合和索引器的内容，逻辑和算术操作，变量命名，从Spring Ioc容器中通过名字检索对象。它也支持它还支持列表投影、选择以及常见的列表聚合。</p>
+<h4 id="2-2-2-AOP-and-Instrumentation"><a href="#2-2-2-AOP-and-Instrumentation" class="headerlink" title="2.2.2 AOP and Instrumentation"></a>2.2.2 AOP and Instrumentation</h4><p>The <code>spring-aop</code> module provides an <strong><em>AOP</em></strong> Alliance-compliant aspect-oriented programming implementation allowing you to define, for example, method interceptors and pointcuts to cleanly decouple code that implements functionality that should be separated. Using source-level metadata functionality, you can also incorporate behavioral information into your code, in a manner similar to that of .NET attributes.</p>
+<p><code>spring-aop</code>模块提供了<strong><em>AOP</em></strong> Alliance-compliant(AOP联盟)面向切面编程的实现，例如允许你自定义方法拦截器和切入点来清晰的解耦功能实现上应该分开的代码。使用源码级的元数据功能，你也可以将行为信息合并到你的代码中，在某种程度上这类似于.NET的属性值。</p>
+<p>The separate <code>spring-aspects</code> module provides integration with AspectJ.</p>
+<p>独立的<code>spring-aspects</code>模块提供了与AspectJ的集成。</p>
+<p>The <code>spring-instrument</code> module provides class instrumentation support and classloader implementations to be used in certain application servers. The <code>spring-instrument-tomcat</code> module contains Spring’s instrumentation agent for Tomcat.</p>
+<p><code>spring-instrument</code>模块提供了类设备支持和类加载器的实现，它们可以在某些应用服务器中使用。<code>spring-instrument-tomcat</code>模块包含了Tomcat的Spring设备代理。</p>
+<h4 id="2-2-3-Messaging"><a href="#2-2-3-Messaging" class="headerlink" title="2.2.3 Messaging"></a>2.2.3 Messaging</h4><p>Spring Framework 4 includes a <code>spring-messaging</code> module with key abstractions from the <strong><em>Spring Integration</em></strong> project such as <code>Message</code>, <code>MessageChannel</code>, <code>MessageHandler</code>, and others to serve as a foundation for messaging-based applications. The module also includes a set of annotations for mapping messages to methods, similar to the Spring MVC annotation based programming model.</p>
+<p>Spring 4框架中包含了<code>spring-messaging</code>模块，它对<strong><em>Spring集成</em></strong>项目例如<code>Message</code>, <code>MessageChannel</code>, <code>MessageHandler</code>和其它作为消息应用服务基础的项目进行了重要的抽象。这个模块也包含了一系列将消息映射到方法上的注解，这个注解与基于编程模型Spring MVC注解类似。</p>
+<h4 id="2-2-4-Data-Access-Integration"><a href="#2-2-4-Data-Access-Integration" class="headerlink" title="2.2.4 Data Access/Integration"></a>2.2.4 Data Access/Integration</h4><p>The <strong><em>Data Access/Integration</em></strong> layer consists of the JDBC, ORM, OXM, JMS, and Transaction modules.</p>
+<p><strong><em>数据访问/集成</em></strong>层包括JDBC,ORM,OXM,JMS和业务模块。</p>
+<p>The <code>spring-jdbc</code> module provides a JDBC-abstraction layer that removes the need to do tedious JDBC coding and parsing of database-vendor specific error codes.</p>
+<p><code>spring-jdbc</code>模块提供了JDBC抽象层，不需要再编写单调的JDBC代码，解析数据库提供商指定的错误编码。</p>
+<p>The <code>spring-tx</code> module supports programmatic and declarative transaction management for classes that implement special interfaces and for <strong><em>all your POJOs (Plain Old Java Objects)</em></strong>.</p>
+<p><code>spring-tx</code>模块为实现指定接口和所有的普通Java对象(POJOs)的类提供编程式(programmatic)和声明式(declarative)的业务管理。</p>
+<p>The <code>spring-orm</code> module provides integration layers for popular object-relational mapping APIs, including JPA and Hibernate. Using the <code>spring-orm</code> module you can use these O/R-mapping frameworks in combination with all of the other features Spring offers, such as the simple declarative transaction management feature mentioned previously.</p>
+<p><code>spring-orm</code>模块提供流行的对象关系映射APIs的集成层，包括JPA和Hibernate。在使用<code>spring-orm</code>模块时，你可以将Spring的其它功能与这些O/R-mapping框架结合起来使用，例如前面提到的简单声明式业务管理的功能。</p>
+<p>The <code>spring-oxm</code> module provides an abstraction layer that supports Object/XML mapping implementations such as JAXB, Castor, JiBX and XStream.</p>
+<p><code>spring-oxm</code>模块提供对Object/XML映射实现例如JAXB，Castor，JiBx和XStream的抽象层。</p>
+<p>The <code>spring-jms</code> module (Java Messaging Service) contains features for producing and consuming messages. Since Spring Framework 4.1, it provides integration with the <code>spring-messaging</code> module.</p>
+<p><code>spring-jms</code>模块（Java消息服务）包含产生和处理消息的功能。从Spring 4.1框架开始它提供了与<code>spring-messaging</code>的集成。</p>
+<h4 id="2-2-5-Web"><a href="#2-2-5-Web" class="headerlink" title="2.2.5 Web"></a>2.2.5 Web</h4><p>The Web layer consists of the <code>spring-web</code>, <code>spring-webmvc</code> and <code>spring-websocket</code> modules.</p>
+<p>网络层包含<code>spring-web</code>, <code>spring-webmvc</code>和<code>spring-websocket</code>模块。</p>
+<p>The <code>spring-web</code> module provides basic web-oriented integration features such as multipart file upload functionality and the initialization of the IoC container using Servlet listeners and a web-oriented application context. It also contains an HTTP client and the web-related parts of Spring’s remoting support.</p>
+<p><code>spring-web</code>模块提供基本的面向网络集成功能，例如multipart文件上传功能，使用Servlet监听器来初始化Ioc容器和面向网络的应用程序上下文。它也包含了HTTP客户端和Spring远程支持中网络相关的部分。</p>
+<p>The <code>spring-webmvc</code> module (also known as the <strong><em>Web-Servlet</em></strong> module) contains Spring’s model-view-controller (MVC) and REST Web Services implementation for web applications. Spring’s MVC framework provides a clean separation between domain model code and web forms and integrates with all of the other features of the Spring Framework.</p>
+<p><code>spring-webmvc</code>模块（也被称为<strong><em>Web-Servlet</em></strong>模块）包含了Spring的model-view-controller(MVC)和REST Web Services的网络应用实现。Spring的MVC框架提供了对领域模型代码，web表单，Spring框架其他功能的完全分离。</p>
+<h4 id="2-2-6-Test"><a href="#2-2-6-Test" class="headerlink" title="2.2.6 Test"></a>2.2.6 Test</h4><p>The <code>spring-test</code> module supports the unit testing and integration testing of Spring components with JUnit or TestNG. It provides consistent loading of Spring <code>ApplicationContexts</code> and caching of those contexts. It also provides mock objects that you can use to test your code in isolation.</p>
+<p><code>spring-test</code>模块支持单元测试，Spring组件和JUnit或TestNG的集成测试。它提供了Spring的<code>ApplicationContexts</code>加载和这些上下文缓存的一致。它也提供了可以单独测试代码的模拟对象。</p>
+<h3 id="2-3-Usage-scenarios"><a href="#2-3-Usage-scenarios" class="headerlink" title="2.3 Usage scenarios"></a>2.3 Usage scenarios</h3><p>The building blocks described previously make Spring a logical choice in many scenarios, from embedded applications that run on resource-constrained devices to full-fledged enterprise applications that use Spring’s transaction management functionality and web framework integration.</p>
+<p>前面描述的搭积木方式使Spring在许多场景中都有一个合理选择，从运行在资源受限的嵌入式应用到全面成熟的企业级应用都在使用Spring的业务管理功能和网络框架集成。</p>
+<p><strong>Figure 2.2. Typical full-fledged Spring web application</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_figure_2.2.png" alt="image"></p>
+<p>Spring’s declarative transaction management features make the web application fully transactional, just as it would be if you used EJB container-managed transactions. All your custom business logic can be implemented with simple POJOs and managed by Spring’s IoC container. Additional services include support for sending email and validation that is independent of the web layer, which lets you choose where to execute validation rules. Spring’s ORM support is integrated with JPA and Hibernate; for example, when using Hibernate, you can continue to use your existing mapping files and standard Hibernate <code>SessionFactory</code> configuration. Form controllers seamlessly integrate the web-layer with the domain model, removing the need for <code>ActionForms</code> or other classes that transform HTTP parameters to values for your domain model.</p>
+<p>Spring的声明式业务管理功能使web应用全面的业务化，如果你用过EJB容器管理业务的话你会发现它们基本一样。你所有自定义的业务逻辑都可以用POJOs实现并通过Spring的IoC容器管理。附加业务包括支持邮件发送和验证，这个是独立于web层之外的，你可以自由选择验证规则执行的位置。Spring对ORM的支持与JPA和Hibernate进行了集成；例如，当你使用Hibernate时，你可以继续使用你现有的映射文件和标准的Hibernate <code>SessionFactory</code>配置。表单控制器被无缝的将web层和领域模型进行了集成，对于你的领域模型来讲不再需要<code>ActionForms</code>或其它的将HTTP参数转换成值的</p>
+<p><strong>Figure 2.3. Spring middle-tier using a third-party web framework</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_figure_2.3.png" alt="image"></p>
+<p>Sometimes circumstances do not allow you to completely switch to a different framework. The Spring Framework does not force you to use everything within it; it is not an <strong><em>all-or-nothing</em></strong> solution. Existing front-ends built with Struts, Tapestry, JSF or other UI frameworks can be integrated with a Spring-based middle-tier, which allows you to use Spring transaction features. You simply need to wire up your business logic using an <code>ApplicationContext</code> and use a <code>WebApplicationContext</code> to integrate your web layer.</p>
+<p>有时候环境不允许你完全转成一个不同的框架。Spring框架<strong><em>不</em></strong>强迫你都采用它内部的东西；它不是一个<strong><em>要么全有要么全无</em></strong>的解决方案。现有的采用Struts,Tapestry,JSF或其它UI框架构建的前端可以与基于Spring的中间层进行集成，这可以让你使用Spring的业务功能。你只需要简单的用<code>ApplicationContext</code>和<code>WebApplicationContext</code>绑定你的业务逻辑然后集成到web层即可。</p>
+<p><strong>Figure 2.4. Remoting usage scenario</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_figure_2.4.png" alt="image"></p>
+<p>When you need to access existing code through web services, you can use Spring’s <code>Hessian-</code>, <code>Rmi-</code> or <code>HttpInvokerProxyFactoryBean</code> classes. Enabling remote access to existing applications is not difficult.</p>
+<p>当你需要通过web服务访问现有代码时，你可以使用Spring的<code>Hessian-</code>, <code>Rmi-</code> 或 <code>HttpInvokerProxyFactoryBean</code>类。这能让远程访问现有应用变得很容易。</p>
+<p><strong>Figure 2.5. EJBs - Wrapping existing POJOs</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_figure_2.5.png" alt="image"></p>
+<p>The Spring Framework also provides an access and abstraction layer for Enterprise JavaBeans, enabling you to reuse your existing POJOs and wrap them in stateless session beans for use in scalable, fail-safe web applications that might need declarative security.</p>
+<p>Spring框架也为企业JavaBeans提供了访问和抽象层，使你能重用你现有的POJOs，为了可扩展使用可以将它们包装成无状态的session beans，自动防故障的web应用可能需要声明安全。</p>
+<h4 id="2-3-1-Dependency-Management-and-Naming-Conventions"><a href="#2-3-1-Dependency-Management-and-Naming-Conventions" class="headerlink" title="2.3.1 Dependency Management and Naming Conventions"></a>2.3.1 Dependency Management and Naming Conventions</h4><p>Dependency management and dependency injection are different things. To get those nice features of Spring into your application (like dependency injection) you need to assemble all the libraries needed (jar files) and get them onto your classpath at runtime, and possibly at compile time. These dependencies are not virtual components that are injected, but physical resources in a file system (typically). The process of dependency management involves locating those resources, storing them and adding them to classpaths. Dependencies can be direct (e.g. my application depends on Spring at runtime), or indirect (e.g. my application depends on <code>commons-dbcp</code> which depends on <code>commons-pool</code>). The indirect dependencies are also known as “transitive” and it is those dependencies that are hardest to identify and manage.</p>
+<p>依赖管理和依赖注入是完全不同的两件事。为了能你的应用中使用Spring的优秀特性（像依赖注入），你需要收集所有必要的库(jar文件)并在运行时将它们添加到classpath中，有可能在编译时就需要添加。这些依赖不是要被注入的虚拟组建，而是文件系统中的物理资源(通常情况下)。这些依赖管理的过程包括资源的定位、存储和添加到classpath中。依赖可以是直接的（例如：我的应用在运行时依赖Spring），或间接的（例如：我的应用依赖<code>commons-dbcp</code>，而它依赖<code>commons-pool</code>）。间接依赖也被称为”传递式”的，这些依赖也是最难识别和管理的。</p>
+<p>If you are going to use Spring you need to get a copy of the jar libraries that comprise the pieces of Spring that you need. To make this easier Spring is packaged as a set of modules that separate the dependencies as much as possible, so for example if you don’t want to write a web application you don’t need the spring-web modules. To refer to Spring library modules in this guide we use a shorthand naming convention <code>spring-*</code> or <code>spring-*.jar</code>, where <code>*</code> represents the short name for the module (e.g. <code>spring-core</code>, <code>spring-webmvc</code>, <code>spring-jms</code>, etc.). The actual jar file name that you use is normally the module name concatenated with the version number (e.g. <code>spring-core-5.0.0.BUILD-SNAPSHOT.jar</code>).</p>
+<p>如果你想使用Spring，你需要有包含你需要的Spirng功能的jar库副本。为了使这个更容易，Spring被打包成了一系列尽可能将依赖分离开的模块，例如你不想写web应用那你就不需要spring-web模块。为了在本指南中谈及Spring的库模块，我们使用了一个简写命名约定<code>spring-*</code>或<code>spring-*.jar</code>，<code>*</code>表示模块的简写名字(例如<code>spring-core</code>, <code>spring-webmvc</code>, <code>spring-jms</code>等等)。实际中你使用的jar文件名字通常是模块名加上版本号（例如<code>spring-core-5.0.0.BUILD-SNAPSHOT.jar</code>）。</p>
+<p>Each release of the Spring Framework will publish artifacts to the following places:</p>
+<ul>
+<li>Maven Central, which is the default repository that Maven queries, and does not require any special configuration to use. Many of the common libraries that Spring depends on also are available from Maven Central and a large section of the Spring community uses Maven for dependency management, so this is convenient for them. The names of the jars here are in the form <code>spring-*-&lt;version&gt;.jar</code> and the Maven groupId is <code>org.springframework</code>.</li>
+<li>In a public Maven repository hosted specifically for Spring. In addition to the final GA releases, this repository also hosts development snapshots and milestones. The jar file names are in the same form as Maven Central, so this is a useful place to get development versions of Spring to use with other libraries deployed in Maven Central. This repository also contains a bundle distribution zip file that contains all Spring jars bundled together for easy download.<br>So the first thing you need to decide is how to manage your dependencies: we generally recommend the use of an automated system like Maven, Gradle or Ivy, but you can also do it manually by downloading all the jars yourself.</li>
+</ul>
+<p>Spring框架的每次发布都会下面的地方公布artifacts：</p>
+<ul>
+<li>Maven Central，Maven查询的默认仓库，使用时不需要任何特定的配置。Spring依赖的许多共通库也可以从Maven Central获得，Spring社区的很大一部分都在使用Maven进行依赖管理，因此这对他们来说是很方便的。jar包的命名形式是<code>spring-*-&lt;version&gt;.jar</code>，Maven GroupId是<code>org.springframework</code>。</li>
+<li>由Spring掌管的公开Maven库。除了最终的GA release（公开可获得的版本）之外，这个仓库也有开发版本的快照和milestone版本。jar包的命名形式和Maven Central一样，这是一个可以使用Spring开发版本有用地方，而其它的库部署在Maven Central。这个库也包含的捆绑分布的zip文件，这个zip文件中所有的Spring jar包被捆绑到一起很容易下载。</li>
+</ul>
+<p>You will find bellow the list of Spring artifacts. For a more complete description of each modules, see Section 2.2, “Modules”.</p>
+<p>你将在下面找到Spring artifacts列表。想要每个模块更全面的描述，请看2.2小节。</p>
+<p><strong>Table 2.1. Spring Framework Artifacts</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_table_2.1.png" alt="image"><br><!--
+| GroupId | ArtifactId | Description |
+| :------ | :------ | :------ |
+| org.springframework | spring-aop               | Proxy-based AOP support |
+| org.springframework | spring-aspects           | AspectJ based aspects |
+| org.springframework | spring-beans             | Beans support, including Groovy |
+| org.springframework | spring-context           | Application context runtime, including scheduling and remoting abstractions |
+| org.springframework | spring-context-support   | Support classes for integrating common third-party libraries into a Spring application context |
+| org.springframework | spring-core              | Core utilities, used by many other Spring modules |
+| org.springframework | spring-expression        | Spring Expression Language (SpEL) |
+| org.springframework | spring-instrument        | Instrumentation agent for JVM bootstrapping |
+| org.springframework | spring-instrument-tomcat | Instrumentation agent for Tomcat |
+| org.springframework | spring-jdbc              | JDBC support package, including DataSource setup and JDBC access support |
+| org.springframework | spring-jms               | JMS support package, including helper classes to send and receive JMS messages |
+| org.springframework | spring-messaging         | Support for messaging architectures and protocols |
+| org.springframework | spring-orm               | Object/Relational Mapping, including JPA and Hibernate support |
+| org.springframework | spring-oxm               | Object/XML Mapping |
+| org.springframework | spring-test              | Support for unit testing and integration testing Spring components |
+| org.springframework | spring-tx                | Transaction infrastructure, including DAO support and JCA integration |
+| org.springframework | spring-web               | Web support packages, including client and web remoting |
+| org.springframework | spring-webmvc            | REST Web Services and model-view-controller implementation for web applications |
+| org.springframework | spring-websocket         | WebSocket and SockJS implementations, including STOMP support |
+--><br><strong>Spring Dependencies and Depending on Spring</strong></p>
+<p>Although Spring provides integration and support for a huge range of enterprise and other external tools, it intentionally keeps its mandatory dependencies to an absolute minimum: you shouldn’t have to locate and download (even automatically) a large number of jar libraries in order to use Spring for simple use cases. For basic dependency injection there is only one mandatory external dependency, and that is for logging (see below for a more detailed description of logging options).</p>
+<p>虽然Spring提供集成并支持大范围内的企业和其它外部工具，但它有意使它的强制性依赖到一个绝对最小化的程度：对于简单的用例你不应该为了使用Spring而定位和下载（即使是自动的）许多jar库。对于基本的依赖注入仅有一个强制性的外部依赖，那个依赖是关于日志的（在下面可以看到日志选择更详细的描述）。</p>
+<p>Next we outline the basic steps needed to configure an application that depends on Spring, first with Maven and then with Gradle and finally using Ivy. In all cases, if anything is unclear, refer to the documentation of your dependency management system, or look at some sample code - Spring itself uses Gradle to manage dependencies when it is building, and our samples mostly use Gradle or Maven.</p>
+<p>接下来我们概述配置一个依赖于Spring的应用需要的基本步骤，首先Maven的，其次是Gradle的，最后是Ivy的。在所有的案例中，如果有任何不清楚的地方，请参考你的依赖管理系统的文档，或者看一些示例代码——Spring本身构建时使用Gradle来管理依赖，我们例子中大多数是使用Gradle和Maven的。</p>
+<p><strong>Maven Dependency Management</strong></p>
+<p>If you are using Maven for dependency management you don’t even need to supply the logging dependency explicitly. For example, to create an application context and use dependency injection to configure an application, your Maven dependencies will look like this:</p>
+<p>如果你正在使用Maven来进行依赖管理，那你不必显式的提供日志依赖。例如，为了创建一个应用上下文，使用依赖注入来配置一个应用，你的Maven依赖看上去是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;5.0.0.BUILD-SNAPSHOT&lt;/version&gt;</div><div class="line">        &lt;scope&gt;runtime&lt;/scope&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">&lt;/dependencies&gt;</div></pre></td></tr></table></figure>
+<p>That’s it. Note the scope can be declared as runtime if you don’t need to compile against Spring APIs, which is typically the case for basic dependency injection use cases.</p>
+<p>就是它。注意如果你不需要编译Spring APIs，scope可以被声明成rumtime，这是典型的基本依赖注入的情况。</p>
+<p>The example above works with the Maven Central repository. To use the Spring Maven repository (e.g. for milestones or developer snapshots), you need to specify the repository location in your Maven configuration. For full releases:</p>
+<p>上面的例子是采用Maven中心仓库的。为了使用Spring Maven仓库(例如：使用milestone版本或snapshot版本)，你需要在Maven配置中指定仓库的位置，完整的版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;repositories&gt;</div><div class="line">    &lt;repository&gt;</div><div class="line">        &lt;id&gt;io.spring.repo.maven.release&lt;/id&gt;</div><div class="line">        &lt;url&gt;http://repo.spring.io/release/&lt;/url&gt;</div><div class="line">        &lt;snapshots&gt;&lt;enabled&gt;false&lt;/enabled&gt;&lt;/snapshots&gt;</div><div class="line">    &lt;/repository&gt;</div><div class="line">&lt;/repositories&gt;</div></pre></td></tr></table></figure>
+<p>For milestones:<br>对于milestone版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;repositories&gt;</div><div class="line">    &lt;repository&gt;</div><div class="line">        &lt;id&gt;io.spring.repo.maven.milestone&lt;/id&gt;</div><div class="line">        &lt;url&gt;http://repo.spring.io/milestone/&lt;/url&gt;</div><div class="line">        &lt;snapshots&gt;&lt;enabled&gt;false&lt;/enabled&gt;&lt;/snapshots&gt;</div><div class="line">    &lt;/repository&gt;</div><div class="line">&lt;/repositories&gt;</div></pre></td></tr></table></figure>
+<p>And for snapshots:<br>对于snapshot版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;repositories&gt;   </div><div class="line">    &lt;repository&gt;</div><div class="line">        &lt;id&gt;io.spring.repo.maven.snapshot&lt;/id&gt;</div><div class="line">        &lt;url&gt;http://repo.spring.io/snapshot/&lt;/url&gt;</div><div class="line">        &lt;snapshots&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;/snapshots&gt;</div><div class="line">    &lt;/repository&gt;</div><div class="line">&lt;/repositories&gt;</div></pre></td></tr></table></figure>
+<p><strong>Maven “Bill Of Materials” Dependency</strong></p>
+<p>It is possible to accidentally mix different versions of Spring JARs when using Maven. For example, you may find that a third-party library, or another Spring project, pulls in a transitive dependency to an older release. If you forget to explicitly declare a direct dependency yourself, all sorts of unexpected issues can arise.</p>
+<p>在使用Maven时，有可能会偶然的将不同版本的Spring JARs混合起来。例如，你可能找到一个第三方库，或另一个Spring项目，通过传递依赖进入了一个更旧的版本。如果你忘了自己显式的声明一个直接依赖，会产生各种意想不到的问题。</p>
+<p>To overcome such problems Maven supports the concept of a “bill of materials” (BOM) dependency. You can import the <code>spring-framework-bom</code> in your <code>dependencyManagement</code> section to ensure that all spring dependencies (both direct and transitive) are at the same version.</p>
+<p>为了解决这种问题，Maven支持”材料清单”(BOM)依赖的概念。你可以在你的<code>dependencyManagement</code>部分导入<code>spring-framework-bom</code>来确保所有的Spring依赖（直接和传递的）都是同一个版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;dependencyManagement&gt;</div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-framework-bom&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;5.0.0.BUILD-SNAPSHOT&lt;/version&gt;</div><div class="line">            &lt;type&gt;pom&lt;/type&gt;</div><div class="line">            &lt;scope&gt;import&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">    &lt;/dependencies&gt;</div><div class="line">&lt;/dependencyManagement&gt;</div></pre></td></tr></table></figure>
+<p>An added benefit of using the BOM is that you no longer need to specify the <code>&lt;version&gt;</code> attribute when depending on Spring Framework artifacts:</p>
+<p>使用BOM的额外好处是当依赖Spring框架的artifacts时你不再需要指定<code>&lt;version&gt;</code>属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">&lt;dependencies&gt;</div></pre></td></tr></table></figure>
+<p><strong>Gradle Dependency Management</strong></p>
+<p>To use the Spring repository with the Gradle build system, include the appropriate URL in the <code>repositories</code> section:</p>
+<p>为了在Gradle构建系统中使用Spring仓库，在<code>repositories</code>部分需要包含合适的URL：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">    // and optionally...</div><div class="line">    maven &#123; url &quot;http://repo.spring.io/release&quot; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>You can change the <code>repositories</code> URL from <code>/release</code> to <code>/milestone</code> or <code>/snapshot</code> as appropriate. Once a repository has been configured, you can declare dependencies in the usual Gradle way:</p>
+<p>当合适的时候你可以修改<code>repositories</code>的URL从<code>/release</code>到<code>/milestone</code>或<code>/snapshot</code>。一旦一个仓库被配置了，你可以用通常的Gradle方式声明依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile(&quot;org.springframework:spring-context:5.0.0.BUILD-SNAPSHOT&quot;)</div><div class="line">    testCompile(&quot;org.springframework:spring-test:5.0.0.BUILD-SNAPSHOT&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Ivy Dependency Management</strong></p>
+<p>If you prefer to use Ivy to manage dependencies then there are similar configuration options.</p>
+<p>如果你更喜欢使用Ivy来管理依赖，这有类似的配置选择。</p>
+<p>To configure Ivy to point to the Spring repository add the following resolver to your <code>ivysettings.xml</code>:</p>
+<p>为了配置Ivy指定Spring仓库，添加下面的解析器到你的<code>ivysettings.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;resolvers&gt;</div><div class="line">    &lt;ibiblio name=&quot;io.spring.repo.maven.release&quot;</div><div class="line">            m2compatible=&quot;true&quot;</div><div class="line">            root=&quot;http://repo.spring.io/release/&quot;/&gt;</div><div class="line">&lt;/resolvers&gt;</div></pre></td></tr></table></figure>
+<p>You can change the root URL from <code>/release/</code> to <code>/milestone/</code> or <code>/snapshot/</code> as appropriate.</p>
+<p>当合适的时候你可以更改根URL从<code>repositories</code>的URL从<code>/release</code>到<code>/milestone</code>或<code>/snapshot</code>。</p>
+<p>Once configured, you can add dependencies in the usual way. For example (in <code>ivy.xml</code>):</p>
+<p>一旦配置了，你可以通过一般的方式添加依赖。例如（在<code>ivy.xml</code>）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;dependency org=&quot;org.springframework&quot;</div><div class="line">    name=&quot;spring-core&quot; rev=&quot;5.0.0.BUILD-SNAPSHOT&quot; conf=&quot;compile-&gt;runtime&quot;/&gt;</div></pre></td></tr></table></figure>
+<p><strong>Distribution Zip Files</strong></p>
+<p>Although using a build system that supports dependency management is the recommended way to obtain the Spring Framework, it is still possible to download a distribution zip file.</p>
+<p>尽管使用一个支持依赖管理的构建系统是获得Spring框架的推荐方式，但仍然可以下载发行版的Zip文件。</p>
+<p>Distribution zips are published to the Spring Maven Repository (this is just for our convenience, you don’t need Maven or any other build system in order to download them).</p>
+<p>发行版的zips是被发布到Spring Maven仓库（这只是为了我们的方便，为了下载它们你不需要Maven或任何其它的构建系统）。</p>
+<p>To download a distribution zip open a web browser to <a href="http://repo.spring.io/release/org/springframework/spring" target="_blank" rel="external">http://repo.spring.io/release/org/springframework/spring</a> and select the appropriate subfolder for the version that you want. Distribution files end <code>-dist.zip</code>, for example spring-framework-{spring-version}-RELEASE-dist.zip. Distributions are also published for milestones and snapshots.</p>
+<p>为了下载发行版zip，打开浏览器输入<a href="http://repo.spring.io/release/org/springframework/spring" target="_blank" rel="external">http://repo.spring.io/release/org/springframework/spring</a>，然后选择你想要的版本的合适子文件夹。发行版文件以<code>-dist.zip</code>结尾，例如spring-framework-{spring-version}-RELEASE-dist.zip。发行版也可以公布milestone版本或snapshots版本。</p>
+<h4 id="2-3-2-Logging"><a href="#2-3-2-Logging" class="headerlink" title="2.3.2 Logging"></a>2.3.2 Logging</h4><p>Logging is a very important dependency for Spring because <em>a)</em> it is the only mandatory external dependency, <em>b)</em> everyone likes to see some output from the tools they are using, and <em>c)</em> Spring integrates with lots of other tools all of which have also made a choice of logging dependency. One of the goals of an application developer is often to have unified logging configured in a central place for the whole application, including all external components. This is more difficult than it might have been since there are so many choices of logging framework.</p>
+<p>日志对于Spring来说是一个非常重要的依赖，因为：<em>a)</em>它是唯一的强制性外部依赖，<em>b)</em>每个人都喜欢从他们使用的工具中看到一些输出，<em>c)</em>Spring集成了许多其它的工具，这些工具也选择了日志依赖。应用开发者的一个目标就是对于整个应用来讲，经常要有一个中心地方来进行日志的统一配置，包括所有的外部组件。比它更困难的可能是有太多的日志框架去选择。</p>
+<p>The mandatory logging dependency in Spring is the Jakarta Commons Logging API (JCL). We compile against JCL and we also make JCL <code>Log</code> objects visible for classes that extend the Spring Framework. It’s important to users that all versions of Spring use the same logging library: migration is easy because backwards compatibility is preserved even with applications that extend Spring. The way we do this is to make one of the modules in Spring depend explicitly on <code>commons-logging</code> (the canonical implementation of JCL), and then make all the other modules depend on that at compile time. If you are using Maven for example, and wondering where you picked up the dependency on <code>commons-logging</code>, then it is from Spring and specifically from the central module called <code>spring-core</code>.</p>
+<p>Spring中的强制日志依赖是Jakarta Commons Logging API (JCL)。我们编译JCL并使JCL<code>log</code>对象对类是可见的，这扩展了Spring框架。所有版本的Spring采用同一个日志库：移植是容易的，因为即使应用扩展了Spring但保留了向后兼容性，这一点对用户来说很重要。我们实现这个的方式是让Spring的模块之一显式的依赖<code>commons-logging</code>(JCL的标准实现)，然后使其它模块在编译时依赖这个模块。例如如果你在使用Maven，想找出依赖于<code>commons-logging</code>的依赖在哪，它在Spring中，更确切的说它是在Spring的中心模块<code>spring-core</code>中。</p>
+<p>The nice thing about <code>commons-logging</code> is that you don’t need anything else to make your application work. It has a runtime discovery algorithm that looks for other logging frameworks in well known places on the classpath and uses one that it thinks is appropriate (or you can tell it which one if you need to). If nothing else is available you get pretty nice looking logs just from the JDK (java.util.logging or JUL for short). You should find that your Spring application works and logs happily to the console out of the box in most situations, and that’s important.</p>
+<p>关于<code>commons-logging</code>的一件好事是要使你的应用工作你不需要任何其它的东西。它有一个运行时发现算法，这个算法能寻找其它的日志框架在知名的classpath中，并使用一个它认为是合适的(或者你告诉它你想用哪个如果你需要的话)。如果找不到任何别的你可以从JDK中找到一个非常美好漂亮的日志(java.util.logging或缩写为JUL)。在大多数环境中你可以发现你的Spring应用恰当地运行并输出日志到控制台输出框中，那是很重要的。</p>
+<p><strong>Not Using Commons Logging</strong></p>
+<p>Unfortunately, the runtime discovery algorithm in <code>commons-logging</code>, while convenient for the end-user, is problematic. If we could turn back the clock and start Spring now as a new project it would use a different logging dependency. The first choice would probably be the Simple Logging Facade for Java ( SLF4J), which is also used by a lot of other tools that people use with Spring inside their applications.</p>
+<p>不幸的是， 虽然<code>commons-logging</code>的运行时发现算法对于终端用户是方便的，但它是有问题的。如果我们将时钟回拨，把Spring作为一个新项目重新开始，将会选择一个不同的日志依赖。第一个选择可能是Simple Logging Facade for Java(SLF4J)，应用内部使用Spring的人使用的许多其它工具也用了SLF4J。</p>
+<p>There are basically two ways to switch off <code>commons-logging</code>:</p>
+<ol>
+<li>Exclude the dependency from the <code>spring-core</code> module (as it is the only module that explicitly depends on <code>commons-logging</code>)</li>
+<li>Depend on a special commons-logging dependency that replaces the library with an empty jar (more details can be found in the SLF4J FAQ)</li>
+</ol>
+<p>这儿有两种方式关掉<code>commons-logging</code>:</p>
+<ol>
+<li>从<code>spring-core</code>模块排除依赖（因为它是唯一的显式依赖）<code>commons-logging</code>的模块</li>
+<li>依赖于一个特定的<code>commons-logging</code>依赖，用一个空jar替换这个依赖（更多细节可以在<a href="http://slf4j.org/faq.html#excludingJCL" target="_blank" rel="external">SLF4J FAQ</a>中找到）。</li>
+</ol>
+<p>To exclude <code>commons-logging</code>, add the following to your <code>dependencyManagement</code> section:</p>
+<p>为了排除<code>commons-logging</code>，把下面的内容加入到你的<code>dependencyManagement</code>部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;5.0.0.BUILD-SNAPSHOT&lt;/version&gt;</div><div class="line">        &lt;exclusions&gt;</div><div class="line">            &lt;exclusion&gt;</div><div class="line">                &lt;groupId&gt;commons-logging&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</div><div class="line">            &lt;/exclusion&gt;</div><div class="line">        &lt;/exclusions&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">&lt;/dependencies&gt;</div></pre></td></tr></table></figure>
+<p>Now this application is probably broken because there is no implementation of the JCL API on the classpath, so to fix it a new one has to be provided. In the next section we show you how to provide an alternative implementation of JCL using SLF4J as an example.</p>
+<p>现在这个应用可能是坏了的，因为在classpath中没有JCL API的实现，为了解决这个问题必须提供一个新的实现。在接下来的部分我们将向你展示怎样提供一个JCL替代实现，使用SLF4J就是一个例子。</p>
+<p><strong>Using SLF4J</strong></p>
+<p>SLF4J is a cleaner dependency and more efficient at runtime than <code>commons-logging</code> because it uses compile-time bindings instead of runtime discovery of the other logging frameworks it integrates. This also means that you have to be more explicit about what you want to happen at runtime, and declare it or configure it accordingly. SLF4J provides bindings to many common logging frameworks, so you can usually choose one that you already use, and bind to that for configuration and management.</p>
+<p>SLF4J是一个更纯净的依赖并且在运行时比<code>commons-logging</code>更有效，因为它使用编译时绑定来代替运行时查找集成的其它日志框架。这也意味着你必须更清楚你想要运行时发生什么，然后相应的声明它或配置它。SLF4J提供跟许多常用日志框架的绑定，因此你通常可以选择一个你正在使用的日志框架，然后绑定到配置和管理上。</p>
+<p>SLF4J provides bindings to many common logging frameworks, including JCL, and it also does the reverse: bridges between other logging frameworks and itself. So to use SLF4J with Spring you need to replace the <code>commons-logging</code> dependency with the SLF4J-JCL bridge. Once you have done that then logging calls from within Spring will be translated into logging calls to the SLF4J API, so if other libraries in your application use that API, then you have a single place to configure and manage logging.</p>
+<p>SLF4J提供跟许多常用日志框架的绑定，包括JCL，它做的恰恰相反，建立其它日志框架和它自己的纽带。因此为了在Spring中使用SLF4J，你需要用SLF4J-JCL连接器取替换<code>commons-logging</code>依赖。一旦你在Spring内部使用了日志调用，Spring会将日志调用变为调用SLF4J API，如果你应用中其它的库调用了那个API，你将有一个单独的地方配置和管理日志。</p>
+<p>A common choice might be to bridge Spring to SLF4J, and then provide explicit binding from SLF4J to Log4J. You need to supply 4 dependencies (and exclude the existing <code>commons-logging</code>): the bridge, the SLF4J API, the binding to Log4J, and the Log4J implementation itself. In Maven you would do that like this</p>
+<p>一个常用的选择连接Spring和SLF4J，然后提供SLF4J到Log4J的显式绑定。你需要提供四个依赖(排除现有的<code>commons-logging</code>)：连接、SLF4J API、到Log4J的绑定、Log4J本身的实现。在Maven中你可能这么做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;5.0.0.BUILD-SNAPSHOT&lt;/version&gt;</div><div class="line">        &lt;exclusions&gt;</div><div class="line">            &lt;exclusion&gt;</div><div class="line">                &lt;groupId&gt;commons-logging&lt;/groupId&gt;</div><div class="line">                &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</div><div class="line">            &lt;/exclusion&gt;</div><div class="line">        &lt;/exclusions&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.5.8&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.5.8&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.5.8&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;log4j&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;log4j&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.2.14&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">&lt;/dependencies&gt;</div></pre></td></tr></table></figure>
+<p>That might seem like a lot of dependencies just to get some logging. Well it is, but it <em>is</em> optional, and it should behave better than the vanilla <code>commons-logging</code> with respect to classloader issues, notably if you are in a strict container like an OSGi platform. Allegedly there is also a performance benefit because the bindings are at compile-time not runtime.</p>
+<p>这可能看起来为了得到一些日志需要很多依赖。还好它是可选的，比起<code>commons-logging</code>的关于类加载器的问题，尤其是你在一个像OSGi平台那样严格的容器中的时候，它应该更好操作。据说这儿也有一个性能提升，因为绑定是在编译时而不是在运行时。</p>
+<p>A more common choice amongst SLF4J users, which uses fewer steps and generates fewer dependencies, is to bind directly to Logback. This removes the extra binding step because Logback implements SLF4J directly, so you only need to depend on two libraries not four ( <code>jcl-over-slf4j</code> and <code>logback</code>). If you do that you might also need to exclude the slf4j-api dependency from other external dependencies (not Spring), because you only want one version of that API on the classpath.</p>
+<p>在SLF4J用户中，一个更通用的选择是直接绑定到<a href="http://logback.qos.ch/" target="_blank" rel="external">Logback</a>，这样使用步骤更少且依赖也更少。这去除了外部绑定步骤，因为Logback直接实现了SLF4J，因此你仅需要依赖两个库而不是四个(<code>jcl-over-slf4j</code>和<code>logback</code>)。如果你这样做的话你可能也需要从其它的外部应用中（不是从Spring）排除slf4j-api依赖，因为你在classpath中仅需要一个版本的API。</p>
+<p><strong>Using Log4J</strong></p>
+<p>Many people use Log4j as a logging framework for configuration and management purposes. It’s efficient and well-established, and in fact it’s what we use at runtime when we build and test Spring. Spring also provides some utilities for configuring and initializing Log4j, so it has an optional compile-time dependency on Log4j in some modules.</p>
+<p>许多人使用Log4j作为配置和管理的日志框架。它有效且完善的，当我们构建和测试Spring时，实际上这就是在运行时我们使用的东西。Spring也提供一些配置和初始化Log4j的工具，因此在某些模块有可选的Log4j的编译时依赖。</p>
+<p>To make Log4j work with the default JCL dependency (<code>commons-logging</code>) all you need to do is put Log4j on the classpath, and provide it with a configuration file ( <code>log4j.properties</code> or <code>log4j.xml</code> in the root of the classpath). So for Maven users this is your dependency declaration:</p>
+<p>为了使Log4j能与默认的JCL依赖(<code>commons-logging</code>)一起工作，所有你需要做的是把Log4j放到classpath中，并提供一个配置文件（<code>log4j.properties</code>或<code>log4j.xml</code>在classpath的根目录）。对于Maven用户依赖声明如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;dependencies&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;5.0.0.BUILD-SNAPSHOT&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;log4j&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;log4j&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.2.14&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div><div class="line">&lt;/dependencies&gt;</div></pre></td></tr></table></figure>
+<p>And here’s a sample log4j.properties for logging to the console:</p>
+<p>下面是一个log4j.properties输出日志到控制台的样本：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/log4j_samle.png" alt="image"></p>
+<p><strong>Runtime Containers with Native JCL</strong></p>
+<p>Many people run their Spring applications in a container that itself provides an implementation of JCL. IBM Websphere Application Server (WAS) is the archetype. This often causes problems, and unfortunately there is no silver bullet solution; simply excluding <code>commons-logging</code> from your application is not enough in most situations.</p>
+<p>许多人在容器中运行他们的Spring应用，容器本身提供了一个JCL实现。IBM Websphere Application Server (WAS) 是原型。这经常会引起问题，不幸的是没有一劳永逸的解决方案；在大多数环境下简单的执行<code>commons-logging</code>是不够的。</p>
+<p>To be clear about this: the problems reported are usually not with JCL per se, or even with <code>commons-logging</code>: rather they are to do with binding <code>commons-logging</code> to another framework (often Log4J). This can fail because <code>commons-logging</code> changed the way they do the runtime discovery in between the older versions (1.0) found in some containers and the modern versions that most people use now (1.1). Spring does not use any unusual parts of the JCL API, so nothing breaks there, but as soon as Spring or your application tries to do any logging you can find that the bindings to Log4J are not working.</p>
+<p>为了使这个更清楚：报告的问题本质上一般不是关于JCL的，或关于<code>commons-logging</code>的：而是他们去绑定<code>commons-logging</code>到其它的框架上（通常是Log4j）。这可能会失败因为<code>commons-logging</code>在一些容器的旧版本（1.0）和大多数人使用的现代版本（1.1）中改变了运行时发现方式。Spring不使用JCL API的和任何不常用的部分，因此不会有问题出现，但是一旦Spring或你的应用试图去输出日志，你可能发现到Log4j的绑定是不起作用的。</p>
+<p>In such cases with WAS the easiest thing to do is to invert the class loader hierarchy (IBM calls it “parent last”) so that the application controls the JCL dependency, not the container. That option isn’t always open, but there are plenty of other suggestions in the public domain for alternative approaches, and your mileage may vary depending on the exact version and feature set of the container.</p>
+<p>在这种情况下使用WAS最容易做的事是逆转类加载层（IBM称为”parent last”），为的是应用能控制依赖，而不是容器。虽然这种选择并非总是公开的，但在公共领域对于替代方法有许多其它的建议，你的解决这个问题花的时间可能是不同的，这取决于确定的版本和容器集合的特性。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第一章/" rel="next" title="Spring 5.0.0框架介绍_中英文对照_第一章">
+                <i class="fa fa-chevron-left"></i> Spring 5.0.0框架介绍_中英文对照_第一章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/12/2016-9-11-Spring框架介绍_中英文对照_3.1_5.0.0版本/" rel="prev" title="Spring 5.0.0框架介绍_中英文对照_3.1">
+                Spring 5.0.0框架介绍_中英文对照_3.1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/"
+     data-title="Spring 5.0.0框架介绍_中英文对照_第二章"
+     data-content=""
+     data-url="noahsnail.com/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/"
+           data-title="Spring 5.0.0框架介绍_中英文对照_第二章" data-url="noahsnail.com/2016/09/10/2016-9-10-Spring框架参考手册_5.0.0_中英文对照版_Part I_第二章/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction-to-the-Spring-Framework"><span class="nav-number">1.</span> <span class="nav-text">2.Introduction to the Spring Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Dependency-Injection-and-Inversion-of-Control"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 Dependency Injection and Inversion of Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Modules"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 Modules</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-Core-Container"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 Core Container</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-AOP-and-Instrumentation"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 AOP and Instrumentation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-Messaging"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.2.3 Messaging</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-Data-Access-Integration"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.2.4 Data Access/Integration</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-Web"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.2.5 Web</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-6-Test"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.2.6 Test</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Usage-scenarios"><span class="nav-number">1.3.</span> <span class="nav-text">2.3 Usage scenarios</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-Dependency-Management-and-Naming-Conventions"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.3.1 Dependency Management and Naming Conventions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-Logging"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.3.2 Logging</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>

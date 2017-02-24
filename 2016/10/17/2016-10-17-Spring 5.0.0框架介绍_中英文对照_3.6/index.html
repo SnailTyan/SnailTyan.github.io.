@@ -1,0 +1,1073 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring 5.0.0框架介绍_中英文对照_3.6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中英文对照_3.6">
+<meta property="og:url" content="noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring 5.0.0框架介绍_中英文对照_3.6">
+<meta property="og:updated_time" content="2016-10-18T00:59:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中英文对照_3.6">
+<meta name="twitter:description" content="Spring 5.0.0框架介绍_中英文对照_3.6">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/"/>
+
+
+
+
+
+  <title> Spring 5.0.0框架介绍_中英文对照_3.6 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 5.0.0框架介绍_中英文对照_3.6
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-17T23:25:28+08:00">
+              2016-10-17
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-10-18T08:59:12+08:00">
+              2016-10-18
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring框架参考手册-5-0-0/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring框架参考手册_5.0.0</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  Spring 5.0.0框架介绍_中英文对照_3.6
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h3 id="3-6-Customizing-the-nature-of-a-bean"><a href="#3-6-Customizing-the-nature-of-a-bean" class="headerlink" title="3.6 Customizing the nature of a bean"></a>3.6 Customizing the nature of a bean</h3><h4 id="3-6-1-Lifecycle-callbacks"><a href="#3-6-1-Lifecycle-callbacks" class="headerlink" title="3.6.1 Lifecycle callbacks"></a>3.6.1 Lifecycle callbacks</h4><p>To interact with the container’s management of the bean lifecycle, you can implement the Spring <code>InitializingBean</code> and <code>DisposableBean</code> interfaces. The container calls <code>afterPropertiesSet()</code> for the former and <code>destroy()</code> for the latter to allow the bean to perform certain actions upon initialization and destruction of your beans.</p>
+<p>为了与容器中bean生命周期的管理进行交互，你可以实现Spring的<code>InitializingBean</code>和<code>DisposableBean</code>接口。当初始化beans时容器会调用<code>InitializingBean</code>中的<code>afterPropertiesSet()</code>方法，当销毁beans时容器会调用<code>DisposableBean</code>中的<code>destroy()</code>方法，在这两个方法中bean可以执行特定的行为。</p>
+<blockquote>
+<p>The JSR-250 <code>@PostConstruct</code> and <code>@PreDestroy</code> annotations are generally considered best practice for receiving lifecycle callbacks in a modern Spring application. Using these annotations means that your beans are not coupled to Spring specific interfaces. For details see Section 3.9.8, “@PostConstruct and @PreDestroy”.</p>
+<p>If you don’t want to use the JSR-250 annotations but you are still looking to remove coupling consider the use of init-method and destroy-method object definition metadata.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>在现代Spring应用中，通常认为JSR-250的<code>@PostConstruct</code>和<code>@PreDestroy</code>注解是最佳实践接收生命周期回调函数的方法。使用这些注解意味着你的bean没有耦合Spring特定的接口。更多细节请看3.9.8小节，”@PostConstruct和@PreDestroy”。</p>
+<p>如果你不想使用JSR-250注解，但你仍要注意解耦，可以考虑使用对象定义元数据中的初始化方法和方法。</p>
+</blockquote>
+<p>Internally, the Spring Framework uses <code>BeanPostProcessor</code> implementations to process any callback interfaces it can find and call the appropriate methods. If you need custom features or other lifecycle behavior Spring does not offer out-of-the-box, you can implement a <code>BeanPostProcessor</code>yourself. For more information, see Section 3.8, “Container Extension Points”.</p>
+<p>在Spring内部，Spring框架使用<code>BeanPostProcessor</code>实现来处理任何它能发现的回调接口并调用合适的方法。如果你需要定制Spring不能提供的开箱即用的功能或其它生命周期行为，你可以自己实现<code>BeanPostProcessor</code>。更多信息请看3.8小节，”容器扩展点”。</p>
+<p>In addition to the initialization and destruction callbacks, Spring-managed objects may also implement the <code>Lifecycle</code> interface so that those objects can participate in the startup and shutdown process as driven by the container’s own lifecycle.</p>
+<p>除了初始化回调函数和析构回调函数之外，Spring管理的对象也可以实现<code>Lifecycle</code>接口，这些对象可以参与容器自身生命周期驱动的启动和关闭过程。</p>
+<p>The lifecycle callback interfaces are described in this section.</p>
+<p>本节描述了生命周期回调接口。</p>
+<p><strong>Initialization callbacks</strong></p>
+<p>The <code>org.springframework.beans.factory.InitializingBean</code> interface allows a bean to perform initialization work after all necessary properties on the bean have been set by the container. The <code>InitializingBean</code> interface specifies a single method:</p>
+<p><code>org.springframework.beans.factory.InitializingBean</code>接口在容器设置了bean所有的必须属性之后，允许bean执行初始化工作。<code>InitializingBean</code>接口指定了一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</div></pre></td></tr></table></figure>
+<p>It is recommended that you do not use the <code>InitializingBean</code> interface because it unnecessarily couples the code to Spring. Alternatively, use the <code>@PostConstruct</code> annotation or specify a POJO initialization method. In the case of XML-based configuration metadata, you use the <code>init-method</code> attribute to specify the name of the method that has a void no-argument signature. With Java config, you use the <code>initMethod</code> attribute of <code>@Bean</code>, see the section called “Receiving lifecycle callbacks”. For example, the following:</p>
+<p>建议你不使用<code>InitializingBean</code>接口，因为它对代码与Spring进行了不必要的耦合。作为一种替代方法，你可以使用<code>@PostConstruct</code>注解或指定一个POPJO的初始化方法。在基于XML配置元数据的情况下，你可以使用<code>init-method</code>特性来指定方法的名称，方法是没有返回值和参数的。如果使用Java配置，你可以使用<code>@Bean</code>的<code>initMethod</code>特性，请看”接收生命周期回调”小节。例如，下面的代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span> <span class="attr">init-method</span>=<span class="string">"init"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleBean</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// do some initialization work</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>…​is exactly the same as…​</p>
+<p>等价于：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.AnotherExampleBean"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnotherExampleBean</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// do some initialization work</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>but does not couple the code to Spring.</p>
+<p>但没有与Spring代码耦合。</p>
+<p><strong>Destruction callbacks</strong></p>
+<p>Implementing the <code>org.springframework.beans.factory.DisposableBean</code> interface allows a bean to get a callback when the container containing it is destroyed. The <code>DisposableBean</code> interface specifies a single method:</p>
+<p>实现<code>org.springframework.beans.factory.DisposableBean</code>接口允许容器包含的bean销毁时调用回调函数。<code>DisposableBean</code>接口指定了一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</div></pre></td></tr></table></figure>
+<p>It is recommended that you do not use the <code>DisposableBean</code> callback interface because it unnecessarily couples the code to Spring. Alternatively, use the <code>@PreDestroy</code> annotation or specify a generic method that is supported by bean definitions. With XML-based configuration metadata, you use the <code>destroy-method</code> attribute on the <code>&lt;bean/&gt;</code>. With Java config, you use the <code>destroyMethod</code> attribute of <code>@Bean</code>, see the section called “Receiving lifecycle callbacks”. For example, the following definition:</p>
+<p>建议你不使用<code>DisposableBean</code>回调接口，因为它对代码与Spring进行了不必要的耦合。作为一种替代方法，你可以使用<code>@PreDestroy</code>注解或指定一个bean定义支持的通用方法。在基于XML配置元数据的情况下，你可以使用<code>&lt;bean/&gt;</code>的<code>destroy-method</code>特性。如果使用Java配置，你可以使用<code>@Bean</code>的<code>destroyMethod</code>特性，请看”接收生命周期回调”小节。例如，下面的定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span> <span class="attr">destroy-method</span>=<span class="string">"cleanup"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleBean</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cleanup</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// do some destruction work (like releasing pooled connections)</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>is exactly the same as:</p>
+<p>等价于：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.AnotherExampleBean"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnotherExampleBean</span> <span class="keyword">implements</span> <span class="title">DisposableBean</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// do some destruction work (like releasing pooled connections)</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>but does not couple the code to Spring.</p>
+<p>但没有与Spring代码耦合。</p>
+<blockquote>
+<p>The <code>destroy-method</code> attribute of a <code>&lt;bean&gt;</code> element can be assigned a special <code>(inferred)</code> value which instructs Spring to automatically detect a public <code>close</code> or <code>shutdown</code> method on the specific bean class (any class that implements <code>java.lang.AutoCloseable</code> or <code>java.io.Closeable</code> would therefore match). This special <code>(inferred)</code> value can also be set on the <code>default-destroy-method</code> attribute of a <code>&lt;beans&gt;</code> element to apply this behavior to an entire set of beans (see the section called “Default initialization and destroy methods”). Note that this is the default behavior with Java config.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p><code>&lt;bean&gt;</code>元素的<code>destroy-method</code>特性可以分配一个特殊值<code>(inferred)</code>，它会指导Spring自动检测指定的bean类的公有<code>close</code>方法或<code>shutdown</code>方法（可以匹配任何实现<code>java.lang.AutoCloseable</code>或<code>java.io.Closeable</code>的类）。为了将这种行为应用到beans的全部集合中，特殊值<code>(inferred)</code>可以设置在<code>&lt;beans&gt;</code>元素中的<code>default-destroy-method</code>特性上（请看”默认初始化方法和销毁方法”小节）。注意Java配置的默认行为。</p>
+</blockquote>
+<p><strong>Default initialization and destroy methods</strong></p>
+<p>When you write initialization and destroy method callbacks that do not use the Spring-specific <code>InitializingBean</code> and <code>DisposableBean</code> callback interfaces, you typically write methods with names such as <code>init()</code>, <code>initialize()</code>, <code>dispose()</code>, and so on. Ideally, the names of such lifecycle callback methods are standardized across a project so that all developers use the same method names and ensure consistency.</p>
+<p>当你编写初始化回调函数和析构回调函数时，不要使用Spring特定的<code>InitializingBean</code>和<code>DisposableBean</code>回调接口，自己编写方法，方法名通常为<code>init()</code>，<code>initialize()</code>，<code>dispose()</code>等等。理想情况下，这种生命周期回调方法的名称在整个工程中是标准化的，以便所有开发人员使用同样的方法名称，保证一致性。</p>
+<p>You can configure the Spring container to <code>look</code> for named initialization and destroy callback method names on every bean. This means that you, as an application developer, can write your application classes and use an initialization callback called <code>init()</code>, without having to configure an <code>init-method=&quot;init&quot;</code> attribute with each bean definition. The Spring IoC container calls that method when the bean is created (and in accordance with the standard lifecycle callback contract described previously). This feature also enforces a consistent naming convention for initialization and destroy method callbacks.</p>
+<p>你可以配置Spring容器查找每个bean的初始化方法和析构方法时的名字。这意味着，作为一个应用开发者，你可以编写应用程序类并使用名为<code>init()</code>的初始化回调方法，而不必在每个bean定义中配置<code>init-method=&quot;init&quot;</code>特性。当bean创建时，Spring Ioc容器调用这个方法（按照前面描述的标准生命周期回调约定）。这个功能也强制了初始化方法和析构方法命名规范的一致性。</p>
+<p>Suppose that your initialization callback methods are named <code>init()</code> and destroy callback methods are named <code>destroy()</code>. Your class will resemble the class in the following example.</p>
+<p>假设你的初始化回调方法名为<code>init()</code>，析构回调方法名为<code>destroy()</code>。你的类应该与下面例子中的类类似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultBlogService</span> <span class="keyword">implements</span> <span class="title">BlogService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> BlogDao blogDao;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBlogDao</span><span class="params">(BlogDao blogDao)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.blogDao = blogDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// this is (unsurprisingly) the initialization callback method</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.blogDao == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"The [blogDao] property must be set."</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">default-init-method</span>=<span class="string">"init"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"blogService"</span> <span class="attr">class</span>=<span class="string">"com.foo.DefaultBlogService"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"blogDao"</span> <span class="attr">ref</span>=<span class="string">"blogDao"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>The presence of the <code>default-init-method</code> attribute on the top-level <code>&lt;beans/&gt;</code> element attribute causes the Spring IoC container to recognize a method called <code>init</code> on beans as the initialization method callback. When a bean is created and assembled, if the bean class has such a method, it is invoked at the appropriate time.</p>
+<p>位于顶层<code>&lt;beans/&gt;</code>元素中的<code>default-init-method</code>特性，会让Spring IoC容器将beans中的名为<code>init</code>的方法识别为初始化回调方法。当一个bean创建和组装时，如果bean类有这样一个方法，它会在恰当的时间被调用。</p>
+<p>You configure destroy method callbacks similarly (in XML, that is) by using the <code>default-destroy-method</code> attribute on the top-level <code>&lt;beans/&gt;</code> element.</p>
+<p>类似的，你可以在顶层元素<code>&lt;beans/&gt;</code>中设置<code>default-destroy-method</code>特性来配置析构回调方法的名字。</p>
+<p>Where existing bean classes already have callback methods that are named at variance with the convention, you can override the default by specifying (in XML, that is) the method name using the <code>init-method</code> and <code>destroy-method</code> attributes of the <code>&lt;bean/&gt;</code> itself.</p>
+<p>在现有的bean类已经有不符合命名规范的回调方法的情况下，你也可以通过在<code>&lt;bean/&gt;</code>本身的<code>init-method</code>和<code>destroy-method</code>特性（在XML中）中指定方法名称来覆盖<code>&lt;beans/&gt;</code>中的默认名称。</p>
+<p>The Spring container guarantees that a configured initialization callback is called immediately after a bean is supplied with all dependencies. Thus the initialization callback is called on the raw bean reference, which means that AOP interceptors and so forth are not yet applied to the bean. A target bean is fully created first, then an AOP proxy (for example) with its interceptor chain is applied. If the target bean and the proxy are defined separately, your code can even interact with the raw target bean, bypassing the proxy. Hence, it would be inconsistent to apply the interceptors to the init method, because doing so would couple the lifecycle of the target bean with its proxy/interceptors and leave strange semantics when your code interacts directly to the raw target bean.</p>
+<p>在bean被提供了所有依赖之后，Spring容器确保会立刻调用配置的初始化回调方法。因此初始化回调会在原生bean引用上调用，这意味着AOP拦截器等仍不能应用到bean中。首先要完整的创建目标bean，然后才会应用AOP代理（例如）等拦截器链。如果分别定义了目标bean和代理，你的代码甚至能绕过代理直接与原生的目标bean进行交互。将拦截器应用到初始化方法上可能会产生不一致性，因为这样做会使目标bean的生命周期与它的代理/拦截器相耦合，当你的代码与原生目标bean直接进行交互时，语义会变的很奇怪。</p>
+<p><strong>Combining lifecycle mechanisms</strong></p>
+<p>As of Spring 2.5, you have three options for controlling bean lifecycle behavior: the <code>InitializingBean</code> and <code>DisposableBean</code> callback interfaces; custom <code>init()</code> and <code>destroy()</code> methods; and the <code>@PostConstruct</code> and <code>@PreDestroy</code> annotations. You can combine these mechanisms to control a given bean.</p>
+<p>从Spring 2.5开始，在控制bean的生命周期行为时，你有三中选择：InitializingBean<code>和</code>DisposableBean<code>回调接口；定制</code>init()<code>和</code>destroy()<code>方法；</code>@PostConstruct<code>和</code>@PreDestroy`注解。在控制一个给定bean时你可以组合这些机制。</p>
+<blockquote>
+<p>If multiple lifecycle mechanisms are configured for a bean, and each mechanism is configured with a different method name, then each configured method is executed in the order listed below. However, if the same method name is configured - for example, <code>init()</code> for an initialization method - for more than one of these lifecycle mechanisms, that method is executed once, as explained in the preceding section.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>如果一个bean配置了多生命周期机制，每种机制配置了一个不同的方法名，那么每一个配置的方法会按照下面的顺序列表来执行。但是如果配置了相同的名字——例如，<code>init()</code>初始化方法——不止在一个生命周期机制中配置，那么这个方法只能执行一次，像之前所说的那样。</p>
+</blockquote>
+<p>Multiple lifecycle mechanisms configured for the same bean, with different initialization methods, are called as follows:</p>
+<ul>
+<li><p>Methods annotated with <code>@PostConstruct</code></p>
+</li>
+<li><p><code>afterPropertiesSet()</code> as defined by the <code>InitializingBean</code> callback interface</p>
+</li>
+<li><p>A custom configured <code>init()</code> method</p>
+</li>
+</ul>
+<p>同一个bean配置了多生命周期机制，并有不同的初始化方法，那么调用顺序如下：</p>
+<ul>
+<li><p>先调用有注解<code>@PostConstruct</code>的方法</p>
+</li>
+<li><p>然后调用<code>InitializingBean</code>回调接口定义的<code>afterPropertiesSet()</code>方法</p>
+</li>
+<li><p>最好调用定制配置的<code>init()</code>方法</p>
+</li>
+</ul>
+<p>Destroy methods are called in the same order:</p>
+<ul>
+<li><p>Methods annotated with <code>@PreDestroy</code></p>
+</li>
+<li><p><code>destroy()</code> as defined by the <code>DisposableBean</code> callback interface</p>
+</li>
+<li><p>A custom configured <code>destroy()</code> method</p>
+</li>
+</ul>
+<p>析构方法按同样的顺序调用：</p>
+<ul>
+<li><p>先调用有<code>@PreDestroy</code>注解的方法</p>
+</li>
+<li><p>再调用<code>DisposableBean</code>回调接口定义的<code>destroy()</code>方法</p>
+</li>
+<li><p>最好调用定制配置的<code>destroy()</code>方法</p>
+</li>
+</ul>
+<p><strong>Startup and shutdown callbacks</strong></p>
+<p>The <code>Lifecycle</code> interface defines the essential methods for any object that has its own lifecycle requirements (e.g. starts and stops some background process):</p>
+<p><code>Lifecycle</code>接口定义了任何对象生命周期都需要的基本方法（例如启动和停止一些背景处理）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lifecycle</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRunning</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Any Spring-managed object may implement that interface. Then, when the <code>ApplicationContext</code> itself receives start and stop signals, e.g. for a stop/restart scenario at runtime, it will cascade those calls to all <code>Lifecycle</code> implementations defined within that context. It does this by delegating to a <code>LifecycleProcessor</code>:</p>
+<p>任何Spring管理的对象都可以实现那个接口。当<code>ApplicationContext</code>本身收到启动启动和关闭信号时，例如运行时关闭/再启动场景，它将级联调用所有的上下文定义的<code>Lifecycle</code>实现。它通过委托<code>LifecycleProcessor</code>来完成这个功能：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">LifecycleProcessor</span> <span class="keyword">extends</span> <span class="title">Lifecycle</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onClose</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Notice that the <code>LifecycleProcessor</code> is itself an extension of the <code>Lifecycle</code> interface. It also adds two other methods for reacting to the context being refreshed and closed.</p>
+<p>注意<code>LifecycleProcessor</code>本身是<code>Lifecycle</code>接口的一个扩展。它也添加了两个其它的方法来响应上下文的再刷新和关闭的。</p>
+<blockquote>
+<p>Note that the regular <code>org.springframework.context.Lifecycle</code> interface is just a plain contract for explicit start/stop notifications and does NOT imply auto-startup at context refresh time. Consider implementing <code>org.springframework.context.SmartLifecycle</code> instead for fine-grained control over auto-startup of a specific bean (including startup phases). Also, please note that stop notifications are not guaranteed to come before destruction: On regular shutdown, all <code>Lifecycle</code> beans will first receive a stop notification before the general destruction callbacks are being propagated; however, on hot refresh during a context’s lifetime or on aborted refresh attempts, only destroy methods will be called.</p>
+<p>注意正规的<code>org.springframework.context.Lifecycle</code>接口只是一个显式启动/关闭通知的协议，并不意味着在上下文刷新时自动启动。考虑实现<code>org.springframework.context.SmartLifecycle</code>接口来实现对指定bean自动启动的细粒度控制（包括启动时期）。请注意停止通知不能保证在销毁之前到来：在正式关闭时，所有的<code>Lifecycle</code> beans在通常的析构回调传播之前首先会收到停止通知；但是，在上下文使用期间进行热刷新或尝试取消再刷新，只会调用析构方法。</p>
+</blockquote>
+<p>The order of startup and shutdown invocations can be important. If a “depends-on” relationship exists between any two objects, the dependent side will start after its dependency, and it will stop before its dependency. However, at times the direct dependencies are unknown. You may only know that objects of a certain type should start prior to objects of another type. In those cases, the <code>SmartLifecycle</code> interface defines another option, namely the <code>getPhase()</code> method as defined on its super-interface, <code>Phased</code>.</p>
+<p>启动和关闭的调用顺序是很重要的。如果任何两个对象间存在一个”depends-on”关系，那么依赖关系将在它的依赖之后开始，在它的依赖之前停止。然而有时直接的依赖关系是未知的。你可能只知道某个类型的对象应该在另一个类型的对象之前启动。在那种情况下，<code>SmartLifecycle</code>接口定义了另一种选择，也就是说<code>getPhase()</code>定义在它的父接口<code>Phased</code>中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Phased</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getPhase</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SmartLifecycle</span> <span class="keyword">extends</span> <span class="title">Lifecycle</span>, <span class="title">Phased</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isAutoStartup</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">(Runnable callback)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>When starting, the objects with the lowest phase start first, and when stopping, the reverse order is followed. Therefore, an object that implements <code>SmartLifecycle</code> and whose <code>getPhase()</code> method returns <code>Integer.MIN_VALUE</code> would be among the first to start and the last to stop. At the other end of the spectrum, a phase value of <code>Integer.MAX_VALUE</code> would indicate that the object should be started last and stopped first (likely because it depends on other processes to be running). When considering the phase value, it’s also important to know that the default phase for any “normal” <code>Lifecycle</code> object that does not implement <code>SmartLifecycle</code> would be 0. Therefore, any negative phase value would indicate that an object should start before those standard components (and stop after them), and vice versa for any positive phase value.</p>
+<p>当开始时，最低相位的对象先启动，当停止时，最高相位的对象先停止。因此，实现了<code>SmartLifecycle</code>接口，<code>getPhase()</code>方法返回值为<code>Integer.MIN_VALUE</code>的对象将最先启动并最后停止。另一方面，相位值<code>Integer.MAX_VALUE</code>表明对象应该最后启动，最先停止（可能是因为它依赖其它运行的进程）。当考虑相位值时，知道任何没有实现<code>SmartLifecycle</code>接口的<code>Lifecycle</code>对象的默认值为0是很重要的。因此，任何负相位值表示对象应该在那么标准组件之前启动（在它们之后停止），反之为任何正相位值。</p>
+<p>As you can see the stop method defined by <code>SmartLifecycle</code> accepts a callback. Any implementation must invoke that callback’s <code>run()</code> method after that implementation’s shutdown process is complete. That enables asynchronous shutdown where necessary since the default implementation of the <code>LifecycleProcessor</code> interface, <code>DefaultLifecycleProcessor</code>, will wait up to its timeout value for the group of objects within each phase to invoke that callback. The default per-phase timeout is 30 seconds. You can override the default lifecycle processor instance by defining a bean named “lifecycleProcessor” within the context. If you only want to modify the timeout, then defining the following would be sufficient:</p>
+<p>正如你看到的，在<code>SmartLifecycle</code>中定义的停止方法接收一个回调函数。任何实现在关闭进程完成之后都必须调用回调的<code>run()</code>方法。当需要时这可以进行异步关闭，因为<code>LifecycleProcessor</code>接口、<code>DefaultLifecycleProcessor</code>接口的默认实现会等待每个阶段的对象组直到达到超时值，然后调用回调函数。默认每个时期的超时值为30秒。你可以在上下文中通过定义名为”lifecycleProcessor”的bean来覆盖默认的生命周期处理器实例。如果你只想修改超时值，如下定义是足够的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"lifecycleProcessor"</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.support.DefaultLifecycleProcessor"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- timeout value in milliseconds --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"timeoutPerShutdownPhase"</span> <span class="attr">value</span>=<span class="string">"10000"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>As mentioned, the <code>LifecycleProcessor</code> interface defines callback methods for the refreshing and closing of the context as well. The latter will simply drive the shutdown process as if <code>stop()</code> had been called explicitly, but it will happen when the context is closing. The <code>refresh</code> callback on the other hand enables another feature of <code>SmartLifecycle</code> beans. When the context is refreshed (after all objects have been instantiated and initialized), that callback will be invoked, and at that point the default lifecycle processor will check the boolean value returned by each <code>SmartLifecycle</code> object’s <code>isAutoStartup()</code> method. If “true”, then that object will be started at that point rather than waiting for an explicit invocation of the context’s or its own <code>start()</code> method (unlike the context refresh, the context start does not happen automatically for a standard context implementation). The “phase” value as well as any “depends-on” relationships will determine the startup order in the same way as described above.</p>
+<p>像上面提到的那样，<code>LifecycleProcessor</code>接口为再刷新和上下文的关闭也定义了回调方法。后者会简单的驱动关闭进程就像显式的调用了<code>stop()</code>方法一样，但当上下文关闭时它才会发生。另一方面<code>refresh</code>回调能使<code>SmartLifecycle</code> beans的另一个功能可用。当上下文再刷新时（所有对象已经实例化并初始化），回调函数将被调用，那时默认的生命周期处理器将会检查每个<code>SmartLifecycle</code>对象的<code>isAutoStartup()</code>方法返回的布尔值。如果为<code>true</code>，对象将会在那时启动而不是等待上下文的显式调用或它自己的<code>start()</code>方法（不像上下文再刷新，对于一个标准的上下文实现上下启动不会自动发生）。”phase”值以及”depends-on”关系将决定启动顺序，像上面描述的一样。</p>
+<p><strong>Shutting down the Spring IoC container gracefully in non-web applications</strong></p>
+<blockquote>
+<p>This section applies only to non-web applications. Spring’s web-based <code>ApplicationContext</code> implementations already have code in place to shut down the Spring IoC container gracefully when the relevant web application is shut down.</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>这一节只应用于非web应用。Spring的基于web的<code>ApplicationContext</code>实现已经有代码来处理当相关的web应用关闭时，妥善关闭Spring IoC容器的问题。</p>
+</blockquote>
+<p>If you are using Spring’s IoC container in a non-web application environment; for example, in a rich client desktop environment; you register a shutdown hook with the JVM. Doing so ensures a graceful shutdown and calls the relevant destroy methods on your singleton beans so that all resources are released. Of course, you must still configure and implement these destroy callbacks correctly.</p>
+<p>如果你在非web应用环境使用Spring的IoC容器；例如，在一个富桌面客户端环境中，你在JVM中注册一个关闭钩子。这样做确保了妥善的关闭，为了释放所有资源需要调用与单例beans相关的析构方法。当然，你仍然必须正确的配置和实现这些销毁回调函数。</p>
+<p>To register a shutdown hook, you call the <code>registerShutdownHook()</code> method that is declared on the <code>ConfigurableApplicationContext</code> interface:</p>
+<p>为了注册一个关闭钩子，你可以调用<code>ConfigurableApplicationContext</code>接口中声明的<code>registerShutdownHook()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.context.ConfigurableApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Boot</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">final</span> String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">        ConfigurableApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(</div><div class="line">                <span class="keyword">new</span> String []&#123;<span class="string">"beans.xml"</span>&#125;);</div><div class="line"></div><div class="line">        <span class="comment">// add a shutdown hook for the above context...</span></div><div class="line">        ctx.registerShutdownHook();</div><div class="line"></div><div class="line">        <span class="comment">// app runs here...</span></div><div class="line"></div><div class="line">        <span class="comment">// main method exits, hook is called prior to the app shutting down...</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-6-2-ApplicationContextAware-and-BeanNameAware"><a href="#3-6-2-ApplicationContextAware-and-BeanNameAware" class="headerlink" title="3.6.2 ApplicationContextAware and BeanNameAware"></a>3.6.2 ApplicationContextAware and BeanNameAware</h4><p>When an <code>ApplicationContext</code> creates an object instance that implements the <code>org.springframework.context.ApplicationContextAware</code> interface, the instance is provided with a reference to that <code>ApplicationContext</code>.</p>
+<p>当<code>ApplicationContext</code>创建一个实现<code>org.springframework.context.ApplicationContextAware</code>接口的对象实例时，这个实例会提供一个<code>ApplicationContext</code>的引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplicationContextAware</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Thus beans can manipulate programmatically the <code>ApplicationContext</code> that created them, through the <code>ApplicationContext</code> interface, or by casting the reference to a known subclass of this interface, such as <code>ConfigurableApplicationContext</code>, which exposes additional functionality. One use would be the programmatic retrieval of other beans. Sometimes this capability is useful; however, in general you should avoid it, because it couples the code to Spring and does not follow the Inversion of Control style, where collaborators are provided to beans as properties. Other methods of the <code>ApplicationContext</code> provide access to file resources, publishing application events, and accessing a <code>MessageSource</code>. These additional features are described in Section 3.15, “Additional Capabilities of the ApplicationContext”.</p>
+<p>因此beans可以以编程方式操纵创建它们的<code>ApplicationContext</code>，通过<code>ApplicationContext</code>接口，或通过将引用抛给这个接口的一个已知子类，例如<code>ConfigurableApplicationContext</code>，它暴露了额外的功能。一个方法是编程式检索其他的bean。有时这个能力是很有用的，但是通常你应该避免使用它，因为它耦合了代码和Spring，不能遵循控制反转的风格，在控制反转中协作者是作为属性提供给beans的。<code>ApplicationContext</code>的其它方法提供了对文件资源的访问，发布应用事件，访问<code>MessageSource</code>的功能。这些额外的特性将在3.15小节『ApplicationContext”的额外能力』中描述。</p>
+<p>As of Spring 2.5, autowiring is another alternative to obtain reference to the <code>ApplicationContext</code>. The “traditional” <code>constructor</code> and <code>byType</code>autowiring modes (as described in Section 3.4.5, “Autowiring collaborators”) can provide a dependency of type <code>ApplicationContext</code> for a constructor argument or setter method parameter, respectively. For more flexibility, including the ability to autowire fields and multiple parameter methods, use the new annotation-based autowiring features. If you do, the <code>ApplicationContext</code> is autowired into a field, constructor argument, or method parameter that is expecting the <code>ApplicationContext</code> type if the field, constructor, or method in question carries the <code>@Autowired</code> annotation. For more information, see Section 3.9.2, “@Autowired”.</p>
+<p>从Spring 2.5起，自动装配是另一种可替代的获得<code>ApplicationContext</code>引用的方法。『传统的』<code>constructor</code>和<code>byType</code>自动装配模式（如3.4.5小节所述，『自动装配协作者』）可以分别为构造函数参数或setter方法参数提供<code>ApplicationContext</code>类型的依赖。更多的灵活性包括自动装配变量的能力和多参数方法，使用新的基于注解的自动装配特性。如果你这一做的话，<code>ApplicationContext</code>可以被自动装配到变量中，构造函数参数中或方法参数中，如果讨论的变量，构造函数或方法有<code>@Autowired</code>注解，那么可以期望它是<code>ApplicationContext</code>类型。更多信息请看3.9.2小节，<code>@autowired</code>。</p>
+<p>When an <code>ApplicationContext</code> creates a class that implements the <code>org.springframework.beans.factory.BeanNameAware</code> interface, the class is provided with a reference to the name defined in its associated object definition.</p>
+<p>当<code>ApplicationContext</code>创建一个实现了<code>org.springframework.beans.factory.BeanNameAware</code>接口的类时，类中有相关的对象定义中定义的名称的引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface BeanNameAware &#123;</div><div class="line"></div><div class="line">    void setBeanName(String name) throws BeansException;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The callback is invoked after population of normal bean properties but before an initialization callback such as <code>InitializingBean</code> afterPropertiesSet or a custom init-method.</p>
+<p>在正常的bean属性填入之后，回调方法调用，但在初始化回调方法之前，例如<code>InitializingBean</code>的afterPropertiesSet或一个定制的初始化方法。</p>
+<h4 id="3-6-3-Other-Aware-interfaces"><a href="#3-6-3-Other-Aware-interfaces" class="headerlink" title="3.6.3 Other Aware interfaces"></a>3.6.3 Other Aware interfaces</h4><p>Besides <code>ApplicationContextAware</code> and <code>BeanNameAware</code> discussed above, Spring offers a range of <code>Aware</code> interfaces that allow beans to indicate to the container that they require a certain infrastructure dependency. The most important <code>Aware</code> interfaces are summarized below - as a general rule, the name is a good indication of the dependency type:</p>
+<p>除了上面讨论的<code>ApplicationContextAware</code>和<code>BeanNameAware</code>之外，Spring给予了一系列<code>Aware</code>接口来允许beans向容器表明它们需要一个确定的基础结构依赖。最重要的<code>Aware</code>接口总结如下——作为一个通用规则，名字是依赖类型的一个很好暗示：</p>
+<p><strong>Table 3.4. Aware interfaces</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Injected Dependency</th>
+<th style="text-align:left">Explained in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ApplicationContextAware</td>
+<td style="text-align:left">Declaring ApplicationContext</td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">ApplicationEventPublisherAware</td>
+<td style="text-align:left">Event publisher of the enclosing ApplicationContext</td>
+<td style="text-align:left">Section 3.15, “Additional Capabilities of the ApplicationContext”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanClassLoaderAware</td>
+<td style="text-align:left">Class loader used to load the bean classes.</td>
+<td style="text-align:left">Section 3.3.2, “Instantiating beans”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanFactoryAware</td>
+<td style="text-align:left">Declaring BeanFactory</td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanNameAware</td>
+<td style="text-align:left">Name of the declaring bean</td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">BootstrapContextAware</td>
+<td style="text-align:left">Resource adapter BootstrapContext the container runs in. Typically available only in JCA aware ApplicationContexts</td>
+<td style="text-align:left">Chapter 28, JCA CCI</td>
+</tr>
+<tr>
+<td style="text-align:left">LoadTimeWeaverAware</td>
+<td style="text-align:left">Defined weaver for processing class definition at load time</td>
+<td style="text-align:left">Section 7.8.4, “Load-time weaving with AspectJ in the Spring Framework”</td>
+</tr>
+<tr>
+<td style="text-align:left">MessageSourceAware</td>
+<td style="text-align:left">Configured strategy for resolving messages (with support for parametrization and internationalization)</td>
+<td style="text-align:left">Section 3.15, “Additional Capabilities of the ApplicationContext”</td>
+</tr>
+<tr>
+<td style="text-align:left">NotificationPublisherAware</td>
+<td style="text-align:left">Spring JMX notification publisher</td>
+<td style="text-align:left">Section 27.7, “Notifications”</td>
+</tr>
+<tr>
+<td style="text-align:left">ResourceLoaderAware</td>
+<td style="text-align:left">Configured loader for low-level access to resources</td>
+<td style="text-align:left">Chapter 4, Resources</td>
+</tr>
+<tr>
+<td style="text-align:left">ServletConfigAware</td>
+<td style="text-align:left">Current ServletConfig the container runs in. Valid only in a web-aware Spring ApplicationContext</td>
+<td style="text-align:left">Chapter 18, Web MVC framework</td>
+</tr>
+<tr>
+<td style="text-align:left">ServletContextAware</td>
+<td style="text-align:left">Current ServletContext the container runs in. Valid only in a web-aware Spring ApplicationContext</td>
+<td style="text-align:left">Chapter 18, Web MVC framework</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表3.4. Aware接口</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Injected Dependency</th>
+<th style="text-align:left">Explained in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ApplicationContextAware</td>
+<td style="text-align:left">声明<code>ApplicationContext</code></td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">ApplicationEventPublisherAware</td>
+<td style="text-align:left">封装事件发布的<code>ApplicationContext</code></td>
+<td style="text-align:left">Section 3.15, “Additional Capabilities of the ApplicationContext”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanClassLoaderAware</td>
+<td style="text-align:left">用来加载bean的类加载器</td>
+<td style="text-align:left">Section 3.3.2, “Instantiating beans”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanFactoryAware</td>
+<td style="text-align:left">声明<code>BeanFactory</code></td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanNameAware</td>
+<td style="text-align:left">声明的bean的名字</td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">BootstrapContextAware</td>
+<td style="text-align:left">容器运行的资源自适应<code>BootstrapContext</code>. 通常只在JCA aware <code>ApplicationContexts</code>可获得</td>
+<td style="text-align:left">Chapter 28, JCA CCI</td>
+</tr>
+<tr>
+<td style="text-align:left">LoadTimeWeaverAware</td>
+<td style="text-align:left">加载时为处理类定义定义的weaver</td>
+<td style="text-align:left">Section 7.8.4, “Load-time weaving with AspectJ in the Spring Framework”</td>
+</tr>
+<tr>
+<td style="text-align:left">MessageSourceAware</td>
+<td style="text-align:left">解析消息配置策略 (支持参数化和国际化)</td>
+<td style="text-align:left">Section 3.15, “Additional Capabilities of the ApplicationContext”</td>
+</tr>
+<tr>
+<td style="text-align:left">NotificationPublisherAware</td>
+<td style="text-align:left">Spring JMX通知发布器</td>
+<td style="text-align:left">Section 27.7, “Notifications”</td>
+</tr>
+<tr>
+<td style="text-align:left">ResourceLoaderAware</td>
+<td style="text-align:left">为底层访问资源配置的加载器</td>
+<td style="text-align:left">Chapter 4, Resources</td>
+</tr>
+<tr>
+<td style="text-align:left">ServletConfigAware</td>
+<td style="text-align:left">容器运行的当前<code>ServletConfig</code>。 仅在web感知的Spring <code>ApplicationContext</code>中有效</td>
+<td style="text-align:left">Chapter 18, Web MVC framework</td>
+</tr>
+<tr>
+<td style="text-align:left">ServletContextAware</td>
+<td style="text-align:left">容器运行的当前<code>ServletContext</code>。 仅在web感知的Spring <code>ApplicationContext</code>中有效</td>
+<td style="text-align:left">Chapter 18, Web MVC framework</td>
+</tr>
+</tbody>
+</table>
+<p>Note again that usage of these interfaces ties your code to the Spring API and does not follow the Inversion of Control style. As such, they are recommended for infrastructure beans that require programmatic access to the container.</p>
+<p>注意这些接口的用法将你的代码与Spring进行了捆绑，不符合控制反转的风格。因此，它们是为那么需要以编程方式访问容器的基础结构beans推荐的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/15/2016-10-15-Effective Java 2.0_中文版_Item 4/" rel="next" title="Effective Java 2.0_中文版_Item 4">
+                <i class="fa fa-chevron-left"></i> Effective Java 2.0_中文版_Item 4
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/" rel="prev" title="Spring 5.0.0框架介绍_中文版_3.6">
+                Spring 5.0.0框架介绍_中文版_3.6 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/"
+     data-title="Spring 5.0.0框架介绍_中英文对照_3.6"
+     data-content=""
+     data-url="noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/"
+           data-title="Spring 5.0.0框架介绍_中英文对照_3.6" data-url="noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Customizing-the-nature-of-a-bean"><span class="nav-number">1.</span> <span class="nav-text">3.6 Customizing the nature of a bean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-1-Lifecycle-callbacks"><span class="nav-number">1.1.</span> <span class="nav-text">3.6.1 Lifecycle callbacks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2-ApplicationContextAware-and-BeanNameAware"><span class="nav-number">1.2.</span> <span class="nav-text">3.6.2 ApplicationContextAware and BeanNameAware</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-3-Other-Aware-interfaces"><span class="nav-number">1.3.</span> <span class="nav-text">3.6.3 Other Aware interfaces</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>

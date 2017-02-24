@@ -1,0 +1,856 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring 5.0.0框架介绍_中文版_3.8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中文版_3.8">
+<meta property="og:url" content="noahsnail.com/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring 5.0.0框架介绍_中文版_3.8">
+<meta property="og:updated_time" content="2016-11-16T11:19:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中文版_3.8">
+<meta name="twitter:description" content="Spring 5.0.0框架介绍_中文版_3.8">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/"/>
+
+
+
+
+
+  <title> Spring 5.0.0框架介绍_中文版_3.8 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 5.0.0框架介绍_中文版_3.8
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-16T19:18:17+08:00">
+              2016-11-16
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2016-11-16T19:19:02+08:00">
+              2016-11-16
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring框架参考手册-5-0-0/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring框架参考手册_5.0.0</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  Spring 5.0.0框架介绍_中文版_3.8
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h3 id="3-8-容器扩展点"><a href="#3-8-容器扩展点" class="headerlink" title="3.8 容器扩展点"></a>3.8 容器扩展点</h3><p>通常情况下，应用开发者不需要继承<code>ApplicationContext</code>的实现类。反而是Spring的IoC容器可以通过插入特定集成接口的实现来进行扩展。下面几节将描述这些集成接口。</p>
+<h4 id="3-8-1-通过BeanPostProcessor定制bean"><a href="#3-8-1-通过BeanPostProcessor定制bean" class="headerlink" title="3.8.1 通过BeanPostProcessor定制bean"></a>3.8.1 通过BeanPostProcessor定制bean</h4><p><code>BeanPostProcessor</code>接口定义了回调方法，你可以实现这个方法来提供你自己的（或覆盖容器默认的）实例化逻辑，依赖解析逻辑等等。如果你想在Spring容器完成实例化，配置和初始化bean之后实现一些定制的业务逻辑，你可以插入一个或多个<code>BeanPostProcessor</code>实现。</p>
+<p>你可以配置多个<code>BeanPostProcessor</code>实例，通过设置<code>order</code>属性你可以控制<code>BeanPostProcessors</code>的执行顺序。只有<code>BeanPostProcessor</code>实现了<code>Ordered</code>接口时你才可以设置这个属性；如果你编写了你自己的<code>BeanPostProcessor</code>，你也应该考虑实现<code>Ordered</code>接口。更多细节请参考<code>BeanPostProcessor</code>接口和<code>Ordered</code>接口的Java文档。也可以查看下面的<code>BeanPostProcessors</code>编程注册的笔记。</p>
+<blockquote>
+<p><code>BeanPostProcessors</code>操作一个bean（或对象）实例；也就是说，Spring Ioc容器实例化一个bean实例，然后<code>BeanPostProcessors</code>完成它们的工作。</p>
+<p><code>BeanPostProcessors</code>的作用域是每个容器。只有你在使用容器分层的情况下，这才是相关的。如果你在一个容器中定义了一个<code>BeanPostProcessor</code>，它将只后处理容器中的beans。换句话说，某个容器中定义的beans不能被另一个容器中定义的<code>BeanPostProcessor</code>进行后处理，即使这两个容器是同一层上的一部分。</p>
+<p>为了改变实际的bean定义（例如，定义bean的蓝图），你可以使用3.8.2小节中描述的<code>BeanFactoryPostProcessor</code>。</p>
+</blockquote>
+<p><code>org.springframework.beans.factory.config.BeanPostProcessor</code>接口包含恰好两个回调方法。当这样一个类在容器中注册为后处理器时，对于容器中创建的每一个bean实例，在容器初始化方法（例如<code>InitializingBean</code>的<code>afterPropertiesSet()</code>方法和任何已声明的初始化方法）被调用之前和任何bean初始化回调函数之后，后处理器会从容器中得到一个回调函数。后处理器可以对bean实例进行任何操作，包括完全忽略回调方法。bean后处理器通常检查回调接口或将bean包裹到代理中。为了提供代理包裹逻辑，一些Spring AOP基础结构类被实现为bean后处理器。</p>
+<p><code>ApplicationContext</code>会自动检测任何配置元数据中定义的实现了<code>BeanPostProcessor</code>接口的bean。为了能在后面bean创建时调用这些bean，<code>ApplicationContext</code>会将这些bean注册为后处理器。bean后处理器可以像其它bean一样在容器进行部署。</p>
+<p>注意当在一个配置类上使用<code>@Bean</code>声明一个<code>BeanPostProcessor</code>时，工厂方法的返回值应该是实现类本身或是<code>org.springframework.beans.factory.config.BeanPostProcessor</code>接口，这能清晰的表明bean的后处理器特性。此外，在完整的创建它之前，<code>ApplicationContext</code>不能通过类型自动检测它。由于<code>BeanPostProcessor</code>需要早一点实例化，为了在上下文中初始化其它的beans，早期的类型检测是非常关键的。</p>
+<blockquote>
+<p>实现<code>BeanPostProcessor</code>接口的类是特别的并被容器不同对待。所有的<code>BeanPostProcessors</code>和它们直接引用的beans在启动时进行实例化，它们是<code>ApplicationContext</code>特定启动阶段的一部分。接下来，所有<code>BeanPostProcessors</code>以有序形式进行注册，并适用于容器中所有更进一步的beans。由于AOP自动代理是作为<code>BeanPostProcessor</code>本身实现的，既不是<code>BeanPostProcessors</code>也不是它们直接引用的beans适合进行自动代理，因此没有融入它们的方面。</p>
+<p>对于这样的bean，你应该看到一个信息日志消息：”Bean foo没资格被所有的<code>BeanPostProcessor</code>接口进行处理（例如，不适合自动代理）。”。</p>
+<p>注意如果有beans使用自动装配或<code>@Resource</code>（可能回到自动装配）注入你的<code>BeanPostProcessor</code>，当搜索类型匹配的依赖候选者时，Spring可能访问未预料到beans，因此使它们不适合自动代理或其他类型的进行后处理的bean。例如，如果你有一个带有<code>@Resource</code>注解的依赖，<code>field/setter</code>名称不能直接对应bean声明的名字，也没有使用name特性，Spring将通过类型匹配来访问其它的bean。</p>
+</blockquote>
+<p>下面的例子展示了在<code>ApplicationContext</code>中如何编写，注册和使用<code>BeanPostProcessors</code>。</p>
+<p><strong>例子: Hello World, BeanPostProcessor类型</strong></p>
+<p>第一个例子阐述了基本用法。这个例子展示了一个定制<code>BeanPostProcessor</code>实现，实现中调用了每一个bean的<code>toString()</code>方法。当容器创建它时，会将结果字符串输出到系统控制台。</p>
+<p>下面是定制<code>BeanPostProcessor</code>实现的类定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> scripting;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.BeanPostProcessor;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InstantiationTracingBeanPostProcessor</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// simply return the instantiated bean as-is</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessBeforeInitialization</span><span class="params">(Object bean,</span></span></div><div class="line">            String beanName) <span class="keyword">throws</span> BeansException &#123;</div><div class="line">        <span class="keyword">return</span> bean; <span class="comment">// we could potentially return any object reference here...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean,</span></span></div><div class="line">            String beanName) <span class="keyword">throws</span> BeansException &#123;</div><div class="line">        System.out.println(<span class="string">"Bean '"</span> + beanName + <span class="string">"' created : "</span> + bean.toString());</div><div class="line">        <span class="keyword">return</span> bean;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xmlns:lang</span>=<span class="string">"http://www.springframework.org/schema/lang"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/lang</div><div class="line">        http://www.springframework.org/schema/lang/spring-lang.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">lang:groovy</span> <span class="attr">id</span>=<span class="string">"messenger"</span></span></div><div class="line">            <span class="attr">script-source</span>=<span class="string">"classpath:org/springframework/scripting/groovy/Messenger.groovy"</span>&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">lang:property</span> <span class="attr">name</span>=<span class="string">"message"</span> <span class="attr">value</span>=<span class="string">"Fiona Apple Is Just So Dreamy."</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">lang:groovy</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--</span></div><div class="line">    when the above bean (messenger) is instantiated, this custom</div><div class="line">    BeanPostProcessor implementation will output the fact to the system console</div><div class="line">    --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"scripting.InstantiationTracingBeanPostProcessor"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>注意<code>InstantiationTracingBeanPostProcessor</code>是怎样简单定义的。它甚至没有一个名字，因为它是一个bean，它能像其它bean一样进行依赖注入。（前面的配置也定义了一个bean，它被Groovy脚本支持。Spring动态语言支持在31章『动态语言支持』中进行了详细描述。）</p>
+<p>下面的简单Java应用执行了前面的代码和配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.scripting.Messenger;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Boot</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">final</span> String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"scripting/beans.xml"</span>);</div><div class="line">        Messenger messenger = (Messenger) ctx.getBean(<span class="string">"messenger"</span>);</div><div class="line">        System.out.println(messenger);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>前面的应用输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Bean &apos;messenger&apos; created : org.springframework.scripting.groovy.GroovyMessenger@272961</div><div class="line">org.springframework.scripting.groovy.GroovyMessenger@272961</div></pre></td></tr></table></figure>
+<p><strong>例: RequiredAnnotationBeanPostProcessor</strong></p>
+<p>使用回调函数接口或注解结合定制<code>BeanPostProcessor</code>实现是扩展Spring IoC容器的常见方法。一个例子是Spring的<code>RequiredAnnotationBeanPostProcessor</code>——一个<code>BeanPostProcessor</code>实现附带在Spring发行中，它保证了标记有（任意）注解的beans上的<code>JavaBean</code>属性能真正（配置成）通过值进行依赖注入。</p>
+<h4 id="3-8-2-通过BeanFactoryPostProcessor定制配置元数据"><a href="#3-8-2-通过BeanFactoryPostProcessor定制配置元数据" class="headerlink" title="3.8.2 通过BeanFactoryPostProcessor定制配置元数据"></a>3.8.2 通过BeanFactoryPostProcessor定制配置元数据</h4><p>接下来我们要看到的扩展点是<code>org.springframework.beans.factory.config.BeanFactoryPostProcessor</code>。这个接口的语义与那些<code>BeanPostProcessor</code>类似，但有一个主要的不同：<code>BeanFactoryPostProcessor</code>可以操作配置元数据；也就是说，Spring IoC容器允许在容器实例化除了<code>BeanFactoryPostProcessor</code>之外的任何beans之前，<code>BeanFactoryPostProcessor</code>读取配置元数据并可能修改它们。</p>
+<p>你可以配置多个<code>BeanFactoryPostProcessors</code>，你可以通过设置<code>order</code>属性来控制这些<code>BeanFactoryPostProcessors</code>的执行顺序。但是，只有<code>BeanFactoryPostProcessor</code>实现了<code>Ordered</code>接口时你才可以设置这个属性。如果你编写了你自己的<code>BeanFactoryPostProcessor</code>，你也应该考虑实现<code>Ordered</code>接口。关于<code>BeanFactoryPostProcessor</code>和<code>Ordered</code>的更多细节请看文档。</p>
+<blockquote>
+<p>如果你想改变真正的bean实例（例如，从配置元数据中创建的对象），你应该需要使用<code>BeanPostProcessor</code>（3.8.1小节中描述的）。尽管在<code>BeanFactoryPostProcessor</code>中处理bean实例在技术上是可能的（例如使用<code>BeanFactory.getBean()</code>），但这样做会引起过早的bean实例化，违背标准的容器生命周期。这可能会产生负面影响例如绕过bean后处理。</p>
+<p><code>BeanFactoryPostProcessors</code>的作用域也是在每个容器中。这仅对于容器分层而言。如果在一个容器中你定义了一个<code>BeanFactoryPostProcessor</code>，它将适用于那个容器中的bean定义。一个容器中的bean定义不能被另一个容器中的<code>BeanFactoryPostProcessors</code>进行后处理，即使两个容器是在同一个分层中。</p>
+</blockquote>
+<p>为了修改定义在容器中的配置元数据，当一个bean工厂后处理器在<code>ApplicationContext</code>中声明时，它会自动执行。Spring包含许多预先定义的bean工厂后处理器，例如<code>PropertyOverrideConfigurer</code>和<code>PropertyPlaceholderConfigurer</code>。定制的<code>BeanFactoryPostProcessor</code>也可以使用，例如，为了注册定制的属性编辑器。</p>
+<p><code>ApplicationContext</code>会自动检测任何部署在它之内的实现了<code>BeanFactoryPostProcessor</code>接口的bean。在合适的时间，它会使用这些beans作为bean工厂后处理器。你可以像任何你使用的bean那样部署这些后处理器beans。</p>
+<blockquote>
+<p>关于<code>BeanPostProcessors</code>, 通常情况下你不想配置<code>BeanFactoryPostProcessors</code>为延迟初始化。 如果没有别的bean引用<code>Bean(Factory)PostProcessor</code>，后处理器将不会实例化。因此，对它进行延迟初始化会被忽略，即使你将<code>&lt;beans/&gt;</code>元素中的<code>default-lazy-init</code>特性设置为<code>true</code>，<code>Bean(Factory)PostProcessor</code>也会急切的初始化。</p>
+</blockquote>
+<p><strong>例: 类名替换PropertyPlaceholderConfigurer</strong></p>
+<p>你可以使用<code>PropertyPlaceholderConfigurer</code>读取单独文件中的bean定义来使属性具体化，这个单独文件使用标准的Java <code>Properties</code>格式。这样做可以在部署应用时定制特定环境属性例如数据库URLs和密码，没有复杂性或修改主XML定义文件及容器相关文件的风险。</p>
+<p>考虑一下下面的基于XML定义的配置元数据片段，其中定义了一个带有占位符的<code>DataSource</code>。这个例子展示了从外部<code>Properties</code>文件进行属性配置。在运行时，<code>PropertyPlaceholderConfigurer</code>会应用到元数据中，将会替换<code>DataSource</code>中的一些属性。通过<code>${property-name}</code>形式的占位符指定要替换的值，这遵循了Ant/log4j/JSP EL风格。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"locations"</span> <span class="attr">value</span>=<span class="string">"classpath:com/foo/jdbc.properties"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span></span></div><div class="line">        <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driverClassName&#125;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>真正的属性值来自于另一个以标准Java <code>Properties</code>形式编写的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">jdbc.driverClassName=org.hsqldb.jdbcDriver</div><div class="line">jdbc.url=jdbc:hsqldb:hsql://production:9002</div><div class="line">jdbc.username=sa</div><div class="line">jdbc.password=root</div></pre></td></tr></table></figure>
+<p>因此，在运行是字符串<code>${jdbc.username}</code>被替换为<code>sa</code>，其它的匹配属性文件中的key的占位符的值以同样方式替换。<code>PropertyPlaceholderConfigurer</code>会检查bean中大多数属性和特性的占位符。此外，占位符的前缀和后缀都可以定制。</p>
+<p>Spring 2.5中引入了上下文命名空间，可以通过专用配置元素配置属性占位符。在<code>location</code>特性可以提供一个或多个位置，多个位置用逗号分开。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;context:property-placeholder location=&quot;classpath:com/foo/jdbc.properties&quot;/&gt;</div></pre></td></tr></table></figure>
+<p><code>PropertyPlaceholderConfigurer</code>不仅仅查找指定<code>Properties</code>文件中的属性。默认情况下，如果不能在指定属性文件中找到属性，它也检查Java <code>System</code>属性。你可以通过下面三个支持的整数值中的一个设置配置器的<code>systemPropertiesMode</code>属性，从而定制查找行为。</p>
+<ul>
+<li><p>never (0): 从不检查<code>system</code>属性</p>
+</li>
+<li><p>fallback (1): 如果不能在指定文件中解析属性，检查<code>system</code>属性，这是默认值。</p>
+</li>
+<li><p>override (2): 在查找指定文件之前，首先检查<code>system</code>属性，这可以使系统属性覆盖任何其它属性源。</p>
+</li>
+</ul>
+<p>更多信息请看<code>PropertyPlaceholderConfigurer</code>文档。</p>
+<blockquote>
+<p>你可以<code>PropertyPlaceholderConfigurer</code>替换类名，有时候非常有用，特别是运行时你必须选择一个特别的实现类的情况下。例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;bean class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">    &lt;property name=&quot;locations&quot;&gt;</div><div class="line">        &lt;value&gt;classpath:com/foo/strategy.properties&lt;/value&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">    &lt;property name=&quot;properties&quot;&gt;</div><div class="line">        &lt;value&gt;custom.strategy.class=com.foo.DefaultStrategy&lt;/value&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;bean id=&quot;serviceStrategy&quot; class=&quot;$&#123;custom.strategy.class&#125;&quot;/&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果这个类不能在运行时解析成一个有效类，对于一个非懒惰初始化的bean，当它要创建时，在<code>ApplicationContext</code>的<code>preInstantiateSingletons()</code>期间，bean会解析失败。</p>
+</blockquote>
+<p><strong>例: PropertyOverrideConfigurer</strong></p>
+<p><code>PropertyOverrideConfigurer</code>，另一个bean工厂后处理器，类似于<code>PropertyPlaceholderConfigurer</code>，但不像后者，最初的定义可以有默认值或bean属性一点也没有值。如果一个覆写的<code>Properties</code>文件对于某个bean属性没有任何输入，会使用默认的上下文定义。</p>
+<p>注意bean定义没有意识到被覆写了，因此从XML定义文件中它不能立刻很明显的看出在使用覆写的配置器。为了防止多个<code>PropertyOverrideConfigurer</code>实例对于同一个bean属性定义不同的值，根据覆写机制，使用最后一个定义的值。</p>
+<p>属性文件配置形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">beanName.property=value</div></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dataSource.driverClassName=com.mysql.jdbc.Driver</div><div class="line">dataSource.url=jdbc:mysql:mydb</div></pre></td></tr></table></figure>
+<p>例子文件可以被包含名为<code>dataSource</code> bean的容器定义使用，它有一个<code>driver</code>和<code>url</code>属性。</p>
+<p>混合属性命名也支持，除了最后被覆写的属性，只要路径的每部分都已经是非空（假设构造函数进行初始化）。在这个例子中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">foo.fred.bob.sammy=123</div></pre></td></tr></table></figure>
+<p><code>foo</code> bean中的<code>fred</code>属性的<code>bob</code>属性的<code>sammy</code>属性设为标量值<code>123</code>。</p>
+<blockquote>
+<p>指定的覆写值总是字面值；它们不能转成bean引用。当XML bean定义中的初始值指定了一个bean引用时，这个规范同样有效。</p>
+</blockquote>
+<p>Spring 2.5引入了上下文命名空间，可以用专用配置元素配置属性覆写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;context:property-override location=&quot;classpath:override.properties&quot;/&gt;</div></pre></td></tr></table></figure>
+<h4 id="3-8-3-使用FactoryBean定制实例化逻辑"><a href="#3-8-3-使用FactoryBean定制实例化逻辑" class="headerlink" title="3.8.3 使用FactoryBean定制实例化逻辑"></a>3.8.3 使用FactoryBean定制实例化逻辑</h4><p>为对象实现<code>org.springframework.beans.factory.FactoryBean</code>接口的是工厂本身。</p>
+<p><code>FactoryBean</code>接口是Spring IoC的实例化逻辑可插入性的一个点。如果你有复杂的初始化代码，相比于大量的冗余的XML代码用Java语言来表达会更好，那么你可以创建你自己的<code>FactoryBean</code>，在类里面编写复杂的初始化逻辑，并将你定制的<code>FactoryBean</code>插入到容器中。</p>
+<p><code>FactoryBean</code>接口提供了三个方法：</p>
+<ul>
+<li><p><code>Object getObject()</code>: 返回一个工厂创建的对象实例。这个实例可能被共享， 依赖于工厂是否返回一个单例或原型。</p>
+</li>
+<li><p><code>boolean isSingleton()</code>: 如果<code>FactoryBean</code>返回单例，返回true，否则返回false。</p>
+</li>
+<li><p><code>Class getObjectType()</code>: 返回<code>getObject()</code>方法返回的类型，如果类型不能提前知道则返回null。</p>
+</li>
+</ul>
+<p><code>FactoryBean</code>的概念和接口在Spring框架中的许多地方都使用了；Spring本身中有不止50个<code>FactoryBean</code>接口的实现。</p>
+<p>当你需要向容器请求一个真正的<code>FactoryBean</code>实例本身来代替它产生的bean时，调用<code>ApplicationContext</code>的<code>getBean()</code>方法时，bean的id前面要加上一个<code>$</code>符。因此给定一个id为<code>myBean</code>的<code>FactoryBean</code>，在容器中调用<code>getBean(&quot;myBean&quot;)</code>，返回<code>FactoryBean</code>的产品，但调用<code>getBean(&quot;&amp;myBean&quot;)</code>会返回<code>FactoryBean</code>实例本身。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/13/2016-11-13-mv命令介绍/" rel="next" title="mv命令介绍">
+                <i class="fa fa-chevron-left"></i> mv命令介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中英文对照_3.8/" rel="prev" title="Spring 5.0.0框架介绍_中英文对照_3.8">
+                Spring 5.0.0框架介绍_中英文对照_3.8 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/"
+     data-title="Spring 5.0.0框架介绍_中文版_3.8"
+     data-content=""
+     data-url="noahsnail.com/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/"
+           data-title="Spring 5.0.0框架介绍_中文版_3.8" data-url="noahsnail.com/2016/11/16/2016-11-16-Spring 5.0.0框架介绍_中文版_3.8/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-容器扩展点"><span class="nav-number">1.</span> <span class="nav-text">3.8 容器扩展点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8-1-通过BeanPostProcessor定制bean"><span class="nav-number">1.1.</span> <span class="nav-text">3.8.1 通过BeanPostProcessor定制bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8-2-通过BeanFactoryPostProcessor定制配置元数据"><span class="nav-number">1.2.</span> <span class="nav-text">3.8.2 通过BeanFactoryPostProcessor定制配置元数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8-3-使用FactoryBean定制实例化逻辑"><span class="nav-number">1.3.</span> <span class="nav-text">3.8.3 使用FactoryBean定制实例化逻辑</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>
