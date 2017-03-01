@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2017/02/23/2017-2-23-Caffe的solver参数介绍/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Caffe的solver参数介绍">
-<meta property="og:updated_time" content="2017-03-01T05:28:31.000Z">
+<meta property="og:updated_time" content="2017-03-01T06:05:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Caffe的solver参数介绍">
 <meta name="twitter:description" content="Caffe的solver参数介绍">
@@ -312,7 +312,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-03-01T13:28:31+08:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2017-03-01T14:05:26+08:00">
               2017-03-01
             </time>
             
@@ -388,9 +388,9 @@
 <ul>
 <li>lr_policy</li>
 </ul>
-<p>这个参数是用来表示学习率随着时间是如何变化的 This value is a quoted string.</p>
-<p>Options include:</p>
-<p>“step” - drop the learning rate in step sizes indicated by the gamma parameter.<br>“multistep” - drop the learning rate in step size indicated by the gamma at each specified stepvalue.<br>“fixed” - the learning rate does not change.<br>“exp” - gamma^iteration<br>“poly” -<br>“sigmoid” -<br>gamma</p>
+<p>这个参数是用来表示学习率随着时间是如何变化的。值是字符串，需要加<code>&quot;&quot;</code>。</p>
+<p>学习率变化的可选参数有：</p>
+<p>“step” - 根据<code>gamma</code>参数和<code>stepsize</code>参数来降低学习率，$new_lr = base_lr * gamma ^ (floor(iter / step))$。<br>“multistep” -<br>“fixed” - 学习率<code>base_lr</code>保持不变。<br>“exp” - gamma^iteration<br>“poly” -<br>“sigmoid” -<br>gamma</p>
 <p>This parameter indicates how much the learning rate should change every time we reach the next “step.” The value is a real number, and can be thought of as multiplying the current learning rate by said number to gain a new learning rate.</p>
 <p>stepsize</p>
 <p>This parameter indicates how often (at some iteration count) that we should move onto the next “step” of training. This value is a positive integer.</p>
@@ -402,10 +402,10 @@
 <p>This parameter indicates how much of the previous weight will be retained in the new calculation. This value is a real fraction.</p>
 <p>weight_decay</p>
 <p>This parameter indicates the factor of (regularization) penalization of large weights. This value is a often a real fraction.</p>
-<p>solver_mode</p>
-<p>This parameter indicates which mode will be used in solving the network.</p>
-<p>Options include:</p>
-<p>CPU<br>GPU<br>snapshot</p>
+<ul>
+<li>solver_mode</li>
+</ul>
+<p>这个参数用来表示求解神经网络的模式——CPU or GPU。<br>snapshot</p>
 <p>This parameter indicates how often caffe should output a model and solverstate. This value is a positive integer.</p>
 <p>snapshot_prefix:</p>
 <p>This parameter indicates how a snapshot output’s model and solverstate’s name should be prefixed. This value is a double quoted string.</p>
@@ -421,14 +421,12 @@
 <p>This parameter indicates the back propagation algorithm used to train the network. This value is a quoted string.</p>
 <p>Options include:</p>
 <p>Stochastic Gradient Descent “SGD”<br>AdaDelta “AdaDelta”<br>Adaptive Gradient “AdaGrad”<br>Adam “Adam”<br>Nesterov’s Accelerated Gradient “Nesterov”<br>RMSprop “RMSProp”</p>
-<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><p>质能方程$E = mc^2$</p>
-<p>参考资料</p>
+<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><p>参考资料</p>
 <ol>
 <li><a href="http://www.cnblogs.com/denny402/p/5074049.html" target="_blank" rel="external">http://www.cnblogs.com/denny402/p/5074049.html</a></li>
 <li><a href="https://github.com/BVLC/caffe/wiki/Solver-Prototxt" target="_blank" rel="external">https://github.com/BVLC/caffe/wiki/Solver-Prototxt</a></li>
+<li><a href="http://stackoverflow.com/questions/30033096/what-is-lr-policy-in-caffe" target="_blank" rel="external">http://stackoverflow.com/questions/30033096/what-is-lr-policy-in-caffe</a></li>
 </ol>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
       
     </div>
