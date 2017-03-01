@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2017/02/23/2017-2-23-Caffe的solver参数介绍/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Caffe的solver参数介绍">
-<meta property="og:updated_time" content="2017-03-01T06:05:26.000Z">
+<meta property="og:updated_time" content="2017-03-01T07:42:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Caffe的solver参数介绍">
 <meta name="twitter:description" content="Caffe的solver参数介绍">
@@ -312,7 +312,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-03-01T14:05:26+08:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2017-03-01T15:42:26+08:00">
               2017-03-01
             </time>
             
@@ -380,48 +380,34 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><code>solver.prototxt</code>文件是用来告诉caffe如何训练网络的。<code>solver.prototxt</code>的各个参数的解释如下：</p>
-<h2 id="1-Parameters"><a href="#1-Parameters" class="headerlink" title="1. Parameters"></a>1. Parameters</h2><ul>
-<li>base_lr</li>
-</ul>
-<p>这个参数是用来表示网络的初始学习率的。这个值是一个浮点型实数。</p>
+<h2 id="1-Parameters"><a href="#1-Parameters" class="headerlink" title="1. Parameters"></a>1. Parameters</h2><p><code>solver.prototxt</code>文件是用来告诉caffe如何训练网络的。<code>solver.prototxt</code>的各个参数的解释如下：</p>
 <ul>
-<li>lr_policy</li>
+<li>base_lr<br>这个参数是用来表示网络的初始学习率的。这个值是一个浮点型实数。</li>
+<li>lr_policy<br>这个参数是用来表示学习率随着时间是如何变化的。值是字符串，需要加<code>&quot;&quot;</code>。学习率变化的可选参数有：<br>“step”——需要设置<code>stepsize</code>。根据<code>gamma</code>参数和<code>stepsize</code>参数来降低学习率，<code>base_lr * gamma ^ (floor(iter / stepsize))</code>。<code>iter</code>是当前迭代次数。学习率每迭代<code>stepsize</code>次变化一次。<br>“multistep”——与<code>step</code>类似，需要设置<code>stepvalue</code>，学习率根据<code>stepvalue</code>进行变化。<br>“fixed”——学习率<code>base_lr</code>保持不变。<br>“inv”——学习率变化公式为<code>base_lr * (1 + gamma * iter) ^ (- power)</code><br>“exp”——学习率变化公式为<code>base_lr * gamma ^ iter}</code><br>“poly”——学习率以多项式形式衰减，到最大迭代次数时降为0。学习率变化公式为<code>base_lr * (1 - iter/max_iter) ^ (power)</code>。<br>“sigmoid”——学习率以S型曲线形式衰减，学习率变化公式为<code>base_lr * (1 / (1 + exp(-gamma * (iter - stepsize))))</code>。</li>
+<li>gamma<br>这个参数表示学习率每次的变化程度，值为实数。</li>
+<li>stepsize<br>这个参数表示什么时候应该进行训练的下一过程，值为正整数。主要用在<code>lr_policy</code>为<code>step</code>的情况。</li>
+<li>stepvalue<br>这个参数表示什么时候应该进行训练的下一过程，值为正整数。主要用在<code>lr_policy</code>为<code>multistep</code>的情况。</li>
+<li>max_iter<br>这个参数表示训练神经网络迭代的最大次数，值为正整数。</li>
+<li>momentum<br>这个参数表示在新的计算中要保留的前面的权重数量，值为真分数，通常设为0.9。</li>
+<li>weight_decay<br>这个参数表示对较大权重的惩罚（正则化）因子。值为真分数。<br>This parameter indicates the factor of (regularization) penalization of large weights. This value is a often a real fraction.</li>
+<li>solver_mode<br>这个参数用来表示求解神经网络的模式——值为CPU or GPU。</li>
+<li>snapshot<br>这个参数用来表示每迭代多少次就应该保存snapshot的<code>model</code>和<code>solverstate</code>，值为正整数。</li>
+<li>snapshot_prefix:<br>这个参数用来表示保存snapshot时<code>model</code>和<code>solverstate</code>的前缀，值为带引号的字符串。</li>
+<li>net:<br>这个参数表示训练网络所在的位置，值为带引号的字符串。</li>
+<li>test_iter<br>这个参数表示<br>这个参数表示每个test_interval进行多少次test迭代，值为正整数。</li>
+<li>test_interval<br>这个参数表示什么时候进行数据的测试，值为正整数。</li>
+<li>display<br>这个参数用来表示什么时候将输出结果打印到屏幕上，值为正整数，表示迭代次数。</li>
+<li>type<br>这个参数表示训练神经网络采用的反向传播算法，值为带引号的字符串。可选的值有：<br>Stochastic Gradient Descent “SGD”——随机梯度下降，默认值。<br>AdaDelta “AdaDelta”——一种”鲁棒的学习率方法“，是基于梯度的优化方法。<br>Adaptive Gradient “AdaGrad”——自适应梯度方法。<br>Adam “Adam”——一种基于梯度的优化方法。<br>Nesterov’s Accelerated Gradient “Nesterov”——Nesterov的加速梯度法，作为凸优化中最理想的方法，其收敛速度非常快。<br>RMSprop “RMSProp”——一种基于梯度的优化方法。</li>
 </ul>
-<p>这个参数是用来表示学习率随着时间是如何变化的。值是字符串，需要加<code>&quot;&quot;</code>。</p>
-<p>学习率变化的可选参数有：</p>
-<p>“step” - 根据<code>gamma</code>参数和<code>stepsize</code>参数来降低学习率，$new_lr = base_lr * gamma ^ (floor(iter / step))$。<br>“multistep” -<br>“fixed” - 学习率<code>base_lr</code>保持不变。<br>“exp” - gamma^iteration<br>“poly” -<br>“sigmoid” -<br>gamma</p>
-<p>This parameter indicates how much the learning rate should change every time we reach the next “step.” The value is a real number, and can be thought of as multiplying the current learning rate by said number to gain a new learning rate.</p>
-<p>stepsize</p>
-<p>This parameter indicates how often (at some iteration count) that we should move onto the next “step” of training. This value is a positive integer.</p>
-<p>stepvalue</p>
-<p>This parameter indicates one of potentially many iteration counts that we should move onto the next “step” of training. This value is a positive integer. There are often more than one of these parameters present, each one indicated the next step iteration.</p>
-<p>max_iter</p>
-<p>This parameter indicates when the network should stop training. The value is an integer indicate which iteration should be the last.</p>
-<p>momentum</p>
-<p>This parameter indicates how much of the previous weight will be retained in the new calculation. This value is a real fraction.</p>
-<p>weight_decay</p>
-<p>This parameter indicates the factor of (regularization) penalization of large weights. This value is a often a real fraction.</p>
-<ul>
-<li>solver_mode</li>
+<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><ul>
+<li><p>lr_policy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># lr_policy为multisetp</div><div class="line">base_lr: 0.01</div><div class="line">momentum: 0.9</div><div class="line">lr_policy: &quot;multistep&quot;</div><div class="line">gamma: 0.9</div><div class="line">stepvalue: 1000</div><div class="line">stepvalue: 2000</div><div class="line">stepvalue: 3000</div><div class="line">stepvalue: 4000</div><div class="line">stepvalue: 5000</div><div class="line"></div><div class="line"># lr_policy为step</div><div class="line">base_lr: 0.01</div><div class="line">momentum: 0.9</div><div class="line">lr_policy: &quot;step&quot;</div><div class="line">gamma: 0.9</div><div class="line">stepsize: 1000</div></pre></td></tr></table></figure>
+</li>
+<li><p>solver.prototxt</p>
+</li>
 </ul>
-<p>这个参数用来表示求解神经网络的模式——CPU or GPU。<br>snapshot</p>
-<p>This parameter indicates how often caffe should output a model and solverstate. This value is a positive integer.</p>
-<p>snapshot_prefix:</p>
-<p>This parameter indicates how a snapshot output’s model and solverstate’s name should be prefixed. This value is a double quoted string.</p>
-<p>net:</p>
-<p>This parameter indicates the location of the network to be trained (path to prototxt). This value is a double quoted string.</p>
-<p>test_iter</p>
-<p>This parameter indicates how many test iterations should occur per test_interval. This value is a positive integer.</p>
-<p>test_interval</p>
-<p>This parameter indicates how often the test phase of the network will be executed.</p>
-<p>display</p>
-<p>This parameter indicates how often caffe should output results to the screen. This value is a positive integer and specifies an iteration count.</p>
-<p>type</p>
-<p>This parameter indicates the back propagation algorithm used to train the network. This value is a quoted string.</p>
-<p>Options include:</p>
-<p>Stochastic Gradient Descent “SGD”<br>AdaDelta “AdaDelta”<br>Adaptive Gradient “AdaGrad”<br>Adam “Adam”<br>Nesterov’s Accelerated Gradient “Nesterov”<br>RMSprop “RMSProp”</p>
-<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><p>参考资料</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">net: &quot;models/bvlc_alexnet/train_val.prototxt&quot;</div><div class="line"># 每次测试时进行1000次迭代</div><div class="line">test_iter: 1000</div><div class="line"># 每进行1000次训练执行一次测试</div><div class="line">test_interval: 1000</div><div class="line">base_lr: 0.01</div><div class="line">lr_policy: &quot;step&quot;</div><div class="line">gamma: 0.1</div><div class="line">stepsize: 100000</div><div class="line">display: 20</div><div class="line">max_iter: 450000</div><div class="line">momentum: 0.9</div><div class="line">weight_decay: 0.0005</div><div class="line">snapshot: 10000</div><div class="line">snapshot_prefix: &quot;models/bvlc_alexnet/caffe_alexnet_train&quot;</div><div class="line">solver_mode: GPU</div></pre></td></tr></table></figure>
+<p>参考资料</p>
 <ol>
 <li><a href="http://www.cnblogs.com/denny402/p/5074049.html" target="_blank" rel="external">http://www.cnblogs.com/denny402/p/5074049.html</a></li>
 <li><a href="https://github.com/BVLC/caffe/wiki/Solver-Prototxt" target="_blank" rel="external">https://github.com/BVLC/caffe/wiki/Solver-Prototxt</a></li>
