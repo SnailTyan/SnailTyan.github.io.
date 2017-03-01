@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2017/02/23/2017-2-23-Caffe的solver参数介绍/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Caffe的solver参数介绍">
-<meta property="og:updated_time" content="2017-02-24T04:16:15.000Z">
+<meta property="og:updated_time" content="2017-03-01T05:22:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Caffe的solver参数介绍">
 <meta name="twitter:description" content="Caffe的solver参数介绍">
@@ -312,8 +312,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-02-24T12:16:15+08:00">
-              2017-02-24
+            <time title="Post modified" itemprop="dateModified" datetime="2017-03-01T13:22:54+08:00">
+              2017-03-01
             </time>
             
           </span>
@@ -380,6 +380,52 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><code>solver.prototxt</code>文件是用来告诉caffe如何训练网络的。<code>solver.prototxt</code>的各个参数的解释如下：</p>
+<h2 id="1-Parameters"><a href="#1-Parameters" class="headerlink" title="1. Parameters"></a>1. Parameters</h2><ul>
+<li>base_lr</li>
+</ul>
+<p>这个参数是用来表示网络的初始学习率的。这个值是一个浮点型实数。</p>
+<ul>
+<li>lr_policy</li>
+</ul>
+<p>这个参数是用来表示学习率随着时间是如何变化的 This value is a quoted string.</p>
+<p>Options include:</p>
+<p>“step” - drop the learning rate in step sizes indicated by the gamma parameter.<br>“multistep” - drop the learning rate in step size indicated by the gamma at each specified stepvalue.<br>“fixed” - the learning rate does not change.<br>“exp” - gamma^iteration<br>“poly” -<br>“sigmoid” -<br>gamma</p>
+<p>This parameter indicates how much the learning rate should change every time we reach the next “step.” The value is a real number, and can be thought of as multiplying the current learning rate by said number to gain a new learning rate.</p>
+<p>stepsize</p>
+<p>This parameter indicates how often (at some iteration count) that we should move onto the next “step” of training. This value is a positive integer.</p>
+<p>stepvalue</p>
+<p>This parameter indicates one of potentially many iteration counts that we should move onto the next “step” of training. This value is a positive integer. There are often more than one of these parameters present, each one indicated the next step iteration.</p>
+<p>max_iter</p>
+<p>This parameter indicates when the network should stop training. The value is an integer indicate which iteration should be the last.</p>
+<p>momentum</p>
+<p>This parameter indicates how much of the previous weight will be retained in the new calculation. This value is a real fraction.</p>
+<p>weight_decay</p>
+<p>This parameter indicates the factor of (regularization) penalization of large weights. This value is a often a real fraction.</p>
+<p>solver_mode</p>
+<p>This parameter indicates which mode will be used in solving the network.</p>
+<p>Options include:</p>
+<p>CPU<br>GPU<br>snapshot</p>
+<p>This parameter indicates how often caffe should output a model and solverstate. This value is a positive integer.</p>
+<p>snapshot_prefix:</p>
+<p>This parameter indicates how a snapshot output’s model and solverstate’s name should be prefixed. This value is a double quoted string.</p>
+<p>net:</p>
+<p>This parameter indicates the location of the network to be trained (path to prototxt). This value is a double quoted string.</p>
+<p>test_iter</p>
+<p>This parameter indicates how many test iterations should occur per test_interval. This value is a positive integer.</p>
+<p>test_interval</p>
+<p>This parameter indicates how often the test phase of the network will be executed.</p>
+<p>display</p>
+<p>This parameter indicates how often caffe should output results to the screen. This value is a positive integer and specifies an iteration count.</p>
+<p>type</p>
+<p>This parameter indicates the back propagation algorithm used to train the network. This value is a quoted string.</p>
+<p>Options include:</p>
+<p>Stochastic Gradient Descent “SGD”<br>AdaDelta “AdaDelta”<br>Adaptive Gradient “AdaGrad”<br>Adam “Adam”<br>Nesterov’s Accelerated Gradient “Nesterov”<br>RMSprop “RMSProp”</p>
+<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><p>参考资料</p>
+<ol>
+<li><a href="http://www.cnblogs.com/denny402/p/5074049.html" target="_blank" rel="external">http://www.cnblogs.com/denny402/p/5074049.html</a></li>
+<li><a href="https://github.com/BVLC/caffe/wiki/Solver-Prototxt" target="_blank" rel="external">https://github.com/BVLC/caffe/wiki/Solver-Prototxt</a></li>
+</ol>
 
       
     </div>
@@ -412,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/21/2017-2-21-Linux的ps命令/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2017/02/21/2017-2-21-Linux的ps命令/" rel="next" title="Linux的ps命令">
+                <i class="fa fa-chevron-left"></i> Linux的ps命令
               </a>
             
           </div>
@@ -490,8 +536,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -502,7 +557,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">170</span>
+              <span class="site-state-item-count">169</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -544,6 +599,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Parameters"><span class="nav-number">1.</span> <span class="nav-text">1. Parameters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Demo"><span class="nav-number">2.</span> <span class="nav-text">2. Demo</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
