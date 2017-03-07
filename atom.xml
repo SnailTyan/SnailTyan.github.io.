@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-03-01T07:42:26.000Z</updated>
+  <updated>2017-03-06T10:01:54.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,121 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux查询CPU信息</title>
+    <link href="noahsnail.com/2017/03/06/2017-3-6-Linux%E6%9F%A5%E8%AF%A2CPU%E4%BF%A1%E6%81%AF/"/>
+    <id>noahsnail.com/2017/03/06/2017-3-6-Linux查询CPU信息/</id>
+    <published>2017-03-06T05:44:15.000Z</published>
+    <updated>2017-03-06T10:01:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h2><ul>
+<li><p>物理CPU数<br>主板上实际插入的CPU数量，可以数不重复的physical id 有几个（physical id）</p>
+</li>
+<li><p>CPU核数<br>单块CPU上面能处理数据的芯片组的数量，如双核、四核等（CPU cores）</p>
+</li>
+<li><p>逻辑CPU数<br>一般情况下，逻辑CPU数=物理CPU个数<em>每颗核数，如果不相等的话，则表示服务器的CPU支持超线程技术（简单来说，它可使处理器中的1颗内核如2颗内核那样在操作系统中发挥作用。这样一来，操作系统可使用的执行资源扩大了一倍，大幅提高了系统的整体性能，此时逻辑CPU=物理CPU个数</em>每颗核数*2）</p>
+</li>
+<li><p>它们之间的关系<br>总核数 = 物理CPU个数 <em> 每颗物理CPU的核数<br>总逻辑CPU数 = 物理CPU个数 </em> 每颗物理CPU的核数 * 超线程数</p>
+</li>
+</ul>
+<h2 id="2-查看物理CPU的个数"><a href="#2-查看物理CPU的个数" class="headerlink" title="2.查看物理CPU的个数"></a>2.查看物理CPU的个数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l</div><div class="line">2</div></pre></td></tr></table></figure>
+<h2 id="3-查看逻辑CPU个数"><a href="#3-查看逻辑CPU个数" class="headerlink" title="3.查看逻辑CPU个数"></a>3.查看逻辑CPU个数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l</div><div class="line">24</div></pre></td></tr></table></figure>
+<h2 id="4-查看CPU核数"><a href="#4-查看CPU核数" class="headerlink" title="4.查看CPU核数"></a>4.查看CPU核数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo |grep &quot;cores&quot;|uniq</div><div class="line">cpu cores       : 6</div></pre></td></tr></table></figure>
+<h2 id="5-查看CPU型号信息"><a href="#5-查看CPU型号信息" class="headerlink" title="5.查看CPU型号信息"></a>5.查看CPU型号信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</div><div class="line">     24  Intel(R) Xeon(R) CPU E5-2630L v2 @ 2.40GHz</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Linux查询CPU信息
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LeNet神经网络</title>
+    <link href="noahsnail.com/2017/03/02/2017-3-2-LeNet%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    <id>noahsnail.com/2017/03/02/2017-3-2-LeNet神经网络/</id>
+    <published>2017-03-02T05:50:43.000Z</published>
+    <updated>2017-03-07T01:05:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-LeNet神经网络介绍"><a href="#1-LeNet神经网络介绍" class="headerlink" title="1. LeNet神经网络介绍"></a>1. LeNet神经网络介绍</h2><p>LeNet神经网络由深度学习三巨头之一的Yan LeCun提出，他同时也是卷积神经网络 (CNN，Convolutional Neural Networks)之父。LeNet主要用来进行手写字符的识别与分类，并在美国的银行中投入了使用。LeNet的实现确立了CNN的结构，现在神经网络中的许多内容在LeNet的网络结构中都能看到，例如卷积层，Pooling层，ReLU层。虽然LeNet早在20世纪90年代就已经提出了，但由于当时缺乏大规模的训练数据，计算机硬件的性能也较低，因此LeNet神经网络在处理复杂问题时效果并不理想。虽然LeNet网络结构比较简单，但是刚好适合神经网络的入门学习。</p>
+<h2 id="2-LeNet神经网络结构"><a href="#2-LeNet神经网络结构" class="headerlink" title="2. LeNet神经网络结构"></a>2. LeNet神经网络结构</h2><p>LeNet的神经网络结构图如下：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/LeNet_1.jpg" alt="LeNet网络图"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/LeNet_2.png" alt="LeNet网络拓扑图"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/LeNet.png" alt="LeNet网络结构图"></p>
+<p>LeNet网络的执行流程图如下：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/conv_all.png" alt="LeNet图像处理流程"></p>
+<h3 id="2-1-LeNet第一层（卷积运算）"><a href="#2-1-LeNet第一层（卷积运算）" class="headerlink" title="2.1 LeNet第一层（卷积运算）"></a>2.1 LeNet第一层（卷积运算）</h3><p>接下来我们来具体的一层层的分析LeNet的网络结构。首先要了解图像（输入数据）的表示。在LeNet网络中，输入图像是手写字符，图像的表示形式为二维数据矩阵，如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/8-gif.gif" alt="图像的表示"></p>
+<p>LeNet网络除去输入输出层总共有六层网络。第一层是卷积层（C1层），卷积核的大小为<code>5*5</code>，卷积核数量为<code>6</code>个，输入图像的大小为<code>32*32</code>，因此输入数据在进行第一层卷积之后，输出结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。卷积操作如下面两幅图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/conv.gif" alt="卷积演示"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/giphy.gif" alt="卷积演示"></p>
+<p>卷积操作的过程可描述为：卷积核在图像上滑动，滑动步长为1（即每次移动一格，水平方向从左到右，到最右边之后再从最左边开始，向下移动一格，重复从左到右滑动），当卷积核与图像的一个局部块重合时进行卷积运行，卷积计算方式为图像块对应位置的数与卷积核对应位置的数相乘，然后将所有相乘结果相加即为feature map的值，<strong>相乘累加之后的结果位于卷积核中心点的位置</strong>，因此如果是<code>3*3</code>的卷积核，feature map比原图像在水平和垂直方向上分别减少两行（上下各一行）和两列（左右各一列），因此上面图像原图为<code>5*5</code>，卷积核为<code>3*3</code>，卷积结果大小为<code>3*3</code>，即<code>(5-2)*(5-2)</code>，如果卷积核为<code>5*5</code>，则卷积结果大小为<code>(5-4)*(5-4)</code>。上图中的卷积核为：<br><img src="http://ocs628urt.bkt.clouddn.com/conv_kernel.png" alt="卷积核"></p>
+<p>由于神经网络层与层的结构是通过连接来实现的，因此输入层与第一个卷积层的连接数量应为<code>(32-2-2)*(32-2-2)*(5*5+1)= 28*28*156 =122304</code>。</p>
+<p>卷积的作用主要是：通过卷积运算，可以使原信号特征增强，并且降低噪音。在图像上卷积之后主要是减少图像噪声，提取图像的特征。例如sobel算子就是一种卷积运算，主要是提取图像的边缘特征。卷积网络能很好地适应图像的平移不变性：例如稍稍移动一幅猫的图像，它仍然是一幅猫的图像。卷积操作保留了图像块之间的空间信息，进行卷积操作的图像块之间的相对位置关系没有改变。图像在不同卷积核上进行卷积之后的效果图如下：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot.png" alt="同一幅图像用不同卷积核处理的效果"></p>
+<h3 id="2-2-LeNet第二层（pooling运算）"><a href="#2-2-LeNet第二层（pooling运算）" class="headerlink" title="2.2 LeNet第二层（pooling运算）"></a>2.2 LeNet第二层（pooling运算）</h3><p>图像在LeNet网络上进行第一层卷积之后，结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。LeNet网络的第二层为pooling层（S2层），也称为下采样。在图像处理中，下采样之后，图像的大小会变为原来的<code>1/4</code>，即水平方向和垂直方向上图像大小分别减半。Pooling有多种，这里主要介绍两种，max-pooling和average-pooling。max-pooling即为从四个元素中选取一个最大的来表示这四个元素，average-pooling则用四个元素的平均值来表示这四个元素。Pooling示意图如下：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/Pooling.png" alt="Pooling示意图"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot-am.png" alt="Pooling示意图"></p>
+<p>在LeNet在进行第二层Pooling运算后，输出结果为<code>14*14</code>的<code>6</code>个feature map。其连接数为<code>(2*2+1) * 14 * 14 *6 = 5880</code>。Pooling层的主要作用就是减少数据，降低数据纬度的同时保留最重要的信息。在数据减少后，可以减少神经网络的纬度和计算量，可以防止参数太多过拟合。</p>
+<h3 id="2-3-LeNet第三层（卷积运算）"><a href="#2-3-LeNet第三层（卷积运算）" class="headerlink" title="2.3 LeNet第三层（卷积运算）"></a>2.3 LeNet第三层（卷积运算）</h3><p>LeNet第三层（C3层）也是卷积层，卷积核大小仍为<code>5*5</code>，不过卷积核的数量变为<code>16</code>个。第三层的输入为<code>14*14</code>的<code>6</code>个feature map，卷积核大小为<code>5*5</code>，因此卷积之后输出的feature map大小为<code>10*10</code>，由于卷积核有<code>16</code>个，因此希望输出的feature map也为<code>16</code>个，但由于输入有<code>6</code>个feature map，因此需要进行额外的处理。输入的<code>6</code>个feature map与输出的<code>16</code>个feature map的关系图如下：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/lenet-c3table.png" alt="S2层与C3层的关系图"></p>
+<p>如上图所示，第一个卷积核处理前三幅输入的feature map，得出一个新的feature map。</p>
+<h3 id="2-4-LeNet第四层（Pooling运算）"><a href="#2-4-LeNet第四层（Pooling运算）" class="headerlink" title="2.4 LeNet第四层（Pooling运算）"></a>2.4 LeNet第四层（Pooling运算）</h3><p>上一层卷积运算之后，结果为大小为<code>10*10</code>的<code>16</code>个feature map，因此在第四层（S4层）进行pooling运算之后，输出结果为<code>16</code>个大小为<code>10*10</code>的feature map。</p>
+<h3 id="2-5-LeNet第五层"><a href="#2-5-LeNet第五层" class="headerlink" title="2.5 LeNet第五层"></a>2.5 LeNet第五层</h3><p>在描述LeNet第五层之前，先要了解ReLU的概念，因为在第五层卷积之后，卷积结果需要进行ReLU操作。</p>
+<p><strong>ReLU介绍：</strong></p>
+<p>ReLU，全称Rectified Linear Unit，它是一个非线性操作，主要是将卷积之后feature map中的负数，变为0，公式为<code>Output = max(0, Input)</code>，对feature map中的每个值都进行这个操作。卷积操作是线性操作，而我们希望卷积神经网络除了能进行线性操作之外，也能进行非线性操作。此外，因为正常情况下图像像素值的变化范围为<code>0~255</code>，不应该出现负数。ReLU操作效果如图：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot-pm.png" alt="ReLU操作"></p>
+<p>当然除了，ReLU操作，还有一些其它操作，例如tanh或sigmoid，但实践证明，ReLU在大多数情况下比其它的表现更好。</p>
+<p>LeNet神经网络结构在Caffe中的配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div></pre></td><td class="code"><pre><div class="line">name: &quot;LeNet&quot;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TRAIN</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_train_lmdb&quot;</div><div class="line">    batch_size: 64</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_test_lmdb&quot;</div><div class="line">    batch_size: 100</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv1&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;data&quot;</div><div class="line">  top: &quot;conv1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 20</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool1&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv1&quot;</div><div class="line">  top: &quot;pool1&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv2&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;pool1&quot;</div><div class="line">  top: &quot;conv2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 50</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool2&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv2&quot;</div><div class="line">  top: &quot;pool2&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip1&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;pool2&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 500</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;relu1&quot;</div><div class="line">  type: &quot;ReLU&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip2&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 10</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;accuracy&quot;</div><div class="line">  type: &quot;Accuracy&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;accuracy&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;loss&quot;</div><div class="line">  type: &quot;SoftmaxWithLoss&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;loss&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<p>1.<a href="https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/" target="_blank" rel="external">https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      LeNet神经网络
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AlexNet神经网络</title>
+    <link href="noahsnail.com/2017/03/01/2017-3-1-AlexNet%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90/"/>
+    <id>noahsnail.com/2017/03/01/2017-3-1-AlexNet神经网络分析/</id>
+    <published>2017-03-01T11:02:40.000Z</published>
+    <updated>2017-03-02T05:51:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-AlexNet神经网络介绍"><a href="#1-AlexNet神经网络介绍" class="headerlink" title="1. AlexNet神经网络介绍"></a>1. AlexNet神经网络介绍</h2>]]></content>
+    
+    <summary type="html">
+    
+      AlexNet神经网络
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Caffe的solver参数介绍</title>
@@ -1398,155 +1513,6 @@
     
     
       <category term="Java" scheme="noahsnail.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java中的静态初始化和非静态初始化</title>
-    <link href="noahsnail.com/2017/01/09/2017-1-9-Java%E4%B8%AD%E7%9A%84%E9%9D%99%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%9D%9E%E9%9D%99%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
-    <id>noahsnail.com/2017/01/09/2017-1-9-Java中的静态初始化和非静态初始化/</id>
-    <published>2017-01-09T06:38:19.000Z</published>
-    <updated>2017-01-09T07:35:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Java中的初始化"><a href="#1-Java中的初始化" class="headerlink" title="1. Java中的初始化"></a>1. Java中的初始化</h2><p>Java与C++的一个不同之处在于，Java不仅有构造函数，还有一个“初始化块”(Initialization Block)的概念。Java中的初始化块在创建Java对象时隐式执行，并且是在构造函数之前执行。</p>
-<h2 id="2-静态初始化"><a href="#2-静态初始化" class="headerlink" title="2. 静态初始化"></a>2. 静态初始化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 定义</div><div class="line">static &#123;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>静态初始化块执行的优先级高于非静态初始化块，在对象装载到JVM中时执行一次，仅能初始化类成员变量，即static修饰的数据成员。</p>
-<h2 id="3-非静态初始化"><a href="#3-非静态初始化" class="headerlink" title="3. 非静态初始化"></a>3. 非静态初始化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 定义</div><div class="line">&#123;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>非静态初始化块在每个对象生成时都会被执行一次，它可以初始化类的实例变量。非静态初始化块在构造函数之前执行。</p>
-<h2 id="4-Demo"><a href="#4-Demo" class="headerlink" title="4. Demo"></a>4. Demo</h2><ul>
-<li>Example</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		System.out.println(<span class="string">"Run static initailization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	&#123;</div><div class="line">		System.out.println(<span class="string">"Run nonstatic initailization block."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"Run Test constructor."</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		Test t = <span class="keyword">new</span> Test();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>Result</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Run static initailization block.</div><div class="line">Run nonstatic initailization block.</div><div class="line">Run Test constructor.</div></pre></td></tr></table></figure>
-<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>从某种程度上来看，初始化块是构造器的补充，初始化块总是在构造器之前执行。初始化块是一段固定执行的代码，它不能接受任何参数。因此初始化块对同一个类的所有对象所进行的初始化处理完全相同。如果有一段初始化处理代码对所有的对象完全相同，且无需接受任何参数，就可以把这段初始化处理代码提取到初始化块中。通过把多个构造器中的相同代码提取到初始化块中定义，能更好地提高初始化代码的复用。静态初始化块是类相关的，系统将在类加载时执行静态初始化块，而不是在创建对象时才执行，因此静态初始化块总是比非静态初始化块先执行。用途：例如在JNI调用时，需要加载动态链接库，就可以在静态代码块中加载。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Java中的静态初始化和非静态初始化
-    
-    </summary>
-    
-      <category term="Java" scheme="noahsnail.com/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="noahsnail.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HTTP/1.1的实体首部</title>
-    <link href="noahsnail.com/2017/01/03/2017-1-3-HTTP%201.1%E7%9A%84%E5%AE%9E%E4%BD%93%E9%A6%96%E9%83%A8/"/>
-    <id>noahsnail.com/2017/01/03/2017-1-3-HTTP 1.1的实体首部/</id>
-    <published>2017-01-03T13:43:10.000Z</published>
-    <updated>2017-01-03T14:25:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>HTTP实体首部描述了HTTP报文的内容。HTTP/1.1定义了以下10个实体首部字段：</p>
-<ul>
-<li>Content-Type</li>
-</ul>
-<p>实体中所承载的对象的类型。</p>
-<ul>
-<li>Content-Length</li>
-</ul>
-<p>所传输的实体的长度或大小。</p>
-<ul>
-<li>Content-Language</li>
-</ul>
-<p>与所传送对象最相配的人类语言。</p>
-<ul>
-<li>Content-Encoding</li>
-</ul>
-<p>对象数据所做的变换（例如压缩）。</p>
-<ul>
-<li>Content-Location</li>
-</ul>
-<p>一个备用位置，请求时可通过它获得对象。</p>
-<ul>
-<li>Content-Range</li>
-</ul>
-<p>如果这是实体部分，这个首部说明它是整体的哪个部分。</p>
-<ul>
-<li>Content-MD5</li>
-</ul>
-<p>实体主体内容的校验和。</p>
-<ul>
-<li>Last-Modified</li>
-</ul>
-<p>所传输内容在服务器上创建或最后修改的时间。</p>
-<ul>
-<li>Expires</li>
-</ul>
-<p>实体数据将要失效的日期时间。</p>
-<ul>
-<li>Allow</li>
-</ul>
-<p>该资源所允许的各种请求方法，例如，GET和HEAD。</p>
-<ul>
-<li>ETag</li>
-</ul>
-<p>这份文档特定实例的唯一验证码。ETag不是正式定义的实体首部。</p>
-<ul>
-<li>Cache-Control</li>
-</ul>
-<p>指出应该如何缓存文档。Cache-Control也不是正式定义的实体首部。</p>
-<p>参考文献</p>
-<ol>
-<li>HTTP权威指南</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      HTTP/1.1的实体首部
-    
-    </summary>
-    
-      <category term="HTTP" scheme="noahsnail.com/categories/HTTP/"/>
-    
-    
-      <category term="HTTP" scheme="noahsnail.com/tags/HTTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Boot 2.0.0参考手册_中文版_Part IV_25</title>
-    <link href="noahsnail.com/2017/01/03/2017-1-3-Spring%20Boot%202.0.0%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C_%E4%B8%AD%E6%96%87%E7%89%88_Part%20IV_25/"/>
-    <id>noahsnail.com/2017/01/03/2017-1-3-Spring Boot 2.0.0参考手册_中文版_Part IV_25/</id>
-    <published>2017-01-03T00:50:33.000Z</published>
-    <updated>2017-01-03T00:51:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="25-Profiles"><a href="#25-Profiles" class="headerlink" title="25. Profiles"></a>25. Profiles</h2><p>Spring Profiles提供了一种隔离部分应用配置的方式，并让这些配置只在特定的环境生效。任何带有<code>@Profile</code>标记的<code>@Component</code>或<code>@Configuration</code>在加载时都会受限制：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@Profile(&quot;production&quot;)</div><div class="line">public class ProductionConfiguration &#123;</div><div class="line"></div><div class="line">    // ...</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以正常的Spring方式，你可以使用<code>spring.profiles.active</code> <code>Environment</code>属性来指定激活哪一个profiles。你可以在任何常见的方式指定这个属性，例如你可以在你的<code>application.properties</code>中包含它：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring.profiles.active=dev,hsqldb</div></pre></td></tr></table></figure>
-<p>或在命令行用<code>--spring.profiles.active=dev,hsqldb</code>指定。</p>
-<h3 id="25-1-添加激活的profiles"><a href="#25-1-添加激活的profiles" class="headerlink" title="25.1 添加激活的profiles"></a>25.1 添加激活的profiles</h3><p><code>spring.profiles.active</code>属性与其它的属性一样遵循同样的排序规则，最高的<code>PropertySource</code>优先。这意味着你可以在<code>application.properties</code>指定激活的profiles，然后用命令行转换替代它们。</p>
-<p>例如，当一个应用具有以下属性且运行时使用<code>--spring.profiles.active=prod</code>转换，<code>proddb</code>和<code>prodmq</code> profiles也将被激活：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">my.property: fromyamlfile</div><div class="line">---</div><div class="line">spring.profiles: prod</div><div class="line">spring.profiles.include:</div><div class="line">  - proddb</div><div class="line">  - prodmq</div></pre></td></tr></table></figure>
-<blockquote>
-<p>记住可以在YAML文档中定义<code>spring.profiles</code>来决定在配置中包含特定的文档。更多细节请看70.7小节，“根据环境更改配置”。</p>
-</blockquote>
-<h3 id="25-2-以编程方式设置profiles"><a href="#25-2-以编程方式设置profiles" class="headerlink" title="25.2 以编程方式设置profiles"></a>25.2 以编程方式设置profiles</h3><p>你可以在你的应用运行之前以编程的方式调用<code>SpringApplication.setAdditionalProfiles(…​)</code>来设置激活的profiles。也可以使用Spring的<code>ConfigurableEnvironment</code>接口来激活profiles。</p>
-<h3 id="25-3-指定profile的配置文件"><a href="#25-3-指定profile的配置文件" class="headerlink" title="25.3 指定profile的配置文件"></a>25.3 指定profile的配置文件</h3><p><code>application.properties</code>(或<code>application.yml</code>)和通过<code>@ConfigurationProperties</code>引用的文件的特定profiles变种都被当做文件进行加载。更多细节请看24.4小节，“Profile-specific properties”。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Spring Boot 2.0.0参考手册_中文版_Part IV_25
-    
-    </summary>
-    
-      <category term="Spring Boot 2.0.0" scheme="noahsnail.com/categories/Spring-Boot-2-0-0/"/>
-    
-    
-      <category term="Spring Boot" scheme="noahsnail.com/tags/Spring-Boot/"/>
     
   </entry>
   
