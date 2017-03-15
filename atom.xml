@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-03-14T15:01:17.000Z</updated>
+  <updated>2017-03-15T03:57:25.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode1——Two Sum</title>
+    <link href="noahsnail.com/2017/03/15/2017-3-15-Leetcode1%E2%80%94%E2%80%94Two%20Sum/"/>
+    <id>noahsnail.com/2017/03/15/2017-3-15-Leetcode1——Two Sum/</id>
+    <published>2017-03-15T01:41:41.000Z</published>
+    <updated>2017-03-15T03:57:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
+<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Given nums = [2, 7, 11, 15], target = 9,</div><div class="line"></div><div class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</div><div class="line">return [0, 1].</div></pre></td></tr></table></figure>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>解法一</strong></p>
+<p>这个题最简单也是最容易的就是两层循环遍历，这个没什么可说的，时间复杂度为O(n^2)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int[] twoSum(int[] nums, int target) &#123;</div><div class="line">        int result[] = new int[2];</div><div class="line">        int n = nums.length;</div><div class="line">        for(int i = 0; i &lt; n; i++) &#123;</div><div class="line">            for(int j = i + 1; j &lt; n; j++) &#123;</div><div class="line">                int sum = nums[i] + nums[j];</div><div class="line">                if(sum == target) &#123;</div><div class="line">                    result[0] = i;</div><div class="line">                    result[1] = j;</div><div class="line">                    return result;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Leetcode Accepted，Runtime: 45 ms。</p>
+<p><strong>解法二</strong></p>
+<p>思考一下，如何进行优化呢？首先，条件为<code>nums[i] + nums[j] = target</code>，已知target和nums[i]的情况下，能不能直接确定nums[j]在数组中是否存在呢？这是可以的，很容易想到map结构，当然数据结构要变换一下，而map的查询复杂度为O(1)，map结构的设计有两种，要不是key为整数，要不key为整数的索引。由于我们求的是整数的索引，因此应该将key设为整数，value为整数的索引。但key为整数有一个问题就是，如果数组中存在相同整数，则后一个放入的数值会覆盖前一个，因此需要单独处理。题目中明确说了一个输入只有一个解，因此如果出现两个整数相等的情况，只需要找到另一个数字的索引即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int[] twoSum(int[] nums, int target) &#123;</div><div class="line">        int result[] = new int[2];</div><div class="line">        int n = nums.length;</div><div class="line">        Map&lt;Integer, Integer&gt; map = new HashMap&lt;Integer, Integer&gt;();</div><div class="line">        for(int i = 0; i &lt; n; i++) &#123;</div><div class="line">            int other = target - nums[i];</div><div class="line">            map.put(nums[i], i);</div><div class="line">            if(map.containsKey(other)) &#123;</div><div class="line">                //两个数字不等情况</div><div class="line">                if(other != nums[i]) &#123;</div><div class="line">                    //注意顺序</div><div class="line">                    result[0] = map.get(other);</div><div class="line">                    result[1] = i;</div><div class="line">                    break;</div><div class="line">                &#125;else &#123;</div><div class="line">                    //数字相等情况</div><div class="line">                    result[0] = i;</div><div class="line">                    for(int j = i + 1; j &lt; n; j++) &#123;</div><div class="line">                        if(nums[j] == other) &#123;</div><div class="line">                            result[1] = j;</div><div class="line">                            return result;</div><div class="line">                        &#125;</div><div class="line">                    &#125;  </div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Leetcode Accepted，Runtime: 12 ms。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode1——Two Sum
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode155——Min Stack</title>
@@ -944,30 +979,6 @@
     
     
       <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>感知机模型</title>
-    <link href="noahsnail.com/2017/02/04/2017-2-4-%E6%84%9F%E7%9F%A5%E6%9C%BA%E6%A8%A1%E5%9E%8B/"/>
-    <id>noahsnail.com/2017/02/04/2017-2-4-感知机模型/</id>
-    <published>2017-02-04T03:51:42.000Z</published>
-    <updated>2017-02-04T05:46:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h1 id="1-感知机模型历史"><a href="#1-感知机模型历史" class="headerlink" title="1. 感知机模型历史"></a>1. 感知机模型历史</h1><p>Perceptron，中文翻译为感知机或感知器，是Frank Rosenblatt在1957年就职于Cornell航空实验室（Cornell Aeronautical Laboratory）时所发明的一种人工神经网络。它可以被视为一种最简单形式的前馈神经网络，是一种二元线性分类器。尽管结构简单，但感知机能够学习并解决相当复杂的问题。感知机主要的本质缺陷是它不能处理线性不可分问题。</p>
-<h1 id="2-感知机定义"><a href="#2-感知机定义" class="headerlink" title="2. 感知机定义"></a>2. 感知机定义</h1><h1 id="3-感知机模型的实现"><a href="#3-感知机模型的实现" class="headerlink" title="3. 感知机模型的实现"></a>3. 感知机模型的实现</h1><h1 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h1>]]></content>
-    
-    <summary type="html">
-    
-      感知机模型
-    
-    </summary>
-    
-      <category term="Machine Learning" scheme="noahsnail.com/categories/Machine-Learning/"/>
-    
-    
-      <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
     
   </entry>
   
