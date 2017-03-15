@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-03-14T06:52:42.000Z</updated>
+  <updated>2017-03-14T15:01:17.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,91 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode155——Min Stack</title>
+    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode155%E2%80%94%E2%80%94Min%20Stack/"/>
+    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode155——Min Stack/</id>
+    <published>2017-03-14T14:46:56.000Z</published>
+    <updated>2017-03-14T15:01:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+<p>push(x) – Push element x onto stack.<br>pop() – Removes the element on top of the stack.<br>top() – Get the top element.<br>getMin() – Retrieve the minimum element in the stack.</p>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MinStack minStack = new MinStack();</div><div class="line">minStack.push(-2);</div><div class="line">minStack.push(0);</div><div class="line">minStack.push(-3);</div><div class="line">minStack.getMin();   --&gt; Returns -3.</div><div class="line">minStack.pop();</div><div class="line">minStack.top();      --&gt; Returns 0.</div><div class="line">minStack.getMin();   --&gt; Returns -2.</div></pre></td></tr></table></figure>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>主要是模拟写一个最小栈。要注意push时可能会输入null。需要使用双栈实现，一个保存数据，一个保存最小值。由于随着数据出栈，最小值是不断变化的，因此需要一个最小值栈来保存最小值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class MinStack &#123;</div><div class="line">    private Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();</div><div class="line">    private Stack&lt;Integer&gt; minStack = new Stack&lt;&gt;();</div><div class="line"></div><div class="line">    public void push(int x) &#123;</div><div class="line">        if(minStack.isEmpty() || x &lt;= minStack.peek()) &#123;</div><div class="line">            minStack.push(x);</div><div class="line">        &#125;</div><div class="line">        stack.push(x);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void pop() &#123;</div><div class="line">        if(stack.peek().equals(minStack.peek())) &#123;</div><div class="line">            minStack.pop();</div><div class="line">        &#125;</div><div class="line">        stack.pop();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int top() &#123;</div><div class="line">        return stack.peek();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMin() &#123;</div><div class="line">        return minStack.peek();        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode155——Min Stack
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode152——Maximum Product Subarray</title>
+    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode152%E2%80%94%E2%80%94Maximum%20Product%20Subarray/"/>
+    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode152——Maximum Product Subarray/</id>
+    <published>2017-03-14T10:37:05.000Z</published>
+    <updated>2017-03-14T10:54:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Find the contiguous subarray within an array (containing at least one number) which has the largest product.</p>
+<p>For example, given the array [2,3,-2,4],<br>the contiguous subarray [2,3] has the largest product = 6.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题跟Leetcode 53——Maximum Subarray类似，可以用三重循环，两种循环解决。但最好的还是用动态规划解决，找出状态转移方程最关键。由于乘积可能为负数，负负得正，因此第<code>i-1</code>次的乘积最大值（maxValuePre）与最小值（minValuePre）都需要保留。当然也可以定义最大值最小值数组来保存第i次乘积的最大值（maxValue）与最小值（minValue）。与Maximum Subarray相比，最大值为<code>maxValue = max(minValuePre * nums[i], maxValuePre * nums[i], nums[i])</code>，最小值同样如此。</p>
+<p><strong>没有定义最大值数组与最小值数组</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int maxProduct(int[] nums) &#123;</div><div class="line">        int n = nums.length;</div><div class="line">        int maxValue = nums[0];</div><div class="line">        int minValue = nums[0];</div><div class="line">        int result = nums[0];</div><div class="line">        int maxValuePre = nums[0], minValuePre = nums[0];</div><div class="line">        for(int i = 1; i &lt; n; i++) &#123;</div><div class="line">            maxValue = Math.max(minValuePre * nums[i], Math.max(maxValuePre * nums[i], nums[i]));</div><div class="line">            minValue = Math.min(minValuePre * nums[i], Math.min(maxValuePre * nums[i], nums[i]));</div><div class="line">            if(maxValue &gt; result) &#123;</div><div class="line">                result = maxValue;</div><div class="line">            &#125;</div><div class="line">            maxValuePre = maxValue;</div><div class="line">            minValuePre = minValue;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>定义最大值数组与最小值数组</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int maxProduct(int[] nums) &#123;</div><div class="line">        int n = nums.length;</div><div class="line">        int maxValue[] = new int[nums.length];</div><div class="line">        int minValue[] = new int[nums.length];</div><div class="line">        maxValue[0] = nums[0];</div><div class="line">        minValue[0] = nums[0];</div><div class="line">        int result = nums[0];</div><div class="line">        for(int i = 1; i &lt; n; i++) &#123;</div><div class="line">            maxValue[i] = Math.max(minValue[i - 1] * nums[i], Math.max(maxValue[i - 1] * nums[i], nums[i]));</div><div class="line">            minValue[i] = Math.min(minValue[i - 1] * nums[i], Math.min(maxValue[i - 1] * nums[i], nums[i]));</div><div class="line">            if(maxValue[i] &gt; result) &#123;</div><div class="line">                result = maxValue[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode152——Maximum Product Subarray
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode128——Longest Consecutive Sequence</title>
+    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode128%E2%80%94%E2%80%94Longest%20Consecutive%20Sequence/"/>
+    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode128——Longest Consecutive Sequence/</id>
+    <published>2017-03-14T10:14:21.000Z</published>
+    <updated>2017-03-14T10:30:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.</p>
+<p>For example,<br>Given [100, 4, 200, 1, 3, 2],<br>The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.</p>
+<p>Your algorithm should run in O(n) complexity.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>题中明确要求时间复杂度为O(n)，因此这道题肯定不能使用循环遍历。这道题主要是考察哈希表，因为哈希表每次查询的时间复杂度为O(1)。因此首先要将数组转为Map。然后分别查询每个数字的前一个数与后一个数，统计数字连续的数量。如果在哈希表中存在相邻的数，查询后应该从哈希表中删除，当然不删也可以。如果哈希表为空，则直接跳出循环，不再遍历。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">   	public int longestConsecutive(int[] nums) &#123;</div><div class="line">		int max = 0;</div><div class="line">		int count = 0;</div><div class="line">		Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();</div><div class="line">		for(int i = 0; i &lt; nums.length; i++) &#123;</div><div class="line">			map.put(String.valueOf(nums[i]), nums[i]);</div><div class="line">		&#125;</div><div class="line">		for(int i = 0; i &lt; nums.length; i++) &#123;</div><div class="line">			count = 1;</div><div class="line">			int x = nums[i];</div><div class="line">			while(true) &#123;</div><div class="line">				int temp = --x;</div><div class="line">				if(map.containsKey(String.valueOf(temp))) &#123;</div><div class="line">					map.remove(String.valueOf(temp));</div><div class="line">					count++;</div><div class="line">				&#125;else &#123;</div><div class="line">					break;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			//必须重置x</div><div class="line">			x = nums[i];</div><div class="line">			while(true) &#123;</div><div class="line">				int temp = ++x;</div><div class="line">				if(map.containsKey(String.valueOf(temp))) &#123;</div><div class="line">					map.remove(String.valueOf(temp));</div><div class="line">					count++;</div><div class="line">				&#125;else &#123;</div><div class="line">					break;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			if(count &gt; max) &#123;</div><div class="line">				max = count;</div><div class="line">			&#125;</div><div class="line">			if(map.isEmpty()) &#123;</div><div class="line">				break;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		return max;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode128——Longest Consecutive Sequence
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode394——Decode String</title>
@@ -158,11 +243,11 @@
   </entry>
   
   <entry>
-    <title>Leetcode53——最大子数组问题</title>
+    <title>Leetcode53——Maximum Subarray</title>
     <link href="noahsnail.com/2017/03/11/2017-3-11-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98/"/>
     <id>noahsnail.com/2017/03/11/2017-3-11-最大子序列问题/</id>
     <published>2017-03-11T13:29:22.000Z</published>
-    <updated>2017-03-14T09:15:22.000Z</updated>
+    <updated>2017-03-14T10:35:35.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是对最大子数组（序列）问题求解的学习与总结，最大子数组问题是一道经典的算法题，这道题解法有很多，因此可以学习到很多求解问题的思路，并可以学习到算法的优化过程。</p>
@@ -198,7 +283,7 @@
     
     <summary type="html">
     
-      Leetcode53——最大子数组问题
+      Leetcode53——Maximum Subarray
     
     </summary>
     
@@ -273,7 +358,7 @@
     <link href="noahsnail.com/2017/03/08/2017-3-8-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E6%A6%82%E8%AE%BA/"/>
     <id>noahsnail.com/2017/03/08/2017-3-8-统计学习方法(一)——统计学习方法概论/</id>
     <published>2017-03-08T01:12:48.000Z</published>
-    <updated>2017-03-14T03:00:07.000Z</updated>
+    <updated>2017-03-15T01:29:46.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="1-统计学习方法概论"><a href="#1-统计学习方法概论" class="headerlink" title="1. 统计学习方法概论"></a>1. 统计学习方法概论</h1><p>本文是统计学习方法（李航）第一章的学习总结。</p>
@@ -310,7 +395,10 @@
 <p><img src="http://ocs628urt.bkt.clouddn.com/supervised-learning.png" alt="监督学习"></p>
 <p>首先给定数据集$T={(x_1,y_1),(x_3,y_2),…,(x_N,y_N)}$，其中$(x_i,y_i)，i=1,2,…,N$，称为样本或样本点，$x_i \in X \subseteq R^n$是输入的观测值，称为输入或实例，$y_i \in Y$是输出的观测值，也称为输出。通过学习得到的模型表示为条件概率分布$P(Y|X)$和决策函数$Y=f(X)$，模型表示的是输入与输出之间的映射关系。</p>
 <p>预测过程中，对于测试数据中的输入$x<em>{N+1}$,由模型$y</em>{N+1}=argmax P(y<em>{N+1}|x</em>{N+1})$或$y<em>{N+1}=f(x</em>{N+1})$给出对应的输出$y_{N+1}$。</p>
-<h2 id="1-3-统计学习三要素"><a href="#1-3-统计学习三要素" class="headerlink" title="1.3 统计学习三要素"></a>1.3 统计学习三要素</h2>]]></content>
+<h2 id="1-3-统计学习三要素"><a href="#1-3-统计学习三要素" class="headerlink" title="1.3 统计学习三要素"></a>1.3 统计学习三要素</h2><p>统计学习方法的三要素为模型、策略和算法，它们关系为：<code>统计学习方法 = 模型 + 策略 + 算法</code>。</p>
+<h3 id="1-3-1-模型"><a href="#1-3-1-模型" class="headerlink" title="1.3.1 模型"></a>1.3.1 模型</h3><p>在监督学习过程中，模型是要学习的条件概率分布或决策函数。模型的假设空间包含所有可能的条件概率分布或决策函数。假设空间用F表示：</p>
+<p>$$F={f|Y=f(X)}$$</p>
+]]></content>
     
     <summary type="html">
     
@@ -880,136 +968,6 @@
     
     
       <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql碰到的一些命令与错误</title>
-    <link href="noahsnail.com/2017/01/13/2017-1-13-Mysql%E7%A2%B0%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%91%BD%E4%BB%A4%E4%B8%8E%E9%94%99%E8%AF%AF/"/>
-    <id>noahsnail.com/2017/01/13/2017-1-13-Mysql碰到的一些命令与错误/</id>
-    <published>2017-01-13T07:05:31.000Z</published>
-    <updated>2017-01-13T08:03:44.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-更新数据出错"><a href="#1-更新数据出错" class="headerlink" title="1. 更新数据出错"></a>1. 更新数据出错</h2><p>错误信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -&gt; SQL Editor and reconnect.</div></pre></td></tr></table></figure>
-<p>解决方案：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set SQL_SAFE_UPDATES = 0;</div></pre></td></tr></table></figure>
-<p>原因： Mysql有个叫SQL_SAFE_UPDATES的变量，为了数据库更新操作的安全性，此值默认为1。</p>
-<h2 id="2-导入CSV文件"><a href="#2-导入CSV文件" class="headerlink" title="2. 导入CSV文件"></a>2. 导入CSV文件</h2><p>导入CSV文件的命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">load data local infile &apos;/Users/ltc/Downloads/test.csv&apos; </div><div class="line">into table `test` </div><div class="line">fields terminated by &apos;,&apos; optionally enclosed by &apos;&quot;&apos; escaped by &apos;&quot;&apos; </div><div class="line">lines terminated by &apos;\n&apos;;</div></pre></td></tr></table></figure>
-<p>碰到的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error Code: 13. Can&apos;t get stat of &apos;/Users/ltc/Downloads/test.csv&apos; (Errcode: 13 - Permission denied)</div></pre></td></tr></table></figure>
-<p><code>infile</code>前面缺少<code>local</code>，因为导入的是本地文件。</p>
-<h2 id="3-清空某个table"><a href="#3-清空某个table" class="headerlink" title="3. 清空某个table"></a>3. 清空某个table</h2><p>命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">truncate table tablename;</div></pre></td></tr></table></figure>
-<p>上面的命令特别之处在于能清理含有自增主键的数据库表。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Mysql碰到的一些命令与错误
-    
-    </summary>
-    
-    
-      <category term="Mysql" scheme="noahsnail.com/tags/Mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring Boot的应用启动与关闭</title>
-    <link href="noahsnail.com/2017/01/13/2017-1-13-Spring%20Boot%E7%9A%84%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%85%B3%E9%97%AD/"/>
-    <id>noahsnail.com/2017/01/13/2017-1-13-Spring Boot的应用启动与关闭/</id>
-    <published>2017-01-13T02:32:11.000Z</published>
-    <updated>2017-01-13T08:04:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Spring-Boot应用打包"><a href="#1-Spring-Boot应用打包" class="headerlink" title="1. Spring Boot应用打包"></a>1. Spring Boot应用打包</h2><p>Spring Boot应用可以打成jar包，其中内嵌tomcat，因此可以直接启动使用。但是在Spring Boot应用启动之前，首先需要进行打包，本文讲述的是Maven工程的打包，打包需要的前提条件(pom.xml文件中的内容)是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">&lt;build&gt;</div><div class="line">	&lt;plugins&gt;</div><div class="line">		&lt;plugin&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;configuration&gt;</div><div class="line">				&lt;mainClass&gt;com.***.Application&lt;/mainClass&gt;</div><div class="line">			&lt;/configuration&gt;</div><div class="line">			&lt;executions&gt;</div><div class="line">				&lt;execution&gt;</div><div class="line">					&lt;goals&gt;</div><div class="line">						&lt;goal&gt;repackage&lt;/goal&gt;</div><div class="line">					&lt;/goals&gt;</div><div class="line">				&lt;/execution&gt;</div><div class="line">			&lt;/executions&gt;</div><div class="line">		&lt;/plugin&gt;</div><div class="line">	&lt;/plugins&gt;</div><div class="line">&lt;/build&gt;</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
-<p>打包命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">mvn clean package -Dmaven.test.skip=true</div><div class="line"></div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ mvn clean package -Dmaven.test.skip=true</div><div class="line">[INFO] Scanning for projects...</div><div class="line">[WARNING] </div><div class="line">[WARNING] Some problems were encountered while building the effective model for com.example:myproject:jar:0.0.1-SNAPSHOT</div><div class="line">[WARNING] &apos;build.plugins.plugin.version&apos; for org.springframework.boot:spring-boot-maven-plugin is missing. @ line 38, column 17</div><div class="line">[WARNING] </div><div class="line">[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.</div><div class="line">[WARNING] </div><div class="line">[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.</div><div class="line">[WARNING] </div><div class="line">[INFO]                                                                         </div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Building myproject 0.0.1-SNAPSHOT</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ myproject ---</div><div class="line">[INFO] Deleting /Users/ltc/Spring Boot Demo/target</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ myproject ---</div><div class="line">[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!</div><div class="line">[INFO] Copying 1 resource</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ myproject ---</div><div class="line">[INFO] Changes detected - recompiling the module!</div><div class="line">[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!</div><div class="line">[INFO] Compiling 1 source file to /Users/ltc/Spring Boot Demo/target/classes</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ myproject ---</div><div class="line">[INFO] Not copying test resources</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ myproject ---</div><div class="line">[INFO] Not compiling test sources</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ myproject ---</div><div class="line">[INFO] Tests are skipped.</div><div class="line">[INFO] </div><div class="line">[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ myproject ---</div><div class="line">[INFO] Building jar: /Users/ltc/Spring Boot Demo/target/myproject-0.0.1-SNAPSHOT.jar</div><div class="line">[INFO] </div><div class="line">[INFO] --- spring-boot-maven-plugin:1.5.0.RC1:repackage (default) @ myproject ---</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] BUILD SUCCESS</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Total time: 1.861 s</div><div class="line">[INFO] Finished at: 2017-01-13T15:31:32+08:00</div><div class="line">[INFO] Final Memory: 26M/308M</div><div class="line">[INFO] ------------------------------------------------------------------------</div></pre></td></tr></table></figure>
-<p>或在eclipse中运行<code>run -&gt; Maven build...</code>，在Goals中填写<code>clean package -Dmaven.test.skip=true</code>，运行，打包完成。</p>
-<h2 id="2-Spring-Boot应用启动"><a href="#2-Spring-Boot应用启动" class="headerlink" title="2. Spring Boot应用启动"></a>2. Spring Boot应用启动</h2><p>Spring Boot的启动命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">java -jar application.jar</div><div class="line"></div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ java -jar target/myproject-0.0.1-SNAPSHOT.jar </div><div class="line"></div><div class="line">  .   ____          _            __ _ _</div><div class="line"> /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</div><div class="line">( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</div><div class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</div><div class="line">  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</div><div class="line"> =========|_|==============|___/=/_/_/_/</div><div class="line"> :: Spring Boot ::        (v1.4.3.RELEASE)</div><div class="line"></div><div class="line">2017-01-13 15:31:36.911  INFO 62119 --- [           main] com.test.Example                         : Starting Example on CN40723-N.local with PID 62119 (/Users/ltc/Spring Boot Demo/target/myproject-0.0.1-SNAPSHOT.jar started by liutianchi in /Users/ltc/Spring Boot Demo)</div><div class="line">2017-01-13 15:31:36.916  INFO 62119 --- [           main] com.test.Example                         : No active profile set, falling back to default profiles: default</div><div class="line">2017-01-13 15:31:36.981  INFO 62119 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@b1a58a3: startup date [Fri Jan 13 15:31:36 CST 2017]; root of context hierarchy</div><div class="line">2017-01-13 15:31:38.602  INFO 62119 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)</div><div class="line">2017-01-13 15:31:38.615  INFO 62119 --- [           main] o.apache.catalina.core.StandardService   : Starting service Tomcat</div><div class="line">2017-01-13 15:31:38.616  INFO 62119 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.6</div><div class="line">2017-01-13 15:31:38.718  INFO 62119 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2017-01-13 15:31:38.718  INFO 62119 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1740 ms</div><div class="line">2017-01-13 15:31:38.927  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;metricsFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;characterEncodingFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;httpPutFormContentFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;requestContextFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;webRequestLoggingFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;applicationContextIdFilter&apos; to: [/*]</div><div class="line">2017-01-13 15:31:39.217  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@b1a58a3: startup date [Fri Jan 13 15:31:36 CST 2017]; root of context hierarchy</div><div class="line">2017-01-13 15:31:39.310  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/]&#125;&quot; onto java.lang.String com.test.Example.home()</div><div class="line">2017-01-13 15:31:39.313  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error]&#125;&quot; onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)</div><div class="line">2017-01-13 15:31:39.313  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error],produces=[text/html]&#125;&quot; onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)</div><div class="line">2017-01-13 15:31:39.338  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-13 15:31:39.338  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-13 15:31:39.378  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-13 15:31:39.665  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/metrics/&#123;name:.*&#125;],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.MetricsMvcEndpoint.value(java.lang.String)</div><div class="line">2017-01-13 15:31:39.665  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/metrics || /manage/metrics.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.666  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/mappings || /manage/mappings.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.667  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/trace || /manage/trace.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.667  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/info || /manage/info.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.668  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/configprops || /manage/configprops.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.669  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/heapdump || /manage/heapdump.json],methods=[GET],produces=[application/octet-stream]&#125;&quot; onto public void org.springframework.boot.actuate.endpoint.mvc.HeapdumpMvcEndpoint.invoke(boolean,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.io.IOException,javax.servlet.ServletException</div><div class="line">2017-01-13 15:31:39.669  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/autoconfig || /manage/autoconfig.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.673  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/env/&#123;name:.*&#125;],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EnvironmentMvcEndpoint.value(java.lang.String)</div><div class="line">2017-01-13 15:31:39.673  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/env || /manage/env.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.674  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/health || /manage/health.json],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.HealthMvcEndpoint.invoke(java.security.Principal)</div><div class="line">2017-01-13 15:31:39.675  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/dump || /manage/dump.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.677  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/shutdown || /manage/shutdown.json],methods=[POST]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.ShutdownMvcEndpoint.invoke()</div><div class="line">2017-01-13 15:31:39.678  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/beans || /manage/beans.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</div><div class="line">2017-01-13 15:31:39.799  INFO 62119 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup</div><div class="line">2017-01-13 15:31:39.809  INFO 62119 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0</div><div class="line">2017-01-13 15:31:39.944  INFO 62119 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)</div><div class="line">2017-01-13 15:31:39.949  INFO 62119 --- [           main] com.test.Example                         : Started Example in 4.292 seconds (JVM running for 4.726)</div></pre></td></tr></table></figure>
-<h2 id="3-Spring-Boot应用关闭"><a href="#3-Spring-Boot应用关闭" class="headerlink" title="3. Spring Boot应用关闭"></a>3. Spring Boot应用关闭</h2><p>Spring Boot应用关闭的前提条件是<code>POM.xml</code>添加以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p><code>application.properties</code>中添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#启用shutdown</div><div class="line">endpoints.shutdown.enabled=true</div><div class="line">#禁用密码验证</div><div class="line">endpoints.shutdown.sensitive=false</div></pre></td></tr></table></figure>
-<p>关闭命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">curl -X POST host:port/shutdown</div><div class="line"></div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ curl -X POST http://localhost:8080/shutdown</div><div class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</div><div class="line"></div><div class="line"></div><div class="line">$ curl -X POST http://localhost:8080/manage/shutdown</div><div class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</div></pre></td></tr></table></figure>
-<p>如果要配置路径，需要在<code>application.properties</code>中添加<code>management.context-path=/manage</code>，则关闭命令变为<code>curl -X POST host:port/manage/shutdown</code>。</p>
-<h2 id="4-安全验证"><a href="#4-安全验证" class="headerlink" title="4. 安全验证"></a>4. 安全验证</h2><p>如果在关闭时需要安全验证，则在<code>pom.xml</code>文件中添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">     &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p><code>application.properties</code>中添加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#开启shutdown的安全验证</div><div class="line">endpoints.shutdown.sensitive=true</div><div class="line"></div><div class="line">#验证用户名</div><div class="line">security.user.name=admin</div><div class="line"></div><div class="line">#验证密码</div><div class="line">security.user.password=admin</div><div class="line">#角色</div><div class="line">management.security.role=SUPERUSER</div><div class="line"></div><div class="line"># 指定端口</div><div class="line">management.port=8081</div><div class="line"></div><div class="line"># 指定地址</div><div class="line">management.address=127.0.0.1</div></pre></td></tr></table></figure>
-<p>关闭命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">curl -u admin:admin -X POST http://127.0.0.1:8081/manage/shutdown</div><div class="line"></div><div class="line"># Demo</div><div class="line"></div><div class="line">$ curl -u admin:admin -X POST http://127.0.0.1:8081/manage/shutdown</div><div class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Spring Boot的应用启动与关闭
-    
-    </summary>
-    
-      <category term="Spring Boot 2.0.0" scheme="noahsnail.com/categories/Spring-Boot-2-0-0/"/>
-    
-    
-      <category term="Spring Boot" scheme="noahsnail.com/tags/Spring-Boot/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux sed编辑器</title>
-    <link href="noahsnail.com/2017/01/11/2017-1-11-Linux%20sed%E7%BC%96%E8%BE%91%E5%99%A8/"/>
-    <id>noahsnail.com/2017/01/11/2017-1-11-Linux sed编辑器/</id>
-    <published>2017-01-11T13:42:39.000Z</published>
-    <updated>2017-01-11T14:44:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-sed编辑器"><a href="#1-sed编辑器" class="headerlink" title="1. sed编辑器"></a>1. sed编辑器</h2><p>sed编辑器中是Linux世界中最广泛使用的两个命令行编辑器之一。sed编辑器被称作流编辑器（stream editor），流编辑器在编辑器处理数据之前基于预先提供的一组规则来编辑数据流。sed编辑器可以根据命令来处理数据流中的数据。sed编辑器会执行以下操作：</p>
-<ol>
-<li>一次从输入中读取一行数据。</li>
-<li>根据所提供的编辑器命令匹配数据。</li>
-<li>按照命令修改流中的数据。</li>
-<li>将新的数据输出到STDOUT。</li>
-</ol>
-<p>在流编辑器将所有命令和一行数据匹配完毕后，它会读取下一行数据重复这个过程。</p>
-<h2 id="2-命令形式"><a href="#2-命令形式" class="headerlink" title="2. 命令形式"></a>2. 命令形式</h2><p>sed命令的格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sed options script file</div></pre></td></tr></table></figure>
-<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><ul>
-<li>基本处理</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ echo &quot;This is a test&quot; | sed &apos;s/test/big test/&apos;</div><div class="line">This is a big test</div></pre></td></tr></table></figure>
-<p>上面的例子中使用了<code>s</code>命令，<code>s</code>命令会用斜线中的第二个文本来替换第一个文本。处理文件如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># test文件内容</div><div class="line"></div><div class="line">$ cat test</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line"></div><div class="line"></div><div class="line"># sed处理</div><div class="line">$ sed &apos;s/test/demo/&apos; test</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line">This is a demo.</div><div class="line"></div><div class="line"># test文件内容</div><div class="line">$ cat test</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div><div class="line">This is a test.</div></pre></td></tr></table></figure>
-<p><strong>注：</strong>sed编辑器不会修改文本文件的数据，它只会将处理后的数据发送到STDOUT。</p>
-<ul>
-<li>执行多个命令</li>
-</ul>
-<p><code>-e</code>选项可以执行多个命令，多个命令用<code>;</code>隔开。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sed -e &apos;s/a/an/; s/test/egg/&apos; test</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div></pre></td></tr></table></figure>
-<ul>
-<li>从文件中读取命令</li>
-</ul>
-<p><code>-f</code>选项可以让sed执行文件中的命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$ cat script.sed </div><div class="line">s/a/an/</div><div class="line">s/test/egg/</div><div class="line"></div><div class="line">$ sed -f script.sed test</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div><div class="line">This is an egg.</div></pre></td></tr></table></figure>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
-<li>Linux命令行与shell脚本编程</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Linux sed编辑器
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
     
   </entry>
   
