@@ -559,7 +559,7 @@
     <link href="noahsnail.com/2017/03/02/2017-3-2-LeNet%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     <id>noahsnail.com/2017/03/02/2017-3-2-LeNet神经网络/</id>
     <published>2017-03-02T05:50:43.000Z</published>
-    <updated>2017-03-16T10:01:22.000Z</updated>
+    <updated>2017-03-16T10:12:12.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-LeNet神经网络介绍"><a href="#1-LeNet神经网络介绍" class="headerlink" title="1. LeNet神经网络介绍"></a>1. LeNet神经网络介绍</h2><p>LeNet神经网络由深度学习三巨头之一的Yan LeCun提出，他同时也是卷积神经网络 (CNN，Convolutional Neural Networks)之父。LeNet主要用来进行手写字符的识别与分类，并在美国的银行中投入了使用。LeNet的实现确立了CNN的结构，现在神经网络中的许多内容在LeNet的网络结构中都能看到，例如卷积层，Pooling层，ReLU层。虽然LeNet早在20世纪90年代就已经提出了，但由于当时缺乏大规模的训练数据，计算机硬件的性能也较低，因此LeNet神经网络在处理复杂问题时效果并不理想。虽然LeNet网络结构比较简单，但是刚好适合神经网络的入门学习。</p>
@@ -569,11 +569,11 @@
 <p><img src="http://ocs628urt.bkt.clouddn.com/conv_all.png" alt="LeNet图像处理流程"></p>
 <h3 id="2-1-LeNet第一层（卷积运算）"><a href="#2-1-LeNet第一层（卷积运算）" class="headerlink" title="2.1 LeNet第一层（卷积运算）"></a>2.1 LeNet第一层（卷积运算）</h3><p>接下来我们来具体的一层层的分析LeNet的网络结构。首先要了解图像（输入数据）的表示。在LeNet网络中，输入图像是手写字符，图像的表示形式为二维数据矩阵，如下图所示：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/8-gif.gif" alt="图像的表示"></p>
-<p>LeNet网络除去输入输出层总共有六层网络。第一层是卷积层（C1层），卷积核的大小为<code>5*5</code>，卷积核数量为<code>6</code>个，输入图像的大小为<code>32*32</code>，因此输入数据在进行第一层卷积之后，输出结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。卷积操作如下面两幅图所示：</p>
+<p>LeNet网络除去输入输出层总共有六层网络。第一层是卷积层（C1层），卷积核的大小为<code>5\*5</code>，卷积核数量为<code>6</code>个，输入图像的大小为<code>32*32</code>，因此输入数据在进行第一层卷积之后，输出结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。卷积操作如下面两幅图所示：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/conv.gif" alt="卷积演示"></p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/giphy.gif" alt="卷积演示"></p>
-<p>卷积操作的过程可描述为：卷积核在图像上滑动，滑动步长为1（即每次移动一格，水平方向从左到右，到最右边之后再从最左边开始，向下移动一格，重复从左到右滑动），当卷积核与图像的一个局部块重合时进行卷积运行，卷积计算方式为图像块对应位置的数与卷积核对应位置的数相乘，然后将所有相乘结果相加即为feature map的值，<strong>相乘累加之后的结果位于卷积核中心点的位置</strong>，因此如果是<code>3*3</code>的卷积核，feature map比原图像在水平和垂直方向上分别减少两行（上下各一行）和两列（左右各一列），因此上面图像原图为<code>5*5</code>，卷积核为<code>3*3</code>，卷积结果大小为<code>3*3</code>，即<code>(5-2)*(5-2)</code>，如果卷积核为<code>5*5</code>，则卷积结果大小为<code>(5-4)*(5-4)</code>。上图中的卷积核为：<br><img src="http://ocs628urt.bkt.clouddn.com/conv_kernel.png" alt="卷积核"></p>
-<p>由于神经网络层与层的结构是通过连接来实现的，因此输入层与第一个卷积层的连接数量应为<code>(32-2-2)*(32-2-2)*(5*5+1)*6= 28*28*156 =122304</code>。</p>
+<p>卷积操作的过程可描述为：卷积核在图像上滑动，滑动步长为1（即每次移动一格，水平方向从左到右，到最右边之后再从最左边开始，向下移动一格，重复从左到右滑动），当卷积核与图像的一个局部块重合时进行卷积运行，卷积计算方式为图像块对应位置的数与卷积核对应位置的数相乘，然后将所有相乘结果相加即为feature map的值，<strong>相乘累加之后的结果位于卷积核中心点的位置</strong>，因此如果是<code>3\*3</code>的卷积核，feature map比原图像在水平和垂直方向上分别减少两行（上下各一行）和两列（左右各一列），因此上面图像原图为<code>5*5</code>，卷积核为<code>3\*3</code>，卷积结果大小为<code>3*3</code>，即<code>(5-2)*(5-2)</code>，如果卷积核为<code>5*5</code>，则卷积结果大小为<code>(5-4)*(5-4)</code>。上图中的卷积核为：<br><img src="http://ocs628urt.bkt.clouddn.com/conv_kernel.png" alt="卷积核"></p>
+<p>由于神经网络层与层的结构是通过连接来实现的，因此输入层与第一个卷积层的连接数量应为<code>(32-2-2)\*(32-2-2)\*(5\*5+1)\*6= 28\*28\*156 =122304</code>。</p>
 <p>卷积的作用主要是：通过卷积运算，可以使原信号特征增强，并且降低噪音。在图像上卷积之后主要是减少图像噪声，提取图像的特征。例如sobel算子就是一种卷积运算，主要是提取图像的边缘特征。卷积网络能很好地适应图像的平移不变性：例如稍稍移动一幅猫的图像，它仍然是一幅猫的图像。卷积操作保留了图像块之间的空间信息，进行卷积操作的图像块之间的相对位置关系没有改变。图像在不同卷积核上进行卷积之后的效果图如下：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot.png" alt="同一幅图像用不同卷积核处理的效果"></p>
 <h3 id="2-2-LeNet第二层（pooling运算）"><a href="#2-2-LeNet第二层（pooling运算）" class="headerlink" title="2.2 LeNet第二层（pooling运算）"></a>2.2 LeNet第二层（pooling运算）</h3><p>图像在LeNet网络上进行第一层卷积之后，结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。LeNet网络的第二层为pooling层（S2层），也称为下采样。在图像处理中，下采样之后，图像的大小会变为原来的<code>1/4</code>，即水平方向和垂直方向上图像大小分别减半。Pooling有多种，这里主要介绍两种，max-pooling和average-pooling。max-pooling即为从四个元素中选取一个最大的来表示这四个元素，average-pooling则用四个元素的平均值来表示这四个元素。Pooling示意图如下：</p>
@@ -584,20 +584,20 @@
 <p><img src="http://ocs628urt.bkt.clouddn.com/lenet-c3table.png" alt="S2层与C3层的关系图"></p>
 <p>如上图所示，第一个卷积核处理前三幅输入的feature map，得出一个新的feature map。</p>
 <h3 id="2-4-LeNet第四层（Pooling运算）"><a href="#2-4-LeNet第四层（Pooling运算）" class="headerlink" title="2.4 LeNet第四层（Pooling运算）"></a>2.4 LeNet第四层（Pooling运算）</h3><p>上一层卷积运算之后，结果为大小为<code>10*10</code>的<code>16</code>个feature map，因此在第四层（S4层）进行pooling运算之后，输出结果为<code>16</code>个大小为<code>5*5</code>的feature map。与S2层进行同样的操作。</p>
-<h3 id="2-5-LeNet第五层"><a href="#2-5-LeNet第五层" class="headerlink" title="2.5 LeNet第五层"></a>2.5 LeNet第五层</h3><p>LeNet第五层是卷积层(C5层)，卷积核数目为120个，大小为5<em>5，由于第四层输出的feature map大小为5</em>5，因此第五层也可以看成全连接层，输出为120个大小为1*1的feature map。</p>
+<h3 id="2-5-LeNet第五层"><a href="#2-5-LeNet第五层" class="headerlink" title="2.5 LeNet第五层"></a>2.5 LeNet第五层</h3><p>LeNet第五层是卷积层(C5层)，卷积核数目为120个，大小为<code>5*5</code>，由于第四层输出的feature map大小为<code>5*5</code>，因此第五层也可以看成全连接层，输出为120个大小为<code>1*1</code>的feature map。</p>
 <h3 id="2-6-LeNet第六层"><a href="#2-6-LeNet第六层" class="headerlink" title="2.6 LeNet第六层"></a>2.6 LeNet第六层</h3><p>LeNet第六层是全连接层（F6层），有84个神经元（84与输出层的设计有关），与C5层全连接。</p>
 <h3 id="2-7-LeNet各层的参数变化"><a href="#2-7-LeNet各层的参数变化" class="headerlink" title="2.7 LeNet各层的参数变化"></a>2.7 LeNet各层的参数变化</h3><ul>
-<li><p>C1<br>输入大小：32<em>32<br>核大小：5</em>5<br>核数目：6<br>输出大小：28<em>28</em>6<br>训练参数数目：(5<em>5+1)</em>6=156<br>连接数：(5<em>5+1)</em>6<em>(32-2-2)</em>(32-2-2)=122304</p>
+<li><p>C1<br>输入大小：32*32<br>核大小：5*5<br>核数目：6<br>输出大小：28*28*6<br>训练参数数目：(5*5+1)*6=156<br>连接数：(5*5+1)*6*(32-2-2)*(32-2-2)=122304</p>
 </li>
-<li><p>S2<br>输入大小：28<em>28</em>6<br>核大小：2<em>2<br>核数目：1<br>输出大小：14</em>14<em>6<br>训练参数数目：2</em>6=12，2=(w,b)<br>连接数：(2<em>2+1)</em>1<em>14</em>14*6 = 5880</p>
+<li><p>S2<br>输入大小：28*28*6<br>核大小：2*2<br>核数目：1<br>输出大小：14*14*6<br>训练参数数目：2*6=12，2=(w,b)<br>连接数：(2*2+1)*1*14*14*6 = 5880</p>
 </li>
-<li><p>C3<br>输入大小：14<em>14</em>6<br>核大小：5<em>5<br>核数目：16<br>输出大小：10</em>10<em>16<br>训练参数数目：6</em>(3<em>5</em>5+1) + 6<em>(4</em>5<em>5+1) + 3</em>(4<em>5</em>5+1) + 1<em>(6</em>5<em>5+1)=1516<br>连接数：(6</em>(3<em>5</em>5+1) + 6<em>(4</em>5<em>5+1) + 3</em>(4<em>5</em>5+1) + 1<em>(6</em>5<em>5+1))</em>10*10=151600</p>
+<li><p>C3<br>输入大小：14*14*6<br>核大小：5*5<br>核数目：16<br>输出大小：10*10*16<br>训练参数数目：6*(3*5*5+1) + 6*(4*5*5+1) + 3*(4*5*5+1) + 1*(6*5*5+1)=1516<br>连接数：(6*(3*5*5+1) + 6*(4*5*5+1) + 3*(4*5*5+1) + 1*(6*5*5+1))*10*10=151600</p>
 </li>
-<li><p>S4<br>输入大小：10<em>10</em>16<br>核大小：2<em>2<br>核数目：1<br>输出大小：5</em>5<em>16<br>训练参数数目：2</em>16=32<br>连接数：(2<em>2+1)</em>1<em>5</em>5*16=2000</p>
+<li><p>S4<br>输入大小：10*10*16<br>核大小：2*2<br>核数目：1<br>输出大小：5*5*16<br>训练参数数目：2*16=32<br>连接数：(2*2+1)*1*5*5*16=2000</p>
 </li>
-<li><p>C5<br>输入大小：5<em>5</em>16<br>核大小：5<em>5<br>核数目：120<br>输出大小：120</em>1<em>1<br>训练参数数目：(5</em>5<em>16+1)</em>120<em>1</em>1=48120（因为是全连接）<br>连接数：(5<em>5</em>16+1)<em>120</em>1*1=48120</p>
+<li><p>C5<br>输入大小：5*5*16<br>核大小：5*5<br>核数目：120<br>输出大小：120*1*1<br>训练参数数目：(5*5*16+1)*120*1*1=48120（因为是全连接）<br>连接数：(5*5*16+1)*120*1*1=48120</p>
 </li>
-<li><p>F6<br>输入大小：120<br>输出大小：84<br>训练参数数目：(120+1)<em>84=10164<br>连接数：(120+1)</em>84=10164</p>
+<li><p>F6<br>输入大小：120<br>输出大小：84<br>训练参数数目：(120+1)\<em>84=10164<br>连接数：(120+1)\\</em>84=10164</p>
 </li>
 </ul>
 <h3 id="3-LeNet在Caffe中的配置"><a href="#3-LeNet在Caffe中的配置" class="headerlink" title="3. LeNet在Caffe中的配置"></a>3. LeNet在Caffe中的配置</h3><p>LeNet神经网络结构在Caffe中的配置文件如下：</p>
@@ -652,7 +652,7 @@
     <link href="noahsnail.com/2017/02/23/2017-2-23-Caffe%E7%9A%84solver%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D/"/>
     <id>noahsnail.com/2017/02/23/2017-2-23-Caffe的solver参数介绍/</id>
     <published>2017-02-23T06:41:45.000Z</published>
-    <updated>2017-03-01T07:42:26.000Z</updated>
+    <updated>2017-03-01T11:02:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Parameters"><a href="#1-Parameters" class="headerlink" title="1. Parameters"></a>1. Parameters</h2><p><code>solver.prototxt</code>文件是用来告诉caffe如何训练网络的。<code>solver.prototxt</code>的各个参数的解释如下：</p>
