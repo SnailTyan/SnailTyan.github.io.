@@ -90,10 +90,12 @@
 <meta property="og:url" content="noahsnail.com/2017/03/01/2017-3-1-AlexNet神经网络分析/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="AlexNet神经网络">
-<meta property="og:updated_time" content="2017-03-02T05:51:03.000Z">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/screen-shot-pm.png">
+<meta property="og:updated_time" content="2017-03-16T09:04:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AlexNet神经网络">
 <meta name="twitter:description" content="AlexNet神经网络">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/screen-shot-pm.png">
 
 
 
@@ -312,8 +314,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-03-02T13:51:03+08:00">
-              2017-03-02
+            <time title="Post modified" itemprop="dateModified" datetime="2017-03-16T17:04:12+08:00">
+              2017-03-16
             </time>
             
           </span>
@@ -380,7 +382,12 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-AlexNet神经网络介绍"><a href="#1-AlexNet神经网络介绍" class="headerlink" title="1. AlexNet神经网络介绍"></a>1. AlexNet神经网络介绍</h2>
+<h2 id="1-AlexNet神经网络介绍"><a href="#1-AlexNet神经网络介绍" class="headerlink" title="1. AlexNet神经网络介绍"></a>1. AlexNet神经网络介绍</h2><p>在描述LeNet第五层之前，先要了解ReLU的概念，因为在第五层卷积之后，卷积结果需要进行ReLU操作。</p>
+<p><strong>ReLU介绍：</strong></p>
+<p>ReLU，全称Rectified Linear Unit，它是一个非线性操作，主要是将卷积之后feature map中的负数，变为0，公式为<code>Output = max(0, Input)</code>，对feature map中的每个值都进行这个操作。卷积操作是线性操作，而我们希望卷积神经网络除了能进行线性操作之外，也能进行非线性操作。此外，因为正常情况下图像像素值的变化范围为<code>0~255</code>，不应该出现负数。ReLU操作效果如图：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot-pm.png" alt="ReLU操作"></p>
+<p>当然除了，ReLU操作，还有一些其它操作，例如tanh或sigmoid，但实践证明，ReLU在大多数情况下比其它的表现更好。ReLU之后，feature map大小不变。</p>
+
       
     </div>
 
@@ -515,7 +522,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">181</span>
+              <span class="site-state-item-count">183</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
