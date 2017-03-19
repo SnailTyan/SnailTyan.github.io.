@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="统计学习方法(一)——统计学习方法概论">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/supervised-learning.png">
-<meta property="og:updated_time" content="2017-03-16T05:26:55.000Z">
+<meta property="og:updated_time" content="2017-03-17T03:01:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="统计学习方法(一)——统计学习方法概论">
 <meta name="twitter:description" content="统计学习方法(一)——统计学习方法概论">
@@ -314,8 +314,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-03-16T13:26:55+08:00">
-              2017-03-16
+            <time title="Post modified" itemprop="dateModified" datetime="2017-03-17T11:01:42+08:00">
+              2017-03-17
             </time>
             
           </span>
@@ -433,7 +433,10 @@
 <li><p>对数损失函数（logarithmic loss function）或对数似然损失函数(log-likelihood loss function)<br>$$L(Y,f(X))=-\log P(Y|X)$$</p>
 </li>
 </ul>
-<p>损失函数越小，模型越好。</p>
+<p>损失函数越小，模型越好。由于模型输入、输出(X,Y)是随机变量，遵循联合分布P(X,Y)，所以损失函数的期望是</p>
+<p>$$R_{exp}(f)=E_p[L(Y,f(X))]$$</p>
+<p>$$=\int_{x*y}L(y,f(x))P(x,y)dxdy$$</p>
+<p>这是理论上模型f(X)关于联合分布P(x,y)的平均意义下的损失，称为风险函数（risk function）或期望损失（expected loss）。</p>
 
       
     </div>
@@ -569,7 +572,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">183</span>
+              <span class="site-state-item-count">184</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
