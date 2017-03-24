@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-03-18T02:28:37.000Z</updated>
+  <updated>2017-03-24T01:30:23.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,174 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Leetcode109——Convert Sorted List to Binary Search Tree</title>
+    <link href="noahsnail.com/2017/03/24/2017-3-24-Leetcode109%E2%80%94%E2%80%94Convert%20Sorted%20List%20to%20Binary%20Search%20Tree/"/>
+    <id>noahsnail.com/2017/03/24/2017-3-24-Leetcode109——Convert Sorted List to Binary Search Tree/</id>
+    <published>2017-03-24T01:17:38.000Z</published>
+    <updated>2017-03-24T01:30:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题主要是根据一个有序链表构造二叉查找树（树的左结点小于根节点，根节点小于右结点，子树具有同样的性质）。与有序数组最大的不同在于有序链表只能从前往后遍历，不能像有序数组一样访问任意位置的元素。因此构造时需要按顺序构造，其实有序链表是二叉查找树的中序遍历。因此需要按照中序遍历的顺序进行构建，先构建左子树，再构造根节点，最后构造右子树。由于是链表，每次构造之后头结点应该进行移动，Java中用了一个静态变量来保存根节点的位置。构造方法主要是递归，每次构建子树时都需要将数组分成左右两半，左边的构建左子树，右边的构建右子树，中间元素构造根节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * public class ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode next;</div><div class="line"> *     ListNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    static ListNode h;</div><div class="line">    </div><div class="line">    public TreeNode sortedListToBST(ListNode head) &#123;</div><div class="line">        if(head == null) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        int length = 0;</div><div class="line">        h = head;</div><div class="line">        //得到链表长度</div><div class="line">        while(head != null) &#123;</div><div class="line">            length++;</div><div class="line">            head = head.next;</div><div class="line">        &#125;</div><div class="line">        return buildBinarySearchTree(h, 0, length - 1);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public TreeNode buildBinarySearchTree(ListNode head, int start, int end) &#123;</div><div class="line">        if(start &gt; end) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        int mid = (start + end) / 2;</div><div class="line">        //先构建左子树</div><div class="line">        TreeNode left = buildBinarySearchTree(h, start, mid - 1);</div><div class="line">        //再构造根节点</div><div class="line">        TreeNode root = new TreeNode(h.val);</div><div class="line">        h = h.next;</div><div class="line">        //最后构造右子树</div><div class="line">        TreeNode right = buildBinarySearchTree(h, mid + 1, end);</div><div class="line">        root.left = left;</div><div class="line">        root.right = right;</div><div class="line">        return root;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode109——Convert Sorted List to Binary Search Tree
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode108——Convert Sorted Array to Binary Search Tree</title>
+    <link href="noahsnail.com/2017/03/23/2017-3-23-Leetcode108%E2%80%94%E2%80%94Convert%20Sorted%20Array%20to%20Binary%20Search%20Tree/"/>
+    <id>noahsnail.com/2017/03/23/2017-3-23-Leetcode108——Convert Sorted Array to Binary Search Tree/</id>
+    <published>2017-03-23T09:53:39.000Z</published>
+    <updated>2017-03-24T01:16:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题主要是根据一个有序数组构造二叉查找树（树的左结点小于根节点，根节点小于右结点，子树具有同样的性质）。构造方法主要是递归，每次构建子树时都需要将数组分成左右两半，左边的构建左子树，右边的构建右子树，中间元素构造根节点。其实有序数组是二叉查找树的中序遍历。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    public TreeNode sortedArrayToBST(int[] nums) &#123;</div><div class="line">        return buildBinarySearchTree(nums, 0, nums.length - 1);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public TreeNode buildBinarySearchTree(int[] nums, int start, int end) &#123;</div><div class="line">        if(start &gt; end) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        int mid = (start + end) / 2;</div><div class="line">        TreeNode root = new TreeNode(nums[mid]);</div><div class="line">        root.left = buildBinarySearchTree(nums, start, mid - 1);</div><div class="line">        root.right = buildBinarySearchTree(nums, mid + 1, end);</div><div class="line">        return root;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode108——Convert Sorted Array to Binary Search Tree
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode102——Binary Tree Level Order Traversal</title>
+    <link href="noahsnail.com/2017/03/22/2017-3-22-Leetcode102%E2%80%94%E2%80%94Binary%20Tree%20Level%20Order%20Traversal/"/>
+    <id>noahsnail.com/2017/03/22/2017-3-22-Leetcode102——Binary Tree Level Order Traversal/</id>
+    <published>2017-03-22T03:42:38.000Z</published>
+    <updated>2017-03-22T03:51:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a binary tree, return the level order traversal of its nodes’ values. (ie, from left to right, level by level).</p>
+<p>For example:<br>Given binary tree <code>[3,9,20,null,null,15,7]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / \</div><div class="line">9  20</div><div class="line">  /  \</div><div class="line"> 15   7</div></pre></td></tr></table></figure>
+<p>return its level order traversal as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [3],</div><div class="line">  [9,20],</div><div class="line">  [15,7]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题就是一个树的层次遍历问题，需要用到新的数据结构队列，把每一层的结点的子结点放入到队列中，依次遍历。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; list = new ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">        if(root == null) &#123;</div><div class="line">            return list;</div><div class="line">        &#125;</div><div class="line">        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</div><div class="line">        queue.add(root);</div><div class="line">        Queue&lt;TreeNode&gt; result = new LinkedList&lt;TreeNode&gt;();</div><div class="line">        List&lt;Integer&gt; level = new ArrayList&lt;Integer&gt;();</div><div class="line">        while(!queue.isEmpty()) &#123;</div><div class="line">            TreeNode temp = queue.poll();</div><div class="line">            level.add(temp.val);</div><div class="line">            if(temp.left != null) &#123;</div><div class="line">                result.add(temp.left);</div><div class="line">            &#125;</div><div class="line">            if(temp.right != null) &#123;</div><div class="line">                result.add(temp.right);</div><div class="line">            &#125;</div><div class="line">            if(queue.isEmpty()) &#123;</div><div class="line">                queue = result;</div><div class="line">                result = new LinkedList&lt;TreeNode&gt;();</div><div class="line">                list.add(level);</div><div class="line">                level = new ArrayList&lt;Integer&gt;();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode102——Binary Tree Level Order Traversal
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode145——Binary Tree Postorder Traversal</title>
+    <link href="noahsnail.com/2017/03/21/2017-3-21-Leetcode145%E2%80%94%E2%80%94Binary%20Tree%20Postorder%20Traversal/"/>
+    <id>noahsnail.com/2017/03/21/2017-3-21-Leetcode145——Binary Tree Postorder Traversal/</id>
+    <published>2017-03-21T10:22:59.000Z</published>
+    <updated>2017-03-21T10:24:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a binary tree, return the postorder traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree <code>{1,#,2,3}</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line"> \</div><div class="line">  2</div><div class="line"> /</div><div class="line">3</div></pre></td></tr></table></figure>
+<p>return <code>[3,2,1]</code>.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题就是一个树的后序遍历问题，最简单的方案就是递归的遍历子树，要注意递归退出的条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    public List&lt;Integer&gt; postorderTraversal(TreeNode root) &#123;</div><div class="line">        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</div><div class="line">        if(root == null) &#123;</div><div class="line">            return list;</div><div class="line">        &#125;</div><div class="line">        List&lt;Integer&gt; left = postorderTraversal(root.left);</div><div class="line">        List&lt;Integer&gt; right = postorderTraversal(root.right);</div><div class="line">        list.addAll(left);</div><div class="line">        list.addAll(right);</div><div class="line">        list.add(root.val);</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode145——Binary Tree Postorder Traversal
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode94——Binary Tree Inorder Traversal</title>
+    <link href="noahsnail.com/2017/03/21/2017-3-21-Leetcode94%E2%80%94%E2%80%94Binary%20Tree%20Inorder%20Traversal/"/>
+    <id>noahsnail.com/2017/03/21/2017-3-21-Leetcode94——Binary Tree Inorder Traversal/</id>
+    <published>2017-03-21T10:21:12.000Z</published>
+    <updated>2017-03-21T10:22:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a binary tree, return the inorder traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree <code>[1,null,2,3]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line"> \</div><div class="line">  2</div><div class="line"> /</div><div class="line">3</div></pre></td></tr></table></figure>
+<p>return <code>[1,3,2]</code>.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题就是一个树的中序遍历问题，最简单的方案就是递归的遍历子树，要注意递归退出的条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    public List&lt;Integer&gt; inorderTraversal(TreeNode root) &#123;</div><div class="line">        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</div><div class="line">        if(root == null) &#123;</div><div class="line">            return list;</div><div class="line">        &#125;</div><div class="line">        List&lt;Integer&gt; left = inorderTraversal(root.left);</div><div class="line">        List&lt;Integer&gt; right = inorderTraversal(root.right);</div><div class="line">        list.addAll(left);</div><div class="line">        list.add(root.val);</div><div class="line">        list.addAll(right);</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode94——Binary Tree Inorder Traversal
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode144——Binary Tree Preorder Traversal</title>
+    <link href="noahsnail.com/2017/03/21/2017-3-21-Leetcode144%E2%80%94%E2%80%94Binary%20Tree%20Preorder%20Traversal/"/>
+    <id>noahsnail.com/2017/03/21/2017-3-21-Leetcode144——Binary Tree Preorder Traversal/</id>
+    <published>2017-03-21T10:16:00.000Z</published>
+    <updated>2017-03-21T10:17:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a binary tree, return the preorder traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree <code>{1,#,2,3}</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line"> \</div><div class="line">  2</div><div class="line"> /</div><div class="line">3</div></pre></td></tr></table></figure>
+<p>return <code>[1,2,3]</code>.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题就是一个树的先序遍历问题，最简单的方案就是递归的遍历子树，要注意递归退出的条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    public List&lt;Integer&gt; preorderTraversal(TreeNode root) &#123;</div><div class="line">        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</div><div class="line">        if(root == null) &#123;</div><div class="line">            return list;</div><div class="line">        &#125;</div><div class="line">        list.add(root.val);</div><div class="line">        List&lt;Integer&gt; left = preorderTraversal(root.left);</div><div class="line">        List&lt;Integer&gt; right = preorderTraversal(root.right);</div><div class="line">        list.addAll(left);</div><div class="line">        list.addAll(right);</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode144——Binary Tree Preorder Traversal
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Leetcode3——Longest Substring Without Repeating Characters</title>
     <link href="noahsnail.com/2017/03/17/2017-3-17-Leetcode3%E2%80%94%E2%80%94Longest%20Substring%20Without%20Repeating%20Characters/"/>
     <id>noahsnail.com/2017/03/17/2017-3-17-Leetcode3——Longest Substring Without Repeating Characters/</id>
     <published>2017-03-17T05:05:29.000Z</published>
-    <updated>2017-03-18T02:28:37.000Z</updated>
+    <updated>2017-03-22T01:21:12.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a string, find the length of the longest substring without repeating characters.</p>
@@ -28,8 +191,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Given &quot;abcabcbb&quot;, the answer is &quot;abc&quot;, which the length is 3.</div><div class="line"></div><div class="line">Given &quot;bbbbb&quot;, the answer is &quot;b&quot;, with the length of 1.</div><div class="line"></div><div class="line">Given &quot;pwwkew&quot;, the answer is &quot;wke&quot;, with the length of 3. Note that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.</div></pre></td></tr></table></figure>
 <h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>方法一</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<p><strong>方法二</strong></p>
-<p>方法一中的代码有较多的冗余，例如<code>current.next = new ListNode(sum % 10);</code>出现了两次，两次while循环的逻辑是非常类似的，经过代码的变换可以将两部分合成一部分，即同时处理两个链表直至两个链表都结束。</p>
+<p><strong>方法二</strong><br>方法二的思路是看到有重复问题，首先想到哈希表，由于求解的是不重复子串，因此需要将子串分为两部分，一部分为(i，n-1)，一部分为(j，i)，如果s[i]不在(j，i)中，则将s[i]放入哈希表中，同时计数器加1，如果s[i]在(j，i)中，则找到(j，i)中与s[i]重复的字符ch，将其移除，当然ch之前的字符也要将其从哈希表中移除，因为包含ch的子串一定与s[i]重复，每移除一个字符，j++。重复上述过程，直至i到字符串最后。每一个找的子串是从(j,i)不重复的最长子串。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int lengthOfLongestSubstring(String s) &#123;</div><div class="line">        Map&lt;Character, Character&gt; map = new HashMap&lt;Character, Character&gt;();</div><div class="line">        int max = 0;</div><div class="line">        int count = 0;</div><div class="line">        int j = 0;</div><div class="line">        for(int i = 0; i &lt; s.length(); i++) &#123;</div><div class="line">            char ch = s.charAt(i);</div><div class="line">            if(map.containsKey(ch)) &#123;</div><div class="line">                while(map.containsKey(ch)) &#123;</div><div class="line">                    map.remove(s.charAt(j));</div><div class="line">                    j++;</div><div class="line">                    count--;</div><div class="line">                &#125;</div><div class="line">                count++;</div><div class="line">                map.put(ch, ch);</div><div class="line">            &#125;else &#123;</div><div class="line">                map.put(ch, ch);</div><div class="line">                count++;</div><div class="line">                if(count &gt; max) &#123;</div><div class="line">                    max = count;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 ]]></content>
     
@@ -261,7 +423,7 @@
     <link href="noahsnail.com/2017/03/13/2017-3-13-Linux%E7%9A%84tar%E5%91%BD%E4%BB%A4/"/>
     <id>noahsnail.com/2017/03/13/2017-3-13-Linux的tar命令/</id>
     <published>2017-03-13T02:48:58.000Z</published>
-    <updated>2017-03-13T03:56:17.000Z</updated>
+    <updated>2017-03-21T08:15:34.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>Linux下经常碰到需要解压文件的情况，需要用到<code>tar</code>命令，本文主要介绍一下<code>tar</code>命令。</p>
@@ -351,6 +513,10 @@
 <li>解压到指定目录</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ mkdir test</div><div class="line">$ tar xvf inception-v3.tar.gz -C ./test</div><div class="line">x model/</div><div class="line">x model/synset.txt</div><div class="line">x model/Inception-7-0001.params</div><div class="line">x model/preprocessing.py</div><div class="line">x model/Inception-7-symbol.json</div></pre></td></tr></table></figure>
+<ul>
+<li>压缩指定文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tar -zcvf test.tar.gz test</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
@@ -482,7 +648,7 @@
     <link href="noahsnail.com/2017/03/08/2017-3-8-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E6%A6%82%E8%AE%BA/"/>
     <id>noahsnail.com/2017/03/08/2017-3-8-统计学习方法(一)——统计学习方法概论/</id>
     <published>2017-03-08T01:12:48.000Z</published>
-    <updated>2017-03-17T03:01:42.000Z</updated>
+    <updated>2017-03-24T06:19:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="1-统计学习方法概论"><a href="#1-统计学习方法概论" class="headerlink" title="1. 统计学习方法概论"></a>1. 统计学习方法概论</h1><p>本文是统计学习方法（李航）第一章的学习总结。</p>
@@ -518,7 +684,7 @@
 <h3 id="1-2-2-问题的形式化"><a href="#1-2-2-问题的形式化" class="headerlink" title="1.2.2 问题的形式化"></a>1.2.2 问题的形式化</h3><p>监督学习利用训练数据学习模型，再用模型对测试数据进行预测。学习过程中的训练数据往往是人工给出的，因此称为监督学习。监督学习分为学习和预测两个过程，如下图：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/supervised-learning.png" alt="监督学习"></p>
 <p>首先给定数据集$T={(x_1,y_1),(x_3,y_2),…,(x_N,y_N)}$，其中$(x_i,y_i)，i=1,2,…,N$，称为样本或样本点，$x_i \in X \subseteq R^n$是输入的观测值，称为输入或实例，$y_i \in Y$是输出的观测值，也称为输出。通过学习得到的模型表示为条件概率分布$P(Y|X)$和决策函数$Y=f(X)$，模型表示的是输入与输出之间的映射关系。</p>
-<p>预测过程中，对于测试数据中的输入$x<em>{N+1}$,由模型$y</em>{N+1}=argmax P(y<em>{N+1}|x</em>{N+1})$或$y<em>{N+1}=f(x</em>{N+1})$给出对应的输出$y_{N+1}$。</p>
+<p>预测过程中，对于测试数据中的输入$x_{N+1}$,由模型$y_{N+1}=argmax P(y_{N+1}|x_{N+1})$或$y_{N+1}=f(x_{N+1})$给出对应的输出$y_{N+1}$。</p>
 <h2 id="1-3-统计学习三要素"><a href="#1-3-统计学习三要素" class="headerlink" title="1.3 统计学习三要素"></a>1.3 统计学习三要素</h2><p>统计学习方法的三要素为模型、策略和算法，它们关系为：<code>统计学习方法 = 模型 + 策略 + 算法</code>。</p>
 <h3 id="1-3-1-模型"><a href="#1-3-1-模型" class="headerlink" title="1.3.1 模型"></a>1.3.1 模型</h3><p>在监督学习过程中，模型是要学习的条件概率分布或决策函数。模型的假设空间包含所有可能的条件概率分布或决策函数。假设空间用F表示：<br>$$F=\lbrace f|Y=f(X)\rbrace $$<br>X和Y是定义在输入输出空间上的变量，F通常是由一个参数向量决定的函数族：<br>$$F=\lbrace f|Y=f_\theta (X),\theta \in R^n \rbrace$$<br>参数向量$\theta$取值于n维欧式空间$R^n$，称为参数空间（parameter space）。假设空间也可以定义为条件概率的集合：</p>
 <p>$$F=\lbrace P|P(Y|X)\rbrace$$<br>X和Y是定义在输入输出空间上的随机变量，F通常是一个由参数向量决定的条件概率分布族：</p>
@@ -537,9 +703,17 @@
 </li>
 </ul>
 <p>损失函数越小，模型越好。由于模型输入、输出(X,Y)是随机变量，遵循联合分布P(X,Y)，所以损失函数的期望是</p>
-<p>$$R_{exp}(f)=E_p[L(Y,f(X))]$$</p>
-<p>$$=\int_{x*y}L(y,f(x))P(x,y)dxdy$$</p>
-<p>这是理论上模型f(X)关于联合分布P(x,y)的平均意义下的损失，称为风险函数（risk function）或期望损失（expected loss）。</p>
+<p>$$R_{exp}(f)=E_p[L(Y,f(X))]=\int_{x*y}L(y,f(x))P(x,y)dxdy$$</p>
+<p>这是理论上模型f(X)关于联合分布P(x,y)的平均意义下的损失，称为风险函数（risk function）或期望损失（expected loss）。学习的目标就是选择期望风险最小的模型。由于联合分布P(X,Y)是未知的，$R_{exp}(f)$不能直接计算。如果知道联合分布P(X,Y)，从联合分布可以直接求出条件概率分布P(Y|X)，也就不需要学习了。一方面根据期望风险最小学习模型需要用到联合分布，一方面联合分布又是未知的，因此监督学习就称为一个病态问题（ill-formed problem）。</p>
+<p>给定一个训练数据集</p>
+<p>$$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$$</p>
+<p>模型f(X)关于训练数据集的平均损失称为经验风险（empirical risk）或经验损失（empirical loss），记作$R_{emp}$：</p>
+<p>$$R_{emp}(f)=\frac {1} {N} \sum_{i=1}^N L(y_i,f(x_i))$$</p>
+<p>期望风险$R_{exp}(f)$是模型关于联合分布的期望损失，经验风险$R_{emp}(f)$是模型关于训练样本集的平均损失。根据大数定律，当样本容量N趋于无穷时，经验风险$R_{emp}(f)$趋于期望风险$R_{exp}(f)$。因此很自然的一个想法就是用经验风险估计期望风险，但由于训练数据是有限的，因此要对经验风险进行一定的矫正。这关系到监督学习的两个基本策略：经验风险最小化和结构风险最小化。</p>
+<p><strong>2.经验风险最小化和结构风险最小化</strong></p>
+<p>在假设空间、损失函数以及训练数据集确定的情况下，经验风险函数就可以确定。经验风险最小化（empirical risk minimization，ERM）策略认为，经验风险最小的模型就是最优的模型。求解经验最小化最优模型就是求解最优化问题：</p>
+<p>$$^{min} _{f \in F} \frac {1} {N}  \sum_{i=1}^N L(y_i, f(x_i))$$</p>
+<p>当样本容量足够大时，经验风险最小化能保证有很好的学习效果，在现实中被广泛采用。极大似然估计（maximum likelihood estimation）就是经验风险最小化的一个例子。当模型是条件概率分布时，损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。但是，当样本容量很小时，经验风险最小化未必会很好，有可能产生“过拟合”现象。</p>
 ]]></content>
     
     <summary type="html">
@@ -596,7 +770,7 @@
     <link href="noahsnail.com/2017/03/02/2017-3-2-LeNet%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     <id>noahsnail.com/2017/03/02/2017-3-2-LeNet神经网络/</id>
     <published>2017-03-02T05:50:43.000Z</published>
-    <updated>2017-03-17T03:01:47.000Z</updated>
+    <updated>2017-03-22T10:46:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-LeNet神经网络介绍"><a href="#1-LeNet神经网络介绍" class="headerlink" title="1. LeNet神经网络介绍"></a>1. LeNet神经网络介绍</h2><p>LeNet神经网络由深度学习三巨头之一的Yan LeCun提出，他同时也是卷积神经网络 (CNN，Convolutional Neural Networks)之父。LeNet主要用来进行手写字符的识别与分类，并在美国的银行中投入了使用。LeNet的实现确立了CNN的结构，现在神经网络中的许多内容在LeNet的网络结构中都能看到，例如卷积层，Pooling层，ReLU层。虽然LeNet早在20世纪90年代就已经提出了，但由于当时缺乏大规模的训练数据，计算机硬件的性能也较低，因此LeNet神经网络在处理复杂问题时效果并不理想。虽然LeNet网络结构比较简单，但是刚好适合神经网络的入门学习。</p>
@@ -638,7 +812,7 @@
 </li>
 </ul>
 <h3 id="3-LeNet在Caffe中的配置"><a href="#3-LeNet在Caffe中的配置" class="headerlink" title="3. LeNet在Caffe中的配置"></a>3. LeNet在Caffe中的配置</h3><p>LeNet神经网络结构在Caffe中的配置文件如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div></pre></td><td class="code"><pre><div class="line">name: &quot;LeNet&quot;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TRAIN</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_train_lmdb&quot;</div><div class="line">    batch_size: 64</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_test_lmdb&quot;</div><div class="line">    batch_size: 100</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv1&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;data&quot;</div><div class="line">  top: &quot;conv1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 20</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool1&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv1&quot;</div><div class="line">  top: &quot;pool1&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv2&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;pool1&quot;</div><div class="line">  top: &quot;conv2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 50</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool2&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv2&quot;</div><div class="line">  top: &quot;pool2&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip1&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;pool2&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 500</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;relu1&quot;</div><div class="line">  type: &quot;ReLU&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip2&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 10</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;accuracy&quot;</div><div class="line">  type: &quot;Accuracy&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;accuracy&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;loss&quot;</div><div class="line">  type: &quot;SoftmaxWithLoss&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;loss&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div></pre></td><td class="code"><pre><div class="line">name: &quot;LeNet&quot; //神经网络名字</div><div class="line">//本层只有top，没有bottom，说明是数据输入层</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot; //layer名字</div><div class="line">  type: &quot;Data&quot; //层的数据类型，如果是Data，说明是leveldb或lmdb</div><div class="line">  top: &quot;data&quot; //top表示输入数据，类型为data</div><div class="line">  top: &quot;label&quot; //top表示输入数据，类型为label，(data,label)配对是分类模型所必需的</div><div class="line">  //一般训练的时候和测试的时候，模型的层是不一样的。该层（layer）是属于训练阶段的层，还是属于测试阶段的层，需要用include来指定。如果没有include参数，则表示该层既在训练模型中，又在测试模型中。</div><div class="line">  include &#123;</div><div class="line">    phase: TRAIN</div><div class="line">  &#125;</div><div class="line">  //数据的预处理，可以将数据变换到定义的范围内。如设置scale为0.00390625，实际上就是1/255, 即将输入数据由0-255归一化到0-1之间</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_train_lmdb&quot;</div><div class="line">    batch_size: 64</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_test_lmdb&quot;</div><div class="line">    batch_size: 100</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv1&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;data&quot;</div><div class="line">  top: &quot;conv1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 20</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool1&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv1&quot;</div><div class="line">  top: &quot;pool1&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv2&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;pool1&quot;</div><div class="line">  top: &quot;conv2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 50</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool2&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv2&quot;</div><div class="line">  top: &quot;pool2&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip1&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;pool2&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 500</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;relu1&quot;</div><div class="line">  type: &quot;ReLU&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip2&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 10</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;accuracy&quot;</div><div class="line">  type: &quot;Accuracy&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;accuracy&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;loss&quot;</div><div class="line">  type: &quot;SoftmaxWithLoss&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;loss&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>参考资料：</p>
 <p>1.<a href="https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/" target="_blank" rel="external">https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/</a></p>
 ]]></content>
@@ -653,328 +827,6 @@
     
     
       <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AlexNet神经网络</title>
-    <link href="noahsnail.com/2017/03/01/2017-3-1-AlexNet%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90/"/>
-    <id>noahsnail.com/2017/03/01/2017-3-1-AlexNet神经网络分析/</id>
-    <published>2017-03-01T11:02:40.000Z</published>
-    <updated>2017-03-16T09:04:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-AlexNet神经网络介绍"><a href="#1-AlexNet神经网络介绍" class="headerlink" title="1. AlexNet神经网络介绍"></a>1. AlexNet神经网络介绍</h2><p>在描述LeNet第五层之前，先要了解ReLU的概念，因为在第五层卷积之后，卷积结果需要进行ReLU操作。</p>
-<p><strong>ReLU介绍：</strong></p>
-<p>ReLU，全称Rectified Linear Unit，它是一个非线性操作，主要是将卷积之后feature map中的负数，变为0，公式为<code>Output = max(0, Input)</code>，对feature map中的每个值都进行这个操作。卷积操作是线性操作，而我们希望卷积神经网络除了能进行线性操作之外，也能进行非线性操作。此外，因为正常情况下图像像素值的变化范围为<code>0~255</code>，不应该出现负数。ReLU操作效果如图：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot-pm.png" alt="ReLU操作"></p>
-<p>当然除了，ReLU操作，还有一些其它操作，例如tanh或sigmoid，但实践证明，ReLU在大多数情况下比其它的表现更好。ReLU之后，feature map大小不变。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      AlexNet神经网络
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Caffe的solver参数介绍</title>
-    <link href="noahsnail.com/2017/02/23/2017-2-23-Caffe%E7%9A%84solver%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D/"/>
-    <id>noahsnail.com/2017/02/23/2017-2-23-Caffe的solver参数介绍/</id>
-    <published>2017-02-23T06:41:45.000Z</published>
-    <updated>2017-03-01T11:02:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Parameters"><a href="#1-Parameters" class="headerlink" title="1. Parameters"></a>1. Parameters</h2><p><code>solver.prototxt</code>文件是用来告诉caffe如何训练网络的。<code>solver.prototxt</code>的各个参数的解释如下：</p>
-<ul>
-<li>base_lr<br>这个参数是用来表示网络的初始学习率的。这个值是一个浮点型实数。</li>
-<li>lr_policy<br>这个参数是用来表示学习率随着时间是如何变化的。值是字符串，需要加<code>&quot;&quot;</code>。学习率变化的可选参数有：<br>“step”——需要设置<code>stepsize</code>。根据<code>gamma</code>参数和<code>stepsize</code>参数来降低学习率，<code>base_lr * gamma ^ (floor(iter / stepsize))</code>。<code>iter</code>是当前迭代次数。学习率每迭代<code>stepsize</code>次变化一次。<br>“multistep”——与<code>step</code>类似，需要设置<code>stepvalue</code>，学习率根据<code>stepvalue</code>进行变化。<br>“fixed”——学习率<code>base_lr</code>保持不变。<br>“inv”——学习率变化公式为<code>base_lr * (1 + gamma * iter) ^ (- power)</code><br>“exp”——学习率变化公式为<code>base_lr * gamma ^ iter}</code><br>“poly”——学习率以多项式形式衰减，到最大迭代次数时降为0。学习率变化公式为<code>base_lr * (1 - iter/max_iter) ^ (power)</code>。<br>“sigmoid”——学习率以S型曲线形式衰减，学习率变化公式为<code>base_lr * (1 / (1 + exp(-gamma * (iter - stepsize))))</code>。</li>
-<li>gamma<br>这个参数表示学习率每次的变化程度，值为实数。</li>
-<li>stepsize<br>这个参数表示什么时候应该进行训练的下一过程，值为正整数。主要用在<code>lr_policy</code>为<code>step</code>的情况。</li>
-<li>stepvalue<br>这个参数表示什么时候应该进行训练的下一过程，值为正整数。主要用在<code>lr_policy</code>为<code>multistep</code>的情况。</li>
-<li>max_iter<br>这个参数表示训练神经网络迭代的最大次数，值为正整数。</li>
-<li>momentum<br>这个参数表示在新的计算中要保留的前面的权重数量，值为真分数，通常设为0.9。</li>
-<li>weight_decay<br>这个参数表示对较大权重的惩罚（正则化）因子。值为真分数。<br>This parameter indicates the factor of (regularization) penalization of large weights. This value is a often a real fraction.</li>
-<li>solver_mode<br>这个参数用来表示求解神经网络的模式——值为CPU or GPU。</li>
-<li>snapshot<br>这个参数用来表示每迭代多少次就应该保存snapshot的<code>model</code>和<code>solverstate</code>，值为正整数。</li>
-<li>snapshot_prefix:<br>这个参数用来表示保存snapshot时<code>model</code>和<code>solverstate</code>的前缀，值为带引号的字符串。</li>
-<li>net:<br>这个参数表示训练网络所在的位置，值为带引号的字符串。</li>
-<li>test_iter<br>这个参数表示<br>这个参数表示每个test_interval进行多少次test迭代，值为正整数。</li>
-<li>test_interval<br>这个参数表示什么时候进行数据的测试，值为正整数。</li>
-<li>display<br>这个参数用来表示什么时候将输出结果打印到屏幕上，值为正整数，表示迭代次数。</li>
-<li>type<br>这个参数表示训练神经网络采用的反向传播算法，值为带引号的字符串。可选的值有：<br>Stochastic Gradient Descent “SGD”——随机梯度下降，默认值。<br>AdaDelta “AdaDelta”——一种”鲁棒的学习率方法“，是基于梯度的优化方法。<br>Adaptive Gradient “AdaGrad”——自适应梯度方法。<br>Adam “Adam”——一种基于梯度的优化方法。<br>Nesterov’s Accelerated Gradient “Nesterov”——Nesterov的加速梯度法，作为凸优化中最理想的方法，其收敛速度非常快。<br>RMSprop “RMSProp”——一种基于梯度的优化方法。</li>
-</ul>
-<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><ul>
-<li><p>lr_policy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># lr_policy为multisetp</div><div class="line">base_lr: 0.01</div><div class="line">momentum: 0.9</div><div class="line">lr_policy: &quot;multistep&quot;</div><div class="line">gamma: 0.9</div><div class="line">stepvalue: 1000</div><div class="line">stepvalue: 2000</div><div class="line">stepvalue: 3000</div><div class="line">stepvalue: 4000</div><div class="line">stepvalue: 5000</div><div class="line"></div><div class="line"># lr_policy为step</div><div class="line">base_lr: 0.01</div><div class="line">momentum: 0.9</div><div class="line">lr_policy: &quot;step&quot;</div><div class="line">gamma: 0.9</div><div class="line">stepsize: 1000</div></pre></td></tr></table></figure>
-</li>
-<li><p>solver.prototxt</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">net: &quot;models/bvlc_alexnet/train_val.prototxt&quot;</div><div class="line"># 每次测试时进行1000次迭代</div><div class="line">test_iter: 1000</div><div class="line"># 每进行1000次训练执行一次测试</div><div class="line">test_interval: 1000</div><div class="line">base_lr: 0.01</div><div class="line">lr_policy: &quot;step&quot;</div><div class="line">gamma: 0.1</div><div class="line">stepsize: 100000</div><div class="line">display: 20</div><div class="line">max_iter: 450000</div><div class="line">momentum: 0.9</div><div class="line">weight_decay: 0.0005</div><div class="line">snapshot: 10000</div><div class="line">snapshot_prefix: &quot;models/bvlc_alexnet/caffe_alexnet_train&quot;</div><div class="line">solver_mode: GPU</div></pre></td></tr></table></figure>
-<p>参考资料</p>
-<ol>
-<li><a href="http://www.cnblogs.com/denny402/p/5074049.html" target="_blank" rel="external">http://www.cnblogs.com/denny402/p/5074049.html</a></li>
-<li><a href="https://github.com/BVLC/caffe/wiki/Solver-Prototxt" target="_blank" rel="external">https://github.com/BVLC/caffe/wiki/Solver-Prototxt</a></li>
-<li><a href="http://stackoverflow.com/questions/30033096/what-is-lr-policy-in-caffe" target="_blank" rel="external">http://stackoverflow.com/questions/30033096/what-is-lr-policy-in-caffe</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Caffe的solver参数介绍
-    
-    </summary>
-    
-      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
-    
-    
-      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux的ps命令</title>
-    <link href="noahsnail.com/2017/02/21/2017-2-21-Linux%E7%9A%84ps%E5%91%BD%E4%BB%A4/"/>
-    <id>noahsnail.com/2017/02/21/2017-2-21-Linux的ps命令/</id>
-    <published>2017-02-21T09:09:49.000Z</published>
-    <updated>2017-02-21T14:14:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-ps命令介绍及Linux进程状态介绍"><a href="#1-ps命令介绍及Linux进程状态介绍" class="headerlink" title="1. ps命令介绍及Linux进程状态介绍"></a>1. ps命令介绍及Linux进程状态介绍</h2><p>Linux中的<code>ps</code>命令是Process Status的缩写，<code>ps</code>命令用来列出系统中当前运行的那些进程。<code>ps</code>命令可以列出当前进程的运行情况（状态、时间等信息）。在Linux系统中，进程有5中状态，在<code>ps</code>命令中分别用5个大写字母表示：</p>
-<ul>
-<li>R (TASK_RUNNING)，可执行状态。<br>runnable (on run queue)，正在运行或在运行队列中等待的进程 </li>
-<li>S (TASK_INTERRUPTIBLE)，可中断的睡眠状态。<br>sleeping，处于这个状态的进程因为等待某某事件的发生（比如等待socket连接、等待信号量），而被挂起。</li>
-<li>D (TASK_UNINTERRUPTIBLE)，不可中断的睡眠状态。<br>uninterruptible sleep (usually IO)，进程处于睡眠状态，但是此刻进程是不可中断的。不可中断，指的并不是CPU不响应外部硬件的中断，而是指进程不响应异步信号。</li>
-<li>T (TASK_STOPPED or TASK_TRACED)，暂停状态或跟踪状态。<br>traced or stopped，进程处于睡眠状态，但是此刻进程是不可中断的。不可中断，指的并不是CPU不响应外部硬件的中断，而是指进程不响应异步信号。(进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行)。 </li>
-<li>Z (TASK_DEAD - EXIT_ZOMBIE)，退出状态，进程成为僵尸进程。<br>a defunct process，在这个退出过程中，进程占有的所有资源将被回收，除了task_struct结构（以及少数资源）。</li>
-</ul>
-<p>除此之外，还有<code>ps</code>命令还有一些进程状态信息：</p>
-<ul>
-<li>&lt; 优先级高的进程</li>
-<li>l 多线程状态</li>
-<li><ul>
-<li>前台进程</li>
-</ul>
-</li>
-<li>L 锁定状态</li>
-<li>N 优先级低的进程</li>
-</ul>
-<h2 id="2-ps命令用法"><a href="#2-ps命令用法" class="headerlink" title="2. ps命令用法"></a>2. ps命令用法</h2><p>默认情况下，ps命令只会显示运行在当前控制台下的属于当前用户的进程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ ps</div><div class="line">  PID TTY           TIME CMD</div><div class="line">50498 ttys000    0:00.02 -bash</div><div class="line"></div><div class="line">$ ps -f</div><div class="line">  UID   PID  PPID   C STIME   TTY           TIME CMD</div><div class="line">  501 50498 50497   0  9:27下午 ttys000    0:00.08 -bash</div><div class="line"></div><div class="line">$ ps -l</div><div class="line">  UID   PID  PPID        F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD</div><div class="line">  501 50498 50497     4006   0  31  0  2466156   1648 -      S                   0 ttys000    0:00.08 -bash</div></pre></td></tr></table></figure>
-<p><code>ps</code>命令的结果列信息表示如下：</p>
-<ul>
-<li>UID 启动进程的用户</li>
-<li>PID 进程ID</li>
-<li>PPID 进程的父进程ID</li>
-<li>C 进程生命周期中的CPU利用率</li>
-<li>TTY 运行在哪个终端</li>
-<li>TIME 进程已用CPU时间</li>
-<li>CMD 进程的命令</li>
-<li>F 内核分配给进程的标记</li>
-<li>PRI 进程的优先级</li>
-<li>NI 谦让度值用来参与决定优先级</li>
-<li>SZ 如果进程被换出，所需要的空间大小</li>
-<li>WCHAN 进程休眠的内核函数的地址</li>
-<li>ADDR 进程的内存地址</li>
-<li>S 进程的状态，（O表示正在运行，S表示休眠，R表示运行，Z代表僵化，T代表停止）</li>
-</ul>
-<p>ps命令的常用参数有：</p>
-<ul>
-<li>-e，-A 显示所有进程</li>
-<li>-f 显示完整格式的输出</li>
-<li>-l 显示长列表</li>
-<li>-a，所有进程，加上-x参数会显示没有控制终端的进程</li>
-<li>-u username，显示指定用户的进程，例如<code>ps -u ltc</code></li>
-<li>-aux 按照CPU或者内存用量来筛选进程，例如<code>ps -aux --sort -pcpu</code>或<code>ps -aux --sort -pmem</code></li>
-<li>-C cmdlist，显示包含在cmdlist列表中的进程，例如<code>ps -C test</code></li>
-<li>-L 显示进程中的线程，例如<code>ps -L 123</code>，123为进程ID</li>
-<li>-j 显示任务信息</li>
-<li>-H 用层级显示进程，树状结构</li>
-</ul>
-<p>ps命令参数还有很多，根据需要自己查询吧。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Linux的ps命令
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spark-submit介绍</title>
-    <link href="noahsnail.com/2017/02/21/2017-2-21-spark-submit%E4%BB%8B%E7%BB%8D/"/>
-    <id>noahsnail.com/2017/02/21/2017-2-21-spark-submit介绍/</id>
-    <published>2017-02-21T03:28:56.000Z</published>
-    <updated>2017-02-22T07:09:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-spark-submit介绍"><a href="#1-spark-submit介绍" class="headerlink" title="1. spark-submit介绍"></a>1. spark-submit介绍</h2><p><code>spark-submit</code>脚本通常位于<code>/usr/local/spark/bin</code>目录下，可以用<code>which spark-submit</code>来查看它所在的位置，<code>spark-submit</code>用来启动集群中的应用，它使用统一的提交接口支持各种类型的集群服务器。为了将应用发布到集群中，通常会将应用打成<code>.jar</code>包，在运行<code>spark-submit</code>时将<code>jar</code>包当做参数提交。</p>
-<h2 id="2-spark-submit参数"><a href="#2-spark-submit参数" class="headerlink" title="2. spark-submit参数"></a>2. spark-submit参数</h2><p><code>spark-submit</code>脚本使用时有很多启动参数，启动参数说明如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Parameters</th>
-<th style="text-align:left">Description</th>
-<th style="text-align:left">Demo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">--master</td>
-<td style="text-align:left">集群master的URL，可以是spark://host:port, mesos://host:port, yarn, yarn-cluster,yarn-client, local</td>
-<td style="text-align:left"><code>--master yarn</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--class</td>
-<td style="text-align:left">主类的名称，包括完整的包路径。</td>
-<td style="text-align:left"><code>--class com.ltc.test /home/ltc/spark-test.jar</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--conf</td>
-<td style="text-align:left">任意的Spark配置属性，格式<code>key=value</code>，如果值包含空格，可以加引号<code>“key=value”</code>。</td>
-<td style="text-align:left"><code>--conf spark.cores.max=2</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--num-executors</td>
-<td style="text-align:left">该参数用于设置Spark作业总共要用多少个Executor进程来执行。Driver在向YARN集群管理器申请资源时，YARN集群管理器会尽可能按照你的设置来在集群的各个工作节点上，启动相应数量的Executor进程。</td>
-<td style="text-align:left"><code>--num-executors 100</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--executor-memory</td>
-<td style="text-align:left">该参数用于设置每个Executor进程的内存。Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。建议每个Executor进程的内存设置4G~8G较为合适。看看资源队列的最大内存限制是多少，num-executors乘以executor-memory，就代表了你的Spark作业申请到的总内存量</td>
-<td style="text-align:left"><code>--executor-memory 4G</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--executor-cores</td>
-<td style="text-align:left">该参数用于设置每个Executor进程的CPU core数量。这个参数决定了每个Executor进程并行执行task线程的能力。因为每个CPU core同一时间只能执行一个task线程，因此每个Executor进程的CPU core数量越多，越能够快速地执行完分配给自己的所有task线程。Executor的CPU core数量设置为2~4个较为合适。</td>
-<td style="text-align:left"><code>--executor-cores 4</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--driver-memory</td>
-<td style="text-align:left">Driver 程序运行时需要的内存， 默认为512M。</td>
-<td style="text-align:left"><code>--driver-memory 1G</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--name</td>
-<td style="text-align:left">应用名称</td>
-<td style="text-align:left"><code>--name application</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--conf spark.default.parallelism</td>
-<td style="text-align:left">该参数用于设置每个stage的默认task数量。这个参数极为重要，如果不设置可能会直接影响你的Spark作业性能。建议：Spark作业的默认task数量多一点。不设置这个参数是个错误，默认情况下，Spark根据底层HDFS的block数量来设置task的数量，默认是一个HDFS block对应一个task。通常来说，Spark默认设置的数量是偏少的（比如就几十个task），如果task数量偏少的话，就会导致前面设置的Executor参数作用不大。无论Executor进程有多少个，内存和CPU有多大，但是task只有1个或者10个，那么90%的Executor进程可能根本就没有task执行，会白白浪费了资源！Spark官网建议的设置原则是，设置该参数为num-executors * executor-cores的2~3倍较为合适，比如Executor的总CPU core数量为300个，那么设置1000个task是可以的，此时可以充分地利用Spark集群的资源。</td>
-<td style="text-align:left"><code>--conf spark.default.parallelism=100</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--conf spark.storage.memoryFraction</td>
-<td style="text-align:left">该参数用于设置RDD持久化数据在Executor内存中能占的比例，默认是0.6。也就是说，默认Executor 60%的内存，可以用来保存持久化的RDD数据。根据你选择的不同的持久化策略，如果内存不够时，可能数据就不会持久化，或者数据会写入磁盘。建议：如果Spark作业中，有较多的RDD持久化操作，该参数的值可以适当提高一些，保证持久化的数据能够容纳在内存中。避免内存不够缓存所有的数据，导致数据只能写入磁盘中，降低了性能。但是如果Spark作业中的shuffle类操作比较多，而持久化操作比较少，那么这个参数的值适当降低一些比较合适。此外，如果发现作业由于频繁的gc导致运行缓慢（通过spark web ui可以观察到作业的gc耗时），意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</td>
-<td style="text-align:left"><code>--conf spark.storage.memoryFraction=0.5</code></td>
-</tr>
-<tr>
-<td style="text-align:left">--conf spark.shuffle.memoryFraction</td>
-<td style="text-align:left">该参数用于设置shuffle过程中一个task拉取到上个stage的task的输出后，进行聚合操作时能够使用的Executor内存的比例，默认是0.2。也就是说，Executor默认只有20%的内存用来进行该操作。shuffle操作在进行聚合时，如果发现使用的内存超出了这个20%的限制，那么多余的数据就会溢写到磁盘文件中去，此时就会极大地降低性能。建议：如果Spark作业中的RDD持久化操作较少，shuffle操作较多时，建议降低持久化操作的内存占比，提高shuffle操作的内存占比比例，避免shuffle过程中数据过多时内存不够用，必须溢写到磁盘上，降低了性能。此外，如果发现作业由于频繁的gc导致运行缓慢，意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</td>
-<td style="text-align:left"><code>--conf spark.shuffle.memoryFraction=0.3</code></td>
-</tr>
-</tbody>
-</table>
-<p>参考资料：</p>
-<ol>
-<li><a href="http://www.jianshu.com/p/9d5234185d68" target="_blank" rel="external">http://www.jianshu.com/p/9d5234185d68</a></li>
-<li><a href="http://colobu.com/2014/12/09/spark-submitting-applications/" target="_blank" rel="external">http://colobu.com/2014/12/09/spark-submitting-applications/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      spark-submit介绍
-    
-    </summary>
-    
-      <category term="Spark" scheme="noahsnail.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="noahsnail.com/tags/Spark/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Python合并lmdb文件</title>
-    <link href="noahsnail.com/2017/02/21/2017-2-21-%E4%BD%BF%E7%94%A8Python%E5%90%88%E5%B9%B6lmdb%E6%96%87%E4%BB%B6/"/>
-    <id>noahsnail.com/2017/02/21/2017-2-21-使用Python合并lmdb文件/</id>
-    <published>2017-02-21T03:11:49.000Z</published>
-    <updated>2017-02-21T03:23:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>由于Caffe使用的存储图像的数据库是lmdb，因此有时候需要对lmdb文件进行操作，本文主要讲解如何用Python合并lmdb文件。没有lmdb支持的，需要用pip命令安装。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install lmdb</div></pre></td></tr></table></figure>
-<p>代码及注释如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding=utf-8</span></div><div class="line"><span class="comment"># filename: merge_lmdb.py</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> lmdb</div><div class="line"></div><div class="line"><span class="comment"># 将两个lmdb文件合并成一个新的lmdb</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_lmdb</span><span class="params">(lmdb1, lmdb2, result_lmdb)</span>:</span></div><div class="line"></div><div class="line">	<span class="keyword">print</span> <span class="string">'Merge start!'</span></div><div class="line"></div><div class="line">	<span class="comment"># env代表Environment, txn代表Transaction</span></div><div class="line"></div><div class="line">	<span class="comment"># 打开lmdb文件，读模式</span></div><div class="line">	env_1 = lmdb.open(lmdb1)</div><div class="line">	env_2 = lmdb.open(lmdb2)</div><div class="line"></div><div class="line">	<span class="comment"># 创建事务</span></div><div class="line">	txn_1 = env_1.begin()</div><div class="line">	txn_2 = env_2.begin()</div><div class="line"></div><div class="line">	<span class="comment"># 打开数据库</span></div><div class="line">	database_1 = txn_1.cursor()</div><div class="line">	database_2 = txn_2.cursor()</div><div class="line"></div><div class="line">	<span class="comment"># 打开lmdb文件，写模式，</span></div><div class="line">	env_3 = lmdb.open(result_lmdb, map_size=int(<span class="number">1e12</span>))</div><div class="line">	txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	count = <span class="number">0</span></div><div class="line">	<span class="comment"># 遍历数据库</span></div><div class="line">	<span class="keyword">for</span> (key, value) <span class="keyword">in</span> database_1:</div><div class="line">		<span class="comment"># 将数据放到结果数据库事务中</span></div><div class="line">	    txn_3.put(key, value)</div><div class="line">	    count++</div><div class="line">	    <span class="keyword">if</span>(count % <span class="number">1000</span> == <span class="number">0</span>):</div><div class="line">	    	<span class="comment"># 将数据写入数据库，必须的，否则数据不会写入到数据库中</span></div><div class="line">	    	txn_3.commit()</div><div class="line">	    	count = <span class="number">0</span></div><div class="line">	    	txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(count % <span class="number">1000</span> != <span class="number">0</span>):</div><div class="line">		txn_3.commit()</div><div class="line">	    count = <span class="number">0</span></div><div class="line">	    txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (key, value) <span class="keyword">in</span> database_2:</div><div class="line">	    txn_3.put(key, value)</div><div class="line">	    <span class="keyword">if</span>(count % <span class="number">1000</span> == <span class="number">0</span>):</div><div class="line">	    	txn_3.commit()</div><div class="line">	    	count = <span class="number">0</span></div><div class="line">	    	txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	<span class="keyword">if</span>(count % <span class="number">1000</span> != <span class="number">0</span>):</div><div class="line">		txn_3.commit()</div><div class="line">	    count = <span class="number">0</span></div><div class="line">	    txn_3 = env_3.begin(write=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	<span class="comment"># 关闭lmdb</span></div><div class="line">	env_1.close()</div><div class="line">	env_2.close()</div><div class="line">	env_3.close()</div><div class="line"></div><div class="line">	<span class="keyword">print</span> <span class="string">'Merge success!'</span></div><div class="line"></div><div class="line">	<span class="comment"># 输出结果lmdb的状态信息，可以看到数据是否合并成功</span></div><div class="line">	<span class="keyword">print</span> env_3.stat()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    fr = open(<span class="string">'lmdb.txt'</span>)</div><div class="line">    <span class="comment"># lmdb1的目录</span></div><div class="line">    lmdb1 = fr.readline().strip()</div><div class="line">    <span class="comment"># lmdb2的目录</span></div><div class="line">    lmdb2 = fr.readline().strip()</div><div class="line">    <span class="comment"># result lmdb的目录</span></div><div class="line">    result_lmdb = fr.readline().strip()</div><div class="line">    fr.close()</div><div class="line">    merge_lmdb(lmdb1, lmdb2, result_lmdb)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      使用Python合并lmdb文件
-    
-    </summary>
-    
-      <category term="Python" scheme="noahsnail.com/categories/Python/"/>
-    
-    
-      <category term="lmdb" scheme="noahsnail.com/tags/lmdb/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux的du命令</title>
-    <link href="noahsnail.com/2017/02/20/2017-2-20-Linux%E7%9A%84du%E5%91%BD%E4%BB%A4/"/>
-    <id>noahsnail.com/2017/02/20/2017-2-20-Linux的du命令/</id>
-    <published>2017-02-20T10:09:21.000Z</published>
-    <updated>2017-02-21T02:55:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><code>du</code>命令可以显示某个特定的目录的磁盘使用情况。可以用来判断系统某个目录下是否存在超大文件。默认情况下，<code>du</code>命令会显示当前目录下所有的文件、目录和子目录的磁盘使用情况，它以磁盘的块为单位来显示每个文件或目录占了多大存储。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ du</div><div class="line">264	./Chapter14</div><div class="line">16	./Chapter15/dir.C7JEUx</div><div class="line">224	./Chapter15</div><div class="line">136	./Chapter16</div><div class="line">96	./Chapter17</div><div class="line">792	.</div></pre></td></tr></table></figure>
-<p>每行开始的地方是文件或目录所占的磁盘块数，列表目录层级是自底向上，按文件、子目录、目录逐级向上。<code>du</code>命令的参数如下：</p>
-<ul>
-<li>-c，显示所有已列出文件的大小</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ du -c</div><div class="line">264	./Chapter14</div><div class="line">16	./Chapter15/dir.C7JEUx</div><div class="line">224	./Chapter15</div><div class="line">136	./Chapter16</div><div class="line">96	./Chapter17</div><div class="line">792	.</div><div class="line">792	total</div></pre></td></tr></table></figure>
-<ul>
-<li>-h，按人类可读的格式输出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ du -h</div><div class="line">132K	./Chapter14</div><div class="line">8.0K	./Chapter15/dir.C7JEUx</div><div class="line">112K	./Chapter15</div><div class="line"> 68K	./Chapter16</div><div class="line"> 48K	./Chapter17</div><div class="line">396K	.</div></pre></td></tr></table></figure>
-<ul>
-<li>-s，显示每个输出参数的总计</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ du -s</div><div class="line">792	.</div></pre></td></tr></table></figure>
-<ul>
-<li>查看当前目录各个文件所占的大小，不递归子目录，<code>*</code>是通配符，即显示当前目录下每个文件的大小</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ du -sh *</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Linux的du命令
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
     
   </entry>
   
