@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="统计学习方法(一)——统计学习方法概论">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/supervised-learning.png">
-<meta property="og:updated_time" content="2017-03-24T06:19:05.000Z">
+<meta property="og:updated_time" content="2017-04-01T10:01:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="统计学习方法(一)——统计学习方法概论">
 <meta name="twitter:description" content="统计学习方法(一)——统计学习方法概论">
@@ -314,8 +314,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-03-24T14:19:05+08:00">
-              2017-03-24
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-01T18:01:16+08:00">
+              2017-04-01
             </time>
             
           </span>
@@ -445,6 +445,20 @@
 <p>在假设空间、损失函数以及训练数据集确定的情况下，经验风险函数就可以确定。经验风险最小化（empirical risk minimization，ERM）策略认为，经验风险最小的模型就是最优的模型。求解经验最小化最优模型就是求解最优化问题：</p>
 <p>$$^{min} _{f \in F} \frac {1} {N}  \sum_{i=1}^N L(y_i, f(x_i))$$</p>
 <p>当样本容量足够大时，经验风险最小化能保证有很好的学习效果，在现实中被广泛采用。极大似然估计（maximum likelihood estimation）就是经验风险最小化的一个例子。当模型是条件概率分布时，损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。但是，当样本容量很小时，经验风险最小化未必会很好，有可能产生“过拟合”现象。</p>
+<p>结构风险最小化（structural risk minimization，SRM）是为了防止过拟合而提出来的策略，结构化风险最小化等价于正则化（regularization）。结构风险在经验风险的基础上加上了表示模型复杂度的正则项（regularizer）或惩罚项（penalty term）。在假设空间、损失函数和训练数据集确定的情况下，结构风险定义为：</p>
+<p>$$R_{srm}(f)=\frac {1} {N} \sum_{i=1}^N L(y_i,f(x_i)) + \lambda J(f) $$</p>
+<p>$J(f)$为模型的复杂度，模型f越复杂，J(f)越大。$\lambda&gt;=0$是权衡经验风险和模型复杂度的系数。</p>
+<p>结构风险最小化策略认为，结构风险最小的模型就是最优的模型。求解最优模型就是求解最优化问题：</p>
+<p>$$^{min} _{f \in F} \frac {1} {N}  \sum_{i=1}^N L(y_i, f(x_i)) + \lambda J(f) $$</p>
+<p>这样，监督学习问题变成了经验风险或结构风险的最优化问题。</p>
+<h3 id="1-3-3算法"><a href="#1-3-3算法" class="headerlink" title="1.3.3算法"></a>1.3.3算法</h3><p>算法是指学习模型的具体计算方法。统计学习基于训练数据集，根据学习策略，从假设空间中选取最优模型，然后考虑用什么计算方法求解最有模型。统计学习问题变为了最优化问题，统计学习的算法变味求解最优化问题的算法。如何保证找到全局最优解，并使求解过程非常高效，就称为一个重要问题。</p>
+<h2 id="1-4-模型评估与模型选择"><a href="#1-4-模型评估与模型选择" class="headerlink" title="1.4 模型评估与模型选择"></a>1.4 模型评估与模型选择</h2><h3 id="1-4-1-训练误差与测试误差"><a href="#1-4-1-训练误差与测试误差" class="headerlink" title="1.4.1 训练误差与测试误差"></a>1.4.1 训练误差与测试误差</h3><p>当损失函数给定时，基于损失函数的模型的训练误差和模型的测试误差就自然称为学习方法评估的标准。假设学习到的模型为$ Y=f\hat (X)$，训练误差是模型关于训练数据集的平均损失：</p>
+<p>$$R_{emp}(f \hat)=\frac {1} {N} \sum_{i=1}^N L(y_i,f \hat(x_i)) $$</p>
+<p>测试误差是关于测试数据集的平均损失：</p>
+<p>$$e_{test}(f \hat)=\frac {1} {N \prime} \sum_{i=1}^{N\prime} L(y_i,f \hat(x_i)) $$</p>
+<p>N和$N\prime$分别为训练数据集和测试数据集的样本容量。</p>
+<p>通常将学习方法对未知数据的预测能力称为泛化能力（generalization ability）。</p>
+<h3 id="1-4-1-过拟合和模型选择"><a href="#1-4-1-过拟合和模型选择" class="headerlink" title="1.4.1 过拟合和模型选择"></a>1.4.1 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。</p>
 
       
     </div>
@@ -632,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-统计学习方法概论"><span class="nav-number">1.</span> <span class="nav-text">1. 统计学习方法概论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-统计学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 统计学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-基本概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-问题的形式化"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 问题的形式化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-统计学习三要素"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 统计学习三要素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 策略</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-统计学习方法概论"><span class="nav-number">1.</span> <span class="nav-text">1. 统计学习方法概论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-统计学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 统计学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-基本概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-问题的形式化"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 问题的形式化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-统计学习三要素"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 统计学习三要素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-模型评估与模型选择"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 模型评估与模型选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-训练误差与测试误差"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 训练误差与测试误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-过拟合和模型选择"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.1 过拟合和模型选择</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
