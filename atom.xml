@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-03-24T01:30:23.000Z</updated>
+  <updated>2017-04-07T07:05:53.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ROC，AUC，Precision，Recall，F1的介绍与计算</title>
+    <link href="noahsnail.com/2017/04/06/2017-4-6-ROC%E5%92%8CAUC%E6%9B%B2%E7%BA%BF%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E8%AE%A1%E7%AE%97/"/>
+    <id>noahsnail.com/2017/04/06/2017-4-6-ROC和AUC曲线的介绍与计算/</id>
+    <published>2017-04-06T03:40:00.000Z</published>
+    <updated>2017-04-07T07:05:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><h3 id="1-1-ROC与AUC"><a href="#1-1-ROC与AUC" class="headerlink" title="1.1 ROC与AUC"></a>1.1 ROC与AUC</h3><p>ROC曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，ROC曲线称为受试者工作特征曲线 （receiver operating characteristic curve，简称ROC曲线），又称为感受性曲线（sensitivity curve），AUC（Area Under Curve）是ROC曲线下的面积。在计算ROC曲线之前，首先要了解一些基本概念。在二元分类模型的预测结果有四种，以判断人是否有病为例：</p>
+<ul>
+<li>真阳性（TP）：诊断为有，实际上也有病。</li>
+<li>伪阳性（FP）：诊断为有，实际却没有病。</li>
+<li>真阴性（TN）：诊断为没有，实际上也没有病。</li>
+<li>伪阴性（FN）：诊断为没有，实际却有病。</li>
+</ul>
+<p>其关系如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/roc.png" alt="TP、FP、TN、FN"></p>
+<p>ROC空间将伪阳性率（FPR）定义为X轴，真阳性率（TPR）定义为Y轴。TPR：在所有实际为阳性的样本中，被正确地判断为阳性之比率，$TPR=\frac {TP} {TP+FN}$ 。FPR：在所有实际为阴性的样本中，被错误地判断为阳性之比率，$FPR=\frac {FP} {FP+TN}$。</p>
+<h3 id="1-2-Precision、Recall与F1"><a href="#1-2-Precision、Recall与F1" class="headerlink" title="1.2 Precision、Recall与F1"></a>1.2 Precision、Recall与F1</h3><p>对于二分类问题另一个常用的评价指标是精确率（precision）与召回率（recall）以及F1值。精确率表示在预测为阳性的样本中，真正有阳性的样本所占的比例。精确率的定义为$P=\frac {TP} {TP+FP}$。召回率表示所有真正呈阳性的样本中，预测为阳性所占的比例。召回率的定义为$R=\frac {TP} {TP+FN}$，F1值是精确率和召回率的调和均值，公式为$F1=\frac {2PR} {P+R}$。精确率和召回率都高时，F1值也会高。通常情况下，Precision与Recall是相互矛盾的。</p>
+<h2 id="2-曲线介绍"><a href="#2-曲线介绍" class="headerlink" title="2. 曲线介绍"></a>2. 曲线介绍</h2><h3 id="2-1-ROC曲线"><a href="#2-1-ROC曲线" class="headerlink" title="2.1 ROC曲线"></a>2.1 ROC曲线</h3><p>ROC曲线坐标系如下图所示，虚线为随机猜测的概率，即猜对跟猜错的概率是一样的。理想情况下，我们是希望FPR为0，没有一个假阳性，TPR为1，即全为真阳性，此时所有样本都被正确分类，点位于左上角(0,1)位置处，没有一个分错的数据，这是最完美的情况，实际情况中基本不可能。如果点位于虚线下方，例如C点，说明分类错误的多，分类正确的少，此时不是我们想要的。如果点位于虚线上方，例如$C \prime$点，说明分类错误的少，分类正确的多，此时是我们想要的，因此我们希望ROC曲线尽可能的靠近左上角。对于一个特定的分类器和测试数据集，只能得到一个分类结果，即ROC曲线坐标系中的一点，那么如何得到一条ROC曲线呢？分类问题中我们经常会得到某个样本是正样本的概率，根据概率值与阈值的比较来判断某个样本是否是正样本。在不同的阈值下可以得到不同的TPR和FPR值，即可以得到一系列的点，将它们在图中绘制出来，并依次连接起来就得到了ROC曲线，阈值取值越多，ROC曲线越平滑。</p>
+<p>AUC为ROC曲线下的面积，它的面积不会大于1，由于ROC曲线一般都处于直线y=x的上方，因此AUC的取值范围通常在(0.5，1)之间。由于ROC曲线不能很好的看出分类器模型的好坏，因此采用AUC值来进行分类器模型的评估与比较。通常AUC值越大，分类器性能越好。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/700px-ROC_space-2.png" alt="ROC曲线"></p>
+<p>在基本概念中我们提到了精确率、召回率以及F1值，既然有它们作为二分类的评价指标，为什么还要使用ROC和AUC呢？这是因为ROC曲线有个很好的特性：当测试集中的正负样本分布发生变化时，即正负样本数量相差较大时，ROC曲线仍能保持不变。实际数据集中经常会出现样本数量不平衡现象，并且测试数据中的正负样本的分布也可能随着时间发生变化。下图是两个分类器模型（算法）的ROC曲线比较图：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/roc_com.png" alt="ROC曲线比较"></p>
+<h3 id="2-2-P-R曲线"><a href="#2-2-P-R曲线" class="headerlink" title="2.2 P-R曲线"></a>2.2 P-R曲线</h3><p>在P-R曲线中，Precision为横坐标，Recall为纵坐标。在ROC曲线中曲线越凸向左上角约好，在P-R曲线中，曲线越凸向右上角越好。P-R曲线判断模型的好坏要根据具体情况具体分析，有的项目要求召回率较高、有的项目要求精确率较高。P-R曲线的绘制跟ROC曲线的绘制是一样的，在不同的阈值下得到不同的Precision、Recall，得到一系列的点，将它们在P-R图中绘制出来，并依次连接起来就得到了P-R图。两个分类器模型（算法）P-R曲线比较的一个例子如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/p-r.png" alt="P-R曲线比较"></p>
+<h3 id="2-3-ROC与P-R对比"><a href="#2-3-ROC与P-R对比" class="headerlink" title="2.3 ROC与P-R对比"></a>2.3 ROC与P-R对比</h3><p>从公式计算中可以看出，ROC曲线中真阳性率TPR的计算公式与P-R曲线中的召回率Recall计算公式是一样的，即二者是同一个东西在不同环境下的不同叫法。当正负样本差距不大的情况下，ROC曲线和P-R的趋势是差不多的，但是当负样本很多的时候，ROC曲线效果依然较好，但是P-R曲线效果一般。</p>
+<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><h3 id="3-1-ROC曲线"><a href="#3-1-ROC曲线" class="headerlink" title="3.1 ROC曲线"></a>3.1 ROC曲线</h3>]]></content>
+    
+    <summary type="html">
+    
+      ROC，AUC，Precision，Recall，F1的介绍与计算
+    
+    </summary>
+    
+      <category term="机器学习" scheme="noahsnail.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode109——Convert Sorted List to Binary Search Tree</title>
@@ -650,7 +692,7 @@
     <link href="noahsnail.com/2017/03/08/2017-3-8-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E6%A6%82%E8%AE%BA/"/>
     <id>noahsnail.com/2017/03/08/2017-3-8-统计学习方法(一)——统计学习方法概论/</id>
     <published>2017-03-08T01:12:48.000Z</published>
-    <updated>2017-04-01T10:01:16.000Z</updated>
+    <updated>2017-04-07T08:21:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="1-统计学习方法概论"><a href="#1-统计学习方法概论" class="headerlink" title="1. 统计学习方法概论"></a>1. 统计学习方法概论</h1><p>本文是统计学习方法（李航）第一章的学习总结。</p>
@@ -729,7 +771,44 @@
 <p>$$e_{test}(f \hat)=\frac {1} {N \prime} \sum_{i=1}^{N\prime} L(y_i,f \hat(x_i)) $$</p>
 <p>N和$N\prime$分别为训练数据集和测试数据集的样本容量。</p>
 <p>通常将学习方法对未知数据的预测能力称为泛化能力（generalization ability）。</p>
-<h3 id="1-4-1-过拟合和模型选择"><a href="#1-4-1-过拟合和模型选择" class="headerlink" title="1.4.1 过拟合和模型选择"></a>1.4.1 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。</p>
+<h3 id="1-4-2-过拟合和模型选择"><a href="#1-4-2-过拟合和模型选择" class="headerlink" title="1.4.2 过拟合和模型选择"></a>1.4.2 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。模型选择时，不仅要考虑对已知数据的预测能力，而且还要考虑对未知数据的预测能力。下图展示了训练误差、测试误差与模型复杂度之间的关系。当模型复杂度增大时，训练误差会逐渐减少并趋向于0；而测试误差会先减少，达到最小值后又增大。当选择的模型复杂度过大时，过拟合现象就会发生。学习时要防止过拟合，进行最优的模型选择，即选择模型复杂度适当的模型，以使测试误差达到最小。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/relations.png" alt="训练误差、测试误差与模型复杂度之间的关系"></p>
+<h2 id="1-5-正则化与交叉验证"><a href="#1-5-正则化与交叉验证" class="headerlink" title="1.5 正则化与交叉验证"></a>1.5 正则化与交叉验证</h2><h3 id="1-5-1-正则化"><a href="#1-5-1-正则化" class="headerlink" title="1.5.1 正则化"></a>1.5.1 正则化</h3><p>模型选择的方法是正则化（regularization）。正则化是结构风险最小化策略的实现，是在经验风险上加上一个正则化项（regularizer）或惩罚项（penalty term）。正则化项一般是模型复杂度的单调递增函数，模型越复杂，正则化值就越大。正则化一般具有以下形式：</p>
+<p>$$^{min}_{f \in F } \frac {1} {N} \sum_{i=1}^{N} L(y_i,f(x_i)) + \lambda J(f)$$</p>
+<p>其中，第一项是经验风险，第二项是正则化项，$\lambda &gt;= 0$为调整两者之间关系的系数。</p>
+<p>正则化项可以取不同的形式，回归问题中，损失函数是平方损失，正则化项可以是参数向量的$L_2$范数：</p>
+<p>$$L(w)=\frac {1} {N} \sum_{i=1}^{N} (f(x_i;w) - y_i)^2 + \frac {\lambda} {2} ||w||^2$$</p>
+<p>$||w||$表示参数向量w的$L_2$范数。正则化项也可以是参数向量的$L_1$范数：</p>
+<p>$$L(w)=\frac {1} {N} \sum_{i=1}^{N} (f(x_i;w) - y_i)^2 + \frac {\lambda} {2} ||w||_1$$</p>
+<p>$||w|_1$表示参数向量w的$L_1$范数。</p>
+<p>正则化的作用是选择经验风险和模型复杂度同时较小的模型。正则化符合奥卡姆剃刀原理：在所有可能选择的模型中，应该选择能够很好的解释已知数据并且十分简单的模型。从贝叶斯估计的角度来看，正则化项对应模型的先验概率，可以假设复杂的模型具有较小的先验概率，简单的模型具有较大的先验概率。</p>
+<h3 id="1-5-2-交叉验证"><a href="#1-5-2-交叉验证" class="headerlink" title="1.5.2 交叉验证"></a>1.5.2 交叉验证</h3><p>另一种常用的模型选择方法是交叉验证（cross validation）。如果给定的样本数据充足，进行模型选择的一种简单方法是随机的将数据分为训练集（training set）、测试集（test set）和验证集（validation set）。训练集用来训练模型，测试集用于模型的评估，验证集用于模型的选择。在学习到的模型中，选择对验证集有最小预测误差的模型。当数据集不充足时，可以采用交叉验证的方法。交叉验证的基本思想是重复的使用数据；吧核定的数据分为训练集和测试集，在此基础上进行反复的训练、测试和模型选择。</p>
+<p><strong>1.简单交叉验证</strong></p>
+<p>简单交叉验证方法是：首先随机地将数据分为两部分——训练集(70%)和测试集(30%)；然后用训练集在各种条件下训练得到不同的模型，在测试集上评价各个模型的测试误差，选择测试误差最小的模型。</p>
+<p><strong>2.S折交叉验证</strong></p>
+<p>应用最多的是S折交叉验证（S-fold cross validation），首先随机地将数据分为S个互不相交的大小相同的子集，然后利用$S-1$个子集的数据进行训练，用剩下的子集进行测试；重复上述过程，最后选出S次测试中平均测试误差最小的模型。</p>
+<p><strong>3.留一交叉验证</strong></p>
+<p>S折交叉验证特殊情况是$S=N$，称为留一交叉验证（leave-one cross validation），往往在数据缺乏的情况下使用。</p>
+<h2 id="1-6-泛化能力"><a href="#1-6-泛化能力" class="headerlink" title="1.6 泛化能力"></a>1.6 泛化能力</h2><h3 id="1-6-1-泛化误差"><a href="#1-6-1-泛化误差" class="headerlink" title="1.6.1 泛化误差"></a>1.6.1 泛化误差</h3><p>学习方法的泛化能力（generalization ability）是指由该方法学习到的模型对未知数据的预测能力，是学习方法本质上最重要的性质。通常采用测试误差来评价学习方法的泛化能力，但这种方法依赖于测试数据，但数据较少时评价结果有可能不可靠。统计学试图从理论上对学习方法的泛化能力进行分析。</p>
+<p>首先给出泛化误差的定义，如果学到的模型是$\hat f$，那么用这个模型对未知数据预测的误差即为泛化误差（generalization error）</p>
+<p>$$R_{exp}(\hat f)=E_p[L(Y,\hat f(X))] = \int_{x*y}L(y,\hat f(x))P(x,y)dxdy$$</p>
+<p>泛化误差反映了学习方法的泛化能力，泛化误差就是所学习到的模型的期望风险。</p>
+<h3 id="1-6-2-泛化误差上界"><a href="#1-6-2-泛化误差上界" class="headerlink" title="1.6.2 泛化误差上界"></a>1.6.2 泛化误差上界</h3><p>学习方法的泛化能力分析往往是通过研究误差的概率上界进行的，简称为泛化误差上界（generalization error bound）。泛化误差上界通常具有以下性质：它是样本容量的函数，当样本容量增加时，泛化上界趋向于0；它是假设空间容量的函数，假设空间容量越大，模型就越难学，泛化误差上界就越大。</p>
+<h2 id="1-7-生成模型和判别模型"><a href="#1-7-生成模型和判别模型" class="headerlink" title="1.7 生成模型和判别模型"></a>1.7 生成模型和判别模型</h2><p>监督学习方法可分为生成方法（generative approach）和判别方法（discriminative approach）。所学到的模型分别称为生成模型（generative model）和判别模型（discriminative model）。生成方法由数据学习联合概率分布P(X,Y)，然后求出条件概率分布P(Y|X)作为预测的模型，即生成模型：</p>
+<p>$$P(Y|X)=\frac {P(X,Y)} {P(X)}$$</p>
+<p>之所以称为生成方法，是因为模型表示了给定输入X产生输出Y的生成关系。典型的生成模型有：朴素贝叶斯法和隐马尔可夫模型。</p>
+<p>判别方法由数据直接学习决策函数f(X)或者条件概率分布P(Y|X)作为预测的模型，即判别模型。判别方法关心的是对给定的输入X，应该预测什么样的输出Y。典型的判别模型包括：k近邻法、感知机、决策树、逻辑回归模型、最大熵模型、支持向量机、提升方法和条件随机场。</p>
+<p>在监督学习中，生成方法和判别方法各有优缺点，适合于不同条件下的学习问题。生成方法的特点：生成方法可以还原出联合概率分布P(X,Y)，而判别方法则不能；生成方法的收敛速度更快，当存在隐变量时，仍可以使用生成方法，此时判别方法不可用。判别方法的特点：判别方法直接学习的是条件概率P(Y|X)或决策函数f(X)，直接面对预测，往往学习的准确率更高；由于直接学习P(Y|X)或f(X)，可以对数据进行各种程度上的抽象、定义特征并使用特征，因此可以简化学习问题。</p>
+<h2 id="1-8-分类问题"><a href="#1-8-分类问题" class="headerlink" title="1.8 分类问题"></a>1.8 分类问题</h2><p>分类是监督学习的一个核心问题。在监督学习中，当输出变量Y取有限个离散值时，预测问题便称为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier）。分类器对新的输入进行输出的预测（prediction），称为分类（classification）。分类的类别为多个时，称为多分类问题。分类问题包括学习和分类两个过程。学习过程中，根据已知的训练数据集学习一个分类器，分类过程中，根据学习的分类器对新实例进行分类。分类问题如图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/classity_problem.png" alt="分类问题"></p>
+<p>精确率的定义为$P=\frac {TP} {TP+FP}$，召回率的定义为$R=\frac {TP} {TP+FN}$，F1值是精确率和召回率的调和均值，公式为$F1=\frac {2PR} {P+R}$。精确率和召回率都高时，F1值也会高。</p>
+<h2 id="1-9-标注问题"><a href="#1-9-标注问题" class="headerlink" title="1.9 标注问题"></a>1.9 标注问题</h2><p>标注（tagging）也是一个监督学习问题，可以认为标注问题是分类问题的一个推广，标注问题的输入是一个观测序列，输出是一个标记序列或状态序列。标注问题的目标在于学习一个模型，使它能够对观测序列给出标记序列作为预测。标注问题分为学习和标记过程。学习系统基于训练数据集构建一个模型，表示为条件概率，标注系统按照学习到的条件概率分布模型，对新的输入观测序列找到相应的输出标记序列。标注问题如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/tagging.png" alt="标注问题"></p>
+<p>评价标注模型的指标与评价分类模型的指标一样，常用的有标注准确率、精确率和召回率。标注常用的统计学习方法有：隐马尔可夫模型、条件随机场。标注问题在信息抽取、自然语言处理等领域被广泛应用，是这些领域的基本问题。</p>
+<h2 id="1-10-回归问题"><a href="#1-10-回归问题" class="headerlink" title="1.10 回归问题"></a>1.10 回归问题</h2><p>回归（regression）是监督学习的另一个重要问题。回归用于预测输入变量（自变量）和输出变量（因变量）之间的关系，特别是当输入变量的值发生变化时，输出变量的值随之发生变化。回归模型正是表示从输入变量到输出变量之间的映射的函数。回归问题等价于函数拟合，选择一条函数曲线使其很好地拟合已知数据且很好的预测未知数据。</p>
+<p>回归问题分为学习和预测两个过程。学习系统基于训练数据构建一个模型，预测系统根据学习的模型确定相应的输出。回归问题如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/regression.png" alt="回归问题"></p>
+<p>回归问题按照变量的个数分为一元回归和多元回归；按照输入变量和输出变量之间关系的类型即模型的类型，分为线性回归和非线性回归。回归学习最常用的损失函数是平方损失函数，此情况下回归问题可以用最小二乘法求解。</p>
 ]]></content>
     
     <summary type="html">
@@ -778,71 +857,6 @@
     
     
       <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeNet神经网络</title>
-    <link href="noahsnail.com/2017/03/02/2017-3-2-LeNet%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    <id>noahsnail.com/2017/03/02/2017-3-2-LeNet神经网络/</id>
-    <published>2017-03-02T05:50:43.000Z</published>
-    <updated>2017-03-22T10:46:43.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-LeNet神经网络介绍"><a href="#1-LeNet神经网络介绍" class="headerlink" title="1. LeNet神经网络介绍"></a>1. LeNet神经网络介绍</h2><p>LeNet神经网络由深度学习三巨头之一的Yan LeCun提出，他同时也是卷积神经网络 (CNN，Convolutional Neural Networks)之父。LeNet主要用来进行手写字符的识别与分类，并在美国的银行中投入了使用。LeNet的实现确立了CNN的结构，现在神经网络中的许多内容在LeNet的网络结构中都能看到，例如卷积层，Pooling层，ReLU层。虽然LeNet早在20世纪90年代就已经提出了，但由于当时缺乏大规模的训练数据，计算机硬件的性能也较低，因此LeNet神经网络在处理复杂问题时效果并不理想。虽然LeNet网络结构比较简单，但是刚好适合神经网络的入门学习。</p>
-<h2 id="2-LeNet神经网络结构"><a href="#2-LeNet神经网络结构" class="headerlink" title="2. LeNet神经网络结构"></a>2. LeNet神经网络结构</h2><p>LeNet的神经网络结构图如下：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/LeNet_1.jpg" alt="LeNet网络图"></p>
-<p>LeNet网络的执行流程图如下：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/conv_all.png" alt="LeNet图像处理流程"></p>
-<h3 id="2-1-LeNet第一层（卷积运算）"><a href="#2-1-LeNet第一层（卷积运算）" class="headerlink" title="2.1 LeNet第一层（卷积运算）"></a>2.1 LeNet第一层（卷积运算）</h3><p>接下来我们来具体的一层层的分析LeNet的网络结构。首先要了解图像（输入数据）的表示。在LeNet网络中，输入图像是手写字符，图像的表示形式为二维数据矩阵，如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/8-gif.gif" alt="图像的表示"></p>
-<p>LeNet网络除去输入输出层总共有六层网络。第一层是卷积层（C1层），卷积核的大小为<code>5\*5</code>，卷积核数量为<code>6</code>个，输入图像的大小为<code>32*32</code>，因此输入数据在进行第一层卷积之后，输出结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。卷积操作如下面两幅图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/conv.gif" alt="卷积演示"></p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/giphy.gif" alt="卷积演示"></p>
-<p>卷积操作的过程可描述为：卷积核在图像上滑动，滑动步长为1（即每次移动一格，水平方向从左到右，到最右边之后再从最左边开始，向下移动一格，重复从左到右滑动），当卷积核与图像的一个局部块重合时进行卷积运行，卷积计算方式为图像块对应位置的数与卷积核对应位置的数相乘，然后将所有相乘结果相加即为feature map的值，<strong>相乘累加之后的结果位于卷积核中心点的位置</strong>，因此如果是<code>3\*3</code>的卷积核，feature map比原图像在水平和垂直方向上分别减少两行（上下各一行）和两列（左右各一列），因此上面图像原图为<code>5*5</code>，卷积核为<code>3\*3</code>，卷积结果大小为<code>3*3</code>，即<code>(5-2)*(5-2)</code>，如果卷积核为<code>5*5</code>，则卷积结果大小为<code>(5-4)*(5-4)</code>。上图中的卷积核为：<br><img src="http://ocs628urt.bkt.clouddn.com/conv_kernel.png" alt="卷积核"></p>
-<p>由于神经网络层与层的结构是通过连接来实现的，因此输入层与第一个卷积层的连接数量应为<code>(32-2-2)\*(32-2-2)\*(5\*5+1)\*6= 28\*28\*156 =122304</code>。</p>
-<p>卷积的作用主要是：通过卷积运算，可以使原信号特征增强，并且降低噪音。在图像上卷积之后主要是减少图像噪声，提取图像的特征。例如sobel算子就是一种卷积运算，主要是提取图像的边缘特征。卷积网络能很好地适应图像的平移不变性：例如稍稍移动一幅猫的图像，它仍然是一幅猫的图像。卷积操作保留了图像块之间的空间信息，进行卷积操作的图像块之间的相对位置关系没有改变。图像在不同卷积核上进行卷积之后的效果图如下：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot.png" alt="同一幅图像用不同卷积核处理的效果"></p>
-<h3 id="2-2-LeNet第二层（pooling运算）"><a href="#2-2-LeNet第二层（pooling运算）" class="headerlink" title="2.2 LeNet第二层（pooling运算）"></a>2.2 LeNet第二层（pooling运算）</h3><p>图像在LeNet网络上进行第一层卷积之后，结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。LeNet网络的第二层为pooling层（S2层），也称为下采样。在图像处理中，下采样之后，图像的大小会变为原来的<code>1/4</code>，即水平方向和垂直方向上图像大小分别减半。Pooling有多种，这里主要介绍两种，max-pooling和average-pooling。max-pooling即为从四个元素中选取一个最大的来表示这四个元素，average-pooling则用四个元素的平均值来表示这四个元素。Pooling示意图如下：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Pooling.png" alt="Pooling示意图"></p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/screen-shot-am.png" alt="Pooling示意图"></p>
-<p>在LeNet在进行第二层Pooling运算后，输出结果为<code>14*14</code>的<code>6</code>个feature map。其连接数为<code>(2*2+1) * 14 * 14 *6 = 5880</code>。Pooling层的主要作用就是减少数据，降低数据纬度的同时保留最重要的信息。在数据减少后，可以减少神经网络的纬度和计算量，可以防止参数太多过拟合。LeNet在这一层是将四个元素相加，然后乘以参数w再加上偏置b，然后计算sigmoid值。</p>
-<h3 id="2-3-LeNet第三层（卷积运算）"><a href="#2-3-LeNet第三层（卷积运算）" class="headerlink" title="2.3 LeNet第三层（卷积运算）"></a>2.3 LeNet第三层（卷积运算）</h3><p>LeNet第三层（C3层）也是卷积层，卷积核大小仍为<code>5*5</code>，不过卷积核的数量变为<code>16</code>个。第三层的输入为<code>14*14</code>的<code>6</code>个feature map，卷积核大小为<code>5*5</code>，因此卷积之后输出的feature map大小为<code>10*10</code>，由于卷积核有<code>16</code>个，因此希望输出的feature map也为<code>16</code>个，但由于输入有<code>6</code>个feature map，因此需要进行额外的处理。输入的<code>6</code>个feature map与输出的<code>16</code>个feature map的关系图如下：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/lenet-c3table.png" alt="S2层与C3层的关系图"></p>
-<p>如上图所示，第一个卷积核处理前三幅输入的feature map，得出一个新的feature map。</p>
-<h3 id="2-4-LeNet第四层（Pooling运算）"><a href="#2-4-LeNet第四层（Pooling运算）" class="headerlink" title="2.4 LeNet第四层（Pooling运算）"></a>2.4 LeNet第四层（Pooling运算）</h3><p>上一层卷积运算之后，结果为大小为<code>10*10</code>的<code>16</code>个feature map，因此在第四层（S4层）进行pooling运算之后，输出结果为<code>16</code>个大小为<code>5*5</code>的feature map。与S2层进行同样的操作。</p>
-<h3 id="2-5-LeNet第五层"><a href="#2-5-LeNet第五层" class="headerlink" title="2.5 LeNet第五层"></a>2.5 LeNet第五层</h3><p>LeNet第五层是卷积层(C5层)，卷积核数目为120个，大小为<code>5*5</code>，由于第四层输出的feature map大小为<code>5*5</code>，因此第五层也可以看成全连接层，输出为120个大小为<code>1*1</code>的feature map。</p>
-<h3 id="2-6-LeNet第六层"><a href="#2-6-LeNet第六层" class="headerlink" title="2.6 LeNet第六层"></a>2.6 LeNet第六层</h3><p>LeNet第六层是全连接层（F6层），有84个神经元（84与输出层的设计有关），与C5层全连接。</p>
-<h3 id="2-7-LeNet各层的参数变化"><a href="#2-7-LeNet各层的参数变化" class="headerlink" title="2.7 LeNet各层的参数变化"></a>2.7 LeNet各层的参数变化</h3><ul>
-<li><p>C1<br>输入大小：32*32<br>核大小：5*5<br>核数目：6<br>输出大小：28*28*6<br>训练参数数目：(5*5+1)*6=156<br>连接数：(5*5+1)*6*(32-2-2)*(32-2-2)=122304</p>
-</li>
-<li><p>S2<br>输入大小：28*28*6<br>核大小：2*2<br>核数目：1<br>输出大小：14*14*6<br>训练参数数目：2*6=12，2=(w,b)<br>连接数：(2*2+1)*1*14*14*6 = 5880</p>
-</li>
-<li><p>C3<br>输入大小：14*14*6<br>核大小：5*5<br>核数目：16<br>输出大小：10*10*16<br>训练参数数目：6*(3*5*5+1) + 6*(4*5*5+1) + 3*(4*5*5+1) + 1*(6*5*5+1)=1516<br>连接数：(6*(3*5*5+1) + 6*(4*5*5+1) + 3*(4*5*5+1) + 1*(6*5*5+1))*10*10=151600</p>
-</li>
-<li><p>S4<br>输入大小：10*10*16<br>核大小：2*2<br>核数目：1<br>输出大小：5*5*16<br>训练参数数目：2*16=32<br>连接数：(2*2+1)*1*5*5*16=2000</p>
-</li>
-<li><p>C5<br>输入大小：5*5*16<br>核大小：5*5<br>核数目：120<br>输出大小：120*1*1<br>训练参数数目：(5*5*16+1)*120*1*1=48120（因为是全连接）<br>连接数：(5*5*16+1)*120*1*1=48120</p>
-</li>
-<li><p>F6<br>输入大小：120<br>输出大小：84<br>训练参数数目：(120+1)*84=10164<br>连接数：(120+1)*84=10164</p>
-</li>
-</ul>
-<h3 id="3-LeNet在Caffe中的配置"><a href="#3-LeNet在Caffe中的配置" class="headerlink" title="3. LeNet在Caffe中的配置"></a>3. LeNet在Caffe中的配置</h3><p>LeNet神经网络结构在Caffe中的配置文件如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div></pre></td><td class="code"><pre><div class="line">name: &quot;LeNet&quot; //神经网络名字</div><div class="line">//本层只有top，没有bottom，说明是数据输入层</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot; //layer名字</div><div class="line">  type: &quot;Data&quot; //层的数据类型，如果是Data，说明是leveldb或lmdb</div><div class="line">  top: &quot;data&quot; //top表示输入数据，类型为data</div><div class="line">  top: &quot;label&quot; //top表示输入数据，类型为label，(data,label)配对是分类模型所必需的</div><div class="line">  //一般训练的时候和测试的时候，模型的层是不一样的。该层（layer）是属于训练阶段的层，还是属于测试阶段的层，需要用include来指定。如果没有include参数，则表示该层既在训练模型中，又在测试模型中。</div><div class="line">  include &#123;</div><div class="line">    phase: TRAIN</div><div class="line">  &#125;</div><div class="line">  //数据的预处理，可以将数据变换到定义的范围内。如设置scale为0.00390625，实际上就是1/255, 即将输入数据由0-255归一化到0-1之间</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_train_lmdb&quot;</div><div class="line">    batch_size: 64</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_test_lmdb&quot;</div><div class="line">    batch_size: 100</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv1&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;data&quot;</div><div class="line">  top: &quot;conv1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 20</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool1&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv1&quot;</div><div class="line">  top: &quot;pool1&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv2&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;pool1&quot;</div><div class="line">  top: &quot;conv2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 50</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool2&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv2&quot;</div><div class="line">  top: &quot;pool2&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip1&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;pool2&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 500</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;relu1&quot;</div><div class="line">  type: &quot;ReLU&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip2&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 10</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;accuracy&quot;</div><div class="line">  type: &quot;Accuracy&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;accuracy&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TEST</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;loss&quot;</div><div class="line">  type: &quot;SoftmaxWithLoss&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;loss&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>参考资料：</p>
-<p>1.<a href="https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/" target="_blank" rel="external">https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      LeNet神经网络
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
     
   </entry>
   

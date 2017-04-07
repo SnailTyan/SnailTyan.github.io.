@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2016/12/06/2016-12-6-Mac下Caffe的安装/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Mac下Caffe的安装">
-<meta property="og:updated_time" content="2017-01-11T08:57:53.000Z">
+<meta property="og:updated_time" content="2017-04-06T15:10:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac下Caffe安装">
 <meta name="twitter:description" content="Mac下Caffe的安装">
@@ -312,8 +312,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-01-11T16:57:53+08:00">
-              2017-01-11
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-06T23:10:07+08:00">
+              2017-04-06
             </time>
             
           </span>
@@ -403,6 +403,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PYTHON_INCLUDE := /usr/include/python2.7 \</div><div class="line">		/usr/local/lib/python2.7/site-packages/numpy/core/include</div></pre></td></tr></table></figure>
 <p>然后运行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ make pycaffe</div><div class="line"></div><div class="line">CXX/LD -o python/caffe/_caffe.so python/caffe/_caffe.cpp</div><div class="line">In file included from python/caffe/_caffe.cpp:17:</div><div class="line">In file included from ./include/caffe/caffe.hpp:12:</div><div class="line">./include/caffe/net.hpp:42:5: warning: unused typedef &apos;INVALID_REQUESTED_LOG_SEVERITY&apos; [-Wunused-local-typedef]</div><div class="line">    LOG_EVERY_N(WARNING, 1000) &lt;&lt; &quot;DEPRECATED: ForwardPrefilled() &quot;</div><div class="line">    ^</div><div class="line">/usr/local/include/glog/logging.h:917:30: note: expanded from macro &apos;LOG_EVERY_N&apos;</div><div class="line">                             INVALID_REQUESTED_LOG_SEVERITY);           \</div><div class="line">                             ^</div><div class="line">1 warning generated.</div><div class="line">touch python/caffe/proto/__init__.py</div><div class="line">PROTOC (python) src/caffe/proto/caffe.proto</div></pre></td></tr></table></figure>
+<p>最后，需要将caffe的目录添加到Python path中。修改<code>.bash_profile</code>或<code>.bashrc</code>文件，添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export PYTHONPATH=/yourpath/caffe/python:$PYTHONPATH</div></pre></td></tr></table></figure>
 <p>在Python中运行<code>import caffe</code>不报错即可。中间报错可能是python环境问题，例如需要升级<code>pip</code>，命令为<code>pip install -U pip</code>，缺少<code>scikit-image</code>，用<code>pip install scikit-image</code>来安装，其它的caffe依赖类似。</p>
 
       
@@ -539,7 +541,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">190</span>
+              <span class="site-state-item-count">191</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

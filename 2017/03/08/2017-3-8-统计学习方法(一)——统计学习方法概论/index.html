@@ -91,7 +91,11 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="统计学习方法(一)——统计学习方法概论">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/supervised-learning.png">
-<meta property="og:updated_time" content="2017-04-01T10:01:16.000Z">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/relations.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/classity_problem.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/tagging.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/regression.png">
+<meta property="og:updated_time" content="2017-04-07T08:21:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="统计学习方法(一)——统计学习方法概论">
 <meta name="twitter:description" content="统计学习方法(一)——统计学习方法概论">
@@ -314,8 +318,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-04-01T18:01:16+08:00">
-              2017-04-01
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-07T16:21:38+08:00">
+              2017-04-07
             </time>
             
           </span>
@@ -458,7 +462,44 @@
 <p>$$e_{test}(f \hat)=\frac {1} {N \prime} \sum_{i=1}^{N\prime} L(y_i,f \hat(x_i)) $$</p>
 <p>N和$N\prime$分别为训练数据集和测试数据集的样本容量。</p>
 <p>通常将学习方法对未知数据的预测能力称为泛化能力（generalization ability）。</p>
-<h3 id="1-4-1-过拟合和模型选择"><a href="#1-4-1-过拟合和模型选择" class="headerlink" title="1.4.1 过拟合和模型选择"></a>1.4.1 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。</p>
+<h3 id="1-4-2-过拟合和模型选择"><a href="#1-4-2-过拟合和模型选择" class="headerlink" title="1.4.2 过拟合和模型选择"></a>1.4.2 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。模型选择时，不仅要考虑对已知数据的预测能力，而且还要考虑对未知数据的预测能力。下图展示了训练误差、测试误差与模型复杂度之间的关系。当模型复杂度增大时，训练误差会逐渐减少并趋向于0；而测试误差会先减少，达到最小值后又增大。当选择的模型复杂度过大时，过拟合现象就会发生。学习时要防止过拟合，进行最优的模型选择，即选择模型复杂度适当的模型，以使测试误差达到最小。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/relations.png" alt="训练误差、测试误差与模型复杂度之间的关系"></p>
+<h2 id="1-5-正则化与交叉验证"><a href="#1-5-正则化与交叉验证" class="headerlink" title="1.5 正则化与交叉验证"></a>1.5 正则化与交叉验证</h2><h3 id="1-5-1-正则化"><a href="#1-5-1-正则化" class="headerlink" title="1.5.1 正则化"></a>1.5.1 正则化</h3><p>模型选择的方法是正则化（regularization）。正则化是结构风险最小化策略的实现，是在经验风险上加上一个正则化项（regularizer）或惩罚项（penalty term）。正则化项一般是模型复杂度的单调递增函数，模型越复杂，正则化值就越大。正则化一般具有以下形式：</p>
+<p>$$^{min}_{f \in F } \frac {1} {N} \sum_{i=1}^{N} L(y_i,f(x_i)) + \lambda J(f)$$</p>
+<p>其中，第一项是经验风险，第二项是正则化项，$\lambda &gt;= 0$为调整两者之间关系的系数。</p>
+<p>正则化项可以取不同的形式，回归问题中，损失函数是平方损失，正则化项可以是参数向量的$L_2$范数：</p>
+<p>$$L(w)=\frac {1} {N} \sum_{i=1}^{N} (f(x_i;w) - y_i)^2 + \frac {\lambda} {2} ||w||^2$$</p>
+<p>$||w||$表示参数向量w的$L_2$范数。正则化项也可以是参数向量的$L_1$范数：</p>
+<p>$$L(w)=\frac {1} {N} \sum_{i=1}^{N} (f(x_i;w) - y_i)^2 + \frac {\lambda} {2} ||w||_1$$</p>
+<p>$||w|_1$表示参数向量w的$L_1$范数。</p>
+<p>正则化的作用是选择经验风险和模型复杂度同时较小的模型。正则化符合奥卡姆剃刀原理：在所有可能选择的模型中，应该选择能够很好的解释已知数据并且十分简单的模型。从贝叶斯估计的角度来看，正则化项对应模型的先验概率，可以假设复杂的模型具有较小的先验概率，简单的模型具有较大的先验概率。</p>
+<h3 id="1-5-2-交叉验证"><a href="#1-5-2-交叉验证" class="headerlink" title="1.5.2 交叉验证"></a>1.5.2 交叉验证</h3><p>另一种常用的模型选择方法是交叉验证（cross validation）。如果给定的样本数据充足，进行模型选择的一种简单方法是随机的将数据分为训练集（training set）、测试集（test set）和验证集（validation set）。训练集用来训练模型，测试集用于模型的评估，验证集用于模型的选择。在学习到的模型中，选择对验证集有最小预测误差的模型。当数据集不充足时，可以采用交叉验证的方法。交叉验证的基本思想是重复的使用数据；吧核定的数据分为训练集和测试集，在此基础上进行反复的训练、测试和模型选择。</p>
+<p><strong>1.简单交叉验证</strong></p>
+<p>简单交叉验证方法是：首先随机地将数据分为两部分——训练集(70%)和测试集(30%)；然后用训练集在各种条件下训练得到不同的模型，在测试集上评价各个模型的测试误差，选择测试误差最小的模型。</p>
+<p><strong>2.S折交叉验证</strong></p>
+<p>应用最多的是S折交叉验证（S-fold cross validation），首先随机地将数据分为S个互不相交的大小相同的子集，然后利用$S-1$个子集的数据进行训练，用剩下的子集进行测试；重复上述过程，最后选出S次测试中平均测试误差最小的模型。</p>
+<p><strong>3.留一交叉验证</strong></p>
+<p>S折交叉验证特殊情况是$S=N$，称为留一交叉验证（leave-one cross validation），往往在数据缺乏的情况下使用。</p>
+<h2 id="1-6-泛化能力"><a href="#1-6-泛化能力" class="headerlink" title="1.6 泛化能力"></a>1.6 泛化能力</h2><h3 id="1-6-1-泛化误差"><a href="#1-6-1-泛化误差" class="headerlink" title="1.6.1 泛化误差"></a>1.6.1 泛化误差</h3><p>学习方法的泛化能力（generalization ability）是指由该方法学习到的模型对未知数据的预测能力，是学习方法本质上最重要的性质。通常采用测试误差来评价学习方法的泛化能力，但这种方法依赖于测试数据，但数据较少时评价结果有可能不可靠。统计学试图从理论上对学习方法的泛化能力进行分析。</p>
+<p>首先给出泛化误差的定义，如果学到的模型是$\hat f$，那么用这个模型对未知数据预测的误差即为泛化误差（generalization error）</p>
+<p>$$R_{exp}(\hat f)=E_p[L(Y,\hat f(X))] = \int_{x*y}L(y,\hat f(x))P(x,y)dxdy$$</p>
+<p>泛化误差反映了学习方法的泛化能力，泛化误差就是所学习到的模型的期望风险。</p>
+<h3 id="1-6-2-泛化误差上界"><a href="#1-6-2-泛化误差上界" class="headerlink" title="1.6.2 泛化误差上界"></a>1.6.2 泛化误差上界</h3><p>学习方法的泛化能力分析往往是通过研究误差的概率上界进行的，简称为泛化误差上界（generalization error bound）。泛化误差上界通常具有以下性质：它是样本容量的函数，当样本容量增加时，泛化上界趋向于0；它是假设空间容量的函数，假设空间容量越大，模型就越难学，泛化误差上界就越大。</p>
+<h2 id="1-7-生成模型和判别模型"><a href="#1-7-生成模型和判别模型" class="headerlink" title="1.7 生成模型和判别模型"></a>1.7 生成模型和判别模型</h2><p>监督学习方法可分为生成方法（generative approach）和判别方法（discriminative approach）。所学到的模型分别称为生成模型（generative model）和判别模型（discriminative model）。生成方法由数据学习联合概率分布P(X,Y)，然后求出条件概率分布P(Y|X)作为预测的模型，即生成模型：</p>
+<p>$$P(Y|X)=\frac {P(X,Y)} {P(X)}$$</p>
+<p>之所以称为生成方法，是因为模型表示了给定输入X产生输出Y的生成关系。典型的生成模型有：朴素贝叶斯法和隐马尔可夫模型。</p>
+<p>判别方法由数据直接学习决策函数f(X)或者条件概率分布P(Y|X)作为预测的模型，即判别模型。判别方法关心的是对给定的输入X，应该预测什么样的输出Y。典型的判别模型包括：k近邻法、感知机、决策树、逻辑回归模型、最大熵模型、支持向量机、提升方法和条件随机场。</p>
+<p>在监督学习中，生成方法和判别方法各有优缺点，适合于不同条件下的学习问题。生成方法的特点：生成方法可以还原出联合概率分布P(X,Y)，而判别方法则不能；生成方法的收敛速度更快，当存在隐变量时，仍可以使用生成方法，此时判别方法不可用。判别方法的特点：判别方法直接学习的是条件概率P(Y|X)或决策函数f(X)，直接面对预测，往往学习的准确率更高；由于直接学习P(Y|X)或f(X)，可以对数据进行各种程度上的抽象、定义特征并使用特征，因此可以简化学习问题。</p>
+<h2 id="1-8-分类问题"><a href="#1-8-分类问题" class="headerlink" title="1.8 分类问题"></a>1.8 分类问题</h2><p>分类是监督学习的一个核心问题。在监督学习中，当输出变量Y取有限个离散值时，预测问题便称为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier）。分类器对新的输入进行输出的预测（prediction），称为分类（classification）。分类的类别为多个时，称为多分类问题。分类问题包括学习和分类两个过程。学习过程中，根据已知的训练数据集学习一个分类器，分类过程中，根据学习的分类器对新实例进行分类。分类问题如图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/classity_problem.png" alt="分类问题"></p>
+<p>精确率的定义为$P=\frac {TP} {TP+FP}$，召回率的定义为$R=\frac {TP} {TP+FN}$，F1值是精确率和召回率的调和均值，公式为$F1=\frac {2PR} {P+R}$。精确率和召回率都高时，F1值也会高。</p>
+<h2 id="1-9-标注问题"><a href="#1-9-标注问题" class="headerlink" title="1.9 标注问题"></a>1.9 标注问题</h2><p>标注（tagging）也是一个监督学习问题，可以认为标注问题是分类问题的一个推广，标注问题的输入是一个观测序列，输出是一个标记序列或状态序列。标注问题的目标在于学习一个模型，使它能够对观测序列给出标记序列作为预测。标注问题分为学习和标记过程。学习系统基于训练数据集构建一个模型，表示为条件概率，标注系统按照学习到的条件概率分布模型，对新的输入观测序列找到相应的输出标记序列。标注问题如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/tagging.png" alt="标注问题"></p>
+<p>评价标注模型的指标与评价分类模型的指标一样，常用的有标注准确率、精确率和召回率。标注常用的统计学习方法有：隐马尔可夫模型、条件随机场。标注问题在信息抽取、自然语言处理等领域被广泛应用，是这些领域的基本问题。</p>
+<h2 id="1-10-回归问题"><a href="#1-10-回归问题" class="headerlink" title="1.10 回归问题"></a>1.10 回归问题</h2><p>回归（regression）是监督学习的另一个重要问题。回归用于预测输入变量（自变量）和输出变量（因变量）之间的关系，特别是当输入变量的值发生变化时，输出变量的值随之发生变化。回归模型正是表示从输入变量到输出变量之间的映射的函数。回归问题等价于函数拟合，选择一条函数曲线使其很好地拟合已知数据且很好的预测未知数据。</p>
+<p>回归问题分为学习和预测两个过程。学习系统基于训练数据构建一个模型，预测系统根据学习的模型确定相应的输出。回归问题如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/regression.png" alt="回归问题"></p>
+<p>回归问题按照变量的个数分为一元回归和多元回归；按照输入变量和输出变量之间关系的类型即模型的类型，分为线性回归和非线性回归。回归学习最常用的损失函数是平方损失函数，此情况下回归问题可以用最小二乘法求解。</p>
 
       
     </div>
@@ -594,7 +635,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">190</span>
+              <span class="site-state-item-count">191</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -646,7 +687,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-统计学习方法概论"><span class="nav-number">1.</span> <span class="nav-text">1. 统计学习方法概论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-统计学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 统计学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-基本概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-问题的形式化"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 问题的形式化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-统计学习三要素"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 统计学习三要素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-模型评估与模型选择"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 模型评估与模型选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-训练误差与测试误差"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 训练误差与测试误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-过拟合和模型选择"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.1 过拟合和模型选择</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-统计学习方法概论"><span class="nav-number">1.</span> <span class="nav-text">1. 统计学习方法概论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-统计学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 统计学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-基本概念"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-问题的形式化"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 问题的形式化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-统计学习三要素"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 统计学习三要素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-模型评估与模型选择"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 模型评估与模型选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-训练误差与测试误差"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 训练误差与测试误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-过拟合和模型选择"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 过拟合和模型选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-正则化与交叉验证"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 正则化与交叉验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-1-正则化"><span class="nav-number">1.5.1.</span> <span class="nav-text">1.5.1 正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-2-交叉验证"><span class="nav-number">1.5.2.</span> <span class="nav-text">1.5.2 交叉验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-泛化能力"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 泛化能力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-1-泛化误差"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 泛化误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-2-泛化误差上界"><span class="nav-number">1.6.2.</span> <span class="nav-text">1.6.2 泛化误差上界</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-生成模型和判别模型"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 生成模型和判别模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-8-分类问题"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 分类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-9-标注问题"><span class="nav-number">1.9.</span> <span class="nav-text">1.9 标注问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-10-回归问题"><span class="nav-number">1.10.</span> <span class="nav-text">1.10 回归问题</span></a></li></ol></li></ol></div>
             
 
           </div>
