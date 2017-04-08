@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/700px-ROC_space-2.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/roc_com.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/p-r.png">
-<meta property="og:updated_time" content="2017-04-07T07:05:53.000Z">
+<meta property="og:updated_time" content="2017-04-07T10:25:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ROC，AUC，Precision，Recall，F1的介绍与计算">
 <meta name="twitter:description" content="ROC，AUC，Precision，Recall，F1的介绍与计算">
@@ -317,7 +317,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-04-07T15:05:53+08:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-07T18:25:28+08:00">
               2017-04-07
             </time>
             
@@ -404,7 +404,8 @@
 <h3 id="2-2-P-R曲线"><a href="#2-2-P-R曲线" class="headerlink" title="2.2 P-R曲线"></a>2.2 P-R曲线</h3><p>在P-R曲线中，Precision为横坐标，Recall为纵坐标。在ROC曲线中曲线越凸向左上角约好，在P-R曲线中，曲线越凸向右上角越好。P-R曲线判断模型的好坏要根据具体情况具体分析，有的项目要求召回率较高、有的项目要求精确率较高。P-R曲线的绘制跟ROC曲线的绘制是一样的，在不同的阈值下得到不同的Precision、Recall，得到一系列的点，将它们在P-R图中绘制出来，并依次连接起来就得到了P-R图。两个分类器模型（算法）P-R曲线比较的一个例子如下图所示：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/p-r.png" alt="P-R曲线比较"></p>
 <h3 id="2-3-ROC与P-R对比"><a href="#2-3-ROC与P-R对比" class="headerlink" title="2.3 ROC与P-R对比"></a>2.3 ROC与P-R对比</h3><p>从公式计算中可以看出，ROC曲线中真阳性率TPR的计算公式与P-R曲线中的召回率Recall计算公式是一样的，即二者是同一个东西在不同环境下的不同叫法。当正负样本差距不大的情况下，ROC曲线和P-R的趋势是差不多的，但是当负样本很多的时候，ROC曲线效果依然较好，但是P-R曲线效果一般。</p>
-<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><h3 id="3-1-ROC曲线"><a href="#3-1-ROC曲线" class="headerlink" title="3.1 ROC曲线"></a>3.1 ROC曲线</h3>
+<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><p>待续。</p>
+
       
     </div>
 
@@ -445,6 +446,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/08/2017-4-8-Leetcode198——House Robber/" rel="prev" title="Leetcode198——House Robber">
+                Leetcode198——House Robber <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -535,7 +540,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">191</span>
+              <span class="site-state-item-count">194</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -543,7 +548,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -552,7 +557,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -587,7 +592,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-ROC与AUC"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 ROC与AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Precision、Recall与F1"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Precision、Recall与F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-曲线介绍"><span class="nav-number">2.</span> <span class="nav-text">2. 曲线介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-ROC曲线"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-P-R曲线"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 P-R曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ROC与P-R对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 ROC与P-R对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Demo"><span class="nav-number">3.</span> <span class="nav-text">3. Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-ROC曲线"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 ROC曲线</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-ROC与AUC"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 ROC与AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Precision、Recall与F1"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Precision、Recall与F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-曲线介绍"><span class="nav-number">2.</span> <span class="nav-text">2. 曲线介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-ROC曲线"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-P-R曲线"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 P-R曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ROC与P-R对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 ROC与P-R对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Demo"><span class="nav-number">3.</span> <span class="nav-text">3. Demo</span></a></li></ol></div>
             
 
           </div>

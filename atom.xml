@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-07T07:05:53.000Z</updated>
+  <updated>2017-04-08T15:00:20.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,123 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Leetcode78——Subsets</title>
+    <link href="noahsnail.com/2017/04/08/2017-4-8-Leetcode78%E2%80%94%E2%80%94Subsets/"/>
+    <id>noahsnail.com/2017/04/08/2017-4-8-Leetcode78——Subsets/</id>
+    <published>2017-04-08T14:30:15.000Z</published>
+    <updated>2017-04-08T15:00:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a set of distinct integers, nums, return all possible subsets.</p>
+<p>Note: The solution set must not contain duplicate subsets.</p>
+<p>For example,<br>If nums = <code>[1,2,3]</code>, a solution is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [3],</div><div class="line">  [1],</div><div class="line">  [2],</div><div class="line">  [1,2,3],</div><div class="line">  [1,3],</div><div class="line">  [2,3],</div><div class="line">  [1,2],</div><div class="line">  []</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>递归法</strong></p>
+<p>这道题类似于数组的组合问题，可以用递归法求解。N个数中每个数都分为要与不要两种情况，求解的过程如下图。递归的边界条件为N个数都遍历完了。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/subset.png" alt="递归过程"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public static List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    public List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) &#123;</div><div class="line">        result.clear();</div><div class="line">        result.add(new ArrayList&lt;Integer&gt;());</div><div class="line">        combination(nums, 0, new ArrayList&lt;Integer&gt;());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void combination(int[] nums, int index, List&lt;Integer&gt; list) &#123;</div><div class="line">        if(index == nums.length) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        combination(nums, index + 1, new ArrayList&lt;Integer&gt;(list));</div><div class="line">        list.add(nums[index]);</div><div class="line">        result.add(list);</div><div class="line">        combination(nums, index + 1, new ArrayList&lt;Integer&gt;(list));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode78——Subsets
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《异类》读书笔记</title>
+    <link href="noahsnail.com/2017/04/08/2017-4-8-%E3%80%8A%E5%BC%82%E7%B1%BB%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>noahsnail.com/2017/04/08/2017-4-8-《异类》读书笔记/</id>
+    <published>2017-04-08T07:10:29.000Z</published>
+    <updated>2017-04-08T09:54:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>《异类》的作者是马尔科姆-格拉德威尔，《异类》主要探究许多人成功背后的原因到底是什么。《异类》分为两大部分，第一部分主要是讲述机遇对人的影响；第二部分主要是讲文化对人的影响。</p>
+<h2 id="第1章-马太效应"><a href="#第1章-马太效应" class="headerlink" title="第1章 马太效应"></a>第1章 马太效应</h2><p>第一章主要是讲述了马太效应。通常我们认为，个体特征的卓越是一个人出类拔萃的根本原因，但作者认为不是这样的。作者以加拿大冰球队的选手为例，分析了这些选手的出生时间，发现大多数选手都是出生在前三个月，为什么出生在前三个月的人能成功优秀的冰球选手呢？这主要是因为加拿大冰球队按年龄分组的分界线是1月1日，同一年龄的选手，出生在1月份的比出生在12月份的选手发育的时间更长，球员之间在生理成熟度上表现出巨大的差异，因此在冰球选拔时具有更大的优势，而当出生在1月份的选手被选入冰球队后，能获得更优秀的辅导，进行的训练比没选拔上的12月份的人更多，优势变得更大，优势慢慢的积累，最终变成了出生在1月份的人变成了优秀的冰球选手，而同年出生的12月份的人慢慢的变成了普通人，两者差距越来越大。这种情况主要是3种制度共通作用的结果：筛选、分组和区别训练。美国的棒球队，英国足球队都有类似的现象。从年龄大几个月的优势在孩子的成长过程中不断积累，最终导致孩子成功或不成功，正是这种领先优势造就了天才们辉煌的成就。在社会学领域，成功就是“优势积累的结果”。天才并非开始就出众，一开始他只是比别人优秀一点点。</p>
+<p><strong>备注：</strong>马太效应（Matthew Effect），指强者愈强、弱者愈弱的现象。</p>
+<p><strong>想法：</strong>感觉这是不是与国内的读书的重点班，预科班很像啊。不让孩子输在起跑线上还是有些道理的。</p>
+<h2 id="第2章-10000小时法则"><a href="#第2章-10000小时法则" class="headerlink" title="第2章 10000小时法则"></a>第2章 10000小时法则</h2><p>10000小时法则是讲当某个人在某个领域练习10000小时时，他就能成为这个领域的专家。作者以Sun公司创始人和比尔盖茨为例，他们从小就接触电脑，当他们成年时他们已经达到了10000小时的训练量，因此当机会来临时他们能够很好的抓住机会并取得成功。成功是天赋加上后天努力，天赋的作用其实很小，而后天努力的作用其实很大。练习并不是为了让你一次就能把事情做好，而是帮助你越做约好。</p>
+<p><strong>想法：</strong>确实挺有道理，很多时候别人成功不是因为别人比你聪明，而是因为别人比你更努力，练习的更多。</p>
+<h2 id="第3、4章-天才之忧"><a href="#第3、4章-天才之忧" class="headerlink" title="第3、4章 天才之忧"></a>第3、4章 天才之忧</h2><p>这两章主要讲述了一个智商接近200的叫兰根的人，虽然他的天赋非常的好，但他却并没有取得成功。爱因斯坦的智商才150左右，智商120以上的人就可以称为聪明人了。那他为什么不成功呢？作者举了其它的研究人员研究的例子，小时候具有同样高智商的人，长大后有的很成功，有的一般，有的混的很惨。他们小时候具有同样的智商优势，长大后的成就却差别很大。研究发现，比较成功的人小时候家庭条件通常都很好，而比较差的人家庭条件通常较差。这是为什么呢？原来，智商与成功只在一定程度上相互关联，除了智商之外，还有一种“实践智力”，即与他人沟通、交流、良好协作的能力。这种“实践智力”通常是家庭条件较差的人缺乏的。社交知识是门学问，是一系列可以习得的技能，而富人的孩子这种能力通常较好。这其实就是一种阶级优势。作者以奥本海默的例子与兰根作了对比，两个人有类似的境遇却有不同的成就，原因就在于家庭环境。你应该想到了，兰根的家庭条件确实很差。</p>
+<p><strong>想法：</strong>“实践智力”我认为就是我们所说的情商，家庭环境对人的影响很大，事实确实如此。看看现在的社会，北京孩子跟西部山区的孩子确实差距很大。</p>
+<h2 id="第5章-乔弗洛姆的启示"><a href="#第5章-乔弗洛姆的启示" class="headerlink" title="第5章 乔弗洛姆的启示"></a>第5章 乔弗洛姆的启示</h2><p>第五章讲述了乔弗洛姆，美国世达律师事务所总裁的故事，讲述了莫里斯简克洛的故事，他们时常身处逆境，这些不利因素却常常称为他们的机遇之源。</p>
+<p><strong>想法：</strong>中国的古话时势造英雄能很好的解释这章。</p>
+<h2 id="第6章-小镇哈伦"><a href="#第6章-小镇哈伦" class="headerlink" title="第6章 小镇哈伦"></a>第6章 小镇哈伦</h2><p>这章主要讲述了美国肯塔基州坎伯兰高原上的小镇哈伦里的两大家族，霍华德家族和特纳家族的恩怨情仇。同时美国还有许多其它的地方存在类似的世仇，这种世仇的模式被称为阿巴拉契亚模式。最后的调查发现民族的文化遗产才是这些世仇的诱因。</p>
+<p><strong>想法：</strong>不同地方的人有不同的文化，不同的行事方式，这就是文化传承的力量。</p>
+<h2 id="第7章-飞机失事的族裔理论"><a href="#第7章-飞机失事的族裔理论" class="headerlink" title="第7章 飞机失事的族裔理论"></a>第7章 飞机失事的族裔理论</h2><p>第七章讲述的是韩国的飞机在以前失事的概率很高，分析了一些空难的原因，当然还有其它国家的空难，最终研究发现这些空难主要是由文化原因导致的。其中提到了一个权利距离指数的概念，即下位者对上位者的服从程度，是否敢于与上位者发表不同的意见。这主要是因为飞机上的副驾驶及其他人要在机长有问题时及时指出，以降低可能产生问题的风险。美国典型的是低权利距离的国家，而韩国属于高权利距离的国家。</p>
+<p><strong>想法：</strong>权利指数分析的确实没错，而权利指数形成的原因主要是由文化背景决定。</p>
+<h2 id="第8章-稻田与数学"><a href="#第8章-稻田与数学" class="headerlink" title="第8章 稻田与数学"></a>第8章 稻田与数学</h2><p>这章讲了我国南方主要种植稻田，同时分析了我们读数字与英语读数字的区别，作者发现造成东西方数学差异的可能是得益于我们的族裔文化。同时比较了东西方种植时间的差异，我国种植水稻一年的劳作时间比西方要多很多，我们的文化是建立在勤劳基础上的文化。我们的发音学数学有优势，我们的文化使我们学习很勤劳，我们的数学成绩高当然也应该是理所当然的。努力工作是所有成功人士的共性，而稻田中产生的文明精华是，通过努力工作，在巨大的不确定性和贫穷中寻找人生真正的价值。成功就是坚持不懈，顽强不屈，就是别人花30秒放弃的事情你花22分钟去坚定思考的坚定信念。</p>
+<p><strong>想法：</strong>成功机遇、努力、坚持都是必备的品质，当然还要有一点运气，而这些品质就存在于我们的族裔文化中。</p>
+<h2 id="第9章-玛丽塔之幸"><a href="#第9章-玛丽塔之幸" class="headerlink" title="第9章 玛丽塔之幸"></a>第9章 玛丽塔之幸</h2><p>作者分析了美国的一个在KIPP学院上学的穷人家孩子玛丽塔的作息表，她的学习时间比普通美国孩子要多得多，当然也因此取得了更好的成绩，因此她的命运比她之前有了很大的改变。</p>
+<p><strong>想法：</strong>穷人还是只有努力才能改变自己的命运。</p>
+<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>作者讲述了他自己的家庭历史，通过一步步分析说明他母亲的是如何一点点成功的。成功人士是历史和环境的产物，是机遇与积累的结果。</p>
+<p><strong>想法：</strong>现在就要努力，这样才能一点点改变你的命运，你孩子的命运，你后代的命运。</p>
+<p><strong>总结：</strong>花了将近两个小时总结，最后自己也感觉不知所云，但推荐看一下《异类》。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      《异类》读书笔记
+    
+    </summary>
+    
+      <category term="社科人文" scheme="noahsnail.com/categories/%E7%A4%BE%E7%A7%91%E4%BA%BA%E6%96%87/"/>
+    
+    
+      <category term="杂谈" scheme="noahsnail.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode198——House Robber</title>
+    <link href="noahsnail.com/2017/04/08/2017-4-8-Leetcode198%E2%80%94%E2%80%94House%20Robber/"/>
+    <id>noahsnail.com/2017/04/08/2017-4-8-Leetcode198——House Robber/</id>
+    <published>2017-04-08T02:47:08.000Z</published>
+    <updated>2017-04-08T12:47:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>ou are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.</p>
+<p>Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.</p>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>方法一</strong>递归法</p>
+<p>递归法如下图所示，从第0家开始，偷与不偷有两种情况，如果偷了则从第2家开始重复此过程，如果没偷，从第1家开始重复此过程，直至结束。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="递归过程"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    </div><div class="line">    public int rob(int[] nums) &#123;</div><div class="line">        if(nums.length == 0) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        return robot(0, nums);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public int robot(int start, int[] nums) &#123;</div><div class="line">        if(start &gt;= nums.length) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        int left = nums[start] + robot(start + 2, nums);</div><div class="line">        int right = 0 + robot(start + 1, nums);</div><div class="line">        int max = Math.max(left, right);</div><div class="line">        return max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Leetcode运行超时，说明存在优化空间。</p>
+<p><strong>方法二</strong>递归法+缓存</p>
+<p>从图中可以看出，上述过程中会有重复的计算，例如从第二家开始偷的情况计算了两次，我们可以用一个HashMap将计算过的数据保存起来，去掉冗余计算。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public static Map&lt;Integer, Integer&gt; cache = new HashMap&lt;Integer, Integer&gt;();</div><div class="line">    </div><div class="line">    public int rob(int[] nums) &#123;</div><div class="line">        cache.clear();</div><div class="line">        if(nums.length == 0) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        return robot(0, nums);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public int robot(int start, int[] nums) &#123;</div><div class="line">        if(start &gt;= nums.length) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        if(cache.containsKey(start)) &#123;</div><div class="line">            return cache.get(start);</div><div class="line">        &#125;</div><div class="line">        int left = nums[start] + robot(start + 2, nums);</div><div class="line">        int right = 0 + robot(start + 1, nums);</div><div class="line">        int max = Math.max(left, right);</div><div class="line">        cache.put(start, max);</div><div class="line">        return max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>方法三：</strong>非递归</p>
+<p>将递归改造成非递归。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public static Map&lt;Integer, Integer&gt; cache = new HashMap&lt;Integer, Integer&gt;();</div><div class="line">    </div><div class="line">    public int rob(int[] nums) &#123;</div><div class="line">        cache.clear();</div><div class="line">        if(nums.length == 0) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        int n = nums.length;</div><div class="line">        cache.put(n-1, nums[n - 1]);</div><div class="line">        for(int i = n - 2; i &gt;=0; i--) &#123;</div><div class="line">            int a = nums[i] + (cache.containsKey(i + 2) ? cache.get(i + 2) : 0);</div><div class="line">            int b = cache.containsKey(i + 1) ? cache.get(i + 1) : 0;</div><div class="line">            int max = Math.max(a, b);</div><div class="line">            cache.put(i, max);</div><div class="line">        &#125;</div><div class="line">        return cache.get(0);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>方法四：</strong>HashMap变为数组</p>
+<p>为了节省空间，可以将HashMap变为数组，代码也可以进一步优化，去掉三目运算符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int rob(int[] nums) &#123;</div><div class="line">        if(nums.length == 0) &#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        if(nums.length == 1) &#123;</div><div class="line">            return nums[0];</div><div class="line">        &#125;</div><div class="line">        if(nums.length == 2) &#123;</div><div class="line">            return Math.max(nums[0], nums[1]);</div><div class="line">        &#125;</div><div class="line">        int n = nums.length;</div><div class="line">        int[] cache = new int[n];</div><div class="line">        cache[n - 1] = nums[n - 1];</div><div class="line">        cache[n - 2] = Math.max(nums[n - 1], nums[n - 2]);</div><div class="line">        for(int i = n - 3; i &gt;=0; i--) &#123;</div><div class="line">            cache[i] = Math.max(nums[i] + cache[i + 2], cache[i + 1]);</div><div class="line">        &#125;</div><div class="line">        return cache[0];</div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode198——House Robber
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>ROC，AUC，Precision，Recall，F1的介绍与计算</title>
     <link href="noahsnail.com/2017/04/06/2017-4-6-ROC%E5%92%8CAUC%E6%9B%B2%E7%BA%BF%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E8%AE%A1%E7%AE%97/"/>
     <id>noahsnail.com/2017/04/06/2017-4-6-ROC和AUC曲线的介绍与计算/</id>
     <published>2017-04-06T03:40:00.000Z</published>
-    <updated>2017-04-07T07:05:53.000Z</updated>
+    <updated>2017-04-07T10:25:28.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><h3 id="1-1-ROC与AUC"><a href="#1-1-ROC与AUC" class="headerlink" title="1.1 ROC与AUC"></a>1.1 ROC与AUC</h3><p>ROC曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，ROC曲线称为受试者工作特征曲线 （receiver operating characteristic curve，简称ROC曲线），又称为感受性曲线（sensitivity curve），AUC（Area Under Curve）是ROC曲线下的面积。在计算ROC曲线之前，首先要了解一些基本概念。在二元分类模型的预测结果有四种，以判断人是否有病为例：</p>
@@ -42,7 +154,8 @@
 <h3 id="2-2-P-R曲线"><a href="#2-2-P-R曲线" class="headerlink" title="2.2 P-R曲线"></a>2.2 P-R曲线</h3><p>在P-R曲线中，Precision为横坐标，Recall为纵坐标。在ROC曲线中曲线越凸向左上角约好，在P-R曲线中，曲线越凸向右上角越好。P-R曲线判断模型的好坏要根据具体情况具体分析，有的项目要求召回率较高、有的项目要求精确率较高。P-R曲线的绘制跟ROC曲线的绘制是一样的，在不同的阈值下得到不同的Precision、Recall，得到一系列的点，将它们在P-R图中绘制出来，并依次连接起来就得到了P-R图。两个分类器模型（算法）P-R曲线比较的一个例子如下图所示：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/p-r.png" alt="P-R曲线比较"></p>
 <h3 id="2-3-ROC与P-R对比"><a href="#2-3-ROC与P-R对比" class="headerlink" title="2.3 ROC与P-R对比"></a>2.3 ROC与P-R对比</h3><p>从公式计算中可以看出，ROC曲线中真阳性率TPR的计算公式与P-R曲线中的召回率Recall计算公式是一样的，即二者是同一个东西在不同环境下的不同叫法。当正负样本差距不大的情况下，ROC曲线和P-R的趋势是差不多的，但是当负样本很多的时候，ROC曲线效果依然较好，但是P-R曲线效果一般。</p>
-<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><h3 id="3-1-ROC曲线"><a href="#3-1-ROC曲线" class="headerlink" title="3.1 ROC曲线"></a>3.1 ROC曲线</h3>]]></content>
+<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><p>待续。</p>
+]]></content>
     
     <summary type="html">
     
@@ -625,238 +738,6 @@
     
     
       <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux内存分析与清理</title>
-    <link href="noahsnail.com/2017/03/09/2017-3-9-Linux%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E4%B8%8E%E6%B8%85%E7%90%86/"/>
-    <id>noahsnail.com/2017/03/09/2017-3-9-Linux内存分析与清理/</id>
-    <published>2017-03-09T03:00:25.000Z</published>
-    <updated>2017-03-09T09:15:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-free命令"><a href="#1-free命令" class="headerlink" title="1. free命令"></a>1. free命令</h2><p>Linux中查看内存的命令为<code>free</code>，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ free -h</div><div class="line">              total        used        free      shared  buff/cache   available</div><div class="line">Mem:            62G        4.9G        627M        520K         57G         57G</div><div class="line">Swap:          4.0G        335M        3.7G</div></pre></td></tr></table></figure>
-<p>每一列的解释如下：</p>
-<ul>
-<li>total：内存总数</li>
-<li>used：已经使用的内存数</li>
-<li>free：空闲的内存数</li>
-<li>shared：当前已经废弃不用</li>
-<li>buffers Buffer：缓存内存数</li>
-<li>cached Page：缓存内存数</li>
-</ul>
-<p>可以看出<code>buff/cache</code>占用的内存份额很大，有时候程序运行结束后，大量内存仍位于<code>buff/cache</code>中，有时运行程序会导致内存不足，因此需要将这部分内存释放出来。</p>
-<h2 id="2-Linux中的缓存分类"><a href="#2-Linux中的缓存分类" class="headerlink" title="2. Linux中的缓存分类"></a>2. Linux中的缓存分类</h2><p>要清理Linux中的cache，首先要明白buff和cache的区别(free中的buff/cache)，以及pagecache，dentries和inodes的区别。</p>
-<ul>
-<li><p>buff<br>作为buffer cache的内存，是块设备的读写缓冲区</p>
-</li>
-<li><p>cache<br>作为page cache的内存，文件系统的cache。Buffer cache是针对磁盘块的缓存，也就是在没有文件系统的情况下，直接对磁盘进行操作的数据会缓存到buffer cache中。</p>
-</li>
-<li><p>pagecache</p>
-</li>
-</ul>
-<p>页面缓存（pagecache）可以包含磁盘块的任何内存映射。这可以是缓冲I/O，内存映射文件，可执行文件的分页区域——操作系统可以从文件保存在内存中的任何内容。Page cache实际上是针对文件系统的，是文件的缓存，在文件层面上的数据会缓存到page cache。</p>
-<ul>
-<li><p>dentries<br>表示目录的数据结构</p>
-</li>
-<li><p>inodes<br>表示文件的数据结构 </p>
-</li>
-</ul>
-<p><strong>总结：</strong>cached是cpu与内存间的，buffer是内存与磁盘间的，都是为了解决速度不对等的问题。buffer是即将要被写入磁盘的，而cache是被从磁盘中读出来的。</p>
-<p>缓存（cached）是把读取过的数据保存起来，重新读取时若命中（找到需要的数据）就不要去读硬盘了，若没有命中就读硬盘。其中的数据会根据读取频率进行组织，把最频繁读取的内容放在最容易找到的位置，把不再读的内容不断往后排，直至从中删除。</p>
-<p>缓冲（buffers）是根据磁盘的读写设计的，把分散的写操作集中进行，减少磁盘碎片和硬盘的反复寻道，从而提高系统性能。linux有一个守护进程定期清空缓冲内容（即写入磁盘），也可以通过sync命令手动清空缓冲。</p>
-<h2 id="3-清理cache"><a href="#3-清理cache" class="headerlink" title="3. 清理cache"></a>3. 清理cache</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/proc/sys/vm/drop_caches (since Linux 2.6.16)</div><div class="line">Writing to this file causes the kernel to drop clean caches,dentries and inodes from memory, causing that memory to become free.</div><div class="line">To free pagecache, use echo 1 &gt; /proc/sys/vm/drop_caches;</div><div class="line">to free dentries and inodes, use echo 2 &gt; /proc/sys/vm/drop_caches;</div><div class="line">to free pagecache, dentries and inodes, use echo 3 &gt; /proc/sys/vm/drop_caches.</div><div class="line">Because this is a non-destructive operation and dirty objects are not freeable, the user should run sync first.</div></pre></td></tr></table></figure>
-<p>/proc是一个虚拟文件系统，我们可以通过对它的读写操作做为与kernel实体间进行通信的一种手段。也就是说可以通过修改/proc中的文件，来对当前kernel的行为做出调整。那么我们可以通过调整/proc/sys/vm/drop_caches来释放内存。<code>/proc/sys/vm/drop_caches</code>中的默认值为0，值为1时表示可以释放pagecache缓存，值为2时可以释放pagecache和inode缓存，值为3时可以释放pagecache, dentries和inodes缓存。当然在释放内存之前需要执行<code>sync</code>命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sync &amp;&amp; echo 1 &gt; /proc/sys/vm/drop_caches</div><div class="line">sync &amp;&amp; echo 2 &gt; /proc/sys/vm/drop_caches</div><div class="line">sync &amp;&amp; echo 3 &gt; /proc/sys/vm/drop_caches</div></pre></td></tr></table></figure>
-<p>参考资料</p>
-<p>1.<a href="http://www.linuxde.net/2011/07/402.html" target="_blank" rel="external">http://www.linuxde.net/2011/07/402.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      Linux内存分析与清理
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>统计学习方法(一)——统计学习方法概论</title>
-    <link href="noahsnail.com/2017/03/08/2017-3-8-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E6%A6%82%E8%AE%BA/"/>
-    <id>noahsnail.com/2017/03/08/2017-3-8-统计学习方法(一)——统计学习方法概论/</id>
-    <published>2017-03-08T01:12:48.000Z</published>
-    <updated>2017-04-07T08:21:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h1 id="1-统计学习方法概论"><a href="#1-统计学习方法概论" class="headerlink" title="1. 统计学习方法概论"></a>1. 统计学习方法概论</h1><p>本文是统计学习方法（李航）第一章的学习总结。</p>
-<h2 id="1-1-统计学习"><a href="#1-1-统计学习" class="headerlink" title="1.1 统计学习"></a>1.1 统计学习</h2><p><strong>1.统计学习的特点</strong></p>
-<p>统计学习（statistical learning）是关于计算机基于<strong>数据</strong>构建<strong>概率统计模型</strong>并运用模型对数据进行预测和分析的一门学科。统计学习也称为统计机器学习（statistical machine learning）。现在人们提到的机器学习往往是指统计机器学习。</p>
-<p>统计学习的特点：(1)以计算机和网络为平台；(2)以数据为研究对象，是数据驱动的学科；(3)目的是对数据进行分析和预测；(4)以方法为中心，构建模型并应用模型进行分析和预测；(5)是概率论、统计学、信息论、优化理论和计算机科学等多个领域的交叉学科。</p>
-<p><strong>2.统计学习的对象</strong></p>
-<p>统计学习的对象是<strong>数据</strong>（data）。它从数据出发，提取数据特征，抽象出数据模型，根据模型对数据进行分析和预测。统计学习的前提是假设同类数据（具有某种共同性质）具有一定的统计规律性。统计学习过程中，以变量或变量组表示数据，数据分为连续变量和离散变量表示的类型。</p>
-<p><strong>3.统计学习的目的</strong></p>
-<p>统计学习总的目标就是考虑学习什么的模型和如何学习模型，以使模型能够对数据进行准确的预测和分析，同时也要考虑学习效率。</p>
-<p><strong>4.统计学习的方法</strong></p>
-<p>统计学习分为监督学习（supervised learning）、非监督学习（unsupervised learning）、半监督学习(semi-supervised learning)和强化学习(reinforcement learning)等。统计学习方法包括模型的假设空间、模型选择的准则及模型选择的算法，称为统计学习方法的三要素，简称模型（model）、策略（strategy）和算法（algorithm）。</p>
-<p><strong>5.统计学习的研究</strong></p>
-<p>统计学习的研究包括统计学习方法（算法创新）、统计学习理论（算法效率及有效性）及统计学习应用（解决问题）三个方面。</p>
-<p><strong>6.统计学习的重要性</strong></p>
-<p>统计学习的重要性体现在三个方面：（1）统计学习是处理海量数据的有效方法。（2）统计学习是计算机智能化的有效手段。（3）统计学习是计算机发展的重要组成部分。</p>
-<h2 id="1-2-监督学习"><a href="#1-2-监督学习" class="headerlink" title="1.2 监督学习"></a>1.2 监督学习</h2><p>监督学习的任务是学习一个模型，使模型能够对任意给定的输入，对其相应的输出做出一个好的预测。</p>
-<h3 id="1-2-1-基本概念"><a href="#1-2-1-基本概念" class="headerlink" title="1.2.1 基本概念"></a>1.2.1 基本概念</h3><p><strong>1.输入空间、特征空间与输出空间</strong></p>
-<p>在监督学习中，输入与输出的所有可能的取值集合分别称为输入空间（input space）和输出空间（output space）。通常输出空间远远小于输入空间。</p>
-<p>每个具体的输入是一个实例（instance），通常由特征向量（feature vector）表示。所有特征向量存在的空间称为特征空间（feature space）。特征空间的每一维对应一个特征。当输入空间与特征空间不同时，需要将实例从输入空间映射到特征空间，模型实际上都是定义在特征空间上的。</p>
-<p>监督学习过程中，将输入和输出看作是定义在输入空间和输出空间上的<strong>随机变量</strong>的取值。习惯上输入变量写作<code>X</code>，其取值写作<code>x</code>，输出变量写作<code>Y</code>，其取值写作<code>y</code>。输入实例的<code>x</code>的特征向量记作</p>
-<p>$$x = (x^{(1)}, x^{(2)},…, x^{(i)} ,…,x^{(n)})^T$$</p>
-<p>$x^{(i)}$表示向量<code>x</code>的第<code>i</code>个特征，而$x_i$表示第<code>i</code>个输入变量。</p>
-<p>$$x_i = (x_i^{(1)}, x_i^{(2)},…, x_i^{(i)} ,…,x_i^{(n)})^T$$</p>
-<p>监督学习从训练数据中学习模型，对测试数据进行预测。训练集通常表示为</p>
-<p>$$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$$</p>
-<p>$(x_i,y_i)$表示样本或样本点。</p>
-<p>输入变量和输出变量可以是离散型的，也可以是连续型的。输入变量和输出变量都是连续型变量的预测问题称为回归问题；输出变量为有限个离散型变量的预测问题称为分类问题；输入变量和输出变量均为变量序列的预测问题称为标注问题。</p>
-<p><strong>2.联合概率分布</strong></p>
-<p>监督学习假设输入与输出的随机变量X和Y遵循联合概率分布<code>P(X,Y)</code>，<code>P(X,Y)</code>表示分布函数或分布密度函数。训练数据和测试数据被看作是依联合概率分布<code>P(X,Y)</code>独立同分布产生的。统计学习假设数据存在一定的统计规律。</p>
-<p><strong>3.假设空间</strong></p>
-<p>监督学习的目的在于学习一个由输入到输出的映射，映射关系用模型表示。输入到输出的映射集合就是假设空间（hypothesis space）。简单学习的模型可以是概率模型或非概率模型。由条件概率分布<code>P(Y|X)</code>或决策函数<code>Y=f(X)</code>表示。对具体的输入进行输出预测时，写作<code>P(y|x)</code>或<code>y=f(x)</code>。</p>
-<h3 id="1-2-2-问题的形式化"><a href="#1-2-2-问题的形式化" class="headerlink" title="1.2.2 问题的形式化"></a>1.2.2 问题的形式化</h3><p>监督学习利用训练数据学习模型，再用模型对测试数据进行预测。学习过程中的训练数据往往是人工给出的，因此称为监督学习。监督学习分为学习和预测两个过程，如下图：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/supervised-learning.png" alt="监督学习"></p>
-<p>首先给定数据集$T={(x_1,y_1),(x_3,y_2),…,(x_N,y_N)}$，其中$(x_i,y_i)，i=1,2,…,N$，称为样本或样本点，$x_i \in X \subseteq R^n$是输入的观测值，称为输入或实例，$y_i \in Y$是输出的观测值，也称为输出。通过学习得到的模型表示为条件概率分布$P(Y|X)$和决策函数$Y=f(X)$，模型表示的是输入与输出之间的映射关系。</p>
-<p>预测过程中，对于测试数据中的输入$x_{N+1}$,由模型$y_{N+1}=argmax P(y_{N+1}|x_{N+1})$或$y_{N+1}=f(x_{N+1})$给出对应的输出$y_{N+1}$。</p>
-<h2 id="1-3-统计学习三要素"><a href="#1-3-统计学习三要素" class="headerlink" title="1.3 统计学习三要素"></a>1.3 统计学习三要素</h2><p>统计学习方法的三要素为模型、策略和算法，它们关系为：<code>统计学习方法 = 模型 + 策略 + 算法</code>。</p>
-<h3 id="1-3-1-模型"><a href="#1-3-1-模型" class="headerlink" title="1.3.1 模型"></a>1.3.1 模型</h3><p>在监督学习过程中，模型是要学习的条件概率分布或决策函数。模型的假设空间包含所有可能的条件概率分布或决策函数。假设空间用F表示：<br>$$F=\lbrace f|Y=f(X)\rbrace $$<br>X和Y是定义在输入输出空间上的变量，F通常是由一个参数向量决定的函数族：<br>$$F=\lbrace f|Y=f_\theta (X),\theta \in R^n \rbrace$$<br>参数向量$\theta$取值于n维欧式空间$R^n$，称为参数空间（parameter space）。假设空间也可以定义为条件概率的集合：</p>
-<p>$$F=\lbrace P|P(Y|X)\rbrace$$<br>X和Y是定义在输入输出空间上的随机变量，F通常是一个由参数向量决定的条件概率分布族：</p>
-<p>$$F=\lbrace P|P_\theta (Y|X)，\theta \in R^n \rbrace$$<br>参数向量$\theta$取值于n维欧式空间$R^n$，也称为参数空间。</p>
-<h3 id="1-3-2-策略"><a href="#1-3-2-策略" class="headerlink" title="1.3.2 策略"></a>1.3.2 策略</h3><p>有了模型的假设空间，统计学习接着考虑的是按照什么样的准则学习或选择最优的模型，统计学习的目标在于从假设空间中选取最优的模型。损失函数度量模型一次预测的好坏，风险函数度量平均意义下模型预测的好坏。</p>
-<p><strong>1.损失函数和风险函数</strong></p>
-<p>监督学习问题是在假设空间F中选取f作为决策函数，对于给定的输入X，f(X)给出对应的输出Y，输出预测值f(X)与真实值Y可能一致也可能不一致，用一个损失函数（loss function）或代价函数（cost function）。损失函数是f(X)和Y的非负实值函数，记作$L(Y,f(X))$。统计学习常用的损失函数有以下几种：</p>
-<ul>
-<li><p>0-1损失函数（0-1 loss function）<br>$$<br>L(Y,f(X))=<br>\begin{cases}<br>1, Y \neq f(X) \\<br>0, Y=f(X)<br>\end{cases}<br>$$</p>
-</li>
-<li><p>平方损失函数（quadratic loss function）<br>$$L(Y,f(X))=(Y-f(X))^2$$</p>
-</li>
-<li><p>绝对损失函数（absolute loss function）<br>$$L(Y,f(X))=|(Y-f(X))|$$</p>
-</li>
-<li><p>对数损失函数（logarithmic loss function）或对数似然损失函数(log-likelihood loss function)<br>$$L(Y,f(X))=-\log P(Y|X)$$</p>
-</li>
-</ul>
-<p>损失函数越小，模型越好。由于模型输入、输出(X,Y)是随机变量，遵循联合分布P(X,Y)，所以损失函数的期望是</p>
-<p>$$R_{exp}(f)=E_p[L(Y,f(X))]=\int_{x*y}L(y,f(x))P(x,y)dxdy$$</p>
-<p>这是理论上模型f(X)关于联合分布P(x,y)的平均意义下的损失，称为风险函数（risk function）或期望损失（expected loss）。学习的目标就是选择期望风险最小的模型。由于联合分布P(X,Y)是未知的，$R_{exp}(f)$不能直接计算。如果知道联合分布P(X,Y)，从联合分布可以直接求出条件概率分布P(Y|X)，也就不需要学习了。一方面根据期望风险最小学习模型需要用到联合分布，一方面联合分布又是未知的，因此监督学习就称为一个病态问题（ill-formed problem）。</p>
-<p>给定一个训练数据集</p>
-<p>$$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$$</p>
-<p>模型f(X)关于训练数据集的平均损失称为经验风险（empirical risk）或经验损失（empirical loss），记作$R_{emp}$：</p>
-<p>$$R_{emp}(f)=\frac {1} {N} \sum_{i=1}^N L(y_i,f(x_i))$$</p>
-<p>期望风险$R_{exp}(f)$是模型关于联合分布的期望损失，经验风险$R_{emp}(f)$是模型关于训练样本集的平均损失。根据大数定律，当样本容量N趋于无穷时，经验风险$R_{emp}(f)$趋于期望风险$R_{exp}(f)$。因此很自然的一个想法就是用经验风险估计期望风险，但由于训练数据是有限的，因此要对经验风险进行一定的矫正。这关系到监督学习的两个基本策略：经验风险最小化和结构风险最小化。</p>
-<p><strong>2.经验风险最小化和结构风险最小化</strong></p>
-<p>在假设空间、损失函数以及训练数据集确定的情况下，经验风险函数就可以确定。经验风险最小化（empirical risk minimization，ERM）策略认为，经验风险最小的模型就是最优的模型。求解经验最小化最优模型就是求解最优化问题：</p>
-<p>$$^{min} _{f \in F} \frac {1} {N}  \sum_{i=1}^N L(y_i, f(x_i))$$</p>
-<p>当样本容量足够大时，经验风险最小化能保证有很好的学习效果，在现实中被广泛采用。极大似然估计（maximum likelihood estimation）就是经验风险最小化的一个例子。当模型是条件概率分布时，损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。但是，当样本容量很小时，经验风险最小化未必会很好，有可能产生“过拟合”现象。</p>
-<p>结构风险最小化（structural risk minimization，SRM）是为了防止过拟合而提出来的策略，结构化风险最小化等价于正则化（regularization）。结构风险在经验风险的基础上加上了表示模型复杂度的正则项（regularizer）或惩罚项（penalty term）。在假设空间、损失函数和训练数据集确定的情况下，结构风险定义为：</p>
-<p>$$R_{srm}(f)=\frac {1} {N} \sum_{i=1}^N L(y_i,f(x_i)) + \lambda J(f) $$</p>
-<p>$J(f)$为模型的复杂度，模型f越复杂，J(f)越大。$\lambda&gt;=0$是权衡经验风险和模型复杂度的系数。</p>
-<p>结构风险最小化策略认为，结构风险最小的模型就是最优的模型。求解最优模型就是求解最优化问题：</p>
-<p>$$^{min} _{f \in F} \frac {1} {N}  \sum_{i=1}^N L(y_i, f(x_i)) + \lambda J(f) $$</p>
-<p>这样，监督学习问题变成了经验风险或结构风险的最优化问题。</p>
-<h3 id="1-3-3算法"><a href="#1-3-3算法" class="headerlink" title="1.3.3算法"></a>1.3.3算法</h3><p>算法是指学习模型的具体计算方法。统计学习基于训练数据集，根据学习策略，从假设空间中选取最优模型，然后考虑用什么计算方法求解最有模型。统计学习问题变为了最优化问题，统计学习的算法变味求解最优化问题的算法。如何保证找到全局最优解，并使求解过程非常高效，就称为一个重要问题。</p>
-<h2 id="1-4-模型评估与模型选择"><a href="#1-4-模型评估与模型选择" class="headerlink" title="1.4 模型评估与模型选择"></a>1.4 模型评估与模型选择</h2><h3 id="1-4-1-训练误差与测试误差"><a href="#1-4-1-训练误差与测试误差" class="headerlink" title="1.4.1 训练误差与测试误差"></a>1.4.1 训练误差与测试误差</h3><p>当损失函数给定时，基于损失函数的模型的训练误差和模型的测试误差就自然称为学习方法评估的标准。假设学习到的模型为$ Y=f\hat (X)$，训练误差是模型关于训练数据集的平均损失：</p>
-<p>$$R_{emp}(f \hat)=\frac {1} {N} \sum_{i=1}^N L(y_i,f \hat(x_i)) $$</p>
-<p>测试误差是关于测试数据集的平均损失：</p>
-<p>$$e_{test}(f \hat)=\frac {1} {N \prime} \sum_{i=1}^{N\prime} L(y_i,f \hat(x_i)) $$</p>
-<p>N和$N\prime$分别为训练数据集和测试数据集的样本容量。</p>
-<p>通常将学习方法对未知数据的预测能力称为泛化能力（generalization ability）。</p>
-<h3 id="1-4-2-过拟合和模型选择"><a href="#1-4-2-过拟合和模型选择" class="headerlink" title="1.4.2 过拟合和模型选择"></a>1.4.2 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。模型选择时，不仅要考虑对已知数据的预测能力，而且还要考虑对未知数据的预测能力。下图展示了训练误差、测试误差与模型复杂度之间的关系。当模型复杂度增大时，训练误差会逐渐减少并趋向于0；而测试误差会先减少，达到最小值后又增大。当选择的模型复杂度过大时，过拟合现象就会发生。学习时要防止过拟合，进行最优的模型选择，即选择模型复杂度适当的模型，以使测试误差达到最小。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/relations.png" alt="训练误差、测试误差与模型复杂度之间的关系"></p>
-<h2 id="1-5-正则化与交叉验证"><a href="#1-5-正则化与交叉验证" class="headerlink" title="1.5 正则化与交叉验证"></a>1.5 正则化与交叉验证</h2><h3 id="1-5-1-正则化"><a href="#1-5-1-正则化" class="headerlink" title="1.5.1 正则化"></a>1.5.1 正则化</h3><p>模型选择的方法是正则化（regularization）。正则化是结构风险最小化策略的实现，是在经验风险上加上一个正则化项（regularizer）或惩罚项（penalty term）。正则化项一般是模型复杂度的单调递增函数，模型越复杂，正则化值就越大。正则化一般具有以下形式：</p>
-<p>$$^{min}_{f \in F } \frac {1} {N} \sum_{i=1}^{N} L(y_i,f(x_i)) + \lambda J(f)$$</p>
-<p>其中，第一项是经验风险，第二项是正则化项，$\lambda &gt;= 0$为调整两者之间关系的系数。</p>
-<p>正则化项可以取不同的形式，回归问题中，损失函数是平方损失，正则化项可以是参数向量的$L_2$范数：</p>
-<p>$$L(w)=\frac {1} {N} \sum_{i=1}^{N} (f(x_i;w) - y_i)^2 + \frac {\lambda} {2} ||w||^2$$</p>
-<p>$||w||$表示参数向量w的$L_2$范数。正则化项也可以是参数向量的$L_1$范数：</p>
-<p>$$L(w)=\frac {1} {N} \sum_{i=1}^{N} (f(x_i;w) - y_i)^2 + \frac {\lambda} {2} ||w||_1$$</p>
-<p>$||w|_1$表示参数向量w的$L_1$范数。</p>
-<p>正则化的作用是选择经验风险和模型复杂度同时较小的模型。正则化符合奥卡姆剃刀原理：在所有可能选择的模型中，应该选择能够很好的解释已知数据并且十分简单的模型。从贝叶斯估计的角度来看，正则化项对应模型的先验概率，可以假设复杂的模型具有较小的先验概率，简单的模型具有较大的先验概率。</p>
-<h3 id="1-5-2-交叉验证"><a href="#1-5-2-交叉验证" class="headerlink" title="1.5.2 交叉验证"></a>1.5.2 交叉验证</h3><p>另一种常用的模型选择方法是交叉验证（cross validation）。如果给定的样本数据充足，进行模型选择的一种简单方法是随机的将数据分为训练集（training set）、测试集（test set）和验证集（validation set）。训练集用来训练模型，测试集用于模型的评估，验证集用于模型的选择。在学习到的模型中，选择对验证集有最小预测误差的模型。当数据集不充足时，可以采用交叉验证的方法。交叉验证的基本思想是重复的使用数据；吧核定的数据分为训练集和测试集，在此基础上进行反复的训练、测试和模型选择。</p>
-<p><strong>1.简单交叉验证</strong></p>
-<p>简单交叉验证方法是：首先随机地将数据分为两部分——训练集(70%)和测试集(30%)；然后用训练集在各种条件下训练得到不同的模型，在测试集上评价各个模型的测试误差，选择测试误差最小的模型。</p>
-<p><strong>2.S折交叉验证</strong></p>
-<p>应用最多的是S折交叉验证（S-fold cross validation），首先随机地将数据分为S个互不相交的大小相同的子集，然后利用$S-1$个子集的数据进行训练，用剩下的子集进行测试；重复上述过程，最后选出S次测试中平均测试误差最小的模型。</p>
-<p><strong>3.留一交叉验证</strong></p>
-<p>S折交叉验证特殊情况是$S=N$，称为留一交叉验证（leave-one cross validation），往往在数据缺乏的情况下使用。</p>
-<h2 id="1-6-泛化能力"><a href="#1-6-泛化能力" class="headerlink" title="1.6 泛化能力"></a>1.6 泛化能力</h2><h3 id="1-6-1-泛化误差"><a href="#1-6-1-泛化误差" class="headerlink" title="1.6.1 泛化误差"></a>1.6.1 泛化误差</h3><p>学习方法的泛化能力（generalization ability）是指由该方法学习到的模型对未知数据的预测能力，是学习方法本质上最重要的性质。通常采用测试误差来评价学习方法的泛化能力，但这种方法依赖于测试数据，但数据较少时评价结果有可能不可靠。统计学试图从理论上对学习方法的泛化能力进行分析。</p>
-<p>首先给出泛化误差的定义，如果学到的模型是$\hat f$，那么用这个模型对未知数据预测的误差即为泛化误差（generalization error）</p>
-<p>$$R_{exp}(\hat f)=E_p[L(Y,\hat f(X))] = \int_{x*y}L(y,\hat f(x))P(x,y)dxdy$$</p>
-<p>泛化误差反映了学习方法的泛化能力，泛化误差就是所学习到的模型的期望风险。</p>
-<h3 id="1-6-2-泛化误差上界"><a href="#1-6-2-泛化误差上界" class="headerlink" title="1.6.2 泛化误差上界"></a>1.6.2 泛化误差上界</h3><p>学习方法的泛化能力分析往往是通过研究误差的概率上界进行的，简称为泛化误差上界（generalization error bound）。泛化误差上界通常具有以下性质：它是样本容量的函数，当样本容量增加时，泛化上界趋向于0；它是假设空间容量的函数，假设空间容量越大，模型就越难学，泛化误差上界就越大。</p>
-<h2 id="1-7-生成模型和判别模型"><a href="#1-7-生成模型和判别模型" class="headerlink" title="1.7 生成模型和判别模型"></a>1.7 生成模型和判别模型</h2><p>监督学习方法可分为生成方法（generative approach）和判别方法（discriminative approach）。所学到的模型分别称为生成模型（generative model）和判别模型（discriminative model）。生成方法由数据学习联合概率分布P(X,Y)，然后求出条件概率分布P(Y|X)作为预测的模型，即生成模型：</p>
-<p>$$P(Y|X)=\frac {P(X,Y)} {P(X)}$$</p>
-<p>之所以称为生成方法，是因为模型表示了给定输入X产生输出Y的生成关系。典型的生成模型有：朴素贝叶斯法和隐马尔可夫模型。</p>
-<p>判别方法由数据直接学习决策函数f(X)或者条件概率分布P(Y|X)作为预测的模型，即判别模型。判别方法关心的是对给定的输入X，应该预测什么样的输出Y。典型的判别模型包括：k近邻法、感知机、决策树、逻辑回归模型、最大熵模型、支持向量机、提升方法和条件随机场。</p>
-<p>在监督学习中，生成方法和判别方法各有优缺点，适合于不同条件下的学习问题。生成方法的特点：生成方法可以还原出联合概率分布P(X,Y)，而判别方法则不能；生成方法的收敛速度更快，当存在隐变量时，仍可以使用生成方法，此时判别方法不可用。判别方法的特点：判别方法直接学习的是条件概率P(Y|X)或决策函数f(X)，直接面对预测，往往学习的准确率更高；由于直接学习P(Y|X)或f(X)，可以对数据进行各种程度上的抽象、定义特征并使用特征，因此可以简化学习问题。</p>
-<h2 id="1-8-分类问题"><a href="#1-8-分类问题" class="headerlink" title="1.8 分类问题"></a>1.8 分类问题</h2><p>分类是监督学习的一个核心问题。在监督学习中，当输出变量Y取有限个离散值时，预测问题便称为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier）。分类器对新的输入进行输出的预测（prediction），称为分类（classification）。分类的类别为多个时，称为多分类问题。分类问题包括学习和分类两个过程。学习过程中，根据已知的训练数据集学习一个分类器，分类过程中，根据学习的分类器对新实例进行分类。分类问题如图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/classity_problem.png" alt="分类问题"></p>
-<p>精确率的定义为$P=\frac {TP} {TP+FP}$，召回率的定义为$R=\frac {TP} {TP+FN}$，F1值是精确率和召回率的调和均值，公式为$F1=\frac {2PR} {P+R}$。精确率和召回率都高时，F1值也会高。</p>
-<h2 id="1-9-标注问题"><a href="#1-9-标注问题" class="headerlink" title="1.9 标注问题"></a>1.9 标注问题</h2><p>标注（tagging）也是一个监督学习问题，可以认为标注问题是分类问题的一个推广，标注问题的输入是一个观测序列，输出是一个标记序列或状态序列。标注问题的目标在于学习一个模型，使它能够对观测序列给出标记序列作为预测。标注问题分为学习和标记过程。学习系统基于训练数据集构建一个模型，表示为条件概率，标注系统按照学习到的条件概率分布模型，对新的输入观测序列找到相应的输出标记序列。标注问题如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/tagging.png" alt="标注问题"></p>
-<p>评价标注模型的指标与评价分类模型的指标一样，常用的有标注准确率、精确率和召回率。标注常用的统计学习方法有：隐马尔可夫模型、条件随机场。标注问题在信息抽取、自然语言处理等领域被广泛应用，是这些领域的基本问题。</p>
-<h2 id="1-10-回归问题"><a href="#1-10-回归问题" class="headerlink" title="1.10 回归问题"></a>1.10 回归问题</h2><p>回归（regression）是监督学习的另一个重要问题。回归用于预测输入变量（自变量）和输出变量（因变量）之间的关系，特别是当输入变量的值发生变化时，输出变量的值随之发生变化。回归模型正是表示从输入变量到输出变量之间的映射的函数。回归问题等价于函数拟合，选择一条函数曲线使其很好地拟合已知数据且很好的预测未知数据。</p>
-<p>回归问题分为学习和预测两个过程。学习系统基于训练数据构建一个模型，预测系统根据学习的模型确定相应的输出。回归问题如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/regression.png" alt="回归问题"></p>
-<p>回归问题按照变量的个数分为一元回归和多元回归；按照输入变量和输出变量之间关系的类型即模型的类型，分为线性回归和非线性回归。回归学习最常用的损失函数是平方损失函数，此情况下回归问题可以用最小二乘法求解。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      统计学习方法(一)——统计学习方法概论
-    
-    </summary>
-    
-      <category term="机器学习" scheme="noahsnail.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="统计学习方法" scheme="noahsnail.com/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux查询CPU信息</title>
-    <link href="noahsnail.com/2017/03/06/2017-3-6-Linux%E6%9F%A5%E8%AF%A2CPU%E4%BF%A1%E6%81%AF/"/>
-    <id>noahsnail.com/2017/03/06/2017-3-6-Linux查询CPU信息/</id>
-    <published>2017-03-06T05:44:15.000Z</published>
-    <updated>2017-03-06T10:01:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h2><ul>
-<li><p>物理CPU数<br>主板上实际插入的CPU数量，可以数不重复的physical id 有几个（physical id）</p>
-</li>
-<li><p>CPU核数<br>单块CPU上面能处理数据的芯片组的数量，如双核、四核等（CPU cores）</p>
-</li>
-<li><p>逻辑CPU数<br>一般情况下，逻辑CPU数=物理CPU个数<em>每颗核数，如果不相等的话，则表示服务器的CPU支持超线程技术（简单来说，它可使处理器中的1颗内核如2颗内核那样在操作系统中发挥作用。这样一来，操作系统可使用的执行资源扩大了一倍，大幅提高了系统的整体性能，此时逻辑CPU=物理CPU个数</em>每颗核数*2）</p>
-</li>
-<li><p>它们之间的关系<br>总核数 = 物理CPU个数 <em> 每颗物理CPU的核数<br>总逻辑CPU数 = 物理CPU个数 </em> 每颗物理CPU的核数 * 超线程数</p>
-</li>
-</ul>
-<h2 id="2-查看物理CPU的个数"><a href="#2-查看物理CPU的个数" class="headerlink" title="2.查看物理CPU的个数"></a>2.查看物理CPU的个数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l</div><div class="line">2</div></pre></td></tr></table></figure>
-<h2 id="3-查看逻辑CPU个数"><a href="#3-查看逻辑CPU个数" class="headerlink" title="3.查看逻辑CPU个数"></a>3.查看逻辑CPU个数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l</div><div class="line">24</div></pre></td></tr></table></figure>
-<h2 id="4-查看CPU核数"><a href="#4-查看CPU核数" class="headerlink" title="4.查看CPU核数"></a>4.查看CPU核数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo |grep &quot;cores&quot;|uniq</div><div class="line">cpu cores       : 6</div></pre></td></tr></table></figure>
-<h2 id="5-查看CPU型号信息"><a href="#5-查看CPU型号信息" class="headerlink" title="5.查看CPU型号信息"></a>5.查看CPU型号信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</div><div class="line">     24  Intel(R) Xeon(R) CPU E5-2630L v2 @ 2.40GHz</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Linux查询CPU信息
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
     
   </entry>
   
