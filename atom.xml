@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-08T15:13:33.000Z</updated>
+  <updated>2017-04-08T15:27:35.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>tensorflow的基本用法</title>
+    <title>tensorflow的基本用法(一)</title>
     <link href="noahsnail.com/2017/04/08/2017-4-8-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/"/>
     <id>noahsnail.com/2017/04/08/2017-4-8-tensorflow的基本用法/</id>
     <published>2017-04-08T15:07:03.000Z</published>
-    <updated>2017-04-08T15:13:33.000Z</updated>
+    <updated>2017-04-08T15:27:35.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是以求解线性回归的参数为例，讲解一下tensorflow的用法。下面的代码中我们自己构建了一个线性回归模型<code>y = 0.1 * x + 0.3</code>，然后我们使用tensorflow来进行了求解。Demo源码及解释如下：</p>
@@ -32,7 +32,7 @@
     
     <summary type="html">
     
-      tensorflow的基本用法
+      tensorflow的基本用法(一)
     
     </summary>
     
