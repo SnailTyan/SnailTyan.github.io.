@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-08T15:27:35.000Z</updated>
+  <updated>2017-04-09T10:16:31.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode402——Remove K Digits</title>
+    <link href="noahsnail.com/2017/04/09/2017-4-9-Leetcode402%E2%80%94%E2%80%94%20Remove%20K%20Digits/"/>
+    <id>noahsnail.com/2017/04/09/2017-4-9-Leetcode402—— Remove K Digits/</id>
+    <published>2017-04-09T06:09:34.000Z</published>
+    <updated>2017-04-09T10:16:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a non-negative integer num represented as a string, remove k digits from the number so that the new number is the smallest possible.</p>
+<p>Note:<br>The length of num is less than 10002 and will be ≥ k.<br>The given num does not contain any leading zero.<br>Example 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: num = &quot;1432219&quot;, k = 3</div><div class="line">Output: &quot;1219&quot;</div><div class="line">Explanation: Remove the three digits 4, 3, and 2 to form the new number 1219 which is the smallest.</div></pre></td></tr></table></figure>
+<p>Example 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: num = &quot;10200&quot;, k = 1</div><div class="line">Output: &quot;200&quot;</div><div class="line">Explanation: Remove the leading 1 and the number is 200. Note that the output must not contain leading zeroes.</div></pre></td></tr></table></figure>
+<p>Example 3:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Input: num = &quot;10&quot;, k = 2</div><div class="line">Output: &quot;0&quot;</div><div class="line">Explanation: Remove all the digits from the number and it is left with nothing which is 0.</div></pre></td></tr></table></figure>
+<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>每移除一个字符，找出移除一个字符串后得到的字符串中最小的那个，作为下一次移除字符的输入，这样每次移除字符后得到子串都是最小子串。这里必须要明确每次移除字符的最优解必定是下一次移除字符最优解的输入，即f(n)的最优解必定是求解f(n-1)的最优解的一部分。问题的最优解解中包含了子问题的最优解。</p>
+<p><strong>方法一：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public String removeKdigits(String num, int k) &#123;</div><div class="line">        String min = remove(num, k);</div><div class="line">        if(min.equals(&quot;&quot;)) &#123;</div><div class="line">            return &quot;0&quot;;</div><div class="line">        &#125;</div><div class="line">        while(min.charAt(0) == &apos;0&apos;) &#123;</div><div class="line">            if(min.length() == 1) &#123;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">            min = min.substring(1, min.length());</div><div class="line">        &#125;</div><div class="line">        return min;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public String remove(String num, int k) &#123;</div><div class="line">        if(k == 0) &#123;</div><div class="line">            return num;</div><div class="line">        &#125;</div><div class="line">        int n = num.length();</div><div class="line">        String minString = num.substring(0, num.length() - 1);</div><div class="line">        for(int i = 0; i &lt; n; i++) &#123;</div><div class="line">            String temp = num.substring(0, i) + num.substring(i + 1, n);</div><div class="line">            if(temp.compareTo(minString) &lt; 0) &#123;</div><div class="line">                minString = temp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return remove(minString, k - 1);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Leetcode超时。</p>
+<p><strong>方法二</strong></p>
+<p>要想数字变小，应该从前往后删除字符，因为前面的字符是数字的高位，在删除一个字符的情况下，删除数字的位置会被它的后一位替代，因此应该删除当前数字大于后一位数字的字符。如果前面没有找到符合条件的数字，则删除最后一位数字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">       public String removeKdigits(String num, int k) &#123;</div><div class="line">    	//用StringBuilder是因为StringBuilder有删除指定字符的功能</div><div class="line">        StringBuilder min = new StringBuilder(num);</div><div class="line">        for(int m = 0; m &lt; k; m++) &#123;</div><div class="line">            int index = 0;</div><div class="line">            int n = min.length();</div><div class="line">            for(int i = 0; i &lt; n; i++) &#123;</div><div class="line"></div><div class="line">                if((i == n -1) || min.charAt(i) &gt; min.charAt(i + 1)) &#123;</div><div class="line">                    index = i;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            min = min.deleteCharAt(index);</div><div class="line">        &#125;</div><div class="line">        //判断字符串为空的情况</div><div class="line">        if(min.length() == 0) &#123;</div><div class="line">            return &quot;0&quot;;</div><div class="line">        &#125;</div><div class="line">        //去掉字符串前面的“0”</div><div class="line">        while(min.charAt(0) == &apos;0&apos;) &#123;</div><div class="line">            if(min.length() == 1) &#123;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">            min = min.deleteCharAt(0);</div><div class="line">        &#125;</div><div class="line">        return min.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Leetcode402—— Remove K Digits
+    
+    </summary>
+    
+      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>tensorflow的基本用法(二)</title>
+    <link href="noahsnail.com/2017/04/08/2017-4-8-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)/"/>
+    <id>noahsnail.com/2017/04/08/2017-4-8-tensorflow的基本用法(二)/</id>
+    <published>2017-04-08T15:37:15.000Z</published>
+    <updated>2017-04-09T06:08:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是使用tensorflow进行矩阵的乘法运算。代码中介绍了两种不同的使用session的方式。Demo源码及解释如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 定义两个矩阵</div><div class="line">matrix1 = tf.constant([[3, 3]])</div><div class="line">matrix2 = tf.constant([[2], [2]])</div><div class="line"></div><div class="line"># 定义矩阵乘法</div><div class="line">product = tf.matmul(matrix1, matrix2)</div><div class="line"></div><div class="line"># 运行矩阵乘法，session用法一</div><div class="line">sess = tf.Session()</div><div class="line">result = sess.run(product)</div><div class="line">print &apos;Session用法一&apos;</div><div class="line">print result</div><div class="line">sess.close()</div><div class="line"></div><div class="line">## session用法二，不用考虑close，会自动关闭</div><div class="line"></div><div class="line">with tf.Session() as sess:</div><div class="line">	result = sess.run(product)</div><div class="line">	print &apos;Session用法二&apos;</div><div class="line">	print result</div></pre></td></tr></table></figure>
+<p>执行结果如下图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Session用法一</div><div class="line">[[12]]</div><div class="line">Session用法二</div><div class="line">[[12]]</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      tensorflow的基本用法(二)
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>tensorflow的基本用法(一)</title>
@@ -568,152 +630,6 @@
     
     
       <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode394——Decode String</title>
-    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode394%E2%80%94%E2%80%94Decode%20String/"/>
-    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode394——Decode String/</id>
-    <published>2017-03-14T06:30:08.000Z</published>
-    <updated>2017-03-14T06:52:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given an encoded string, return it’s decoded string.</p>
-<p>The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.</p>
-<p>You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.</p>
-<p>Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there won’t be input like 3a or 2[4].</p>
-<p>Examples:</p>
-<p>s = “3[a]2[bc]”, return “aaabcbc”.<br>s = “3[a2[c]]”, return “accaccacc”.<br>s = “2[abc]3[cd]ef”, return “abcabccdcdcdef”.</p>
-<p><strong>中文</strong></p>
-<p>给定一个经过编码的字符串，返回其解码字符串。编码规则为：k[encoded_string]，其中中括号内的encoded_string被重复k次。注意k一定是正整数。</p>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>本题中明显有括号的匹配问题，因此需要使用栈来求解。当碰到右括号（<code>]</code>）时，字符串出栈，碰到左括号（<code>[</code>）时，保存左右括号内的字符串（<code>[]</code>），继续出栈，保存字符串重复次数，直至栈为空或碰到非数字。要注意重复次数不是个位数，将字符串重复之后压入栈中。继续处理剩余字符串，同样执行上述过程，直至处理完字符串。然后将栈中所有的字符出栈构成结果字符串返回。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">	public String decodeString(String s) &#123;</div><div class="line">		int n = s.length();</div><div class="line">		Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();</div><div class="line">		String result = &quot;&quot;;</div><div class="line">		String temp = &quot;&quot;;</div><div class="line">		for (int i = 0; i &lt; n; i ++) &#123;</div><div class="line">			char str = s.charAt(i);</div><div class="line">			if (str != &apos;]&apos;) &#123;</div><div class="line">				stack.push(str);</div><div class="line">			&#125; else &#123;</div><div class="line">				char ch = stack.pop();</div><div class="line">				while (ch != &apos;[&apos;) &#123;</div><div class="line">					temp = ch + temp;</div><div class="line">					ch = stack.pop();</div><div class="line">				&#125;</div><div class="line">				//字符串重复次数</div><div class="line">				String times = &quot;&quot;;</div><div class="line">				while(!stack.isEmpty()) &#123;</div><div class="line">					ch = stack.pop();</div><div class="line">					if(Character.isDigit(ch)) &#123;</div><div class="line">						times = ch + times;</div><div class="line">					&#125;else &#123;</div><div class="line">						stack.push(ch);</div><div class="line">						break;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				//重复字符串，压入栈中</div><div class="line">				for(int j = 0; j &lt; Integer.parseInt(times); j++) &#123;</div><div class="line">					for(int k = 0; k &lt; temp.length(); k++) &#123;</div><div class="line">						stack.push(temp.charAt(k));</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				temp = &quot;&quot;;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		while(!stack.isEmpty()) &#123;</div><div class="line">			result = stack.pop() + result;</div><div class="line">		&#125; </div><div class="line">		return result;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Leetcode394——Decode String
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux的tar命令</title>
-    <link href="noahsnail.com/2017/03/13/2017-3-13-Linux%E7%9A%84tar%E5%91%BD%E4%BB%A4/"/>
-    <id>noahsnail.com/2017/03/13/2017-3-13-Linux的tar命令/</id>
-    <published>2017-03-13T02:48:58.000Z</published>
-    <updated>2017-03-21T08:15:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>Linux下经常碰到需要解压文件的情况，需要用到<code>tar</code>命令，本文主要介绍一下<code>tar</code>命令。</p>
-<h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>Linux tar命令用于备份文件。tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。我的直观印象就是压缩解压文件。其参数如下：</p>
-<ul>
-<li>-A或–catenate 新增文件到已存在的备份文件。</li>
-<li>-b&lt;区块数目&gt;或–blocking-factor=&lt;区块数目&gt; 设置每笔记录的区块数目，每个区块大小为12Bytes。</li>
-<li>-B或–read-full-records 读取数据时重设区块大小。</li>
-<li>-c或–create 建立新的备份文件。</li>
-<li>-C&lt;目的目录&gt;或–directory=&lt;目的目录&gt; 切换到指定的目录。</li>
-<li>-d或–diff或–compare 对比备份文件内和文件系统上的文件的差异。</li>
-<li>-f&lt;备份文件&gt;或–file=&lt;备份文件&gt; 指定备份文件。</li>
-<li>-F<script文件>或–info-script=<script文件> 每次更换磁带时，就执行指定的Script文件。</script文件></script文件></li>
-<li>-g或–listed-incremental 处理GNU格式的大量备份。</li>
-<li>-G或–incremental 处理旧的GNU格式的大量备份。</li>
-<li>-h或–dereference 不建立符号连接，直接复制该连接所指向的原始文件。</li>
-<li>-i或–ignore-zeros 忽略备份文件中的0 Byte区块，也就是EOF。</li>
-<li>-k或–keep-old-files 解开备份文件时，不覆盖已有的文件。</li>
-<li>-K&lt;文件&gt;或–starting-file=&lt;文件&gt; 从指定的文件开始还原。</li>
-<li>-l或–one-file-system 复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相同，否则不予复制。</li>
-<li>-L&lt;媒体容量&gt;或-tape-length=&lt;媒体容量&gt; 设置存放每体的容量，单位以1024 Bytes计算。</li>
-<li>-m或–modification-time 还原文件时，不变更文件的更改时间。</li>
-<li>-M或–multi-volume 在建立，还原备份文件或列出其中的内容时，采用多卷册模式。</li>
-<li>-N&lt;日期格式&gt;或–newer=&lt;日期时间&gt; 只将较指定日期更新的文件保存到备份文件里。</li>
-<li>-o或–old-archive或–portability 将资料写入备份文件时使用V7格式。</li>
-<li>-O或–stdout 把从备份文件里还原的文件输出到标准输出设备。</li>
-<li>-p或–same-permissions 用原来的文件权限还原文件。</li>
-<li>-P或–absolute-names 文件名使用绝对名称，不移除文件名称前的”/“号。</li>
-<li>-r或–append 新增文件到已存在的备份文件的结尾部分。</li>
-<li>-R或–block-number 列出每个信息在备份文件中的区块编号。</li>
-<li>-s或–same-order 还原文件的顺序和备份文件内的存放顺序相同。</li>
-<li>-S或–sparse 倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</li>
-<li>-t或–list 列出备份文件的内容。</li>
-<li>-T&lt;范本文件&gt;或–files-from=&lt;范本文件&gt; 指定范本文件，其内含有一个或多个范本样式，让tar解开或建立符合设置条件的文件。</li>
-<li>-u或–update 仅置换较备份文件内的文件更新的文件。</li>
-<li>-U或–unlink-first 解开压缩文件还原文件之前，先解除文件的连接。</li>
-<li>-v或–verbose 显示指令执行过程。</li>
-<li>-V&lt;卷册名称&gt;或–label=&lt;卷册名称&gt; 建立使用指定的卷册名称的备份文件。</li>
-<li>-w或–interactive 遭遇问题时先询问用户。</li>
-<li>-W或–verify 写入备份文件后，确认文件正确无误。</li>
-<li>-x或–extract或–get 从备份文件中还原文件。</li>
-<li>-X&lt;范本文件&gt;或–exclude-from=&lt;范本文件&gt; 指定范本文件，其内含有一个或多个范本样式，让ar排除符合设置条件的文件。</li>
-<li>-z或–gzip或–ungzip 通过gzip指令处理备份文件。</li>
-<li>-Z或–compress或–uncompress 通过compress指令处理备份文件。</li>
-<li>-&lt;设备编号&gt;&lt;存储密度&gt; 设置备份用的外围设备编号及存放数据的密度。</li>
-<li>–after-date=&lt;日期时间&gt; 此参数的效果和指定”-N”参数相同。</li>
-<li>–atime-preserve 不变更文件的存取时间。</li>
-<li>–backup=&lt;备份方式&gt;或–backup 移除文件前先进行备份。</li>
-<li>–checkpoint 读取备份文件时列出目录名称。</li>
-<li>–concatenate 此参数的效果和指定”-A”参数相同。</li>
-<li>–confirmation 此参数的效果和指定”-w”参数相同。</li>
-<li>–delete 从备份文件中删除指定的文件。</li>
-<li>–exclude=&lt;范本样式&gt; 排除符合范本样式的问家。</li>
-<li>–group=&lt;群组名称&gt; 把加入设备文件中的文件的所属群组设成指定的群组。</li>
-<li>–help 在线帮助。</li>
-<li>–ignore-failed-read 忽略数据读取错误，不中断程序的执行。</li>
-<li>–new-volume-script=<script文件> 此参数的效果和指定”-F”参数相同。</script文件></li>
-<li>–newer-mtime 只保存更改过的文件。</li>
-<li>–no-recursion 不做递归处理，也就是指定目录下的所有文件及子目录不予处理。</li>
-<li>–null 从null设备读取文件名称。</li>
-<li>–numeric-owner 以用户识别码及群组识别码取代用户名称和群组名称。</li>
-<li>–owner=&lt;用户名称&gt; 把加入备份文件中的文件的拥有者设成指定的用户。</li>
-<li>–posix 将数据写入备份文件时使用POSIX格式。</li>
-<li>–preserve 此参数的效果和指定”-ps”参数相同。</li>
-<li>–preserve-order 此参数的效果和指定”-A”参数相同。</li>
-<li>–preserve-permissions 此参数的效果和指定”-p”参数相同。</li>
-<li>–record-size=&lt;区块数目&gt; 此参数的效果和指定”-b”参数相同。</li>
-<li>–recursive-unlink 解开压缩文件还原目录之前，先解除整个目录下所有文件的连接。</li>
-<li>–remove-files 文件加入备份文件后，就将其删除。</li>
-<li>–rsh-command=&lt;执行指令&gt; 设置要在远端主机上执行的指令，以取代rsh指令。</li>
-<li>–same-owner 尝试以相同的文件拥有者还原问家你。</li>
-<li>–suffix=&lt;备份字尾字符串&gt; 移除文件前先行备份。</li>
-<li>–totals 备份文件建立后，列出文件大小。</li>
-<li>–use-compress-program=&lt;执行指令&gt; 通过指定的指令处理备份文件。</li>
-<li>–version 显示版本信息。</li>
-<li>–volno-file=&lt;编号文件&gt; 使用指定文件内的编号取代预设的卷册编号。</li>
-</ul>
-<h2 id="2-Demo"><a href="#2-Demo" class="headerlink" title="2. Demo"></a>2. Demo</h2><ul>
-<li>查看压缩文件中的内容</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ tar -tvf inception-v3.tar.gz </div><div class="line">drwxrwxr-x  0 muli   muli        0 12 21  2015 model/</div><div class="line">-rw-rw-r--  0 muli   muli    31691 12 17  2015 model/synset.txt</div><div class="line">-rw-rw-r--  0 muli   muli 95575141 12 17  2015 model/Inception-7-0001.params</div><div class="line">-rw-rw-r--  0 muli   muli      879 12 17  2015 model/preprocessing.py</div><div class="line">-rw-rw-r--  0 muli   muli   134383 12 17  2015 model/Inception-7-symbol.json</div></pre></td></tr></table></figure>
-<ul>
-<li>解压文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ tar -xvf inception-v3.tar.gz </div><div class="line">x model/</div><div class="line">x model/synset.txt</div><div class="line">x model/Inception-7-0001.params</div><div class="line">x model/preprocessing.py</div><div class="line">x model/Inception-7-symbol.json</div></pre></td></tr></table></figure>
-<ul>
-<li>解压到指定目录</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ mkdir test</div><div class="line">$ tar xvf inception-v3.tar.gz -C ./test</div><div class="line">x model/</div><div class="line">x model/synset.txt</div><div class="line">x model/Inception-7-0001.params</div><div class="line">x model/preprocessing.py</div><div class="line">x model/Inception-7-symbol.json</div></pre></td></tr></table></figure>
-<ul>
-<li>压缩指定文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tar -zcvf test.tar.gz test</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Linux的tar命令
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
     
   </entry>
   
