@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2017/04/08/2017-4-8-tensorflow的基本用法/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="tensorflow的基本用法(一)">
-<meta property="og:updated_time" content="2017-04-08T15:27:35.000Z">
+<meta property="og:updated_time" content="2017-04-10T11:10:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow的基本用法(一)">
 <meta name="twitter:description" content="tensorflow的基本用法(一)">
@@ -312,8 +312,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-04-08T23:27:35+08:00">
-              2017-04-08
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-10T19:10:55+08:00">
+              2017-04-10
             </time>
             
           </span>
@@ -381,7 +381,7 @@
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是以求解线性回归的参数为例，讲解一下tensorflow的用法。下面的代码中我们自己构建了一个线性回归模型<code>y = 0.1 * x + 0.3</code>，然后我们使用tensorflow来进行了求解。Demo源码及解释如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 随机生成100个浮点数</div><div class="line">x_data = np.random.rand(100).astype(np.float32)</div><div class="line"># y=0.1*x+0.3，这样就构造了训练数据(x_data,y_data)</div><div class="line">y_data = x_data * 0.1 + 0.3</div><div class="line"></div><div class="line"># 定义线性回归的权重参数</div><div class="line">Weights = tf.Variable(tf.random_uniform([1], -1.0, 1.0))</div><div class="line"># 定义线性回归的偏置参数</div><div class="line">Biases = tf.Variable(tf.zeros([1]))</div><div class="line"></div><div class="line"># 构建线性回归模型</div><div class="line">y = Weights * x_data + Biases</div><div class="line"># 计算线性回归的损失函数</div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line"></div><div class="line"># 定义线性回归的求解方法，梯度下降法，学习率为0.5</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.5)</div><div class="line"># 使用tensorflow求解</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"># 初始化tensorflow的所有变量</div><div class="line">init = tf.initialize_all_variables()</div><div class="line"># 定义tensorflow的session</div><div class="line">sess = tf.Session()</div><div class="line"># 将初始化数据放入到session中，执行时会用到</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"># 迭代201次求解线性回归参数</div><div class="line">for step in range(201):</div><div class="line">	# session执行训练</div><div class="line">	sess.run(train)</div><div class="line">	if step % 20 == 0:</div><div class="line">		# 每迭代二十次输出一次结果</div><div class="line">		print step, sess.run(Weights), sess.run(Biases)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 随机生成100个浮点数</div><div class="line">x_data = np.random.rand(100).astype(np.float32)</div><div class="line"># y=0.1*x+0.3，这样就构造了训练数据(x_data,y_data)</div><div class="line">y_data = x_data * 0.1 + 0.3</div><div class="line"></div><div class="line"># 定义线性回归的权重参数</div><div class="line">Weights = tf.Variable(tf.random_uniform([1], -1.0, 1.0))</div><div class="line"># 定义线性回归的偏置参数</div><div class="line">Biases = tf.Variable(tf.zeros([1]))</div><div class="line"></div><div class="line"># 构建线性回归模型</div><div class="line">y = Weights * x_data + Biases</div><div class="line"># 计算线性回归的损失函数</div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line"></div><div class="line"># 定义线性回归的求解方法，梯度下降法，学习率为0.5</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.5)</div><div class="line"># 使用tensorflow求解</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"># 初始化tensorflow的所有变量</div><div class="line">init = tf.global_variables_initializer()</div><div class="line"># 定义tensorflow的session</div><div class="line">sess = tf.Session()</div><div class="line"># 将初始化数据放入到session中，执行时会用到</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"># 迭代201次求解线性回归参数</div><div class="line">for step in range(201):</div><div class="line">	# session执行训练</div><div class="line">	sess.run(train)</div><div class="line">	if step % 20 == 0:</div><div class="line">		# 每迭代二十次输出一次结果</div><div class="line">		print step, sess.run(Weights), sess.run(Biases)</div></pre></td></tr></table></figure>
 <p>执行结果如下图：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0 [ 0.46898228] [ 0.12989661]</div><div class="line">20 [ 0.18490312] [ 0.25323763]</div><div class="line">40 [ 0.1203066] [ 0.28881568]</div><div class="line">60 [ 0.10485679] [ 0.29732502]</div><div class="line">80 [ 0.10116163] [ 0.29936022]</div><div class="line">100 [ 0.10027781] [ 0.29984701]</div><div class="line">120 [ 0.10006645] [ 0.29996341]</div><div class="line">140 [ 0.10001589] [ 0.29999125]</div><div class="line">160 [ 0.10000382] [ 0.29999793]</div><div class="line">180 [ 0.10000091] [ 0.29999951]</div><div class="line">200 [ 0.10000024] [ 0.29999989]</div></pre></td></tr></table></figure>
 <p>从结果中可以看出，求解的结果还是很准确的。</p>
@@ -427,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/08/2017-4-8-tensorflow的基本用法(二)/" rel="prev" title="tensorflow的基本用法(二)">
-                tensorflow的基本用法(二) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/08/2017-4-8-tensorflow的基本用法(二)/" rel="prev" title="tensorflow的基本用法(二)——Session">
+                tensorflow的基本用法(二)——Session <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -511,7 +511,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">197</span>
+              <span class="site-state-item-count">202</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-09T10:16:31.000Z</updated>
+  <updated>2017-04-12T15:12:12.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,158 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tensorflow的基本用法(五)——创建神经网络并训练</title>
+    <link href="noahsnail.com/2017/04/12/2017-4-12-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%94)%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%B1%82/"/>
+    <id>noahsnail.com/2017/04/12/2017-4-12-tensorflow的基本用法(五)——创建神经网络层/</id>
+    <published>2017-04-12T14:09:21.000Z</published>
+    <updated>2017-04-12T15:12:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是介绍利用tensorflow创建一个简单的神经网络并进行训练。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 创建一个神经网络层</div><div class="line">def add_layer(input, in_size, out_size, activation_function = None):</div><div class="line">	&quot;&quot;&quot;</div><div class="line">	:param input:</div><div class="line">		神经网络层的输入</div><div class="line">	:param in_zize:</div><div class="line">		输入数据的大小</div><div class="line">	:param out_size:</div><div class="line">		输出数据的大小</div><div class="line">	:param activation_function:</div><div class="line">		神经网络激活函数，默认没有</div><div class="line">	&quot;&quot;&quot;</div><div class="line"></div><div class="line">	# 定义神经网络的初始化权重</div><div class="line">	Weights = tf.Variable(tf.random_normal([in_size, out_size]))</div><div class="line">	# 定义神经网络的偏置</div><div class="line">	biases = tf.Variable(tf.zeros([1, out_size]) + 0.1)</div><div class="line">	# 计算w*x+b</div><div class="line">	W_mul_x_plus_b = tf.matmul(input, Weights) + biases</div><div class="line">	# 根据是否有激活函数进行处理</div><div class="line">	if activation_function is None:</div><div class="line">		output = W_mul_x_plus_b</div><div class="line">	else:</div><div class="line">		output = activation_function(W_mul_x_plus_b)</div><div class="line"></div><div class="line">	return output</div><div class="line"></div><div class="line"># 创建一个具有输入层、隐藏层、输出层的三层神经网络，神经元个数分别为1,10,1</div><div class="line"># 创建只有一个特征的输入数据，数据数目为300，输入层</div><div class="line">x_data = np.linspace(-1, 1, 300)[:, np.newaxis]</div><div class="line"># 创建数据中的噪声</div><div class="line">noise = np.random.normal(0, 0.05, x_data.shape)</div><div class="line"># 创建输入数据对应的输出</div><div class="line">y_data = np.square(x_data) + 1 + noise</div><div class="line"></div><div class="line"># 定义输入数据，None是样本数目，表示多少输入数据都行，1是输入数据的特征数目</div><div class="line">xs = tf.placeholder(tf.float32, [None, 1])</div><div class="line"># 定义输出数据，与xs同理</div><div class="line">ys = tf.placeholder(tf.float32, [None, 1])</div><div class="line"></div><div class="line"># 定义一个隐藏层</div><div class="line">hidden_layer = add_layer(xs, 1, 10, activation_function = tf.nn.relu)</div><div class="line"># 定义输出层</div><div class="line">prediction = add_layer(hidden_layer, 10, 1, activation_function = None)</div><div class="line"></div><div class="line"># 求解神经网络参数</div><div class="line"># 定义损失函数</div><div class="line">loss = tf.reduce_mean(tf.reduce_sum(tf.square(ys - prediction), reduction_indices = [1]))</div><div class="line"># 定义训练过程</div><div class="line">train_step = tf.train.GradientDescentOptimizer(0.1).minimize(loss)</div><div class="line"># 变量初始化</div><div class="line">init = tf.global_variables_initializer()</div><div class="line"># 定义Session</div><div class="line">sess = tf.Session()</div><div class="line"># 执行初始化工作</div><div class="line">sess.run(init)</div><div class="line"># 进行训练</div><div class="line">for i in range(1000):</div><div class="line">	# 执行训练，并传入数据</div><div class="line">	sess.run(train_step, feed_dict = &#123;xs: x_data, ys: y_data&#125;)</div><div class="line">	if i % 100 == 0:</div><div class="line">		print sess.run(loss, feed_dict = &#123;xs: x_data, ys: y_data&#125;)</div><div class="line"># 关闭Session</div><div class="line">sess.close()</div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1.06731</div><div class="line">0.0111914</div><div class="line">0.00651229</div><div class="line">0.00530187</div><div class="line">0.00472237</div><div class="line">0.00429948</div><div class="line">0.00399815</div><div class="line">0.00377548</div><div class="line">0.00359714</div><div class="line">0.00345819</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      tensorflow的基本用法(五)——创建神经网络并训练
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>tensorflow的基本用法(四)——placeholder</title>
+    <link href="noahsnail.com/2017/04/11/2017-4-11-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%9B%9B)/"/>
+    <id>noahsnail.com/2017/04/11/2017-4-11-tensorflow的基本用法(四)/</id>
+    <published>2017-04-11T14:26:39.000Z</published>
+    <updated>2017-04-12T15:08:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是介绍tensorflow中的placeholder及用法。placeholder，中文意思是占位符，在tensorflow中类似于函数参数，运行时必须传入值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 定义placeholder</div><div class="line">input1 = tf.placeholder(tf.float32)</div><div class="line">input2 = tf.placeholder(tf.float32)</div><div class="line"></div><div class="line"># 定义乘法运算</div><div class="line">output = tf.multiply(input1, input2)</div><div class="line"></div><div class="line"># 通过session执行乘法运行</div><div class="line">with tf.Session() as sess:</div><div class="line">	# 执行时要传入placeholder的值</div><div class="line">	print sess.run(output, feed_dict = &#123;input1:[7.], input2: [2.]&#125;)</div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ 14.]</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      tensorflow的基本用法(四)——placeholder
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>tensorflow的基本用法(三)——Variable</title>
+    <link href="noahsnail.com/2017/04/10/2017-4-10-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)/"/>
+    <id>noahsnail.com/2017/04/10/2017-4-10-tensorflow的基本用法(三)/</id>
+    <published>2017-04-10T10:58:57.000Z</published>
+    <updated>2017-04-11T14:34:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是介绍tensorflow中的变量Variable及用法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 定义变量</div><div class="line">state = tf.Variable(0, name = &apos;counter&apos;)</div><div class="line">print(state.name)</div><div class="line"></div><div class="line"># 定义常量</div><div class="line">one = tf.constant(1)</div><div class="line"># 定义新的变量，值等于state + one</div><div class="line">new_value = tf.add(state, one)</div><div class="line"># 定义update操作，将new_value赋值给state</div><div class="line">update = tf.assign(state, new_value)</div><div class="line"></div><div class="line"># 定义的变量激活，如果定义了Variable，必须有</div><div class="line">init = tf.global_variables_initializer()</div><div class="line"> </div><div class="line">with tf.Session() as sess:</div><div class="line">	sess.run(init)</div><div class="line">	for _ in range(3):</div><div class="line">		# 执行update操作，update操作包括add,assign两部分</div><div class="line">		sess.run(update)</div><div class="line">		# 输出state结果，必须放到sess.run()中</div><div class="line">		print sess.run(state)</div></pre></td></tr></table></figure>
+<p>执行结果如下图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">counter:0</div><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      tensorflow的基本用法(三)——Variable
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>统计学习方法(二)——感知机</title>
+    <link href="noahsnail.com/2017/04/10/2017-4-10-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
+    <id>noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/</id>
+    <published>2017-04-10T09:27:03.000Z</published>
+    <updated>2017-04-12T15:12:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h1 id="第2章-感知机"><a href="#第2章-感知机" class="headerlink" title="第2章 感知机"></a>第2章 感知机</h1><p>感知机（perceptron）是二分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取+1和-1值。感知机将实例分为正负两类的分离超平面，属于判别模型。感知机旨在求出将训练数据进行线性可分的分离超平面，根据损失函数用梯度下降法对损失函数进行极小化，求的感知机模型。</p>
+<h2 id="2-1-感知机模型"><a href="#2-1-感知机模型" class="headerlink" title="2.1 感知机模型"></a>2.1 感知机模型</h2><p><strong>感知机定义</strong></p>
+<p>假设输入空间是$x \in R^n$，输出空间是$y=\lbrace +1,-1 \rbrace$，输入$x \in X$是实例的特征向量，是输入空间的点，输出$y \in Y$表示实例的类别，输入输出之间的映射函数为：</p>
+<p>$$f(x)=sign(w * x + b)$$</p>
+<p>f(x)称为感知机。其中，w和b为感知机的模型参数，$w \in R^n$叫做权值(weight)或权值向量(weight vector)，$b \in R$叫做偏置（bias）。$w*x$表示w与x的内积。sign是符号函数，即</p>
+<p>$$sign(x)=<br>\begin{cases}<br>+1，x \geq 0 \\<br>-1，x \lt 0<br>\end{cases}$$</p>
+<p>感知机是一种线性分类模型，属于判别模型。感知机模型的假设空间是定义在特征空间中的所有线性分类模型（linear classification model）或线性分类器（linear classifier），即函数集合$\lbrace f|f(x) = w * x + b\rbrace$。感知机的几何解释为：线性方程</p>
+<p>$$w * x + b = 0$$</p>
+<p>对应于特征空间$R^n$中的一个超平面S，其中w是超平面的法向量，b是超平面的截距，这个超平面将特征空间划分为两个部分。位于两部分的点（特征向量）分别被分为正负两类，因此超平面S称为分离超平面（separating hyperplane），如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/perceptron.png" alt="感知机模型"></p>
+<h2 id="2-2-感知机学习策略"><a href="#2-2-感知机学习策略" class="headerlink" title="2.2 感知机学习策略"></a>2.2 感知机学习策略</h2><h3 id="2-2-1-数据集的线性可分性"><a href="#2-2-1-数据集的线性可分性" class="headerlink" title="2.2.1 数据集的线性可分性"></a>2.2.1 数据集的线性可分性</h3><p><strong>线性可分性</strong></p>
+<p>给定一个数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中$x_i \in X = R^n$，$y \in Y=\lbrace +1,-1 \rbrace$，$i=1,2,…,N$，如果存在超平面S</p>
+<p>$$w * x + b = 0$$</p>
+<p>能够将数据集的正实例点和负实例点完全正确地划分到超平面的两侧，即对所有$y_i=+1$的实例i，有$w<em>_i+b&gt;0$，对所有$y_i=-1$的实例i，有$w</em>_i+b&lt;0$，则称数据集T为线性可分数据集（linear separable data set）；否则，称数据集T线性不可分。</p>
+<h3 id="2-2-2-感知机学习策略"><a href="#2-2-2-感知机学习策略" class="headerlink" title="2.2.2 感知机学习策略"></a>2.2.2 感知机学习策略</h3><p>假定训练数据集是线性可分的，感知机的学习目标是求得一个能将训练集正负实例点完全正确分开的分离超平面。为了找出超平面，即确定模型参数w，b，需要确定学习策略，即定义损失函数并将损失函数最小化。损失函数的一个自然选择是分类点的错误数。但这样的损失函数不是连续可导函数，不易优化。因此感知机采用误分类点到超平面S的总距离作为损失函数。输入空间中任意一点$x_0$到超平面S的距离为：</p>
+<p>$$\frac {1} {||w||} |w * x_0 + b|$$</p>
+<p>$||w||$为w的$L_2$范数。对于误分类的数据$(x_i,y_i)$，$-y_i(w * x + b) \lt 0$始终成立。因此，误分类点$x_i$到超平面S的距离为：</p>
+<p>$$-\frac {1} {||w||} y_i(w * x_i + b)$$</p>
+<p>假设误分类点集合为M，M到超平面S的总距离为</p>
+<p>$$-\frac {1} {||w||} \sum_{x_i \in M} y_i(w * x_i + b)$$</p>
+<p>去掉$||w||$，就得到了感知机的损失函数。感知机${sign}(w * x + b)$的损失函数为</p>
+<p>$$L(w,b)=-\sum_{x_i \in M} y_i(w * x_i + b)$$</p>
+]]></content>
+    
+    <summary type="html">
+    
+      统计学习方法(二)——感知机
+    
+    </summary>
+    
+      <category term="机器学习" scheme="noahsnail.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="统计学习方法" scheme="noahsnail.com/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mac安装Python版OpenCV</title>
+    <link href="noahsnail.com/2017/04/10/2017-4-10-Mac%E5%AE%89%E8%A3%85Python%E7%89%88OpenCV/"/>
+    <id>noahsnail.com/2017/04/10/2017-4-10-Mac安装Python版OpenCV/</id>
+    <published>2017-04-10T08:10:24.000Z</published>
+    <updated>2017-04-10T08:53:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-brew安装opencv"><a href="#1-brew安装opencv" class="headerlink" title="1. brew安装opencv"></a>1. brew安装opencv</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew install homebrew/science/opencv</div><div class="line"></div><div class="line">brew install homebrew/science/opencv3</div></pre></td></tr></table></figure>
+<h2 id="2-把opencv添加到python中"><a href="#2-把opencv添加到python中" class="headerlink" title="2. 把opencv添加到python中"></a>2. 把opencv添加到python中</h2><p>执行下面的命令，或直接将<code>/usr/local/Cellar/opencv3/3.1.0_4/lib/python2.7/site-packages/</code>下的cv2.so拷贝到<code>/Users/ltc/anaconda/lib/python2.7/site-packages/</code>目录中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo /usr/local/Cellar/opencv3/3.1.0_4/lib/python2.7/site-packages/ &gt;&gt; /Users/ltc/anaconda/lib/python2.7/site-packages/opencv3.pth</div></pre></td></tr></table></figure>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ python</div><div class="line">$ import cv2</div></pre></td></tr></table></figure>
+<p>不报错，安装成功。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Mac安装Python版OpenCV
+    
+    </summary>
+    
+      <category term="OpenCV" scheme="noahsnail.com/categories/OpenCV/"/>
+    
+    
+      <category term="OpenCV" scheme="noahsnail.com/tags/OpenCV/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode402——Remove K Digits</title>
@@ -52,11 +204,11 @@
   </entry>
   
   <entry>
-    <title>tensorflow的基本用法(二)</title>
+    <title>tensorflow的基本用法(二)——Session</title>
     <link href="noahsnail.com/2017/04/08/2017-4-8-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)/"/>
     <id>noahsnail.com/2017/04/08/2017-4-8-tensorflow的基本用法(二)/</id>
     <published>2017-04-08T15:37:15.000Z</published>
-    <updated>2017-04-09T06:08:32.000Z</updated>
+    <updated>2017-04-11T14:35:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是使用tensorflow进行矩阵的乘法运算。代码中介绍了两种不同的使用session的方式。Demo源码及解释如下：</p>
@@ -66,7 +218,7 @@
     
     <summary type="html">
     
-      tensorflow的基本用法(二)
+      tensorflow的基本用法(二)——Session
     
     </summary>
     
@@ -82,11 +234,11 @@
     <link href="noahsnail.com/2017/04/08/2017-4-8-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/"/>
     <id>noahsnail.com/2017/04/08/2017-4-8-tensorflow的基本用法/</id>
     <published>2017-04-08T15:07:03.000Z</published>
-    <updated>2017-04-08T15:27:35.000Z</updated>
+    <updated>2017-04-10T11:10:55.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是以求解线性回归的参数为例，讲解一下tensorflow的用法。下面的代码中我们自己构建了一个线性回归模型<code>y = 0.1 * x + 0.3</code>，然后我们使用tensorflow来进行了求解。Demo源码及解释如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 随机生成100个浮点数</div><div class="line">x_data = np.random.rand(100).astype(np.float32)</div><div class="line"># y=0.1*x+0.3，这样就构造了训练数据(x_data,y_data)</div><div class="line">y_data = x_data * 0.1 + 0.3</div><div class="line"></div><div class="line"># 定义线性回归的权重参数</div><div class="line">Weights = tf.Variable(tf.random_uniform([1], -1.0, 1.0))</div><div class="line"># 定义线性回归的偏置参数</div><div class="line">Biases = tf.Variable(tf.zeros([1]))</div><div class="line"></div><div class="line"># 构建线性回归模型</div><div class="line">y = Weights * x_data + Biases</div><div class="line"># 计算线性回归的损失函数</div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line"></div><div class="line"># 定义线性回归的求解方法，梯度下降法，学习率为0.5</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.5)</div><div class="line"># 使用tensorflow求解</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"># 初始化tensorflow的所有变量</div><div class="line">init = tf.initialize_all_variables()</div><div class="line"># 定义tensorflow的session</div><div class="line">sess = tf.Session()</div><div class="line"># 将初始化数据放入到session中，执行时会用到</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"># 迭代201次求解线性回归参数</div><div class="line">for step in range(201):</div><div class="line">	# session执行训练</div><div class="line">	sess.run(train)</div><div class="line">	if step % 20 == 0:</div><div class="line">		# 每迭代二十次输出一次结果</div><div class="line">		print step, sess.run(Weights), sess.run(Biases)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 随机生成100个浮点数</div><div class="line">x_data = np.random.rand(100).astype(np.float32)</div><div class="line"># y=0.1*x+0.3，这样就构造了训练数据(x_data,y_data)</div><div class="line">y_data = x_data * 0.1 + 0.3</div><div class="line"></div><div class="line"># 定义线性回归的权重参数</div><div class="line">Weights = tf.Variable(tf.random_uniform([1], -1.0, 1.0))</div><div class="line"># 定义线性回归的偏置参数</div><div class="line">Biases = tf.Variable(tf.zeros([1]))</div><div class="line"></div><div class="line"># 构建线性回归模型</div><div class="line">y = Weights * x_data + Biases</div><div class="line"># 计算线性回归的损失函数</div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line"></div><div class="line"># 定义线性回归的求解方法，梯度下降法，学习率为0.5</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.5)</div><div class="line"># 使用tensorflow求解</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"># 初始化tensorflow的所有变量</div><div class="line">init = tf.global_variables_initializer()</div><div class="line"># 定义tensorflow的session</div><div class="line">sess = tf.Session()</div><div class="line"># 将初始化数据放入到session中，执行时会用到</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"># 迭代201次求解线性回归参数</div><div class="line">for step in range(201):</div><div class="line">	# session执行训练</div><div class="line">	sess.run(train)</div><div class="line">	if step % 20 == 0:</div><div class="line">		# 每迭代二十次输出一次结果</div><div class="line">		print step, sess.run(Weights), sess.run(Biases)</div></pre></td></tr></table></figure>
 <p>执行结果如下图：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0 [ 0.46898228] [ 0.12989661]</div><div class="line">20 [ 0.18490312] [ 0.25323763]</div><div class="line">40 [ 0.1203066] [ 0.28881568]</div><div class="line">60 [ 0.10485679] [ 0.29732502]</div><div class="line">80 [ 0.10116163] [ 0.29936022]</div><div class="line">100 [ 0.10027781] [ 0.29984701]</div><div class="line">120 [ 0.10006645] [ 0.29996341]</div><div class="line">140 [ 0.10001589] [ 0.29999125]</div><div class="line">160 [ 0.10000382] [ 0.29999793]</div><div class="line">180 [ 0.10000091] [ 0.29999951]</div><div class="line">200 [ 0.10000024] [ 0.29999989]</div></pre></td></tr></table></figure>
 <p>从结果中可以看出，求解的结果还是很准确的。</p>
@@ -477,152 +629,6 @@
     <summary type="html">
     
       Leetcode2——Add Two Numbers
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>二值卷积神经网络</title>
-    <link href="noahsnail.com/2017/03/15/2017-3-15-%E4%BA%8C%E5%80%BC%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    <id>noahsnail.com/2017/03/15/2017-3-15-二值卷积神经网络/</id>
-    <published>2017-03-15T09:22:00.000Z</published>
-    <updated>2017-03-16T00:51:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h1 id="XNOR-Net-ImageNet-Classification-Using-Binary-Convolutional-Neural-Networks"><a href="#XNOR-Net-ImageNet-Classification-Using-Binary-Convolutional-Neural-Networks" class="headerlink" title="XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks"></a>XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks</h1><h1 id="XNOR-Net：使用二值卷积神经网络对ImageNet分类"><a href="#XNOR-Net：使用二值卷积神经网络对ImageNet分类" class="headerlink" title="XNOR-Net：使用二值卷积神经网络对ImageNet分类"></a>XNOR-Net：使用二值卷积神经网络对ImageNet分类</h1>]]></content>
-    
-    <summary type="html">
-    
-      二值卷积神经网络
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode1——Two Sum</title>
-    <link href="noahsnail.com/2017/03/15/2017-3-15-Leetcode1%E2%80%94%E2%80%94Two%20Sum/"/>
-    <id>noahsnail.com/2017/03/15/2017-3-15-Leetcode1——Two Sum/</id>
-    <published>2017-03-15T01:41:41.000Z</published>
-    <updated>2017-03-16T02:29:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
-<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Given nums = [2, 7, 11, 15], target = 9,</div><div class="line"></div><div class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</div><div class="line">return [0, 1].</div></pre></td></tr></table></figure>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>解法一</strong></p>
-<p>这个题最简单也是最容易的就是两层循环遍历，这个没什么可说的，时间复杂度为O(n^2)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int[] twoSum(int[] nums, int target) &#123;</div><div class="line">        int result[] = new int[2];</div><div class="line">        int n = nums.length;</div><div class="line">        for(int i = 0; i &lt; n; i++) &#123;</div><div class="line">            for(int j = i + 1; j &lt; n; j++) &#123;</div><div class="line">                int sum = nums[i] + nums[j];</div><div class="line">                if(sum == target) &#123;</div><div class="line">                    result[0] = i;</div><div class="line">                    result[1] = j;</div><div class="line">                    return result;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Leetcode Accepted，Runtime: 45 ms。</p>
-<p><strong>解法二</strong></p>
-<p>思考一下，如何进行优化呢？首先，条件为<code>nums[i] + nums[j] = target</code>，已知target和nums[i]的情况下，能不能直接确定nums[j]在数组中是否存在呢？这是可以的，很容易想到map结构，当然数据结构要变换一下，而map的查询复杂度为O(1)，map结构的设计有两种，要不是key为整数，要不key为整数的索引。由于我们求的是整数的索引，因此应该将key设为整数，value为整数的索引。但key为整数有一个问题就是，如果数组中存在相同整数，则后一个放入的数值会覆盖前一个，因此需要单独处理。题目中明确说了一个输入只有一个解，因此如果出现两个整数相等的情况，只需要找到另一个数字的索引即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int[] twoSum(int[] nums, int target) &#123;</div><div class="line">        int result[] = new int[2];</div><div class="line">        int n = nums.length;</div><div class="line">        Map&lt;Integer, Integer&gt; map = new HashMap&lt;Integer, Integer&gt;();</div><div class="line">        for(int i = 0; i &lt; n; i++) &#123;</div><div class="line">            int other = target - nums[i];</div><div class="line">            map.put(nums[i], i);</div><div class="line">            if(map.containsKey(other)) &#123;</div><div class="line">                //两个数字不等情况</div><div class="line">                if(other != nums[i]) &#123;</div><div class="line">                    //注意顺序</div><div class="line">                    result[0] = map.get(other);</div><div class="line">                    result[1] = i;</div><div class="line">                    break;</div><div class="line">                &#125;else &#123;</div><div class="line">                    //数字相等情况</div><div class="line">                    result[0] = i;</div><div class="line">                    for(int j = i + 1; j &lt; n; j++) &#123;</div><div class="line">                        if(nums[j] == other) &#123;</div><div class="line">                            result[1] = j;</div><div class="line">                            return result;</div><div class="line">                        &#125;</div><div class="line">                    &#125;  </div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Leetcode Accepted，Runtime: 12 ms。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode1——Two Sum
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode155——Min Stack</title>
-    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode155%E2%80%94%E2%80%94Min%20Stack/"/>
-    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode155——Min Stack/</id>
-    <published>2017-03-14T14:46:56.000Z</published>
-    <updated>2017-03-18T02:24:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
-<p>push(x) – Push element x onto stack.<br>pop() – Removes the element on top of the stack.<br>top() – Get the top element.<br>getMin() – Retrieve the minimum element in the stack.</p>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MinStack minStack = new MinStack();</div><div class="line">minStack.push(-2);</div><div class="line">minStack.push(0);</div><div class="line">minStack.push(-3);</div><div class="line">minStack.getMin();   --&gt; Returns -3.</div><div class="line">minStack.pop();</div><div class="line">minStack.top();      --&gt; Returns 0.</div><div class="line">minStack.getMin();   --&gt; Returns -2.</div></pre></td></tr></table></figure>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>方法一</strong><br>主要是模拟写一个最小栈。要注意push时可能会输入null。需要使用双栈实现，一个保存数据，一个保存最小值。由于随着数据出栈，最小值是不断变化的，因此需要一个最小值栈来保存最小值。方法一是最小值栈与普通栈大小不等的情况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class MinStack &#123;</div><div class="line">    private Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();</div><div class="line">    private Stack&lt;Integer&gt; minStack = new Stack&lt;&gt;();</div><div class="line"></div><div class="line">    public void push(int x) &#123;</div><div class="line">        if(minStack.isEmpty() || x &lt;= minStack.peek()) &#123;</div><div class="line">            minStack.push(x);</div><div class="line">        &#125;</div><div class="line">        stack.push(x);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void pop() &#123;</div><div class="line">        if(stack.peek().equals(minStack.peek())) &#123;</div><div class="line">            minStack.pop();</div><div class="line">        &#125;</div><div class="line">        stack.pop();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int top() &#123;</div><div class="line">        return stack.peek();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMin() &#123;</div><div class="line">        return minStack.peek();        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>方法二</strong><br>最小值栈与存储元素的栈大小始终相等的情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class MinStack &#123;</div><div class="line">    private Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();</div><div class="line">    private Stack&lt;Integer&gt; minStack = new Stack&lt;Integer&gt;();</div><div class="line"></div><div class="line">    public void push(int x) &#123;</div><div class="line">        if(minStack.isEmpty() || x &lt;= minStack.peek()) &#123;</div><div class="line">            minStack.push(x);</div><div class="line">        &#125;else &#123;</div><div class="line">            minStack.push(minStack.peek());</div><div class="line">        &#125;</div><div class="line">        stack.push(x);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void pop() &#123;</div><div class="line">        minStack.pop();</div><div class="line">        stack.pop();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int top() &#123;</div><div class="line">        return stack.peek();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMin() &#123;</div><div class="line">        return minStack.peek();        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode155——Min Stack
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode152——Maximum Product Subarray</title>
-    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode152%E2%80%94%E2%80%94Maximum%20Product%20Subarray/"/>
-    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode152——Maximum Product Subarray/</id>
-    <published>2017-03-14T10:37:05.000Z</published>
-    <updated>2017-03-14T10:54:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Find the contiguous subarray within an array (containing at least one number) which has the largest product.</p>
-<p>For example, given the array [2,3,-2,4],<br>the contiguous subarray [2,3] has the largest product = 6.</p>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题跟Leetcode 53——Maximum Subarray类似，可以用三重循环，两种循环解决。但最好的还是用动态规划解决，找出状态转移方程最关键。由于乘积可能为负数，负负得正，因此第<code>i-1</code>次的乘积最大值（maxValuePre）与最小值（minValuePre）都需要保留。当然也可以定义最大值最小值数组来保存第i次乘积的最大值（maxValue）与最小值（minValue）。与Maximum Subarray相比，最大值为<code>maxValue = max(minValuePre * nums[i], maxValuePre * nums[i], nums[i])</code>，最小值同样如此。</p>
-<p><strong>没有定义最大值数组与最小值数组</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int maxProduct(int[] nums) &#123;</div><div class="line">        int n = nums.length;</div><div class="line">        int maxValue = nums[0];</div><div class="line">        int minValue = nums[0];</div><div class="line">        int result = nums[0];</div><div class="line">        int maxValuePre = nums[0], minValuePre = nums[0];</div><div class="line">        for(int i = 1; i &lt; n; i++) &#123;</div><div class="line">            maxValue = Math.max(minValuePre * nums[i], Math.max(maxValuePre * nums[i], nums[i]));</div><div class="line">            minValue = Math.min(minValuePre * nums[i], Math.min(maxValuePre * nums[i], nums[i]));</div><div class="line">            if(maxValue &gt; result) &#123;</div><div class="line">                result = maxValue;</div><div class="line">            &#125;</div><div class="line">            maxValuePre = maxValue;</div><div class="line">            minValuePre = minValue;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>定义最大值数组与最小值数组</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public int maxProduct(int[] nums) &#123;</div><div class="line">        int n = nums.length;</div><div class="line">        int maxValue[] = new int[nums.length];</div><div class="line">        int minValue[] = new int[nums.length];</div><div class="line">        maxValue[0] = nums[0];</div><div class="line">        minValue[0] = nums[0];</div><div class="line">        int result = nums[0];</div><div class="line">        for(int i = 1; i &lt; n; i++) &#123;</div><div class="line">            maxValue[i] = Math.max(minValue[i - 1] * nums[i], Math.max(maxValue[i - 1] * nums[i], nums[i]));</div><div class="line">            minValue[i] = Math.min(minValue[i - 1] * nums[i], Math.min(maxValue[i - 1] * nums[i], nums[i]));</div><div class="line">            if(maxValue[i] &gt; result) &#123;</div><div class="line">                result = maxValue[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Leetcode152——Maximum Product Subarray
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode128——Longest Consecutive Sequence</title>
-    <link href="noahsnail.com/2017/03/14/2017-3-14-Leetcode128%E2%80%94%E2%80%94Longest%20Consecutive%20Sequence/"/>
-    <id>noahsnail.com/2017/03/14/2017-3-14-Leetcode128——Longest Consecutive Sequence/</id>
-    <published>2017-03-14T10:14:21.000Z</published>
-    <updated>2017-03-14T10:30:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.</p>
-<p>For example,<br>Given [100, 4, 200, 1, 3, 2],<br>The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.</p>
-<p>Your algorithm should run in O(n) complexity.</p>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>题中明确要求时间复杂度为O(n)，因此这道题肯定不能使用循环遍历。这道题主要是考察哈希表，因为哈希表每次查询的时间复杂度为O(1)。因此首先要将数组转为Map。然后分别查询每个数字的前一个数与后一个数，统计数字连续的数量。如果在哈希表中存在相邻的数，查询后应该从哈希表中删除，当然不删也可以。如果哈希表为空，则直接跳出循环，不再遍历。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">   	public int longestConsecutive(int[] nums) &#123;</div><div class="line">		int max = 0;</div><div class="line">		int count = 0;</div><div class="line">		Map&lt;String, Integer&gt; map = new HashMap&lt;String, Integer&gt;();</div><div class="line">		for(int i = 0; i &lt; nums.length; i++) &#123;</div><div class="line">			map.put(String.valueOf(nums[i]), nums[i]);</div><div class="line">		&#125;</div><div class="line">		for(int i = 0; i &lt; nums.length; i++) &#123;</div><div class="line">			count = 1;</div><div class="line">			int x = nums[i];</div><div class="line">			while(true) &#123;</div><div class="line">				int temp = --x;</div><div class="line">				if(map.containsKey(String.valueOf(temp))) &#123;</div><div class="line">					map.remove(String.valueOf(temp));</div><div class="line">					count++;</div><div class="line">				&#125;else &#123;</div><div class="line">					break;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			//必须重置x</div><div class="line">			x = nums[i];</div><div class="line">			while(true) &#123;</div><div class="line">				int temp = ++x;</div><div class="line">				if(map.containsKey(String.valueOf(temp))) &#123;</div><div class="line">					map.remove(String.valueOf(temp));</div><div class="line">					count++;</div><div class="line">				&#125;else &#123;</div><div class="line">					break;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			if(count &gt; max) &#123;</div><div class="line">				max = count;</div><div class="line">			&#125;</div><div class="line">			if(map.isEmpty()) &#123;</div><div class="line">				break;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		return max;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode128——Longest Consecutive Sequence
     
     </summary>
     

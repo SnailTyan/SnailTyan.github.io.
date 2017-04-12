@@ -1,0 +1,785 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="统计学习方法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="统计学习方法(二)——感知机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计学习方法(二)——感知机">
+<meta property="og:url" content="noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="统计学习方法(二)——感知机">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/perceptron.png">
+<meta property="og:updated_time" content="2017-04-12T15:12:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="统计学习方法(二)——感知机">
+<meta name="twitter:description" content="统计学习方法(二)——感知机">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/perceptron.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/"/>
+
+
+
+
+
+  <title> 统计学习方法(二)——感知机 | SnailTyan </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">SnailTyan</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tyan">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="SnailTyan">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="SnailTyan" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                统计学习方法(二)——感知机
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-10T17:27:03+08:00">
+              2017-04-10
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-12T23:12:15+08:00">
+              2017-04-12
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/10/2017-4-10-统计学习方法(二)——感知机/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/10/2017-4-10-统计学习方法(二)——感知机/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+          
+          
+              <div class="post-description">
+                  统计学习方法(二)——感知机
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h1 id="第2章-感知机"><a href="#第2章-感知机" class="headerlink" title="第2章 感知机"></a>第2章 感知机</h1><p>感知机（perceptron）是二分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取+1和-1值。感知机将实例分为正负两类的分离超平面，属于判别模型。感知机旨在求出将训练数据进行线性可分的分离超平面，根据损失函数用梯度下降法对损失函数进行极小化，求的感知机模型。</p>
+<h2 id="2-1-感知机模型"><a href="#2-1-感知机模型" class="headerlink" title="2.1 感知机模型"></a>2.1 感知机模型</h2><p><strong>感知机定义</strong></p>
+<p>假设输入空间是$x \in R^n$，输出空间是$y=\lbrace +1,-1 \rbrace$，输入$x \in X$是实例的特征向量，是输入空间的点，输出$y \in Y$表示实例的类别，输入输出之间的映射函数为：</p>
+<p>$$f(x)=sign(w * x + b)$$</p>
+<p>f(x)称为感知机。其中，w和b为感知机的模型参数，$w \in R^n$叫做权值(weight)或权值向量(weight vector)，$b \in R$叫做偏置（bias）。$w*x$表示w与x的内积。sign是符号函数，即</p>
+<p>$$sign(x)=<br>\begin{cases}<br>+1，x \geq 0 \\<br>-1，x \lt 0<br>\end{cases}$$</p>
+<p>感知机是一种线性分类模型，属于判别模型。感知机模型的假设空间是定义在特征空间中的所有线性分类模型（linear classification model）或线性分类器（linear classifier），即函数集合$\lbrace f|f(x) = w * x + b\rbrace$。感知机的几何解释为：线性方程</p>
+<p>$$w * x + b = 0$$</p>
+<p>对应于特征空间$R^n$中的一个超平面S，其中w是超平面的法向量，b是超平面的截距，这个超平面将特征空间划分为两个部分。位于两部分的点（特征向量）分别被分为正负两类，因此超平面S称为分离超平面（separating hyperplane），如下图所示：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/perceptron.png" alt="感知机模型"></p>
+<h2 id="2-2-感知机学习策略"><a href="#2-2-感知机学习策略" class="headerlink" title="2.2 感知机学习策略"></a>2.2 感知机学习策略</h2><h3 id="2-2-1-数据集的线性可分性"><a href="#2-2-1-数据集的线性可分性" class="headerlink" title="2.2.1 数据集的线性可分性"></a>2.2.1 数据集的线性可分性</h3><p><strong>线性可分性</strong></p>
+<p>给定一个数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中$x_i \in X = R^n$，$y \in Y=\lbrace +1,-1 \rbrace$，$i=1,2,…,N$，如果存在超平面S</p>
+<p>$$w * x + b = 0$$</p>
+<p>能够将数据集的正实例点和负实例点完全正确地划分到超平面的两侧，即对所有$y_i=+1$的实例i，有$w<em>_i+b&gt;0$，对所有$y_i=-1$的实例i，有$w</em>_i+b&lt;0$，则称数据集T为线性可分数据集（linear separable data set）；否则，称数据集T线性不可分。</p>
+<h3 id="2-2-2-感知机学习策略"><a href="#2-2-2-感知机学习策略" class="headerlink" title="2.2.2 感知机学习策略"></a>2.2.2 感知机学习策略</h3><p>假定训练数据集是线性可分的，感知机的学习目标是求得一个能将训练集正负实例点完全正确分开的分离超平面。为了找出超平面，即确定模型参数w，b，需要确定学习策略，即定义损失函数并将损失函数最小化。损失函数的一个自然选择是分类点的错误数。但这样的损失函数不是连续可导函数，不易优化。因此感知机采用误分类点到超平面S的总距离作为损失函数。输入空间中任意一点$x_0$到超平面S的距离为：</p>
+<p>$$\frac {1} {||w||} |w * x_0 + b|$$</p>
+<p>$||w||$为w的$L_2$范数。对于误分类的数据$(x_i,y_i)$，$-y_i(w * x + b) \lt 0$始终成立。因此，误分类点$x_i$到超平面S的距离为：</p>
+<p>$$-\frac {1} {||w||} y_i(w * x_i + b)$$</p>
+<p>假设误分类点集合为M，M到超平面S的总距离为</p>
+<p>$$-\frac {1} {||w||} \sum_{x_i \in M} y_i(w * x_i + b)$$</p>
+<p>去掉$||w||$，就得到了感知机的损失函数。感知机${sign}(w * x + b)$的损失函数为</p>
+<p>$$L(w,b)=-\sum_{x_i \in M} y_i(w * x_i + b)$$</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/统计学习方法/" rel="tag"># 统计学习方法</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/10/2017-4-10-Mac安装Python版OpenCV/" rel="next" title="Mac安装Python版OpenCV">
+                <i class="fa fa-chevron-left"></i> Mac安装Python版OpenCV
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/10/2017-4-10-tensorflow的基本用法(三)/" rel="prev" title="tensorflow的基本用法(三)——Variable">
+                tensorflow的基本用法(三)——Variable <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/04/10/2017-4-10-统计学习方法(二)——感知机/"
+     data-title="统计学习方法(二)——感知机"
+     data-content=""
+     data-url="noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/10/2017-4-10-统计学习方法(二)——感知机/"
+           data-title="统计学习方法(二)——感知机" data-url="noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+          <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">202</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第2章-感知机"><span class="nav-number">1.</span> <span class="nav-text">第2章 感知机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-感知机模型"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 感知机模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-感知机学习策略"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 感知机学习策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-数据集的线性可分性"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 数据集的线性可分性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-感知机学习策略"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 感知机学习策略</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"noahsnail"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+  
+
+
+</body>
+</html>
