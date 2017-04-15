@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-12T15:12:12.000Z</updated>
+  <updated>2017-04-14T14:54:55.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tensorflow的基本用法(六)——神经网络可视化</title>
+    <link href="noahsnail.com/2017/04/14/2017-4-14-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AD)%E2%80%94%E2%80%94%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    <id>noahsnail.com/2017/04/14/2017-4-14-tensorflow的基本用法(六)——神经网络可视化/</id>
+    <published>2017-04-14T14:40:35.000Z</published>
+    <updated>2017-04-14T14:54:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是对tensorflow的神经网络训练过程以及神经网络结构进行可视化工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 创建一个神经网络层</div><div class="line">def add_layer(input, in_size, out_size, activation_function = None):</div><div class="line">	&quot;&quot;&quot;</div><div class="line">	:param input:</div><div class="line">		神经网络层的输入</div><div class="line">	:param in_zize:</div><div class="line">		输入数据的大小</div><div class="line">	:param out_size:</div><div class="line">		输出数据的大小</div><div class="line">	:param activation_function:</div><div class="line">		神经网络激活函数，默认没有</div><div class="line">	&quot;&quot;&quot;</div><div class="line">	with tf.name_scope(&apos;layer&apos;):</div><div class="line">		with tf.name_scope(&apos;weights&apos;):</div><div class="line">			# 定义神经网络的初始化权重</div><div class="line">			Weights = tf.Variable(tf.random_normal([in_size, out_size]))</div><div class="line">		with tf.name_scope(&apos;biases&apos;):</div><div class="line">			# 定义神经网络的偏置</div><div class="line">			biases = tf.Variable(tf.zeros([1, out_size]) + 0.1)</div><div class="line">		with tf.name_scope(&apos;W_mul_x_plus_b&apos;):</div><div class="line">			# 计算w*x+b</div><div class="line">			W_mul_x_plus_b = tf.matmul(input, Weights) + biases</div><div class="line">		# 根据是否有激活函数进行处理</div><div class="line">		if activation_function is None:</div><div class="line">			output = W_mul_x_plus_b</div><div class="line">		else:</div><div class="line">			output = activation_function(W_mul_x_plus_b)</div><div class="line"></div><div class="line">		return output</div><div class="line"></div><div class="line"># 创建一个具有输入层、隐藏层、输出层的三层神经网络，神经元个数分别为1,10,1</div><div class="line"># 创建只有一个特征的输入数据，数据数目为300，输入层</div><div class="line">x_data = np.linspace(-1, 1, 300)[:, np.newaxis]</div><div class="line"># 创建数据中的噪声</div><div class="line">noise = np.random.normal(0, 0.05, x_data.shape)</div><div class="line"># 创建输入数据对应的输出</div><div class="line">y_data = np.square(x_data) + 1 + noise</div><div class="line"></div><div class="line">with tf.name_scope(&apos;input&apos;):</div><div class="line">	# 定义输入数据，None是样本数目，表示多少输入数据都行，1是输入数据的特征数目</div><div class="line">	xs = tf.placeholder(tf.float32, [None, 1], name = &apos;x_input&apos;)</div><div class="line">	# 定义输出数据，与xs同理</div><div class="line">	ys = tf.placeholder(tf.float32, [None, 1], name = &apos;y_input&apos;)</div><div class="line"></div><div class="line"># 定义一个隐藏层</div><div class="line">hidden_layer = add_layer(xs, 1, 10, activation_function = tf.nn.relu)</div><div class="line"># 定义输出层</div><div class="line">prediction = add_layer(hidden_layer, 10, 1, activation_function = None)</div><div class="line"></div><div class="line"># 求解神经网络参数</div><div class="line"></div><div class="line"># 定义损失函数</div><div class="line">with tf.name_scope(&apos;loss&apos;):</div><div class="line">	loss = tf.reduce_mean(tf.reduce_sum(tf.square(ys - prediction), reduction_indices = [1]))</div><div class="line"># 定义训练过程</div><div class="line">with tf.name_scope(&apos;train&apos;):</div><div class="line">	train_step = tf.train.GradientDescentOptimizer(0.1).minimize(loss)</div><div class="line"># 变量初始化</div><div class="line">init = tf.global_variables_initializer()</div><div class="line"># 定义Session</div><div class="line">sess = tf.Session()</div><div class="line"># 将网络结构图写到文件中</div><div class="line">writer = tf.summary.FileWriter(&apos;logs/&apos;, sess.graph)</div><div class="line"># 执行初始化工作</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"># 绘制求解的曲线</div><div class="line">fig = plt.figure()</div><div class="line">ax = fig.add_subplot(1, 1, 1)</div><div class="line">ax.scatter(x_data, y_data)</div><div class="line">plt.ion()</div><div class="line">plt.show()</div><div class="line"></div><div class="line"># 进行训练</div><div class="line">for i in range(1000):</div><div class="line">	# 执行训练，并传入数据</div><div class="line">	sess.run(train_step, feed_dict = &#123;xs: x_data, ys: y_data&#125;)</div><div class="line">	if i % 100 == 0:</div><div class="line">		try:</div><div class="line">			ax.lines.remove(lines[0])</div><div class="line">		except Exception:</div><div class="line">			pass</div><div class="line"></div><div class="line">		# print sess.run(loss, feed_dict = &#123;xs: x_data, ys: y_data&#125;)</div><div class="line">		# 计算预测值</div><div class="line">		prediction_value = sess.run(prediction, feed_dict = &#123;xs: x_data&#125;)</div><div class="line">		绘制预测值</div><div class="line">		lines = ax.plot(x_data, prediction_value, &apos;r-&apos;, lw = 5)</div><div class="line">		plt.pause(0.1)</div><div class="line"># 关闭Session</div><div class="line">sess.close()</div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/visualization.png" alt="优化"></p>
+<p>在网络结果代码中添加<code>tf.name_scope(&#39;name&#39;)</code>并将网络结构图写入文件后，可用tensorboard命令查看神经网络的结果图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tensorboard --logdir=log/</div></pre></td></tr></table></figure>
+<p>结果如图：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/neural_network.png" alt="神经网络结构图"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      tensorflow的基本用法(六)——神经网络可视化
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>tensorflow的基本用法(五)——创建神经网络并训练</title>
@@ -99,7 +130,7 @@
     <link href="noahsnail.com/2017/04/10/2017-4-10-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
     <id>noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/</id>
     <published>2017-04-10T09:27:03.000Z</published>
-    <updated>2017-04-12T15:12:15.000Z</updated>
+    <updated>2017-04-14T10:44:50.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="第2章-感知机"><a href="#第2章-感知机" class="headerlink" title="第2章 感知机"></a>第2章 感知机</h1><p>感知机（perceptron）是二分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取+1和-1值。感知机将实例分为正负两类的分离超平面，属于判别模型。感知机旨在求出将训练数据进行线性可分的分离超平面，根据损失函数用梯度下降法对损失函数进行极小化，求的感知机模型。</p>
@@ -124,6 +155,18 @@
 <p>$$-\frac {1} {||w||} \sum_{x_i \in M} y_i(w * x_i + b)$$</p>
 <p>去掉$||w||$，就得到了感知机的损失函数。感知机${sign}(w * x + b)$的损失函数为</p>
 <p>$$L(w,b)=-\sum_{x_i \in M} y_i(w * x_i + b)$$</p>
+<p>损失函数L(w,b)是非负的，如果没有误分类点，损失函数为0。误分类点离超平面越近，损失函数值越小。</p>
+<h2 id="2-3-感知机学习算法"><a href="#2-3-感知机学习算法" class="headerlink" title="2.3 感知机学习算法"></a>2.3 感知机学习算法</h2><p>感知机学习问题转化为求解损失函数L(w,b)的问题，最优化的方法是随机梯度下降法。</p>
+<h3 id="2-3-1-感知机学习算法的原始形式"><a href="#2-3-1-感知机学习算法的原始形式" class="headerlink" title="2.3.1 感知机学习算法的原始形式"></a>2.3.1 感知机学习算法的原始形式</h3><p>感知机是对以下最优化问题的算法。给定一个训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中$x_i \in X = R^n$，$y \in Y=\lbrace +1,-1 \rbrace$，$i=1,2,…,N$，求参数w，b，使其为以下损失函数极小化问题的解</p>
+<p>$${min}_{w,b} L(w,b) = -\sum_{x_i \in M} y_i(w * x_i + b)$$</p>
+<p>其中M为误分类点的集合。感知机学习算法是通过误分类驱动的，具体采用随机梯度下降法（stochastic gradient descent）。首先，选取任意一个超平面$w_0，b_0$，然后用梯度下降法不断的极小化目标函数。极小化过程不是一次使M中的所有误分类点的梯度下降，而是一次随机选择一个误分类点使其梯度下降。</p>
+<p>假设误分类点集合M是固定的，那么损失函数的L(w,b)的梯度由</p>
+<p>$$\nabla_wL(w,b)=-\sum_{x_i \in M} y_ix_i$$</p>
+<p>$$\nabla_bL(w,b)=-\sum_{x_i \in M} y_i$$</p>
+<p>给出。随机选取一个误分类点(x_i,y_i)，对w，b进行更新：</p>
+<p>$$w \longleftarrow w + \eta y_ix_i$$</p>
+<p>$$b \longleftarrow b + \eta y_i$$</p>
+<p>式子中$\eta(0 &lt; \eta \le 1)$是步长，在统计学习中又称为学习率（learning rate）。通过迭代可以期待损失函数L(w,b)不断减小，直到为0。</p>
 ]]></content>
     
     <summary type="html">
@@ -597,38 +640,6 @@
     <summary type="html">
     
       Leetcode3——Longest Substring Without Repeating Characters
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode2——Add Two Numbers</title>
-    <link href="noahsnail.com/2017/03/16/2017-3-16-Leetcode2%E2%80%94%E2%80%94Add%20Two%20Numbers/"/>
-    <id>noahsnail.com/2017/03/16/2017-3-16-Leetcode2——Add Two Numbers/</id>
-    <published>2017-03-16T06:40:37.000Z</published>
-    <updated>2017-03-16T07:09:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
-<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</div><div class="line">Output: 7 -&gt; 0 -&gt; 8</div></pre></td></tr></table></figure>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>方法一</strong></p>
-<p>先求解两个链表的和，直接一个链表结束或两个链表同时结束，然后再处理没结束链表的剩下部分。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123;</div><div class="line">        int sum = 0;</div><div class="line">        int a = 0;</div><div class="line">        int b = 0;</div><div class="line">        int quotient = 0;</div><div class="line">        ListNode head = new ListNode(0);</div><div class="line">        ListNode current = head;</div><div class="line">        while(l1 != null &amp;&amp; l2 !=null) &#123;</div><div class="line">            a = l1.val;</div><div class="line">            b = l2.val;</div><div class="line">            sum = a + b + quotient;</div><div class="line">            current.next = new ListNode(sum % 10);</div><div class="line">            quotient = sum / 10;</div><div class="line">            l1 = l1.next;</div><div class="line">            l2 = l2.next;</div><div class="line">            current = current.next;</div><div class="line">        &#125;</div><div class="line">        ListNode temp = null;</div><div class="line">        if(l1 != null) &#123;</div><div class="line">            temp = l1;</div><div class="line">        &#125;else if(l2 != null) &#123;</div><div class="line">            temp = l2;</div><div class="line">        &#125;else &#123;</div><div class="line">            if(quotient != 0) &#123;</div><div class="line">                temp = new ListNode(0);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        while(temp != null) &#123;</div><div class="line">            sum = temp.val + quotient;</div><div class="line">            current.next = new ListNode(sum % 10);</div><div class="line">            quotient = sum / 10;</div><div class="line">            temp = temp.next;</div><div class="line">            current = current.next;</div><div class="line">        &#125;</div><div class="line">        if(quotient != 0) &#123;</div><div class="line">             current.next = new ListNode(quotient);</div><div class="line">        &#125;</div><div class="line">        return head.next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>方法二</strong></p>
-<p>方法一中的代码有较多的冗余，例如<code>current.next = new ListNode(sum % 10);</code>出现了两次，两次while循环的逻辑是非常类似的，经过代码的变换可以将两部分合成一部分，即同时处理两个链表直至两个链表都结束。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123;</div><div class="line">        int sum = 0;</div><div class="line">        int a = 0;</div><div class="line">        int b = 0;</div><div class="line">        int quotient = 0;</div><div class="line">        ListNode head = new ListNode(0);</div><div class="line">        ListNode current = head;</div><div class="line">        while(l1 != null || l2 !=null) &#123;</div><div class="line">            if(l1 ==null) &#123;</div><div class="line">                a = 0;</div><div class="line">            &#125;else &#123;</div><div class="line">                a = l1.val;</div><div class="line">                l1 = l1.next;</div><div class="line">            &#125;</div><div class="line">            if(l2 == null) &#123;</div><div class="line">                b = 0;</div><div class="line">            &#125;else &#123;</div><div class="line">                b = l2.val;</div><div class="line">                l2 = l2.next;</div><div class="line">            &#125;</div><div class="line">            sum = a + b + quotient;</div><div class="line">            current.next = new ListNode(sum % 10);</div><div class="line">            quotient = sum / 10;</div><div class="line">            current = current.next;</div><div class="line">        &#125;</div><div class="line">        if(quotient != 0) &#123;</div><div class="line">             current.next = new ListNode(quotient);</div><div class="line">        &#125;</div><div class="line">        return head.next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode2——Add Two Numbers
     
     </summary>
     

@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2016/12/01/2016-12-1-Homebrew简介与安装/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Homebrew简介与安装">
-<meta property="og:updated_time" content="2016-12-06T13:29:09.000Z">
+<meta property="og:updated_time" content="2017-04-14T07:37:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Homebrew简介与安装">
 <meta name="twitter:description" content="Homebrew简介与安装">
@@ -312,8 +312,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2016-12-06T21:29:09+08:00">
-              2016-12-06
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-14T15:37:12+08:00">
+              2017-04-14
             </time>
             
           </span>
@@ -376,7 +376,7 @@
 <ul>
 <li>查看安装的软件</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式： brew list</span></div><div class="line"></div><div class="line">$ brew list</div><div class="line">cmake		maven		node		openssl		pkg-config	wget		xz</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式： brew list</span></div><div class="line"></div><div class="line">$ brew list</div><div class="line">cmake		maven		node		openssl		pkg-config	wget		xz</div><div class="line"></div><div class="line">$ brew list --versions</div></pre></td></tr></table></figure>
 <ul>
 <li>查看哪些软件需要更新</li>
 </ul>
@@ -401,6 +401,10 @@
 <li>创建软件链接</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew link software-name</div></pre></td></tr></table></figure>
+<ul>
+<li>切换软件版本</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># brew switch &lt;name&gt; &lt;version&gt;</div><div class="line">$ brew switch webp 0.5.1</div><div class="line">Cleaning /usr/local/Cellar/webp/0.5.1</div><div class="line">Cleaning /usr/local/Cellar/webp/0.6.0</div><div class="line">23 links created for /usr/local/Cellar/webp/0.5.1</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -536,7 +540,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">202</span>
+              <span class="site-state-item-count">203</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
