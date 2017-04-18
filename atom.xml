@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-15T16:23:24.000Z</updated>
+  <updated>2017-04-17T13:51:55.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tensorflow的基本用法(八)——dropout的作用</title>
+    <link href="noahsnail.com/2017/04/17/2017-4-17-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AB)%E2%80%94%E2%80%94dropout%E7%9A%84%E4%BD%9C%E7%94%A8/"/>
+    <id>noahsnail.com/2017/04/17/2017-4-17-tensorflow的基本用法(八)——dropout的作用/</id>
+    <published>2017-04-17T13:45:48.000Z</published>
+    <updated>2017-04-17T13:51:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是介绍tensorflow中dropout的作用，dropout主要是用来防止过拟合，即提供模型的泛化能力。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_digits</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> train_test_split</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelBinarizer</div><div class="line"></div><div class="line"><span class="comment"># 加载数据 </span></div><div class="line">digits = load_digits()</div><div class="line"><span class="comment"># 输入数据</span></div><div class="line">X = digits.data</div><div class="line"><span class="comment"># 输出数据</span></div><div class="line">y = digits.target</div><div class="line"><span class="comment"># 标签变换</span></div><div class="line">y = LabelBinarizer().fit_transform(y)</div><div class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">.3</span>)</div><div class="line"></div><div class="line"><span class="comment"># 创建一个神经网络层</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_layer</span><span class="params">(input, in_size, out_size, layer_name, activation_function = None)</span>:</span></div><div class="line">	<span class="string">"""</span></div><div class="line">	:param input:</div><div class="line">		神经网络层的输入</div><div class="line">	:param in_zize:</div><div class="line">		输入数据的大小</div><div class="line">	:param out_size:</div><div class="line">		输出数据的大小</div><div class="line">	:param layer_name</div><div class="line">		神经网络层的名字</div><div class="line">	:param activation_function:</div><div class="line">		神经网络激活函数，默认没有</div><div class="line">	"""</div><div class="line">	<span class="comment"># 定义神经网络的初始化权重</span></div><div class="line">	Weights = tf.Variable(tf.random_normal([in_size, out_size]))</div><div class="line">	<span class="comment"># 定义神经网络的偏置</span></div><div class="line">	biases = tf.Variable(tf.zeros([<span class="number">1</span>, out_size]) + <span class="number">0.1</span>)</div><div class="line">	<span class="comment"># 计算w*x+b</span></div><div class="line">	W_mul_x_plus_b = tf.matmul(input, Weights) + biases</div><div class="line">	<span class="comment"># 进行dropout，可以注释和不注释来对比dropout的效果</span></div><div class="line"><span class="comment">#	W_mul_x_plus_b = tf.nn.dropout(W_mul_x_plus_b, keep_prob)</span></div><div class="line">	<span class="comment"># 根据是否有激活函数进行处理</span></div><div class="line">	<span class="keyword">if</span> activation_function <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">		output = W_mul_x_plus_b</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">		output = activation_function(W_mul_x_plus_b)</div><div class="line">	<span class="comment"># 查看权重变化</span></div><div class="line">	tf.summary.histogram(layer_name + <span class="string">'/output'</span>, output)</div><div class="line">	<span class="keyword">return</span> output</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 定义dropout的placeholder</span></div><div class="line">keep_prob = tf.placeholder(tf.float32)</div><div class="line"><span class="comment"># 输入数据64个特征</span></div><div class="line">xs = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">64</span>])  <span class="comment"># 8x8</span></div><div class="line">ys = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">10</span>])</div><div class="line"></div><div class="line"><span class="comment"># 添加隐藏层和输出层</span></div><div class="line">l1 = add_layer(xs, <span class="number">64</span>, <span class="number">50</span>, <span class="string">'l1'</span>, activation_function=tf.nn.tanh)</div><div class="line">prediction = add_layer(l1, <span class="number">50</span>, <span class="number">10</span>, <span class="string">'l2'</span>, activation_function=tf.nn.softmax)</div><div class="line"></div><div class="line"><span class="comment"># 计算loss</span></div><div class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(ys * tf.log(prediction), reduction_indices=[<span class="number">1</span>]))</div><div class="line"><span class="comment"># 存储loss</span></div><div class="line">tf.summary.scalar(<span class="string">'loss'</span>, cross_entropy)</div><div class="line"><span class="comment"># 神经网络训练</span></div><div class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.5</span>).minimize(cross_entropy)</div><div class="line"><span class="comment"># 定义Session</span></div><div class="line">sess = tf.Session()</div><div class="line"><span class="comment"># 收集所有的数据</span></div><div class="line">merged = tf.summary.merge_all()</div><div class="line"><span class="comment"># 将数据写入到tensorboard中</span></div><div class="line">train_writer = tf.summary.FileWriter(<span class="string">"logs/train"</span>, sess.graph)</div><div class="line">test_writer = tf.summary.FileWriter(<span class="string">"logs/test"</span>, sess.graph)</div><div class="line"></div><div class="line"><span class="comment"># 根据tensorflow版本选择初始化函数</span></div><div class="line"><span class="keyword">if</span> int((tf.__version__).split(<span class="string">'.'</span>)[<span class="number">1</span>]) &lt; <span class="number">12</span> <span class="keyword">and</span> int((tf.__version__).split(<span class="string">'.'</span>)[<span class="number">0</span>]) &lt; <span class="number">1</span>:</div><div class="line">    init = tf.initialize_all_variables()</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    init = tf.global_variables_initializer()</div><div class="line"><span class="comment"># 执行初始化</span></div><div class="line">sess.run(init)</div><div class="line"><span class="comment"># 进行训练迭代</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">500</span>):</div><div class="line">    <span class="comment"># 执行训练，dropout为1-0.5=0.5</span></div><div class="line">    sess.run(train_step, feed_dict=&#123;xs: X_train, ys: y_train, keep_prob: <span class="number">0.5</span>&#125;)</div><div class="line">    <span class="keyword">if</span> i % <span class="number">50</span> == <span class="number">0</span>:</div><div class="line">        <span class="comment"># 记录损失</span></div><div class="line">        train_result = sess.run(merged, feed_dict=&#123;xs: X_train, ys: y_train, keep_prob: <span class="number">1</span>&#125;)</div><div class="line">        test_result = sess.run(merged, feed_dict=&#123;xs: X_test, ys: y_test, keep_prob: <span class="number">1</span>&#125;)</div><div class="line">        train_writer.add_summary(train_result, i)</div><div class="line">        test_writer.add_summary(test_result, i)</div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<ul>
+<li>没有dropout</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/no_dropout.png" alt="no_dropout"></p>
+<p>测试误差与训练误差的损失差的较大，说明模型更拟合训练数据。</p>
+<ul>
+<li>有dropout</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/dropout.png" alt="dropout"></p>
+<p>测试误差与训练误差相差不大，说明模型泛化能力较好。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      tensorflow的基本用法(八)——dropout的作用
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>tensorflow的基本用法(七)——使用MNIST训练神经网络</title>
@@ -156,7 +192,7 @@
     <link href="noahsnail.com/2017/04/10/2017-4-10-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
     <id>noahsnail.com/2017/04/10/2017-4-10-统计学习方法(二)——感知机/</id>
     <published>2017-04-10T09:27:03.000Z</published>
-    <updated>2017-04-14T10:44:50.000Z</updated>
+    <updated>2017-04-17T11:53:51.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="第2章-感知机"><a href="#第2章-感知机" class="headerlink" title="第2章 感知机"></a>第2章 感知机</h1><p>感知机（perceptron）是二分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取+1和-1值。感知机将实例分为正负两类的分离超平面，属于判别模型。感知机旨在求出将训练数据进行线性可分的分离超平面，根据损失函数用梯度下降法对损失函数进行极小化，求的感知机模型。</p>
@@ -186,14 +222,17 @@
 <h3 id="2-3-1-感知机学习算法的原始形式"><a href="#2-3-1-感知机学习算法的原始形式" class="headerlink" title="2.3.1 感知机学习算法的原始形式"></a>2.3.1 感知机学习算法的原始形式</h3><p>感知机是对以下最优化问题的算法。给定一个训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中$x_i \in X = R^n$，$y \in Y=\lbrace +1,-1 \rbrace$，$i=1,2,…,N$，求参数w，b，使其为以下损失函数极小化问题的解</p>
 <p>$${min}_{w,b} L(w,b) = -\sum_{x_i \in M} y_i(w * x_i + b)$$</p>
 <p>其中M为误分类点的集合。感知机学习算法是通过误分类驱动的，具体采用随机梯度下降法（stochastic gradient descent）。首先，选取任意一个超平面$w_0，b_0$，然后用梯度下降法不断的极小化目标函数。极小化过程不是一次使M中的所有误分类点的梯度下降，而是一次随机选择一个误分类点使其梯度下降。</p>
-<p>假设误分类点集合M是固定的，那么损失函数的L(w,b)的梯度由</p>
-<p>$$\nabla_wL(w,b)=-\sum_{x_i \in M} y_ix_i$$</p>
+<p>假设误分类点集合M是固定的，那么损失函数的L(w,b)的梯度由<br>$$\nabla_wL(w,b)=-\sum_{x_i \in M} y_ix_i$$</p>
 <p>$$\nabla_bL(w,b)=-\sum_{x_i \in M} y_i$$</p>
 <p>给出。随机选取一个误分类点(x_i,y_i)，对w，b进行更新：</p>
-<p>$$w \longleftarrow w + \eta y_ix_i$$</p>
-<p>$$b \longleftarrow b + \eta y_i$$</p>
+<p>$$w \longleftarrow w + \eta y_ix_i$$<br>$$b \longleftarrow b + \eta y_i$$</p>
 <p>式子中$\eta(0 &lt; \eta \le 1)$是步长，在统计学习中又称为学习率（learning rate）。通过迭代可以期待损失函数L(w,b)不断减小，直到为0。</p>
-]]></content>
+<p>感知机学习算法的流程如下：</p>
+<p>输入：训练数据集$T={(x_1,y_1)，(x_2,y_2)，…，(x_n,y_n)}$，其中$x_i \in X = R^n$，$y \in Y=\lbrace +1,-1 \rbrace$，$i=1,2,…,N$，学习率$\eta(0&lt;\eta \le 1)$；输出w，b；感知机学习模型$f(x) = {sign}(w * x + b)$。</p>
+<p>(1) 选取初值$w_0，b_0$<br>(2) 在训练集中选取数据$(x_i,y_i)$<br>(3) 如果$y_i(w * x_i + b) \le 0$</p>
+<p>$$w \longleftarrow w + \eta y_ix_i$$</p>
+<p>$$b \longleftarrow b + \eta y_i$$<br>(4) 转至(2)，知道训练集中没有误分类点。</p>
+<h3 id="2-3-2-算法的收敛性"><a href="#2-3-2-算法的收敛性" class="headerlink" title="2.3.2 算法的收敛性"></a>2.3.2 算法的收敛性</h3>]]></content>
     
     <summary type="html">
     
@@ -606,34 +645,6 @@
     <summary type="html">
     
       Leetcode94——Binary Tree Inorder Traversal
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode144——Binary Tree Preorder Traversal</title>
-    <link href="noahsnail.com/2017/03/21/2017-3-21-Leetcode144%E2%80%94%E2%80%94Binary%20Tree%20Preorder%20Traversal/"/>
-    <id>noahsnail.com/2017/03/21/2017-3-21-Leetcode144——Binary Tree Preorder Traversal/</id>
-    <published>2017-03-21T10:16:00.000Z</published>
-    <updated>2017-03-21T10:17:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a binary tree, return the preorder traversal of its nodes’ values.</p>
-<p>For example:<br>Given binary tree <code>{1,#,2,3}</code>,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line"> \</div><div class="line">  2</div><div class="line"> /</div><div class="line">3</div></pre></td></tr></table></figure>
-<p>return <code>[1,2,3]</code>.</p>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题就是一个树的先序遍历问题，最简单的方案就是递归的遍历子树，要注意递归退出的条件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    public List&lt;Integer&gt; preorderTraversal(TreeNode root) &#123;</div><div class="line">        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</div><div class="line">        if(root == null) &#123;</div><div class="line">            return list;</div><div class="line">        &#125;</div><div class="line">        list.add(root.val);</div><div class="line">        List&lt;Integer&gt; left = preorderTraversal(root.left);</div><div class="line">        List&lt;Integer&gt; right = preorderTraversal(root.right);</div><div class="line">        list.addAll(left);</div><div class="line">        list.addAll(right);</div><div class="line">        return list;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Leetcode144——Binary Tree Preorder Traversal
     
     </summary>
     
