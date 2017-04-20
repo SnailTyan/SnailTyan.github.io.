@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="统计学习方法(二)——感知机">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/perceptron.png">
-<meta property="og:updated_time" content="2017-04-17T11:53:51.000Z">
+<meta property="og:updated_time" content="2017-04-18T11:09:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="统计学习方法(二)——感知机">
 <meta name="twitter:description" content="统计学习方法(二)——感知机">
@@ -314,8 +314,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-04-17T19:53:51+08:00">
-              2017-04-17
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-18T19:09:59+08:00">
+              2017-04-18
             </time>
             
           </span>
@@ -419,7 +419,10 @@
 <p>(1) 选取初值$w_0，b_0$<br>(2) 在训练集中选取数据$(x_i,y_i)$<br>(3) 如果$y_i(w * x_i + b) \le 0$</p>
 <p>$$w \longleftarrow w + \eta y_ix_i$$</p>
 <p>$$b \longleftarrow b + \eta y_i$$<br>(4) 转至(2)，知道训练集中没有误分类点。</p>
-<h3 id="2-3-2-算法的收敛性"><a href="#2-3-2-算法的收敛性" class="headerlink" title="2.3.2 算法的收敛性"></a>2.3.2 算法的收敛性</h3>
+<p><strong>解释：</strong>当一个实例点被误分类，即位于分离超平面的错误一侧时，则调整w，b的值，使分离超平面向该误分类点的一侧移动，以减少改误分类点与超平面间的距离，直至超平面越过该分类点使其被正确分类。</p>
+<h3 id="2-3-2-算法的收敛性"><a href="#2-3-2-算法的收敛性" class="headerlink" title="2.3.2 算法的收敛性"></a>2.3.2 算法的收敛性</h3><p>对于线性可分数据集感知机学习算法原始形式收敛，即经过有限次迭代可以得到一个将训练数据集完全正确划分的分离超平面及感知机模型。</p>
+<p>证明略。</p>
+<h3 id="2-3-3-感知机学习算法的对偶形式"><a href="#2-3-3-感知机学习算法的对偶形式" class="headerlink" title="2.3.3 感知机学习算法的对偶形式"></a>2.3.3 感知机学习算法的对偶形式</h3>
       
     </div>
 
@@ -554,7 +557,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">205</span>
+              <span class="site-state-item-count">207</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -606,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第2章-感知机"><span class="nav-number">1.</span> <span class="nav-text">第2章 感知机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-感知机模型"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 感知机模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-感知机学习策略"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 感知机学习策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-数据集的线性可分性"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 数据集的线性可分性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-感知机学习策略"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 感知机学习策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-感知机学习算法"><span class="nav-number">1.3.</span> <span class="nav-text">2.3 感知机学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-感知机学习算法的原始形式"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.3.1 感知机学习算法的原始形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-算法的收敛性"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.3.2 算法的收敛性</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第2章-感知机"><span class="nav-number">1.</span> <span class="nav-text">第2章 感知机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-感知机模型"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 感知机模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-感知机学习策略"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 感知机学习策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-数据集的线性可分性"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 数据集的线性可分性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-感知机学习策略"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 感知机学习策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-感知机学习算法"><span class="nav-number">1.3.</span> <span class="nav-text">2.3 感知机学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-感知机学习算法的原始形式"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.3.1 感知机学习算法的原始形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-算法的收敛性"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.3.2 算法的收敛性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-感知机学习算法的对偶形式"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3.3 感知机学习算法的对偶形式</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
