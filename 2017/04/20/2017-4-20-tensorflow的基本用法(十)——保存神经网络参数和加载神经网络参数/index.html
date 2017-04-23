@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2017/04/20/2017-4-20-tensorflow的基本用法(十)——保存神经网络参数和加载神经网络参数/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="tensorflow的基本用法(十)——保存神经网络参数和加载神经网络参数">
-<meta property="og:updated_time" content="2017-04-20T11:58:24.000Z">
+<meta property="og:updated_time" content="2017-04-20T11:59:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow的基本用法(十)——保存神经网络参数和加载神经网络参数">
 <meta name="twitter:description" content="tensorflow的基本用法(十)——保存神经网络参数和加载神经网络参数">
@@ -312,7 +312,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-04-20T19:58:24+08:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-20T19:59:03+08:00">
               2017-04-20
             </time>
             
@@ -380,7 +380,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是使用tensorfl保存神经网络参数和加载神经网络参数。</p>
+<p>本文主要是使用tensorfl保存神经网络参数和加载神经网络参数，不包括神经网络框架。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 保存神经网络参数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_para</span><span class="params">()</span>:</span></div><div class="line">	<span class="comment"># 定义权重参数</span></div><div class="line">	W = tf.Variable([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]], dtype = tf.float32, name = <span class="string">'weights'</span>)</div><div class="line">	<span class="comment"># 定义偏置参数</span></div><div class="line">	b = tf.Variable([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]], dtype = tf.float32, name = <span class="string">'biases'</span>)</div><div class="line">	<span class="comment"># 参数初始化</span></div><div class="line">	init = tf.global_variables_initializer()</div><div class="line">	<span class="comment"># 定义保存参数的saver</span></div><div class="line">	saver = tf.train.Saver()</div><div class="line"></div><div class="line">	<span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">		sess.run(init)</div><div class="line">		<span class="comment"># 保存session中的数据</span></div><div class="line">		save_path = saver.save(sess, <span class="string">'my_net/save_net.ckpt'</span>)</div><div class="line">		<span class="comment"># 输出保存路径</span></div><div class="line">		<span class="keyword">print</span> <span class="string">'Save to path: '</span>, save_path</div><div class="line"></div><div class="line"><span class="comment"># 恢复神经网络参数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">restore_para</span><span class="params">()</span>:</span></div><div class="line">	<span class="comment"># 定义权重参数</span></div><div class="line">	W = tf.Variable(np.arange(<span class="number">6</span>).reshape((<span class="number">2</span>, <span class="number">3</span>)), dtype = tf.float32, name = <span class="string">'weights'</span>)</div><div class="line">	<span class="comment"># 定义偏置参数</span></div><div class="line">	b = tf.Variable(np.arange(<span class="number">3</span>).reshape((<span class="number">1</span>, <span class="number">3</span>)), dtype = tf.float32, name = <span class="string">'biases'</span>)</div><div class="line">	<span class="comment"># 定义提取参数的saver</span></div><div class="line">	saver = tf.train.Saver()</div><div class="line"></div><div class="line">	<span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">		<span class="comment"># 加载文件中的参数数据，会根据name加载数据并保存到变量W和b中</span></div><div class="line">		save_path = saver.restore(sess, <span class="string">'my_net/save_net.ckpt'</span>)</div><div class="line">		<span class="comment"># 输出保存路径</span></div><div class="line">		<span class="keyword">print</span> <span class="string">'Weights: '</span>, sess.run(W)</div><div class="line">		<span class="keyword">print</span> <span class="string">'biases:  '</span>, sess.run(b)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># save_para()</span></div><div class="line">restore_para()</div></pre></td></tr></table></figure>
 <p>执行结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># save</div><div class="line">Save to path:  my_net/save_net.ckpt</div><div class="line"></div><div class="line"></div><div class="line"># restore</div><div class="line">Weights:  [[ 1.  2.  3.]</div><div class="line"> [ 4.  5.  6.]]</div><div class="line">biases:   [[ 1.  2.  3.]]</div></pre></td></tr></table></figure>
@@ -424,6 +424,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/23/2017-4-23-numpy的基本用法(一)——基本运算/" rel="prev" title="numpy的基本用法(一)——基本运算">
+                numpy的基本用法(一)——基本运算 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -505,7 +509,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">207</span>
+              <span class="site-state-item-count">209</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
