@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-23T13:07:44.000Z</updated>
+  <updated>2017-04-24T14:38:56.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>numpy的基本用法(二)——基本运算</title>
+    <link href="noahsnail.com/2017/04/24/2017-4-24-numpy%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/"/>
+    <id>noahsnail.com/2017/04/24/2017-4-24-numpy的基本用法(二)——基本运算/</id>
+    <published>2017-04-24T14:14:40.000Z</published>
+    <updated>2017-04-24T14:38:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是关于numpy的一些基本运算的用法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Test 1</div><div class="line">a = np.arange(2, 14).reshape(3, 4)</div><div class="line">print a</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">[[ 2  3  4  5]</div><div class="line"> [ 6  7  8  9]</div><div class="line"> [10 11 12 13]]</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 计算矩阵最小值的索引</div><div class="line">print np.argmin(a)</div><div class="line"># 计算矩阵最大值的索引</div><div class="line">print np.argmax(a)</div><div class="line"># 计算矩阵的均值</div><div class="line">print np.mean(a)</div><div class="line">print a.mean()</div><div class="line">print np.average(a)</div><div class="line"># 计算矩阵的中位数</div><div class="line">print np.median(a)</div><div class="line"># 计算前n项之和</div><div class="line">print np.cumsum(a)</div><div class="line"># 计算相邻两位的差</div><div class="line">print np.diff(a)</div><div class="line"># 找出非零的数, 输出的是非零数的索引，分别为行的索引和列的索引</div><div class="line">print np.nonzero(a)</div><div class="line"></div><div class="line"># Test 2 result</div><div class="line">11</div><div class="line">0</div><div class="line">8.5</div><div class="line">8.5</div><div class="line">8.5</div><div class="line">8.5</div><div class="line">[ 14  27  39  50  60  69  77  84  90  95  99 102]</div><div class="line">[[-1 -1 -1]</div><div class="line"> [-1 -1 -1]</div><div class="line"> [-1 -1 -1]]</div><div class="line">(array([0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2]), array([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]))</div><div class="line"></div><div class="line"># Test 3</div><div class="line">a = np.arange(14, 2, -1).reshape(3, 4)</div><div class="line">print a</div><div class="line"># 矩阵排序，按行排序</div><div class="line">print np.sort(a)</div><div class="line"># 矩阵的转置</div><div class="line">print np.transpose(a)</div><div class="line">print a.transpose()</div><div class="line">print a.T</div><div class="line"></div><div class="line">print a.T.dot(a)</div><div class="line"></div><div class="line"># Test 3 result</div><div class="line">[[14 13 12 11]</div><div class="line"> [10  9  8  7]</div><div class="line"> [ 6  5  4  3]]</div><div class="line">[[11 12 13 14]</div><div class="line"> [ 7  8  9 10]</div><div class="line"> [ 3  4  5  6]]</div><div class="line">[[14 10  6]</div><div class="line"> [13  9  5]</div><div class="line"> [12  8  4]</div><div class="line"> [11  7  3]]</div><div class="line">[[14 10  6]</div><div class="line"> [13  9  5]</div><div class="line"> [12  8  4]</div><div class="line"> [11  7  3]]</div><div class="line">[[14 10  6]</div><div class="line"> [13  9  5]</div><div class="line"> [12  8  4]</div><div class="line"> [11  7  3]]</div><div class="line">[[332 302 272 242]</div><div class="line"> [302 275 248 221]</div><div class="line"> [272 248 224 200]</div><div class="line"> [242 221 200 179]]</div><div class="line"></div><div class="line"># Test 4</div><div class="line">print a</div><div class="line"># 矩阵的处理，所有小于5的数等于5，所有大于10的数等于10</div><div class="line">print np.clip(a, 5, 10)</div><div class="line"></div><div class="line"># 计算矩阵指定维度的均值, 0是列, 1是行</div><div class="line">print np.mean(a, axis = 0)</div><div class="line"></div><div class="line"># Test 4 result</div><div class="line">[[14 13 12 11]</div><div class="line"> [10  9  8  7]</div><div class="line"> [ 6  5  4  3]]</div><div class="line">[[10 10 10 10]</div><div class="line"> [10  9  8  7]</div><div class="line"> [ 6  5  5  5]]</div><div class="line">[ 10.   9.   8.   7.]</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      numpy的基本用法(二)——基本运算
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>numpy的基本用法(一)——基本运算</title>
@@ -625,31 +650,6 @@
     
     
       <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode109——Convert Sorted List to Binary Search Tree</title>
-    <link href="noahsnail.com/2017/03/24/2017-3-24-Leetcode109%E2%80%94%E2%80%94Convert%20Sorted%20List%20to%20Binary%20Search%20Tree/"/>
-    <id>noahsnail.com/2017/03/24/2017-3-24-Leetcode109——Convert Sorted List to Binary Search Tree/</id>
-    <published>2017-03-24T01:17:38.000Z</published>
-    <updated>2017-03-24T01:30:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.</p>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p>这个题主要是根据一个有序链表构造二叉查找树（树的左结点小于根节点，根节点小于右结点，子树具有同样的性质）。与有序数组最大的不同在于有序链表只能从前往后遍历，不能像有序数组一样访问任意位置的元素。因此构造时需要按顺序构造，其实有序链表是二叉查找树的中序遍历。因此需要按照中序遍历的顺序进行构建，先构建左子树，再构造根节点，最后构造右子树。由于是链表，每次构造之后头结点应该进行移动，Java中用了一个静态变量来保存根节点的位置。构造方法主要是递归，每次构建子树时都需要将数组分成左右两半，左边的构建左子树，右边的构建右子树，中间元素构造根节点。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * public class ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode next;</div><div class="line"> *     ListNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">public class Solution &#123;</div><div class="line">    static ListNode h;</div><div class="line">    </div><div class="line">    public TreeNode sortedListToBST(ListNode head) &#123;</div><div class="line">        if(head == null) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        int length = 0;</div><div class="line">        h = head;</div><div class="line">        //得到链表长度</div><div class="line">        while(head != null) &#123;</div><div class="line">            length++;</div><div class="line">            head = head.next;</div><div class="line">        &#125;</div><div class="line">        return buildBinarySearchTree(h, 0, length - 1);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public TreeNode buildBinarySearchTree(ListNode head, int start, int end) &#123;</div><div class="line">        if(start &gt; end) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        int mid = (start + end) / 2;</div><div class="line">        //先构建左子树</div><div class="line">        TreeNode left = buildBinarySearchTree(h, start, mid - 1);</div><div class="line">        //再构造根节点</div><div class="line">        TreeNode root = new TreeNode(h.val);</div><div class="line">        h = h.next;</div><div class="line">        //最后构造右子树</div><div class="line">        TreeNode right = buildBinarySearchTree(h, mid + 1, end);</div><div class="line">        root.left = left;</div><div class="line">        root.right = right;</div><div class="line">        return root;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Leetcode109——Convert Sorted List to Binary Search Tree
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
