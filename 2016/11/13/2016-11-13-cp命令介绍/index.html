@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2016/11/13/2016-11-13-cp命令介绍/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="cp命令介绍">
-<meta property="og:updated_time" content="2016-11-13T07:00:33.000Z">
+<meta property="og:updated_time" content="2017-04-26T05:52:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cp命令介绍">
 <meta name="twitter:description" content="cp命令介绍">
@@ -312,8 +312,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2016-11-13T15:00:33+08:00">
-              2016-11-13
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-26T13:52:00+08:00">
+              2017-04-26
             </time>
             
           </span>
@@ -384,7 +384,7 @@
 <h2 id="1-cp-source-destination"><a href="#1-cp-source-destination" class="headerlink" title="1. cp source destination"></a>1. cp source destination</h2><p>在最基本的用法中，cp命令需要两个参数：源对象和目标对象。当source和destination都是文件名时，cp命令将源文件复制成新文件<br>，并以destination命名。新文件就像新建的一样，有新的修改时间。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：cp source destination</span></div><div class="line"></div><div class="line"><span class="comment"># 例子</span></div><div class="line">$ cp <span class="built_in">test</span> a</div><div class="line">$ ls</div><div class="line">a	<span class="built_in">test</span></div><div class="line">$ ls <span class="_">-l</span></div><div class="line">total 0</div><div class="line">-rw-r--r--  1 ***  staff  0 11 13 13:45 a</div><div class="line">-rw-r--r--  1 ***  staff  0 11 13 13:13 <span class="built_in">test</span></div></pre></td></tr></table></figure>
 <h2 id="2-cp-i-source-destination"><a href="#2-cp-i-source-destination" class="headerlink" title="2. cp -i source destination"></a>2. cp -i source destination</h2><p>默认情况下，cp命令不会询问destination文件是否存在，会直接覆盖，如果需要询问是否覆盖，可以使用<code>-i</code>参数。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：cp -i source destination</span></div><div class="line"></div><div class="line"><span class="comment"># 直接覆盖</span></div><div class="line">$ cp <span class="built_in">test</span> a</div><div class="line">CN40723-N:hbase liutianchi$ ls <span class="_">-l</span></div><div class="line">total 0</div><div class="line">-rw-r--r--  1 liutianchi  staff  0 11 13 13:49 a</div><div class="line">-rw-r--r--  1 liutianchi  staff  0 11 13 13:13 <span class="built_in">test</span></div><div class="line"></div><div class="line"><span class="comment"># 询问是否要覆盖已有文件</span></div><div class="line">$ cp -i <span class="built_in">test</span> a</div><div class="line">overwrite a? (y/n [n]) y</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：cp -i source destination</span></div><div class="line"></div><div class="line"><span class="comment"># 直接覆盖</span></div><div class="line">$ cp <span class="built_in">test</span> a</div><div class="line">$ ls <span class="_">-l</span></div><div class="line">total 0</div><div class="line">-rw-r--r--  1 liutianchi  staff  0 11 13 13:49 a</div><div class="line">-rw-r--r--  1 liutianchi  staff  0 11 13 13:13 <span class="built_in">test</span></div><div class="line"></div><div class="line"><span class="comment"># 询问是否要覆盖已有文件</span></div><div class="line">$ cp -i <span class="built_in">test</span> a</div><div class="line">overwrite a? (y/n [n]) y</div></pre></td></tr></table></figure>
 <h2 id="3-复制文件到目录中"><a href="#3-复制文件到目录中" class="headerlink" title="3. 复制文件到目录中"></a>3. 复制文件到目录中</h2><p>目标目录尾部加上了<code>/</code>，表明这是一个目录而不是文件名，如果没有zookeeper目录且没有加上<code>/</code>，会将zookeeper当成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cp test ~/zookeeper/</div><div class="line"></div><div class="line">$ cd ~/zookeeper/</div><div class="line">$ ls</div><div class="line">test</div></pre></td></tr></table></figure>
 <h2 id="4-cp-R-source-destination"><a href="#4-cp-R-source-destination" class="headerlink" title="4. cp -R source destination"></a>4. cp -R source destination</h2><p><code>-R</code>参数功能强大，它能将递归的复制整个目录的内容，如果Blog目录不存在，会先创建一个Blog目录，再进行递归的复制。</p>
