@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-26T13:57:41.000Z</updated>
+  <updated>2017-04-26T14:18:06.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>numpy的基本用法(六)——numpy array的copy</title>
+    <link href="noahsnail.com/2017/04/26/2017-4-26-numpy%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AD)%E2%80%94%E2%80%94numpy%20array%E7%9A%84copy/"/>
+    <id>noahsnail.com/2017/04/26/2017-4-26-numpy的基本用法(六)——numpy array的copy/</id>
+    <published>2017-04-26T14:15:45.000Z</published>
+    <updated>2017-04-26T14:18:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是关于numpy的一些基本运算的用法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Test 1</div><div class="line">a = np.arange(4)</div><div class="line">print a</div><div class="line"></div><div class="line"># 直接赋值, a,b,c,d是同一个array</div><div class="line">b = a</div><div class="line">c = a</div><div class="line">d = b</div><div class="line">a[0] = 10</div><div class="line">print b is a</div><div class="line">print c is a</div><div class="line">print d is a</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">[0 1 2 3]</div><div class="line">True</div><div class="line">True</div><div class="line">True</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 深拷贝</div><div class="line">b = a.copy()</div><div class="line">b[0] = 12</div><div class="line">print b is a</div><div class="line">print a</div><div class="line">print b</div><div class="line"></div><div class="line"># Test 2 result</div><div class="line">False</div><div class="line">[10  1  2  3]</div><div class="line">[12  1  2  3]</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      numpy的基本用法(六)——numpy array的copy
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title></title>
@@ -1677,36 +1702,6 @@ print D
     
     
       <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode78——Subsets</title>
-    <link href="noahsnail.com/2017/04/08/2017-4-8-Leetcode78%E2%80%94%E2%80%94Subsets/"/>
-    <id>noahsnail.com/2017/04/08/2017-4-8-Leetcode78——Subsets/</id>
-    <published>2017-04-08T14:30:15.000Z</published>
-    <updated>2017-04-08T15:00:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a set of distinct integers, nums, return all possible subsets.</p>
-<p>Note: The solution set must not contain duplicate subsets.</p>
-<p>For example,<br>If nums = <code>[1,2,3]</code>, a solution is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [3],</div><div class="line">  [1],</div><div class="line">  [2],</div><div class="line">  [1,2,3],</div><div class="line">  [1,3],</div><div class="line">  [2,3],</div><div class="line">  [1,2],</div><div class="line">  []</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>递归法</strong></p>
-<p>这道题类似于数组的组合问题，可以用递归法求解。N个数中每个数都分为要与不要两种情况，求解的过程如下图。递归的边界条件为N个数都遍历完了。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/subset.png" alt="递归过程"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public static List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    public List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) &#123;</div><div class="line">        result.clear();</div><div class="line">        result.add(new ArrayList&lt;Integer&gt;());</div><div class="line">        combination(nums, 0, new ArrayList&lt;Integer&gt;());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void combination(int[] nums, int index, List&lt;Integer&gt; list) &#123;</div><div class="line">        if(index == nums.length) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        combination(nums, index + 1, new ArrayList&lt;Integer&gt;(list));</div><div class="line">        list.add(nums[index]);</div><div class="line">        result.add(list);</div><div class="line">        combination(nums, index + 1, new ArrayList&lt;Integer&gt;(list));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Leetcode78——Subsets
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
