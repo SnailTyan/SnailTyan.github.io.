@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-04-26T14:18:06.000Z</updated>
+  <updated>2017-04-27T12:58:59.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>matplotlib的基本用法(一)——figure的使用</title>
+    <link href="noahsnail.com/2017/04/27/2017-4-27-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94figure%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>noahsnail.com/2017/04/27/2017-4-27-matplotlib的基本用法(一)——figure的使用/</id>
+    <published>2017-04-27T12:50:51.000Z</published>
+    <updated>2017-04-27T12:58:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是关于matplotlib的一些基本用法。</p>
+<ul>
+<li>Demo 1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 绘制普通图像</div><div class="line">x = np.linspace(-1, 1, 50)</div><div class="line">y = 2 * x + 1</div><div class="line">plt.plot(x, y)</div><div class="line">plt.show()</div><div class="line"></div><div class="line"># 绘制普通图像</div><div class="line">y = x**2</div><div class="line">plt.plot(x, y)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m1.png" alt="y=2x+1"><br><img src="http://ocs628urt.bkt.clouddn.com/m2.png" alt="y=x^2"></p>
+<ul>
+<li>Demo 2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># figure的使用</div><div class="line">x = np.linspace(-1, 1, 50)</div><div class="line">y1 = 2 * x + 1</div><div class="line"></div><div class="line"># figure 1</div><div class="line">plt.figure()</div><div class="line">plt.plot(x, y1)</div><div class="line"></div><div class="line"></div><div class="line"># figure 2</div><div class="line">y2 = x**2</div><div class="line">plt.figure()</div><div class="line">plt.plot(x, y2)</div><div class="line"></div><div class="line"></div><div class="line"># figure 3，指定figure的编号并指定figure的大小, 指定线的颜色, 宽度和类型</div><div class="line">y2 = x**2</div><div class="line">plt.figure(num = 5, figsize = (4, 4))</div><div class="line">plt.plot(x, y1)</div><div class="line">plt.plot(x, y2, color = &apos;red&apos;, linewidth = 1.0, linestyle = &apos;--&apos;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m3.png" alt="y=2x+1"><br><img src="http://ocs628urt.bkt.clouddn.com/m4.png" alt="y=x^2"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      matplotlib的基本用法(一)——figure的使用
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pandas的基本用法(一)——数据定义及使用</title>
+    <link href="noahsnail.com/2017/04/27/2017-4-27-pandas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%8F%8A%E4%BD%BF%E7%94%A8/"/>
+    <id>noahsnail.com/2017/04/27/2017-4-27-pandas的基本用法(一)——数据定义及使用/</id>
+    <published>2017-04-27T12:21:00.000Z</published>
+    <updated>2017-04-27T12:47:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是关于pandas的一些基本用法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Test 1</div><div class="line"># 定义序列, pandas中的数据形式通常是float32或float64</div><div class="line">s = pd.Series([1, 3, 5, np.nan, 44,  1])</div><div class="line">print s</div><div class="line">print s[0]</div><div class="line">print s[3]</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">0     1.0</div><div class="line">1     3.0</div><div class="line">2     5.0</div><div class="line">3     NaN</div><div class="line">4    44.0</div><div class="line">5     1.0</div><div class="line">dtype: float64</div><div class="line">1.0</div><div class="line">nan</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 定义日期列表</div><div class="line">dates = pd.date_range(&apos;20170101&apos;, periods = 6)</div><div class="line">print dates</div><div class="line">print dates[5]</div><div class="line"></div><div class="line"># Test 2 result</div><div class="line">DatetimeIndex([&apos;2017-01-01&apos;, &apos;2017-01-02&apos;, &apos;2017-01-03&apos;, &apos;2017-01-04&apos;,</div><div class="line">               &apos;2017-01-05&apos;, &apos;2017-01-06&apos;],</div><div class="line">              dtype=&apos;datetime64[ns]&apos;, freq=&apos;D&apos;)</div><div class="line">2017-01-06 00:00:00</div><div class="line"></div><div class="line"># Test 3</div><div class="line"># DataFrame类似于numpy的array, 行索引为dates, 列索引为[a, b, c, d]</div><div class="line">df = pd.DataFrame(np.random.randn(6, 4), index = dates, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line">print df</div><div class="line"></div><div class="line"># 不指定索引的DataFrame</div><div class="line">df = pd.DataFrame(np.arange(12).reshape(3, 4))</div><div class="line">print df</div><div class="line"></div><div class="line"># DataFrame的定义</div><div class="line">df = pd.DataFrame(&#123;&apos;A&apos;: 1., &apos;B&apos;: &apos;Foo&apos;, &apos;C&apos;: np.array([3] * 4)&#125;)</div><div class="line">print df</div><div class="line"></div><div class="line"># Test 3 result</div><div class="line">                   a         b         c         d</div><div class="line">2017-01-01  1.104994  1.328379  0.410358 -1.661059</div><div class="line">2017-01-02 -0.642727 -0.152576  1.126191 -0.005317</div><div class="line">2017-01-03 -0.179257  0.160972 -0.824172 -0.175027</div><div class="line">2017-01-04  0.838328 -0.500909  0.714592  1.144800</div><div class="line">2017-01-05  0.803691 -3.979186 -1.037603 -0.747943</div><div class="line">2017-01-06  1.217289 -0.074413  0.504138 -0.077507</div><div class="line"></div><div class="line">   0  1   2   3</div><div class="line">0  0  1   2   3</div><div class="line">1  4  5   6   7</div><div class="line">2  8  9  10  11</div><div class="line"></div><div class="line">     A    B  C</div><div class="line">0  1.0  Foo  3</div><div class="line">1  1.0  Foo  3</div><div class="line">2  1.0  Foo  3</div><div class="line">3  1.0  Foo  3</div><div class="line"></div><div class="line"># Test 4</div><div class="line"># 查看DataFrame的数据类型</div><div class="line">df.dtypes</div><div class="line"></div><div class="line"># 查看DataFrame的索引</div><div class="line">df.index</div><div class="line"></div><div class="line"># 查看DataFrame的列索引</div><div class="line">df.columns</div><div class="line"></div><div class="line"># 查看DataFrame的值</div><div class="line">df.values</div><div class="line"></div><div class="line"># 查看DataFrame的描述</div><div class="line">df.describe()</div><div class="line"></div><div class="line"># DataFrame的转置</div><div class="line">df.T</div><div class="line"></div><div class="line"># DataFrame的index排序</div><div class="line">df.sort_index(axis = 1)</div><div class="line"></div><div class="line"># DataFrame的index排序, 逆序</div><div class="line">df.sort_index(axis = 1, ascending = False)</div><div class="line"></div><div class="line"># DataFrame按值排序</div><div class="line">df.sort_values(by = &apos;C&apos;)</div><div class="line"></div><div class="line"># Test 4 result</div><div class="line">A    float64</div><div class="line">B     object</div><div class="line">C      int64</div><div class="line">dtype: object</div><div class="line"></div><div class="line">RangeIndex(start=0, stop=4, step=1)</div><div class="line"></div><div class="line">Index([u&apos;A&apos;, u&apos;B&apos;, u&apos;C&apos;], dtype=&apos;object&apos;)</div><div class="line"></div><div class="line">array([[1.0, &apos;Foo&apos;, 3],</div><div class="line">       [1.0, &apos;Foo&apos;, 3],</div><div class="line">       [1.0, &apos;Foo&apos;, 3],</div><div class="line">       [1.0, &apos;Foo&apos;, 3]], dtype=object)</div><div class="line"></div><div class="line">       A      C</div><div class="line">count  4.0    4.0</div><div class="line">mean   1.0    3.0</div><div class="line">std    0.0    0.0</div><div class="line">min    1.0    3.0</div><div class="line">25%    1.0    3.0</div><div class="line">50%    1.0    3.0</div><div class="line">75%    1.0    3.0</div><div class="line">max    1.0    3.0</div><div class="line"></div><div class="line">       0      1      2      3</div><div class="line">A      1      1      1      1</div><div class="line">B      Foo    Foo    Foo    Foo</div><div class="line">C      3      3      3      3</div><div class="line"></div><div class="line"></div><div class="line">       A      B      C</div><div class="line">0      1.0    3      Foo</div><div class="line">1      1.0    3      Foo</div><div class="line">2      1.0    3      Foo</div><div class="line">3      1.0    3      Foo</div><div class="line"></div><div class="line">       C      B      A</div><div class="line">0      Foo    3      1.0</div><div class="line">1      Foo    3      1.0</div><div class="line">2      Foo    3      1.0</div><div class="line">3      Foo    3      1.0</div><div class="line"></div><div class="line">       A      B      C</div><div class="line">0      1.0    3      Foo</div><div class="line">1      1.0    3      Foo</div><div class="line">2      1.0    3      Foo</div><div class="line">3      1.0    3      Foo</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      pandas的基本用法(一)——数据定义及使用
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>numpy的基本用法(六)——numpy array的copy</title>
@@ -539,64 +604,6 @@
     
     
       <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tensorflow的基本用法(一)</title>
-    <link href="noahsnail.com/2017/04/08/2017-4-8-tensorflow%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/"/>
-    <id>noahsnail.com/2017/04/08/2017-4-8-tensorflow的基本用法/</id>
-    <published>2017-04-08T15:07:03.000Z</published>
-    <updated>2017-04-10T11:10:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是以求解线性回归的参数为例，讲解一下tensorflow的用法。下面的代码中我们自己构建了一个线性回归模型<code>y = 0.1 * x + 0.3</code>，然后我们使用tensorflow来进行了求解。Demo源码及解释如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import tensorflow as tf</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 随机生成100个浮点数</div><div class="line">x_data = np.random.rand(100).astype(np.float32)</div><div class="line"># y=0.1*x+0.3，这样就构造了训练数据(x_data,y_data)</div><div class="line">y_data = x_data * 0.1 + 0.3</div><div class="line"></div><div class="line"># 定义线性回归的权重参数</div><div class="line">Weights = tf.Variable(tf.random_uniform([1], -1.0, 1.0))</div><div class="line"># 定义线性回归的偏置参数</div><div class="line">Biases = tf.Variable(tf.zeros([1]))</div><div class="line"></div><div class="line"># 构建线性回归模型</div><div class="line">y = Weights * x_data + Biases</div><div class="line"># 计算线性回归的损失函数</div><div class="line">loss = tf.reduce_mean(tf.square(y - y_data))</div><div class="line"></div><div class="line"># 定义线性回归的求解方法，梯度下降法，学习率为0.5</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.5)</div><div class="line"># 使用tensorflow求解</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"># 初始化tensorflow的所有变量</div><div class="line">init = tf.global_variables_initializer()</div><div class="line"># 定义tensorflow的session</div><div class="line">sess = tf.Session()</div><div class="line"># 将初始化数据放入到session中，执行时会用到</div><div class="line">sess.run(init)</div><div class="line"></div><div class="line"># 迭代201次求解线性回归参数</div><div class="line">for step in range(201):</div><div class="line">	# session执行训练</div><div class="line">	sess.run(train)</div><div class="line">	if step % 20 == 0:</div><div class="line">		# 每迭代二十次输出一次结果</div><div class="line">		print step, sess.run(Weights), sess.run(Biases)</div></pre></td></tr></table></figure>
-<p>执行结果如下图：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">0 [ 0.46898228] [ 0.12989661]</div><div class="line">20 [ 0.18490312] [ 0.25323763]</div><div class="line">40 [ 0.1203066] [ 0.28881568]</div><div class="line">60 [ 0.10485679] [ 0.29732502]</div><div class="line">80 [ 0.10116163] [ 0.29936022]</div><div class="line">100 [ 0.10027781] [ 0.29984701]</div><div class="line">120 [ 0.10006645] [ 0.29996341]</div><div class="line">140 [ 0.10001589] [ 0.29999125]</div><div class="line">160 [ 0.10000382] [ 0.29999793]</div><div class="line">180 [ 0.10000091] [ 0.29999951]</div><div class="line">200 [ 0.10000024] [ 0.29999989]</div></pre></td></tr></table></figure>
-<p>从结果中可以看出，求解的结果还是很准确的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      tensorflow的基本用法(一)
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode78——Subsets</title>
-    <link href="noahsnail.com/2017/04/08/2017-4-8-Leetcode78%E2%80%94%E2%80%94Subsets/"/>
-    <id>noahsnail.com/2017/04/08/2017-4-8-Leetcode78——Subsets/</id>
-    <published>2017-04-08T14:30:15.000Z</published>
-    <updated>2017-04-08T15:00:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h2><p>Given a set of distinct integers, nums, return all possible subsets.</p>
-<p>Note: The solution set must not contain duplicate subsets.</p>
-<p>For example,<br>If nums = <code>[1,2,3]</code>, a solution is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [3],</div><div class="line">  [1],</div><div class="line">  [2],</div><div class="line">  [1,2,3],</div><div class="line">  [1,3],</div><div class="line">  [2,3],</div><div class="line">  [1,2],</div><div class="line">  []</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="2-求解"><a href="#2-求解" class="headerlink" title="2. 求解"></a>2. 求解</h2><p><strong>递归法</strong></p>
-<p>这道题类似于数组的组合问题，可以用递归法求解。N个数中每个数都分为要与不要两种情况，求解的过程如下图。递归的边界条件为N个数都遍历完了。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/subset.png" alt="递归过程"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class Solution &#123;</div><div class="line">    public static List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();</div><div class="line">    public List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) &#123;</div><div class="line">        result.clear();</div><div class="line">        result.add(new ArrayList&lt;Integer&gt;());</div><div class="line">        combination(nums, 0, new ArrayList&lt;Integer&gt;());</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void combination(int[] nums, int index, List&lt;Integer&gt; list) &#123;</div><div class="line">        if(index == nums.length) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        combination(nums, index + 1, new ArrayList&lt;Integer&gt;(list));</div><div class="line">        list.add(nums[index]);</div><div class="line">        result.add(list);</div><div class="line">        combination(nums, index + 1, new ArrayList&lt;Integer&gt;(list));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Leetcode78——Subsets
-    
-    </summary>
-    
-      <category term="基础算法" scheme="noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
