@@ -92,7 +92,7 @@
 <meta property="og:description" content="matplotlib的基本用法(二)——设置坐标轴">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/t1.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/t2.png">
-<meta property="og:updated_time" content="2017-04-28T00:35:11.000Z">
+<meta property="og:updated_time" content="2017-04-29T03:50:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="matplotlib的基本用法(二)——设置坐标轴">
 <meta name="twitter:description" content="matplotlib的基本用法(二)——设置坐标轴">
@@ -315,8 +315,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-04-28T08:35:11+08:00">
-              2017-04-28
+            <time title="Post modified" itemprop="dateModified" datetime="2017-04-29T11:50:11+08:00">
+              2017-04-29
             </time>
             
           </span>
@@ -385,7 +385,7 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是关于matplotlib的一些基本用法。</p>
 <ul>
-<li>Demo 1</li>
+<li>Demo</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 绘制普通图像</div><div class="line">x = np.linspace(-1, 1, 50)</div><div class="line">y1 = 2 * x + 1</div><div class="line">y2 = x**2</div><div class="line"></div><div class="line">plt.figure()</div><div class="line">plt.plot(x, y1)</div><div class="line">plt.plot(x, y2, color = &apos;red&apos;, linewidth = 1.0, linestyle = &apos;--&apos;)</div><div class="line"></div><div class="line"># 设置坐标轴的取值范围</div><div class="line">plt.xlim((-1, 1))</div><div class="line">plt.ylim((0, 2))</div><div class="line"></div><div class="line"># 设置坐标轴的lable</div><div class="line">plt.xlabel(&apos;X axis&apos;)</div><div class="line">plt.ylabel(&apos;Y axis&apos;)</div><div class="line"></div><div class="line"># 设置x坐标轴刻度, 原来为0.25, 修改后为0.5</div><div class="line">plt.xticks(np.linspace(-1, 1, 5))</div><div class="line"># 设置y坐标轴刻度及标签, $$是设置字体</div><div class="line">plt.yticks([0, 0.5], [&apos;$minimum$&apos;, &apos;normal&apos;])</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <ul>
@@ -424,7 +424,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/27/2017-4-pandas的基本用法(二)——选择数据/" rel="next" title="pandas的基本用法(二)——选择数据">
+              <a href="/2017/04/27/2017-4-27-pandas的基本用法(二)——选择数据/" rel="next" title="pandas的基本用法(二)——选择数据">
                 <i class="fa fa-chevron-left"></i> pandas的基本用法(二)——选择数据
               </a>
             
@@ -433,6 +433,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/28/2017-4-28-Caffe绘制神经网络结构图/" rel="prev" title="Caffe绘制神经网络结构图">
+                Caffe绘制神经网络结构图 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -514,7 +518,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">218</span>
+              <span class="site-state-item-count">230</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
