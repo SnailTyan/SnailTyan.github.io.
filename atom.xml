@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-05-04T02:45:33.000Z</updated>
+  <updated>2017-05-04T12:07:14.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,128 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>matplotlib的基本用法(十四)——figure图的嵌套</title>
+    <link href="noahsnail.com/2017/05/04/2017-5-4-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E5%9B%9B)%E2%80%94%E2%80%94figure%E5%9B%BE%E7%9A%84%E5%B5%8C%E5%A5%97/"/>
+    <id>noahsnail.com/2017/05/04/2017-5-4-matplotlib的基本用法(十四)——figure图的嵌套/</id>
+    <published>2017-05-04T12:06:54.000Z</published>
+    <updated>2017-05-04T12:07:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要使用matplotlib进行图嵌套的绘制。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">fig = plt.figure()</div><div class="line"></div><div class="line"># 定义数据</div><div class="line">x = [1, 2, 3, 4, 5, 6, 7]</div><div class="line">y = [1, 3, 4, 2, 5, 8, 6]</div><div class="line"></div><div class="line"># figure的百分比, 从figure 10%的位置开始绘制, 宽高是figure的80%</div><div class="line">left, bottom, width, height = 0.1, 0.1, 0.8, 0.8</div><div class="line"># 获得绘制的句柄</div><div class="line">ax1 = fig.add_axes([left, bottom, width, height])</div><div class="line"># 绘制点(x,y)</div><div class="line">ax1.plot(x, y, &apos;r&apos;)</div><div class="line">ax1.set_xlabel(&apos;x&apos;)</div><div class="line">ax1.set_ylabel(&apos;y&apos;)</div><div class="line">ax1.set_title(&apos;test&apos;)</div><div class="line"></div><div class="line"></div><div class="line"># 嵌套方法一</div><div class="line"># figure的百分比, 从figure 10%的位置开始绘制, 宽高是figure的80%</div><div class="line">left, bottom, width, height = 0.2, 0.6, 0.25, 0.25</div><div class="line"># 获得绘制的句柄</div><div class="line">ax2 = fig.add_axes([left, bottom, width, height])</div><div class="line"># 绘制点(x,y)</div><div class="line">ax2.plot(x, y, &apos;r&apos;)</div><div class="line">ax2.set_xlabel(&apos;x&apos;)</div><div class="line">ax2.set_ylabel(&apos;y&apos;)</div><div class="line">ax2.set_title(&apos;part1&apos;)</div><div class="line"></div><div class="line"></div><div class="line"># 嵌套方法二</div><div class="line">plt.axes([bottom, left, width, height])</div><div class="line">plt.plot(x, y, &apos;r&apos;)</div><div class="line">plt.xlabel(&apos;x&apos;)</div><div class="line">plt.ylabel(&apos;y&apos;)</div><div class="line">plt.title(&apos;part2&apos;)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m14.png" alt="图像"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      matplotlib的基本用法(十四)——figure图的嵌套
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>matplotlib的基本用法(十三)——figure绘制多图</title>
+    <link href="noahsnail.com/2017/05/04/2017-5-4-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%B8%89)%E2%80%94%E2%80%94figure%E7%BB%98%E5%88%B6%E5%A4%9A%E5%9B%BE/"/>
+    <id>noahsnail.com/2017/05/04/2017-5-4-matplotlib的基本用法(十三)——figure绘制多图/</id>
+    <published>2017-05-04T11:28:15.000Z</published>
+    <updated>2017-05-04T11:48:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要使用matplotlib进行多图的绘制。</p>
+<ul>
+<li>Demo 1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">plt.figure()</div><div class="line"># figure分成3行3列, 取得第一个子图的句柄, 第一个子图跨度为1行3列, 起点是表格(0, 0)</div><div class="line">ax1 = plt.subplot2grid((3, 3), (0, 0), colspan = 3, rowspan = 1)</div><div class="line">ax1.plot([0, 1], [0, 1])</div><div class="line">ax1.set_title(&apos;Test&apos;)</div><div class="line"></div><div class="line"># figure分成3行3列, 取得第二个子图的句柄, 第二个子图跨度为1行3列, 起点是表格(1, 0)</div><div class="line">ax2 = plt.subplot2grid((3, 3), (1, 0), colspan = 2, rowspan = 1)</div><div class="line">ax2.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line"># figure分成3行3列, 取得第三个子图的句柄, 第三个子图跨度为1行1列, 起点是表格(1, 2)</div><div class="line">ax3 = plt.subplot2grid((3, 3), (1, 2), colspan = 1, rowspan = 1)</div><div class="line">ax3.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line"># figure分成3行3列, 取得第四个子图的句柄, 第四个子图跨度为1行3列, 起点是表格(2, 0)</div><div class="line">ax4 = plt.subplot2grid((3, 3), (2, 0), colspan = 3, rowspan = 1)</div><div class="line">ax4.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m131.png" alt="图像"></p>
+<ul>
+<li>Demo 2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import matplotlib.gridspec as gridspec</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">plt.figure()</div><div class="line"># 分隔figure</div><div class="line">gs = gridspec.GridSpec(3, 3)</div><div class="line">ax1 = plt.subplot(gs[0, :])</div><div class="line">ax2 = plt.subplot(gs[1, 0:2])</div><div class="line">ax3 = plt.subplot(gs[1, 2])</div><div class="line">ax4 = plt.subplot(gs[2, :])</div><div class="line"></div><div class="line"># 绘制图像</div><div class="line">ax1.plot([0, 1], [0, 1])</div><div class="line">ax1.set_title(&apos;Test&apos;)</div><div class="line"></div><div class="line">ax2.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">ax3.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">ax4.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m131.png" alt="图像"></p>
+<ul>
+<li>Demo 3</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 划分figure</div><div class="line">fig, ((ax11, ax12), (ax21, ax22)) = plt.subplots(2, 2, sharex = True, sharey = True)</div><div class="line"></div><div class="line"># 绘制图像</div><div class="line">ax11.scatter([0, 0.5], [0, 1])</div><div class="line">ax12.scatter([0, 1], [0, 1])</div><div class="line">ax21.scatter([0, 1], [0, -1])</div><div class="line">ax22.scatter([0, -1], [0, 1])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m132.png" alt="图像"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      matplotlib的基本用法(十三)——figure绘制多图
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scikit-learn的基本用法(四)——数据归一化</title>
+    <link href="noahsnail.com/2017/05/04/2017--5-4-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%9B%9B)%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E5%BD%92%E4%B8%80%E5%8C%96/"/>
+    <id>noahsnail.com/2017/05/04/2017--5-4-scikit-learn的基本用法(四)——数据归一化/</id>
+    <published>2017-05-04T10:47:06.000Z</published>
+    <updated>2017-05-04T11:06:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍scikit-learn中的数据预处理之归一化。</p>
+<ul>
+<li>Demo 1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from sklearn import preprocessing</div><div class="line"></div><div class="line"></div><div class="line"># 定义array</div><div class="line">a = np.array([-10, 2.3, 13.7, 56, 108])</div><div class="line">print a</div><div class="line"></div><div class="line"># 对array进行归一化(normalization)</div><div class="line"># scale进行的操作是按列减去均值, 除以方差, 因此数据的均值为0, 方差为1</div><div class="line">print preprocessing.scale(a)</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[ -10.     2.3   13.7   56.   108. ]</div><div class="line">[-1.01951435 -0.73451375 -0.47036685  0.50975718  1.71463777]</div></pre></td></tr></table></figure>
+<ul>
+<li>Demo 2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from sklearn import preprocessing</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.datasets.samples_generator import make_classification</div><div class="line">from sklearn.svm import SVC</div><div class="line"></div><div class="line"># 生成数据集</div><div class="line">X, y = make_classification(n_samples = 200, n_features = 2, n_redundant = 0, n_informative = 2, </div><div class="line">                           random_state = 22, n_clusters_per_class = 1, scale = 100)</div><div class="line"># 查看数据分布</div><div class="line">plt.scatter(X[:, 0], X[:, 1], c = y)</div><div class="line">plt.show()</div><div class="line"></div><div class="line"># 数据归一化处理, 不进行处理时注释掉</div><div class="line">X = preprocessing.scale(X)</div><div class="line"># 将数据分为训练集和测试集</div><div class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)</div><div class="line"># 构建分类器</div><div class="line">svm = SVC()</div><div class="line"># 训练分类器</div><div class="line">svm.fit(X_train, y_train)</div><div class="line"># 测试</div><div class="line">print svm.score(X_test, y_test)</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/sk4.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 进行归一化的准确率</div><div class="line">0.9</div><div class="line"># 不进行归一化的准确率</div><div class="line">0.65</div></pre></td></tr></table></figure>
+<p>备注：由于数据是随机生成的, 结果可能会不同，但进行归一化与不进行归一化的差异是一致的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      scikit-learn的基本用法(四)——数据归一化
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>scikit-learn的基本用法(三)——model的介绍</title>
@@ -580,83 +702,6 @@
     <summary type="html">
     
       pandas的基本用法(六)——合并数据
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pandas的基本用法(五)——导入导出数据</title>
-    <link href="noahsnail.com/2017/04/29/2017-4-29-pandas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%94)%E2%80%94%E2%80%94%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/"/>
-    <id>noahsnail.com/2017/04/29/2017-4-29-pandas的基本用法(五)——导入导出数据/</id>
-    <published>2017-04-29T02:20:33.000Z</published>
-    <updated>2017-04-29T02:29:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于pandas的数据导入导出功能，非常简单。pandas支持的导入数据格式有csv，excel，sql，json，html，pickle等。导入数据使用的csv文件，<code>student.csv</code>文件内容为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Student ID;name;age;gender</div><div class="line">1000;Jack;21;Male</div><div class="line">1001;Lucy;22;Female</div><div class="line">1002;Rose;23;Female</div><div class="line">1003;David;24;Male</div></pre></td></tr></table></figure>
-<p>pandas代码示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Test 1</div><div class="line"># 读取csv文件, sep指定字符串的分隔符, 默认为逗号</div><div class="line">data = pd.read_csv(&apos;student.csv&apos;, sep = &apos;;&apos;)</div><div class="line">print data</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">   Student ID   name  age  gender</div><div class="line">0        1000   Jack   21    Male</div><div class="line">1        1001   Lucy   22  Female</div><div class="line">2        1002   Rose   23  Female</div><div class="line">3        1003  David   24    Male</div><div class="line"></div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 导出数据</div><div class="line">data.to_pickle(&apos;student.pickle&apos;)</div><div class="line"></div><div class="line"># Test 2 result</div><div class="line"># 在目录下会看到student.pickle文件</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      pandas的基本用法(五)——导入导出数据
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pandas的基本用法(四)——处理缺失数据</title>
-    <link href="noahsnail.com/2017/04/28/2017-4-28-pandas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%9B%9B)%E2%80%94%E2%80%94%E5%A4%84%E7%90%86%E7%BC%BA%E5%A4%B1%E6%95%B0%E6%8D%AE/"/>
-    <id>noahsnail.com/2017/04/28/2017-4-28-pandas的基本用法(四)——处理缺失数据/</id>
-    <published>2017-04-28T14:27:13.000Z</published>
-    <updated>2017-04-28T14:42:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于pandas的一些基本用法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"></div><div class="line"># Test 1</div><div class="line"># 定义数据</div><div class="line">dates = pd.date_range(&apos;20170101&apos;, periods = 6)</div><div class="line">df = pd.DataFrame(np.arange(24).reshape((6, 4)), index = dates, columns = [&apos;A&apos;, &apos;B&apos;, &apos;C&apos;, &apos;D&apos;])</div><div class="line"></div><div class="line"># 假设缺少数据</div><div class="line">df.iloc[1, 1] = np.nan</div><div class="line">df.iloc[2, 2] = np.nan</div><div class="line">print df</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">             A     B     C   D</div><div class="line">2017-01-01   0   1.0   2.0   3</div><div class="line">2017-01-02   4   NaN   6.0   7</div><div class="line">2017-01-03   8   9.0   NaN  11</div><div class="line">2017-01-04  12  13.0  14.0  15</div><div class="line">2017-01-05  16  17.0  18.0  19</div><div class="line">2017-01-06  20  21.0  22.0  23</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 按行或列来舍弃数据, how = any or all, any是默认值</div><div class="line">print df.dropna(axis = 0, how = &apos;any&apos;)</div><div class="line"></div><div class="line"># 填充数据</div><div class="line">print df.fillna(value = 0)</div><div class="line"></div><div class="line"># 判断是否缺失数据</div><div class="line">print df.isnull()</div><div class="line"></div><div class="line"># 判断是否存在缺失数据的情况</div><div class="line">print np.any(df.isnull() == True)</div><div class="line"></div><div class="line"># Test 2 result</div><div class="line">             A     B     C   D</div><div class="line">2017-01-01   0   1.0   2.0   3</div><div class="line">2017-01-04  12  13.0  14.0  15</div><div class="line">2017-01-05  16  17.0  18.0  19</div><div class="line">2017-01-06  20  21.0  22.0  23</div><div class="line"></div><div class="line">             A     B     C   D</div><div class="line">2017-01-01   0   1.0   2.0   3</div><div class="line">2017-01-02   4   0.0   6.0   7</div><div class="line">2017-01-03   8   9.0   0.0  11</div><div class="line">2017-01-04  12  13.0  14.0  15</div><div class="line">2017-01-05  16  17.0  18.0  19</div><div class="line">2017-01-06  20  21.0  22.0  23</div><div class="line"></div><div class="line">                A      B      C      D</div><div class="line">2017-01-01  False  False  False  False</div><div class="line">2017-01-02  False   True  False  False</div><div class="line">2017-01-03  False  False   True  False</div><div class="line">2017-01-04  False  False  False  False</div><div class="line">2017-01-05  False  False  False  False</div><div class="line">2017-01-06  False  False  False  False</div><div class="line"></div><div class="line">True</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      pandas的基本用法(四)——处理缺失数据
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pandas的基本用法(三)——设置数据</title>
-    <link href="noahsnail.com/2017/04/28/2017-4-28-pandas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)%E2%80%94%E2%80%94%E8%AE%BE%E7%BD%AE%E6%95%B0%E6%8D%AE/"/>
-    <id>noahsnail.com/2017/04/28/2017-4-28-pandas的基本用法(三)——设置数据/</id>
-    <published>2017-04-28T14:02:54.000Z</published>
-    <updated>2017-04-28T14:22:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于pandas的一些基本用法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"></div><div class="line"># Test 1</div><div class="line"># 定义数据</div><div class="line">dates = pd.date_range(&apos;20170101&apos;, periods = 6)</div><div class="line">print dates</div><div class="line"></div><div class="line">df = pd.DataFrame(np.arange(24).reshape((6, 4)), index = dates, columns = [&apos;A&apos;, &apos;B&apos;, &apos;C&apos;, &apos;D&apos;])</div><div class="line">print df</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">DatetimeIndex([&apos;2017-01-01&apos;, &apos;2017-01-02&apos;, &apos;2017-01-03&apos;, &apos;2017-01-04&apos;,</div><div class="line">               &apos;2017-01-05&apos;, &apos;2017-01-06&apos;],</div><div class="line">              dtype=&apos;datetime64[ns]&apos;, freq=&apos;D&apos;)</div><div class="line"></div><div class="line">             A   B   C   D</div><div class="line">2017-01-01   0   1   2   3</div><div class="line">2017-01-02   4   5   6   7</div><div class="line">2017-01-03   8   9  10  11</div><div class="line">2017-01-04  12  13  14  15</div><div class="line">2017-01-05  16  17  18  19</div><div class="line">2017-01-06  20  21  22  23</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 设置df[2,2]为100</div><div class="line">df.iloc[2, 2] = 100</div><div class="line">print df</div><div class="line"></div><div class="line"># loc设置值</div><div class="line">df.loc[&apos;20170102&apos;, &apos;C&apos;] = 999</div><div class="line">print df</div><div class="line"></div><div class="line"># 根据条件设置值</div><div class="line">df[df.A &gt; 8] = 0</div><div class="line">print df</div><div class="line"></div><div class="line"># 根据ix设置值</div><div class="line">df.ix[[0, 2],  [&apos;A&apos;, &apos;C&apos;]] = 888</div><div class="line">print df</div><div class="line"></div><div class="line"># 限定设置区域</div><div class="line">df.B[df.B == 0] = 6</div><div class="line">print df </div><div class="line"></div><div class="line"># Test 2 result</div><div class="line">             A   B    C   D</div><div class="line">2017-01-01   0   1    2   3</div><div class="line">2017-01-02   4   5    6   7</div><div class="line">2017-01-03   8   9  100  11</div><div class="line">2017-01-04  12  13   14  15</div><div class="line">2017-01-05  16  17   18  19</div><div class="line">2017-01-06  20  21   22  23</div><div class="line"></div><div class="line">             A   B    C   D</div><div class="line">2017-01-01   0   1    2   3</div><div class="line">2017-01-02   4   5  999   7</div><div class="line">2017-01-03   8   9  100  11</div><div class="line">2017-01-04  12  13   14  15</div><div class="line">2017-01-05  16  17   18  19</div><div class="line">2017-01-06  20  21   22  23</div><div class="line"></div><div class="line">            A  B    C   D</div><div class="line">2017-01-01  0  1    2   3</div><div class="line">2017-01-02  4  5  999   7</div><div class="line">2017-01-03  8  9  100  11</div><div class="line">2017-01-04  0  0    0   0</div><div class="line">2017-01-05  0  0    0   0</div><div class="line">2017-01-06  0  0    0   0</div><div class="line"></div><div class="line">              A  B    C   D</div><div class="line">2017-01-01  888  1  888   3</div><div class="line">2017-01-02    4  5  999   7</div><div class="line">2017-01-03  888  9  888  11</div><div class="line">2017-01-04    0  0    0   0</div><div class="line">2017-01-05    0  0    0   0</div><div class="line">2017-01-06    0  0    0   0</div><div class="line"></div><div class="line">              A  B    C   D</div><div class="line">2017-01-01  888  1  888   3</div><div class="line">2017-01-02    4  5  999   7</div><div class="line">2017-01-03  888  9  888  11</div><div class="line">2017-01-04    0  6    0   0</div><div class="line">2017-01-05    0  6    0   0</div><div class="line">2017-01-06    0  6    0   0</div><div class="line"></div><div class="line"># Test 3</div><div class="line"># 添加一列</div><div class="line">df[&apos;F&apos;] = None</div><div class="line">print df</div><div class="line"></div><div class="line"># 添加一列</div><div class="line">df[&apos;E&apos;] = pd.Series([1, 2, 3, 4, 5, 6], index = dates)</div><div class="line">print df</div><div class="line"></div><div class="line"># Test 3 result</div><div class="line">              A  B    C   D     F</div><div class="line">2017-01-01  888  1  888   3  None</div><div class="line">2017-01-02    4  5  999   7  None</div><div class="line">2017-01-03  888  9  888  11  None</div><div class="line">2017-01-04    0  6    0   0  None</div><div class="line">2017-01-05    0  6    0   0  None</div><div class="line">2017-01-06    0  6    0   0  None</div><div class="line"></div><div class="line">              A  B    C   D     F  E</div><div class="line">2017-01-01  888  1  888   3  None  1</div><div class="line">2017-01-02    4  5  999   7  None  2</div><div class="line">2017-01-03  888  9  888  11  None  3</div><div class="line">2017-01-04    0  6    0   0  None  4</div><div class="line">2017-01-05    0  6    0   0  None  5</div><div class="line">2017-01-06    0  6    0   0  None  6</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      pandas的基本用法(三)——设置数据
     
     </summary>
     
