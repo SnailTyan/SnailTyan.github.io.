@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-05-03T05:12:32.000Z</updated>
+  <updated>2017-05-04T02:45:33.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,110 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scikit-learn的基本用法(三)——model的介绍</title>
+    <link href="noahsnail.com/2017/05/03/2017-5-3-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)%E2%80%94%E2%80%94model%E7%9A%84%E4%BB%8B%E7%BB%8D/"/>
+    <id>noahsnail.com/2017/05/03/2017-5-3-scikit-learn的基本用法(三)——model的介绍/</id>
+    <published>2017-05-03T13:47:38.000Z</published>
+    <updated>2017-05-04T02:45:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是scikit-learn中model的介绍。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">from sklearn import datasets</div><div class="line">from sklearn.linear_model import LinearRegression</div><div class="line"></div><div class="line"># 直接加载数据集</div><div class="line">loaded_data = datasets.load_boston()</div><div class="line">data_X = loaded_data.data</div><div class="line">data_y = loaded_data.target</div><div class="line"></div><div class="line"># 定义模型model</div><div class="line">model = LinearRegression()</div><div class="line"># 学习参数</div><div class="line">model.fit(data_X, data_y)</div><div class="line"># 输出权重weight</div><div class="line">print model.coef_</div><div class="line"># 输出偏置bias</div><div class="line">print model.intercept_</div><div class="line"># 输出model定义时的参数, 没有给定则返回默认参数</div><div class="line">print model.get_params()</div><div class="line"># 评估学习到的模型</div><div class="line"># 通过coefficient of determination(决定系数),来判断回归方程拟合的程度.</div><div class="line">print model.score(data_X, data_y)</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[ -1.07170557e-01   4.63952195e-02   2.08602395e-02   2.68856140e+00</div><div class="line">  -1.77957587e+01   3.80475246e+00   7.51061703e-04  -1.47575880e+00</div><div class="line">   3.05655038e-01  -1.23293463e-02  -9.53463555e-01   9.39251272e-03</div><div class="line">  -5.25466633e-01]</div><div class="line">36.4911032804</div><div class="line">&#123;&apos;copy_X&apos;: True, &apos;normalize&apos;: False, &apos;n_jobs&apos;: 1, &apos;fit_intercept&apos;: True&#125;</div><div class="line">0.740607742865</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      scikit-learn的基本用法(三)——model的介绍
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scikit-learn的基本用法(二)——数据集的使用</title>
+    <link href="noahsnail.com/2017/05/03/2017-5-3-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>noahsnail.com/2017/05/03/2017-5-3-scikit-learn的基本用法(二)——数据集的使用/</id>
+    <published>2017-05-03T12:58:40.000Z</published>
+    <updated>2017-05-03T13:06:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是演示scikit-learn自带的数据集的一些用法。本文介绍两种sklearn构建数据集的方式，一种是直接加载已有的数据集，另一种是通过工具构建一个数据集。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line">from sklearn import datasets</div><div class="line">from sklearn.linear_model import LinearRegression</div><div class="line"></div><div class="line"># 直接加载数据集</div><div class="line">loaded_data = datasets.load_boston()</div><div class="line">data_X = loaded_data.data</div><div class="line">data_y = loaded_data.target</div><div class="line"></div><div class="line"># 定义模型</div><div class="line">model = LinearRegression()</div><div class="line"># 学习参数</div><div class="line">model.fit(data_X, data_y)</div><div class="line"># 计算预测值</div><div class="line">result = model.predict(data_X)</div><div class="line"></div><div class="line"></div><div class="line"># 创造一些线性回归的数据点</div><div class="line">X, y = datasets.make_regression(n_samples = 100, n_features = 1, n_targets = 1, noise = 5)</div><div class="line"># 绘制创造的数据集的散点图</div><div class="line">plt.scatter(X, y)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[ 30.00821269  25.0298606   30.5702317   28.60814055]</div><div class="line">[ 24.   21.6  34.7  33.4]</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/sk2.png" alt="image"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      scikit-learn的基本用法(二)——数据集的使用
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>matplotlib的基本用法(十二)——subplot绘制多图</title>
+    <link href="noahsnail.com/2017/05/03/2017-5-3-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%BA%8C)%E2%80%94%E2%80%94subplot%E7%BB%98%E5%88%B6%E5%A4%9A%E5%9B%BE/"/>
+    <id>noahsnail.com/2017/05/03/2017-5-3-matplotlib的基本用法(十二)——subplot绘制多图/</id>
+    <published>2017-05-03T12:20:49.000Z</published>
+    <updated>2017-05-03T12:38:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要使用matplotlib进行多图的绘制。</p>
+<ul>
+<li>Demo 1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line">plt.figure()</div><div class="line"></div><div class="line"># 绘制第一个图</div><div class="line">plt.subplot(2, 2, 1)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第二个图</div><div class="line">plt.subplot(2, 2, 2)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第三个图</div><div class="line">plt.subplot(2, 2, 3)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第四个图</div><div class="line">plt.subplot(2, 2, 4)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m121.png" alt="图像"></p>
+<ul>
+<li>Demo 2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line">plt.figure()</div><div class="line"></div><div class="line"># 绘制第一个图</div><div class="line">plt.subplot(2, 1, 1)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第二个图</div><div class="line">plt.subplot(2, 3, 4)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第三个图</div><div class="line">plt.subplot(2, 3, 5)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第四个图</div><div class="line">plt.subplot(2, 3, 6)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m122.png" alt="图像"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      matplotlib的基本用法(十二)——subplot绘制多图
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>matplotlib的基本用法(十一)——绘制3D图</title>
@@ -553,280 +657,6 @@
     <summary type="html">
     
       pandas的基本用法(三)——设置数据
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>博客链接导航</title>
-    <link href="noahsnail.com/2017/04/28/2017-4-28-links/"/>
-    <id>noahsnail.com/2017/04/28/2017-4-28-links/</id>
-    <published>2017-04-28T05:42:57.000Z</published>
-    <updated>2017-05-02T13:46:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="0-说明"><a href="#0-说明" class="headerlink" title="0. 说明"></a>0. 说明</h2><p>本文主要是对我博客内容的总结及相关链接汇总，部分在继续学习的内容后面会更新。共有17个大类，分别为：Caffe(8篇)、Tensorflow(12篇)、Numpy(6篇)、Matplotlib(3篇)、Pandas(8篇)、Scikit-learn(0篇)、Spring框架(11篇)、Spring Boot框架(10篇)、Docker(5篇)、Effective Java(18篇)、Linux(28篇)、Leetcode(18篇)、统计学习方法(1篇)、Matlab(18篇)、计算机视觉(27篇)、论文翻译(3篇)、深度学习(1篇)。</p>
-<h2 id="1-Caffe相关"><a href="#1-Caffe相关" class="headerlink" title="1. Caffe相关"></a>1. Caffe相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/53437569" target="_blank" rel="external">Caffe简介</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53494949" target="_blank" rel="external">Mac下Caffe安装</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/59109447" target="_blank" rel="external">Caffe的solver参数介绍</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53503182" target="_blank" rel="external">Caffe的框架</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53468000" target="_blank" rel="external">Caffe mnist数据集训练</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53467966" target="_blank" rel="external">Caffe的依赖</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53490746" target="_blank" rel="external">编译caffe.proto</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70904274" target="_blank" rel="external">Caffe绘制神经网络结构图</a></p>
-<h2 id="2-Tensorflow相关"><a href="#2-Tensorflow相关" class="headerlink" title="2. Tensorflow相关"></a>2. Tensorflow相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/52727889" target="_blank" rel="external">TensorFlow介绍_中英文对照</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52853970" target="_blank" rel="external">TensorFlow Introduction_中英文对照</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/69788882" target="_blank" rel="external">Tensorflow的基本用法（一）</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/69789285" target="_blank" rel="external">Tensorflow的基本用法(二)</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70001804" target="_blank" rel="external">Tensorflow的基本用法(三)</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70141689" target="_blank" rel="external">Tensorflow的基本用法(四)——placeholder</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70148801" target="_blank" rel="external">Tensorflow的基本用法(五)——创建神经网络并训练</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70176685" target="_blank" rel="external">Tensorflow的基本用法(六)——神经网络可视化</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70189400" target="_blank" rel="external">Tensorflow的基本用法(七)——使用MNIST训练神经网络</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70216588" target="_blank" rel="external">Tensorflow的基本用法(八)——dropout的作用</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70246592" target="_blank" rel="external">Tensorflow的基本用法(九)——定义卷积神经网络训练MNIST</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70301468" target="_blank" rel="external">Tensorflow的基本用法(十)——保存神经网络参数和加载神经网络参数</a></p>
-<h2 id="3-Numpy相关"><a href="#3-Numpy相关" class="headerlink" title="3. Numpy相关"></a>3. Numpy相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/70546736" target="_blank" rel="external">Numpy的基本用法(一)——基本运算</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70666427" target="_blank" rel="external">Numpy的基本用法(二)——基本运算</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70767325" target="_blank" rel="external">Numpy的基本用法(三)——numpy的索引</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70832207" target="_blank" rel="external">Numpy的基本用法(四)——numpy array合并</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70833106" target="_blank" rel="external">Numpy的基本用法(五)——numpy array分割</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70833232" target="_blank" rel="external">Numpy的基本用法(六)——numpy array的copy</a></p>
-<h2 id="4-Matplotlib相关"><a href="#4-Matplotlib相关" class="headerlink" title="4. Matplotlib相关"></a>4. Matplotlib相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/70879516" target="_blank" rel="external">Matplotlib的基本用法(一)——figure的使用</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70882336" target="_blank" rel="external">Matplotlib的基本用法(二)——设置坐标轴</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/70946894" target="_blank" rel="external">Matplotlib的基本用法(三)——调整坐标轴</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70947363" target="_blank" rel="external">Matplotlib的基本用法(四)——设置legend图例</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/71007130" target="_blank" rel="external">Matplotlib的基本用法(五)——添加annotation</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/71023284" target="_blank" rel="external">Matplotlib的基本用法(六)——设置坐标轴label</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/71090214" target="_blank" rel="external">Matplotlib的基本用法(七)——绘制散点图</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/71093898" target="_blank" rel="external">Matplotlib的基本用法(八)——绘制柱状图</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/71104405" target="_blank" rel="external">Matplotlib的基本用法(九)——绘制等高线图</a></p>
-<p>未完待续。</p>
-<h2 id="5-Pandas相关"><a href="#5-Pandas相关" class="headerlink" title="5. Pandas相关"></a>5. Pandas相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/70878371" target="_blank" rel="external">Pandas的基本用法(一)——数据定义及使用</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70880338" target="_blank" rel="external">Pandas的基本用法(二)——选择数据</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/70941604" target="_blank" rel="external">Pandas的基本用法(三)——设置数据</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/70941687" target="_blank" rel="external">Pandas的基本用法(四)——处理缺失数据</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/70945847" target="_blank" rel="external">Pandas的基本用法(五)——导入导出数据</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/70946223" target="_blank" rel="external">Pandas的基本用法(六)——合并数据</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/70990990" target="_blank" rel="external">Pandas的基本用法(七)——合并数据merge</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/70991151" target="_blank" rel="external">Pandas的基本用法(八)——数据的绘制</a></p>
-<p>未完待续。</p>
-<h2 id="6-Scikit-learn相关"><a href="#6-Scikit-learn相关" class="headerlink" title="6. Scikit-learn相关"></a>6. Scikit-learn相关</h2><p>未完待续。</p>
-<h2 id="7-Spring框架相关"><a href="#7-Spring框架相关" class="headerlink" title="7. Spring框架相关"></a>7. Spring框架相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/52492910" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版<em>Part I</em>第一章</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52492951" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版<em>Part I</em>第二章</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52495769" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.1</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52510815" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.2</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52562723" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.3</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52664488" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.4</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52740603" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.5</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52843800" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.6</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52876340" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.7</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53190319" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.8</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53560685" target="_blank" rel="external">Spring框架参考手册<em>5.0.0</em>中英文对照版_Part II_3.9</a></p>
-<h2 id="8-Spring-Boot框架相关"><a href="#8-Spring-Boot框架相关" class="headerlink" title="8. Spring Boot框架相关"></a>8. Spring Boot框架相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/52761208" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part I</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52771812" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part II_8-10</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52819139" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part II_11-12</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52986587" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part III_13</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53057554" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part III_14-18</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53106941" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part III_19-22</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53204871" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part IV_23</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53401914" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part IV_24</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53991221" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part IV_25</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/54292945" target="_blank" rel="external">Spring Boot 2.0.0参考手册_中英文对照_Part IV_26</a></p>
-<h2 id="9-Docker相关"><a href="#9-Docker相关" class="headerlink" title="9. Docker相关"></a>9. Docker相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/52612497" target="_blank" rel="external">Docker理论与实践（一）</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52624421" target="_blank" rel="external">Docker理论与实践（二）</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52640661" target="_blank" rel="external">Docker理论与实践（三）</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53437487" target="_blank" rel="external">Docker理论与实践（四）</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53424824" target="_blank" rel="external">Docker配置加速器</a></p>
-<h2 id="10-Effective-Java相关"><a href="#10-Effective-Java相关" class="headerlink" title="10. Effective Java相关"></a>10. Effective Java相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/52566004" target="_blank" rel="external">Effective Java 2.0<em>中英文对照</em>第一章</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52685672" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 1</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52746666" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 2</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/52824572" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 3</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52826123" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 4</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53047692" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 5</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53066421s" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 6</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53123034" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 7</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53327217" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 8</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53440434" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 9</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53714069" target="_blank" rel="external">Effective Java 2.0_中英文对照_Item 10</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52693593" target="_blank" rel="external">Java服务提供者框架_Effective Java 2.0_Item 1知识点</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52693279" target="_blank" rel="external">Java中的泛型_Effective Java 2.0_Item 1知识点</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52681468" target="_blank" rel="external">Java中的EnumSet_Effective Java 2.0_Item 1知识点</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52749076" target="_blank" rel="external">Java中的可变参数_Effective Java 2.0_Item 2知识点</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/52743041" target="_blank" rel="external">重叠构造函数模式_Effective Java 2.0_Item 2知识点</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52756150" target="_blank" rel="external">Java中的静态内部类_Effective Java 2.0_Item 2知识点</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/53327394" target="_blank" rel="external">Java instanceof操作符__Effective Java 2.0_Item 8知识点</a></p>
-<h2 id="11-Linux相关"><a href="#11-Linux相关" class="headerlink" title="11. Linux相关"></a>11. Linux相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/61915565" target="_blank" rel="external">Linux的tar命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/60964503" target="_blank" rel="external">Linux内存分析与清理</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/56319860" target="_blank" rel="external">Linux的ps命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/60584622" target="_blank" rel="external">Linux查询CPU信息</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/56017269" target="_blank" rel="external">Linux的df命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53589624" target="_blank" rel="external">Linux的pkg-config命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53612394" target="_blank" rel="external">Linux的tee命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53612393" target="_blank" rel="external">Linux的mktemp命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53700161" target="_blank" rel="external">Linux的jobs命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53717837" target="_blank" rel="external">Linux的at命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53731040" target="_blank" rel="external">Linux的cron程序</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53731068" target="_blank" rel="external">Linux定时运行作业</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53932913" target="_blank" rel="external">Linux Shell中的\$#、\$\@、\$0</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/54349059" target="_blank" rel="external">Linux sed编辑器</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/54348471" target="_blank" rel="external">Linux Shell获取文件夹下的文件名</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/54348409" target="_blank" rel="external">Linux Shell中的命令替换</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/54943351" target="_blank" rel="external">Linux统计文件夹下的文件数目</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/56046621" target="_blank" rel="external">Linux的du命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53612259" target="_blank" rel="external">Linux的IFS</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53612266" target="_blank" rel="external">Linux的sysctl命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53587373" target="_blank" rel="external">Linux的scp命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53149148" target="_blank" rel="external">Linux的cp命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/52906011" target="_blank" rel="external">Linux/Mac的目录切换</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/53142891" target="_blank" rel="external">Linux的ls命令</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/53014650" target="_blank" rel="external">Linux的curl命令</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/53149134" target="_blank" rel="external">Linux的touch命令</a></p>
-<p><a href="http://blog.csdn.net/Quincuntial/article/details/53149449" target="_blank" rel="external">Linux的ln命令</a></p>
-<h2 id="12-Leetcode相关"><a href="#12-Leetcode相关" class="headerlink" title="12. Leetcode相关"></a>12. Leetcode相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/62218590" target="_blank" rel="external">Leetcode 1——Two Sum</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/62430398" target="_blank" rel="external">Leetcode 2——Add Two Numbers</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/68946023" target="_blank" rel="external">Leetcode 3——Longest Substring Without Repeating Characters</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/69787417" target="_blank" rel="external">Leetcode 46——Permutations</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/62046066" target="_blank" rel="external">Leetcode 53——Maximum Subarray</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/69788605" target="_blank" rel="external">Leetcode 78——Subsets</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/64464341" target="_blank" rel="external">Leetcode 94——Binary Tree Inorder Traversal</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/64906945" target="_blank" rel="external">Leetcode 102——Binary Tree Level Order Traversal</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/65446795" target="_blank" rel="external">Leetcode 108——Convert Sorted Array to Binary Search Tree</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/65630099" target="_blank" rel="external">Leetcode 109——Convert Sorted List to Binary Search Tree</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/62048260" target="_blank" rel="external">Leetcode 128——Longest Consecutive Sequence</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/64464655" target="_blank" rel="external">Leetcode 144——Binary Tree Preorder Traversal</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/64464147" target="_blank" rel="external">Leetcode 145——Binary Tree Postorder Traversal</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/62049422" target="_blank" rel="external">Leetcode 152——Maximum Product Subarray</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/62074187" target="_blank" rel="external">Leetcode 155——Min Stack</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/69703633" target="_blank" rel="external">Leetcode 198——House Robber</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/62046081" target="_blank" rel="external">Leetcode 394——Decode String</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/69864523" target="_blank" rel="external">Leetcode 402——Remove K Digits</a></p>
-<p>未完待续。</p>
-<h2 id="13-论文翻译"><a href="#13-论文翻译" class="headerlink" title="13. 论文翻译"></a>13. 论文翻译</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/50630024" target="_blank" rel="external">Online Object Tracking: A Benchmark</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50555834" target="_blank" rel="external">Robust Object Tracking via Sparsity-based Collaborative Model</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50555847" target="_blank" rel="external">Visual Tracking via Adaptive Structural Local Sparse Appearance Model</a></p>
-<h2 id="14-统计学习方法相关"><a href="#14-统计学习方法相关" class="headerlink" title="14. 统计学习方法相关"></a>14. 统计学习方法相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/69568742" target="_blank" rel="external">统计学习方法(一)——统计学习方法概论</a></p>
-<p>未完待续。</p>
-<h2 id="15-Deep-Learning相关"><a href="#15-Deep-Learning相关" class="headerlink" title="15. Deep Learning相关"></a>15. Deep Learning相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/62430795" target="_blank" rel="external">LeNet神经网络</a></p>
-<p>未完待续。</p>
-<h2 id="16-Matlab相关"><a href="#16-Matlab相关" class="headerlink" title="16. Matlab相关"></a>16. Matlab相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/46866509" target="_blank" rel="external">Matlab用代码关联m文件</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45575941" target="_blank" rel="external">Matlab读取文件夹下的图像文件名</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45029131" target="_blank" rel="external">Matlab中的class用法</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/44961917" target="_blank" rel="external">Matlab中的cell</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/44943171" target="_blank" rel="external">Matlab中的inf</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/44856407" target="_blank" rel="external">Matlab中测程序运行时间</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/44757429" target="_blank" rel="external">Matlab的padarray函数</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/44756521" target="_blank" rel="external">Matlab中的round、ceil、floor、fix函数</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/42739301" target="_blank" rel="external">Matlab中mexext命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/42738569" target="_blank" rel="external">Matlab中的input命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/42738379" target="_blank" rel="external">Matlab中的eval命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/42716195" target="_blank" rel="external">Matlab中的nargin命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/42715759" target="_blank" rel="external">Matlab中的ispc命令</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45032825" target="_blank" rel="external">Matlab/C++混合编程中见过的函数</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45031829" target="_blank" rel="external">Matlab编译C、C++程序的编译器配置</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45031687" target="_blank" rel="external">Matlab、C++混合编程之Hell world</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45031509" target="_blank" rel="external">Matlab、C++混合编程中的mexFunction函数参数详解</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/45032481" target="_blank" rel="external">Matlab/C++混合编程之mxArray的访问</a></p>
-<h2 id="17-计算机视觉相关"><a href="#17-计算机视觉相关" class="headerlink" title="17. 计算机视觉相关"></a>17. 计算机视觉相关</h2><p><a href="http://blog.csdn.net/quincuntial/article/details/50541815" target="_blank" rel="external">LBP特征原理及代码实现</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50528620" target="_blank" rel="external">图像积分图的计算</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50625389" target="_blank" rel="external">高斯模糊</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50462401" target="_blank" rel="external">Opencv中的MSER特征</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/46622765" target="_blank" rel="external">图像处理——卷积、滤波的整理</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50146199" target="_blank" rel="external">积分图的概念、计算及代码</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50132089" target="_blank" rel="external">Surf特征点检测与匹配</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/46637853" target="_blank" rel="external">L0、L1与L2范数</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50442384" target="_blank" rel="external">TrainCascade类图解析</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50461025" target="_blank" rel="external">SIFT特征检测与RANSAC过滤</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50436699" target="_blank" rel="external">opencv_traincascade.exe用到的参数及解释</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50461521" target="_blank" rel="external">Opencv中FAST特征检测</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50461653" target="_blank" rel="external">BRIEF特征匹配</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50461692" target="_blank" rel="external">ORB特征检测与匹配</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50462133" target="_blank" rel="external">BRISK特征匹配</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50462165" target="_blank" rel="external">FREAK特征匹配</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53572415" target="_blank" rel="external">Mac下dlib安装</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50130057" target="_blank" rel="external">亮度、对比度、直方图均衡化</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50114773" target="_blank" rel="external">Opencv中的DMatch</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50086719" target="_blank" rel="external">Opencv的KeyPoint</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/50082769" target="_blank" rel="external">Opencv中的BFMatcher和FlannBasedMatcher的区别</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/49947791" target="_blank" rel="external">Opencv中如何将两幅图像连接成一幅图像(Mat操作)</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/49641437" target="_blank" rel="external">64位Win7下配置VS2010和Opencv3.0</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53766784" target="_blank" rel="external">OpenCV的Transparent API</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53407926" target="_blank" rel="external">OpenCV 3.0与OpenCV 2.4的区别</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53424820" target="_blank" rel="external">Mac下OpenCV的安装</a></p>
-<p><a href="http://blog.csdn.net/quincuntial/article/details/53590060" target="_blank" rel="external">Mac下使用Eclipse编写OpenCV程序</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      博客链接导航
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Caffe绘制神经网络结构图</title>
-    <link href="noahsnail.com/2017/04/28/2017-4-28-Caffe%E7%BB%98%E5%88%B6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/04/28/2017-4-28-Caffe绘制神经网络结构图/</id>
-    <published>2017-04-28T05:25:41.000Z</published>
-    <updated>2017-04-28T05:40:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>Caffe中自带绘制神经网络结构图的工具，主要是在pycaffe中，因此首先要安装pycaffe，可参考我的另一篇文章，<a href="http://noahsnail.com/2016/12/06/2016-12-6-Mac%E4%B8%8BCaffe%E7%9A%84%E5%AE%89%E8%A3%85/">Caffe安装</a>，除此之外还需要安装两个依赖：pydot和graphviz。</p>
-<p>graphviz不能通过pip安装，否则仍然会报下面的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Drawing net to lenet.png</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;draw_net.py&quot;, line 58, in &lt;module&gt;</div><div class="line">    main()</div><div class="line">  File &quot;draw_net.py&quot;, line 54, in main</div><div class="line">    phase)</div><div class="line">  File &quot;/Users/ltc/Caffe/caffe-master/python/caffe/draw.py&quot;, line 244, in draw_net_to_file</div><div class="line">    fid.write(draw_net(caffe_net, rankdir, ext, phase))</div><div class="line">  File &quot;/Users/ltc/Caffe/caffe-master/python/caffe/draw.py&quot;, line 223, in draw_net</div><div class="line">    return get_pydot_graph(caffe_net, rankdir, phase=phase).create(format=ext)</div><div class="line">  File &quot;/Users/ltc/anaconda/lib/python2.7/site-packages/pydot.py&quot;, line 1883, in create</div><div class="line">    prog=prog))</div><div class="line">Exception: &quot;dot&quot; not found in path.</div></pre></td></tr></table></figure>
-<h2 id="2-graphviz安装"><a href="#2-graphviz安装" class="headerlink" title="2. graphviz安装"></a>2. graphviz安装</h2><p>graphviz安装命令如下（Mac，Linux可用apt-get）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install graphviz</div></pre></td></tr></table></figure>
-<h2 id="3-pydot安装"><a href="#3-pydot安装" class="headerlink" title="3. pydot安装"></a>3. pydot安装</h2><p>pydot的安装命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install pydot</div></pre></td></tr></table></figure>
-<h2 id="4-绘制结构图"><a href="#4-绘制结构图" class="headerlink" title="4. 绘制结构图"></a>4. 绘制结构图</h2><p>绘制神经网络结构图：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 进入Caffe python目录</div><div class="line">$ cd /Users/ltc/Caffe/caffe-master/python</div><div class="line"></div><div class="line"># 绘制结构图</div><div class="line">$ python draw_net.py ../examples/mnist/lenet_train_test.prototxt lenet.png</div></pre></td></tr></table></figure>
-<h2 id="5-结果"><a href="#5-结果" class="headerlink" title="5. 结果"></a>5. 结果</h2><p>结果如下：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/lenet_structure.png" alt="LeNet网络结构图"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      Caffe绘制神经网络结构图
-    
-    </summary>
-    
-      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
-    
-    
-      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(二)——设置坐标轴</title>
-    <link href="noahsnail.com/2017/04/28/2017-4-28-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E8%AE%BE%E7%BD%AE%E5%9D%90%E6%A0%87%E8%BD%B4/"/>
-    <id>noahsnail.com/2017/04/28/2017-4-28-matplotlib的基本用法(二)——设置坐标轴/</id>
-    <published>2017-04-28T00:13:56.000Z</published>
-    <updated>2017-04-29T03:50:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于matplotlib的一些基本用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 绘制普通图像</div><div class="line">x = np.linspace(-1, 1, 50)</div><div class="line">y1 = 2 * x + 1</div><div class="line">y2 = x**2</div><div class="line"></div><div class="line">plt.figure()</div><div class="line">plt.plot(x, y1)</div><div class="line">plt.plot(x, y2, color = &apos;red&apos;, linewidth = 1.0, linestyle = &apos;--&apos;)</div><div class="line"></div><div class="line"># 设置坐标轴的取值范围</div><div class="line">plt.xlim((-1, 1))</div><div class="line">plt.ylim((0, 2))</div><div class="line"></div><div class="line"># 设置坐标轴的lable</div><div class="line">plt.xlabel(&apos;X axis&apos;)</div><div class="line">plt.ylabel(&apos;Y axis&apos;)</div><div class="line"></div><div class="line"># 设置x坐标轴刻度, 原来为0.25, 修改后为0.5</div><div class="line">plt.xticks(np.linspace(-1, 1, 5))</div><div class="line"># 设置y坐标轴刻度及标签, $$是设置字体</div><div class="line">plt.yticks([0, 0.5], [&apos;$minimum$&apos;, &apos;normal&apos;])</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/t1.png" alt="设置ticks前"><br><img src="http://ocs628urt.bkt.clouddn.com/t2.png" alt="设置ticks后"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(二)——设置坐标轴
     
     </summary>
     
