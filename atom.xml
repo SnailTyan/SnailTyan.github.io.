@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-05-04T12:07:14.000Z</updated>
+  <updated>2017-05-04T14:03:31.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scikit-learn的基本用法(六)——交叉验证2</title>
+    <link href="noahsnail.com/2017/05/04/2017-5-4-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AD)%E2%80%94%E2%80%94%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%812/"/>
+    <id>noahsnail.com/2017/05/04/2017-5-4-scikit-learn的基本用法(六)——交叉验证2/</id>
+    <published>2017-05-04T13:45:35.000Z</published>
+    <updated>2017-05-04T14:03:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍scikit-learn中的交叉验证。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from sklearn.datasets import load_digits</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.svm import SVC</div><div class="line">from sklearn.learning_curve import learning_curve</div><div class="line">from sklearn.model_selection import cross_val_score </div><div class="line"></div><div class="line"></div><div class="line"># 加载数据集</div><div class="line">digits = load_digits()</div><div class="line">X = digits.data</div><div class="line">y = digits.target</div><div class="line"># 用SVM进行学习并记录loss</div><div class="line">train_sizes, train_loss, test_loss = learning_curve(SVC(gamma = 0.001), </div><div class="line">                                                    X, y, cv = 10, scoring = &apos;neg_mean_squared_error&apos;,</div><div class="line">                                                    train_sizes = [0.1, 0.25, 0.5, 0.75, 1])</div><div class="line"></div><div class="line"># 训练误差均值</div><div class="line">train_loss_mean = -np.mean(train_loss, axis = 1)</div><div class="line"># 测试误差均值</div><div class="line">test_loss_mean = -np.mean(test_loss, axis = 1)</div><div class="line"></div><div class="line"># 绘制误差曲线</div><div class="line">plt.plot(train_sizes, train_loss_mean, &apos;o-&apos;, color = &apos;r&apos;, label = &apos;Training&apos;)</div><div class="line">plt.plot(train_sizes, test_loss_mean, &apos;o-&apos;, color = &apos;g&apos;, label = &apos;Cross-Validation&apos;)</div><div class="line"></div><div class="line">plt.xlabel(&apos;Training data size&apos;)</div><div class="line">plt.ylabel(&apos;Loss&apos;)</div><div class="line">plt.legend(loc = &apos;best&apos;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/sk6.png" alt="image"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      scikit-learn的基本用法(六)——交叉验证2
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scikit-learn的基本用法(五)——交叉验证1</title>
+    <link href="noahsnail.com/2017/05/04/2017-5-4-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%94)%E2%80%94%E2%80%94%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/"/>
+    <id>noahsnail.com/2017/05/04/2017-5-4-scikit-learn的基本用法(五)——交叉验证/</id>
+    <published>2017-05-04T13:06:43.000Z</published>
+    <updated>2017-05-04T13:41:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍scikit-learn中的交叉验证。通过交叉验证来选取KNN算法中的K值。</p>
+<ul>
+<li>Demo 1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from sklearn import datasets</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.neighbors import KNeighborsClassifier</div><div class="line">from sklearn.cross_validation import cross_val_score </div><div class="line"></div><div class="line"># 加载iris数据集</div><div class="line">iris = datasets.load_iris()</div><div class="line"># 读取特征</div><div class="line">X = iris.data</div><div class="line"># 读取分类标签</div><div class="line">y = iris.target</div><div class="line"># 定义分类器</div><div class="line">knn = KNeighborsClassifier(n_neighbors = 5)</div><div class="line"># 进行交叉验证数据评估, 数据分为5部分, 每次用一部分作为测试集</div><div class="line">scores = cross_val_score(knn, X, y, cv = 5, scoring = &apos;accuracy&apos;)</div><div class="line"># 输出5次交叉验证的准确率</div><div class="line">print scores</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ 0.96666667  1.          0.93333333  0.96666667  1.        ]</div></pre></td></tr></table></figure>
+<ul>
+<li>Demo 2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from sklearn import datasets</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.neighbors import KNeighborsClassifier</div><div class="line">from sklearn.cross_validation import cross_val_score </div><div class="line"></div><div class="line"># 确定knn中k的取值</div><div class="line"></div><div class="line"># 加载iris数据集</div><div class="line">iris = datasets.load_iris()</div><div class="line"># 读取特征</div><div class="line">X = iris.data</div><div class="line"># 读取分类标签</div><div class="line">y = iris.target</div><div class="line"># 定义knn中k的取值, 0-10</div><div class="line">k_range = range(1, 30)</div><div class="line"># 保存k对应的准确率</div><div class="line">k_scores = []</div><div class="line"># 计算每个k取值对应的准确率</div><div class="line">for k in k_range:</div><div class="line">    # 获得knn分类器</div><div class="line">    knn = KNeighborsClassifier(n_neighbors = k)</div><div class="line">    # 对数据进行交叉验证求准确率</div><div class="line">    scores = cross_val_score(knn, X, y, cv = 10, scoring = &apos;accuracy&apos;)</div><div class="line">    # 保存交叉验证结果的准确率均值</div><div class="line">    k_scores.append(scores.mean())</div><div class="line"></div><div class="line"># 绘制k取不同值时的准确率变化图像</div><div class="line">plt.plot(k_range, k_scores)</div><div class="line">plt.xlabel(&apos;K Value in KNN&apos;)</div><div class="line">plt.ylabel(&apos;Cross-Validation Mean Accuracy&apos;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p><img src="http://ocs628urt.bkt.clouddn.com/sk5.png" alt="image"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      scikit-learn的基本用法(五)——交叉验证1
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>matplotlib的基本用法(十四)——figure图的嵌套</title>
@@ -645,63 +717,6 @@
     <summary type="html">
     
       matplotlib的基本用法(四)——设置legend图例
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(三)——调整坐标轴</title>
-    <link href="noahsnail.com/2017/04/29/2017-4-29-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)%E2%80%94%E2%80%94%E8%B0%83%E6%95%B4%E5%9D%90%E6%A0%87%E8%BD%B4/"/>
-    <id>noahsnail.com/2017/04/29/2017-4-29-matplotlib的基本用法(三)——调整坐标轴/</id>
-    <published>2017-04-29T03:50:02.000Z</published>
-    <updated>2017-04-29T03:52:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于matplotlib的一些基本用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 绘制普通图像</div><div class="line">x = np.linspace(-1, 1, 50)</div><div class="line">y1 = 2 * x + 1</div><div class="line">y2 = x**2</div><div class="line"></div><div class="line">plt.figure()</div><div class="line">plt.plot(x, y1)</div><div class="line">plt.plot(x, y2, color = &apos;red&apos;, linewidth = 1.0, linestyle = &apos;--&apos;)</div><div class="line"></div><div class="line"># 设置坐标轴的取值范围</div><div class="line">plt.xlim((-1, 1))</div><div class="line">plt.ylim((0, 2))</div><div class="line"></div><div class="line"># 设置坐标轴的lable</div><div class="line">plt.xlabel(&apos;X axis&apos;)</div><div class="line">plt.ylabel(&apos;Y axis&apos;)</div><div class="line"></div><div class="line"># 设置x坐标轴刻度, 原来为0.25, 修改后为0.5</div><div class="line">plt.xticks(np.linspace(-1, 1, 5))</div><div class="line"># 设置y坐标轴刻度及标签, $$是设置字体</div><div class="line">plt.yticks([0, 0.5], [&apos;$minimum$&apos;, &apos;normal&apos;])</div><div class="line"></div><div class="line"># 获取当前的坐标轴, gca = get current axis</div><div class="line">ax = plt.gca()</div><div class="line"># 设置右边框和上边框</div><div class="line">ax.spines[&apos;right&apos;].set_color(&apos;none&apos;)</div><div class="line">ax.spines[&apos;top&apos;].set_color(&apos;none&apos;)</div><div class="line"># 设置x坐标轴为下边框</div><div class="line">ax.xaxis.set_ticks_position(&apos;bottom&apos;)</div><div class="line"># 设置y坐标轴为左边框</div><div class="line">ax.yaxis.set_ticks_position(&apos;left&apos;)</div><div class="line"># 设置x轴, y周在(0, 0)的位置</div><div class="line">ax.spines[&apos;bottom&apos;].set_position((&apos;data&apos;, 0))</div><div class="line">ax.spines[&apos;left&apos;].set_position((&apos;data&apos;, 0))</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/t3.png" alt="设置结果图"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(三)——调整坐标轴
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pandas的基本用法(六)——合并数据</title>
-    <link href="noahsnail.com/2017/04/29/2017-4-29-pandas%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AD)%E2%80%94%E2%80%94%E5%90%88%E5%B9%B6%E6%95%B0%E6%8D%AE/"/>
-    <id>noahsnail.com/2017/04/29/2017-4-29-pandas的基本用法(六)——合并数据/</id>
-    <published>2017-04-29T02:47:29.000Z</published>
-    <updated>2017-04-29T03:15:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于pandas的一些基本用法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"></div><div class="line"># Test 1</div><div class="line"># 创建DataFrame</div><div class="line">df1 = pd.DataFrame(np.ones((3, 4)) * 0, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line">df2 = pd.DataFrame(np.ones((3, 4)) * 1, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line">df3 = pd.DataFrame(np.ones((3, 4)) * 2, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line">print df1</div><div class="line">print df2</div><div class="line">print df3</div><div class="line"></div><div class="line"># Test 1 result</div><div class="line">     a    b    c    d</div><div class="line">0  0.0  0.0  0.0  0.0</div><div class="line">1  0.0  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0  0.0</div><div class="line">     a    b    c    d</div><div class="line">0  1.0  1.0  1.0  1.0</div><div class="line">1  1.0  1.0  1.0  1.0</div><div class="line">2  1.0  1.0  1.0  1.0</div><div class="line">     a    b    c    d</div><div class="line">0  2.0  2.0  2.0  2.0</div><div class="line">1  2.0  2.0  2.0  2.0</div><div class="line">2  2.0  2.0  2.0  2.0</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 竖向合并三个DataFrame</div><div class="line">res = pd.concat([df1, df2, df3], axis = 0)</div><div class="line">print res</div><div class="line"></div><div class="line"># 横向合并三个DataFrame</div><div class="line">res = pd.concat([df1, df2, df3], axis = 1)</div><div class="line">print res</div><div class="line"></div><div class="line"># 合并的同时index重新排序</div><div class="line">res = pd.concat([df1, df2, df3], axis = 0, ignore_index = True)</div><div class="line">print res</div><div class="line"></div><div class="line"># Test 2 result</div><div class="line">     a    b    c    d</div><div class="line">0  0.0  0.0  0.0  0.0</div><div class="line">1  0.0  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0  0.0</div><div class="line">0  1.0  1.0  1.0  1.0</div><div class="line">1  1.0  1.0  1.0  1.0</div><div class="line">2  1.0  1.0  1.0  1.0</div><div class="line">0  2.0  2.0  2.0  2.0</div><div class="line">1  2.0  2.0  2.0  2.0</div><div class="line">2  2.0  2.0  2.0  2.0</div><div class="line"></div><div class="line">     a    b    c    d    a    b    c    d    a    b    c    d</div><div class="line">0  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0  2.0  2.0  2.0  2.0</div><div class="line">1  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0  2.0  2.0  2.0  2.0</div><div class="line">2  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0  2.0  2.0  2.0  2.0</div><div class="line"></div><div class="line">     a    b    c    d</div><div class="line">0  0.0  0.0  0.0  0.0</div><div class="line">1  0.0  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0  0.0</div><div class="line">3  1.0  1.0  1.0  1.0</div><div class="line">4  1.0  1.0  1.0  1.0</div><div class="line">5  1.0  1.0  1.0  1.0</div><div class="line">6  2.0  2.0  2.0  2.0</div><div class="line">7  2.0  2.0  2.0  2.0</div><div class="line">8  2.0  2.0  2.0  2.0</div><div class="line"></div><div class="line"># Test 3</div><div class="line"># 创建DataFrame, 部分索引重合</div><div class="line">df1 = pd.DataFrame(np.ones((3, 4)) * 0, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;], index = [1, 2, 3])</div><div class="line">df2 = pd.DataFrame(np.ones((3, 4)) * 1, columns = [&apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;], index = [2, 3, 4])</div><div class="line">print df1</div><div class="line">print df2</div><div class="line"></div><div class="line"># 直接合并, 默认的join模式为outer, 与pd.concat([df1, df2])是一样的</div><div class="line">res = pd.concat([df1, df2], join = &apos;outer&apos;)</div><div class="line">print res</div><div class="line"></div><div class="line"># 合并模式为inner</div><div class="line">res = pd.concat([df1, df2], join = &apos;inner&apos;)</div><div class="line">print res</div><div class="line"></div><div class="line"># 合并模式为inner, 同时重新排序</div><div class="line">res = pd.concat([df1, df2], join = &apos;inner&apos;, ignore_index = True)</div><div class="line">print res</div><div class="line"></div><div class="line"># Test 3 result</div><div class="line">     a    b    c    d</div><div class="line">1  0.0  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0  0.0</div><div class="line">3  0.0  0.0  0.0  0.0</div><div class="line"></div><div class="line">     b    c    d    e</div><div class="line">2  1.0  1.0  1.0  1.0</div><div class="line">3  1.0  1.0  1.0  1.0</div><div class="line">4  1.0  1.0  1.0  1.0</div><div class="line"></div><div class="line">     a    b    c    d    e</div><div class="line">1  0.0  0.0  0.0  0.0  NaN</div><div class="line">2  0.0  0.0  0.0  0.0  NaN</div><div class="line">3  0.0  0.0  0.0  0.0  NaN</div><div class="line">2  NaN  1.0  1.0  1.0  1.0</div><div class="line">3  NaN  1.0  1.0  1.0  1.0</div><div class="line">4  NaN  1.0  1.0  1.0  1.0</div><div class="line"></div><div class="line">     b    c    d</div><div class="line">1  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0</div><div class="line">3  0.0  0.0  0.0</div><div class="line">2  1.0  1.0  1.0</div><div class="line">3  1.0  1.0  1.0</div><div class="line">4  1.0  1.0  1.0</div><div class="line"></div><div class="line">     b    c    d</div><div class="line">0  0.0  0.0  0.0</div><div class="line">1  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0</div><div class="line">3  1.0  1.0  1.0</div><div class="line">4  1.0  1.0  1.0</div><div class="line">5  1.0  1.0  1.0</div><div class="line"></div><div class="line"># Test 4</div><div class="line"># 横向合并</div><div class="line">res = pd.concat([df1, df2], axis = 1)</div><div class="line">print res</div><div class="line"></div><div class="line"># 横向合并, 按照df1的index, 忽略df2不一致的index</div><div class="line">res = pd.concat([df1, df2], axis = 1, join_axes = [df1.index])</div><div class="line">print res</div><div class="line"></div><div class="line"># Test 4 result</div><div class="line">     a    b    c    d    b    c    d    e</div><div class="line">1  0.0  0.0  0.0  0.0  NaN  NaN  NaN  NaN</div><div class="line">2  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0</div><div class="line">3  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0</div><div class="line">4  NaN  NaN  NaN  NaN  1.0  1.0  1.0  1.0</div><div class="line"></div><div class="line">     a    b    c    d    b    c    d    e</div><div class="line">1  0.0  0.0  0.0  0.0  NaN  NaN  NaN  NaN</div><div class="line">2  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0</div><div class="line">3  0.0  0.0  0.0  0.0  1.0  1.0  1.0  1.0</div><div class="line"></div><div class="line"># Test 5</div><div class="line"># 创建DataFrame</div><div class="line">df1 = pd.DataFrame(np.ones((3, 4)) * 0, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line">df2 = pd.DataFrame(np.ones((3, 4)) * 1, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line">df3 = pd.DataFrame(np.ones((3, 4)) * 2, columns = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;])</div><div class="line"># append</div><div class="line">print df1.append(df2, ignore_index = True)</div><div class="line"></div><div class="line"># append 多个DataFrame</div><div class="line">print df1.append([df2, df3], ignore_index = True)</div><div class="line"></div><div class="line"># Test 5 result</div><div class="line">     a    b    c    d</div><div class="line">0  0.0  0.0  0.0  0.0</div><div class="line">1  0.0  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0  0.0</div><div class="line">3  1.0  1.0  1.0  1.0</div><div class="line">4  1.0  1.0  1.0  1.0</div><div class="line">5  1.0  1.0  1.0  1.0</div><div class="line"></div><div class="line">     a    b    c    d</div><div class="line">0  0.0  0.0  0.0  0.0</div><div class="line">1  0.0  0.0  0.0  0.0</div><div class="line">2  0.0  0.0  0.0  0.0</div><div class="line">3  1.0  1.0  1.0  1.0</div><div class="line">4  1.0  1.0  1.0  1.0</div><div class="line">5  1.0  1.0  1.0  1.0</div><div class="line">6  2.0  2.0  2.0  2.0</div><div class="line">7  2.0  2.0  2.0  2.0</div><div class="line">8  2.0  2.0  2.0  2.0</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      pandas的基本用法(六)——合并数据
     
     </summary>
     
