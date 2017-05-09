@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-05-05T13:15:57.000Z</updated>
+  <updated>2017-05-08T14:40:23.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>keras的基本用法(一)——回归模型</title>
+    <link href="noahsnail.com/2017/05/08/2017-5-8-Keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/"/>
+    <id>noahsnail.com/2017/05/08/2017-5-8-Keras的基本用法(一)——回归模型/</id>
+    <published>2017-05-08T14:26:54.000Z</published>
+    <updated>2017-05-08T14:40:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍Keras的一些基本用法。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from keras.models import Sequential</div><div class="line">from keras.layers import Dense</div><div class="line"></div><div class="line"># 创建数据</div><div class="line">X = np.linspace(-1, 1, 200)</div><div class="line"># 数据随机化</div><div class="line">np.random.shuffle(X)</div><div class="line"># 创建数据及参数, 并加入噪声</div><div class="line">Y = 0.5 * X + 2 + np.random.normal(0, 0.05, (200,))</div><div class="line"></div><div class="line"># 绘制数据</div><div class="line">plt.scatter(X, Y)</div><div class="line">plt.show()</div><div class="line"></div><div class="line"># 分为训练数据和测试数据</div><div class="line">X_train, Y_train = X[:160], Y[:160]</div><div class="line">X_test, Y_test = X[160:], Y[160:]</div><div class="line"></div><div class="line"># 使用keras创建神经网络</div><div class="line"># Sequential是指一层层堆叠的神经网络</div><div class="line"># Dense是指全连接层</div><div class="line"># 定义model</div><div class="line">model = Sequential()</div><div class="line"># 定义第一层, 由于是回归模型, 因此只有一层</div><div class="line">model.add(Dense(units = 1, input_dim = 1))</div><div class="line"></div><div class="line"># 选择损失函数和优化方法</div><div class="line">model.compile(loss = &apos;mse&apos;, optimizer = &apos;sgd&apos;)</div><div class="line"></div><div class="line">print &apos;----Training----&apos;</div><div class="line"># 训练过程</div><div class="line">for step in range(501):</div><div class="line">    # 进行训练, 返回损失(代价)函数</div><div class="line">    cost = model.train_on_batch(X_train, Y_train)</div><div class="line">    if step % 100 == 0:</div><div class="line">        print &apos;loss: &apos;, cost</div><div class="line"></div><div class="line">print &apos;----Testing----&apos;    </div><div class="line"># 训练结束进行测试</div><div class="line">cost = model.evaluate(X_test, Y_test, batch_size = 40)</div><div class="line">print &apos;test loss: &apos;, cost</div><div class="line"></div><div class="line"># 获取参数</div><div class="line">W, b = model.layers[0].get_weights()</div><div class="line">print &apos;Weights: &apos;,W</div><div class="line">print &apos;Biases: &apos;, b</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">----Training----</div><div class="line">loss:  3.97799</div><div class="line">loss:  0.100697</div><div class="line">loss:  0.0118289</div><div class="line">loss:  0.00448105</div><div class="line">loss:  0.00278243</div><div class="line">loss:  0.00232763</div><div class="line">----Testing----</div><div class="line">40/40 [==============================] - 0s</div><div class="line">test loss:  0.00307717337273</div><div class="line">Weights:  [[ 0.47406867]]</div><div class="line">Biases:  [ 1.99442744]</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/k1.png" alt="image"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      keras的基本用法(一)——回归模型
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>scikit-learn的基本用法(八)——保存与加载模型</title>
@@ -684,38 +717,6 @@
     
     
       <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(六)——设置坐标轴label</title>
-    <link href="noahsnail.com/2017/04/30/2017-4-30-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AD)%E2%80%94%E2%80%94%E8%AE%BE%E7%BD%AE%E5%9D%90%E6%A0%87%E8%BD%B4label/"/>
-    <id>noahsnail.com/2017/04/30/2017-4-30-matplotlib的基本用法(六)——设置坐标轴label/</id>
-    <published>2017-04-30T07:20:48.000Z</published>
-    <updated>2017-04-30T07:21:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于matplotlib的一些基本用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 绘制普通图像</div><div class="line">x = np.linspace(-3, 3, 50)</div><div class="line">y = 2 * x + 1</div><div class="line"></div><div class="line">plt.figure()</div><div class="line">plt.plot(x, y)</div><div class="line"></div><div class="line"># 将上、右边框去掉</div><div class="line">ax = plt.gca()</div><div class="line">ax.spines[&apos;right&apos;].set_color(&apos;none&apos;)</div><div class="line">ax.spines[&apos;top&apos;].set_color(&apos;none&apos;)</div><div class="line"></div><div class="line"># 设置x轴的位置及数据在坐标轴上的位置</div><div class="line">ax.xaxis.set_ticks_position(&apos;bottom&apos;)</div><div class="line">ax.spines[&apos;bottom&apos;].set_position((&apos;data&apos;, 0))</div><div class="line"># 设置y轴的位置及数据在坐标轴上的位置</div><div class="line">ax.yaxis.set_ticks_position(&apos;left&apos;)</div><div class="line">ax.spines[&apos;left&apos;].set_position((&apos;data&apos;, 0))</div><div class="line"></div><div class="line"># 设置坐标轴label的大小，背景色等信息</div><div class="line">for label in ax.get_xticklabels() + ax.get_yticklabels():</div><div class="line">    label.set_fontsize(12)</div><div class="line">    label.set_bbox(dict(facecolor = &apos;green&apos;, edgecolor = &apos;None&apos;, alpha = 0.7))</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m6.png" alt="设置结果图"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(六)——设置坐标轴label
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
     
   </entry>
   
