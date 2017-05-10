@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-05-08T14:40:23.000Z</updated>
+  <updated>2017-05-10T14:56:54.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,101 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>keras的基本用法(三)——创建神经网络</title>
+    <link href="noahsnail.com/2017/05/10/2017-5-10-keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    <id>noahsnail.com/2017/05/10/2017-5-10-keras的基本用法(三)——创建神经网络/</id>
+    <published>2017-05-10T14:55:02.000Z</published>
+    <updated>2017-05-10T14:56:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍Keras的一些基本用法。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">from keras.datasets import mnist</div><div class="line">from keras.utils import np_utils</div><div class="line">from keras.models import Sequential</div><div class="line">from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten</div><div class="line">from keras.optimizers import Adam</div><div class="line"></div><div class="line"># 加载数据集</div><div class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data()</div><div class="line"></div><div class="line"># 数据集预处理</div><div class="line">X_train = X_train.reshape(-1, 1, 28, 28)</div><div class="line">X_test = X_test.reshape(-1, 1, 28, 28)</div><div class="line"></div><div class="line"># 将label变为向量</div><div class="line">y_train = np_utils.to_categorical(y_train, 10)</div><div class="line">y_test = np_utils.to_categorical(y_test, 10)</div><div class="line"></div><div class="line"></div><div class="line"># 构建神经网络</div><div class="line">model = Sequential()</div><div class="line"></div><div class="line"># 卷积层一</div><div class="line">model.add(Conv2D(32, kernel_size = (5, 5), strides = (1, 1), padding = &apos;same&apos;, activation = &apos;relu&apos;, input_shape = (1, 28, 28)))</div><div class="line"></div><div class="line"># 池化层一</div><div class="line">model.add(MaxPooling2D(pool_size = (2, 2), strides = (1, 1), padding = &apos;same&apos;))</div><div class="line"></div><div class="line"># 卷积层二</div><div class="line">model.add(Conv2D(64, kernel_size = (5, 5), strides = (1, 1), padding = &apos;same&apos;, activation = &apos;relu&apos;))</div><div class="line"></div><div class="line"># 池化层二</div><div class="line">model.add(MaxPooling2D(pool_size = (2, 2), strides = (1, 1), padding = &apos;same&apos;))</div><div class="line"></div><div class="line"># 全连接层一</div><div class="line">model.add(Flatten())</div><div class="line">model.add(Dense(1024))</div><div class="line">model.add(Activation(&apos;relu&apos;))</div><div class="line"></div><div class="line"># 全连接层二</div><div class="line">model.add(Dense(10))</div><div class="line">model.add(Activation(&apos;softmax&apos;))</div><div class="line"></div><div class="line"># 选择并定义优化求解方法</div><div class="line">adam = Adam(lr = 1e-4)</div><div class="line"></div><div class="line"># 选择损失函数、求解方法、度量方法</div><div class="line">model.compile(optimizer = adam, loss = &apos;categorical_crossentropy&apos;, metrics = [&apos;accuracy&apos;])</div><div class="line"></div><div class="line"># 训练模型</div><div class="line">model.fit(X_train, y_train, epochs = 2, batch_size = 32)</div><div class="line"></div><div class="line"># 评估模型</div><div class="line">loss, accuracy = model.evaluate(X_test, y_test)</div><div class="line"></div><div class="line">print &apos;&apos;</div><div class="line">print &apos;loss: &apos;, loss</div><div class="line">print &apos;accuracy: &apos;, accuracy</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Using TensorFlow backend.</div><div class="line">Epoch 1/2</div><div class="line">60000/60000 [==============================] - 55s - loss: 0.4141 - acc: 0.9234</div><div class="line">Epoch 2/2</div><div class="line">60000/60000 [==============================] - 56s - loss: 0.0743 - acc: 0.9770</div><div class="line"> 9920/10000 [============================&gt;.] - ETA: 0s</div><div class="line">loss:  0.103529265788</div><div class="line">accuracy:  0.9711</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      keras的基本用法(三)——创建神经网络
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>keras的基本用法(二)——定义分类器</title>
+    <link href="noahsnail.com/2017/05/10/2017-5-10-keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E5%AE%9A%E4%B9%89%E5%88%86%E7%B1%BB%E5%99%A8/"/>
+    <id>noahsnail.com/2017/05/10/2017-5-10-keras的基本用法(二)——定义分类器/</id>
+    <published>2017-05-10T13:44:57.000Z</published>
+    <updated>2017-05-10T14:57:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍Keras的一些基本用法。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">from keras.datasets import mnist</div><div class="line">from keras.utils import np_utils</div><div class="line">from keras.models import Sequential</div><div class="line">from keras.layers import Dense, Activation</div><div class="line">from keras.optimizers import RMSprop</div><div class="line"></div><div class="line"># 加载数据集</div><div class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data()</div><div class="line"></div><div class="line"># 数据集reshape, -1表示该参数不指定, 系统通过推断来获得</div><div class="line">X_train = X_train.reshape(X_train.shape[0], -1) / 255.0</div><div class="line">X_test = X_test.reshape(X_test.shape[0], -1) / 255.0</div><div class="line"></div><div class="line"># 将label变为向量</div><div class="line">y_train = np_utils.to_categorical(y_train, 10)</div><div class="line">y_test = np_utils.to_categorical(y_test, 10)</div><div class="line"></div><div class="line"></div><div class="line"># 构建分类器</div><div class="line">model = Sequential([</div><div class="line">    Dense(32, input_dim = 784),</div><div class="line">    Activation(&apos;relu&apos;),</div><div class="line">    Dense(10),</div><div class="line">    Activation(&apos;softmax&apos;)</div><div class="line">])</div><div class="line"></div><div class="line"># 选择并定义优化求解方法</div><div class="line">rmsprop = RMSprop(lr = 0.001, rho = 0.9, epsilon = 1e-8, decay = 0.0)</div><div class="line"></div><div class="line"># 选择损失函数、求解方法、度量方法</div><div class="line">model.compile(optimizer = rmsprop, loss = &apos;categorical_crossentropy&apos;, metrics = [&apos;accuracy&apos;])</div><div class="line"></div><div class="line"># 训练模型</div><div class="line">model.fit(X_train, y_train, epochs = 2, batch_size = 32)</div><div class="line"></div><div class="line"># 评估模型</div><div class="line">loss, accuracy = model.evaluate(X_test, y_test)</div><div class="line"></div><div class="line">print &apos;&apos;</div><div class="line">print &apos;loss: &apos;, loss</div><div class="line">print &apos;accuracy: &apos;, accuracy</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Using TensorFlow backend.</div><div class="line">Epoch 1/2</div><div class="line">60000/60000 [==============================] - 2s - loss: 0.3382 - acc: 0.9048</div><div class="line">Epoch 2/2</div><div class="line">60000/60000 [==============================] - 2s - loss: 0.1913 - acc: 0.9454</div><div class="line"> 7680/10000 [======================&gt;.......] - ETA: 0s</div><div class="line">loss:  0.16181669073</div><div class="line">accuracy:  0.9535</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      keras的基本用法(二)——定义分类器
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>matplotlib的基本用法(十七)——保存figure</title>
+    <link href="noahsnail.com/2017/05/10/2017-5-10-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%B8%83)%E2%80%94%E2%80%94%E4%BF%9D%E5%AD%98%E7%BB%98%E5%9B%BE/"/>
+    <id>noahsnail.com/2017/05/10/2017-5-10-matplotlib的基本用法(十七)——保存绘图/</id>
+    <published>2017-05-10T12:58:53.000Z</published>
+    <updated>2017-05-10T13:04:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍matplotlib的一些用法。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">import matplotlib</div><div class="line">matplotlib.use(&apos;Agg&apos;)</div><div class="line"></div><div class="line"># 定义数据</div><div class="line">x = np.arange(0, 10, 0.1)</div><div class="line">y = 0.05 * x ** 2</div><div class="line"></div><div class="line">#绘制图像</div><div class="line">plt.plot(x, y)</div><div class="line"></div><div class="line"># 设置坐标轴</div><div class="line">plt.xlabel(&apos;x data&apos;)</div><div class="line">plt.ylabel(&apos;y data&apos;)</div><div class="line"></div><div class="line"># 默认保存为png格式</div><div class="line">plt.savefig(&apos;test&apos;)</div></pre></td></tr></table></figure>
+<ul>
+<li>结果</li>
+</ul>
+<p>在文件夹下可看到<code>test.png</code>，如图：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/m17.png" alt="图像"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      matplotlib的基本用法(十七)——保存figure
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>keras的基本用法(一)——回归模型</title>
@@ -607,116 +702,6 @@
     
     
       <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(八)——绘制柱状图</title>
-    <link href="noahsnail.com/2017/05/02/2017-5-2-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AB)%E2%80%94%E2%80%94%E7%BB%98%E5%88%B6%E6%9F%B1%E7%8A%B6%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/05/02/2017-5-2-matplotlib的基本用法(八)——绘制柱状图/</id>
-    <published>2017-05-02T11:27:32.000Z</published>
-    <updated>2017-05-02T13:40:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要使用matplotlib进行柱状图的绘制。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># 数据数目</div><div class="line">n = 10</div><div class="line">x = np.arange(n)</div><div class="line"># 生成数据, 均匀分布(0.5, 1.0)之间</div><div class="line">y1 = (1 - x / float(n)) * np.random.uniform(0.5, 1.0, n)</div><div class="line">y2 = (1 - x / float(n)) * np.random.uniform(0.5, 1.0, n)</div><div class="line"></div><div class="line"># 绘制柱状图, 向上</div><div class="line">plt.bar(x, y1, facecolor = &apos;blue&apos;, edgecolor = &apos;white&apos;)</div><div class="line"># 绘制柱状图, 向下</div><div class="line">plt.bar(x, -y2, facecolor = &apos;green&apos;, edgecolor = &apos;white&apos;)</div><div class="line"></div><div class="line"></div><div class="line">temp = zip(x, y2)</div><div class="line"># 在柱状图上显示具体数值, ha水平对齐, va垂直对齐</div><div class="line">for x, y in zip(x, y1):</div><div class="line">    plt.text(x + 0.05, y + 0.1, &apos;%.2f&apos; % y, ha = &apos;center&apos;, va = &apos;bottom&apos;)</div><div class="line"></div><div class="line">for x, y in temp:</div><div class="line">    plt.text(x + 0.05, -y - 0.1, &apos;%.2f&apos; % y, ha = &apos;center&apos;, va = &apos;bottom&apos;)</div><div class="line"></div><div class="line"># 设置坐标轴范围</div><div class="line">plt.xlim(-1, n)</div><div class="line">plt.ylim(-1.5, 1.5)</div><div class="line"># 去除坐标轴</div><div class="line">plt.xticks(())</div><div class="line">plt.yticks(())</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m8.png" alt="柱状图"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(八)——绘制柱状图
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(七)——绘制散点图</title>
-    <link href="noahsnail.com/2017/05/02/2017-5-2-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%83)%E2%80%94%E2%80%94%E7%BB%98%E5%88%B6%E6%95%A3%E7%82%B9%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/05/02/2017-5-2-matplotlib的基本用法(七)——绘制散点图/</id>
-    <published>2017-05-02T10:45:48.000Z</published>
-    <updated>2017-05-02T10:50:47.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要使用matplotlib进行散点图的绘制。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 数据个数</div><div class="line">n = 1024</div><div class="line"># 均值为0, 方差为1的随机数</div><div class="line">x = np.random.normal(0, 1, n)</div><div class="line">y = np.random.normal(0, 1, n)</div><div class="line"></div><div class="line"># 计算颜色值</div><div class="line">color = np.arctan2(y, x)</div><div class="line"># 绘制散点图</div><div class="line">plt.scatter(x, y, s = 75, c = color, alpha = 0.5)</div><div class="line"># 设置坐标轴范围</div><div class="line">plt.xlim((-1.5, 1.5))</div><div class="line">plt.ylim((-1.5, 1.5))</div><div class="line"></div><div class="line"># 不显示坐标轴的值</div><div class="line">plt.xticks(())</div><div class="line">plt.yticks(())</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m7.png" alt="散点图"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(七)——绘制散点图
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Caffe的layer解析</title>
-    <link href="noahsnail.com/2017/05/02/2017-5-2-Caffe%E7%9A%84layer%E8%A7%A3%E6%9E%90/"/>
-    <id>noahsnail.com/2017/05/02/2017-5-2-Caffe的layer解析/</id>
-    <published>2017-05-02T07:56:28.000Z</published>
-    <updated>2017-05-02T08:39:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Caffe中的layer"><a href="#1-Caffe中的layer" class="headerlink" title="1. Caffe中的layer"></a>1. Caffe中的layer</h2><p>在Caffe中，神经网络Net是由一层层的神经网络层layer组合构建出来的，神经网络结构位于主要是在<code>.prototxt</code>文件中。Caffe中的layer分为Data Layers、Vision Layers、Recurrent Layers、Common Layers、Normalization Layers、Activation/Neuron Layers、Utility Layers、Loss Layers等。下面对这些layer进行一一的介绍。</p>
-<h2 id="2-Data-Layer"><a href="#2-Data-Layer" class="headerlink" title="2. Data Layer"></a>2. Data Layer</h2><p>Data Layer是数据层，主要用来向神经网络中输入训练数据的，它支持的输入数据类型有：</p>
-<ul>
-<li><p>Image Data<br>读取原始图像数据</p>
-</li>
-<li><p>Database<br>从LEVELDB或LMDB中读取数据</p>
-</li>
-<li><p>HDF5 Input<br>读取HDF5数据，数据可以是任意维度的</p>
-</li>
-<li><p>HDF5 Output<br>输出HDF5数据</p>
-</li>
-<li><p>Input<br>通常在部署神经网络时使用</p>
-</li>
-<li><p>Window Data - read window data file.<br>存在硬盘上的图片，需要在一个txt里指定用于训练图片以及bounding box。</p>
-</li>
-<li><p>Memory Data<br>直接从内存中读取数据</p>
-</li>
-<li><p>Dummy Data<br>静态数据和调试</p>
-</li>
-</ul>
-<p>Data Layer的定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">layer &#123;</div><div class="line">  name: &quot;data&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TRAIN</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    mean_file: &quot;mean.binaryproto&quot;</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;train_lmdb&quot;</div><div class="line">    batch_size: 32</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>name：用来定义layer的名字，没有限制。<br>type：layer的类型，具体类型可参考<a href="http://caffe.berkeleyvision.org/tutorial/layers.html" target="_blank" rel="external">http://caffe.berkeleyvision.org/tutorial/layers.html</a>。<br>top：layer的输出数据，由于是分类问题，因此有两个top，数据和标签。<br>bottom：layer的输入数据。<br>source：表示训练数据或测试数据的地址，必须有。<br>batch_size：一次训练或测试多少幅数据，必须有。<br>bakcend：可选，默认为LEVELDB。<br>include：表明该层属于训练阶段还是测试阶段，如果不指定，表示两个阶段都包括。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Caffe的layer解析
-    
-    </summary>
-    
-      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
-    
-    
-      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
     
   </entry>
   
