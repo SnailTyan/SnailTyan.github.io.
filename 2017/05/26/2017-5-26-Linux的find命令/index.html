@@ -90,7 +90,7 @@
 <meta property="og:url" content="noahsnail.com/2017/05/26/2017-5-26-Linux的find命令/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Linux的find命令">
-<meta property="og:updated_time" content="2017-05-26T05:33:22.000Z">
+<meta property="og:updated_time" content="2017-05-27T05:40:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux的find命令">
 <meta name="twitter:description" content="Linux的find命令">
@@ -312,8 +312,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2017-05-26T13:33:22+08:00">
-              2017-05-26
+            <time title="Post modified" itemprop="dateModified" datetime="2017-05-27T13:40:19+08:00">
+              2017-05-27
             </time>
             
           </span>
@@ -373,20 +373,12 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>Linux的tee命令可以将输出同时发送到显示器和文件中。tee命令相当于一个管道的T型街头，它接收STDIN的数据并将数据发送到两处，一处是STDOUT，一处是tee命令指定的文件名。命令用法如下：</p>
+<p>Linux的find命令主要用来查找系统中的文件。命令格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">find命令的格式： find  [-path ..] -options [-print -exec -ok]</div><div class="line">path：要查找的目录路径。</div><div class="line">~ 表示$HOME目录</div><div class="line">. 表示当前目录</div><div class="line">/ 表示根目录</div><div class="line">-print ：表示将结果输出到标准输出</div><div class="line">-exec ：对匹配的文件执行该参数所给出的shell命令。形式为 command  &#123;&#125; \; ，注意&#123;&#125;与\; 之间有空格</div><div class="line">-ok ：与-exec作用相同，区别在于，在执行命令之前，都会给出提示，让用户确认是否执行</div><div class="line"></div><div class="line">options常用的有下选项：</div><div class="line">-name 按照名字查找</div><div class="line">-perm 安装权限查找</div><div class="line">-prune 不再当前指定的目录下查找</div><div class="line">-user 文件属主来查找</div><div class="line">-group 所属组来查找</div><div class="line">-nogroup 查找无有效所属组的文件</div><div class="line">-nouser 查找无有效属主的文件</div><div class="line">-type 按照文件类型查找</div></pre></td></tr></table></figure>
 <ul>
-<li>基本用法</li>
+<li>Demo</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令形式：tee filename</span></div><div class="line"></div><div class="line">$ date | tee testfile</div><div class="line">2016年12月13日 星期二 18时46分32秒 CST</div><div class="line"></div><div class="line">$ cat testfile </div><div class="line">2016年12月13日 星期二 18时46分32秒 CST</div></pre></td></tr></table></figure>
-<ul>
-<li>-a选项</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -a选项是将数据追加到文件中</span></div><div class="line"></div><div class="line">$ date | tee <span class="_">-a</span> testfile</div><div class="line">2016年12月13日 星期二 18时47分38秒 CST</div><div class="line"></div><div class="line">$ cat testfile </div><div class="line">2016年12月13日 星期二 18时46分32秒 CST</div><div class="line">2016年12月13日 星期二 18时47分38秒 CST</div></pre></td></tr></table></figure>
-<p>参考资料</p>
-<ol>
-<li>Linux命令行与shell脚本大全</li>
-</ol>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"># 当前路径下查找名为source_code的文件或文件夹（递归子文件夹）</div><div class="line">$ find . -name source_code</div><div class="line">./source_code</div><div class="line"></div><div class="line"># 查找当前路径下的txt文件</div><div class="line">$ find . -name &quot;*.txt&quot;</div><div class="line">./crontab.txt</div><div class="line"></div><div class="line"># 根据文件权限查找，查找权限为777的文件</div><div class="line">$ find . -perm 777</div><div class="line">./test.sh</div><div class="line"></div><div class="line"># 根据类型查找，查找符号链接</div><div class="line">$ find . -type l</div><div class="line">./Chapter14/multem</div><div class="line"></div><div class="line"># 根据修改时间查找</div><div class="line">$ find . -mtime 7 -type f</div><div class="line">./model-zoo/.DS_Store</div><div class="line">./model-zoo/vgg19/train_val.prototxt</div><div class="line">./model-zoo/vgg19/VGG_ILSVRC_19_layers.caffemodel</div><div class="line"></div><div class="line"># 根据文件大小查找</div><div class="line">$ find . -size +1k -type f</div><div class="line">./.DS_Store</div><div class="line">./Chapter14/.DS_Store</div><div class="line">./Chapter15/.DS_Store</div><div class="line">./Chapter16/.DS_Store</div><div class="line">./Chapter17/.DS_Store</div><div class="line">./filename.txt</div><div class="line"></div><div class="line"># 查找文件并删除</div><div class="line">$ find . -size +1k -type f -ok rm &#123;&#125; \;</div><div class="line">&quot;rm ./.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter14/.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter15/.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter16/.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter17/.DS_Store&quot;? y</div><div class="line">&quot;rm ./filename.txt&quot;? n</div></pre></td></tr></table></figure>
       
     </div>
 
