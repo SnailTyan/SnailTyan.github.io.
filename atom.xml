@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-05-27T05:40:19.000Z</updated>
+  <updated>2017-06-06T11:34:12.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,347 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pandas总结(一)——Series的使用</title>
+    <link href="noahsnail.com/2017/06/06/2017-6-6-pandas%E6%80%BB%E7%BB%93(%E4%B8%80)%E2%80%94%E2%80%94Series%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>noahsnail.com/2017/06/06/2017-6-6-pandas总结(一)——Series的使用/</id>
+    <published>2017-06-06T11:33:34.000Z</published>
+    <updated>2017-06-06T11:34:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># pandas是一个用来进行数据分析的基于numpy的库</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="comment"># Series是一个一维的数据结构</span></div><div class="line"></div><div class="line"><span class="comment"># 用list构建Series</span></div><div class="line">series1 = pd.Series([<span class="number">3</span>, <span class="number">5</span>, <span class="string">'test'</span>, <span class="number">-5</span>, <span class="number">0.3</span>])</div><div class="line"><span class="keyword">print</span> series1</div></pre></td></tr></table></figure>
+<pre><code>0       3
+1       5
+2    test
+3      -5
+4     0.3
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 用list, index构建Series</span></div><div class="line">series2 = pd.Series([<span class="number">3</span>, <span class="number">5</span>, <span class="string">'test'</span>, <span class="number">-5</span>, <span class="number">0.3</span>], index = [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>])</div><div class="line"><span class="keyword">print</span> series2</div></pre></td></tr></table></figure>
+<pre><code>A       3
+B       5
+C    test
+D      -5
+E     0.3
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 通过dict构建Series</span></div><div class="line">companies = &#123;<span class="string">'Baidu'</span>: <span class="number">400</span>, <span class="string">'Alibaba'</span>: <span class="number">500</span>, <span class="string">'Tecent'</span>: <span class="number">600</span>, <span class="string">'Jingdong'</span>: <span class="number">300</span>&#125;</div><div class="line">series3 = pd.Series(companies)</div><div class="line"><span class="keyword">print</span> series3</div></pre></td></tr></table></figure>
+<pre><code>Alibaba     500
+Baidu       400
+Jingdong    300
+Tecent      600
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Series数据选择</span></div><div class="line"></div><div class="line"><span class="comment"># 通过index选择数据</span></div><div class="line"><span class="keyword">print</span> series3[<span class="string">'Baidu'</span>]</div><div class="line"></div><div class="line"><span class="comment"># 选择多个数据</span></div><div class="line"><span class="keyword">print</span> series3[[<span class="string">'Baidu'</span>, <span class="string">'Tecent'</span>]]</div></pre></td></tr></table></figure>
+<pre><code>400
+Baidu     400
+Tecent    600
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 根据条件选择数据</span></div><div class="line"><span class="keyword">print</span> series3[series3 &lt; <span class="number">500</span>]</div></pre></td></tr></table></figure>
+<pre><code>Baidu       400
+Jingdong    300
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> <span class="comment"># 条件选择原理</span></div><div class="line"><span class="keyword">print</span> series3 &lt; <span class="number">500</span></div><div class="line">temp = series3 &lt; <span class="number">500</span></div><div class="line"><span class="keyword">print</span> series3[temp]</div></pre></td></tr></table></figure>
+<pre><code>Alibaba     False
+Baidu        True
+Jingdong     True
+Tecent      False
+dtype: bool
+Baidu       400
+Jingdong    300
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Series元素赋值</span></div><div class="line"><span class="keyword">print</span> <span class="string">'old value: '</span>, series3[<span class="string">'Baidu'</span>]</div><div class="line">series3[<span class="string">'Baidu'</span>] = <span class="number">450</span></div><div class="line"><span class="keyword">print</span> <span class="string">'new value: '</span>, series3[<span class="string">'Baidu'</span>]</div></pre></td></tr></table></figure>
+<pre><code>old value:  400
+new value:  450
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 根据条件赋值</span></div><div class="line"><span class="keyword">print</span> <span class="string">'old series: '</span></div><div class="line"><span class="keyword">print</span> series3</div><div class="line">series3[series3 &lt; <span class="number">500</span>] = <span class="number">500</span></div><div class="line"><span class="keyword">print</span> <span class="string">'new series: '</span></div><div class="line"><span class="keyword">print</span> series3</div></pre></td></tr></table></figure>
+<pre><code>old series: 
+Alibaba     500
+Baidu       400
+Jingdong    300
+Tecent      600
+dtype: int64
+new series: 
+Alibaba     500
+Baidu       500
+Jingdong    500
+Tecent      600
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Series数学运算</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Division: '</span></div><div class="line"><span class="keyword">print</span> series3 / <span class="number">2</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Square: '</span></div><div class="line"><span class="keyword">print</span> series3 ** <span class="number">2</span></div><div class="line"><span class="keyword">print</span> np.square(series3)</div></pre></td></tr></table></figure>
+<pre><code>Division: 
+Alibaba     250.0
+Baidu       250.0
+Jingdong    250.0
+Tecent      300.0
+dtype: float64
+Square: 
+Alibaba     250000
+Baidu       250000
+Jingdong    250000
+Tecent      360000
+dtype: int64
+Alibaba     250000
+Baidu       250000
+Jingdong    250000
+Tecent      360000
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义新的Series, 公司人数</span></div><div class="line">people = &#123;<span class="string">'Baidu'</span>: <span class="number">50000</span>, <span class="string">'Alibaba'</span>: <span class="number">45000</span>, <span class="string">'Tecent'</span>: <span class="number">60000</span>, <span class="string">'Jingdong'</span>: <span class="number">80000</span>, <span class="string">'Netease'</span>: <span class="number">30000</span>&#125;</div><div class="line">series4 = pd.Series(people)</div><div class="line"><span class="keyword">print</span> series4</div></pre></td></tr></table></figure>
+<pre><code>Alibaba     45000
+Baidu       50000
+Jingdong    80000
+Netease     30000
+Tecent      60000
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Series相加, series3没有Netease, 因此结果为NaN</span></div><div class="line"><span class="keyword">print</span> series3 + series4</div></pre></td></tr></table></figure>
+<pre><code>Alibaba     45500.0
+Baidu       50500.0
+Jingdong    80500.0
+Netease         NaN
+Tecent      60600.0
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 判断数据是否数据缺失</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Netease'</span> <span class="keyword">in</span> series3</div><div class="line"><span class="keyword">print</span> <span class="string">'Baidu'</span> <span class="keyword">in</span> series3</div></pre></td></tr></table></figure>
+<pre><code>False
+True
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找出数据为null或非null的元素</span></div><div class="line">result = series3 + series4</div><div class="line"><span class="keyword">print</span> result.notnull()</div><div class="line"><span class="keyword">print</span> result.isnull()</div><div class="line"></div><div class="line"><span class="keyword">print</span> result[result.isnull()]</div><div class="line"><span class="keyword">print</span> result[result.isnull() != <span class="keyword">True</span>]</div></pre></td></tr></table></figure>
+<pre><code>Alibaba      True
+Baidu        True
+Jingdong     True
+Netease     False
+Tecent       True
+dtype: bool
+Alibaba     False
+Baidu       False
+Jingdong    False
+Netease      True
+Tecent      False
+dtype: bool
+Netease   NaN
+dtype: float64
+Alibaba     45500.0
+Baidu       50500.0
+Jingdong    80500.0
+Tecent      60600.0
+dtype: float64
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      pandas总结(一)——Series的使用
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Unix、Posix和标准UniX规范</title>
+    <link href="noahsnail.com/2017/06/03/2017-6-3-Unix%E3%80%81Posix%E5%92%8C%E6%A0%87%E5%87%86UniX%E8%A7%84%E8%8C%83/"/>
+    <id>noahsnail.com/2017/06/03/2017-6-3-Unix、Posix和标准UniX规范/</id>
+    <published>2017-06-03T10:06:44.000Z</published>
+    <updated>2017-06-03T10:14:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>20世纪60年代是大型、复杂操作系统盛行的年代，比如IBM的OS/360和Honeywell的Multics系统。OS/360是历史上最成功的软件项目之一，而 Multics虽然持续存在了多年，却从来没有被广泛应用过。贝尔实验室曾经是Multics项目的最初参与者，但是因为考虑到该项目的复杂性和缺乏进展而于1969年退出。鉴于Mutics项目不愉快的经历，一群贝尔实验室的研究人员Ken Thompson、 Dennis Ritchie、 Doug Mcllroy和 Joe Ossanna，从1969年开始在DEC PDP-7计算机上完全用机器语言编写了一个简单得多的操作系统。这个新系统中的很多思想，比如层次文件系统、作为用户级进程的 shell概念，都是来自于 Multics，只不过在一个更小、更简单的程序包里实现。1970年，Brian Kernighan给新系统命名为“Unix”，这也是一个双关语，暗指“Multics”的复杂性。1973年用C重新编写其内核，1974年，Unix开始正式对外发布。</p>
+<p>贝尔实验室以慷慨的条件向学校提供源代码，所以Unix在大专院校里获得了很多支持并得以持续发展。最有影响的工作发生在20世纪70年代晚期到80年代早期，在美国加州大学伯克利分校，研究人员在一系列发布版本中增加了虚拟内存和Internet协议，称为Unix4.xBSD(Berkeley Software Distribution)。与此同时，贝尔实验室也在发布自己的版本，称为System V Unix。其他厂商的版本，比如Sun Microsystems的Solaris系统,则是从这些原始的BSD和System V版本中衍生而来。</p>
+<p>20世纪80年代中期，Unix厂商试图通过加入新的、往往不兼容的特性来使它们的程序与众不同，麻烦也就随之而来了。为了阻止这种趋势，IEEE(电气和电子工程师协会)开始努力标准化Unix的开发，后来由 Richard Stallman命名为“Posix”。结果就得到了一系列的标准，称作Posix标准。这套标准涵盖了很多方面，比如Unix系统调用的C语言接口、shell程序和工具、线程及网络编程。最近，一个被称为“标准Unix规范”的独立标准化工作已经与Posix一起创建了统一的Unix系统标准。这些标准化工作的结果是Unix版本之间的差异已经基本消失。</p>
+<p>参考资料：</p>
+<ol>
+<li>深度理解计算机系统（P11）</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Unix、Posix和标准UniX规范
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="noahsnail.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="noahsnail.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GNU项目</title>
+    <link href="noahsnail.com/2017/06/03/2017-6-3-GNU%E9%A1%B9%E7%9B%AE/"/>
+    <id>noahsnail.com/2017/06/03/2017-6-3-GNU项目/</id>
+    <published>2017-06-03T09:57:06.000Z</published>
+    <updated>2017-06-03T10:03:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>GCC是GNU(GNU是GNU’s Not Unix的缩写)项目开发出来的众多有用工具之。GNU项目是1984年由Richard Stallman发起的一个免税的慈善项目。该项目的目标非常宏大，就是开发出一个完整的类Unix的系统，其源代码能够不受限制地被修改和传播。GNU项目已经开发出了一个包含Unix操作系统的所有主要部件的环境，但内核除外，内核是由 Linux项目独立发展而来的。GNU环境包括 EMACS编辑器、GCC编译器、GDB调试器、汇编器、链接器、处理二进制文件的工具以及其他一些部件。GCC编译器已经发展到支持许多不同的语言，能够为许多不同的机器生成代码。支持的语言包括C、C++、 Fortran、Java、Pascal、面向对象C语言(Objective-C)和Ada。</p>
+<p>GNU项目取得了非凡的成绩，但是却常常被忽略。现代开放源码运动(通常和Linux联系在一起)的思想起源是GNU项目中自由软件(free software)的概念。(此处的free为自由言论(free speech)中的“自由”之意，而非免费啤酒(free beer)中的“免费”之意。) 而且，Linux如此受欢迎在很大程度上还要归功于GNU工具，它们给Linux内核提供了环境。</p>
+<p>参考资料：</p>
+<ol>
+<li>深度理解计算机系统（P4）</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      GNU项目
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="noahsnail.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="noahsnail.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C语言的起源</title>
+    <link href="noahsnail.com/2017/06/03/2017-6-3-C%E8%AF%AD%E8%A8%80%E7%9A%84%E8%B5%B7%E6%BA%90/"/>
+    <id>noahsnail.com/2017/06/03/2017-6-3-C语言的起源/</id>
+    <published>2017-06-03T09:43:06.000Z</published>
+    <updated>2017-06-03T09:54:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>C语言是贝尔实验室的Dennis Ritchie于1969年~1973年间创建的。美国国家标准学会（American national standards institute，ANSI）在1989年颁布了ANSI C的标准，后来语言的标准化成了国际标准化组织（International Standards Organization，ISO)的责任。这些标准定义了C语言和一系列函数库,即所谓的<strong>C标准库</strong>。Kernighan和 Ritchie在他们的经典著作中描述了ANSI C，这本著作被人们满怀感情地称为“K8R”。用Ritchie的话来说，C语言是“古怪的、有缺陷的，但同时也是一个巨大的成功”。为什么会成功呢?</p>
+<ul>
+<li><p>C语言与Unⅸ操作系统关系密切。<br>C从一开始就是作为一种用于Unix系统的程府语言开发出来的。大部分Unix内核(操作系统的核心部分)，以及所有支撑工具和函数库都是用C语言编写的。20世纪70年代后期到80年代初期，Unix风行于高等院校，许多人开始接触C语言并喜欢上它。因为Unix几乎全部是用C编写的，它可以很方便地移植到新的机器上，这种特点为C和Unix赢得了更为广泛的支持。</p>
+</li>
+<li><p>C语言小而简单。<br>C语言的设计是由一个人而非一个协会掌控的，因此这是一个简洁明了、没有什么冗赘的设计。K&amp;R这本书用大量的例子和练习描述了完整的C语言及其标准库，而全书不过261页。C语言的简单使它相对而言易于学习，也易于移植到不同的计算机上。</p>
+</li>
+<li><p>C语言是为实践目的设计的。C语言是设计用来实现Unix操作系统的。后来其他人发现能够用这门语言无障碍地编写他们想要的程序。</p>
+</li>
+</ul>
+<p>C语言是系统级编程的首选，同时它也非常适用于应用级程序的编写。然而，它也并非适用于所有的程序员和所有的情况。C语言的指针是造成程序员困惑和程序错误的一个常见原因。同时，C语言还缺乏对非常有用的抽象的显式支持，例如类、对象和异常，像C++和Java这样针对应用级程序的新程序语言解决了这些问题。</p>
+<p>参考资料：</p>
+<ol>
+<li>深度理解计算机系统（P2，3）</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      C语言的起源
+    
+    </summary>
+    
+      <category term="深入理解计算机系统" scheme="noahsnail.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="深入理解计算机系统" scheme="noahsnail.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Caffe神经网络结构汇总</title>
+    <link href="noahsnail.com/2017/06/01/2017-6-1-Caffe%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93/"/>
+    <id>noahsnail.com/2017/06/01/2017-6-1-Caffe网络结构总结/</id>
+    <published>2017-06-01T07:16:35.000Z</published>
+    <updated>2017-06-01T07:56:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>自2012年Alexnet赢得了ImageNet竞赛以来，深度学习（神经网络）得到了飞速发展，产生了许多的神经网络结构，本文主要总结Caffe中使用的神经网络(分类的神经网络)，本文的神经网络作者都使用Caffe训练过，并在Kaggle的Intel癌症预测比赛中进行了测试与使用（top 8%）。</p>
+<h2 id="1-Alexnet"><a href="#1-Alexnet" class="headerlink" title="1. Alexnet"></a>1. Alexnet</h2><p>Alexnet，2012年ImageNet竞赛冠军，深度学习的里程碑。</p>
+<p>网络结构地址：<a href="https://github.com/BVLC/caffe/tree/master/models/bvlc_alexnet" target="_blank" rel="external">https://github.com/BVLC/caffe/tree/master/models/bvlc_alexnet</a></p>
+<p>预训练模型地址：<a href="http://dl.caffe.berkeleyvision.org/bvlc_alexnet.caffemodel" target="_blank" rel="external">http://dl.caffe.berkeleyvision.org/bvlc_alexnet.caffemodel</a></p>
+<h2 id="2-Squeezenet"><a href="#2-Squeezenet" class="headerlink" title="2. Squeezenet"></a>2. Squeezenet</h2><p>Squeezenet设计目标不是为了提高识别的准确率，而是希望简化网络复杂度。squeezenet的模型结构确实很小，没压缩的情况下才5M左右，而且识别的精度还可以。</p>
+<p>网络结构地址：<a href="https://github.com/DeepScale/SqueezeNet" target="_blank" rel="external">https://github.com/DeepScale/SqueezeNet</a></p>
+<p>预训练模型地址：<a href="https://github.com/DeepScale/SqueezeNet" target="_blank" rel="external">https://github.com/DeepScale/SqueezeNet</a></p>
+<h2 id="3-VGG系列"><a href="#3-VGG系列" class="headerlink" title="3. VGG系列"></a>3. VGG系列</h2><p>VGG和GoogLenet是2014年imagenet竞赛的双雄，VGG主要分为VGG16和VGG19。其网络结构与预训练模型的地址如下：</p>
+<p>VGG16的网络结构：<a href="https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md" target="_blank" rel="external">https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md</a></p>
+<p>VGG16的预训练模型：<a href="http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_16_layers.caffemodel" target="_blank" rel="external"> http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_16_layers.caffemodel</a></p>
+<p>VGG19的网络结构：<a href="https://gist.github.com/ksimonyan/3785162f95cd2d5fee77#file-readme-md" target="_blank" rel="external">https://gist.github.com/ksimonyan/3785162f95cd2d5fee77#file-readme-md</a></p>
+<p>VGG19的预训练模型：<a href="http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_19_layers.caffemodel" target="_blank" rel="external">http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_19_layers.caffemodel</a></p>
+<p>备注：上面的网络结构需要进行细微调整才能在Caffe中直接训练，主要是网络结构中的Type类型。</p>
+<h2 id="4-Resnet系列"><a href="#4-Resnet系列" class="headerlink" title="4. Resnet系列"></a>4. Resnet系列</h2><p>Resnet网络，2015年ImageNet竞赛冠军，网络结构主要分为Resnet-50、Resnet-101、Resnet-152三种，当然也有一些其它的结构，例如Resnet-18，Resnet-14。</p>
+<p>Github地址：<a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank" rel="external">https://github.com/KaimingHe/deep-residual-networks</a></p>
+<p>Resnet-50、Resnet-101、Resnet-152的网络结构及预训练模型的下载地址：<a href="https://onedrive.live.com/?authkey=%21AAFW2-FVoxeVRck&amp;id=4006CBB8476FF777%2117887&amp;cid=4006CBB8476FF777" target="_blank" rel="external">https://onedrive.live.com/?authkey=%21AAFW2-FVoxeVRck&amp;id=4006CBB8476FF777%2117887&amp;cid=4006CBB8476FF777</a></p>
+<h2 id="5-Inception系列"><a href="#5-Inception系列" class="headerlink" title="5. Inception系列"></a>5. Inception系列</h2><p>Inception系列是Google发明的一系列神经网络结构。</p>
+<p>Inception-v1：</p>
+<p>Inception-v1，即大名鼎鼎的GoogLenet，2014年ImageNet竞赛冠军。</p>
+<p>网络结构地址：<a href="https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet" target="_blank" rel="external">https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet</a></p>
+<p>预训练模型地址：<a href="http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel" target="_blank" rel="external">http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel</a></p>
+<p>Inception-v2：</p>
+<p>即Inception V1 + Batch Normalization。</p>
+<p>网络结构地址：<a href="https://github.com/pertusa/InceptionBN-21K-for-Caffe" target="_blank" rel="external">https://github.com/pertusa/InceptionBN-21K-for-Caffe</a></p>
+<p>预训练模型地址：<a href="http://www.dlsi.ua.es/~pertusa/deep/Inception21k.caffemodel" target="_blank" rel="external">http://www.dlsi.ua.es/~pertusa/deep/Inception21k.caffemodel</a></p>
+<p>Inception-v3：</p>
+<p>网络结构地址：<a href="https://pan.baidu.com/s/1boC0HEf#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1boC0HEf#list/path=%2F</a></p>
+<p>预训练模型地址：<a href="https://pan.baidu.com/s/1boC0HEf#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1boC0HEf#list/path=%2F</a></p>
+<p>Inception-v4：</p>
+<p>网络结构地址：<a href="https://pan.baidu.com/s/1c6D150#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1c6D150#list/path=%2F</a></p>
+<p>预训练模型地址：<a href="https://pan.baidu.com/s/1c6D150#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1c6D150#list/path=%2F</a></p>
+<p>Inception-resnet-v2：</p>
+<p>网络结构地址：<a href="https://pan.baidu.com/s/1jHPJCX4#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1jHPJCX4#list/path=%2F</a></p>
+<p>预训练模型地址：<a href="https://pan.baidu.com/s/1jHPJCX4#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1jHPJCX4#list/path=%2F</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Caffe神经网络结构汇总
+    
+    </summary>
+    
+      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
+    
+    
+      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pandas应用总结</title>
+    <link href="noahsnail.com/2017/05/27/2017-5-27-Pandas%E5%BA%94%E7%94%A8%E6%80%BB%E7%BB%93/"/>
+    <id>noahsnail.com/2017/05/27/2017-5-27-Pandas应用总结/</id>
+    <published>2017-05-27T10:33:49.000Z</published>
+    <updated>2017-05-27T10:39:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>Pandas是一个基于numpy的、用来进行数据分析的库。</p>
+<h2 id="1-Series的应用"><a href="#1-Series的应用" class="headerlink" title="1. Series的应用"></a>1. Series的应用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Series是一个一维的数据结构</div><div class="line"></div><div class="line"># 用list构建Series</div><div class="line">s = pd.Series([3, 5, &apos;test&apos;, -5, 0.3])</div><div class="line">print s</div><div class="line"></div><div class="line">0       3</div><div class="line">1       5</div><div class="line">2    test</div><div class="line">3      -5</div><div class="line">4     0.3</div><div class="line">dtype: object</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      Pandas应用总结
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="noahsnail.com/categories/Machine-Learning/"/>
+    
+    
+      <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下启动和停止apache服务</title>
+    <link href="noahsnail.com/2017/05/27/2017-5-27-Linux%E4%B8%8B%E5%90%AF%E5%8A%A8%E5%92%8C%E5%81%9C%E6%AD%A2apache%E6%9C%8D%E5%8A%A1/"/>
+    <id>noahsnail.com/2017/05/27/2017-5-27-Linux下启动和停止apache服务/</id>
+    <published>2017-05-27T06:17:50.000Z</published>
+    <updated>2017-05-27T10:27:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文使用的Linux系统为CentOS 7，下面将介绍apache服务的启动、关闭与设置。apache在CentOS 7中一般是默认安装的，而且服务名字为<code>httpd</code>。</p>
+<h2 id="1-安装apache及查看相关配置"><a href="#1-安装apache及查看相关配置" class="headerlink" title="1. 安装apache及查看相关配置"></a>1. 安装apache及查看相关配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># apache安装命令</div><div class="line"></div><div class="line">$ sudo yum install httpd</div><div class="line">Loaded plugins: fastestmirror, langpacks</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line">Package httpd-2.4.6-45.el7.centos.4.x86_64 already installed and latest version</div><div class="line">Nothing to do</div><div class="line"></div><div class="line"></div><div class="line"># 查看apache文件的位置</div><div class="line"></div><div class="line">$ sudo find / -name httpd</div><div class="line">/run/httpd</div><div class="line">/etc/logrotate.d/httpd</div><div class="line">/etc/sysconfig/httpd</div><div class="line">/etc/httpd</div><div class="line">/var/log/httpd</div><div class="line">/var/cache/httpd</div><div class="line">/usr/sbin/httpd</div><div class="line">/usr/lib64/httpd</div><div class="line">/usr/share/httpd</div><div class="line">/usr/include/httpd</div><div class="line">/usr/libexec/initscripts/legacy-actions/httpd</div></pre></td></tr></table></figure>
+<p>Apache配置文件位于<code>/etc/httpd/conf</code>，主要的配置文件是<code>/etc/httpd/conf/httpd.conf</code>, apache相关的配置信息都可以在这个文件中看到。</p>
+<h2 id="2-apache服务的启动与关闭"><a href="#2-apache服务的启动与关闭" class="headerlink" title="2. apache服务的启动与关闭"></a>2. apache服务的启动与关闭</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 启动服务</div><div class="line">$ sudo systemctl start httpd.service</div><div class="line"></div><div class="line"># 查看服务</div><div class="line">$ ps aux | grep httpd</div><div class="line">root     *  0.3  0.0 220444  4956 ?        Ss   15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2492 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line"></div><div class="line"># 停止服务</div><div class="line">$ sudo systemctl stop httpd.service</div><div class="line"></div><div class="line"># 重启服务</div><div class="line">$ sudo systemctl restart httpd.service</div></pre></td></tr></table></figure>
+<p>启动服务后，可以在外网通过服务器的IP地址访问。可以看到如下界面：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/apache.png" alt="image"></p>
+<h2 id="3-配置自己可以在外部访问的内容"><a href="#3-配置自己可以在外部访问的内容" class="headerlink" title="3. 配置自己可以在外部访问的内容"></a>3. 配置自己可以在外部访问的内容</h2><p>可以在<code>/var/www/html</code>下创建一个软链接，链接到你想要在外部访问的内容，同时要修改要访问目录的权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo ln -s images your_directory</div><div class="line">$ sudo chmod 755 your_directory</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux下启动和停止apache服务
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux的find命令</title>
@@ -441,264 +782,6 @@
     <summary type="html">
     
       scikit-learn的基本用法(五)——交叉验证1
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(十四)——figure图的嵌套</title>
-    <link href="noahsnail.com/2017/05/04/2017-5-4-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E5%9B%9B)%E2%80%94%E2%80%94figure%E5%9B%BE%E7%9A%84%E5%B5%8C%E5%A5%97/"/>
-    <id>noahsnail.com/2017/05/04/2017-5-4-matplotlib的基本用法(十四)——figure图的嵌套/</id>
-    <published>2017-05-04T12:06:54.000Z</published>
-    <updated>2017-05-04T12:07:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要使用matplotlib进行图嵌套的绘制。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">fig = plt.figure()</div><div class="line"></div><div class="line"># 定义数据</div><div class="line">x = [1, 2, 3, 4, 5, 6, 7]</div><div class="line">y = [1, 3, 4, 2, 5, 8, 6]</div><div class="line"></div><div class="line"># figure的百分比, 从figure 10%的位置开始绘制, 宽高是figure的80%</div><div class="line">left, bottom, width, height = 0.1, 0.1, 0.8, 0.8</div><div class="line"># 获得绘制的句柄</div><div class="line">ax1 = fig.add_axes([left, bottom, width, height])</div><div class="line"># 绘制点(x,y)</div><div class="line">ax1.plot(x, y, &apos;r&apos;)</div><div class="line">ax1.set_xlabel(&apos;x&apos;)</div><div class="line">ax1.set_ylabel(&apos;y&apos;)</div><div class="line">ax1.set_title(&apos;test&apos;)</div><div class="line"></div><div class="line"></div><div class="line"># 嵌套方法一</div><div class="line"># figure的百分比, 从figure 10%的位置开始绘制, 宽高是figure的80%</div><div class="line">left, bottom, width, height = 0.2, 0.6, 0.25, 0.25</div><div class="line"># 获得绘制的句柄</div><div class="line">ax2 = fig.add_axes([left, bottom, width, height])</div><div class="line"># 绘制点(x,y)</div><div class="line">ax2.plot(x, y, &apos;r&apos;)</div><div class="line">ax2.set_xlabel(&apos;x&apos;)</div><div class="line">ax2.set_ylabel(&apos;y&apos;)</div><div class="line">ax2.set_title(&apos;part1&apos;)</div><div class="line"></div><div class="line"></div><div class="line"># 嵌套方法二</div><div class="line">plt.axes([bottom, left, width, height])</div><div class="line">plt.plot(x, y, &apos;r&apos;)</div><div class="line">plt.xlabel(&apos;x&apos;)</div><div class="line">plt.ylabel(&apos;y&apos;)</div><div class="line">plt.title(&apos;part2&apos;)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m14.png" alt="图像"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(十四)——figure图的嵌套
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(十三)——figure绘制多图</title>
-    <link href="noahsnail.com/2017/05/04/2017-5-4-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%B8%89)%E2%80%94%E2%80%94figure%E7%BB%98%E5%88%B6%E5%A4%9A%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/05/04/2017-5-4-matplotlib的基本用法(十三)——figure绘制多图/</id>
-    <published>2017-05-04T11:28:15.000Z</published>
-    <updated>2017-05-04T11:48:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要使用matplotlib进行多图的绘制。</p>
-<ul>
-<li>Demo 1</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">plt.figure()</div><div class="line"># figure分成3行3列, 取得第一个子图的句柄, 第一个子图跨度为1行3列, 起点是表格(0, 0)</div><div class="line">ax1 = plt.subplot2grid((3, 3), (0, 0), colspan = 3, rowspan = 1)</div><div class="line">ax1.plot([0, 1], [0, 1])</div><div class="line">ax1.set_title(&apos;Test&apos;)</div><div class="line"></div><div class="line"># figure分成3行3列, 取得第二个子图的句柄, 第二个子图跨度为1行3列, 起点是表格(1, 0)</div><div class="line">ax2 = plt.subplot2grid((3, 3), (1, 0), colspan = 2, rowspan = 1)</div><div class="line">ax2.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line"># figure分成3行3列, 取得第三个子图的句柄, 第三个子图跨度为1行1列, 起点是表格(1, 2)</div><div class="line">ax3 = plt.subplot2grid((3, 3), (1, 2), colspan = 1, rowspan = 1)</div><div class="line">ax3.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line"># figure分成3行3列, 取得第四个子图的句柄, 第四个子图跨度为1行3列, 起点是表格(2, 0)</div><div class="line">ax4 = plt.subplot2grid((3, 3), (2, 0), colspan = 3, rowspan = 1)</div><div class="line">ax4.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m131.png" alt="图像"></p>
-<ul>
-<li>Demo 2</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import matplotlib.gridspec as gridspec</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">plt.figure()</div><div class="line"># 分隔figure</div><div class="line">gs = gridspec.GridSpec(3, 3)</div><div class="line">ax1 = plt.subplot(gs[0, :])</div><div class="line">ax2 = plt.subplot(gs[1, 0:2])</div><div class="line">ax3 = plt.subplot(gs[1, 2])</div><div class="line">ax4 = plt.subplot(gs[2, :])</div><div class="line"></div><div class="line"># 绘制图像</div><div class="line">ax1.plot([0, 1], [0, 1])</div><div class="line">ax1.set_title(&apos;Test&apos;)</div><div class="line"></div><div class="line">ax2.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">ax3.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">ax4.plot([0, 1], [0, 1])</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m131.png" alt="图像"></p>
-<ul>
-<li>Demo 3</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 划分figure</div><div class="line">fig, ((ax11, ax12), (ax21, ax22)) = plt.subplots(2, 2, sharex = True, sharey = True)</div><div class="line"></div><div class="line"># 绘制图像</div><div class="line">ax11.scatter([0, 0.5], [0, 1])</div><div class="line">ax12.scatter([0, 1], [0, 1])</div><div class="line">ax21.scatter([0, 1], [0, -1])</div><div class="line">ax22.scatter([0, -1], [0, 1])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m132.png" alt="图像"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(十三)——figure绘制多图
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>scikit-learn的基本用法(四)——数据归一化</title>
-    <link href="noahsnail.com/2017/05/04/2017--5-4-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%9B%9B)%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E5%BD%92%E4%B8%80%E5%8C%96/"/>
-    <id>noahsnail.com/2017/05/04/2017--5-4-scikit-learn的基本用法(四)——数据归一化/</id>
-    <published>2017-05-04T10:47:06.000Z</published>
-    <updated>2017-05-04T11:06:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍scikit-learn中的数据预处理之归一化。</p>
-<ul>
-<li>Demo 1</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from sklearn import preprocessing</div><div class="line"></div><div class="line"></div><div class="line"># 定义array</div><div class="line">a = np.array([-10, 2.3, 13.7, 56, 108])</div><div class="line">print a</div><div class="line"></div><div class="line"># 对array进行归一化(normalization)</div><div class="line"># scale进行的操作是按列减去均值, 除以方差, 因此数据的均值为0, 方差为1</div><div class="line">print preprocessing.scale(a)</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[ -10.     2.3   13.7   56.   108. ]</div><div class="line">[-1.01951435 -0.73451375 -0.47036685  0.50975718  1.71463777]</div></pre></td></tr></table></figure>
-<ul>
-<li>Demo 2</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from sklearn import preprocessing</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.datasets.samples_generator import make_classification</div><div class="line">from sklearn.svm import SVC</div><div class="line"></div><div class="line"># 生成数据集</div><div class="line">X, y = make_classification(n_samples = 200, n_features = 2, n_redundant = 0, n_informative = 2, </div><div class="line">                           random_state = 22, n_clusters_per_class = 1, scale = 100)</div><div class="line"># 查看数据分布</div><div class="line">plt.scatter(X[:, 0], X[:, 1], c = y)</div><div class="line">plt.show()</div><div class="line"></div><div class="line"># 数据归一化处理, 不进行处理时注释掉</div><div class="line">X = preprocessing.scale(X)</div><div class="line"># 将数据分为训练集和测试集</div><div class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)</div><div class="line"># 构建分类器</div><div class="line">svm = SVC()</div><div class="line"># 训练分类器</div><div class="line">svm.fit(X_train, y_train)</div><div class="line"># 测试</div><div class="line">print svm.score(X_test, y_test)</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/sk4.png" alt="image"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 进行归一化的准确率</div><div class="line">0.9</div><div class="line"># 不进行归一化的准确率</div><div class="line">0.65</div></pre></td></tr></table></figure>
-<p>备注：由于数据是随机生成的, 结果可能会不同，但进行归一化与不进行归一化的差异是一致的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      scikit-learn的基本用法(四)——数据归一化
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>scikit-learn的基本用法(三)——model的介绍</title>
-    <link href="noahsnail.com/2017/05/03/2017-5-3-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)%E2%80%94%E2%80%94model%E7%9A%84%E4%BB%8B%E7%BB%8D/"/>
-    <id>noahsnail.com/2017/05/03/2017-5-3-scikit-learn的基本用法(三)——model的介绍/</id>
-    <published>2017-05-03T13:47:38.000Z</published>
-    <updated>2017-05-04T02:45:33.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是scikit-learn中model的介绍。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">from sklearn import datasets</div><div class="line">from sklearn.linear_model import LinearRegression</div><div class="line"></div><div class="line"># 直接加载数据集</div><div class="line">loaded_data = datasets.load_boston()</div><div class="line">data_X = loaded_data.data</div><div class="line">data_y = loaded_data.target</div><div class="line"></div><div class="line"># 定义模型model</div><div class="line">model = LinearRegression()</div><div class="line"># 学习参数</div><div class="line">model.fit(data_X, data_y)</div><div class="line"># 输出权重weight</div><div class="line">print model.coef_</div><div class="line"># 输出偏置bias</div><div class="line">print model.intercept_</div><div class="line"># 输出model定义时的参数, 没有给定则返回默认参数</div><div class="line">print model.get_params()</div><div class="line"># 评估学习到的模型</div><div class="line"># 通过coefficient of determination(决定系数),来判断回归方程拟合的程度.</div><div class="line">print model.score(data_X, data_y)</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[ -1.07170557e-01   4.63952195e-02   2.08602395e-02   2.68856140e+00</div><div class="line">  -1.77957587e+01   3.80475246e+00   7.51061703e-04  -1.47575880e+00</div><div class="line">   3.05655038e-01  -1.23293463e-02  -9.53463555e-01   9.39251272e-03</div><div class="line">  -5.25466633e-01]</div><div class="line">36.4911032804</div><div class="line">&#123;&apos;copy_X&apos;: True, &apos;normalize&apos;: False, &apos;n_jobs&apos;: 1, &apos;fit_intercept&apos;: True&#125;</div><div class="line">0.740607742865</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      scikit-learn的基本用法(三)——model的介绍
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>scikit-learn的基本用法(二)——数据集的使用</title>
-    <link href="noahsnail.com/2017/05/03/2017-5-3-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
-    <id>noahsnail.com/2017/05/03/2017-5-3-scikit-learn的基本用法(二)——数据集的使用/</id>
-    <published>2017-05-03T12:58:40.000Z</published>
-    <updated>2017-05-03T13:06:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是演示scikit-learn自带的数据集的一些用法。本文介绍两种sklearn构建数据集的方式，一种是直接加载已有的数据集，另一种是通过工具构建一个数据集。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line">from sklearn import datasets</div><div class="line">from sklearn.linear_model import LinearRegression</div><div class="line"></div><div class="line"># 直接加载数据集</div><div class="line">loaded_data = datasets.load_boston()</div><div class="line">data_X = loaded_data.data</div><div class="line">data_y = loaded_data.target</div><div class="line"></div><div class="line"># 定义模型</div><div class="line">model = LinearRegression()</div><div class="line"># 学习参数</div><div class="line">model.fit(data_X, data_y)</div><div class="line"># 计算预测值</div><div class="line">result = model.predict(data_X)</div><div class="line"></div><div class="line"></div><div class="line"># 创造一些线性回归的数据点</div><div class="line">X, y = datasets.make_regression(n_samples = 100, n_features = 1, n_targets = 1, noise = 5)</div><div class="line"># 绘制创造的数据集的散点图</div><div class="line">plt.scatter(X, y)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[ 30.00821269  25.0298606   30.5702317   28.60814055]</div><div class="line">[ 24.   21.6  34.7  33.4]</div></pre></td></tr></table></figure>
-<p><img src="http://ocs628urt.bkt.clouddn.com/sk2.png" alt="image"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      scikit-learn的基本用法(二)——数据集的使用
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(十二)——subplot绘制多图</title>
-    <link href="noahsnail.com/2017/05/03/2017-5-3-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%BA%8C)%E2%80%94%E2%80%94subplot%E7%BB%98%E5%88%B6%E5%A4%9A%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/05/03/2017-5-3-matplotlib的基本用法(十二)——subplot绘制多图/</id>
-    <published>2017-05-03T12:20:49.000Z</published>
-    <updated>2017-05-03T12:38:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要使用matplotlib进行多图的绘制。</p>
-<ul>
-<li>Demo 1</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line">plt.figure()</div><div class="line"></div><div class="line"># 绘制第一个图</div><div class="line">plt.subplot(2, 2, 1)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第二个图</div><div class="line">plt.subplot(2, 2, 2)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第三个图</div><div class="line">plt.subplot(2, 2, 3)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第四个图</div><div class="line">plt.subplot(2, 2, 4)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m121.png" alt="图像"></p>
-<ul>
-<li>Demo 2</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line">plt.figure()</div><div class="line"></div><div class="line"># 绘制第一个图</div><div class="line">plt.subplot(2, 1, 1)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第二个图</div><div class="line">plt.subplot(2, 3, 4)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第三个图</div><div class="line">plt.subplot(2, 3, 5)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line"># 绘制第四个图</div><div class="line">plt.subplot(2, 3, 6)</div><div class="line">plt.plot([0, 1], [0, 1])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m122.png" alt="图像"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(十二)——subplot绘制多图
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(十一)——绘制3D图</title>
-    <link href="noahsnail.com/2017/05/03/2017-5-3-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%B8%80)%E2%80%94%E2%80%94%E7%BB%98%E5%88%B63D%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/05/03/2017-5-3-matplotlib的基本用法(十一)——绘制3D图/</id>
-    <published>2017-05-03T01:21:20.000Z</published>
-    <updated>2017-05-03T05:12:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要使用matplotlib进行3D图像的绘制。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">import matplotlib.pyplot as plt</div><div class="line">import numpy as np</div><div class="line">from mpl_toolkits.mplot3d import Axes3D</div><div class="line"></div><div class="line"></div><div class="line"># 定义figure</div><div class="line">fig = plt.figure()</div><div class="line"># 将figure变为3d</div><div class="line">ax = Axes3D(fig)</div><div class="line"></div><div class="line"># 数据数目</div><div class="line">n = 256</div><div class="line"># 定义x, y</div><div class="line">x = np.arange(-4, 4, 0.25)</div><div class="line">y = np.arange(-4, 4, 0.25)</div><div class="line"></div><div class="line"># 生成网格数据</div><div class="line">X, Y = np.meshgrid(x, y)</div><div class="line"></div><div class="line"># 计算每个点对的长度</div><div class="line">R = np.sqrt(X ** 2 + Y ** 2)</div><div class="line"># 计算Z轴的高度</div><div class="line">Z = np.sin(R)</div><div class="line"></div><div class="line"># 绘制3D曲面</div><div class="line">ax.plot_surface(X, Y, Z, rstride = 1, cstride = 1, cmap = plt.get_cmap(&apos;rainbow&apos;))</div><div class="line"># 绘制从3D曲面到底部的投影</div><div class="line">ax.contour(X, Y, Z, zdim = &apos;z&apos;, offset = -2, cmap = &apos;rainbow&apos;)</div><div class="line"></div><div class="line"># 设置z轴的维度</div><div class="line">ax.set_zlim(-2, 2)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m11.png" alt="图像"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(十一)——绘制3D图
     
     </summary>
     
