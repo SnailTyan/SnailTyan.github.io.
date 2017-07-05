@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-06-06T11:34:12.000Z</updated>
+  <updated>2017-07-05T08:34:17.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,91 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AlexNet论文翻译</title>
+    <link href="noahsnail.com/2017/07/04/2017-7-4-AlexNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91/"/>
+    <id>noahsnail.com/2017/07/04/2017-7-4-AlexNet论文翻译/</id>
+    <published>2017-07-04T10:04:42.000Z</published>
+    <updated>2017-07-05T08:34:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h1 id="ImageNet-Classification-with-Deep-Convolutional-Neural-Networks"><a href="#ImageNet-Classification-with-Deep-Convolutional-Neural-Networks" class="headerlink" title="ImageNet Classification with Deep Convolutional Neural Networks"></a>ImageNet Classification with Deep Convolutional Neural Networks</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 37.5% and 17.0% which is considerably better than the previous state-of-the-art. The neural network, which has 60 million parameters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully-connected layers with a final 1000-way softmax. To make training faster, we used non-saturating neurons and a very efficient GPU implementation of the convolution operation. To reduce overfitting in the fully-connected layers we employed a recently-developed regularization method called “dropout” that proved to be very effective. We also entered a variant of this model in the ILSVRC-2012 competition and achieved a winning top-5 test error rate of 15.3%, compared to 26.2% achieved by the second-best entry.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们训练了一个大型深度卷积神经网络来将<code>ImageNet LSVRC-2010</code>竞赛的120万高分辨率的图像分到1000不同的类别中。在测试数据上，我们得到了<code>top-1 37.5%, top-5 17.0%</code>的错误率，这个结果比目前的最好结果好很多。这个神经网络有6000万参数和650000个神经元，包含5个卷积层（某些卷积层后面带有池化层）和3个全连接层，最后是一个1000维的softmax。为了训练的更快，我们使用了非饱和神经元并对卷积操作进行了非常有效的GPU实现。为了减少全连接层的过拟合，我们采用了一个最近开发的名为<code>dropout</code>的正则化方法，结果证明是非常有效的。我们也使用这个模型的一个变种参加了<code>ILSVRC-2012</code>竞赛，赢得了冠军并且与第二名 <code>top-5 26.2%</code>的错误率相比，我们取得了<code>top-5 15.3%</code>的错误率。</p>
+<p>1 Introduction</p>
+<p>Current approaches to object recognition make essential use of machine learning methods. To im- prove their performance, we can collect larger datasets, learn more powerful models, and use bet- ter techniques for preventing overfitting. Until recently, datasets of labeled images were relatively small — on the order of tens of thousands of images (e.g., NORB [16], Caltech-101/256 [8, 9], and CIFAR-10/100 [12]). Simple recognition tasks can be solved quite well with datasets of this size, especially if they are augmented with label-preserving transformations. For example, the current- best error rate on the MNIST digit-recognition task (&lt;0.3%) approaches human performance [4]. But objects in realistic settings exhibit considerable variability, so to learn to recognize them it is necessary to use much larger training sets. And indeed, the shortcomings of small image datasets have been widely recognized (e.g., Pinto et al. [21]), but it has only recently become possible to col- lect labeled datasets with millions of images. The new larger datasets include LabelMe [23], which consists of hundreds of thousands of fully-segmented images, and ImageNet [6], which consists of over 15 million labeled high-resolution images in over 22,000 categories.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      AlexNet论文翻译
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>keras的基本用法(五)——图像predict</title>
+    <link href="noahsnail.com/2017/06/12/2017-6-12-keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%94)%E2%80%94%E2%80%94%E5%9B%BE%E5%83%8Fpredict/"/>
+    <id>noahsnail.com/2017/06/12/2017-6-12-keras的基本用法(五)——图像predict/</id>
+    <published>2017-06-12T07:48:52.000Z</published>
+    <updated>2017-06-12T07:57:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍Keras的一些基本用法，主要是根据已有模型预测图像的类别，以ResNet50为例。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from keras.layers import Dense</div><div class="line">from keras.models import Model</div><div class="line">from keras.preprocessing import image</div><div class="line">from keras.applications.resnet50 import ResNet50</div><div class="line"></div><div class="line"># 使用ResNet的结构，不包括最后一层</div><div class="line">base_model = ResNet50(include_top = False, pooling = &apos;avg&apos;)</div><div class="line"></div><div class="line"># 定义网络结构最后一层</div><div class="line">predictions = Dense(3, activation=&apos;softmax&apos;)(base_model.output)</div><div class="line"></div><div class="line"># 定义模型</div><div class="line">model = Model(inputs=base_model.input, outputs=predictions)</div><div class="line"></div><div class="line"># 加载训练好的模型</div><div class="line">model.load_weights(&apos;./weights.h5&apos;)</div><div class="line"></div><div class="line">image_path = &apos;./lena.jpg&apos;</div><div class="line"></div><div class="line"># 加载图像</div><div class="line">img = image.load_img(image_path, target_size=(224, 224))</div><div class="line"></div><div class="line"># 图像预处理</div><div class="line">x = image.img_to_array(img)</div><div class="line">x = np.expand_dims(x, axis=0)</div><div class="line">x = preprocess_input(x)</div><div class="line"></div><div class="line"># 对图像进行分类</div><div class="line">preds = model.predict(x)</div><div class="line"></div><div class="line"># 输出预测概率</div><div class="line">print &apos;Predicted:&apos;, preds</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      keras的基本用法(五)——图像predict
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>keras的基本用法(四)——Fine Tuning神经网络</title>
+    <link href="noahsnail.com/2017/06/07/2017-6-7-keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%9B%9B)%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9CFine%20Tuning/"/>
+    <id>noahsnail.com/2017/06/07/2017-6-7-keras的基本用法(四)——网络Fine Tuning/</id>
+    <published>2017-06-07T01:53:09.000Z</published>
+    <updated>2017-06-12T08:23:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要介绍Keras的一些基本用法，主要涉及已有网络的fine tuning，以ResNet50为例。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">from keras.models import Model</div><div class="line">from keras.layers import Dense</div><div class="line">from keras.applications.resnet50 import ResNet50</div><div class="line">from keras.preprocessing.image import ImageDataGenerator</div><div class="line"></div><div class="line"># 训练的batch_size</div><div class="line">batch_size = 16</div><div class="line"># 训练的epoch</div><div class="line">epochs = 100</div><div class="line"></div><div class="line"># 图像Generator，用来构建输入数据</div><div class="line">train_datagen = ImageDataGenerator(</div><div class="line">        width_shift_range=0.1,</div><div class="line">        height_shift_range=0.1,</div><div class="line">        zoom_range=0.2,</div><div class="line">        horizontal_flip=True)</div><div class="line"></div><div class="line"># 从文件中读取数据，目录结构应为train下面是各个类别的子目录，每个子目录中为对应类别的图像</div><div class="line">train_generator = train_datagen.flow_from_directory(&apos;./train&apos;, target_size = (224, 224), batch_size = batch_size)</div><div class="line"></div><div class="line"># 输出类别信息</div><div class="line">print train_generator.class_indices</div><div class="line"></div><div class="line"># 生成测试数据</div><div class="line">test_datagen = ImageDataGenerator()</div><div class="line">validation_generator = test_datagen.flow_from_directory(&apos;./validation&apos;, target_size = (224, 224), batch_size = batch_size)</div><div class="line"></div><div class="line"># 使用ResNet的结构，不包括最后一层，且加载ImageNet的预训练参数</div><div class="line">base_model = ResNet50(weights = &apos;imagenet&apos;, include_top = False, pooling = &apos;avg&apos;)</div><div class="line"></div><div class="line"># 构建网络的最后一层，3是自己的数据的类别</div><div class="line">predictions = Dense(3, activation=&apos;softmax&apos;)(base_model.output)</div><div class="line"></div><div class="line"># 定义整个模型</div><div class="line">model = Model(inputs=base_model.input, outputs=predictions)</div><div class="line"></div><div class="line"># 编译模型，loss为交叉熵损失</div><div class="line">model.compile(optimizer=&apos;rmsprop&apos;, loss=&apos;categorical_crossentropy&apos;)</div><div class="line"></div><div class="line"># 训练模型</div><div class="line">model.fit_generator(train_generator,steps_per_epoch = batch_size, epochs = epochs, validation_data = validation_generator, validation_steps = batch_size)</div><div class="line"></div><div class="line"># 保存训练得到的模型</div><div class="line">model.save_weights(&apos;weights.h5&apos;)</div></pre></td></tr></table></figure>
+<ul>
+<li>部分结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&#123;&apos;Type_3&apos;: 2, &apos;Type_2&apos;: 1, &apos;Type_1&apos;: 0&#125;</div><div class="line">Found 761 images belonging to 3 classes.</div><div class="line">Epoch 1/40</div><div class="line"> 1/16 [&gt;.............................] - ETA: 119s - loss: 1.33922017-06-07 10:18:48.246289: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:247] PoolAllocator: After 2521 get requests, put_count=2161 evicted_count=1000 eviction_rate=0.462749 and unsatisfied allocation rate=0.579135</div><div class="line">2017-06-07 10:18:48.246348: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:259] Raising pool_size_limit_ from 100 to 110</div><div class="line">16/16 [==============================] - 120s - loss: 2.3753 - val_loss: 10.8293</div><div class="line">Epoch 2/40</div><div class="line"> 1/16 [&gt;.............................] - ETA: 5s - loss: 1.00542017-06-07 10:20:40.464589: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:247] PoolAllocator: After 2270 get requests, put_count=2642 evicted_count=1000 eviction_rate=0.378501 and unsatisfied allocation rate=0.286784</div><div class="line">2017-06-07 10:20:40.464643: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:259] Raising pool_size_limit_ from 256 to 281</div><div class="line">16/16 [==============================] - 83s - loss: 1.7988 - val_loss: 11.5219</div><div class="line">Epoch 3/40</div><div class="line">16/16 [==============================] - 81s - loss: 1.6640 - val_loss: 11.0043</div><div class="line">Epoch 4/40</div><div class="line"> 3/16 [====&gt;.........................] - ETA: 4s - loss: 1.87452017-06-07 10:23:26.725923: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:247] PoolAllocator: After 11057 get requests, put_count=11071 evicted_count=1000 eviction_rate=0.0903261 and unsatisfied allocation rate=0.0945103</div><div class="line">2017-06-07 10:23:26.725986: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:259] Raising pool_size_limit_ from 655 to 720</div><div class="line">16/16 [==============================] - 83s - loss: 1.7237 - val_loss: 11.7738</div><div class="line">Epoch 5/40</div><div class="line">16/16 [==============================] - 83s - loss: 1.6304 - val_loss: 10.6538</div><div class="line">Epoch 6/40</div><div class="line">16/16 [==============================] - 80s - loss: 1.2182 - val_loss: 4.5027</div><div class="line">Epoch 7/40</div><div class="line">16/16 [==============================] - 83s - loss: 1.3179 - val_loss: 11.5891</div><div class="line">Epoch 8/40</div><div class="line">16/16 [==============================] - 82s - loss: 1.1806 - val_loss: 10.5800</div><div class="line">Epoch 9/40</div><div class="line">16/16 [==============================] - 81s - loss: 1.1935 - val_loss: 11.1477</div><div class="line">Epoch 10/40</div><div class="line">16/16 [==============================] - 80s - loss: 1.1727 - val_loss: 7.0913</div><div class="line">Epoch 11/40</div><div class="line">16/16 [==============================] - 83s - loss: 1.2058 - val_loss: 6.4474</div><div class="line">Epoch 12/40</div><div class="line">16/16 [==============================] - 82s - loss: 1.2702 - val_loss: 7.7678</div><div class="line">Epoch 13/40</div><div class="line">16/16 [==============================] - 84s - loss: 1.2060 - val_loss: 7.9961</div><div class="line">Epoch 14/40</div><div class="line">16/16 [==============================] - 83s - loss: 1.0768 - val_loss: 11.2121</div><div class="line">Epoch 15/40</div><div class="line">16/16 [==============================] - 80s - loss: 1.1401 - val_loss: 13.2052</div><div class="line">Epoch 16/40</div><div class="line">16/16 [==============================] - 83s - loss: 1.1961 - val_loss: 13.0330</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      keras的基本用法(四)——Fine Tuning神经网络
+    
+    </summary>
+    
+      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
+    
+    
+      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
+    
+  </entry>
   
   <entry>
     <title>pandas总结(一)——Series的使用</title>
@@ -678,110 +763,6 @@ dtype: float64
     <summary type="html">
     
       matplotlib的基本用法(十六)——创建动画
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(十五)——主次坐标轴</title>
-    <link href="noahsnail.com/2017/05/05/2017-5-5-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%BA%94)%E2%80%94%E2%80%94%E4%B8%BB%E6%AC%A1%E5%9D%90%E6%A0%87%E8%BD%B4/"/>
-    <id>noahsnail.com/2017/05/05/2017-5-5-matplotlib的基本用法(十五)——主次坐标轴/</id>
-    <published>2017-05-05T11:15:56.000Z</published>
-    <updated>2017-05-05T11:25:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍matplotlib的一些用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line"></div><div class="line"># 定义数据</div><div class="line">x = np.arange(0, 10, 0.1)</div><div class="line">y1 = 0.05 * x ** 2</div><div class="line">y2 = -1 * y1</div><div class="line"></div><div class="line"># 定义figure</div><div class="line">fig, ax1 = plt.subplots()</div><div class="line"># 得到ax1的对称轴ax2</div><div class="line">ax2 = ax1.twinx()</div><div class="line"># 绘制图像</div><div class="line">ax1.plot(x, y1, &apos;g-&apos;)</div><div class="line">ax2.plot(x, y2, &apos;b--&apos;)</div><div class="line"></div><div class="line"># 设置label</div><div class="line">ax1.set_xlabel(&apos;X data&apos;)</div><div class="line">ax1.set_ylabel(&apos;Y 1&apos;, color = &apos;g&apos;)</div><div class="line">ax2.set_ylabel(&apos;Y 2&apos;, color = &apos;b&apos;)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m151.png" alt="图像"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(十五)——主次坐标轴
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>scikit-learn的基本用法(六)——交叉验证2</title>
-    <link href="noahsnail.com/2017/05/04/2017-5-4-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%85%AD)%E2%80%94%E2%80%94%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%812/"/>
-    <id>noahsnail.com/2017/05/04/2017-5-4-scikit-learn的基本用法(六)——交叉验证2/</id>
-    <published>2017-05-04T13:45:35.000Z</published>
-    <updated>2017-05-04T14:03:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍scikit-learn中的交叉验证。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from sklearn.datasets import load_digits</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.svm import SVC</div><div class="line">from sklearn.learning_curve import learning_curve</div><div class="line">from sklearn.model_selection import cross_val_score </div><div class="line"></div><div class="line"></div><div class="line"># 加载数据集</div><div class="line">digits = load_digits()</div><div class="line">X = digits.data</div><div class="line">y = digits.target</div><div class="line"># 用SVM进行学习并记录loss</div><div class="line">train_sizes, train_loss, test_loss = learning_curve(SVC(gamma = 0.001), </div><div class="line">                                                    X, y, cv = 10, scoring = &apos;neg_mean_squared_error&apos;,</div><div class="line">                                                    train_sizes = [0.1, 0.25, 0.5, 0.75, 1])</div><div class="line"></div><div class="line"># 训练误差均值</div><div class="line">train_loss_mean = -np.mean(train_loss, axis = 1)</div><div class="line"># 测试误差均值</div><div class="line">test_loss_mean = -np.mean(test_loss, axis = 1)</div><div class="line"></div><div class="line"># 绘制误差曲线</div><div class="line">plt.plot(train_sizes, train_loss_mean, &apos;o-&apos;, color = &apos;r&apos;, label = &apos;Training&apos;)</div><div class="line">plt.plot(train_sizes, test_loss_mean, &apos;o-&apos;, color = &apos;g&apos;, label = &apos;Cross-Validation&apos;)</div><div class="line"></div><div class="line">plt.xlabel(&apos;Training data size&apos;)</div><div class="line">plt.ylabel(&apos;Loss&apos;)</div><div class="line">plt.legend(loc = &apos;best&apos;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/sk6.png" alt="image"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      scikit-learn的基本用法(六)——交叉验证2
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>scikit-learn的基本用法(五)——交叉验证1</title>
-    <link href="noahsnail.com/2017/05/04/2017-5-4-scikit-learn%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%94)%E2%80%94%E2%80%94%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/"/>
-    <id>noahsnail.com/2017/05/04/2017-5-4-scikit-learn的基本用法(五)——交叉验证/</id>
-    <published>2017-05-04T13:06:43.000Z</published>
-    <updated>2017-05-04T13:41:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍scikit-learn中的交叉验证。通过交叉验证来选取KNN算法中的K值。</p>
-<ul>
-<li>Demo 1</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from sklearn import datasets</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.neighbors import KNeighborsClassifier</div><div class="line">from sklearn.cross_validation import cross_val_score </div><div class="line"></div><div class="line"># 加载iris数据集</div><div class="line">iris = datasets.load_iris()</div><div class="line"># 读取特征</div><div class="line">X = iris.data</div><div class="line"># 读取分类标签</div><div class="line">y = iris.target</div><div class="line"># 定义分类器</div><div class="line">knn = KNeighborsClassifier(n_neighbors = 5)</div><div class="line"># 进行交叉验证数据评估, 数据分为5部分, 每次用一部分作为测试集</div><div class="line">scores = cross_val_score(knn, X, y, cv = 5, scoring = &apos;accuracy&apos;)</div><div class="line"># 输出5次交叉验证的准确率</div><div class="line">print scores</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ 0.96666667  1.          0.93333333  0.96666667  1.        ]</div></pre></td></tr></table></figure>
-<ul>
-<li>Demo 2</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from sklearn import datasets</div><div class="line">from sklearn.cross_validation import train_test_split</div><div class="line">from sklearn.neighbors import KNeighborsClassifier</div><div class="line">from sklearn.cross_validation import cross_val_score </div><div class="line"></div><div class="line"># 确定knn中k的取值</div><div class="line"></div><div class="line"># 加载iris数据集</div><div class="line">iris = datasets.load_iris()</div><div class="line"># 读取特征</div><div class="line">X = iris.data</div><div class="line"># 读取分类标签</div><div class="line">y = iris.target</div><div class="line"># 定义knn中k的取值, 0-10</div><div class="line">k_range = range(1, 30)</div><div class="line"># 保存k对应的准确率</div><div class="line">k_scores = []</div><div class="line"># 计算每个k取值对应的准确率</div><div class="line">for k in k_range:</div><div class="line">    # 获得knn分类器</div><div class="line">    knn = KNeighborsClassifier(n_neighbors = k)</div><div class="line">    # 对数据进行交叉验证求准确率</div><div class="line">    scores = cross_val_score(knn, X, y, cv = 10, scoring = &apos;accuracy&apos;)</div><div class="line">    # 保存交叉验证结果的准确率均值</div><div class="line">    k_scores.append(scores.mean())</div><div class="line"></div><div class="line"># 绘制k取不同值时的准确率变化图像</div><div class="line">plt.plot(k_range, k_scores)</div><div class="line">plt.xlabel(&apos;K Value in KNN&apos;)</div><div class="line">plt.ylabel(&apos;Cross-Validation Mean Accuracy&apos;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p><img src="http://ocs628urt.bkt.clouddn.com/sk5.png" alt="image"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      scikit-learn的基本用法(五)——交叉验证1
     
     </summary>
     
