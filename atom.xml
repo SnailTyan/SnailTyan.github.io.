@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-07-13T03:38:32.000Z</updated>
+  <updated>2017-07-18T08:44:50.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,155 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Linux快捷键总结</title>
+    <link href="noahsnail.com/2017/07/18/2017-7-18-Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93/"/>
+    <id>noahsnail.com/2017/07/18/2017-7-18-Linux快捷键总结/</id>
+    <published>2017-07-18T06:11:02.000Z</published>
+    <updated>2017-07-18T08:44:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/002.jpg" alt="image"></p>
+<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文的Linux快捷键总结主要是作者使用Linux过程中常用的。</p>
+<ul>
+<li>清屏，等价于clear命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + l</div></pre></td></tr></table></figure>
+<ul>
+<li>切换到命令行开始</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + a</div></pre></td></tr></table></figure>
+<ul>
+<li>切换到命令行末尾</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + e</div></pre></td></tr></table></figure>
+<ul>
+<li>剪切光标至行首内容，可以用来清除输入的命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + w</div></pre></td></tr></table></figure>
+<ul>
+<li>粘贴</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + y</div></pre></td></tr></table></figure>
+<ul>
+<li>终止当前运行的程序</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + c</div></pre></td></tr></table></figure>
+<ul>
+<li>退出当前shell</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + d</div></pre></td></tr></table></figure>
+<ul>
+<li>查找历史命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + r</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Linux快捷键总结
+    
+    </summary>
+    
+      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Caffe关闭日志输出</title>
+    <link href="noahsnail.com/2017/07/18/2017-7-18-Caffe%E5%85%B3%E9%97%ADlog%E8%BE%93%E5%87%BA/"/>
+    <id>noahsnail.com/2017/07/18/2017-7-18-Caffe关闭log输出/</id>
+    <published>2017-07-18T05:34:58.000Z</published>
+    <updated>2017-07-18T05:49:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>在训练Caffe模型后，部署Caffe服务时我们通常会使用pycaffe来加载模型并处理图像，但是pycaffe加载模型时通常会输出加载模型的日志，影响我们查看自己的日志，因此需要移除Caffe加载模型时的日志。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">os.environ[&apos;GLOG_minloglevel&apos;] = &apos;2&apos;</div><div class="line">import caffe</div></pre></td></tr></table></figure>
+<p>Caffe使用的日志是GLOG，其日志级别如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 - debug</div><div class="line">1 - info (still a LOT of outputs)</div><div class="line">2 - warnings</div><div class="line">3 - errors</div></pre></td></tr></table></figure>
+<p>注意：由于在导入Caffe时Caffe会加载GLOG，因此<code>os.environ[&#39;GLOG_minloglevel&#39;] = &#39;2&#39;</code>需要在<code>import caffe</code>之前。</p>
+<p>参考资料</p>
+<ol>
+<li><a href="https://stackoverflow.com/questions/29788075/setting-glog-minloglevel-1-to-prevent-output-in-shell-from-caffe" target="_blank" rel="external">https://stackoverflow.com/questions/29788075/setting-glog-minloglevel-1-to-prevent-output-in-shell-from-caffe</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Caffe关闭日志输出
+    
+    </summary>
+    
+      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
+    
+    
+      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Caffe源码调试</title>
+    <link href="noahsnail.com/2017/07/17/2017-7-17-Caffe%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95/"/>
+    <id>noahsnail.com/2017/07/17/2017-7-17-Caffe代码调试/</id>
+    <published>2017-07-17T03:46:44.000Z</published>
+    <updated>2017-07-18T08:50:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/NASA_Mars_Rover.jpg" alt="Mars Exploration Rovers"></p>
+<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>这篇文件主要介绍如何使用Linux的gdb调试Caffe的源码，源码调试主要是为了阅读并更好的了解Caffe源码。</p>
+<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h2><ol>
+<li>首先要在编译Caffe源码时打开debug模式，即将<code>Makefile.config</code>中的<code>DEBUG := 1</code>打开。</li>
+<li>下载mnist数据集，主要是在mnist数据集上进行调试，执行<code>bash data/mnist/get_mnist.sh</code>。</li>
+<li>转换mnist数据集为LMDB，<code>bash examples/mnist/create_mnist.sh</code>。</li>
+<li>修改<code>examples/mnist/lenet_solver.prototxt</code>，将GPU改为CPU。</li>
+</ol>
+<h2 id="2-调试"><a href="#2-调试" class="headerlink" title="2. 调试"></a>2. 调试</h2><h3 id="1-激活GDB"><a href="#1-激活GDB" class="headerlink" title="1. 激活GDB"></a>1. 激活GDB</h3><p>使用GDB启动调试，执行<code>gdb --args build/tools/caffe train --solver examples/mnist/lenet_solver.prototxt</code>，<code>--args</code>表示我们调试时需要输入的参数，调试的命令为<code>build/tools/caffe</code>，caffe命令的参数为<code>--solver examples/mnist/lenet_solver.prototxt</code>。</p>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ gdb --args build/tools/caffe train --solver examples/mnist/lenet_solver.prototxt</div><div class="line">GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-94.el7</div><div class="line">Copyright (C) 2013 Free Software Foundation, Inc.</div><div class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</div><div class="line">This is free software: you are free to change and redistribute it.</div><div class="line">There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;</div><div class="line">and &quot;show warranty&quot; for details.</div><div class="line">This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.</div><div class="line">For bug reporting instructions, please see:</div><div class="line">&lt;http://www.gnu.org/software/gdb/bugs/&gt;...</div><div class="line">Reading symbols from /home/irteam/line-brain/deploy/caffe/.build_debug/tools/caffe.bin...done.</div></pre></td></tr></table></figure>
+<h3 id="2-设置断点"><a href="#2-设置断点" class="headerlink" title="2. 设置断点"></a>2. 设置断点</h3><p>执行<code>b src/caffe/layers/base_conv_layer.cpp:117</code>，<code>b</code>表示插入断点（breakpoint），断点的位置是<code>base_conv_layer.cpp</code>文件中的<code>117</code>行。插入断点的命令形式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">b path/to/code.cpp:#line</div></pre></td></tr></table></figure>
+<p>118行相关代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">117</span> channels_ = bottom[<span class="number">0</span>]-&gt;shape(channel_axis_);</div><div class="line"><span class="number">118</span> num_output_ = <span class="keyword">this</span>-&gt;layer_param_.convolution_param().num_output();</div><div class="line"><span class="number">119</span> CHECK_GT(num_output_, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(gdb) b src/caffe/layers/base_conv_layer.cpp:117</div><div class="line">No source file named src/caffe/layers/base_conv_layer.cpp.</div><div class="line">Make breakpoint pending on future shared library load? (y or [n]) y</div><div class="line"></div><div class="line">Breakpoint 1 (src/caffe/layers/base_conv_layer.cpp:117) pending.</div></pre></td></tr></table></figure>
+<h3 id="3-运行程序"><a href="#3-运行程序" class="headerlink" title="3. 运行程序"></a>3. 运行程序</h3><p>运行程序的命令是<code>r</code>。</p>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div></pre></td><td class="code"><pre><div class="line">Starting program: /*/caffe/build/tools/caffe train --solver examples/mnist/lenet_solver.prototxt</div><div class="line">[Thread debugging using libthread_db enabled]</div><div class="line">Using host libthread_db library &quot;/lib64/libthread_db.so.1&quot;.</div><div class="line">I0718 15:19:19.671941 29986 caffe.cpp:211] Use CPU.</div><div class="line">[New Thread 0x7fffd81c7700 (LWP 29991)]</div><div class="line">[New Thread 0x7fffd79c6700 (LWP 29992)]</div><div class="line">I0718 15:19:20.437239 29986 solver.cpp:44] Initializing solver from parameters:</div><div class="line">test_iter: 100</div><div class="line">test_interval: 500</div><div class="line">base_lr: 0.01</div><div class="line">display: 100</div><div class="line">max_iter: 10000</div><div class="line">lr_policy: &quot;inv&quot;</div><div class="line">gamma: 0.0001</div><div class="line">power: 0.75</div><div class="line">momentum: 0.9</div><div class="line">weight_decay: 0.0005</div><div class="line">snapshot: 5000</div><div class="line">snapshot_prefix: &quot;examples/mnist/lenet&quot;</div><div class="line">solver_mode: CPU</div><div class="line">net: &quot;examples/mnist/lenet_train_test.prototxt&quot;</div><div class="line">train_state &#123;</div><div class="line">  level: 0</div><div class="line">  stage: &quot;&quot;</div><div class="line">&#125;</div><div class="line">I0718 15:19:20.437687 29986 solver.cpp:87] Creating training net from net file: examples/mnist/lenet_train_test.prototxt</div><div class="line">I0718 15:19:20.438357 29986 net.cpp:294] The NetState phase (0) differed from the phase (1) specified by a rule in layer mnist</div><div class="line">I0718 15:19:20.438398 29986 net.cpp:294] The NetState phase (0) differed from the phase (1) specified by a rule in layer accuracy</div><div class="line">I0718 15:19:20.438499 29986 net.cpp:51] Initializing net from parameters:</div><div class="line">name: &quot;LeNet&quot;</div><div class="line">state &#123;</div><div class="line">  phase: TRAIN</div><div class="line">  level: 0</div><div class="line">  stage: &quot;&quot;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;mnist&quot;</div><div class="line">  type: &quot;Data&quot;</div><div class="line">  top: &quot;data&quot;</div><div class="line">  top: &quot;label&quot;</div><div class="line">  include &#123;</div><div class="line">    phase: TRAIN</div><div class="line">  &#125;</div><div class="line">  transform_param &#123;</div><div class="line">    scale: 0.00390625</div><div class="line">  &#125;</div><div class="line">  data_param &#123;</div><div class="line">    source: &quot;examples/mnist/mnist_train_lmdb&quot;</div><div class="line">    batch_size: 64</div><div class="line">    backend: LMDB</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv1&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;data&quot;</div><div class="line">  top: &quot;conv1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 20</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool1&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv1&quot;</div><div class="line">  top: &quot;pool1&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;conv2&quot;</div><div class="line">  type: &quot;Convolution&quot;</div><div class="line">  bottom: &quot;pool1&quot;</div><div class="line">  top: &quot;conv2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  convolution_param &#123;</div><div class="line">    num_output: 50</div><div class="line">    kernel_size: 5</div><div class="line">    stride: 1</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;pool2&quot;</div><div class="line">  type: &quot;Pooling&quot;</div><div class="line">  bottom: &quot;conv2&quot;</div><div class="line">  top: &quot;pool2&quot;</div><div class="line">  pooling_param &#123;</div><div class="line">    pool: MAX</div><div class="line">    kernel_size: 2</div><div class="line">    stride: 2</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip1&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;pool2&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 500</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;relu1&quot;</div><div class="line">  type: &quot;ReLU&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip1&quot;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;ip2&quot;</div><div class="line">  type: &quot;InnerProduct&quot;</div><div class="line">  bottom: &quot;ip1&quot;</div><div class="line">  top: &quot;ip2&quot;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 1</div><div class="line">  &#125;</div><div class="line">  param &#123;</div><div class="line">    lr_mult: 2</div><div class="line">  &#125;</div><div class="line">  inner_product_param &#123;</div><div class="line">    num_output: 10</div><div class="line">    weight_filler &#123;</div><div class="line">      type: &quot;xavier&quot;</div><div class="line">    &#125;</div><div class="line">    bias_filler &#123;</div><div class="line">      type: &quot;constant&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">layer &#123;</div><div class="line">  name: &quot;loss&quot;</div><div class="line">  type: &quot;SoftmaxWithLoss&quot;</div><div class="line">  bottom: &quot;ip2&quot;</div><div class="line">  bottom: &quot;label&quot;</div><div class="line">  top: &quot;loss&quot;</div><div class="line">&#125;</div><div class="line">I0718 15:19:20.439380 29986 layer_factory.hpp:77] Creating layer mnist</div><div class="line">I0718 15:19:20.439625 29986 db_lmdb.cpp:35] Opened lmdb examples/mnist/mnist_train_lmdb</div><div class="line">I0718 15:19:20.439702 29986 net.cpp:84] Creating Layer mnist</div><div class="line">I0718 15:19:20.439735 29986 net.cpp:380] mnist -&gt; data</div><div class="line">I0718 15:19:20.439853 29986 net.cpp:380] mnist -&gt; label</div><div class="line">I0718 15:19:20.444980 29986 data_layer.cpp:45] output data size: 64,1,28,28</div><div class="line">I0718 15:19:20.445436 29986 base_data_layer.cpp:72] Initializing prefetch</div><div class="line">[New Thread 0x7fffd603d700 (LWP 29993)]</div><div class="line">I0718 15:19:20.448151 29986 base_data_layer.cpp:75] Prefetch initialized.</div><div class="line">I0718 15:19:20.448186 29986 net.cpp:122] Setting up mnist</div><div class="line">I0718 15:19:20.448216 29986 net.cpp:129] Top shape: 64 1 28 28 (50176)</div><div class="line">I0718 15:19:20.448235 29986 net.cpp:129] Top shape: 64 (64)</div><div class="line">I0718 15:19:20.448245 29986 net.cpp:137] Memory required for data: 200960</div><div class="line">I0718 15:19:20.448264 29986 layer_factory.hpp:77] Creating layer conv1</div><div class="line">I0718 15:19:20.448324 29986 net.cpp:84] Creating Layer conv1</div><div class="line">I0718 15:19:20.448345 29986 net.cpp:406] conv1 &lt;- data</div><div class="line">I0718 15:19:20.448393 29986 net.cpp:380] conv1 -&gt; conv1</div><div class="line"></div><div class="line">Breakpoint 1, caffe::BaseConvolutionLayer&lt;float&gt;::LayerSetUp (this=0x91edd70,</div><div class="line">    bottom=std::vector of length 1, capacity 1 = &#123;...&#125;, top=std::vector of length 1, capacity 1 = &#123;...&#125;)</div><div class="line">    at src/caffe/layers/base_conv_layer.cpp:117</div><div class="line">117       channels_ = bottom[0]-&gt;shape(channel_axis_);</div><div class="line">Missing separate debuginfos, use: debuginfo-install OpenEXR-libs-1.7.1-7.el7.x86_64 atk-2.14.0-1.el7.x86_64 atlas-3.10.1-10.el7.x86_64 boost-filesystem-1.53.0-26.el7.x86_64 boost-python-1.53.0-26.el7.x86_64 boost-system-1.53.0-26.el7.x86_64 boost-thread-1.53.0-26.el7.x86_64 cairo-1.14.2-1.el7.x86_64 expat-2.1.0-10.el7_3.x86_64 fontconfig-2.10.95-10.el7.x86_64 freetype-2.4.11-12.el7.x86_64 gdk-pixbuf2-2.31.6-3.el7.x86_64 gflags-2.1.1-6.el7.x86_64 glib2-2.46.2-4.el7.x86_64 glibc-2.17-157.el7_3.1.x86_64 glog-0.3.3-8.el7.x86_64 graphite2-1.3.6-1.el7_2.x86_64 gstreamer-0.10.36-7.el7.x86_64 gstreamer-plugins-base-0.10.36-10.el7.x86_64 gtk2-2.24.28-8.el7.x86_64 harfbuzz-0.9.36-1.el7.x86_64 hdf5-1.8.12-8.el7.x86_64 ilmbase-1.0.3-7.el7.x86_64 jasper-libs-1.900.1-29.el7.x86_64 jbigkit-libs-2.0-11.el7.x86_64 leveldb-1.12.0-11.el7.x86_64 libX11-1.6.3-3.el7.x86_64 libXau-1.0.8-2.1.el7.x86_64 libXcomposite-0.4.4-4.1.el7.x86_64 libXcursor-1.1.14-2.1.el7.x86_64 libXdamage-1.1.4-4.1.el7.x86_64 libXext-1.3.3-3.el7.x86_64 libXfixes-5.0.1-2.1.el7.x86_64 libXi-1.7.4-2.el7.x86_64 libXinerama-1.1.3-2.1.el7.x86_64 libXrandr-1.4.2-2.el7.x86_64 libXrender-0.9.8-2.1.el7.x86_64 libffi-3.0.13-18.el7.x86_64 libgcc-4.8.5-11.el7.x86_64 libgfortran-4.8.5-11.el7.x86_64 libjpeg-turbo-1.2.90-5.el7.x86_64 libpng-1.5.13-7.el7_2.x86_64 libquadmath-4.8.5-11.el7.x86_64 libselinux-2.5-6.el7.x86_64 libstdc++-4.8.5-11.el7.x86_64 libtiff-4.0.3-27.el7_3.x86_64 libv4l-0.9.5-4.el7.x86_64 libxcb-1.11-4.el7.x86_64 libxml2-2.9.1-6.el7_2.3.x86_64 lmdb-libs-0.9.18-1.el7.x86_64 opencv-2.4.5-3.el7.x86_64 opencv-core-2.4.5-3.el7.x86_64 orc-0.4.22-5.el7.x86_64 pango-1.36.8-2.el7.x86_64 pcre-8.32-15.el7_2.1.x86_64 pixman-0.34.0-1.el7.x86_64 protobuf-2.5.0-8.el7.x86_64 python-libs-2.7.5-48.el7.x86_64 snappy-1.1.0-3.el7.x86_64 xz-libs-5.2.2-1.el7.x86_64 zlib-1.2.7-17.el7.x86_64</div></pre></td></tr></table></figure>
+<p><code>Breakpoint 1</code>之前是正常的程序日志输出，程序在断点处暂停。</p>
+<p>查看变量命令为<code>p var</code>，命令与结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(gdb) p channels_</div><div class="line">$1 = 0</div><div class="line"></div><div class="line">(gdb) p channel_axis_</div><div class="line">$2 = 1</div></pre></td></tr></table></figure>
+<p>此时，<code>channels_</code>值为<code>0</code>。下一行命令为<code>n</code>，执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) n</div><div class="line">118       num_output_ = this-&gt;layer_param_.convolution_param().num_output();</div></pre></td></tr></table></figure>
+<p>此时查看<code>channels_</code>值为<code>1</code>，mnist数据是灰度图像，<code>channels_</code>为<code>1</code>没问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(gdb) p channels_</div><div class="line">$3 = 1</div></pre></td></tr></table></figure>
+<p>命令<code>c</code>是继续执行直到下一个断点。</p>
+<p>如果需要调试GPU程序，可以使用<code>cuda-gdb</code>，文档地址为：<a href="http://docs.nvidia.com/cuda/cuda-gdb/index.html#axzz4nAAR7ujZ" target="_blank" rel="external">http://docs.nvidia.com/cuda/cuda-gdb/index.html#axzz4nAAR7ujZ</a>。</p>
+<p>参考资料</p>
+<ol>
+<li><a href="http://zhaok.xyz/blog/post/debug-caffe/" target="_blank" rel="external">http://zhaok.xyz/blog/post/debug-caffe/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Caffe源码调试
+    
+    </summary>
+    
+      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
+    
+    
+      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
+    
+  </entry>
+  
+  <entry>
     <title>vim使用总结</title>
     <link href="noahsnail.com/2017/07/13/2017-7-13-vim%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/"/>
     <id>noahsnail.com/2017/07/13/2017-7-13-vim使用总结/</id>
     <published>2017-07-13T02:36:29.000Z</published>
-    <updated>2017-07-13T03:38:32.000Z</updated>
+    <updated>2017-07-18T06:17:51.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是记录使用vim过程中的一些用法，本文中介绍的命令都在vim中使用验证过。</p>
@@ -43,7 +187,11 @@
 <h2 id="3-字符串替换"><a href="#3-字符串替换" class="headerlink" title="3. 字符串替换"></a>3. 字符串替换</h2><ul>
 <li>命令格式：[:%s/原始字符串/要替换的字符串]</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># test替换为global，默认情况下全部替换</div><div class="line"></div><div class="line">:%s/test/global</div></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># test替换为global，默认情况下全部替换</div><div class="line"></div><div class="line">:%s/test/global</div></pre></td></tr></table></figure>
+<h2 id="4-跳到指定行"><a href="#4-跳到指定行" class="headerlink" title="4. 跳到指定行"></a>4. 跳到指定行</h2><ul>
+<li>命令格式：[:line-number]</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 跳到118行</div><div class="line">:118</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -88,7 +236,7 @@
     <link href="noahsnail.com/2017/07/04/2017-7-4-AlexNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91/"/>
     <id>noahsnail.com/2017/07/04/2017-7-4-AlexNet论文翻译/</id>
     <published>2017-07-04T10:04:42.000Z</published>
-    <updated>2017-07-10T01:10:38.000Z</updated>
+    <updated>2017-07-17T03:16:47.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="ImageNet-Classification-with-Deep-Convolutional-Neural-Networks"><a href="#ImageNet-Classification-with-Deep-Convolutional-Neural-Networks" class="headerlink" title="ImageNet Classification with Deep Convolutional Neural Networks"></a>ImageNet Classification with Deep Convolutional Neural Networks</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 37.5% and 17.0% which is considerably better than the previous state-of-the-art. The neural network, which has 60 million parameters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully-connected layers with a final 1000-way softmax. To make training faster, we used non-saturating neurons and a very efficient GPU implementation of the convolution operation. To reduce overfitting in the fully-connected layers we employed a recently-developed regularization method called “dropout” that proved to be very effective. We also entered a variant of this model in the ILSVRC-2012 competition and achieved a winning top-5 test error rate of 15.3%, compared to 26.2% achieved by the second-best entry.</p>
@@ -114,9 +262,12 @@
 <h3 id="3-1-ReLU-Nonlinearity"><a href="#3-1-ReLU-Nonlinearity" class="headerlink" title="3.1 ReLU Nonlinearity"></a>3.1 ReLU Nonlinearity</h3><p>The standard way to model a neuron’s output <code>f</code> as a function of its input <code>x</code> is with <code>f(x) = tanh(x)</code> or <code>f(x) = (1 + e−x)−1</code>. In terms of training time with gradient descent, these saturating nonlinearities are much slower than the non-saturating nonlinearity <code>f(x) = max(0,x)</code>. Following Nair and Hinton [20], we refer to neurons with this nonlinearity as Rectified Linear Units (ReLUs). Deep convolutional neural networks with ReLUs train several times faster than their equivalents with tanh units. This is demonstrated in Figure 1, which shows the number of iterations required to reach 25% training error on the CIFAR-10 dataset for a particular four-layer convolutional network. This plot shows that we would not have been able to experiment with such large neural networks for this work if we had used traditional saturating neuron models.</p>
 <h3 id="3-1-ReLU非线性"><a href="#3-1-ReLU非线性" class="headerlink" title="3.1 ReLU非线性"></a>3.1 ReLU非线性</h3><p>将神经元输出<code>f</code>建模为输入<code>x</code>的函数的标准方式是用<code>f(x) = tanh(x)</code>或<code>f(x) = (1 + e−x)−1</code>。考虑到梯度下降的训练时间，这些饱和的非线性比非饱和非线性<code>f(x) = max(0,x)</code>更慢。根据Nair和Hinton[20]的说法，我们将这种非线性神经元称为修正线性单元(ReLU)。采用ReLU的深度卷积神经网络训练时间比等价的<code>tanh</code>单元要快几倍。在图1中，对于一个特定的四层卷积网络，在CIFAR-10数据集上达到25%的训练误差所需要的迭代次数可以证实这一点。这幅图表明，如果我们采用传统的饱和神经元模型，我们将不能在如此大的神经网络上实验该工作。</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/Figure%201.png" alt="Figure 1"></p>
-<p>We are not the first to consider alternatives to traditional neuron models in CNNs. For example, Jarrett et al. [11] claim that the nonlinearity f (x) = |tanh(x)| works particularly well with their type of contrast nor- malization followed by local average pooling on the Caltech-101 dataset. However, on this dataset the pri- mary concern is preventing overfitting, so the effect they are observing is different from the accelerated ability to fit the training set which we report when us- ing ReLUs. Faster learning has a great influence on the performance of large models trained on large datasets.</p>
+<p>Figure 1: A four-layer convolutional neural network with ReLUs (solid line) reaches a 25% training error rate on CIFAR-10 six times faster than an equivalent network with tanh neurons (dashed line). The learning rates for each network were chosen independently to make training as fast as possible. No regularization of any kind was employed. The magnitude of the effect demonstrated here varies with network architecture, but networks with ReLUs consistently learn several times faster than equivalents with saturating neurons.</p>
+<p>图1：使用ReLU的四层卷积神经网络在CIFAR-10数据集上达到25%的训练误差比使用tanh神经元的等价网络（虚线）快六倍。为了使训练尽可能快，每个网络的学习率是单独选择的。没有采用任何类型的正则化。影响的大小随着网络结构的变化而变化，这一点已得到证实，但使用ReLU的网络都比等价的饱和神经元快几倍。</p>
+<p>We are not the first to consider alternatives to traditional neuron models in CNNs. For example, Jarrett et al. [11] claim that the nonlinearity <code>f(x) = |tanh(x)|</code> works particularly well with their type of contrast normalization followed by local average pooling on the Caltech-101 dataset. However, on this dataset the primary concern is preventing overfitting, so the effect they are observing is different from the accelerated ability to fit the training set which we report when using ReLUs. Faster learning has a great influence on the performance of large models trained on large datasets.</p>
+<p>我们不是第一个考虑替代CNN中传统神经元模型的人。例如，Jarrett等人[11]声称非线性函数<code>f(x) = |tanh(x)|</code>与其对比度归一化一起，然后是局部均值池化，在Caltech-101数据集上工作的非常好。然而，在这个数据集上主要的关注点是防止过拟合，因此他们观测到的影响不同于我们使用ReLU拟合数据集时的加速能力。更快的学习对大型数据集上大型模型的性能有很大的影响。</p>
 <h3 id="3-2-Training-on-Multiple-GPUs"><a href="#3-2-Training-on-Multiple-GPUs" class="headerlink" title="3.2 Training on Multiple GPUs"></a>3.2 Training on Multiple GPUs</h3><p>A single GTX 580 GPU has only 3GB of memory, which limits the maximum size of the networks that can be trained on it. It turns out that 1.2 million training examples are enough to train networks which are too big to fit on one GPU. Therefore we spread the net across two GPUs. Current GPUs are particularly well-suited to cross-GPU parallelization, as they are able to read from and write to one another’s memory directly, without going through host machine memory. The parallelization scheme that we employ essentially puts half of the kernels (or neurons) on each GPU, with one additional trick: the GPUs communicate only in certain layers. This means that, for example, the kernels of layer 3 take input from all kernel maps in layer 2. However, kernels in layer 4 take input only from those kernel maps in layer 3 which reside on the same GPU. Choosing the pattern of connectivity is a problem for cross-validation, but this allows us to precisely tune the amount of communication until it is an acceptable fraction of the amount of computation.</p>
-<p>The resultant architecture is somewhat similar to that of the “columnar” CNN employed by Cires ̧an et al. [5], except that our columns are not independent (see Figure 2). This scheme reduces our top-1 and top-5 error rates by 1.7% and 1.2%, respectively, as compared with a net with half as many kernels in each convolutional layer trained on one GPU. The two-GPU net takes slightly less time to train than the one-GPU net2.</p>
+<h3 id="3-2-多GPU训练"><a href="#3-2-多GPU训练" class="headerlink" title="3.2 多GPU训练"></a>3.2 多GPU训练</h3><p>The resultant architecture is somewhat similar to that of the “columnar” CNN employed by Cires ̧an et al. [5], except that our columns are not independent (see Figure 2). This scheme reduces our top-1 and top-5 error rates by 1.7% and 1.2%, respectively, as compared with a net with half as many kernels in each convolutional layer trained on one GPU. The two-GPU net takes slightly less time to train than the one-GPU net.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] R.M.BellandY.Koren.Lessonsfromthenetflixprizechallenge.ACMSIGKDDExplorationsNewsletter, 9(2):75–79, 2007.</p>
 <p>[2] A. Berg, J. Deng, and L. Fei-Fei. Large scale visual recognition challenge 2010. www.imagenet.org/challenges. 2010.</p>
 <p>[3] L. Breiman. Random forests. Machine learning, 45(1):5–32, 2001.</p>
@@ -728,103 +879,6 @@ dtype: float64
     <summary type="html">
     
       keras的基本用法(三)——创建神经网络
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>keras的基本用法(二)——定义分类器</title>
-    <link href="noahsnail.com/2017/05/10/2017-5-10-keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94%E5%AE%9A%E4%B9%89%E5%88%86%E7%B1%BB%E5%99%A8/"/>
-    <id>noahsnail.com/2017/05/10/2017-5-10-keras的基本用法(二)——定义分类器/</id>
-    <published>2017-05-10T13:44:57.000Z</published>
-    <updated>2017-05-10T14:57:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍Keras的一些基本用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">from keras.datasets import mnist</div><div class="line">from keras.utils import np_utils</div><div class="line">from keras.models import Sequential</div><div class="line">from keras.layers import Dense, Activation</div><div class="line">from keras.optimizers import RMSprop</div><div class="line"></div><div class="line"># 加载数据集</div><div class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data()</div><div class="line"></div><div class="line"># 数据集reshape, -1表示该参数不指定, 系统通过推断来获得</div><div class="line">X_train = X_train.reshape(X_train.shape[0], -1) / 255.0</div><div class="line">X_test = X_test.reshape(X_test.shape[0], -1) / 255.0</div><div class="line"></div><div class="line"># 将label变为向量</div><div class="line">y_train = np_utils.to_categorical(y_train, 10)</div><div class="line">y_test = np_utils.to_categorical(y_test, 10)</div><div class="line"></div><div class="line"></div><div class="line"># 构建分类器</div><div class="line">model = Sequential([</div><div class="line">    Dense(32, input_dim = 784),</div><div class="line">    Activation(&apos;relu&apos;),</div><div class="line">    Dense(10),</div><div class="line">    Activation(&apos;softmax&apos;)</div><div class="line">])</div><div class="line"></div><div class="line"># 选择并定义优化求解方法</div><div class="line">rmsprop = RMSprop(lr = 0.001, rho = 0.9, epsilon = 1e-8, decay = 0.0)</div><div class="line"></div><div class="line"># 选择损失函数、求解方法、度量方法</div><div class="line">model.compile(optimizer = rmsprop, loss = &apos;categorical_crossentropy&apos;, metrics = [&apos;accuracy&apos;])</div><div class="line"></div><div class="line"># 训练模型</div><div class="line">model.fit(X_train, y_train, epochs = 2, batch_size = 32)</div><div class="line"></div><div class="line"># 评估模型</div><div class="line">loss, accuracy = model.evaluate(X_test, y_test)</div><div class="line"></div><div class="line">print &apos;&apos;</div><div class="line">print &apos;loss: &apos;, loss</div><div class="line">print &apos;accuracy: &apos;, accuracy</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Using TensorFlow backend.</div><div class="line">Epoch 1/2</div><div class="line">60000/60000 [==============================] - 2s - loss: 0.3382 - acc: 0.9048</div><div class="line">Epoch 2/2</div><div class="line">60000/60000 [==============================] - 2s - loss: 0.1913 - acc: 0.9454</div><div class="line"> 7680/10000 [======================&gt;.......] - ETA: 0s</div><div class="line">loss:  0.16181669073</div><div class="line">accuracy:  0.9535</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      keras的基本用法(二)——定义分类器
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>matplotlib的基本用法(十七)——保存figure</title>
-    <link href="noahsnail.com/2017/05/10/2017-5-10-matplotlib%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E5%8D%81%E4%B8%83)%E2%80%94%E2%80%94%E4%BF%9D%E5%AD%98%E7%BB%98%E5%9B%BE/"/>
-    <id>noahsnail.com/2017/05/10/2017-5-10-matplotlib的基本用法(十七)——保存绘图/</id>
-    <published>2017-05-10T12:58:53.000Z</published>
-    <updated>2017-05-10T13:04:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍matplotlib的一些用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">import matplotlib</div><div class="line">matplotlib.use(&apos;Agg&apos;)</div><div class="line"></div><div class="line"># 定义数据</div><div class="line">x = np.arange(0, 10, 0.1)</div><div class="line">y = 0.05 * x ** 2</div><div class="line"></div><div class="line">#绘制图像</div><div class="line">plt.plot(x, y)</div><div class="line"></div><div class="line"># 设置坐标轴</div><div class="line">plt.xlabel(&apos;x data&apos;)</div><div class="line">plt.ylabel(&apos;y data&apos;)</div><div class="line"></div><div class="line"># 默认保存为png格式</div><div class="line">plt.savefig(&apos;test&apos;)</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<p>在文件夹下可看到<code>test.png</code>，如图：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/m17.png" alt="图像"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      matplotlib的基本用法(十七)——保存figure
-    
-    </summary>
-    
-      <category term="tensorflow" scheme="noahsnail.com/categories/tensorflow/"/>
-    
-    
-      <category term="tensorflow" scheme="noahsnail.com/tags/tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>keras的基本用法(一)——回归模型</title>
-    <link href="noahsnail.com/2017/05/08/2017-5-8-Keras%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%80)%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/"/>
-    <id>noahsnail.com/2017/05/08/2017-5-8-Keras的基本用法(一)——回归模型/</id>
-    <published>2017-05-08T14:26:54.000Z</published>
-    <updated>2017-05-08T14:40:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要介绍Keras的一些基本用法。</p>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">from keras.models import Sequential</div><div class="line">from keras.layers import Dense</div><div class="line"></div><div class="line"># 创建数据</div><div class="line">X = np.linspace(-1, 1, 200)</div><div class="line"># 数据随机化</div><div class="line">np.random.shuffle(X)</div><div class="line"># 创建数据及参数, 并加入噪声</div><div class="line">Y = 0.5 * X + 2 + np.random.normal(0, 0.05, (200,))</div><div class="line"></div><div class="line"># 绘制数据</div><div class="line">plt.scatter(X, Y)</div><div class="line">plt.show()</div><div class="line"></div><div class="line"># 分为训练数据和测试数据</div><div class="line">X_train, Y_train = X[:160], Y[:160]</div><div class="line">X_test, Y_test = X[160:], Y[160:]</div><div class="line"></div><div class="line"># 使用keras创建神经网络</div><div class="line"># Sequential是指一层层堆叠的神经网络</div><div class="line"># Dense是指全连接层</div><div class="line"># 定义model</div><div class="line">model = Sequential()</div><div class="line"># 定义第一层, 由于是回归模型, 因此只有一层</div><div class="line">model.add(Dense(units = 1, input_dim = 1))</div><div class="line"></div><div class="line"># 选择损失函数和优化方法</div><div class="line">model.compile(loss = &apos;mse&apos;, optimizer = &apos;sgd&apos;)</div><div class="line"></div><div class="line">print &apos;----Training----&apos;</div><div class="line"># 训练过程</div><div class="line">for step in range(501):</div><div class="line">    # 进行训练, 返回损失(代价)函数</div><div class="line">    cost = model.train_on_batch(X_train, Y_train)</div><div class="line">    if step % 100 == 0:</div><div class="line">        print &apos;loss: &apos;, cost</div><div class="line"></div><div class="line">print &apos;----Testing----&apos;    </div><div class="line"># 训练结束进行测试</div><div class="line">cost = model.evaluate(X_test, Y_test, batch_size = 40)</div><div class="line">print &apos;test loss: &apos;, cost</div><div class="line"></div><div class="line"># 获取参数</div><div class="line">W, b = model.layers[0].get_weights()</div><div class="line">print &apos;Weights: &apos;,W</div><div class="line">print &apos;Biases: &apos;, b</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">----Training----</div><div class="line">loss:  3.97799</div><div class="line">loss:  0.100697</div><div class="line">loss:  0.0118289</div><div class="line">loss:  0.00448105</div><div class="line">loss:  0.00278243</div><div class="line">loss:  0.00232763</div><div class="line">----Testing----</div><div class="line">40/40 [==============================] - 0s</div><div class="line">test loss:  0.00307717337273</div><div class="line">Weights:  [[ 0.47406867]]</div><div class="line">Biases:  [ 1.99442744]</div></pre></td></tr></table></figure>
-<p><img src="http://ocs628urt.bkt.clouddn.com/k1.png" alt="image"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      keras的基本用法(一)——回归模型
     
     </summary>
     
