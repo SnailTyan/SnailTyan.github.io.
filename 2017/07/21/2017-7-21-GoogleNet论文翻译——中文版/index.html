@@ -101,7 +101,7 @@
 <meta property="og:description" content="GoogleNet论文翻译——中文版">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/g_figure%201.png">
-<meta property="og:updated_time" content="2017-07-25T09:20:07.000Z">
+<meta property="og:updated_time" content="2017-07-26T06:05:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GoogleNet论文翻译——中文版">
 <meta name="twitter:description" content="GoogleNet论文翻译——中文版">
@@ -353,8 +353,8 @@
         <p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
 <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="Going-Deeper-with-Convolutions"><a href="#Going-Deeper-with-Convolutions" class="headerlink" title="Going Deeper with Convolutions"></a>Going Deeper with Convolutions</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们在ImageNet大规模视觉识别挑战赛2014（ILSVRC14）上提出了一种代号为Inception的深度卷积神经网络结构，并在分类和检测上取得了新的最好结果。这个架构的主要特点是提高了网络内部计算资源的利用率。通过精心的手工设计，我们在增加了网络深度和广度的同时保持了计算预算不变。为了优化质量，架构的设计以赫布理论和多尺度处理直觉为基础。我们在ILSVRC14提交中应用的一个特例被称为GoogLeNet，一个22层的深度网络，它的质量在分类和检测的背景下得到了评估。</p>
-<p>过去三年中，由于深度学习核卷积网络的发展[10]，我们的目标分类和检测能力得到了显著提高。一个令人鼓舞的消息是，大部分的进步不只是更强大硬件、更大数据集、更大模型的结果，而主要是新的想法、算法和网络结构改进的结果。例如，ILSVRC 2014竞赛中最靠前的输入除了用于检测目的的分类数据集之外，没有使用新的数据资源。我们在ILSVRC 2014中的GoogLeNet提交实际上使用了比两年前Krizhevsky等人[9]获胜结构的参数小12倍，而结果明显更准确。在目标检测前沿，最大的收获不是来自于越来越大的深度网络的简单应用，而是来自于深度架构和经典计算机视觉的协同，像Girshick等人[6]的R-CNN算法那样。</p>
-<p>另一个显著因素是随着移动和嵌入式设备的推动，我们的算法的效率——尤其是它们的电力和内存使用——很重要。值得注意的是，得出本文中呈现的深度架构设计的思考中就包含了这个因素，而不是单纯的为了提高准确率。对于大多数实验来说，模型设计为在一次推断中保持15亿乘加的计算预算，因此它们不是以单纯的学术好奇心为结束，而是能在现实世界中应用，即使是以合理的代价在大型数据集上使用。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>过去三年中，由于深度学习和卷积网络的发展[10]，我们的目标分类和检测能力得到了显著提高。一个令人鼓舞的消息是，大部分的进步不只是更强大硬件、更大数据集、更大模型的结果，而主要是新的想法、算法和网络结构改进的结果。例如，ILSVRC 2014竞赛中最靠前的输入除了用于检测目的的分类数据集之外，没有使用新的数据资源。我们在ILSVRC 2014中的GoogLeNet提交实际使用的参数比两年前Krizhevsky等人[9]获胜结构的参数小12倍，而结果明显更准确。在目标检测前沿，最大的收获不是来自于越来越大的深度网络的简单应用，而是来自于深度架构和经典计算机视觉的协同，像Girshick等人[6]的R-CNN算法那样。</p>
+<p>另一个显著因素是随着移动和嵌入式设备的推动，我们的算法的效率很重要——尤其是它们的电力和内存使用。值得注意的是，正是包含了这个因素的考虑才得出了本文中呈现的深度架构设计，而不是单纯的为了提高准确率。对于大多数实验来说，模型被设计为在一次推断中保持15亿乘加的计算预算，所以最终它们不是单纯的学术好奇心，而是能在现实世界中应用，甚至是以合理的代价在大型数据集上使用。</p>
 <p>在本文中，我们将关注一个高效的计算机视觉深层神经网络架构，代号为Inception，它的名字来自于Lin等人[12]网络论文中的Network与著名的“we need to go deeper”网络迷因[1]的结合。在我们的案例中，单词“deep”用在两个不同的含义中：首先，在某种意义上，我们以“Inception module”的形式引入了一种新水平的组织方式，在更直接的意义上增加了网络的深度。一般来说，可以把Inception模型看作论文[12]的逻辑顶点同时从Arora等人[2]的理论工作中受到了鼓舞和引导。这种架构的好处在ILSVRC 2014分类和检测挑战赛中通过实验得到了验证，它明显优于目前的最好水平。</p>
 <h2 id="2-近期工作"><a href="#2-近期工作" class="headerlink" title="2. 近期工作"></a>2. 近期工作</h2><p>从LeNet-5 [10]开始，卷积神经网络（CNN）通常有一个标准结构——堆叠的卷积层（后面可以选择有对比归一化和最大池化）后面是一个或更多的全连接层。这个基本设计的变种流行于图像分类著作，并且已经目前为止在MNIST，CIFAR和更著名的ImageNet分类挑战赛中[9, 21]的取得了最佳结果。对于更大的数据集例如ImageNet来说，最近的趋势是增加层的数目[12]和层的大小[21, 14]，同时使用丢弃[7]来解决过拟合问题。</p>
 <p>尽管担心最大池化层会引起准确空间信息的损失，但与[9]相同的卷积网络结构也已经成功的应用于定位[9, 14]，目标检测[6, 14, 18, 5]和行人姿态估计[19]。</p>
@@ -587,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Going-Deeper-with-Convolutions"><span class="nav-number">1.</span> <span class="nav-text">Going Deeper with Convolutions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-近期工作"><span class="nav-number">1.2.</span> <span class="nav-text">2. 近期工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-动机和高层思考"><span class="nav-number">1.3.</span> <span class="nav-text">3. 动机和高层思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.4.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Going-Deeper-with-Convolutions"><span class="nav-number">1.</span> <span class="nav-text">Going Deeper with Convolutions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-近期工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 近期工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-动机和高层思考"><span class="nav-number">1.4.</span> <span class="nav-text">3. 动机和高层思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.5.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
             
 
           </div>
