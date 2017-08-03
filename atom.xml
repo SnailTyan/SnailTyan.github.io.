@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-07-31T09:22:22.000Z</updated>
+  <updated>2017-08-03T03:10:09.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,219 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Yolo-Darknet的安装和使用</title>
+    <link href="noahsnail.com/2017/08/02/2017-8-2-Yolo-Darknet%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/"/>
+    <id>noahsnail.com/2017/08/02/2017-8-2-Yolo-Darknet的安装和使用/</id>
+    <published>2017-08-02T03:02:30.000Z</published>
+    <updated>2017-08-03T03:10:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-Yolo-Darknet介绍"><a href="#1-Yolo-Darknet介绍" class="headerlink" title="1. Yolo-Darknet介绍"></a>1. Yolo-Darknet介绍</h2><p>YOLO是基于深度学习方法的端到端实时目标检测系统，目前有三个版本，Yolo-v1，Yolo-9000，Yolo-v2。Darknet是Yolo的实现，但Darknet不仅包含Yolo的实现，还包括其它内容。</p>
+<h2 id="2-Darknet安装"><a href="#2-Darknet安装" class="headerlink" title="2. Darknet安装"></a>2. Darknet安装</h2><p>安装过程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># 代码下载</div><div class="line">git clone https://github.com/pjreddie/darknet.git</div><div class="line"> </div><div class="line"># 修改Makefile</div><div class="line">cd darknet</div><div class="line">sed -i &apos;1s/GPU=0/GPU=1/&apos; Makefile</div><div class="line">sed -i &apos;2s/CUDNN=0/CUDNN=1/&apos; Makefile</div><div class="line">sed -i &apos;3s/OPENCV=0/OPENCV=1/&apos; Makefile</div><div class="line"> </div><div class="line"># 安装</div><div class="line">make</div><div class="line"> </div><div class="line"># 下载预训练的模型</div><div class="line">wget https://pjreddie.com/media/files/yolo.weights</div><div class="line">wget https://pjreddie.com/media/files/tiny-yolo-voc.weights</div><div class="line">wget http://pjreddie.com/media/files/yolov1.weights</div><div class="line">wget http://pjreddie.com/media/files/tiny-yolo.weights</div><div class="line">wget http://pjreddie.com/media/files/tiny-coco.weights</div><div class="line">wget http://pjreddie.com/media/files/yolo-coco.weights</div></pre></td></tr></table></figure>
+<h2 id="3-Yolo-v2用法"><a href="#3-Yolo-v2用法" class="headerlink" title="3. Yolo-v2用法"></a>3. Yolo-v2用法</h2><ul>
+<li>使用预训练的模型进行目标检测</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/predictions.jpg" alt="Result"></p>
+<ul>
+<li>输入图像名称进行检测</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">$ ./darknet detect cfg/yolo.cfg yolo.weights</div><div class="line"># 输入 data/horses.jpg</div><div class="line"># 执行结果如下:</div><div class="line">layer     filters    size              input                output</div><div class="line">    0 conv     32  3 x 3 / 1   608 x 608 x   3   -&gt;   608 x 608 x  32</div><div class="line">    1 max          2 x 2 / 2   608 x 608 x  32   -&gt;   304 x 304 x  32</div><div class="line">    2 conv     64  3 x 3 / 1   304 x 304 x  32   -&gt;   304 x 304 x  64</div><div class="line">    3 max          2 x 2 / 2   304 x 304 x  64   -&gt;   152 x 152 x  64</div><div class="line">    4 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128</div><div class="line">    5 conv     64  1 x 1 / 1   152 x 152 x 128   -&gt;   152 x 152 x  64</div><div class="line">    6 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128</div><div class="line">    7 max          2 x 2 / 2   152 x 152 x 128   -&gt;    76 x  76 x 128</div><div class="line">    8 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256</div><div class="line">    9 conv    128  1 x 1 / 1    76 x  76 x 256   -&gt;    76 x  76 x 128</div><div class="line">   10 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256</div><div class="line">   11 max          2 x 2 / 2    76 x  76 x 256   -&gt;    38 x  38 x 256</div><div class="line">   12 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512</div><div class="line">   13 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256</div><div class="line">   14 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512</div><div class="line">   15 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256</div><div class="line">   16 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512</div><div class="line">   17 max          2 x 2 / 2    38 x  38 x 512   -&gt;    19 x  19 x 512</div><div class="line">   18 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024</div><div class="line">   19 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512</div><div class="line">   20 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024</div><div class="line">   21 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512</div><div class="line">   22 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024</div><div class="line">   23 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024</div><div class="line">   24 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024</div><div class="line">   25 route  16</div><div class="line">   26 conv     64  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x  64</div><div class="line">   27 reorg              / 2    38 x  38 x  64   -&gt;    19 x  19 x 256</div><div class="line">   28 route  27 24</div><div class="line">   29 conv   1024  3 x 3 / 1    19 x  19 x1280   -&gt;    19 x  19 x1024</div><div class="line">   30 conv    425  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 425</div><div class="line">   31 detection</div><div class="line">mask_scale: Using default &apos;1.000000&apos;</div><div class="line">Loading weights from yolo.weights...Done!</div><div class="line">Enter Image Path: data/horses.jpg</div><div class="line">data/horses.jpg: Predicted in 0.030211 seconds.</div><div class="line">horse: 46%</div><div class="line">horse: 59%</div><div class="line">horse: 91%</div><div class="line"> </div><div class="line">(predictions:31): Gtk-WARNING **: cannot open display:</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/horse-predictions.jpg" alt="result"></p>
+<ul>
+<li>设置检测阈值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg -thresh 0.1</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/thres-predictions.jpg" alt="result"></p>
+<ul>
+<li>检测视频</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./darknet detector demo cfg/coco.data cfg/yolo.cfg yolo.weights &lt;video file&gt;</div></pre></td></tr></table></figure>
+<p>参考资料</p>
+<ol>
+<li><p><a href="https://pjreddie.com/darknet/install/" target="_blank" rel="external">https://pjreddie.com/darknet/install/</a></p>
+</li>
+<li><p><a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="external">https://pjreddie.com/darknet/yolo/</a></p>
+</li>
+<li><p><a href="https://pjreddie.com/darknet/yolov1/" target="_blank" rel="external">https://pjreddie.com/darknet/yolov1/</a></p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Yolo-Darknet的安装和使用
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ResNet论文翻译——中文版</title>
+    <link href="noahsnail.com/2017/07/31/2017-7-31-ResNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>noahsnail.com/2017/07/31/2017-7-31-ResNet论文翻译——中文版/</id>
+    <published>2017-07-31T09:37:49.000Z</published>
+    <updated>2017-08-01T01:32:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+<h1 id="Deep-Residual-Learning-for-Image-Recognition"><a href="#Deep-Residual-Learning-for-Image-Recognition" class="headerlink" title="Deep Residual Learning for Image Recognition"></a>Deep Residual Learning for Image Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers—8× deeper than VGG nets [40] but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>更深的神经网络更难训练。</p>
+<p>The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC &amp; COCO 2015 competitions1, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Deep convolutional neural networks [22, 21] have led to a series of breakthroughs for image classification [21, 49, 39]. Deep networks naturally integrate low/mid/high- level features [49] and classifiers in an end-to-end multi- layer fashion, and the “levels” of features can be enriched by the number of stacked layers (depth). Recent evidence [40, 43] reveals that network depth is of crucial importance, and the leading results [40, 43, 12, 16] on the challenging ImageNet dataset [35] all exploit “very deep” [40] models, with a depth of sixteen [40] to thirty [16]. Many other non- trivial visual recognition tasks [7, 11, 6, 32, 27] have also greatly benefited from very deep models.</p>
+<p>Driven by the significance of depth, a question arises: Is learning better networks as easy as stacking more layers? An obstacle to answering this question was the notorious problem of vanishing/exploding gradients [14, 1, 8], which hamper convergence from the beginning. This problem, however, has been largely addressed by normalized initial- ization [23, 8, 36, 12] and intermediate normalization layers [16], which enable networks with tens of layers to start con- verging for stochastic gradient descent (SGD) with back- propagation [22].</p>
+<p>When deeper networks are able to start converging, a degradation problem has been exposed: with the network depth increasing, accuracy gets saturated (which might be unsurprising) and then degrades rapidly. Unexpectedly, such degradation is not caused by overfitting, and adding more layers to a suitably deep model leads to higher train- ing error, as reported in [10, 41] and thoroughly verified by our experiments. Fig. 1 shows a typical example.</p>
+<p>The degradation (of training accuracy) indicates that not all systems are similarly easy to optimize. Let us consider a shallower architecture and its deeper counterpart that adds more layers onto it. There exists a solution by construction to the deeper model: the added layers are identity mapping, and the other layers are copied from the learned shallower model. The existence of this constructed solution indicates that a deeper model should produce no higher training error than its shallower counterpart. But experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution (or unable to do so in feasible time).</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Y.Bengio,P.Simard,andP.Frasconi.Learning long-term dependencies with gradient descent is difficult. IEEE Transactions on Neural Networks, 5(2):157–166, 1994.</p>
+<p>[2] C. M. Bishop. Neural networks for pattern recognition. Oxford university press, 1995.</p>
+<p>[3] W. L. Briggs, S. F. McCormick, et al. A Multigrid Tutorial. Siam, 2000.</p>
+<p>[4] K.Chatfield,V.Lempitsky,A.Vedaldi,andA.Zisserman.Thedevil is in the details: an evaluation of recent feature encoding methods. In BMVC, 2011.</p>
+<p>[5] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The Pascal Visual Object Classes (VOC) Challenge. IJCV, pages 303–338, 2010.</p>
+<p>[6] R. Girshick. Fast R-CNN. In ICCV, 2015.</p>
+<p>[7] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In<br>CVPR, 2014.</p>
+<p>[8] X. Glorot and Y. Bengio. Understanding the difficulty of training deep feedforward neural networks. In AISTATS, 2010.</p>
+<p>[9] I. J. Goodfellow, D. Warde-Farley, M. Mirza, A. Courville, and Y. Bengio. Maxout networks. arXiv:1302.4389, 2013.</p>
+<p>[10] K.Heand J.Sun. Convolutional neural networks at constrained time cost. In CVPR, 2015.</p>
+<p>[11] K.He, X.Zhang, S.Ren, and J.Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV, 2014.</p>
+<p>[12] K. He, X. Zhang, S. Ren, and J. Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In<br>ICCV, 2015.</p>
+<p>[13] G. E. Hinton, N. Srivastava, A. Krizhevsky, I. Sutskever, and R. R. Salakhutdinov. Improving neural networks by preventing co-adaptation of feature detectors. arXiv:1207.0580, 2012.</p>
+<p>[14] S. Hochreiter. Untersuchungen zu dynamischen neuronalen netzen. Diploma thesis, TU Munich, 1991.</p>
+<p>[15] S.HochreiterandJ.Schmidhuber.Longshort-termmemory.Neural computation, 9(8):1735–1780, 1997.</p>
+<p>[16] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In ICML, 2015.</p>
+<p>[17] H.Jegou, M.Douze, and C.Schmid. Product quantization for nearest neighbor search. TPAMI, 33, 2011.</p>
+<p>[18] H. Jegou, F. Perronnin, M. Douze, J. Sanchez, P. Perez, and C. Schmid. Aggregating local image descriptors into compact codes.<br>TPAMI, 2012.</p>
+<p>[19] Y. Jia, E. Shelhamer, J. Donahue, S. Karayev, J. Long, R. Girshick, S. Guadarrama, and T. Darrell. Caffe: Convolutional architecture for<br>fast feature embedding. arXiv:1408.5093, 2014.</p>
+<p>[20] A. Krizhevsky. Learning multiple layers of features from tiny images. Tech Report, 2009.</p>
+<p>[21] A. Krizhevsky, I. Sutskever, and G. Hinton. Imagenet classification</p>
+<p>with deep convolutional neural networks. In NIPS, 2012.</p>
+<p>[22] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropagation applied to hand-<br>written zip code recognition. Neural computation, 1989.</p>
+<p>[23] Y.LeCun,L.Bottou,G.B.Orr,and K.-R.Muller. Efficient back prop. In Neural Networks: Tricks of the Trade, pages 9–50. Springer, 1998.</p>
+<p>[24] C.-Y. Lee, S. Xie, P. Gallagher, Z. Zhang, and Z. Tu. Deeply-supervised nets. arXiv:1409.5185, 2014.</p>
+<p>[25] M.Lin,Q.Chen,andS.Yan.Networkinnetwork.arXiv:1312.4400,2013.</p>
+<p>[26] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollar, and C. L. Zitnick. Microsoft COCO: Common objects in<br>context. In ECCV. 2014.</p>
+<p>[27] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.</p>
+<p>[28] G. Montufar, R. Pascanu, K. Cho, and Y. Bengio. On the number of linear regions of deep neural networks. In NIPS, 2014.</p>
+<p>[29] V. Nair and G. E. Hinton. Rectified linear units improve restricted boltzmann machines. In ICML, 2010.</p>
+<p>[30] F.PerronninandC.Dance.Fisherkernelsonvisualvocabulariesfor image categorization. In CVPR, 2007.</p>
+<p>[31] T. Raiko, H. Valpola, and Y. LeCun. Deep learning made easier by linear transformations in perceptrons. In AISTATS, 2012.</p>
+<p>[32] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015.</p>
+<p>[33] B. D. Ripley. Pattern recognition and neural networks. Cambridge university press, 1996.</p>
+<p>[34] A. Romero, N. Ballas, S. E. Kahou, A. Chassang, C. Gatta, and Y. Bengio. Fitnets: Hints for thin deep nets. In ICLR, 2015.</p>
+<p>[35] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, et al. Imagenet large scale visual recognition challenge. arXiv:1409.0575, 2014.</p>
+<p>[36] A. M. Saxe, J. L. McClelland, and S. Ganguli. Exact solutions to the nonlinear dynamics of learning in deep linear neural networks. arXiv:1312.6120, 2013.</p>
+<p>[37] N.N.Schraudolph. Accelerated gradient descent by factor-centering decomposition. Technical report, 1998.</p>
+<p>[38] N. N. Schraudolph. Centering neural network gradient factors. In Neural Networks: Tricks of the Trade, pages 207–226. Springer, 1998.</p>
+<p>[39] P.Sermanet,D.Eigen,X.Zhang,M.Mathieu,R.Fergus,andY.LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014.</p>
+<p>[40] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.</p>
+<p>[41] R. K. Srivastava, K. Greff, and J. Schmidhuber. Highway networks. arXiv:1505.00387, 2015.</p>
+<p>[42] R. K. Srivastava, K. Greff, and J. Schmidhuber. Training very deep networks. 1507.06228, 2015.</p>
+<p>[43] C.Szegedy,W.Liu,Y.Jia,P.Sermanet,S.Reed,D.Anguelov,D.Erhan, V. Vanhoucke, and A. Rabinovich. Going deeper with convolutions. In CVPR, 2015.</p>
+<p>[44] R. Szeliski. Fast surface interpolation using hierarchical basis functions. TPAMI, 1990.</p>
+<p>[45] R. Szeliski. Locally adapted hierarchical basis preconditioning. In SIGGRAPH, 2006.</p>
+<p>[46] T. Vatanen, T. Raiko, H. Valpola, and Y. LeCun. Pushing stochastic gradient towards second-order methods–backpropagation learning with transformations in nonlinearities. In Neural Information Processing, 2013.</p>
+<p>[47] A. Vedaldi and B. Fulkerson. VLFeat: An open and portable library of computer vision algorithms, 2008.</p>
+<p>[48] W. Venables and B. Ripley. Modern applied statistics with s-plus. 1999.</p>
+<p>[49] M.D.ZeilerandR.Fergus.Visualizingandunderstandingconvolutional neural networks. In ECCV, 2014.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      ResNet论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ResNet论文翻译——中英文对照</title>
+    <link href="noahsnail.com/2017/07/31/2017-7-31-ResNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>noahsnail.com/2017/07/31/2017-7-31-ResNet论文翻译——中英文对照/</id>
+    <published>2017-07-31T09:37:23.000Z</published>
+    <updated>2017-08-02T02:44:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+<h1 id="Deep-Residual-Learning-for-Image-Recognition"><a href="#Deep-Residual-Learning-for-Image-Recognition" class="headerlink" title="Deep Residual Learning for Image Recognition"></a>Deep Residual Learning for Image Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers—8× deeper than VGG nets [40] but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>更深的神经网络更难训练。</p>
+<p>The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC &amp; COCO 2015 competitions1, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Deep convolutional neural networks [22, 21] have led to a series of breakthroughs for image classification [21, 49, 39]. Deep networks naturally integrate low/mid/high- level features [49] and classifiers in an end-to-end multi- layer fashion, and the “levels” of features can be enriched by the number of stacked layers (depth). Recent evidence [40, 43] reveals that network depth is of crucial importance, and the leading results [40, 43, 12, 16] on the challenging ImageNet dataset [35] all exploit “very deep” [40] models, with a depth of sixteen [40] to thirty [16]. Many other non- trivial visual recognition tasks [7, 11, 6, 32, 27] have also greatly benefited from very deep models.</p>
+<p>Driven by the significance of depth, a question arises: Is learning better networks as easy as stacking more layers? An obstacle to answering this question was the notorious problem of vanishing/exploding gradients [14, 1, 8], which hamper convergence from the beginning. This problem, however, has been largely addressed by normalized initial- ization [23, 8, 36, 12] and intermediate normalization layers [16], which enable networks with tens of layers to start con- verging for stochastic gradient descent (SGD) with back- propagation [22].</p>
+<p>When deeper networks are able to start converging, a degradation problem has been exposed: with the network depth increasing, accuracy gets saturated (which might be unsurprising) and then degrades rapidly. Unexpectedly, such degradation is not caused by overfitting, and adding more layers to a suitably deep model leads to higher train- ing error, as reported in [10, 41] and thoroughly verified by our experiments. Fig. 1 shows a typical example.</p>
+<p>The degradation (of training accuracy) indicates that not all systems are similarly easy to optimize. Let us consider a shallower architecture and its deeper counterpart that adds more layers onto it. There exists a solution by construction to the deeper model: the added layers are identity mapping, and the other layers are copied from the learned shallower model. The existence of this constructed solution indicates that a deeper model should produce no higher training error than its shallower counterpart. But experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution (or unable to do so in feasible time).</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Y.Bengio,P.Simard,andP.Frasconi.Learning long-term dependencies with gradient descent is difficult. IEEE Transactions on Neural Networks, 5(2):157–166, 1994.</p>
+<p>[2] C. M. Bishop. Neural networks for pattern recognition. Oxford university press, 1995.</p>
+<p>[3] W. L. Briggs, S. F. McCormick, et al. A Multigrid Tutorial. Siam, 2000.</p>
+<p>[4] K.Chatfield,V.Lempitsky,A.Vedaldi,andA.Zisserman.Thedevil is in the details: an evaluation of recent feature encoding methods. In BMVC, 2011.</p>
+<p>[5] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The Pascal Visual Object Classes (VOC) Challenge. IJCV, pages 303–338, 2010.</p>
+<p>[6] R. Girshick. Fast R-CNN. In ICCV, 2015.</p>
+<p>[7] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In<br>CVPR, 2014.</p>
+<p>[8] X. Glorot and Y. Bengio. Understanding the difficulty of training deep feedforward neural networks. In AISTATS, 2010.</p>
+<p>[9] I. J. Goodfellow, D. Warde-Farley, M. Mirza, A. Courville, and Y. Bengio. Maxout networks. arXiv:1302.4389, 2013.</p>
+<p>[10] K.Heand J.Sun. Convolutional neural networks at constrained time cost. In CVPR, 2015.</p>
+<p>[11] K.He, X.Zhang, S.Ren, and J.Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV, 2014.</p>
+<p>[12] K. He, X. Zhang, S. Ren, and J. Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In<br>ICCV, 2015.</p>
+<p>[13] G. E. Hinton, N. Srivastava, A. Krizhevsky, I. Sutskever, and R. R. Salakhutdinov. Improving neural networks by preventing co-adaptation of feature detectors. arXiv:1207.0580, 2012.</p>
+<p>[14] S. Hochreiter. Untersuchungen zu dynamischen neuronalen netzen. Diploma thesis, TU Munich, 1991.</p>
+<p>[15] S.HochreiterandJ.Schmidhuber.Longshort-termmemory.Neural computation, 9(8):1735–1780, 1997.</p>
+<p>[16] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In ICML, 2015.</p>
+<p>[17] H.Jegou, M.Douze, and C.Schmid. Product quantization for nearest neighbor search. TPAMI, 33, 2011.</p>
+<p>[18] H. Jegou, F. Perronnin, M. Douze, J. Sanchez, P. Perez, and C. Schmid. Aggregating local image descriptors into compact codes.<br>TPAMI, 2012.</p>
+<p>[19] Y. Jia, E. Shelhamer, J. Donahue, S. Karayev, J. Long, R. Girshick, S. Guadarrama, and T. Darrell. Caffe: Convolutional architecture for<br>fast feature embedding. arXiv:1408.5093, 2014.</p>
+<p>[20] A. Krizhevsky. Learning multiple layers of features from tiny images. Tech Report, 2009.</p>
+<p>[21] A. Krizhevsky, I. Sutskever, and G. Hinton. Imagenet classification</p>
+<p>with deep convolutional neural networks. In NIPS, 2012.</p>
+<p>[22] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropagation applied to hand-<br>written zip code recognition. Neural computation, 1989.</p>
+<p>[23] Y.LeCun,L.Bottou,G.B.Orr,and K.-R.Muller. Efficient back prop. In Neural Networks: Tricks of the Trade, pages 9–50. Springer, 1998.</p>
+<p>[24] C.-Y. Lee, S. Xie, P. Gallagher, Z. Zhang, and Z. Tu. Deeply-supervised nets. arXiv:1409.5185, 2014.</p>
+<p>[25] M.Lin,Q.Chen,andS.Yan.Networkinnetwork.arXiv:1312.4400,2013.</p>
+<p>[26] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollar, and C. L. Zitnick. Microsoft COCO: Common objects in<br>context. In ECCV. 2014.</p>
+<p>[27] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.</p>
+<p>[28] G. Montufar, R. Pascanu, K. Cho, and Y. Bengio. On the number of linear regions of deep neural networks. In NIPS, 2014.</p>
+<p>[29] V. Nair and G. E. Hinton. Rectified linear units improve restricted boltzmann machines. In ICML, 2010.</p>
+<p>[30] F.PerronninandC.Dance.Fisherkernelsonvisualvocabulariesfor image categorization. In CVPR, 2007.</p>
+<p>[31] T. Raiko, H. Valpola, and Y. LeCun. Deep learning made easier by linear transformations in perceptrons. In AISTATS, 2012.</p>
+<p>[32] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015.</p>
+<p>[33] B. D. Ripley. Pattern recognition and neural networks. Cambridge university press, 1996.</p>
+<p>[34] A. Romero, N. Ballas, S. E. Kahou, A. Chassang, C. Gatta, and Y. Bengio. Fitnets: Hints for thin deep nets. In ICLR, 2015.</p>
+<p>[35] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, et al. Imagenet large scale visual recognition challenge. arXiv:1409.0575, 2014.</p>
+<p>[36] A. M. Saxe, J. L. McClelland, and S. Ganguli. Exact solutions to the nonlinear dynamics of learning in deep linear neural networks. arXiv:1312.6120, 2013.</p>
+<p>[37] N.N.Schraudolph. Accelerated gradient descent by factor-centering decomposition. Technical report, 1998.</p>
+<p>[38] N. N. Schraudolph. Centering neural network gradient factors. In Neural Networks: Tricks of the Trade, pages 207–226. Springer, 1998.</p>
+<p>[39] P.Sermanet,D.Eigen,X.Zhang,M.Mathieu,R.Fergus,andY.LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014.</p>
+<p>[40] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.</p>
+<p>[41] R. K. Srivastava, K. Greff, and J. Schmidhuber. Highway networks. arXiv:1505.00387, 2015.</p>
+<p>[42] R. K. Srivastava, K. Greff, and J. Schmidhuber. Training very deep networks. 1507.06228, 2015.</p>
+<p>[43] C.Szegedy,W.Liu,Y.Jia,P.Sermanet,S.Reed,D.Anguelov,D.Erhan, V. Vanhoucke, and A. Rabinovich. Going deeper with convolutions. In CVPR, 2015.</p>
+<p>[44] R. Szeliski. Fast surface interpolation using hierarchical basis functions. TPAMI, 1990.</p>
+<p>[45] R. Szeliski. Locally adapted hierarchical basis preconditioning. In SIGGRAPH, 2006.</p>
+<p>[46] T. Vatanen, T. Raiko, H. Valpola, and Y. LeCun. Pushing stochastic gradient towards second-order methods–backpropagation learning with transformations in nonlinearities. In Neural Information Processing, 2013.</p>
+<p>[47] A. Vedaldi and B. Fulkerson. VLFeat: An open and portable library of computer vision algorithms, 2008.</p>
+<p>[48] W. Venables and B. Ripley. Modern applied statistics with s-plus. 1999.</p>
+<p>[49] M.D.ZeilerandR.Fergus.Visualizingandunderstandingconvolutional neural networks. In ECCV, 2014.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      ResNet论文翻译——中英文对照
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>GoogLeNet论文翻译——中文版</title>
@@ -1167,90 +1380,6 @@ dtype: float64
     
     
       <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Pandas应用总结</title>
-    <link href="noahsnail.com/2017/05/27/2017-5-27-Pandas%E5%BA%94%E7%94%A8%E6%80%BB%E7%BB%93/"/>
-    <id>noahsnail.com/2017/05/27/2017-5-27-Pandas应用总结/</id>
-    <published>2017-05-27T10:33:49.000Z</published>
-    <updated>2017-05-27T10:39:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>Pandas是一个基于numpy的、用来进行数据分析的库。</p>
-<h2 id="1-Series的应用"><a href="#1-Series的应用" class="headerlink" title="1. Series的应用"></a>1. Series的应用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Series是一个一维的数据结构</div><div class="line"></div><div class="line"># 用list构建Series</div><div class="line">s = pd.Series([3, 5, &apos;test&apos;, -5, 0.3])</div><div class="line">print s</div><div class="line"></div><div class="line">0       3</div><div class="line">1       5</div><div class="line">2    test</div><div class="line">3      -5</div><div class="line">4     0.3</div><div class="line">dtype: object</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Pandas应用总结
-    
-    </summary>
-    
-      <category term="Machine Learning" scheme="noahsnail.com/categories/Machine-Learning/"/>
-    
-    
-      <category term="Machine Learning" scheme="noahsnail.com/tags/Machine-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下启动和停止apache服务</title>
-    <link href="noahsnail.com/2017/05/27/2017-5-27-Linux%E4%B8%8B%E5%90%AF%E5%8A%A8%E5%92%8C%E5%81%9C%E6%AD%A2apache%E6%9C%8D%E5%8A%A1/"/>
-    <id>noahsnail.com/2017/05/27/2017-5-27-Linux下启动和停止apache服务/</id>
-    <published>2017-05-27T06:17:50.000Z</published>
-    <updated>2017-05-27T10:27:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文使用的Linux系统为CentOS 7，下面将介绍apache服务的启动、关闭与设置。apache在CentOS 7中一般是默认安装的，而且服务名字为<code>httpd</code>。</p>
-<h2 id="1-安装apache及查看相关配置"><a href="#1-安装apache及查看相关配置" class="headerlink" title="1. 安装apache及查看相关配置"></a>1. 安装apache及查看相关配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"># apache安装命令</div><div class="line"></div><div class="line">$ sudo yum install httpd</div><div class="line">Loaded plugins: fastestmirror, langpacks</div><div class="line">Loading mirror speeds from cached hostfile</div><div class="line">Package httpd-2.4.6-45.el7.centos.4.x86_64 already installed and latest version</div><div class="line">Nothing to do</div><div class="line"></div><div class="line"></div><div class="line"># 查看apache文件的位置</div><div class="line"></div><div class="line">$ sudo find / -name httpd</div><div class="line">/run/httpd</div><div class="line">/etc/logrotate.d/httpd</div><div class="line">/etc/sysconfig/httpd</div><div class="line">/etc/httpd</div><div class="line">/var/log/httpd</div><div class="line">/var/cache/httpd</div><div class="line">/usr/sbin/httpd</div><div class="line">/usr/lib64/httpd</div><div class="line">/usr/share/httpd</div><div class="line">/usr/include/httpd</div><div class="line">/usr/libexec/initscripts/legacy-actions/httpd</div></pre></td></tr></table></figure>
-<p>Apache配置文件位于<code>/etc/httpd/conf</code>，主要的配置文件是<code>/etc/httpd/conf/httpd.conf</code>, apache相关的配置信息都可以在这个文件中看到。</p>
-<h2 id="2-apache服务的启动与关闭"><a href="#2-apache服务的启动与关闭" class="headerlink" title="2. apache服务的启动与关闭"></a>2. apache服务的启动与关闭</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 启动服务</div><div class="line">$ sudo systemctl start httpd.service</div><div class="line"></div><div class="line"># 查看服务</div><div class="line">$ ps aux | grep httpd</div><div class="line">root     *  0.3  0.0 220444  4956 ?        Ss   15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2492 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line">apache   *  0.0  0.0 220444  2488 ?        S    15:46   0:00 /usr/sbin/httpd -DFOREGROUND</div><div class="line"></div><div class="line"># 停止服务</div><div class="line">$ sudo systemctl stop httpd.service</div><div class="line"></div><div class="line"># 重启服务</div><div class="line">$ sudo systemctl restart httpd.service</div></pre></td></tr></table></figure>
-<p>启动服务后，可以在外网通过服务器的IP地址访问。可以看到如下界面：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/apache.png" alt="image"></p>
-<h2 id="3-配置自己可以在外部访问的内容"><a href="#3-配置自己可以在外部访问的内容" class="headerlink" title="3. 配置自己可以在外部访问的内容"></a>3. 配置自己可以在外部访问的内容</h2><p>可以在<code>/var/www/html</code>下创建一个软链接，链接到你想要在外部访问的内容，同时要修改要访问目录的权限。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo ln -s images your_directory</div><div class="line">$ sudo chmod 755 your_directory</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      Linux下启动和停止apache服务
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux的find命令</title>
-    <link href="noahsnail.com/2017/05/26/2017-5-26-Linux%E7%9A%84find%E5%91%BD%E4%BB%A4/"/>
-    <id>noahsnail.com/2017/05/26/2017-5-26-Linux的find命令/</id>
-    <published>2017-05-26T05:33:22.000Z</published>
-    <updated>2017-05-27T06:17:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>Linux的find命令主要用来查找系统中的文件。命令格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">find命令的格式： find  [-path ..] -options [-print -exec -ok]</div><div class="line">path：要查找的目录路径。</div><div class="line">~ 表示$HOME目录</div><div class="line">. 表示当前目录</div><div class="line">/ 表示根目录</div><div class="line">-print ：表示将结果输出到标准输出</div><div class="line">-exec ：对匹配的文件执行该参数所给出的shell命令。形式为 command  &#123;&#125; \; ，注意&#123;&#125;与\; 之间有空格</div><div class="line">-ok ：与-exec作用相同，区别在于，在执行命令之前，都会给出提示，让用户确认是否执行</div><div class="line"></div><div class="line">options常用的有下选项：</div><div class="line">-name 按照名字查找</div><div class="line">-perm 安装权限查找</div><div class="line">-prune 不再当前指定的目录下查找</div><div class="line">-user 文件属主来查找</div><div class="line">-group 所属组来查找</div><div class="line">-nogroup 查找无有效所属组的文件</div><div class="line">-nouser 查找无有效属主的文件</div><div class="line">-type 按照文件类型查找</div></pre></td></tr></table></figure>
-<ul>
-<li>Demo</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"># 当前路径下查找名为source_code的文件或文件夹（递归子文件夹）</div><div class="line">$ find . -name source_code</div><div class="line">./source_code</div><div class="line"></div><div class="line"># 查找当前路径下的txt文件</div><div class="line">$ find . -name &quot;*.txt&quot;</div><div class="line">./crontab.txt</div><div class="line"></div><div class="line"># 根据文件权限查找，查找权限为777的文件</div><div class="line">$ find . -perm 777</div><div class="line">./test.sh</div><div class="line"></div><div class="line"># 根据类型查找，查找符号链接</div><div class="line">$ find . -type l</div><div class="line">./Chapter14/multem</div><div class="line"></div><div class="line"># 根据修改时间查找</div><div class="line">$ find . -mtime 7 -type f</div><div class="line">./model-zoo/.DS_Store</div><div class="line">./model-zoo/vgg19/train_val.prototxt</div><div class="line">./model-zoo/vgg19/VGG_ILSVRC_19_layers.caffemodel</div><div class="line"></div><div class="line"># 根据文件大小查找</div><div class="line">$ find . -size +1k -type f</div><div class="line">./.DS_Store</div><div class="line">./Chapter14/.DS_Store</div><div class="line">./Chapter15/.DS_Store</div><div class="line">./Chapter16/.DS_Store</div><div class="line">./Chapter17/.DS_Store</div><div class="line">./filename.txt</div><div class="line"></div><div class="line"># 查找文件并删除</div><div class="line">$ find . -size +1k -type f -ok rm &#123;&#125; \;</div><div class="line">&quot;rm ./.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter14/.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter15/.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter16/.DS_Store&quot;? y</div><div class="line">&quot;rm ./Chapter17/.DS_Store&quot;? y</div><div class="line">&quot;rm ./filename.txt&quot;? n</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Linux的find命令
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
     
   </entry>
   
