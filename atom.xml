@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-08-03T03:10:09.000Z</updated>
+  <updated>2017-08-07T10:09:20.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AlexNet论文总结</title>
+    <link href="noahsnail.com/2017/08/07/2017-8-7-AlexNet%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/"/>
+    <id>noahsnail.com/2017/08/07/2017-8-7-AlexNet论文总结/</id>
+    <published>2017-08-07T09:17:33.000Z</published>
+    <updated>2017-08-07T10:09:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h3 id="Preconditions"><a href="#Preconditions" class="headerlink" title="Preconditions"></a>Preconditions</h3><ul>
+<li><p>ImageNet<br>Objects in realistic settings exhibit considerable variability, so to learn to recognize them it is necessary to use much larger training sets. <strong>ImageNet</strong> consists of over 15 million labeled high-resolution images in over 22,000 categories.</p>
+</li>
+<li><p>CNNs<br>To learn about thousands of objects from millions of images, we need a model with a large learning capacity. <strong>Convolutional neural networks (CNNs)</strong> constitute one such class of models. Their capacity can be controlled by varying their depth and breadth, and they also make strong and mostly correct assumptions about the nature of images (namely, stationarity of statistics and locality of pixel dependencies). </p>
+</li>
+</ul>
+<h3 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h3><p>The specific contributions of this paper are as follows:</p>
+<ul>
+<li>We trained one of the largest convolutional neural networks to date on the subsets of ImageNet used in the ILSVRC-2010 and ILSVRC-2012 competitions and achieved by far the best results ever reported on these datasets. </li>
+<li>We wrote a highly-optimized GPU implementation of 2D convolution and all the other operations inherent in training convolutional neural networks, which we make available publicly. </li>
+<li>Our network contains a number of new and unusual features which improve its performance and reduce its training time. </li>
+<li>The size of our network made overfitting a significant problem, even with 1.2 million labeled training examples, so we used several effective techniques for preventing overfitting. </li>
+<li>Our final network contains five convolutional and three fully-connected layers, and this depth seems to be important: we found that removing any convolutional layer (each of which contains no more than 1% of the model’s parameters) resulted in inferior performance.</li>
+</ul>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://ocs628urt.bkt.clouddn.com/Fig%202.png" alt="Figure"></p>
+<p>The neural network, which has 60 million parameters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully-connected layers with a final 1000-way softmax. </p>
+<h3 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h3><p><strong>Motivation</strong>: We are not the first to consider alternatives to traditional neuron models in CNNs. </p>
+<p>The standard way to model a neuron’s output f as a function of its input x is with $f(x)=tanh(x)$ or $f(x)=(1+e_{−x})^{−1}$. In terms of training time with gradient descent, these <strong>saturating nonlinearities</strong> are much slower than the <strong>non-saturating nonlinearity</strong> $f(x)=max(0,x)$. Deep convolutional neural networks with ReLUs train several times faster than their equivalents with tanh units.</p>
+<p><strong>Note</strong>: Saturation of Sigmoid f(x) refers to the time when the output is almost zero or 1, where the gradient in the region is almost zero, causing the local gradient to disappear.</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/Figure%201.png" alt="Figure"></p>
+<p>A four-layer convolutional neural network with ReLUs (solid line) reaches a 25% training error rate on CIFAR-10 six times faster than an equivalent network with tanh neurons (dashed line). </p>
+<h3 id="Training-on-Multiple-GPUs"><a href="#Training-on-Multiple-GPUs" class="headerlink" title="Training on Multiple GPUs"></a>Training on Multiple GPUs</h3><p>A single GTX 580 GPU has only 3GB of memory, which limits the maximum size of the networks that can be trained on it. It turns out that 1.2 million training examples are enough to train networks which are too big to fit on one GPU. Therefore we spread the net across two GPUs. The parallelization scheme that we employ essentially puts half of the kernels (or neurons) on each GPU, with one additional trick: <strong>the GPUs communicate only in certain layers</strong>.<br><strong>Result</strong>: This scheme reduces our <code>top-1</code> and <code>top-5</code> error rates by <code>1.7%</code> and <code>1.2%</code>, respectively, as compared with a net with half as many kernels in each convolutional layer trained on one GPU. The two-GPU net takes <strong>slightly less time</strong> to train than the one-GPU net.</p>
+<h3 id="Local-Response-Normalization"><a href="#Local-Response-Normalization" class="headerlink" title="Local Response Normalization"></a>Local Response Normalization</h3><p>Motivation: This sort of response normalization implements a form of <strong>lateral inhibition</strong> inspired by the type found in real neurons, creating competition for big activities amongst neuron outputs computed using different kernels.</p>
+<p>We still find that the following local normalization scheme aids generalization. Denoting by $a_{x,y}^i$ the activity of a neuron computed by applying kernel $i$ at position $(x, y)$ and then applying the ReLU nonlinearity, the response-normalized activity $b^i_{x,y}$ is given by the expression</p>
+<p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^i)^2 )^\beta$$</p>
+<p>where the sum runs over n “adjacent” kernel maps at the same spatial position, and N is the total number of kernels in the layer. The constants k, n, α, and β are hyper-parameters whose values are determined using a validation set; we used k = 2, n = 5, α = 0.0001, and β = 0.75.</p>
+<p><strong>Result</strong>: Response normalization reduces our <code>top-1</code> and <code>top-5</code> error rates by <code>1.4%</code> and <code>1.2%</code>, respectively.</p>
+<h3 id="Overlapping-Pooling"><a href="#Overlapping-Pooling" class="headerlink" title="Overlapping Pooling"></a>Overlapping Pooling</h3><p>A pooling layer can be thought of as consisting of a grid of pooling units spaced $s$ pixels apart, each summarizing a neighborhood of size $z × z$ centered at the location of the pooling unit. If we set $s = z$, we obtain traditional local pooling as commonly employed in CNNs. If we set $s &lt; z$, we obtain overlapping pooling. This is what we use throughout our network, with $s = 2$ and $z = 3$.</p>
+<p><strong>Result</strong>: This scheme reduces the <code>top-1</code> and <code>top-5</code> error rates by <code>0.4%</code> and <code>0.3%</code>, respectively. We generally observe during training that models with overlapping pooling find it slightly <strong>more difficult to overfit</strong>.</p>
+<h3 id="Overall-Architecture"><a href="#Overall-Architecture" class="headerlink" title="Overall Architecture"></a>Overall Architecture</h3><p><img src="http://ocs628urt.bkt.clouddn.com/architecture.png" alt="Architecture"></p>
+<h1 id="Reduce-Overfitting"><a href="#Reduce-Overfitting" class="headerlink" title="Reduce Overfitting"></a>Reduce Overfitting</h1><h3 id="Data-Augmentation"><a href="#Data-Augmentation" class="headerlink" title="Data Augmentation"></a>Data Augmentation</h3><p>The first form of data augmentation consists of generating image translations and horizontal reflections.</p>
+<p>The second form of data augmentation consists of altering the intensities of the RGB channels in training images. Specifically, we perform PCA on the set of RGB pixel values throughout the ImageNet training set. To each training image, we add multiples of the found principal components, with magnitudes proportional to the corresponding eigenvalues times a random variable drawn from a Gaussian with mean zero and standard deviation 0.1. Therefore to each RGB image pixel $I_{xy} = [I^R_{xy} , I^G_{xy} , I^B_{xy} ]^T$ we add the following quantity: </p>
+<p>$$[p_1, p_2, p_3][\alpha_1\lambda_1, \alpha_2\lambda_2, \alpha_3\lambda_3]^T$$</p>
+<p>where $p_i$ and $\lambda_i$ are $i$th eigenvector and eigenvalue of the 3 × 3 covariance matrix of RGB pixel values, respectively, and $\alpha_i$ is the aforementioned random variable.</p>
+<p><strong>Result</strong>: This scheme reduces the <code>top-1</code> error rate by over <code>1%</code>.</p>
+<h3 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h3><p><strong>Motivation</strong>: Combining the predictions of many different models is a very successful way to reduce test errors, but it appears to be too expensive for big neural networks that already take several days to train.</p>
+<p>There is, however, a very efficient version of model combination that only costs about a factor of two during training. The recently-introduced technique, called <strong>“dropout”</strong>, consists of setting to zero the output of each hidden neuron with probability 0.5. We use dropout in the first two fully-connected layers. Without dropout, our network exhibits substantial overfitting. Dropout roughly <strong>doubles</strong> the number of iterations required to converge.</p>
+<h1 id="Experimental-Results"><a href="#Experimental-Results" class="headerlink" title="Experimental Results"></a>Experimental Results</h1><p><img src="http://ocs628urt.bkt.clouddn.com/exp_1.png" alt="Table 1"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/exp_2.png" alt="Table 2"></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks" target="_blank" rel="external">https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks</a></p>
+<h1 id="Supplement-material"><a href="#Supplement-material" class="headerlink" title="Supplement material"></a>Supplement material</h1><p><img src="http://ocs628urt.bkt.clouddn.com/Alex_2.png" alt="Fig 1"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/Alex_sup_2.png" alt="Fig 2"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      AlexNet论文总结
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Yolo-Darknet的安装和使用</title>
@@ -58,6 +123,52 @@
     <summary type="html">
     
       Yolo-Darknet的安装和使用
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>YOLO论文翻译——中文版</title>
+    <link href="noahsnail.com/2017/08/02/2017-8-2-You%20Only%20Look%20Once-%20Unified,%20Real-Time%20Object%20Detection%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>noahsnail.com/2017/08/02/2017-8-2-You Only Look Once- Unified, Real-Time Object Detection论文翻译——中文版/</id>
+    <published>2017-08-02T02:45:29.000Z</published>
+    <updated>2017-08-07T10:29:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+<h1 id="You-Only-Look-Once-Unified-Real-Time-Object-Detection"><a href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection" class="headerlink" title="You Only Look Once: Unified, Real-Time Object Detection"></a>You Only Look Once: Unified, Real-Time Object Detection</h1>]]></content>
+    
+    <summary type="html">
+    
+      You Only Look Once——Unified, Real-Time Object Detection论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>YOLO论文翻译——中英文对照</title>
+    <link href="noahsnail.com/2017/08/02/2017-8-2-You%20Only%20Look%20Once-%20Unified,%20Real-Time%20Object%20Detection%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>noahsnail.com/2017/08/02/2017-8-2-You Only Look Once- Unified, Real-Time Object Detection论文翻译——中英文对照/</id>
+    <published>2017-08-02T02:44:49.000Z</published>
+    <updated>2017-08-07T10:29:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+<h1 id="You-Only-Look-Once-Unified-Real-Time-Object-Detection"><a href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection" class="headerlink" title="You Only Look Once: Unified, Real-Time Object Detection"></a>You Only Look Once: Unified, Real-Time Object Detection</h1>]]></content>
+    
+    <summary type="html">
+    
+      You Only Look Once——Unified, Real-Time Object Detection论文翻译——中英文对照
     
     </summary>
     
@@ -153,15 +264,16 @@
     <link href="noahsnail.com/2017/07/31/2017-7-31-ResNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
     <id>noahsnail.com/2017/07/31/2017-7-31-ResNet论文翻译——中英文对照/</id>
     <published>2017-07-31T09:37:23.000Z</published>
-    <updated>2017-08-02T02:44:10.000Z</updated>
+    <updated>2017-08-07T09:10:19.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
-<h1 id="Deep-Residual-Learning-for-Image-Recognition"><a href="#Deep-Residual-Learning-for-Image-Recognition" class="headerlink" title="Deep Residual Learning for Image Recognition"></a>Deep Residual Learning for Image Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers—8× deeper than VGG nets [40] but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers.</p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>更深的神经网络更难训练。</p>
-<p>The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC &amp; COCO 2015 competitions1, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Deep convolutional neural networks [22, 21] have led to a series of breakthroughs for image classification [21, 49, 39]. Deep networks naturally integrate low/mid/high- level features [49] and classifiers in an end-to-end multi- layer fashion, and the “levels” of features can be enriched by the number of stacked layers (depth). Recent evidence [40, 43] reveals that network depth is of crucial importance, and the leading results [40, 43, 12, 16] on the challenging ImageNet dataset [35] all exploit “very deep” [40] models, with a depth of sixteen [40] to thirty [16]. Many other non- trivial visual recognition tasks [7, 11, 6, 32, 27] have also greatly benefited from very deep models.</p>
-<p>Driven by the significance of depth, a question arises: Is learning better networks as easy as stacking more layers? An obstacle to answering this question was the notorious problem of vanishing/exploding gradients [14, 1, 8], which hamper convergence from the beginning. This problem, however, has been largely addressed by normalized initial- ization [23, 8, 36, 12] and intermediate normalization layers [16], which enable networks with tens of layers to start con- verging for stochastic gradient descent (SGD) with back- propagation [22].</p>
-<p>When deeper networks are able to start converging, a degradation problem has been exposed: with the network depth increasing, accuracy gets saturated (which might be unsurprising) and then degrades rapidly. Unexpectedly, such degradation is not caused by overfitting, and adding more layers to a suitably deep model leads to higher train- ing error, as reported in [10, 41] and thoroughly verified by our experiments. Fig. 1 shows a typical example.</p>
+<h1 id="Deep-Residual-Learning-for-Image-Recognition"><a href="#Deep-Residual-Learning-for-Image-Recognition" class="headerlink" title="Deep Residual Learning for Image Recognition"></a>Deep Residual Learning for Image Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers——8× deeper than VGG nets [40] but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>更深的神经网络更难训练。我们提出了一种残差学习框架来减轻网络训练，这些网络比以前使用的网络更深。我们明确地将层变为学习关于层输入的残差函数，而不是学习未参考的函数。我们提供了全面的经验证据说明这些残差网络很容易优化，并可以显著增加深度来提高准确性。在ImageNet数据集上我们评估了深度高达152层的残差网络——比VGG[40]深8倍但仍具有较低的复杂度。这些残差网络的集合在ImageNet测试集上取得了<code>3.57%</code>的错误率。这个结果在ILSVRC 2015分类任务上赢得了第一名。我们也在CIFAR-10上分析了100层和1000层的残差网络。</p>
+<p>The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC &amp; COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>
+<p>对于许多视觉识别任务而言，表示的深度是至关重要的。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Deep convolutional neural networks [22, 21] have led to a series of breakthroughs for image classification [21, 49, 39]. Deep networks naturally integrate low/mid/high- level features [49] and classifiers in an end-to-end multi-layer fashion, and the “levels” of features can be enriched by the number of stacked layers (depth). Recent evidence [40, 43] reveals that network depth is of crucial importance, and the leading results [40, 43, 12, 16] on the challenging ImageNet dataset [35] all exploit “very deep” [40] models, with a depth of sixteen [40] to thirty [16]. Many other non- trivial visual recognition tasks [7, 11, 6, 32, 27] have also greatly benefited from very deep models.</p>
+<p>Driven by the significance of depth, a question arises: Is learning better networks as easy as stacking more layers? An obstacle to answering this question was the notorious problem of vanishing/exploding gradients [14, 1, 8], which hamper convergence from the beginning. This problem, however, has been largely addressed by normalized initialization [23, 8, 36, 12] and intermediate normalization layers [16], which enable networks with tens of layers to start converging for stochastic gradient descent (SGD) with back-propagation [22].</p>
+<p>When deeper networks are able to start converging, a degradation problem has been exposed: with the network depth increasing, accuracy gets saturated (which might be unsurprising) and then degrades rapidly. Unexpectedly, such degradation is not caused by overfitting, and adding more layers to a suitably deep model leads to higher training error, as reported in [10, 41] and thoroughly verified by our experiments. Fig. 1 shows a typical example.</p>
 <p>The degradation (of training accuracy) indicates that not all systems are similarly easy to optimize. Let us consider a shallower architecture and its deeper counterpart that adds more layers onto it. There exists a solution by construction to the deeper model: the added layers are identity mapping, and the other layers are copied from the learned shallower model. The existence of this constructed solution indicates that a deeper model should produce no higher training error than its shallower counterpart. But experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution (or unable to do so in feasible time).</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Y.Bengio,P.Simard,andP.Frasconi.Learning long-term dependencies with gradient descent is difficult. IEEE Transactions on Neural Networks, 5(2):157–166, 1994.</p>
 <p>[2] C. M. Bishop. Neural networks for pattern recognition. Oxford university press, 1995.</p>
@@ -834,7 +946,7 @@
     <link href="noahsnail.com/2017/07/04/2017-7-4-AlexNet%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91/"/>
     <id>noahsnail.com/2017/07/04/2017-7-4-AlexNet论文翻译/</id>
     <published>2017-07-04T10:04:42.000Z</published>
-    <updated>2017-07-27T09:07:14.000Z</updated>
+    <updated>2017-08-03T09:02:44.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
 <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
@@ -894,10 +1006,10 @@
 <h3 id="4-1-数据增强"><a href="#4-1-数据增强" class="headerlink" title="4.1 数据增强"></a>4.1 数据增强</h3><p>图像数据上最简单常用的用来减少过拟合的方法是使用标签保留变换（例如[25, 4, 5]）来人工增大数据集。我们使用了两种独特的数据增强方式，这两种方式都可以从原始图像通过非常少的计算量产生变换的图像，因此变换图像不需要存储在硬盘上。在我们的实现中，变换图像通过CPU的Python代码生成，而此时GPU正在训练前一批图像。因此，实际上这些数据增强方案是计算免费的。</p>
 <p>The first form of data augmentation consists of generating image translations and horizontal reflections. We do this by extracting random 224 × 224 patches (and their horizontal reflections) from the 256×256 images and training our network on these extracted patches. This increases the size of our training set by a factor of 2048, though the resulting training examples are, of course, highly interdependent. Without this scheme, our network suffers from substantial overfitting, which would have forced us to use much smaller networks. At test time, the network makes a prediction by extracting five 224 × 224 patches (the four corner patches and the center patch) as well as their horizontal reflections (hence ten patches in all), and averaging the predictions made by the network’s softmax layer on the ten patches.</p>
 <p>第一种数据增强方式包括产生图像变换和水平翻转。我们从256×256图像上通过随机提取224 × 224的图像块实现了这种方式，然后在这些提取的图像块上进行训练。这通过一个2048因子增大了我们的训练集，尽管最终的训练样本是高度相关的。没有这个方案，我们的网络会有大量的过拟合，这会迫使我们使用更小的网络。在测试时，网络会提取5个224 × 224的图像块（四个角上的图像块和中心的图像块）和它们的水平翻转（因此总共10个图像块）进行预测，然后对网络在10个图像块上的softmax层进行平均。</p>
-<p>The second form of data augmentation consists of altering the intensities of the RGB channels in training images. Specifically, we perform PCA on the set of RGB pixel values throughout the ImageNet training set. To each training image, we add multiples of the found principal components, with magnitudes proportional to the corresponding eigenvalues times a random variable drawn from a Gaussian with mean zero and standard deviation 0.1. Therefore to each RGB image pixel $I_xy = [I^R_{xy} , I^G_{xy} , I^B_{xy} ]^T$ we add the following quantity: </p>
+<p>The second form of data augmentation consists of altering the intensities of the RGB channels in training images. Specifically, we perform PCA on the set of RGB pixel values throughout the ImageNet training set. To each training image, we add multiples of the found principal components, with magnitudes proportional to the corresponding eigenvalues times a random variable drawn from a Gaussian with mean zero and standard deviation 0.1. Therefore to each RGB image pixel $I_{xy} = [I^R_{xy} , I^G_{xy} , I^B_{xy} ]^T$ we add the following quantity: </p>
 <p>$$[p_1, p_2, p_3][\alpha_1\lambda_1, \alpha_2\lambda_2, \alpha_3\lambda_3]^T$$</p>
 <p>where $p_i$ and $\lambda_i$ are $i$th eigenvector and eigenvalue of the 3 × 3 covariance matrix of RGB pixel values, respectively, and $\alpha_i$ is the aforementioned random variable. Each $\alpha_i$ is drawn only once for all the pixels of a particular training image until that image is used for training again, at which point it is re-drawn. This scheme approximately captures an important property of natural images, namely, that object identity is invariant to changes in the intensity and color of the illumination. This scheme reduces the top-1 error rate by over 1%.</p>
-<p>第二种数据增强方式包括改变训练图像的RGB通道的强度。具体地，我们在整个ImageNet训练集上对RGB像素值集合执行PCA。对于每幅训练图像，我们加上多倍找到的主成分，大小成正比的对应特征值乘以一个随机变量，随机变量通过均值为0，标准差为0.1的高斯分布得到。因此对于每幅RGB图像像素$I_xy = [I^R_{xy} , I^G_{xy} , I^B_{xy} ]^T$，我们加上下面的数量：</p>
+<p>第二种数据增强方式包括改变训练图像的RGB通道的强度。具体地，我们在整个ImageNet训练集上对RGB像素值集合执行PCA。对于每幅训练图像，我们加上多倍找到的主成分，大小成正比的对应特征值乘以一个随机变量，随机变量通过均值为0，标准差为0.1的高斯分布得到。因此对于每幅RGB图像像素$I_{xy} = [I^R_{xy} , I^G_{xy} , I^B_{xy} ]^T$，我们加上下面的数量：</p>
 <p>$$[p_1, p_2, p_3][\alpha_1\lambda_1, \alpha_2\lambda_2, \alpha_3\lambda_3]^T$$</p>
 <p>$p_i$，$\lambda_i$分别是RGB像素值3 × 3协方差矩阵的第$i$个特征向量和特征值，$\alpha_i$是前面提到的随机变量。对于某个训练图像的所有像素，每个$\alpha_i$只获取一次，直到图像进行下一次训练时才重新获取。这个方案近似抓住了自然图像的一个重要特性，即光照的颜色和强度发生变化时，目标身份是不变的。这个方案减少了<code>top 1</code>错误率1%以上。</p>
 <h3 id="4-2-Dropout"><a href="#4-2-Dropout" class="headerlink" title="4.2 Dropout"></a>4.2 Dropout</h3><p>Combining the predictions of many different models is a very successful way to reduce test errors [1, 3], but it appears to be too expensive for big neural networks that already take several days to train. There is, however, a very efficient version of model combination that only costs about a factor of two during training. The recently-introduced technique, called “dropout” [10], consists of setting to zero the output of each hidden neuron with probability 0.5. The neurons which are “dropped out” in this way do not contribute to the forward pass and do not participate in back-propagation. So every time an input is presented, the neural network samples a different architecture, but all these architectures share weights. This technique reduces complex co-adaptations of neurons, since a neuron cannot rely on the presence of particular other neurons. It is, therefore, forced to learn more robust features that are useful in conjunction with many different random subsets of the other neurons. At test time, we use all the neurons but multiply their outputs by 0.5, which is a reasonable approximation to taking the geometric mean of the predictive distributions produced by the exponentially-many dropout networks.</p>
@@ -1257,129 +1369,6 @@ dtype: float64
     
     
       <category term="深入理解计算机系统" scheme="noahsnail.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GNU项目</title>
-    <link href="noahsnail.com/2017/06/03/2017-6-3-GNU%E9%A1%B9%E7%9B%AE/"/>
-    <id>noahsnail.com/2017/06/03/2017-6-3-GNU项目/</id>
-    <published>2017-06-03T09:57:06.000Z</published>
-    <updated>2017-06-03T10:03:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>GCC是GNU(GNU是GNU’s Not Unix的缩写)项目开发出来的众多有用工具之。GNU项目是1984年由Richard Stallman发起的一个免税的慈善项目。该项目的目标非常宏大，就是开发出一个完整的类Unix的系统，其源代码能够不受限制地被修改和传播。GNU项目已经开发出了一个包含Unix操作系统的所有主要部件的环境，但内核除外，内核是由 Linux项目独立发展而来的。GNU环境包括 EMACS编辑器、GCC编译器、GDB调试器、汇编器、链接器、处理二进制文件的工具以及其他一些部件。GCC编译器已经发展到支持许多不同的语言，能够为许多不同的机器生成代码。支持的语言包括C、C++、 Fortran、Java、Pascal、面向对象C语言(Objective-C)和Ada。</p>
-<p>GNU项目取得了非凡的成绩，但是却常常被忽略。现代开放源码运动(通常和Linux联系在一起)的思想起源是GNU项目中自由软件(free software)的概念。(此处的free为自由言论(free speech)中的“自由”之意，而非免费啤酒(free beer)中的“免费”之意。) 而且，Linux如此受欢迎在很大程度上还要归功于GNU工具，它们给Linux内核提供了环境。</p>
-<p>参考资料：</p>
-<ol>
-<li>深度理解计算机系统（P4）</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      GNU项目
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="noahsnail.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="noahsnail.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C语言的起源</title>
-    <link href="noahsnail.com/2017/06/03/2017-6-3-C%E8%AF%AD%E8%A8%80%E7%9A%84%E8%B5%B7%E6%BA%90/"/>
-    <id>noahsnail.com/2017/06/03/2017-6-3-C语言的起源/</id>
-    <published>2017-06-03T09:43:06.000Z</published>
-    <updated>2017-06-03T09:54:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>C语言是贝尔实验室的Dennis Ritchie于1969年~1973年间创建的。美国国家标准学会（American national standards institute，ANSI）在1989年颁布了ANSI C的标准，后来语言的标准化成了国际标准化组织（International Standards Organization，ISO)的责任。这些标准定义了C语言和一系列函数库,即所谓的<strong>C标准库</strong>。Kernighan和 Ritchie在他们的经典著作中描述了ANSI C，这本著作被人们满怀感情地称为“K8R”。用Ritchie的话来说，C语言是“古怪的、有缺陷的，但同时也是一个巨大的成功”。为什么会成功呢?</p>
-<ul>
-<li><p>C语言与Unⅸ操作系统关系密切。<br>C从一开始就是作为一种用于Unix系统的程府语言开发出来的。大部分Unix内核(操作系统的核心部分)，以及所有支撑工具和函数库都是用C语言编写的。20世纪70年代后期到80年代初期，Unix风行于高等院校，许多人开始接触C语言并喜欢上它。因为Unix几乎全部是用C编写的，它可以很方便地移植到新的机器上，这种特点为C和Unix赢得了更为广泛的支持。</p>
-</li>
-<li><p>C语言小而简单。<br>C语言的设计是由一个人而非一个协会掌控的，因此这是一个简洁明了、没有什么冗赘的设计。K&amp;R这本书用大量的例子和练习描述了完整的C语言及其标准库，而全书不过261页。C语言的简单使它相对而言易于学习，也易于移植到不同的计算机上。</p>
-</li>
-<li><p>C语言是为实践目的设计的。C语言是设计用来实现Unix操作系统的。后来其他人发现能够用这门语言无障碍地编写他们想要的程序。</p>
-</li>
-</ul>
-<p>C语言是系统级编程的首选，同时它也非常适用于应用级程序的编写。然而，它也并非适用于所有的程序员和所有的情况。C语言的指针是造成程序员困惑和程序错误的一个常见原因。同时，C语言还缺乏对非常有用的抽象的显式支持，例如类、对象和异常，像C++和Java这样针对应用级程序的新程序语言解决了这些问题。</p>
-<p>参考资料：</p>
-<ol>
-<li>深度理解计算机系统（P2，3）</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      C语言的起源
-    
-    </summary>
-    
-      <category term="深入理解计算机系统" scheme="noahsnail.com/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="深入理解计算机系统" scheme="noahsnail.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Caffe神经网络结构汇总</title>
-    <link href="noahsnail.com/2017/06/01/2017-6-1-Caffe%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93/"/>
-    <id>noahsnail.com/2017/06/01/2017-6-1-Caffe网络结构总结/</id>
-    <published>2017-06-01T07:16:35.000Z</published>
-    <updated>2017-06-01T07:56:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>自2012年Alexnet赢得了ImageNet竞赛以来，深度学习（神经网络）得到了飞速发展，产生了许多的神经网络结构，本文主要总结Caffe中使用的神经网络(分类的神经网络)，本文的神经网络作者都使用Caffe训练过，并在Kaggle的Intel癌症预测比赛中进行了测试与使用（top 8%）。</p>
-<h2 id="1-Alexnet"><a href="#1-Alexnet" class="headerlink" title="1. Alexnet"></a>1. Alexnet</h2><p>Alexnet，2012年ImageNet竞赛冠军，深度学习的里程碑。</p>
-<p>网络结构地址：<a href="https://github.com/BVLC/caffe/tree/master/models/bvlc_alexnet" target="_blank" rel="external">https://github.com/BVLC/caffe/tree/master/models/bvlc_alexnet</a></p>
-<p>预训练模型地址：<a href="http://dl.caffe.berkeleyvision.org/bvlc_alexnet.caffemodel" target="_blank" rel="external">http://dl.caffe.berkeleyvision.org/bvlc_alexnet.caffemodel</a></p>
-<h2 id="2-Squeezenet"><a href="#2-Squeezenet" class="headerlink" title="2. Squeezenet"></a>2. Squeezenet</h2><p>Squeezenet设计目标不是为了提高识别的准确率，而是希望简化网络复杂度。squeezenet的模型结构确实很小，没压缩的情况下才5M左右，而且识别的精度还可以。</p>
-<p>网络结构地址：<a href="https://github.com/DeepScale/SqueezeNet" target="_blank" rel="external">https://github.com/DeepScale/SqueezeNet</a></p>
-<p>预训练模型地址：<a href="https://github.com/DeepScale/SqueezeNet" target="_blank" rel="external">https://github.com/DeepScale/SqueezeNet</a></p>
-<h2 id="3-VGG系列"><a href="#3-VGG系列" class="headerlink" title="3. VGG系列"></a>3. VGG系列</h2><p>VGG和GoogLenet是2014年imagenet竞赛的双雄，VGG主要分为VGG16和VGG19。其网络结构与预训练模型的地址如下：</p>
-<p>VGG16的网络结构：<a href="https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md" target="_blank" rel="external">https://gist.github.com/ksimonyan/211839e770f7b538e2d8#file-readme-md</a></p>
-<p>VGG16的预训练模型：<a href="http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_16_layers.caffemodel" target="_blank" rel="external"> http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_16_layers.caffemodel</a></p>
-<p>VGG19的网络结构：<a href="https://gist.github.com/ksimonyan/3785162f95cd2d5fee77#file-readme-md" target="_blank" rel="external">https://gist.github.com/ksimonyan/3785162f95cd2d5fee77#file-readme-md</a></p>
-<p>VGG19的预训练模型：<a href="http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_19_layers.caffemodel" target="_blank" rel="external">http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_19_layers.caffemodel</a></p>
-<p>备注：上面的网络结构需要进行细微调整才能在Caffe中直接训练，主要是网络结构中的Type类型。</p>
-<h2 id="4-Resnet系列"><a href="#4-Resnet系列" class="headerlink" title="4. Resnet系列"></a>4. Resnet系列</h2><p>Resnet网络，2015年ImageNet竞赛冠军，网络结构主要分为Resnet-50、Resnet-101、Resnet-152三种，当然也有一些其它的结构，例如Resnet-18，Resnet-14。</p>
-<p>Github地址：<a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank" rel="external">https://github.com/KaimingHe/deep-residual-networks</a></p>
-<p>Resnet-50、Resnet-101、Resnet-152的网络结构及预训练模型的下载地址：<a href="https://onedrive.live.com/?authkey=%21AAFW2-FVoxeVRck&amp;id=4006CBB8476FF777%2117887&amp;cid=4006CBB8476FF777" target="_blank" rel="external">https://onedrive.live.com/?authkey=%21AAFW2-FVoxeVRck&amp;id=4006CBB8476FF777%2117887&amp;cid=4006CBB8476FF777</a></p>
-<h2 id="5-Inception系列"><a href="#5-Inception系列" class="headerlink" title="5. Inception系列"></a>5. Inception系列</h2><p>Inception系列是Google发明的一系列神经网络结构。</p>
-<p>Inception-v1：</p>
-<p>Inception-v1，即大名鼎鼎的GoogLenet，2014年ImageNet竞赛冠军。</p>
-<p>网络结构地址：<a href="https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet" target="_blank" rel="external">https://github.com/BVLC/caffe/tree/master/models/bvlc_googlenet</a></p>
-<p>预训练模型地址：<a href="http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel" target="_blank" rel="external">http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel</a></p>
-<p>Inception-v2：</p>
-<p>即Inception V1 + Batch Normalization。</p>
-<p>网络结构地址：<a href="https://github.com/pertusa/InceptionBN-21K-for-Caffe" target="_blank" rel="external">https://github.com/pertusa/InceptionBN-21K-for-Caffe</a></p>
-<p>预训练模型地址：<a href="http://www.dlsi.ua.es/~pertusa/deep/Inception21k.caffemodel" target="_blank" rel="external">http://www.dlsi.ua.es/~pertusa/deep/Inception21k.caffemodel</a></p>
-<p>Inception-v3：</p>
-<p>网络结构地址：<a href="https://pan.baidu.com/s/1boC0HEf#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1boC0HEf#list/path=%2F</a></p>
-<p>预训练模型地址：<a href="https://pan.baidu.com/s/1boC0HEf#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1boC0HEf#list/path=%2F</a></p>
-<p>Inception-v4：</p>
-<p>网络结构地址：<a href="https://pan.baidu.com/s/1c6D150#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1c6D150#list/path=%2F</a></p>
-<p>预训练模型地址：<a href="https://pan.baidu.com/s/1c6D150#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1c6D150#list/path=%2F</a></p>
-<p>Inception-resnet-v2：</p>
-<p>网络结构地址：<a href="https://pan.baidu.com/s/1jHPJCX4#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1jHPJCX4#list/path=%2F</a></p>
-<p>预训练模型地址：<a href="https://pan.baidu.com/s/1jHPJCX4#list/path=%2F" target="_blank" rel="external">https://pan.baidu.com/s/1jHPJCX4#list/path=%2F</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      Caffe神经网络结构汇总
-    
-    </summary>
-    
-      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
-    
-    
-      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
     
   </entry>
   
