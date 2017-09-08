@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="工作中的编程习惯总结——持续更新">
+<meta name="description" content="Python中的编码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工作中的编程小习惯总结——持续更新">
-<meta property="og:url" content="noahsnail.com/2016/09/20/2016-9-20-编程习惯/index.html">
+<meta property="og:title" content="Python中的编码">
+<meta property="og:url" content="noahsnail.com/2017/09/07/2017-9-7-Python中的字符串编码/index.html">
 <meta property="og:site_name" content="SnailTyan">
-<meta property="og:description" content="工作中的编程习惯总结——持续更新">
-<meta property="og:updated_time" content="2016-09-20T02:56:42.000Z">
+<meta property="og:description" content="Python中的编码">
+<meta property="og:updated_time" content="2017-09-07T08:48:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工作中的编程小习惯总结——持续更新">
-<meta name="twitter:description" content="工作中的编程习惯总结——持续更新">
+<meta name="twitter:title" content="Python中的编码">
+<meta name="twitter:description" content="Python中的编码">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="noahsnail.com/2016/09/20/2016-9-20-编程习惯/"/>
+  <link rel="canonical" href="noahsnail.com/2017/09/07/2017-9-7-Python中的字符串编码/"/>
 
 
 
 
 
-  <title>工作中的编程小习惯总结——持续更新 | SnailTyan</title>
+  <title>Python中的编码 | SnailTyan</title>
   
 
 
@@ -284,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="noahsnail.com/2016/09/20/2016-9-20-编程习惯/">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/09/07/2017-9-7-Python中的字符串编码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tyan">
@@ -301,7 +301,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">工作中的编程小习惯总结——持续更新</h1>
+          <h1 class="post-title" itemprop="name headline">Python中的编码</h1>
         
 
         <div class="post-meta">
@@ -333,7 +333,7 @@
 
           
               <div class="post-description">
-                  工作中的编程习惯总结——持续更新
+                  Python中的编码
               </div>
           
 
@@ -347,12 +347,14 @@
       
 
       
-        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
-<h1 id="习惯一：先判断再操作"><a href="#习惯一：先判断再操作" class="headerlink" title="习惯一：先判断再操作"></a>习惯一：先判断再操作</h1><p>不好的习惯：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; exportFlag = args.getOptionValues(<span class="string">"example"</span>);</div><div class="line"><span class="keyword">if</span> (args.containsOption(<span class="string">"example"</span>)) &#123;</div><div class="line">	</div><div class="line">	<span class="comment">//if 处理</span></div><div class="line">&#125;<span class="keyword">else</span> &#123;</div><div class="line">	</div><div class="line">	<span class="comment">//else 处理</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>好的习惯：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (args.containsOption(<span class="string">"example"</span>)) &#123;</div><div class="line">	List&lt;String&gt; exportFlag = args.getOptionValues(<span class="string">"example"</span>);</div><div class="line">	</div><div class="line">	<span class="comment">//if 处理</span></div><div class="line">&#125;<span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//else 处理</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>总结：两个代码都不会出现问题，可能写的时候不注意，但代码review的时候一定要修正，最好是写的时候就写对，养成好的习惯。<br>致谢：工作中力哥指出的问题，感谢力哥。</p>
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>Python处理字符串，写文件时会碰到许多的编码问题，特别是涉及到中文的时候，非常烦人，但又不得不学。下面主要记录工作过程中碰到的Python编码问题。</p>
+<h2 id="1-字符串编码"><a href="#1-字符串编码" class="headerlink" title="1. 字符串编码"></a>1. 字符串编码</h2><p>Python的字符串类型为<code>str</code>，可以通过<code>type</code>函数查看返回的类型。Python中字符串默认的编码方式需要通过<code>sys.getfilesystemencoding()</code>查看，通常是<code>utf-8</code>。<code>u&#39;中文&#39;</code>构造出来的是<code>unicode</code>类型，不是<code>str</code>类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 查看字符串编码方式</div><div class="line">&gt;&gt;&gt; import sys</div><div class="line">&gt;&gt;&gt; print sys.getfilesystemencoding()</div><div class="line">utf-8</div><div class="line"></div><div class="line">&gt;&gt;&gt; s1 = &apos;中国&apos;</div><div class="line">&gt;&gt;&gt; s2 = u&apos;中国&apos;</div><div class="line">&gt;&gt;&gt; type(s1)</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">&gt;&gt;&gt; type(s2)</div><div class="line">&lt;type &apos;unicode&apos;&gt;</div></pre></td></tr></table></figure>
+<p><code>str</code>类型和<code>unicode</code>类型分别有<code>decode</code>和<code>encode</code>函数。<code>str.decode</code>用来将<code>str</code>转为<code>unicode</code>，<code>unicode.encode</code>用来将<code>unicdoe</code>转为<code>str</code>。用法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># decode</div><div class="line">&gt;&gt;&gt; s1.decode(&apos;utf8&apos;)</div><div class="line">u&apos;\u4e2d\u56fd&apos;</div><div class="line">&gt;&gt;&gt; type(s1.decode(&apos;utf8&apos;))</div><div class="line">&lt;type &apos;unicode&apos;&gt;</div><div class="line"></div><div class="line"># encode</div><div class="line">&gt;&gt;&gt; s2.encode(&apos;utf8&apos;)</div><div class="line">&apos;\xe4\xb8\xad\xe5\x9b\xbd&apos;</div><div class="line">&gt;&gt;&gt; type(s2.encode(&apos;utf8&apos;))</div><div class="line">&lt;type &apos;str&apos;&gt;</div></pre></td></tr></table></figure>
+<h2 id="2-代码文件编码"><a href="#2-代码文件编码" class="headerlink" title="2. 代码文件编码"></a>2. 代码文件编码</h2><p><code>py</code>文件默认的编码是ASCII编码，中文显示时会进行ASCII编码到系统默认编码的转换，在运行Python文件时经常会报错。因此需要设置<code>py</code>文件的编码为<code>utf-8</code>。设置方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># _*_ coding: utf-8 _*_</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -403,7 +405,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -416,8 +418,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/17/2016-9-17-Spring框架介绍_中文版_3.3_5.0.0版本/" rel="next" title="Spring 5.0.0框架介绍_中文版_3.3">
-                <i class="fa fa-chevron-left"></i> Spring 5.0.0框架介绍_中文版_3.3
+              <a href="/2017/09/05/2017-9-5-逻辑回归/" rel="next" title="逻辑回归">
+                <i class="fa fa-chevron-left"></i> 逻辑回归
               </a>
             
           </div>
@@ -425,10 +427,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/22/2016-9-21-Docker理论与实践1/" rel="prev" title="Docker理论与实践（一）">
-                Docker理论与实践（一） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -522,7 +520,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -557,7 +555,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#习惯一：先判断再操作"><span class="nav-number">1.</span> <span class="nav-text">习惯一：先判断再操作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-字符串编码"><span class="nav-number">1.</span> <span class="nav-text">1. 字符串编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-代码文件编码"><span class="nav-number">2.</span> <span class="nav-text">2. 代码文件编码</span></a></li></ol></div>
             
 
           </div>
