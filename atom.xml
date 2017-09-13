@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-09-07T08:48:09.000Z</updated>
+  <updated>2017-09-13T02:59:50.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python的命令行参数解析</title>
+    <link href="noahsnail.com/2017/09/13/2017-9-13-Python%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90/"/>
+    <id>noahsnail.com/2017/09/13/2017-9-13-Python的命令行参数解析/</id>
+    <published>2017-09-13T02:22:00.000Z</published>
+    <updated>2017-09-13T02:59:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>命令行参数解析在编程语言中基本都会碰到，Python中内置了一个用于命令项选项与参数解析的模块<code>argparse</code>。下面主要介绍两种解析Python命令行参数的方式。</p>
+<h2 id="1-sys-argv"><a href="#1-sys-argv" class="headerlink" title="1. sys.argv"></a>1. sys.argv</h2><p>解析Python中命令行参数的最传统的方法是通过<code>sys.argv</code>。Demo如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#!/usr/env/python python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import sys</div><div class="line"></div><div class="line">param1 = sys.argv[1]</div><div class="line">param2 = sys.argv[2]</div><div class="line"></div><div class="line">print sys.argv</div><div class="line">print param1</div><div class="line">print param2</div><div class="line">print type(param1)</div><div class="line">print type(param2)</div></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ python test.py 1 2</div><div class="line">[&apos;test.py&apos;, &apos;1&apos;, &apos;2&apos;]</div><div class="line">1</div><div class="line">2</div></pre></td></tr></table></figure>
+<p>这种方法比较古老，灵活性很差，同时解析出来的参数都是<code>str</code>类型。但在编写简单脚本，参数较少且固定时比较方便。</p>
+<h2 id="2-argparse"><a href="#2-argparse" class="headerlink" title="2. argparse"></a>2. argparse</h2><p><code>argparse</code>模块是Python内置的参数解析模块，使用起来比较简单且功能强大。Demo如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">#!/usr/env/python python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import argparse</div><div class="line"></div><div class="line"># Create ArgumentParser() object</div><div class="line">parser = argparse.ArgumentParser()</div><div class="line"></div><div class="line"># Add argument</div><div class="line">parser.add_argument(&apos;--train&apos;, required=True, help=&apos;path to dataset&apos;)</div><div class="line">parser.add_argument(&apos;--val&apos;, required=True, help=&apos;path to dataset&apos;)</div><div class="line">parser.add_argument(&apos;--total&apos;, type=int, help=&apos;number of dataset&apos;, default=100)</div><div class="line">parser.add_argument(&apos;--lr&apos;, type=float, default=0.01, help=&apos;learning rate&apos;)</div><div class="line"></div><div class="line"># Print usage</div><div class="line">parser.print_help()</div><div class="line"></div><div class="line"># Parse argument</div><div class="line">args = parser.parse_args()</div><div class="line"></div><div class="line"># Print args</div><div class="line">print args</div><div class="line"></div><div class="line">print args.train</div><div class="line">print type(args.train)</div><div class="line">print args.val</div><div class="line">print type(args.val)</div><div class="line">print args.total</div><div class="line">print type(args.total)</div><div class="line">print args.lr</div><div class="line">print type(args.lr)</div></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"># Test 1</div><div class="line">python test.py --train train_lmdb --val val_lmdb --total 10000 --lr 0.001</div><div class="line">usage: test.py [-h] --train TRAIN --val VAL [--total TOTAL] [--lr LR]</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  -h, --help     show this help message and exit</div><div class="line">  --train TRAIN  path to dataset</div><div class="line">  --val VAL      path to dataset</div><div class="line">  --total TOTAL  number of dataset</div><div class="line">  --lr LR        learning rate</div><div class="line">Namespace(lr=0.001, total=10000, train=&apos;train_lmdb&apos;, val=&apos;val_lmdb&apos;)</div><div class="line">train_lmdb</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">val_lmdb</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">10000</div><div class="line">&lt;type &apos;int&apos;&gt;</div><div class="line">0.001</div><div class="line">&lt;type &apos;float&apos;&gt;</div><div class="line"></div><div class="line"># Test 2</div><div class="line">python test.py --train train_lmdb --val val_lmdb</div><div class="line">usage: test.py [-h] --train TRAIN --val VAL [--total TOTAL] [--lr LR]</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  -h, --help     show this help message and exit</div><div class="line">  --train TRAIN  path to dataset</div><div class="line">  --val VAL      path to dataset</div><div class="line">  --total TOTAL  number of dataset</div><div class="line">  --lr LR        learning rate</div><div class="line">Namespace(lr=0.01, total=100, train=&apos;train_lmdb&apos;, val=&apos;val_lmdb&apos;)</div><div class="line">train_lmdb</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">val_lmdb</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">100</div><div class="line">&lt;type &apos;int&apos;&gt;</div><div class="line">0.01</div><div class="line">&lt;type &apos;float&apos;&gt;</div><div class="line"></div><div class="line"></div><div class="line"># Test 3</div><div class="line">python test.py --val val_lmdb --train train_lmdb</div><div class="line">usage: test.py [-h] --train TRAIN --val VAL [--total TOTAL] [--lr LR]</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  -h, --help     show this help message and exit</div><div class="line">  --train TRAIN  path to dataset</div><div class="line">  --val VAL      path to dataset</div><div class="line">  --total TOTAL  number of dataset</div><div class="line">  --lr LR        learning rate</div><div class="line">Namespace(lr=0.01, total=100, train=&apos;train_lmdb&apos;, val=&apos;val_lmdb&apos;)</div><div class="line">train_lmdb</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">val_lmdb</div><div class="line">&lt;type &apos;str&apos;&gt;</div><div class="line">100</div><div class="line">&lt;type &apos;int&apos;&gt;</div><div class="line">0.01</div><div class="line">&lt;type &apos;float&apos;&gt;</div></pre></td></tr></table></figure>
+<p><code>ArgumentParser</code>类创建时的参数如下：</p>
+<ul>
+<li>prog - 程序的名字（默认：sys.argv[0]）</li>
+<li>usage - 描述程序用法的字符串（默认：从解析器的参数生成）</li>
+<li>description - 参数帮助信息之前的文本（默认：空）</li>
+<li>epilog - 参数帮助信息之后的文本（默认：空）</li>
+<li>parents - ArgumentParser 对象的一个列表，这些对象的参数应该包括进去</li>
+<li>formatter_class - 定制化帮助信息的类</li>
+<li>prefix_chars - 可选参数的前缀字符集（默认：‘-‘）</li>
+<li>fromfile_prefix_chars - 额外的参数应该读取的文件的前缀字符集（默认：None）</li>
+<li>argument_default - 参数的全局默认值（默认：None）</li>
+<li>conflict_handler - 解决冲突的可选参数的策略（通常没有必要）</li>
+<li>add_help - 给解析器添加-h/–help 选项（默认：True）</li>
+</ul>
+<p><code>add_argument</code>函数的参数如下：</p>
+<ul>
+<li>name or flags - 选项字符串的名字或者列表，例如foo 或者-f, –foo。</li>
+<li>action - 在命令行遇到该参数时采取的基本动作类型。</li>
+<li>nargs - 应该读取的命令行参数数目。</li>
+<li>const - 某些action和nargs选项要求的常数值。</li>
+<li>default - 如果命令行中没有出现该参数时的默认值。</li>
+<li>type - 命令行参数应该被转换成的类型。</li>
+<li>choices - 参数可允许的值的一个容器。</li>
+<li>required - 该命令行选项是否可以省略（只针对可选参数）。</li>
+<li>help - 参数的简短描述。</li>
+<li>metavar - 参数在帮助信息中的名字。</li>
+<li>dest - 给parse_args()返回的对象要添加的属性名称。</li>
+</ul>
+<p>参考资料：</p>
+<ol>
+<li><a href="http://python.usyiyi.cn/translate/python_278/library/argparse.html" target="_blank" rel="external">http://python.usyiyi.cn/translate/python_278/library/argparse.html</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/explore-python/Standard-Modules/argparse.html" target="_blank" rel="external">http://wiki.jikexueyuan.com/project/explore-python/Standard-Modules/argparse.html</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Python的命令行参数解析
+    
+    </summary>
+    
+      <category term="Python" scheme="noahsnail.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="noahsnail.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python中的编码</title>
@@ -1811,38 +1877,6 @@
     
     
       <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Caffe关闭日志输出</title>
-    <link href="noahsnail.com/2017/07/18/2017-7-18-Caffe%E5%85%B3%E9%97%ADlog%E8%BE%93%E5%87%BA/"/>
-    <id>noahsnail.com/2017/07/18/2017-7-18-Caffe关闭log输出/</id>
-    <published>2017-07-18T05:34:58.000Z</published>
-    <updated>2017-07-18T05:49:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>在训练Caffe模型后，部署Caffe服务时我们通常会使用pycaffe来加载模型并处理图像，但是pycaffe加载模型时通常会输出加载模型的日志，影响我们查看自己的日志，因此需要移除Caffe加载模型时的日志。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">os.environ[&apos;GLOG_minloglevel&apos;] = &apos;2&apos;</div><div class="line">import caffe</div></pre></td></tr></table></figure>
-<p>Caffe使用的日志是GLOG，其日志级别如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">0 - debug</div><div class="line">1 - info (still a LOT of outputs)</div><div class="line">2 - warnings</div><div class="line">3 - errors</div></pre></td></tr></table></figure>
-<p>注意：由于在导入Caffe时Caffe会加载GLOG，因此<code>os.environ[&#39;GLOG_minloglevel&#39;] = &#39;2&#39;</code>需要在<code>import caffe</code>之前。</p>
-<p>参考资料</p>
-<ol>
-<li><a href="https://stackoverflow.com/questions/29788075/setting-glog-minloglevel-1-to-prevent-output-in-shell-from-caffe" target="_blank" rel="external">https://stackoverflow.com/questions/29788075/setting-glog-minloglevel-1-to-prevent-output-in-shell-from-caffe</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Caffe关闭日志输出
-    
-    </summary>
-    
-      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
-    
-    
-      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
     
   </entry>
   
