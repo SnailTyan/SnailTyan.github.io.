@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-09-13T02:59:50.000Z</updated>
+  <updated>2017-09-16T14:21:38.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,99 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Improving Deep Neural Networks学习笔记(一)</title>
+    <link href="noahsnail.com/2017/09/16/2017-9-16-Improving%20Deep%20Neural%20Networks%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(%E4%B8%80)/"/>
+    <id>noahsnail.com/2017/09/16/2017-9-16-Improving Deep Neural Networks学习笔记(一)/</id>
+    <published>2017-09-16T01:21:06.000Z</published>
+    <updated>2017-09-16T14:21:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Setting-up-your-Machine-Learning-Application"><a href="#1-Setting-up-your-Machine-Learning-Application" class="headerlink" title="1. Setting up your Machine Learning Application"></a>1. Setting up your Machine Learning Application</h2><h4 id="1-1-Train-Dev-Test-sets"><a href="#1-1-Train-Dev-Test-sets" class="headerlink" title="1.1 Train/Dev/Test sets"></a>1.1 Train/Dev/Test sets</h4><p>Make sure that the dev and test sets come from the same distribution。</p>
+<p>Not having a test set might be okay.(Only dev set.)</p>
+<p>So having set up a train dev and test set will allow you to integrate more quickly. It will also allow you to more efficiently measure the bias and variance of your algorithm, so you can more efficiently select ways to improve your algorithm.</p>
+<h4 id="1-2-Bias-Variance"><a href="#1-2-Bias-Variance" class="headerlink" title="1.2 Bias/Variance"></a>1.2 Bias/Variance</h4><p>High Bias: underfitting<br>High Variance: overfitting</p>
+<p>Assumption——human: 0% (Optimal/Bayes error), train set and dev set are drawn from the same distribution.</p>
+<table>
+<thead>
+<tr>
+<th>Train set error</th>
+<th>Dev set error</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1%</td>
+<td>11%</td>
+<td>high variance</td>
+</tr>
+<tr>
+<td>15%</td>
+<td>16%</td>
+<td>high bias</td>
+</tr>
+<tr>
+<td>15%</td>
+<td>30%</td>
+<td>high bias and high variance</td>
+</tr>
+<tr>
+<td>0.5%</td>
+<td>1%</td>
+<td>low bias and low variance</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1-3-Basic-Recipe-for-Machine-Learning"><a href="#1-3-Basic-Recipe-for-Machine-Learning" class="headerlink" title="1.3 Basic Recipe for Machine Learning"></a>1.3 Basic Recipe for Machine Learning</h4><p>High bias –&gt; Bigger network, Training longer, Advanced optimization algorithms, Try different netword.</p>
+<p>High variance –&gt; More data, Try regularization, Find a more appropriate neural network architecture.</p>
+<h2 id="2-Regularizing-your-neural-network"><a href="#2-Regularizing-your-neural-network" class="headerlink" title="2. Regularizing your neural network"></a>2. Regularizing your neural network</h2><h4 id="2-1-Regularization"><a href="#2-1-Regularization" class="headerlink" title="2.1 Regularization"></a>2.1 Regularization</h4><p>In logistic regression, $$w \in R^{n_x}, b \in R$$$$J(w, b) = \frac {1} {m} \sum _{i=1} ^m L(\hat y^{(i)}, y^{(i)}) + \frac {\lambda} {2m} ||w||_2^2$$$$||w||_2^2 = \sum _{j=1} ^{n_x} w_j^2 = w^Tw$$<br>This is called L2 regularization.</p>
+<p>$$J(w, b) = \frac {1} {m} \sum _{i=1} ^m L(\hat y^{(i)}, y^{(i)}) + \frac {\lambda} {2m} ||w||_1$$<br>This is called L1 regularization. <code>w</code> will end up being sparse. $\lambda$ is called regularization parameter.</p>
+<p>In neural network, the formula is $$J(w^{[1]},b^{[1]},…,w^{[L]},b^{[L]}) = \frac {1} {m} \sum _{i=1} ^m L(\hat y^{(i)}, y^{(i)}) + \frac {\lambda} {2m} \sum _{l=1}^L ||w^{[l]}||^2$$$$||w^{[l]}||^2 = \sum_{i=1}^{n^{[l-1]}}\sum _{j=1}^{n^{[l]}} (w_{ij}^{[l]})^2, w:(n^{[l-1]}, n^{[l]})$$</p>
+<p>This matrix norm, it turns out is called the <code>Frobenius Norm</code> of the matrix, denoted with a <code>F</code> in the subscript.</p>
+<p>L2 norm regularization is also called <code>weight decay</code>.</p>
+<h4 id="2-2-Why-regularization-reduces-overfitting"><a href="#2-2-Why-regularization-reduces-overfitting" class="headerlink" title="2.2 Why regularization reduces overfitting?"></a>2.2 Why regularization reduces overfitting?</h4><p>If $\lambda$ is set too large, matrices <code>W</code> is set to be reasonabley close to zero, and it will zero out the impact of these hidden units. And that’s the case, then this much simplified neural network becomes a much smaller neural network. It will take you from overfitting to underfitting, but there is a <code>just right case</code> in the middle.</p>
+<h4 id="2-3-Dropout-regularization"><a href="#2-3-Dropout-regularization" class="headerlink" title="2.3 Dropout regularization"></a>2.3 Dropout regularization</h4><p>Dropout will go through each of the layers of the network, and set some probability of eliminating a node in neural network. By far the most common implementation of dropouts today is inverted dropouts.</p>
+<p>Inverted dropout, <code>kp</code> stands for <code>keep-prob</code>:</p>
+<p>$$z^{[i + 1]} = w^{[i + 1]} a^{[i]} + b^{[i + 1]}$$$$a^{[i]} = a^{[i]} / kp$$</p>
+<p>In test phase, we don’t use dropout and <code>keep-prob</code>.</p>
+<h4 id="2-4-Understanding-dropout"><a href="#2-4-Understanding-dropout" class="headerlink" title="2.4 Understanding dropout"></a>2.4 Understanding dropout</h4><p>Why does dropout workd? Intuition: Can’t rely on any one feature, so have to spread out weights.</p>
+<p>By spreading all the weights, this will tend to have an effect of shrinking the squared norm of the weights.</p>
+<h4 id="2-5-Other-regularization-methods"><a href="#2-5-Other-regularization-methods" class="headerlink" title="2.5 Other regularization methods"></a>2.5 Other regularization methods</h4><ul>
+<li>Data augmentation.</li>
+<li>Early stopping</li>
+</ul>
+<h2 id="3-Setting-up-your-optimization-problem"><a href="#3-Setting-up-your-optimization-problem" class="headerlink" title="3. Setting up your optimization problem"></a>3. Setting up your optimization problem</h2><h4 id="3-1-Normalizing-inputs"><a href="#3-1-Normalizing-inputs" class="headerlink" title="3.1 Normalizing inputs"></a>3.1 Normalizing inputs</h4><p>Normalizing inputs can speed up training. Normalizing inputs corresponds to two steps. The first is to subtract out or to zero out the mean. And then the second step is to normalize the variances.</p>
+<h4 id="3-2-Vanishing-Exploding-gradients"><a href="#3-2-Vanishing-Exploding-gradients" class="headerlink" title="3.2 Vanishing/Exploding gradients"></a>3.2 Vanishing/Exploding gradients</h4><p>If the network is very deeper, deep network suffer from the problems of vanishing or exploding gradients.</p>
+<h4 id="3-3-Weight-initialization-for-deep-networks"><a href="#3-3-Weight-initialization-for-deep-networks" class="headerlink" title="3.3 Weight initialization for deep networks"></a>3.3 Weight initialization for deep networks</h4><p>If activation function is <code>ReLU</code> or <code>tanh</code>, <code>w</code> initialization is: $$w^{[l]} = np.random.randn(shape) * np.sqrt(\frac {2} {n^{[l-1]}}).$$ This is called Xavier initalization. </p>
+<p>Another formula is $$w^{[l]} = np.random.randn(shape) * np.sqrt(\frac {2} {n^{[l-1]} + n^{[l]}}).$$</p>
+<h4 id="3-4-Numberical-approximation-of-gradients"><a href="#3-4-Numberical-approximation-of-gradients" class="headerlink" title="3.4 Numberical approximation of gradients"></a>3.4 Numberical approximation of gradients</h4><p>In order to build up to gradient checking, you need to numerically approximate computatiions of gradients.</p>
+<p>$$g(\theta) \approx \frac {f(\theta + \epsilon) - f(\theta - \epsilon)} {2 \epsilon}$$</p>
+<h4 id="3-5-Gradient-checking"><a href="#3-5-Gradient-checking" class="headerlink" title="3.5 Gradient checking"></a>3.5 Gradient checking</h4><p>Take matrix <code>W</code>, vector <code>b</code> and reshape them into vectors, and then concatenate them, you have a giant vector $\theta$. For each <code>i</code>:</p>
+<p>$$d\theta _{approx}[i]= \frac {J(\theta_1,…,\theta_i + \epsilon,…)-J(\theta_1,…,\theta_i - \epsilon,…)} {2\epsilon} \approx d\theta_i=\frac {\partial J} {\partial \theta_i}$$</p>
+<p>If $$\frac {||d\theta_{approx} - d\theta ||_2} {||d\theta_{approx}||_2 + ||\theta||_2} \approx 10^{-7}$$, that’s great. If $\approx 10^{-5}$, you need to do double check, if $\approx 10^{-5}$, there may be a bug.</p>
+<h4 id="3-6-Gradient-checking-implementation-notes"><a href="#3-6-Gradient-checking-implementation-notes" class="headerlink" title="3.6 Gradient checking implementation notes"></a>3.6 Gradient checking implementation notes</h4><ul>
+<li>Don’t use gradient check in training, only to debug.</li>
+<li>If algorithm fails gradient check, look at components to try to identify bug.</li>
+<li>Remember regularization.</li>
+<li>Doesn’t work with dropout.</li>
+<li>Run at random initialization; perhaps again after some training.</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      Improving Deep Neural Networks学习笔记(一)
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Python的命令行参数解析</title>
@@ -1821,62 +1914,6 @@
     
     
       <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux快捷键总结</title>
-    <link href="noahsnail.com/2017/07/18/2017-7-18-Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%80%BB%E7%BB%93/"/>
-    <id>noahsnail.com/2017/07/18/2017-7-18-Linux快捷键总结/</id>
-    <published>2017-07-18T06:11:02.000Z</published>
-    <updated>2017-07-18T08:44:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://ocs628urt.bkt.clouddn.com/002.jpg" alt="image"></p>
-<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文的Linux快捷键总结主要是作者使用Linux过程中常用的。</p>
-<ul>
-<li>清屏，等价于clear命令</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + l</div></pre></td></tr></table></figure>
-<ul>
-<li>切换到命令行开始</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + a</div></pre></td></tr></table></figure>
-<ul>
-<li>切换到命令行末尾</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + e</div></pre></td></tr></table></figure>
-<ul>
-<li>剪切光标至行首内容，可以用来清除输入的命令</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + w</div></pre></td></tr></table></figure>
-<ul>
-<li>粘贴</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + y</div></pre></td></tr></table></figure>
-<ul>
-<li>终止当前运行的程序</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + c</div></pre></td></tr></table></figure>
-<ul>
-<li>退出当前shell</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + d</div></pre></td></tr></table></figure>
-<ul>
-<li>查找历史命令</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + r</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      Linux快捷键总结
-    
-    </summary>
-    
-      <category term="Linux" scheme="noahsnail.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="noahsnail.com/tags/Linux/"/>
     
   </entry>
   
