@@ -99,7 +99,7 @@
 <meta property="og:url" content="noahsnail.com/2017/09/18/2017-9-18-Python性能优化/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Python性能优化">
-<meta property="og:updated_time" content="2017-09-18T08:02:51.000Z">
+<meta property="og:updated_time" content="2017-09-18T10:40:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python性能优化">
 <meta name="twitter:description" content="Python性能优化">
@@ -357,7 +357,20 @@
 <p>运行结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">string concat time:  0.0814869403839</div><div class="line">string join time:  0.0123951435089</div><div class="line">list length:  441669</div></pre></td></tr></table></figure>
 <p>结论：本次测试中，<code>join</code>函数拼接字符串比<code>+=</code>拼接字符串快<code>6倍多</code>。</p>
-
+<h2 id="3-range与xrange"><a href="#3-range与xrange" class="headerlink" title="3. range与xrange"></a>3. range与xrange</h2><ul>
+<li>range</li>
+</ul>
+<p>python中range会直接生成一个list对象。</p>
+<ul>
+<li>xrange</li>
+</ul>
+<p>用法与range完全相同，所不同的是生成的不是一个数组，而是一个生成器，它的类型为<code>xrange</code>。在生成非常大的数字序列时，xrange不会马上开辟很大的一块内存空间。如果不是需要返回列表，则尽可能使用<code>xrange</code>。</p>
+<p>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import time</div><div class="line"></div><div class="line">t1 = time.time()</div><div class="line">for i in range(1000000):</div><div class="line">    pass</div><div class="line">t2 = time.time()</div><div class="line">print &apos;range time: &apos;, t2 -t1</div><div class="line"></div><div class="line">t1 = time.time()</div><div class="line">for i in xrange(1000000):</div><div class="line">    pass</div><div class="line">t2 = time.time()</div><div class="line">print &apos;xrange time: &apos;, t2 -t1</div></pre></td></tr></table></figure>
+<p>测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">range time:  0.0680990219116</div><div class="line">xrange time:  0.0329170227051</div></pre></td></tr></table></figure>
+<p>结论：本次测试中，<code>xrange</code>比<code>range</code>快一倍多。</p>
+<h2 id="4-待续。"><a href="#4-待续。" class="headerlink" title="4. 待续。"></a>4. 待续。</h2>
       
     </div>
 
@@ -557,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-列表解析与列表重建"><span class="nav-number">1.</span> <span class="nav-text">1. 列表解析与列表重建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-字符串拼接"><span class="nav-number">2.</span> <span class="nav-text">2. 字符串拼接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-列表解析与列表重建"><span class="nav-number">1.</span> <span class="nav-text">1. 列表解析与列表重建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-字符串拼接"><span class="nav-number">2.</span> <span class="nav-text">2. 字符串拼接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-range与xrange"><span class="nav-number">3.</span> <span class="nav-text">3. range与xrange</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-待续。"><span class="nav-number">4.</span> <span class="nav-text">4. 待续。</span></a></li></ol></div>
             
 
           </div>
