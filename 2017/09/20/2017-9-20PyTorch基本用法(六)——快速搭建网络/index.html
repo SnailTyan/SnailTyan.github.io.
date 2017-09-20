@@ -93,16 +93,19 @@
 
 
 
-<meta name="description" content="逻辑回归">
+<meta name="description" content="PyTorch基本用法(六)——快速搭建网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="逻辑回归">
-<meta property="og:url" content="noahsnail.com/2017/09/05/2017-9-5-逻辑回归/index.html">
+<meta property="og:title" content="PyTorch基本用法(六)——快速搭建网络">
+<meta property="og:url" content="noahsnail.com/2017/09/20/2017-9-20PyTorch基本用法(六)——快速搭建网络/index.html">
 <meta property="og:site_name" content="SnailTyan">
-<meta property="og:description" content="逻辑回归">
-<meta property="og:updated_time" content="2017-09-06T02:25:16.000Z">
+<meta property="og:description" content="PyTorch基本用法(六)——快速搭建网络">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/classification_1_0.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/classification_4_0.png">
+<meta property="og:updated_time" content="2017-09-20T11:23:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="逻辑回归">
-<meta name="twitter:description" content="逻辑回归">
+<meta name="twitter:title" content="PyTorch基本用法(六)——快速搭建网络">
+<meta name="twitter:description" content="PyTorch基本用法(六)——快速搭建网络">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/classification_1_0.png">
 
 
 
@@ -130,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="noahsnail.com/2017/09/05/2017-9-5-逻辑回归/"/>
+  <link rel="canonical" href="noahsnail.com/2017/09/20/2017-9-20PyTorch基本用法(六)——快速搭建网络/"/>
 
 
 
 
 
-  <title>逻辑回归 | SnailTyan</title>
+  <title>PyTorch基本用法(六)——快速搭建网络 | SnailTyan</title>
   
 
 
@@ -284,7 +287,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/09/05/2017-9-5-逻辑回归/">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/09/20/2017-9-20PyTorch基本用法(六)——快速搭建网络/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tyan">
@@ -301,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">逻辑回归</h1>
+          <h1 class="post-title" itemprop="name headline">PyTorch基本用法(六)——快速搭建网络</h1>
         
 
         <div class="post-meta">
@@ -333,7 +336,7 @@
 
           
               <div class="post-description">
-                  逻辑回归
+                  PyTorch基本用法(六)——快速搭建网络
               </div>
           
 
@@ -348,9 +351,19 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="0-逻辑回归"><a href="#0-逻辑回归" class="headerlink" title="0. 逻辑回归"></a>0. 逻辑回归</h2><p>逻辑回归，英文名为Logistic Regression，简称LR。逻辑回归主要用于二分类问题，当然也可用于多分类问题。逻辑回归在数据挖掘，广告预测，疾病诊断等领域得到了广泛应用。</p>
-<h2 id="1-问题背景"><a href="#1-问题背景" class="headerlink" title="1. 问题背景"></a>1. 问题背景</h2><p>以癌症分类为例，判断一个病人是否患有癌症，分为两种情况，“有”和“没有”，这是问题的输出。在判断时需要知道病人的年龄，性别，饮食习惯，是否抽烟等因素，这是问题的输入。为了学习癌症分类的模型，需要知道多个癌症病人和非癌症病人的数据，这是训练数据。</p>
-<h2 id="2-符号表示"><a href="#2-符号表示" class="headerlink" title="2. 符号表示"></a>2. 符号表示</h2><h2 id="3-损失函数"><a href="#3-损失函数" class="headerlink" title="3. 损失函数"></a>3. 损失函数</h2><h2 id="4-求解方法"><a href="#4-求解方法" class="headerlink" title="4. 求解方法"></a>4. 求解方法</h2><h2 id="5-代码实现"><a href="#5-代码实现" class="headerlink" title="5. 代码实现"></a>5. 代码实现</h2>
+<p>本文主要是关于PyTorch的一些用法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</div><div class="line"></div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"></div><div class="line"><span class="comment"># 许多没解释的东西可以去查文档, 文档中都有, 已查过</span></div><div class="line"><span class="comment"># pytorch文档: http://pytorch.org/docs/master/index.html</span></div><div class="line"><span class="comment"># matplotlib文档: https://matplotlib.org/</span></div><div class="line"></div><div class="line"><span class="comment"># 随机算法的生成种子</span></div><div class="line">torch.manual_seed(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 生成数据</span></div><div class="line">n_data = torch.ones(<span class="number">100</span>, <span class="number">2</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 类别一的数据</span></div><div class="line">x0 = torch.normal(<span class="number">2</span> * n_data, <span class="number">1</span>)</div><div class="line"><span class="comment"># 类别一的标签</span></div><div class="line">y0 = torch.zeros(<span class="number">100</span>)</div><div class="line"></div><div class="line"><span class="comment"># 类别二的数据</span></div><div class="line">x1 = torch.normal(<span class="number">-2</span> * n_data, <span class="number">1</span>)</div><div class="line"><span class="comment"># 类别二的标签</span></div><div class="line">y1 = torch.ones(<span class="number">100</span>)</div><div class="line"></div><div class="line"><span class="comment"># x0, x1连接起来, 按维度0连接, 并指定数据的类型</span></div><div class="line">x = torch.cat((x0, x1), <span class="number">0</span>).type(torch.FloatTensor)</div><div class="line"><span class="comment"># y0, y1连接, 由于只有一维, 因此没有指定维度, torch中标签类型必须为LongTensor</span></div><div class="line">y = torch.cat((y0, y1), ).type(torch.LongTensor)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># x,y 转为变量, torch只支持变量的训练, 因为Variable中有grad</span></div><div class="line">x, y = Variable(x), Variable(y)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 绘制数据散点图</span></div><div class="line">plt.scatter(x.data.numpy()[:, <span class="number">0</span>], x.data.numpy()[:, <span class="number">1</span>], c = y.data.numpy(), s = <span class="number">100</span>, lw = <span class="number">0</span>, cmap = <span class="string">'RdYlGn'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/classification_1_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 快速搭建分类网络</span></div><div class="line">net = torch.nn.Sequential(</div><div class="line">    torch.nn.Linear(<span class="number">2</span>, <span class="number">10</span>),</div><div class="line">    torch.nn.ReLU(),</div><div class="line">    torch.nn.Linear(<span class="number">10</span>, <span class="number">2</span>))</div><div class="line">print(net)</div></pre></td></tr></table></figure>
+<pre><code>Sequential (
+  (0): Linear (2 -&gt; 10)
+  (1): ReLU ()
+  (2): Linear (10 -&gt; 2)
+)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义优化方法</span></div><div class="line">optimizer = torch.optim.SGD(net.parameters(), lr = <span class="number">0.02</span>)</div><div class="line"><span class="comment"># 定义损失函数</span></div><div class="line">loss_func = torch.nn.CrossEntropyLoss()</div><div class="line"></div><div class="line">plt.ion()</div><div class="line"></div><div class="line"><span class="comment"># 训练过程</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">100</span>):</div><div class="line">    prediction = net(x)</div><div class="line">    loss = loss_func(prediction, y)</div><div class="line"></div><div class="line">    optimizer.zero_grad()</div><div class="line">    loss.backward()</div><div class="line">    optimizer.step()</div><div class="line"></div><div class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</div><div class="line">        plt.cla()</div><div class="line">        <span class="comment"># 获取概率最大的类别的索引</span></div><div class="line">        prediction = torch.max(F.softmax(prediction), <span class="number">1</span>)[<span class="number">1</span>]</div><div class="line">        <span class="comment"># 将输出结果变为一维</span></div><div class="line">        pred_y = prediction.data.numpy().squeeze()</div><div class="line">        target_y = y.data.numpy()</div><div class="line">        plt.scatter(x.data.numpy()[:, <span class="number">0</span>], x.data.numpy()[:, <span class="number">1</span>], c = pred_y, s = <span class="number">100</span>, lw = <span class="number">0</span>, cmap = <span class="string">'RdYlGn'</span>)</div><div class="line">        <span class="comment"># 计算准确率</span></div><div class="line">        accuracy = sum(pred_y == target_y) / <span class="number">200.0</span></div><div class="line">        plt.text(<span class="number">1.5</span>, <span class="number">-4</span>, <span class="string">'Accuracy=%.2f'</span> % accuracy, fontdict = &#123;<span class="string">'size'</span>: <span class="number">10</span>, <span class="string">'color'</span>:  <span class="string">'red'</span>&#125;)</div><div class="line">        plt.pause(<span class="number">0.1</span>)</div><div class="line"></div><div class="line">plt.ioff()</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/classification_4_0.png" alt="png"></p>
+
       
     </div>
 
@@ -413,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/04/2017-9-4-Batch Normalization论文翻译——中英文对照/" rel="next" title="Batch Normalization论文翻译——中英文对照">
-                <i class="fa fa-chevron-left"></i> Batch Normalization论文翻译——中英文对照
+              <a href="/2017/09/19/2017-9-19-PyTorch基本用法(五)——分类/" rel="next" title="PyTorch基本用法(五)——分类">
+                <i class="fa fa-chevron-left"></i> PyTorch基本用法(五)——分类
               </a>
             
           </div>
@@ -423,8 +436,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/07/2017-9-7-Python中的字符串编码/" rel="prev" title="Python中的编码">
-                Python中的编码 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/20/2017-9-20-PyTorch基本用法(七)——模型的保存与加载/" rel="prev" title="PyTorch基本用法(七)——模型的保存与加载">
+                PyTorch基本用法(七)——模型的保存与加载 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -472,17 +485,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -497,7 +501,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">293</span>
+                <span class="site-state-item-count">297</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -544,22 +548,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-逻辑回归"><span class="nav-number">1.</span> <span class="nav-text">0. 逻辑回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-问题背景"><span class="nav-number">2.</span> <span class="nav-text">1. 问题背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-符号表示"><span class="nav-number">3.</span> <span class="nav-text">2. 符号表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-损失函数"><span class="nav-number">4.</span> <span class="nav-text">3. 损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-求解方法"><span class="nav-number">5.</span> <span class="nav-text">4. 求解方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-代码实现"><span class="nav-number">6.</span> <span class="nav-text">5. 代码实现</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

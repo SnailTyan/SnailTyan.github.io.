@@ -1,0 +1,805 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Improving Deep Neural Networks学习笔记(二)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Improving Deep Neural Networks学习笔记(二)">
+<meta property="og:url" content="noahsnail.com/2017/09/18/2017-9-18-Improving Deep Neural Networks学习笔记(二)/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Improving Deep Neural Networks学习笔记(二)">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ewa_1.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ewa_2.png">
+<meta property="og:updated_time" content="2017-09-20T10:56:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Improving Deep Neural Networks学习笔记(二)">
+<meta name="twitter:description" content="Improving Deep Neural Networks学习笔记(二)">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/ewa_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2017/09/18/2017-9-18-Improving Deep Neural Networks学习笔记(二)/"/>
+
+
+
+
+
+  <title>Improving Deep Neural Networks学习笔记(二) | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/09/18/2017-9-18-Improving Deep Neural Networks学习笔记(二)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Improving Deep Neural Networks学习笔记(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Improving Deep Neural Networks学习笔记(二)
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="4-Optimization-algorithms"><a href="#4-Optimization-algorithms" class="headerlink" title="4. Optimization algorithms"></a>4. Optimization algorithms</h2><h4 id="4-1-Mini-batch-gradient-descent"><a href="#4-1-Mini-batch-gradient-descent" class="headerlink" title="4.1 Mini-batch gradient descent"></a>4.1 Mini-batch gradient descent</h4><p>$x^{\{t\}}$，$y^{\{t\}}$ is used to index into different mini batches. $x^{[t]}$，$y^{[t]}$ is used to index into different layer. $x^{(t)}$，$y^{(t)}$ is used to index into different examples.</p>
+<p>Batch gradient descent is to process entire training set at the same time. Mini-batch gradient descent is to process single mini batch $x^{\{t\}}$，$y^{\{t\}}$ at the same time.</p>
+<p>Run forward propagation and back propagation once on mini batch is called one iteration.</p>
+<p>Mini-batch gradient descent runs much faster than batch gradient descent.</p>
+<h4 id="4-2-Understanding-mini-batch-gradient-descent"><a href="#4-2-Understanding-mini-batch-gradient-descent" class="headerlink" title="4.2 Understanding mini-batch gradient descent"></a>4.2 Understanding mini-batch gradient descent</h4><p>If mini-batch size = m, it’s batch gradient descend.<br>If mini-batch size = 1, it’s stochastic gradient descend.<br>In pracice, mini-batch size between 1 and m.</p>
+<p>Batch gradient descend: too long per iteration.<br>Stochastic gradient descend: lose speed up from vectorization.<br>Mini-batch gradient descend: Faster learning, 1. vectorization 2. Make progress without needing to wait.</p>
+<p>Choosing mini-batch size:</p>
+<p>If small training set(m &lt;= 2000), use batch gradient descend.<br>Typical mini-batch size: 64, 128, 256, 512, 1024(rare).</p>
+<h4 id="4-3-Exponentially-weighted-averages"><a href="#4-3-Exponentially-weighted-averages" class="headerlink" title="4.3 Exponentially weighted averages"></a>4.3 Exponentially weighted averages</h4><p>$$V_t = \beta V_{t-1} + (1-\beta)\theta_t$$</p>
+<p>View $V_t$ as approximately averaging over $\frac {1} {1 - \beta}$.</p>
+<p>It’s called moving average in the statistics literature.</p>
+<p>$\beta = 0.9$：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ewa_1.png" alt="Figure 1"></p>
+<p>$\beta = 0.9(red)$，$\beta = 0.98(green)$，$\beta = 0.5(yellow)$：</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ewa_2.png" alt="Figure 2"></p>
+<h4 id="4-4-Understanding-exponentially-weighted-averages"><a href="#4-4-Understanding-exponentially-weighted-averages" class="headerlink" title="4.4 Understanding exponentially weighted averages"></a>4.4 Understanding exponentially weighted averages</h4><p>$\theta$ is the temperature of the day.</p>
+<p>$$v_{100} = 0.9v_{99} + 0.1 \theta_{100}$$$$v_{99} = 0.9v_{98} + 0.1 \theta_{99}$$$$…$$</p>
+<p>So $$v_{100} = 0.1 * \theta _{100} + 0.1 * 0.9 * \theta _{99} + … + 0.1 * 0.9^{i} * \theta _{100-i} + …$$</p>
+<p>Th coefficients is $$0.1 + 0.1 * 0.9 + 0.1 * 0.9^2 + …$$</p>
+<p>All of these coefficients, add up to one or add up to very close to one. It is called bias correction.</p>
+<p>$$(1 - \epsilon)^{\frac {1} {\epsilon}} \approx \frac {1} {e}$$ $$\frac {1} {e} \approx 0.3679$$</p>
+<p>Implement exponentially weighted average:</p>
+<p>$$v_0 = 0$$$$v_1 = \beta v_0 + (1- \beta) \theta _1$$$$v_2 = \beta v_1 + (1- \beta) \theta _2$$$$…$$</p>
+<p>Exponentially weighted average takes very low memory.</p>
+<h4 id="4-5-Bias-correction-in-exponentially-weighted-averages"><a href="#4-5-Bias-correction-in-exponentially-weighted-averages" class="headerlink" title="4.5 Bias correction in exponentially weighted averages"></a>4.5 Bias correction in exponentially weighted averages</h4>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享，如果觉得有收获就打赏吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/18/2017-9-18-PyTorch基本用法(三)——激活函数/" rel="next" title="PyTorch基本用法(三)——激活函数">
+                <i class="fa fa-chevron-left"></i> PyTorch基本用法(三)——激活函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/2017-9-19-PyTorch基本用法(四)——回归/" rel="prev" title="PyTorch基本用法(四)——回归">
+                PyTorch基本用法(四)——回归 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">297</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Optimization-algorithms"><span class="nav-number">1.</span> <span class="nav-text">4. Optimization algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Mini-batch-gradient-descent"><span class="nav-number">1.0.1.</span> <span class="nav-text">4.1 Mini-batch gradient descent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Understanding-mini-batch-gradient-descent"><span class="nav-number">1.0.2.</span> <span class="nav-text">4.2 Understanding mini-batch gradient descent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-Exponentially-weighted-averages"><span class="nav-number">1.0.3.</span> <span class="nav-text">4.3 Exponentially weighted averages</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-Understanding-exponentially-weighted-averages"><span class="nav-number">1.0.4.</span> <span class="nav-text">4.4 Understanding exponentially weighted averages</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-Bias-correction-in-exponentially-weighted-averages"><span class="nav-number">1.0.5.</span> <span class="nav-text">4.5 Bias correction in exponentially weighted averages</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
