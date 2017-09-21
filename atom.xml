@@ -247,7 +247,7 @@ Epoch:  4 | Step:  1 | batch x:  [ 6.  8.  2.  4.  1.] | betch y:  [  5.   3.   
     <link href="noahsnail.com/2017/09/18/2017-9-18-Improving%20Deep%20Neural%20Networks%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(%E4%BA%8C)/"/>
     <id>noahsnail.com/2017/09/18/2017-9-18-Improving Deep Neural Networks学习笔记(二)/</id>
     <published>2017-09-18T13:53:18.000Z</published>
-    <updated>2017-09-20T10:56:52.000Z</updated>
+    <updated>2017-09-21T00:45:12.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="4-Optimization-algorithms"><a href="#4-Optimization-algorithms" class="headerlink" title="4. Optimization algorithms"></a>4. Optimization algorithms</h2><h4 id="4-1-Mini-batch-gradient-descent"><a href="#4-1-Mini-batch-gradient-descent" class="headerlink" title="4.1 Mini-batch gradient descent"></a>4.1 Mini-batch gradient descent</h4><p>$x^{\{t\}}$，$y^{\{t\}}$ is used to index into different mini batches. $x^{[t]}$，$y^{[t]}$ is used to index into different layer. $x^{(t)}$，$y^{(t)}$ is used to index into different examples.</p>
@@ -274,7 +274,27 @@ Epoch:  4 | Step:  1 | batch x:  [ 6.  8.  2.  4.  1.] | betch y:  [  5.   3.   
 <p>Implement exponentially weighted average:</p>
 <p>$$v_0 = 0$$$$v_1 = \beta v_0 + (1- \beta) \theta _1$$$$v_2 = \beta v_1 + (1- \beta) \theta _2$$$$…$$</p>
 <p>Exponentially weighted average takes very low memory.</p>
-<h4 id="4-5-Bias-correction-in-exponentially-weighted-averages"><a href="#4-5-Bias-correction-in-exponentially-weighted-averages" class="headerlink" title="4.5 Bias correction in exponentially weighted averages"></a>4.5 Bias correction in exponentially weighted averages</h4>]]></content>
+<h4 id="4-5-Bias-correction-in-exponentially-weighted-averages"><a href="#4-5-Bias-correction-in-exponentially-weighted-averages" class="headerlink" title="4.5 Bias correction in exponentially weighted averages"></a>4.5 Bias correction in exponentially weighted averages</h4><p>It’s not a very good estimate of the first several day’s temperature. Bias correction is used to mofity this estimate that makes it much better. The formula is: $$\frac {v_t} {1 - \beta^t} = \beta v_{t-1} + (1- \beta) \theta _t.$$</p>
+<h4 id="4-6-Gradient-descent-with-momentum"><a href="#4-6-Gradient-descent-with-momentum" class="headerlink" title="4.6 Gradient descent with momentum"></a>4.6 Gradient descent with momentum</h4><p>Gradient descent with momentum almost always works faster than the standard gradient descent algorithm. The basic idea is to compute an exponentially weighted average of gradients, and then use that gradient to update weights instead.</p>
+<p>On iteration t:</p>
+<ol>
+<li>compute $dw$, db on current mini-batch.</li>
+<li>compute $v_{dw}$, $v_{db}$<br>$$v_{dw} = \beta v_{dw} + (1 - \beta)dw$$$$v_{db} = \beta v_{db} + (1 - \beta)db$$</li>
+<li>update dw, db<br>$$w = w - \alpha v_{dw}$$$$b = b - \alpha v_{db}$$</li>
+</ol>
+<p>There are two hyperparameters, the most common value for $\beta$ is 0.9.</p>
+<p>Another formula is $v_{dw} = \beta v_{dw} + dw$, you need to modify corresponding $\alpha$.</p>
+<h4 id="4-7-RMSprop"><a href="#4-7-RMSprop" class="headerlink" title="4.7 RMSprop"></a>4.7 RMSprop</h4><p>RMSprop stands for root mean square prop, that can also speed up gradient descent.</p>
+<p>On iteration t:</p>
+<ol>
+<li>compute $dw$, db on current mini-batch.</li>
+<li>compute $s_{dw}$, $s_{db}$<br>$$s_{dw} = \beta s_{dw} + (1 - \beta){dw}^2$$$$s_{db} = \beta s_{db} + (1 - \beta){db}^2$$</li>
+<li>update dw, db<br>$$w = w - \alpha \frac {dw} {\sqrt {s_{dw}}}$$$$b = b - \alpha \frac {db} {\sqrt {s_{db}}}$$</li>
+</ol>
+<p>In practice, in order to avoid $\sqrt {s_{dw}}$ being very close zero:</p>
+<p>$$w = w - \alpha \frac {dw} {\sqrt {s_{dw}} + \epsilon}$$$$b = b - \alpha \frac {db} {\sqrt {s_{db}} + \epsilon}$$</p>
+<p>Usually $\epsilon = 10^{-8}$</p>
+<h4 id="4-8-Adam-optimization-algorithm"><a href="#4-8-Adam-optimization-algorithm" class="headerlink" title="4.8 Adam optimization algorithm"></a>4.8 Adam optimization algorithm</h4><h4 id="4-9-Learning-rate-decay"><a href="#4-9-Learning-rate-decay" class="headerlink" title="4.9 Learning rate decay"></a>4.9 Learning rate decay</h4><h4 id="4-10-The-problem-of-local-optima"><a href="#4-10-The-problem-of-local-optima" class="headerlink" title="4.10 The problem of local optima"></a>4.10 The problem of local optima</h4>]]></content>
     
     <summary type="html">
     
