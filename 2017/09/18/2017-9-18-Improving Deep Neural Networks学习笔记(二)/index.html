@@ -101,7 +101,7 @@
 <meta property="og:description" content="Improving Deep Neural Networks学习笔记(二)">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ewa_1.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ewa_2.png">
-<meta property="og:updated_time" content="2017-09-21T00:45:12.000Z">
+<meta property="og:updated_time" content="2017-09-21T14:32:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Improving Deep Neural Networks学习笔记(二)">
 <meta name="twitter:description" content="Improving Deep Neural Networks学习笔记(二)">
@@ -394,8 +394,31 @@
 </ol>
 <p>In practice, in order to avoid $\sqrt {s_{dw}}$ being very close zero:</p>
 <p>$$w = w - \alpha \frac {dw} {\sqrt {s_{dw}} + \epsilon}$$$$b = b - \alpha \frac {db} {\sqrt {s_{db}} + \epsilon}$$</p>
-<p>Usually $\epsilon = 10^{-8}$</p>
-<h4 id="4-8-Adam-optimization-algorithm"><a href="#4-8-Adam-optimization-algorithm" class="headerlink" title="4.8 Adam optimization algorithm"></a>4.8 Adam optimization algorithm</h4><h4 id="4-9-Learning-rate-decay"><a href="#4-9-Learning-rate-decay" class="headerlink" title="4.9 Learning rate decay"></a>4.9 Learning rate decay</h4><h4 id="4-10-The-problem-of-local-optima"><a href="#4-10-The-problem-of-local-optima" class="headerlink" title="4.10 The problem of local optima"></a>4.10 The problem of local optima</h4>
+<p>Usually $$\epsilon = 10^{-8}$$</p>
+<h4 id="4-8-Adam-optimization-algorithm"><a href="#4-8-Adam-optimization-algorithm" class="headerlink" title="4.8 Adam optimization algorithm"></a>4.8 Adam optimization algorithm</h4><p>$$v_{dw}=0, s_{dw}=0,v_{db},s_{db}=0$$</p>
+<p>On iteration t:</p>
+<p>$$v_{dw} = \beta_1 v_{dw} + (1 - \beta_1)dw$$$$v_{db} = \beta_1 v_{db} + (1 - \beta_1)db$$</p>
+<p>$$s_{dw} = \beta_2 s_{dw} + (1 - \beta_2){dw}^2$$$$s_{db} = \beta_2 s_{db} + (1 - \beta_2){db}^2$$</p>
+<p>Bias correction:</p>
+<p>$$v_{dw}^{bc} = \frac {v_{dw}} {1 - \beta_1^t}, v_{db}^{bc} = \frac {v_{db}} {1 - \beta_1^t}$$$$s_{dw}^{bc} = \frac {s_{dw}} {1 - \beta_2^t}, s_{db}^{bc} = \frac {s_{db}} {1 - \beta_2^t}$$</p>
+<p>Update weight:</p>
+<p>$$w = w - \alpha \frac {v_{dw}^{bc}} {\sqrt {s_{dw}^{bc}} + \epsilon}$$$$b = b - \alpha \frac {v_{db}^{bc}} {\sqrt {s_{db}^{bc}} + \epsilon}$$</p>
+<p>Adam combines the effect of gradient descent with momentum together with gradient descent with RMSprop. It’s a commonly used learning algorithm that is proven to be very effective for many different neural networks of a very wide variety of architectures.\</p>
+<p>$\alpha$ needs to be tuned. $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}$.</p>
+<p>Adam stands for Adaptive Moment Estimation.</p>
+<h4 id="4-9-Learning-rate-decay"><a href="#4-9-Learning-rate-decay" class="headerlink" title="4.9 Learning rate decay"></a>4.9 Learning rate decay</h4><p>Learning rate decay is slowly reduce the learning rate.</p>
+<p>$$\alpha = \frac {1} {1 + {decay rate} * epochs} \alpha_0$$</p>
+<p>$\alpha_0$ is the initial learning rate.</p>
+<p>Other learning rate decay methods:</p>
+<p>$\alpha = 0.95^{epochs}\alpha_0$, this is called exponentially decay.</p>
+<p>$\alpha = \frac {k} {\sqrt {epochs} } \alpha_0$, $\alpha = \frac {k} {\sqrt t} \alpha_0$.</p>
+<p>$\alpha = {\frac {1} {2}}^{epochs} \alpha _0$, this is called a discrete staircase.</p>
+<h4 id="4-10-The-problem-of-local-optima"><a href="#4-10-The-problem-of-local-optima" class="headerlink" title="4.10 The problem of local optima"></a>4.10 The problem of local optima</h4><p>In very high-dimensional spaces you’re actually much more likely to run into a saddle point, rather than local optimum.</p>
+<ul>
+<li>Unlikely to get stuck in a bad local optima.</li>
+<li>Plateaus can make learning slow.</li>
+</ul>
+
       
     </div>
 
@@ -542,7 +565,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">298</span>
+                <span class="site-state-item-count">299</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
