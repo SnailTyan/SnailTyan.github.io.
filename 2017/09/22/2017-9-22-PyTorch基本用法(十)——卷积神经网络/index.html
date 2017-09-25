@@ -1,0 +1,789 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="PyTorch基本用法(十)——卷积神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch基本用法(十)——卷积神经网络">
+<meta property="og:url" content="noahsnail.com/2017/09/22/2017-9-22-PyTorch基本用法(十)——卷积神经网络/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="PyTorch基本用法(十)——卷积神经网络">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/cnn_1_0.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/cnn_1_1.png">
+<meta property="og:updated_time" content="2017-09-22T12:26:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyTorch基本用法(十)——卷积神经网络">
+<meta name="twitter:description" content="PyTorch基本用法(十)——卷积神经网络">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/cnn_1_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2017/09/22/2017-9-22-PyTorch基本用法(十)——卷积神经网络/"/>
+
+
+
+
+
+  <title>PyTorch基本用法(十)——卷积神经网络 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/09/22/2017-9-22-PyTorch基本用法(十)——卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PyTorch基本用法(十)——卷积神经网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  PyTorch基本用法(十)——卷积神经网络
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文主要是关于PyTorch的一些用法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">import</span> torchvision</div><div class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</div><div class="line"><span class="keyword">import</span> torch.utils.data <span class="keyword">as</span> Data</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"></div><div class="line"><span class="comment"># 超参数定义</span></div><div class="line">EPOCH = <span class="number">1</span></div><div class="line">LR = <span class="number">0.01</span></div><div class="line">BATCH_SIZE = <span class="number">64</span></div><div class="line"></div><div class="line"><span class="comment"># 下载MNIST数据集</span></div><div class="line">train_data = torchvision.datasets.MNIST(</div><div class="line">    root = <span class="string">'./mnist/'</span>,</div><div class="line">    <span class="comment"># 是否是训练数据</span></div><div class="line">    train = <span class="keyword">True</span>,</div><div class="line">    <span class="comment"># 数据变换(0, 255) -&gt; (0, 1)</span></div><div class="line">    transform = torchvision.transforms.ToTensor(),</div><div class="line">    <span class="comment"># 是否下载MNIST数据</span></div><div class="line">    download = <span class="keyword">True</span></div><div class="line">)</div><div class="line"></div><div class="line">test_data = torchvision.datasets.MNIST(</div><div class="line">    root = <span class="string">'./mnist/'</span>,</div><div class="line">    <span class="comment"># 是否是训练数据</span></div><div class="line">    train = <span class="keyword">False</span>,</div><div class="line">    <span class="comment"># 数据变换(0, 255) -&gt; (0, 1)</span></div><div class="line">    transform = torchvision.transforms.ToTensor(),</div><div class="line">    <span class="comment"># 是否下载MNIST数据</span></div><div class="line">    download = <span class="keyword">True</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">print</span> train_data.train_data.size()</div><div class="line"><span class="keyword">print</span> train_data.train_labels.size()</div><div class="line"><span class="keyword">print</span> test_data.test_data.size()</div><div class="line"><span class="keyword">print</span> test_data.test_labels.size()</div></pre></td></tr></table></figure>
+<pre><code>torch.Size([60000, 28, 28])
+torch.Size([60000])
+torch.Size([10000, 28, 28])
+torch.Size([10000])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 查看图像</span></div><div class="line">plt.imshow(train_data.train_data[<span class="number">0</span>].numpy(), cmap = <span class="string">'gray'</span>)</div><div class="line">plt.title(<span class="string">'%i'</span> % train_data.train_labels[<span class="number">0</span>])</div><div class="line">plt.show()</div><div class="line"></div><div class="line">plt.imshow(test_data.test_data[<span class="number">0</span>].numpy(), cmap = <span class="string">'gray'</span>)</div><div class="line">plt.title(<span class="string">'%i'</span> % test_data.test_labels[<span class="number">0</span>])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://ocs628urt.bkt.clouddn.com/cnn_1_0.png" alt="png"></p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/cnn_1_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 数据加载</span></div><div class="line">train_loader = Data.DataLoader(dataset = train_data, batch_size = BATCH_SIZE, shuffle = <span class="keyword">True</span>, num_workers = <span class="number">2</span>)</div><div class="line">test_loader = Data.DataLoader(dataset = test_data, batch_size = BATCH_SIZE, shuffle = <span class="keyword">False</span>, num_workers = <span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 定义卷积神经网络</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNN</span><span class="params">(nn.Module)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        super(CNN, self).__init__()</div><div class="line">        self.conv1 = nn.Sequential(</div><div class="line">            nn.Conv2d(</div><div class="line">                in_channels = <span class="number">1</span>,</div><div class="line">                out_channels = <span class="number">16</span>,</div><div class="line">                kernel_size = <span class="number">5</span>,</div><div class="line">                stride = <span class="number">1</span>,</div><div class="line">                padding = <span class="number">2</span></div><div class="line">            ),</div><div class="line">            nn.ReLU(),</div><div class="line">            nn.MaxPool2d(kernel_size = <span class="number">2</span>)</div><div class="line">        )</div><div class="line">        <span class="comment"># conv1输出为(16, 14, 14)</span></div><div class="line">        self.conv2 = nn.Sequential(</div><div class="line">            nn.Conv2d(<span class="number">16</span>, <span class="number">32</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>),</div><div class="line">            nn.ReLU(),</div><div class="line">            nn.MaxPool2d(<span class="number">2</span>)</div><div class="line">        )</div><div class="line">        <span class="comment"># conv2输出为(32, 7, 7)</span></div><div class="line">        self.output = nn.Linear(<span class="number">32</span> * <span class="number">7</span> * <span class="number">7</span>, <span class="number">10</span>)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></div><div class="line">        x = self.conv1(x)</div><div class="line">        x = self.conv2(x)</div><div class="line">        x = x.view(x.size(<span class="number">0</span>), <span class="number">-1</span>)</div><div class="line">        prediction = self.output(x)</div><div class="line">        <span class="keyword">return</span> prediction</div><div class="line"></div><div class="line">cnn = CNN()</div><div class="line"><span class="keyword">print</span> cnn</div></pre></td></tr></table></figure>
+<pre><code>CNN (
+  (conv1): Sequential (
+    (0): Conv2d(1, 16, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (1): ReLU ()
+    (2): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+  )
+  (conv2): Sequential (
+    (0): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (1): ReLU ()
+    (2): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
+  )
+  (output): Linear (1568 -&gt; 10)
+)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义优化器</span></div><div class="line">optimizer = torch.optim.Adam(cnn.parameters(), lr = LR, betas= (<span class="number">0.9</span>, <span class="number">0.999</span>))</div><div class="line"></div><div class="line"><span class="comment"># 定义损失函数</span></div><div class="line">loss_func = nn.CrossEntropyLoss()</div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> xrange(EPOCH):</div><div class="line">    <span class="keyword">for</span> step, (x, y) <span class="keyword">in</span> enumerate(train_loader):</div><div class="line">        x_var = Variable(x)</div><div class="line">        y_var = Variable(y)</div><div class="line">        prediction = cnn(x_var)</div><div class="line">        loss = loss_func(prediction, y_var)</div><div class="line">        optimizer.zero_grad()</div><div class="line">        loss.backward()</div><div class="line">        optimizer.step()</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> step % <span class="number">100</span> == <span class="number">0</span>:</div><div class="line">            correct = <span class="number">0.0</span></div><div class="line">            <span class="keyword">for</span> step_test, (test_x, test_y) <span class="keyword">in</span> enumerate(test_loader):</div><div class="line">                test_x = Variable(test_x)</div><div class="line">                test_output = cnn(test_x)</div><div class="line">                pred_y = torch.max(test_output, <span class="number">1</span>)[<span class="number">1</span>].data.squeeze()</div><div class="line">                correct += sum(pred_y == test_y)</div><div class="line">            accuracy = correct / test_data.test_data.size(<span class="number">0</span>)</div><div class="line">            <span class="keyword">print</span> <span class="string">'Epoch: '</span>, epoch, <span class="string">'| train loss: %.4f'</span> % loss.data[<span class="number">0</span>], <span class="string">'| accuracy: '</span>, accuracy</div></pre></td></tr></table></figure>
+<pre><code>Epoch:  0 | train loss: 2.2787 | accuracy:  0.0982
+Epoch:  0 | train loss: 0.0788 | accuracy:  0.9592
+Epoch:  0 | train loss: 0.0587 | accuracy:  0.9626
+Epoch:  0 | train loss: 0.0188 | accuracy:  0.9745
+Epoch:  0 | train loss: 0.0707 | accuracy:  0.9759
+Epoch:  0 | train loss: 0.0564 | accuracy:  0.9775
+Epoch:  0 | train loss: 0.0489 | accuracy:  0.9779
+Epoch:  0 | train loss: 0.0925 | accuracy:  0.9791
+Epoch:  0 | train loss: 0.0566 | accuracy:  0.9834
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享，如果觉得有收获就打赏吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/22/2017-9-22-Improving Deep Neural Networks学习笔记(三)/" rel="next" title="Improving Deep Neural Networks学习笔记(三)">
+                <i class="fa fa-chevron-left"></i> Improving Deep Neural Networks学习笔记(三)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/24/2017-9-24-Structuring Machine Learning Projects学习笔记(一)/" rel="prev" title="Structuring Machine Learning Projects学习笔记(一)">
+                Structuring Machine Learning Projects学习笔记(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">302</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
