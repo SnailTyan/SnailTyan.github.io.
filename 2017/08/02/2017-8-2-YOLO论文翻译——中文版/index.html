@@ -96,11 +96,11 @@
 <meta name="description" content="You Only Look Once——Unified, Real-Time Object Detection论文翻译——中文版">
 <meta property="og:type" content="article">
 <meta property="og:title" content="YOLO论文翻译——中文版">
-<meta property="og:url" content="noahsnail.com/2017/08/02/2017-8-2-You Only Look Once- Unified, Real-Time Object Detection论文翻译——中文版/index.html">
+<meta property="og:url" content="noahsnail.com/2017/08/02/2017-8-2-YOLO论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="You Only Look Once——Unified, Real-Time Object Detection论文翻译——中文版">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
-<meta property="og:updated_time" content="2017-08-07T10:29:36.000Z">
+<meta property="og:updated_time" content="2017-11-23T01:52:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO论文翻译——中文版">
 <meta name="twitter:description" content="You Only Look Once——Unified, Real-Time Object Detection论文翻译——中文版">
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="noahsnail.com/2017/08/02/2017-8-2-You Only Look Once- Unified, Real-Time Object Detection论文翻译——中文版/"/>
+  <link rel="canonical" href="noahsnail.com/2017/08/02/2017-8-2-YOLO论文翻译——中文版/"/>
 
 
 
@@ -286,7 +286,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/08/02/2017-8-2-You Only Look Once- Unified, Real-Time Object Detection论文翻译——中文版/">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/08/02/2017-8-2-YOLO论文翻译——中文版/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tyan">
@@ -350,7 +350,10 @@
 
       
         <p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
-<h1 id="You-Only-Look-Once-Unified-Real-Time-Object-Detection"><a href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection" class="headerlink" title="You Only Look Once: Unified, Real-Time Object Detection"></a>You Only Look Once: Unified, Real-Time Object Detection</h1>
+<h1 id="You-Only-Look-Once-Unified-Real-Time-Object-Detection"><a href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection" class="headerlink" title="You Only Look Once: Unified, Real-Time Object Detection"></a>You Only Look Once: Unified, Real-Time Object Detection</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了YOLO，一种新的目标检测方法。以前的目标检测工作重新利用分类器来执行检测。相反，我们将目标检测框架看作回归问题从空间上分割边界框和相关的类别概率。单个神经网络在一次评估中直接从完整图像上预测边界框和类别概率。由于整个检测流水线是单一网络，因此可以直接对检测性能进行端到端的优化。</p>
+<p>我们的统一架构非常快。我们的基础YOLO模型以45帧/秒的速度实时处理图像。网络的一个较小版本，快速YOLO，每秒能处理惊人的155帧，同时实现其它实时检测器两倍的mAP。与最先进的检测系统相比，YOLO产生了更多的定位误差，但不太可能在背景上的预测假阳性。最后，YOLO学习目标非常通用的表示。当从自然图像到艺术品等其它领域泛化时，它都优于其它检测方法，包括DPM和R-CNN。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>人们瞥一眼图像，立即知道图像中的物体是什么，它们在哪里以及它们如何相互作用。人类的视觉系统是快速和准确的，使我们能够执行复杂的任务，如驾驶时没有多少有意识的想法。快速，准确的目标检测算法可以让计算机在没有专门传感器的情况下驾驶汽车，使辅助设备能够向人类用户传达实时的场景信息，并表现出对一般用途和响应机器人系统的潜力。</p>
+
       
     </div>
 
@@ -413,7 +416,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/02/2017-8-2-You Only Look Once- Unified, Real-Time Object Detection论文翻译——中英文对照/" rel="next" title="YOLO论文翻译——中英文对照">
+              <a href="/2017/08/02/2017-8-2-YOLO论文翻译——中英文对照/" rel="next" title="YOLO论文翻译——中英文对照">
                 <i class="fa fa-chevron-left"></i> YOLO论文翻译——中英文对照
               </a>
             
@@ -497,7 +500,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">308</span>
+                <span class="site-state-item-count">309</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -554,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection"><span class="nav-number">1.</span> <span class="nav-text">You Only Look Once: Unified, Real-Time Object Detection</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection"><span class="nav-number">1.</span> <span class="nav-text">You Only Look Once: Unified, Real-Time Object Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li></ol></li></ol></div>
             
 
           </div>
