@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-11-23T02:40:59.000Z</updated>
+  <updated>2017-11-29T03:10:08.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux下Caffe、Docker、Tensorflow，PyTorch环境搭建(CentOS 7)</title>
+    <link href="noahsnail.com/2017/11/29/2017-11-29-Linux%E4%B8%8BCaffe%E3%80%81Docker%E3%80%81Tensorflow%E3%80%81PyTorch%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(CentOS%207)/"/>
+    <id>noahsnail.com/2017/11/29/2017-11-29-Linux下Caffe、Docker、Tensorflow、PyTorch环境搭建(CentOS 7)/</id>
+    <published>2017-11-29T02:36:00.000Z</published>
+    <updated>2017-11-29T03:10:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>注：模型的训练、测试、部署都可以通过Docker环境完成，环境问题会更少。</p>
+<h2 id="1-CUDA-8-0安装"><a href="#1-CUDA-8-0安装" class="headerlink" title="1. CUDA 8.0安装"></a>1. CUDA 8.0安装</h2><p><img src="http://ocs628urt.bkt.clouddn.com/cuda-8.0.png" alt="CUDA 8.0"></p>
+<ul>
+<li>Config env variables</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># CUDA PATH</div><div class="line">export PATH=&quot;/usr/local/cuda-8.0/bin:$PATH&quot;</div><div class="line"> </div><div class="line"># CUDA LDLIBRARY_PATH</div><div class="line">export LD_LIBRARY_PATH=&quot;/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH&quot;</div></pre></td></tr></table></figure>
+<ul>
+<li>CUDA check</li>
+</ul>
+<p>$ nvcc –version<br>nvcc: NVIDIA (R) Cuda compiler driver<br>Copyright (c) 2005-2016 NVIDIA Corporation<br>Built on Tue_Jan_10_13:22:03_CST_2017<br>Cuda compilation tools, release 8.0, V8.0.61</p>
+<h2 id="2-cuDNN安装"><a href="#2-cuDNN安装" class="headerlink" title="2. cuDNN安装"></a>2. cuDNN安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># unzip cudnn</div><div class="line">tar zxvf cudnn-8.0-linux-x64-v5.1.tgz</div><div class="line">cd cuda</div><div class="line">  </div><div class="line"># copy include file</div><div class="line">sudo cp include/cudnn.h /usr/local/cuda-8.0/include/</div><div class="line">  </div><div class="line"># copy .so file</div><div class="line">sudo cp lib64/libcudnn.so.5.1.10 /usr/local/cuda-8.0/lib64/</div><div class="line">  </div><div class="line"># add ln link</div><div class="line">cd /usr/local/cuda-8.0/lib64/</div><div class="line">sudo ln -s libcudnn.so.5.1.10 libcudnn.so.5</div><div class="line">sudo ln -s libcudnn.so.5 libcudnn.so</div></pre></td></tr></table></figure>
+<h2 id="3-NCCL安装"><a href="#3-NCCL安装" class="headerlink" title="3. NCCL安装"></a>3. NCCL安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># clone nccl</div><div class="line">git clone https://github.com/NVIDIA/nccl.git</div><div class="line"></div><div class="line">make CUDA_HOME=/usr/local/cuda-8.0 test</div><div class="line"></div><div class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./build/lib</div><div class="line"></div><div class="line">./build/test/single/all_reduce_test 10000000</div><div class="line"></div><div class="line">make PREFIX=nccl install</div><div class="line"></div><div class="line"># Copy files</div><div class="line">sudo cp /yourpath/nccl/build/include/nccl.h /usr/local/include</div><div class="line">sudo cp /yourpath/nccl/build/lib/libnccl* /usr/local/lib</div><div class="line"> </div><div class="line"># Edit ~/.bashrc</div><div class="line">export LD_LIBRARY_PATH=&quot;/usr/local/cuda-8.0/lib64:/yourpath/nccl/build/lib:$LD_LIBRARY_PATH&quot;</div></pre></td></tr></table></figure>
+<h2 id="4-Caffe安装"><a href="#4-Caffe安装" class="headerlink" title="4. Caffe安装"></a>4. Caffe安装</h2><ul>
+<li>Install dependencies</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo yum install protobuf-devel leveldb-devel snappy-devel opencv-devel boost-devel hdf5-devel gflags-devel glog-devel lmdb-devel atlas-devel</div><div class="line">sudo yum install python-pip</div><div class="line">sudo pip install --upgrade pip</div><div class="line">sudo pip install numpy</div></pre></td></tr></table></figure>
+<ul>
+<li>Installation</li>
+</ul>
+<p>参考<a href="http://blog.csdn.net/quincuntial/article/details/53494949" target="_blank" rel="external">http://blog.csdn.net/quincuntial/article/details/53494949</a></p>
+<ul>
+<li>Caffe Test</li>
+</ul>
+<p>参考<a href="http://blog.csdn.net/quincuntial/article/details/53468000" target="_blank" rel="external">http://blog.csdn.net/quincuntial/article/details/53468000</a></p>
+<h2 id="5-Tensorflow安装"><a href="#5-Tensorflow安装" class="headerlink" title="5. Tensorflow安装"></a>5. Tensorflow安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install tensorflow-gpu</div></pre></td></tr></table></figure>
+<h2 id="6-PyTorch安装"><a href="#6-PyTorch安装" class="headerlink" title="6. PyTorch安装"></a>6. PyTorch安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pip install http://download.pytorch.org/whl/cu80/torch-0.1.12.post2-cp27-none-linux_x86_64.whl</div><div class="line">pip install torchvision</div><div class="line">pip install lmdb</div><div class="line">pip install mahotas</div><div class="line">pip install cffi</div></pre></td></tr></table></figure>
+<h2 id="7-Docker安装"><a href="#7-Docker安装" class="headerlink" title="7. Docker安装"></a>7. Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Install docker</div><div class="line">sudo yum install docker-ce</div><div class="line"></div><div class="line"># Start docker</div><div class="line">sudo systemctl start docker</div><div class="line"></div><div class="line"># Test docker</div><div class="line">sudo docker run hello-world</div></pre></td></tr></table></figure>
+<h2 id="8-Nvidia-Docker安装"><a href="#8-Nvidia-Docker安装" class="headerlink" title="8. Nvidia-Docker安装"></a>8. Nvidia-Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Install nvida-docker</div><div class="line"># https://github.com/NVIDIA/nvidia-docker</div><div class="line">wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker-1.0.1-1.x86_64.rpm</div><div class="line"></div><div class="line">sudo rpm -i /tmp/nvidia-docker*.rpm &amp;&amp; rm /tmp/nvidia-docker*.rpm</div><div class="line"></div><div class="line"># start</div><div class="line">sudo systemctl start nvidia-docker</div><div class="line"></div><div class="line"># Test nvidia-smi</div><div class="line">nvidia-docker run --rm nvidia/cuda nvidia-smi</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Linux下Caffe、Docker、Tensorflow、PyTorch环境搭建(CentOS 7)
+    
+    </summary>
+    
+      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
+    
+    
+      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux中“Argument list too long”解决方法</title>
@@ -1425,51 +1475,6 @@ Variable containing:
     
     
       <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python性能优化</title>
-    <link href="noahsnail.com/2017/09/18/2017-9-18-Python%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    <id>noahsnail.com/2017/09/18/2017-9-18-Python性能优化/</id>
-    <published>2017-09-18T02:15:08.000Z</published>
-    <updated>2017-09-18T10:40:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>Python使用非常方便、灵活，因此很受欢迎。但正因为如此，导致实现同一功能时，Python代码有很多写法，但不同的写法有不同的性能。因此写Python代码要有良好的习惯，多写高性能的代码。作者原来平常写Python代码也很随意，直到某天处理大量数据时半天看不到结果，究其原因，是Python代码的性能问题导致的。</p>
-<h2 id="1-列表解析与列表重建"><a href="#1-列表解析与列表重建" class="headerlink" title="1. 列表解析与列表重建"></a>1. 列表解析与列表重建</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">fr = open(<span class="string">'words.txt'</span>)</div><div class="line">t1 = time.time()</div><div class="line">word_list = fr.readlines()</div><div class="line">t2 = time.time()</div><div class="line"><span class="keyword">print</span> <span class="string">'read file time: '</span>, t2 -t1</div><div class="line">fr.close()</div><div class="line"></div><div class="line"><span class="comment"># for循环构建列表</span></div><div class="line">keywords = []</div><div class="line">t1 = time.time()</div><div class="line"><span class="keyword">for</span> word <span class="keyword">in</span> word_list:</div><div class="line">    word = word.strip()</div><div class="line">    keywords.append(word)</div><div class="line">t2 = time.time()</div><div class="line"><span class="keyword">print</span> <span class="string">'for loop time: '</span>, t2 - t1</div><div class="line"></div><div class="line"><span class="comment"># 列表解析</span></div><div class="line">t3 = time.time()</div><div class="line">keywords = [word.strip() <span class="keyword">for</span> word <span class="keyword">in</span> word_list]</div><div class="line">t4 = time.time()</div><div class="line"><span class="keyword">print</span> <span class="string">'list pars time: '</span>, t4 - t3</div><div class="line"></div><div class="line">fr = open(<span class="string">'words.txt'</span>)</div><div class="line">t5 = time.time()</div><div class="line">keywords = [word.strip() <span class="keyword">for</span> word <span class="keyword">in</span> fr.readlines()]</div><div class="line">t6 = time.time()</div><div class="line">fr.close()</div><div class="line"><span class="keyword">print</span> <span class="string">'read file and list parse time: '</span>, t6 - t5</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">'list length: '</span>, len(word_list)</div></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">read file time:  0.0318450927734</div><div class="line">for loop time:  0.137716054916</div><div class="line">list pars time:  0.0910630226135</div><div class="line">read file and list parse time:  0.124923944473</div><div class="line">list length:  441669</div></pre></td></tr></table></figure>
-<p>结论：本次测试中，列表解析时间是for循环时间的<code>2/3</code>。</p>
-<h2 id="2-字符串拼接"><a href="#2-字符串拼接" class="headerlink" title="2. 字符串拼接"></a>2. 字符串拼接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import time</div><div class="line"></div><div class="line">fr = open(&apos;words.txt&apos;)</div><div class="line">keywords = [word.strip() for word in fr.readlines()]</div><div class="line">fr.close()</div><div class="line"></div><div class="line"># 加号拼接字符串</div><div class="line">t1 = time.time()</div><div class="line">str1 = &apos;&apos;</div><div class="line">for word in keywords:</div><div class="line">    str1 += word</div><div class="line">t2 = time.time()</div><div class="line">print &apos;string concat time: &apos;, t2 - t1</div><div class="line"></div><div class="line"># join拼接字符串</div><div class="line">t1 = time.time()</div><div class="line">str2 = &apos;&apos;.join(keywords)</div><div class="line">t2 = time.time()</div><div class="line">print &apos;string join time: &apos;, t2 - t1</div><div class="line"></div><div class="line">print &apos;list length: &apos;, len(keywords)</div></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">string concat time:  0.0814869403839</div><div class="line">string join time:  0.0123951435089</div><div class="line">list length:  441669</div></pre></td></tr></table></figure>
-<p>结论：本次测试中，<code>join</code>函数拼接字符串比<code>+=</code>拼接字符串快<code>6倍多</code>。</p>
-<h2 id="3-range与xrange"><a href="#3-range与xrange" class="headerlink" title="3. range与xrange"></a>3. range与xrange</h2><ul>
-<li>range</li>
-</ul>
-<p>python中range会直接生成一个list对象。</p>
-<ul>
-<li>xrange</li>
-</ul>
-<p>用法与range完全相同，所不同的是生成的不是一个数组，而是一个生成器，它的类型为<code>xrange</code>。在生成非常大的数字序列时，xrange不会马上开辟很大的一块内存空间。如果不是需要返回列表，则尽可能使用<code>xrange</code>。</p>
-<p>测试代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import time</div><div class="line"></div><div class="line">t1 = time.time()</div><div class="line">for i in range(1000000):</div><div class="line">    pass</div><div class="line">t2 = time.time()</div><div class="line">print &apos;range time: &apos;, t2 -t1</div><div class="line"></div><div class="line">t1 = time.time()</div><div class="line">for i in xrange(1000000):</div><div class="line">    pass</div><div class="line">t2 = time.time()</div><div class="line">print &apos;xrange time: &apos;, t2 -t1</div></pre></td></tr></table></figure>
-<p>测试结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">range time:  0.0680990219116</div><div class="line">xrange time:  0.0329170227051</div></pre></td></tr></table></figure>
-<p>结论：本次测试中，<code>xrange</code>比<code>range</code>快一倍多。</p>
-<h2 id="4-待续。"><a href="#4-待续。" class="headerlink" title="4. 待续。"></a>4. 待续。</h2>]]></content>
-    
-    <summary type="html">
-    
-      Python性能优化
-    
-    </summary>
-    
-      <category term="Python" scheme="noahsnail.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="noahsnail.com/tags/Python/"/>
     
   </entry>
   
