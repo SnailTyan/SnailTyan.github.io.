@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/crnn-fig4.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/crnn-fig5.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/crnn-table4.png">
-<meta property="og:updated_time" content="2017-09-05T02:56:32.000Z">
+<meta property="og:updated_time" content="2017-11-29T07:58:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CRNN论文翻译——中文版">
 <meta name="twitter:description" content="CRNN论文翻译——中文版">
@@ -358,6 +358,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <h1 id="An-End-to-End-Trainable-Neural-Network-for-Image-based-Sequence-Recognition-and-Its-Application-to-Scene-Text-Recognition"><a href="#An-End-to-End-Trainable-Neural-Network-for-Image-based-Sequence-Recognition-and-Its-Application-to-Scene-Text-Recognition" class="headerlink" title="An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition"></a>An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>基于图像的序列识别一直是计算机视觉中长期存在的研究课题。在本文中，我们研究了场景文本识别的问题，这是基于图像的序列识别中最重要和最具挑战性的任务之一。提出了一种将特征提取，序列建模和转录整合到统一框架中的新型神经网络架构。与以前的场景文本识别系统相比，所提出的架构具有四个不同的特性：（1）与大多数现有的组件需要单独训练和协调的算法相比，它是端对端训练的。（2）它自然地处理任意长度的序列，不涉及字符分割或水平尺度归一化。（3）它不仅限于任何预定义的词汇，并且在无词典和基于词典的场景文本识别任务中都取得了显著的表现。（4）它产生了一个有效而小得多的模型，这对于现实世界的应用场景更为实用。在包括IIIT-5K，Street View Text和ICDAR数据集在内的标准基准数据集上的实验证明了提出的算法比现有的技术更有优势。此外，提出的算法在基于图像的音乐乐谱识别任务中表现良好，这显然证实了它的泛化性。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>最近，社区已经看到神经网络的强大复兴，这主要受到深度神经网络模型，特别是深度卷积神经网络（DCNN）在各种视觉任务中的巨大成功的推动。然而，最近大多数与深度神经网络相关的工作主要致力于检测或分类对象类别[12,25]。在本文中，我们关注计算机视觉中的一个经典问题：基于图像的序列识别。在现实世界中，稳定的视觉对象，如场景文字，手写字符和乐谱，往往以序列的形式出现，而不是孤立地出现。与一般的对象识别不同，识别这样的类序列对象通常需要系统预测一系列对象标签，而不是单个标签。因此，可以自然地将这样的对象的识别作为序列识别问题。类序列对象的另一个独特之处在于它们的长度可能会有很大变化。例如，英文单词可以由2个字符组成，如“OK”，或由15个字符组成，如“congratulations”。因此，最流行的深度模型像DCNN[25,26]不能直接应用于序列预测，因为DCNN模型通常对具有固定维度的输入和输出进行操作，因此不能产生可变长度的标签序列。</p>
 <p>已经针对特定的类似序列的对象（例如场景文本）进行了一些尝试来解决该问题。例如，[35,8]中的算法首先检测单个字符，然后用DCNN模型识别这些检测到的字符，并使用标注的字符图像进行训练。这些方法通常需要训练强字符检测器，以便从原始单词图像中准确地检测和裁剪每个字符。一些其他方法（如[22]）将场景文本识别视为图像分类问题，并为每个英文单词（总共9万个词）分配一个类标签。结果是一个大的训练模型中有很多类，这很难泛化到其它类型的类序列对象，如中文文本，音乐配乐等，因为这种序列的基本组合数目可能大于100万。总之，目前基于DCNN的系统不能直接用于基于图像的序列识别。</p>

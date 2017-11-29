@@ -99,7 +99,6 @@
 <meta property="og:url" content="noahsnail.com/2017/08/02/2017-8-2-YOLO论文翻译——中英文对照/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="You Only Look Once——Unified, Real-Time Object Detection论文翻译——中英文对照">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig1.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig1.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig2.png">
@@ -118,11 +117,11 @@
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig5.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig6.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig6.png">
-<meta property="og:updated_time" content="2017-11-29T07:22:24.000Z">
+<meta property="og:updated_time" content="2017-11-29T08:06:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO论文翻译——中英文对照">
 <meta name="twitter:description" content="You Only Look Once——Unified, Real-Time Object Detection论文翻译——中英文对照">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/yolo-fig1.png">
 
 
 
@@ -367,7 +366,8 @@
       
 
       
-        <p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <h1 id="You-Only-Look-Once-Unified-Real-Time-Object-Detection"><a href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection" class="headerlink" title="You Only Look Once: Unified, Real-Time Object Detection"></a>You Only Look Once: Unified, Real-Time Object Detection</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We present YOLO, a new approach to object detection. Prior work on object detection repurposes classifiers to perform detection. Instead, we frame object detection as a regression problem to spatially separated bounding boxes and associated class probabilities. A single neural network predicts bounding boxes and class probabilities directly from full images in one evaluation. Since the whole detection pipeline is a single network, it can be optimized end-to-end directly on detection performance.</p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了YOLO，一种新的目标检测方法。以前的目标检测工作重新利用分类器来执行检测。相反，我们将目标检测框架看作回归问题从空间上分割边界框和相关的类别概率。单个神经网络在一次评估中直接从完整图像上预测边界框和类别概率。由于整个检测流水线是单一网络，因此可以直接对检测性能进行端到端的优化。</p>
 <p>Our unified architecture is extremely fast. Our base YOLO model processes images in real-time at 45 frames per second. A smaller version of the network, Fast YOLO, processes an astounding 155 frames per second while still achieving double the mAP of other real-time detectors. Compared to state-of-the-art detection systems, YOLO makes more localization errors but is less likely to predict false positives on background. Finally, YOLO learns very general representations of objects. It outperforms other detection methods, including DPM and R-CNN, when generalizing from natural images to other domains like artwork.</p>

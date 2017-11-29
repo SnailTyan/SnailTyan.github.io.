@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/bn-fig2.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/bn-fig3.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/bn-fig4.png">
-<meta property="og:updated_time" content="2017-09-29T06:18:20.000Z">
+<meta property="og:updated_time" content="2017-11-29T07:58:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch Normalization论文翻译——中文版">
 <meta name="twitter:description" content="Batch Normalization论文翻译——中文版">
@@ -355,6 +355,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <h1 id="Batch-Normalization-Accelerating-Deep-Network-Training-by-Reducing-Internal-Covariate-Shift"><a href="#Batch-Normalization-Accelerating-Deep-Network-Training-by-Reducing-Internal-Covariate-Shift" class="headerlink" title="Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift"></a>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>训练深度神经网络的复杂性在于，每层输入的分布在训练过程中会发生变化，因为前面的层的参数会发生变化。通过要求较低的学习率和仔细的参数初始化减慢了训练，并且使具有饱和非线性的模型训练起来非常困难。我们将这种现象称为<em>内部协变量转移</em>，并通过标准化层输入来解决这个问题。我们的方法力图使标准化成为模型架构的一部分，并为<em>每个训练小批量数据</em>执行标准化。批标准化使我们能够使用更高的学习率，并且不用太注意初始化。它也作为一个正则化项，在某些情况下不需要Dropout。将批量标准化应用到最先进的图像分类模型上，批标准化在取得相同的精度的情况下，减少了14倍的训练步骤，并以显著的差距击败了原始模型。使用批标准化网络的组合，我们改进了在ImageNet分类上公布的最佳结果：达到了<code>4.9％ top-5</code>的验证误差（和<code>4.8％</code>测试误差），超过了人类评估者的准确性。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>深度学习在视觉、语音等诸多方面显著提高了现有技术的水平。随机梯度下降（SGD）已经被证明是训练深度网络的有效方式，并且已经使用诸如动量（Sutskever等，2013）和Adagrad（Duchi等人，2011）等SGD变种取得了最先进的性能。SGD优化网络参数$\Theta$，以最小化损失</p>
 <p>$$\Theta = \arg \min_\Theta \frac{1}{N}\sum_{i=1}^N \ell(x_i, \Theta)$$</p>

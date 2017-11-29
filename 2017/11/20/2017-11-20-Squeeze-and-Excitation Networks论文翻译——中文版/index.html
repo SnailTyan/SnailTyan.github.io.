@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/senet-table5.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/senet-fig7.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/senet-fig8.png">
-<meta property="og:updated_time" content="2017-11-22T06:21:49.000Z">
+<meta property="og:updated_time" content="2017-11-29T07:59:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Squeeze-and-Excitation Networks论文翻译——中文版">
 <meta name="twitter:description" content="Squeeze-and-Excitation Networks论文翻译——中文版">
@@ -362,6 +362,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <h1 id="Squeeze-and-Excitation-Networks"><a href="#Squeeze-and-Excitation-Networks" class="headerlink" title="Squeeze-and-Excitation Networks"></a>Squeeze-and-Excitation Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>卷积神经网络建立在卷积运算的基础上，通过融合局部感受野内的空间信息和通道信息来提取信息特征。为了提高网络的表示能力，许多现有的工作已经显示出增强空间编码的好处。在这项工作中，我们专注于通道，并提出了一种新颖的架构单元，我们称之为“Squeeze-and-Excitation”（SE）块，通过显式地建模通道之间的相互依赖关系，自适应地重新校准通道式的特征响应。通过将这些块堆叠在一起，我们证明了我们可以构建SENet架构，在具有挑战性的数据集中可以进行泛化地非常好。关键的是，我们发现SE块以微小的计算成本为现有的最先进的深层架构产生了显著的性能改进。SENets是我们ILSVRC 2017分类提交的基础，它赢得了第一名，并将<code>top-5</code>错误率显著减少到$2.251 \%$，相对于2016年的获胜成绩取得了$\sim25\%$的相对改进。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>卷积神经网络（CNNs）已被证明是解决各种视觉任务的有效模型[19,23,29,41]。对于每个卷积层，沿着输入通道学习一组滤波器来表达局部空间连接模式。换句话说，期望卷积滤波器通过融合空间信息和信道信息进行信息组合，而受限于局部感受野。通过叠加一系列非线性和下采样交织的卷积层，CNN能够捕获具有全局感受野的分层模式作为强大的图像描述。最近的工作已经证明，网络的性能可以通过显式地嵌入学习机制来改善，这种学习机制有助于捕捉空间相关性而不需要额外的监督。Inception架构推广了一种这样的方法[14,39]，这表明网络可以通过在其模块中嵌入多尺度处理来取得有竞争力的准确度。最近的工作在寻找更好地模型空间依赖[1,27]，结合空间注意力[17]。</p>
 <p>与这些方法相反，通过引入新的架构单元，我们称之为<em>“Squeeze-and-Excitation”</em> (SE)块，我们研究了架构设计的一个不同方向——通道关系。我们的目标是通过显式地建模卷积特征通道之间的相互依赖性来提高网络的表示能力。为了达到这个目的，我们提出了一种机制，使网络能够执行<em>特征重新校准</em>，通过这种机制可以学习使用全局信息来选择性地强调信息特征并抑制不太有用的特征。</p>
