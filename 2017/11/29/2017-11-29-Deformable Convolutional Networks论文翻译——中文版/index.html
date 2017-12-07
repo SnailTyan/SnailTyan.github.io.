@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Deformable Convolutional Networks论文翻译——中文版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deformable Convolutional Networks论文翻译——中文版">
+<meta property="og:url" content="noahsnail.com/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中文版/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Deformable Convolutional Networks论文翻译——中文版">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/dcn-fig1.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/fcn-fig2.png">
+<meta property="og:updated_time" content="2017-12-07T08:29:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deformable Convolutional Networks论文翻译——中文版">
+<meta name="twitter:description" content="Deformable Convolutional Networks论文翻译——中文版">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/dcn-fig1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中文版/"/>
+
+
+
+
+
+  <title>Deformable Convolutional Networks论文翻译——中文版 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中文版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deformable Convolutional Networks论文翻译——中文版</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Deformable Convolutional Networks论文翻译——中文版
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="Deformable-Convolutional-Networks"><a href="#Deformable-Convolutional-Networks" class="headerlink" title="Deformable Convolutional Networks"></a>Deformable Convolutional Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>卷积神经网络（CNN）由于其构建模块固定的几何结构天然地局限于建模几何变换。在这项工作中，我们引入了两个新的模块来提高CNN的转换建模能力，即可变形卷积和可变形RoI池化。两者都基于这样的想法：增加模块中的空间采样位置以及额外的偏移量，并且从目标任务中学习偏移量，而不需要额外的监督。新模块可以很容易地替换现有CNN中的普通模块，并且可以通过标准的反向传播便易地进行端对端训练，从而产生<em>可变形卷积网络</em>。大量的实验验证了我们方法的性能。我们首次证明了在深度CNN中学习密集空间变换对于复杂的视觉任务（如目标检测和语义分割）是有效的。代码发布在<a href="https://github.com/msracver/Deformable-ConvNets" target="_blank" rel="external">https://github.com/msracver/Deformable-ConvNets</a>。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>视觉识别中的一个关键挑战是如何在目标尺度，姿态，视点和部件变形中适应几何变化或建模几何变换。一般来说，有两种方法。首先是建立具有足够期望变化的训练数据集。这通常通过增加现有的数据样本来实现，例如通过仿射变换。鲁棒的表示可以从数据中学习，但是通常以昂贵的训练和复杂的模型参数为代价。其次是使用变换不变的特征和算法。这一类包含了许多众所周知的技术，如SIFT（尺度不变特征变换）[42]和基于滑动窗口的目标检测范例。</p>
+<p>上述方法有两个缺点。首先，几何变换被假定是固定并且已知的。这样的先验知识被用来扩充数据，并设计特征和算法。这个假设阻止了对具有未知几何变换的新任务的泛化能力，这些新任务没有被正确地建模。其次，手工设计的不变特征和算法对于过于复杂的变换可能是困难的或不可行的，即使在已知复杂变化的情况下。</p>
+<p>最近，卷积神经网络（CNNs）[35]在图像分类[31]，语义分割[41]和目标检测[16]等视觉识别任务中取得了显著的成功。不过，他们仍然有上述两个缺点。它们对几何变换建模的能力主要来自大量的数据增强，大的模型容量以及一些简单的手工设计模块（例如，对小的平移具有不变性的最大池化[1]）。</p>
+<p>简而言之，CNN本质上局限于建模大型，未知的转换。该限制源于CNN模块的固定几何结构：卷积单元在固定位置对输入特征图进行采样；池化层以一个固定的比例降低空间分辨率；一个RoI（感兴趣区域）池化层把RoI分成固定的空间组块等等。缺乏处理几何变换的内部机制。这会导致明显的问题。举一个例子，同一CNN层中所有激活单元的感受野大小是相同的。对于在空间位置上编码语义的高级CNN层来说，这是不可取的。由于不同的位置可能对应不同尺度或形变的目标，所以对于具有精细定位的视觉识别来说，例如使用全卷积网络的语义分割[41]，尺度或感受野大小的自适应确定是理想的情况。又如，尽管最近目标检测已经取得了显著而迅速的进展[16,52,15,47,46,40,7]，但所有方法仍然依赖于基于特征提取的粗糙边界框。这显然是次优的，特别是对于非刚性目标。</p>
+<p>在这项工作中，我们引入了两个新的模块，大大提高了CNN建模几何变换的能力。首先是<em>可变形卷积</em>。它将2D偏移添加到标准卷积中的常规网格采样位置上。它可以使采样网格自由形变。如图1所示。偏移量通过附加的卷积层从前面的特征图中学习。因此，变形以局部的，密集的和自适应的方式受到输入特征的限制。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/dcn-fig1.png" alt="Figure 1"></p>
+<p>图1：3×3标准卷积和可变形卷积中采样位置的示意图。（a）标准卷积的定期采样网格（绿点）。（b）变形的采样位置（深蓝色点）和可变形卷积中增大的偏移量（浅蓝色箭头）。（c）（d）是（b）的特例，表明可变形卷积泛化到了各种尺度（各向异性）、长宽比和旋转的变换。</p>
+<p>第二个是<em>可变形的RoI池化</em>。它为前面的RoI池化的常规bin分区中的每个bin位置添加一个偏移量[15,7]。类似地，从前面的特征映射和RoI中学习偏移量，使得具有不同形状的目标能够自适应的进行部件定位。</p>
+<p>两个模块都轻量的。它们为偏移学习增加了少量的参数和计算。他们可以很容易地取代深层CNN中简单的对应部分，并且可以很容易地通过标准的反向传播进行端对端的训练。所得到的CNN被称为<em>可变形卷积网络</em>，或<em>可变形ConvNets</em>。</p>
+<p>我们的方法与空间变换网络[26]和可变形部件模型[11]具有类似的高层精神。它们都有内部的转换参数，纯粹从数据中学习这些参数。可变形ConvNets的一个关键区别在于它们以简单，高效，深入和端到端的方式处理密集的空间变换。在3.1节中，我们详细讨论了我们的工作与以前的工作的关系，并分析了可变形ConvNets的优越性。</p>
+<h2 id="2-可变形卷积网络"><a href="#2-可变形卷积网络" class="headerlink" title="2. 可变形卷积网络"></a>2. 可变形卷积网络</h2><p>CNN中的特征映射和卷积是3D的。可变形卷积和RoI池化模块都在2D空间域上运行。在整个通道维度上的操作保持不变。在不丧失泛化能力的情况下，为了符号清晰，这些模块在2D中描述。扩展到3D很简单。</p>
+<h3 id="2-1-可变形卷积"><a href="#2-1-可变形卷积" class="headerlink" title="2.1. 可变形卷积"></a>2.1. 可变形卷积</h3><p>2D卷积包含两步：1）用规则的网格$\mathcal{R}$在输入特征映射$\mathbf{x}$上采样；2）对$\mathbf{w}$加权的采样值求和。网格$\mathcal{R}$定义了感受野的大小和扩张。例如，$$\mathcal{R}=\lbrace (-1, -1), (-1, 0), \ldots, (0,1), (1, 1)\rbrace$$定义了一个扩张大小为$1$的$3 \times 3$卷积核。</p>
+<p>对于输出特征映射$\mathbf{y}$上的每个位置$\mathbf{p}_0$，我们有$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n) \tag{1}$$其中$\mathbf{p}_n$枚举了$\mathcal{R}$中的位置。</p>
+<p>在可变形卷积中，规则的网格$\mathcal{R}$通过偏移$\lbrace \Delta \mathbf{p}_n|n=1,…,N\rbrace$增大，其中$N=|\mathcal{R}|$。公式(1)变为$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n).\tag{2}$$</p>
+<p>现在，采样是在不规则且有偏移的位置$\mathbf{p}_n + \Delta \mathbf{p}_n$上。由于偏移$\Delta \mathbf{p}_n$通常是小数，公式(2)可以通过双线性插值实现为$$\mathbf{x}(\mathbf{p})=\sum_\mathbf{q} G(\mathbf{q},\mathbf{p})\cdot \mathbf{x}(\mathbf{q}), \tag{3} $$其中$\mathbf{p}$表示任意（小数）位置(公式(2)中$\mathbf{p}=\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n$)，$\mathbf{q}$枚举了特征映射$\mathbf{x}$中所有整体空间位置，$G(\cdot,\cdot)$是双线性插值的核。注意$G$是二维的。它被分为两个一维核$$ G(\mathbf{q},\mathbf{p})=g(q_x,p_x)\cdot g(q_y,p_y), \tag{4}$$其中$g(a,b)=max(0,1-|a-b|)$。公式(3)可以快速计算因为$G(\mathbf{q},\mathbf{p})$仅对于一些$\mathbf{q}$是非零的。</p>
+<p>如图2所示，通过在相同的输入特征映射上应用卷积层来获得偏移。卷积核具有与当前卷积层相同的空间分辨率和扩张（例如，在图2中也具有扩张为1的$3\times 3$）。输出偏移域与输入特征映射具有相同的空间分辨率。通道维度$2N$对应于$N$个2D偏移量。在训练过程中，同时学习用于生成输出特征的卷积核和偏移量。为了学习偏移量，梯度通过等式(3)和(4)中的双线性运算进行反向传播。详见附录A。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/fcn-fig2.png" alt="Figure 2"></p>
+<p>图2：3×3可变形卷积的说明。</p>
+<h3 id="2-2-可变形RoI池化"><a href="#2-2-可变形RoI池化" class="headerlink" title="2.2. 可变形RoI池化"></a>2.2. 可变形RoI池化</h3><p>在所有基于区域提出的目标检测方法中都使用了RoI池化功能[16,15,47,7]。它将任意大小的输入矩形区域转换为固定大小的特征。</p>
+<p><strong>RoI池化[15]</strong>给定输入特征映射$\mathbf{x}$、RoI的大小$w\times h$和左上角$\mathbf{p}_0$，RoI池化将ROI分到$k\times k$（$k$是一个自由参数）个bin中，并输出$k\times k$的特征映射$\mathbf{y}$。对于$(i,j)$-th bin ($0\le i,j &lt; k$)，我们有$$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p})/n_{ij},\tag{5}$$其中$n_{ij}$是bin中的像素数量。第$(i,j)$个bin跨度为$\lfloor i \frac{w}{k} \rfloor \le p_x &lt; \lceil (i+1)\frac{w}{k}\rceil$和$\lfloor j \frac{h}{k}\rfloor \le p_y &lt; \lceil (j+1)\frac{h}{k} \rceil$。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享，如果觉得有收获就打赏吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/29/2017-11-29-Linux下Caffe、Docker、Tensorflow、PyTorch环境搭建(CentOS 7)/" rel="next" title="Linux下Caffe、Docker、Tensorflow，PyTorch环境搭建(CentOS 7)">
+                <i class="fa fa-chevron-left"></i> Linux下Caffe、Docker、Tensorflow，PyTorch环境搭建(CentOS 7)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中英文对照/" rel="prev" title="Deformable Convolutional Networks论文翻译——中英文对照">
+                Deformable Convolutional Networks论文翻译——中英文对照 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">313</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Deformable-Convolutional-Networks"><span class="nav-number">1.</span> <span class="nav-text">Deformable Convolutional Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-可变形卷积网络"><span class="nav-number">1.3.</span> <span class="nav-text">2. 可变形卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-可变形卷积"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1. 可变形卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可变形RoI池化"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2. 可变形RoI池化</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Linux下Caffe、Docker、Tensorflow、PyTorch环境搭建(CentOS 7)">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/cuda-8.0.png">
-<meta property="og:updated_time" content="2017-11-29T03:10:08.000Z">
+<meta property="og:updated_time" content="2017-12-07T08:09:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下Caffe、Docker、Tensorflow，PyTorch环境搭建(CentOS 7)">
 <meta name="twitter:description" content="Linux下Caffe、Docker、Tensorflow、PyTorch环境搭建(CentOS 7)">
@@ -377,7 +377,7 @@
 <h2 id="5-Tensorflow安装"><a href="#5-Tensorflow安装" class="headerlink" title="5. Tensorflow安装"></a>5. Tensorflow安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install tensorflow-gpu</div></pre></td></tr></table></figure>
 <h2 id="6-PyTorch安装"><a href="#6-PyTorch安装" class="headerlink" title="6. PyTorch安装"></a>6. PyTorch安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pip install http://download.pytorch.org/whl/cu80/torch-0.1.12.post2-cp27-none-linux_x86_64.whl</div><div class="line">pip install torchvision</div><div class="line">pip install lmdb</div><div class="line">pip install mahotas</div><div class="line">pip install cffi</div></pre></td></tr></table></figure>
 <h2 id="7-Docker安装"><a href="#7-Docker安装" class="headerlink" title="7. Docker安装"></a>7. Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Install docker</div><div class="line">sudo yum install docker-ce</div><div class="line"></div><div class="line"># Start docker</div><div class="line">sudo systemctl start docker</div><div class="line"></div><div class="line"># Test docker</div><div class="line">sudo docker run hello-world</div></pre></td></tr></table></figure>
-<h2 id="8-Nvidia-Docker安装"><a href="#8-Nvidia-Docker安装" class="headerlink" title="8. Nvidia-Docker安装"></a>8. Nvidia-Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Install nvida-docker</div><div class="line"># https://github.com/NVIDIA/nvidia-docker</div><div class="line">wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker-1.0.1-1.x86_64.rpm</div><div class="line"></div><div class="line">sudo rpm -i /tmp/nvidia-docker*.rpm &amp;&amp; rm /tmp/nvidia-docker*.rpm</div><div class="line"></div><div class="line"># start</div><div class="line">sudo systemctl start nvidia-docker</div><div class="line"></div><div class="line"># Test nvidia-smi</div><div class="line">nvidia-docker run --rm nvidia/cuda nvidia-smi</div></pre></td></tr></table></figure>
+<h2 id="8-Nvidia-Docker安装"><a href="#8-Nvidia-Docker安装" class="headerlink" title="8. Nvidia-Docker安装"></a>8. Nvidia-Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"># Install nvida-docker</div><div class="line"># https://github.com/NVIDIA/nvidia-docker</div><div class="line">wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker-1.0.1-1.x86_64.rpm</div><div class="line"></div><div class="line">sudo rpm -i /tmp/nvidia-docker*.rpm &amp;&amp; rm /tmp/nvidia-docker*.rpm</div><div class="line"></div><div class="line"># start</div><div class="line">sudo systemctl start nvidia-docker</div><div class="line"></div><div class="line"># Test nvidia-smi</div><div class="line">nvidia-docker run --rm nvidia/cuda nvidia-smi</div><div class="line"></div><div class="line">#link docker to a large disk space.</div><div class="line"># copy Docker files:</div><div class="line">cp -R /var/lib/docker/ [xx path]</div><div class="line"># backup original Docker files:</div><div class="line">mv /var/lib/docker/ /var/lib/docker.backup</div><div class="line"># add link to new Docker files:</div><div class="line">ln -s [xx path] /var/lib/docker</div><div class="line"></div><div class="line"># add other user into docker group. Then run docker without sudo</div><div class="line">sudo /usr/sbin/groupadd docker</div><div class="line">sudo gpasswd -a $&#123;USER&#125; docker</div><div class="line">sudo systemctl restart docker</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -450,6 +450,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中文版/" rel="prev" title="Deformable Convolutional Networks论文翻译——中文版">
+                Deformable Convolutional Networks论文翻译——中文版 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -520,7 +524,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">310</span>
+                <span class="site-state-item-count">313</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

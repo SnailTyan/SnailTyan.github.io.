@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-11-29T03:10:08.000Z</updated>
+  <updated>2017-12-07T08:09:19.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,225 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Dilated Convolutions——扩张卷积</title>
+    <link href="noahsnail.com/2017/12/07/2017-12-7-Dilated%20Convolutions%E2%80%94%E2%80%94%E6%89%A9%E5%BC%A0%E5%8D%B7%E7%A7%AF/"/>
+    <id>noahsnail.com/2017/12/07/2017-12-7-Dilated Convolutions——扩张卷积/</id>
+    <published>2017-12-07T06:52:19.000Z</published>
+    <updated>2017-12-07T08:09:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a>、</p>
+<h2 id="1-扩张卷积"><a href="#1-扩张卷积" class="headerlink" title="1. 扩张卷积"></a>1. 扩张卷积</h2><p>Dilated Convolutions，翻译为扩张卷积或空洞卷积。扩张卷积与普通的卷积相比，除了卷积核的大小以外，还有一个扩张率(dilation rate)参数，主要用来表示扩张的大小。扩张卷积与普通卷积的相同点在于，卷积核的大小是一样的，在神经网络中即参数数量不变，区别在于扩张卷积具有更大的感受野。感受野是卷积核在图像上看到的大小，例如$3 \times 3$卷积核的感受野大小为9。</p>
+<h2 id="2-示意图"><a href="#2-示意图" class="headerlink" title="2. 示意图"></a>2. 示意图</h2><p>下图是扩张卷积的示意图。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/dilation-conv.png" alt="Dilated Convolution"></p>
+<p>(a) 普通卷积，1-dilated convolution，卷积核的感受野为$3 \times 3 = 9$。<br>(b) 扩张卷积，2-dilated convolution，卷积核的感受野为$7 \times 7 = 49$。<br>(c) 扩张卷积，4-dilated convolution，卷积核的感受野为$15 \times 15 = 225$。</p>
+<p>从上图中可以看出，卷积核的参数个数保持不变，感受野的大小随着“dilation rate”参数的增加呈指数增长。</p>
+<h2 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h2><p>扩展卷积在保持参数个数不变的情况下增大了卷积核的感受野，同时它可以保证输出的特征映射（feature map）的大小保持不变。一个扩张率为2的3×3卷积核，感受野与5×5的卷积核相同，但参数数量仅为9个，是5×5卷积参数数量的$36\%$。</p>
+<h2 id="4-应用"><a href="#4-应用" class="headerlink" title="4. 应用"></a>4. 应用</h2><p>扩张卷积在图像分割、语音合成、机器翻译、目标检测中都有应用。</p>
+<h2 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5. 参考资料"></a>5. 参考资料</h2><p><img src="https://arxiv.org/abs/1511.07122" alt="Multi-Scale Context Aggregation by Dilated Convolutions"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Dilated Convolutions——扩张卷积
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Deformable Convolutional Networks论文翻译——中英文对照</title>
+    <link href="noahsnail.com/2017/11/29/2017-11-29-Deformable%20Convolutional%20Networks%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>noahsnail.com/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中英文对照/</id>
+    <published>2017-11-29T08:45:36.000Z</published>
+    <updated>2017-12-07T08:38:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="Deformable-Convolutional-Networks"><a href="#Deformable-Convolutional-Networks" class="headerlink" title="Deformable Convolutional Networks"></a>Deformable Convolutional Networks</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Convolutional neural networks (CNNs) are inherently limited to model geometric transformations due to the fixed geometric structures in their building modules. In this work, we introduce two new modules to enhance the transformation modeling capability of CNNs, namely, deformable convolution and deformable RoI pooling. Both are based on the idea of augmenting the spatial sampling locations in the modules with additional offsets and learning the offsets from the target tasks, without additional supervision. The new modules can readily replace their plain counterparts in existing CNNs and can be easily trained end-to-end by standard back-propagation, giving rise to <em>deformable convolutional networks</em>. Extensive experiments validate the performance of our approach. For the first time, we show that learning dense spatial transformation in deep CNNs is effective for sophisticated vision tasks such as object detection and semantic segmentation. The code is released at <a href="https://github.com/msracver/Deformable-ConvNets" target="_blank" rel="external">https://github.com/msracver/Deformable-ConvNets</a>.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>卷积神经网络（CNN）由于其构建模块固定的几何结构天然地局限于建模几何变换。在这项工作中，我们引入了两个新的模块来提高CNN的转换建模能力，即可变形卷积和可变形RoI池化。两者都基于这样的想法：增加模块中的空间采样位置以及额外的偏移量，并且从目标任务中学习偏移量，而不需要额外的监督。新模块可以很容易地替换现有CNN中的普通模块，并且可以通过标准的反向传播便易地进行端对端训练，从而产生<em>可变形卷积网络</em>。大量的实验验证了我们方法的性能。我们首次证明了在深度CNN中学习密集空间变换对于复杂的视觉任务（如目标检测和语义分割）是有效的。代码发布在<a href="https://github.com/msracver/Deformable-ConvNets" target="_blank" rel="external">https://github.com/msracver/Deformable-ConvNets</a>。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>A key challenge in visual recognition is how to accommodate geometric variations or model geometric transformations in object scale, pose, viewpoint, and part deformation. In general, there are two ways. The first is to build the training datasets with sufficient desired variations. This is usually realized by augmenting the existing data samples, e.g., by affine transformation. Robust representations can be learned from the data, but usually at the cost of expensive training and complex model parameters. The second is to use transformation-invariant features and algorithms. This category subsumes many well known techniques, such as SIFT (scale invariant feature transform) [42] and sliding window based object detection paradigm.</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>视觉识别中的一个关键挑战是如何在目标尺度，姿态，视点和部件变形中适应几何变化或建模几何变换。一般来说，有两种方法。首先是建立具有足够期望变化的训练数据集。这通常通过增加现有的数据样本来实现，例如通过仿射变换。鲁棒的表示可以从数据中学习，但是通常以昂贵的训练和复杂的模型参数为代价。其次是使用变换不变的特征和算法。这一类包含了许多众所周知的技术，如SIFT（尺度不变特征变换）[42]和基于滑动窗口的目标检测范例。</p>
+<p>There are two drawbacks in above ways. First, the geometric transformations are assumed fixed and known. Such prior knowledge is used to augment the data, and design the features and algorithms. This assumption prevents generalization to new tasks possessing unknown geometric transformations, which are not properly modeled. Second, hand-crafted design of invariant features and algorithms could be difficult or infeasible for overly complex transformations, even when they are known.</p>
+<p>上述方法有两个缺点。首先，几何变换被假定是固定并且已知的。这样的先验知识被用来扩充数据，并设计特征和算法。这个假设阻止了对具有未知几何变换的新任务的泛化能力，这些新任务没有被正确地建模。其次，手工设计的不变特征和算法对于过于复杂的变换可能是困难的或不可行的，即使在已知复杂变化的情况下。</p>
+<p>Recently, convolutional neural networks (CNNs) [35] have achieved significant success for visual recognition tasks, such as image classification [31], semantic segmentation [41], and object detection [16]. Nevertheless, they still share the above two drawbacks. Their capability of modeling geometric transformations mostly comes from the extensive data augmentation, the large model capacity, and some simple hand-crafted modules (e.g., max-pooling [1] for small translation-invariance).</p>
+<p>最近，卷积神经网络（CNNs）[35]在图像分类[31]，语义分割[41]和目标检测[16]等视觉识别任务中取得了显著的成功。不过，他们仍然有上述两个缺点。它们对几何变换建模的能力主要来自大量的数据增强，大的模型容量以及一些简单的手工设计模块（例如，对小的平移具有不变性的最大池化[1]）。</p>
+<p>In short, CNNs are inherently limited to model large, unknown transformations. The limitation originates from the fixed geometric structures of CNN modules: a convolution unit samples the input feature map at fixed locations; a pooling layer reduces the spatial resolution at a fixed ratio; a RoI (region-of-interest) pooling layer separates a RoI into fixed spatial bins, etc. There lacks internal mechanisms to handle the geometric transformations. This causes noticeable problems. For one example, the receptive field sizes of all activation units in the same CNN layer are the same. This is undesirable for high level CNN layers that encode the semantics over spatial locations. Because different locations may correspond to objects with different scales or deformation, adaptive determination of scales or receptive field sizes is desirable for visual recognition with fine localization, e.g., semantic segmentation using fully convolutional networks [41]. For another example, while object detection has seen significant and rapid progress [16, 52, 15, 47, 46, 40, 7] recently, all approaches still rely on the primitive bounding box based feature extraction. This is clearly sub-optimal, especially for non-rigid objects.</p>
+<p>简而言之，CNN本质上局限于建模大型，未知的转换。该限制源于CNN模块的固定几何结构：卷积单元在固定位置对输入特征图进行采样；池化层以一个固定的比例降低空间分辨率；一个RoI（感兴趣区域）池化层把RoI分成固定的空间组块等等。缺乏处理几何变换的内部机制。这会导致明显的问题。举一个例子，同一CNN层中所有激活单元的感受野大小是相同的。对于在空间位置上编码语义的高级CNN层来说，这是不可取的。由于不同的位置可能对应不同尺度或形变的目标，所以对于具有精细定位的视觉识别来说，例如使用全卷积网络的语义分割[41]，尺度或感受野大小的自适应确定是理想的情况。又如，尽管最近目标检测已经取得了显著而迅速的进展[16,52,15,47,46,40,7]，但所有方法仍然依赖于基于特征提取的粗糙边界框。这显然是次优的，特别是对于非刚性目标。</p>
+<p>In this work, we introduce two new modules that greatly enhance CNNs’ capability of modeling geometric transformations. The first is <em>deformable convolution</em>. It adds 2D offsets to the regular grid sampling locations in the standard convolution. It enables free form deformation of the sampling grid. It is illustrated in Figure 1. The offsets are learned from the preceding feature maps, via additional convolutional layers. Thus, the deformation is conditioned on the input features in a local, dense, and adaptive manner.</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/dcn-fig1.png" alt="Figure 1"></p>
+<p>Figure 1: Illustration of the sampling locations in 3 × 3 standard and deformable convolutions. (a) regular sampling grid (green points) of standard convolution. (b) deformed sampling locations (dark blue points) with augmented offsets (light blue arrows) in deformable convolution. (c)(d) are special cases of (b), showing that the deformable convolution generalizes various transformations for scale, (anisotropic) aspect ratio and rotation.</p>
+<p>在这项工作中，我们引入了两个新的模块，大大提高了CNN建模几何变换的能力。首先是<em>可变形卷积</em>。它将2D偏移添加到标准卷积中的常规网格采样位置上。它可以使采样网格自由形变。如图1所示。偏移量通过附加的卷积层从前面的特征图中学习。因此，变形以局部的，密集的和自适应的方式受到输入特征的限制。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/dcn-fig1.png" alt="Figure 1"></p>
+<p>图1：3×3标准卷积和可变形卷积中采样位置的示意图。（a）标准卷积的定期采样网格（绿点）。（b）变形的采样位置（深蓝色点）和可变形卷积中增大的偏移量（浅蓝色箭头）。（c）（d）是（b）的特例，表明可变形卷积泛化到了各种尺度（各向异性）、长宽比和旋转的变换。</p>
+<p>The second is <em>deformable RoI pooling</em>. It adds an offset to each bin position in the regular bin partition of the previous RoI pooling [15, 7]. Similarly, the offsets are learned from the preceding feature maps and the RoIs, enabling adaptive part localization for objects with different shapes.</p>
+<p>第二个是<em>可变形的RoI池化</em>。它为前面的RoI池化的常规bin分区中的每个bin位置添加一个偏移量[15,7]。类似地，从前面的特征映射和RoI中学习偏移量，使得具有不同形状的目标能够自适应的进行部件定位。</p>
+<p>Both modules are light weight. They add small amount of parameters and computation for the offset learning. They can readily replace their plain counterparts in deep CNNs and can be easily trained end-to-end with standard back-propagation. The resulting CNNs are called <em>deformable convolutional networks</em>, or <em>deformable ConvNets</em>.</p>
+<p>两个模块都轻量的。它们为偏移学习增加了少量的参数和计算。他们可以很容易地取代深层CNN中简单的对应部分，并且可以很容易地通过标准的反向传播进行端对端的训练。所得到的CNN被称为<em>可变形卷积网络</em>，或<em>可变形ConvNets</em>。</p>
+<p>Our approach shares similar high level spirit with spatial transform networks [26] and deformable part models [11]. They all have internal transformation parameters and learn such parameters purely from data. A key difference in deformable ConvNets is that they deal with dense spatial transformations in a simple, efficient, deep and end-to-end manner. In Section 3.1, we discuss in details the relation of our work to previous works and analyze the superiority of deformable ConvNets.</p>
+<p>我们的方法与空间变换网络[26]和可变形部件模型[11]具有类似的高层精神。它们都有内部的转换参数，纯粹从数据中学习这些参数。可变形ConvNets的一个关键区别在于它们以简单，高效，深入和端到端的方式处理密集的空间变换。在3.1节中，我们详细讨论了我们的工作与以前的工作的关系，并分析了可变形ConvNets的优越性。</p>
+<h2 id="2-Deformable-Convolutional-Networks"><a href="#2-Deformable-Convolutional-Networks" class="headerlink" title="2. Deformable Convolutional Networks"></a>2. Deformable Convolutional Networks</h2><p>The feature maps and convolution in CNNs are 3D. Both deformable convolution and RoI pooling modules operate on the 2D spatial domain. The operation remains the same across the channel dimension. Without loss of generality, the modules are described in 2D here for notation clarity. Extension to 3D is straightforward.</p>
+<h2 id="2-可变形卷积网络"><a href="#2-可变形卷积网络" class="headerlink" title="2. 可变形卷积网络"></a>2. 可变形卷积网络</h2><p>CNN中的特征映射和卷积是3D的。可变形卷积和RoI池化模块都在2D空间域上运行。在整个通道维度上的操作保持不变。在不丧失泛化能力的情况下，为了符号清晰，这些模块在2D中描述。扩展到3D很简单。</p>
+<h3 id="2-1-Deformable-Convolution"><a href="#2-1-Deformable-Convolution" class="headerlink" title="2.1. Deformable Convolution"></a>2.1. Deformable Convolution</h3><p>The 2D convolution consists of two steps: 1) sampling using a regular grid $\mathcal{R}$ over the input feature map $\mathbf{x}$; 2) summation of sampled values weighted by $\mathbf{w}$. The grid $\mathcal{R}$ defines the receptive field size and dilation. For example, $$\mathcal{R}=\lbrace (-1, -1), (-1, 0), \ldots, (0,1), (1, 1)\rbrace$$ defines a $3 \times 3$ kernel with dilation $1$.</p>
+<h3 id="2-1-可变形卷积"><a href="#2-1-可变形卷积" class="headerlink" title="2.1. 可变形卷积"></a>2.1. 可变形卷积</h3><p>2D卷积包含两步：1）用规则的网格$\mathcal{R}$在输入特征映射$\mathbf{x}$上采样；2）对$\mathbf{w}$加权的采样值求和。网格$\mathcal{R}$定义了感受野的大小和扩张。例如，$$\mathcal{R}=\lbrace (-1, -1), (-1, 0), \ldots, (0,1), (1, 1)\rbrace$$定义了一个扩张大小为$1$的$3 \times 3$卷积核。</p>
+<p>For each location $\mathbf{p}_0$ on the output feature map $\mathbf{y}$, we have $$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n) \tag{1}$$ where $\mathbf{p}_n$ enumerates the locations in $\mathcal{R}$.</p>
+<p>对于输出特征映射$\mathbf{y}$上的每个位置$\mathbf{p}_0$，我们有$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n) \tag{1}$$其中$\mathbf{p}_n$枚举了$\mathcal{R}$中的位置。</p>
+<p>In deformable convolution, the regular grid $\mathcal{R}$ is augmented with offsets $\lbrace \Delta \mathbf{p}_n|n=1,…,N\rbrace$, where $N=|\mathcal{R}|$. Eq.(1) becomes $$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n).\tag{2}$$</p>
+<p>在可变形卷积中，规则的网格$\mathcal{R}$通过偏移$\lbrace \Delta \mathbf{p}_n|n=1,…,N\rbrace$增大，其中$N=|\mathcal{R}|$。公式(1)变为$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n).\tag{2}$$</p>
+<p>Now, the sampling is on the irregular and offset locations $\mathbf{p}_n + \Delta \mathbf{p}_n$. As the offset $\Delta \mathbf{p}_n$ is typically fractional, Eq.(2) is implemented via bilinear interpolation as $$\mathbf{x}(\mathbf{p})=\sum_\mathbf{q} G(\mathbf{q},\mathbf{p})\cdot \mathbf{x}(\mathbf{q}), \tag{3} $$ where $\mathbf{p}$ denotes an arbitrary (fractional) location ($\mathbf{p}=\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n$ for Eq.(2)), $\mathbf{q}$ enumerates all integral spatial locations in the feature map $\mathbf{x}$, and $G(\cdot,\cdot)$ is the bilinear interpolation kernel. Note that $G$ is two dimensional. It is separated into two one dimensional kernels as $$ G(\mathbf{q},\mathbf{p})=g(q_x,p_x)\cdot g(q_y,p_y), \tag{4}$$ where $g(a,b)=max(0,1-|a-b|)$. Eq.(3) is fast to compute as $G(\mathbf{q},\mathbf{p})$ is non-zero only for a few $\mathbf{q}$s.</p>
+<p>现在，采样是在不规则且有偏移的位置$\mathbf{p}_n + \Delta \mathbf{p}_n$上。由于偏移$\Delta \mathbf{p}_n$通常是小数，公式(2)可以通过双线性插值实现为$$\mathbf{x}(\mathbf{p})=\sum_\mathbf{q} G(\mathbf{q},\mathbf{p})\cdot \mathbf{x}(\mathbf{q}), \tag{3} $$其中$\mathbf{p}$表示任意（小数）位置(公式(2)中$\mathbf{p}=\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n$)，$\mathbf{q}$枚举了特征映射$\mathbf{x}$中所有整体空间位置，$G(\cdot,\cdot)$是双线性插值的核。注意$G$是二维的。它被分为两个一维核$$ G(\mathbf{q},\mathbf{p})=g(q_x,p_x)\cdot g(q_y,p_y), \tag{4}$$其中$g(a,b)=max(0,1-|a-b|)$。公式(3)可以快速计算因为$G(\mathbf{q},\mathbf{p})$仅对于一些$\mathbf{q}$是非零的。</p>
+<p>As illustrated in Figure 2, the offsets are obtained by applying a convolutional layer over the same input feature map. The convolution kernel is of the same spatial resolution and dilation as those of the current convolutional layer (e.g., also $3\times 3$ with dilation 1 in Figure 2. The output offset fields have the same spatial resolution with the input feature map. The channel dimension $2N$ corresponds to $N$ 2D offsets. During training, both the convolutional kernels for generating the output features and the offsets are learned simultaneously. To learn the offsets, the gradients are back-propagated through the bilinear operations in Eq.(3) and Eq.(4). It is detailed in appendix A.</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/fcn-fig2.png" alt="Figure 2"></p>
+<p>Figure 2: Illustration of 3 × 3 deformable convolution.</p>
+<p>如图2所示，通过在相同的输入特征映射上应用卷积层来获得偏移。卷积核具有与当前卷积层相同的空间分辨率和扩张（例如，在图2中也具有扩张为1的$3\times 3$）。输出偏移域与输入特征映射具有相同的空间分辨率。通道维度$2N$对应于$N$个2D偏移量。在训练过程中，同时学习用于生成输出特征的卷积核和偏移量。为了学习偏移量，梯度通过等式(3)和(4)中的双线性运算进行反向传播。详见附录A。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/fcn-fig2.png" alt="Figure 2"></p>
+<p>图2：3×3可变形卷积的说明。</p>
+<h3 id="2-2-Deformable-RoI-Pooling"><a href="#2-2-Deformable-RoI-Pooling" class="headerlink" title="2.2. Deformable RoI Pooling"></a>2.2. Deformable RoI Pooling</h3><p>RoI pooling is used in all region proposal based object detection methods [16, 15, 47, 7]. It converts an input rectangular region of arbitrary size into fixed size features.</p>
+<h3 id="2-2-可变形RoI池化"><a href="#2-2-可变形RoI池化" class="headerlink" title="2.2. 可变形RoI池化"></a>2.2. 可变形RoI池化</h3><p>在所有基于区域提出的目标检测方法中都使用了RoI池化功能[16,15,47,7]。它将任意大小的输入矩形区域转换为固定大小的特征。</p>
+<p><strong>RoI Pooling [15]</strong> Given the input feature map $\mathbf{x}$ and a RoI of size $w\times h$ and top-left corner $\mathbf{p}_0$, RoI pooling divides the RoI into $k\times k$ ($k$ is a free parameter) bins and outputs a $k\times k$ feature map $\mathbf{y}$. For $(i,j)$-th bin ($0\le i,j &lt; k$), we have $$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p})/n_{ij},\tag{5}$$ where $n_{ij}$ is the number of pixels in the bin. The $(i,j)$-th bin spans $\lfloor i \frac{w}{k} \rfloor \le p_x &lt; \lceil (i+1)\frac{w}{k}\rceil$ and $\lfloor j \frac{h}{k}\rfloor \le p_y &lt; \lceil (j+1)\frac{h}{k} \rceil$.</p>
+<p><strong>RoI池化[15]</strong>给定输入特征映射$\mathbf{x}$、RoI的大小$w\times h$和左上角$\mathbf{p}_0$，RoI池化将ROI分到$k\times k$（$k$是一个自由参数）个bin中，并输出$k\times k$的特征映射$\mathbf{y}$。对于$(i,j)$-th bin ($0\le i,j &lt; k$)，我们有$$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p})/n_{ij},\tag{5}$$其中$n_{ij}$是bin中的像素数量。第$(i,j)$个bin跨度为$\lfloor i \frac{w}{k} \rfloor \le p_x &lt; \lceil (i+1)\frac{w}{k}\rceil$和$\lfloor j \frac{h}{k}\rfloor \le p_y &lt; \lceil (j+1)\frac{h}{k} \rceil$。</p>
+<p>Similarly as in Eq.(2), in deformable RoI pooling, offsets ${\Delta \mathbf{p}_{ij}|0\le i,j &lt; k}$ are added to the spatial binning positions. Eq.(5) becomes $$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p}+\Delta \mathbf{p}_{ij})/n_{ij}. \tag{6}$$ Typically, $\Delta \mathbf{p}_{ij}$ is fractional. Eq.(6) is implemented by bilinear interpolation via Eq.(3) and (4).</p>
+<p>类似于等式（2），在可变形RoI池化中，将偏移${\Delta \mathbf{p}_{ij}|0\le i,j &lt; k}$加到空间组块的位置上。等式（5）变为$$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p}+\Delta \mathbf{p}_{ij})/n_{ij}. \tag{6}$$通常，$\Delta \mathbf{p}_{ij}$是分数。等式（6）通过等式（3）和（4）通过双线性插值来实现。</p>
+<p>Figure 3 illustrates how to obtain the offsets. Firstly, RoI pooling (Eq.(5)) generates the pooled feature maps. From the maps, a fc layer generates the \emph{normalized} offsets $\Delta \widehat{\mathbf{p}}_{ij}$, which are then transformed to the offsets $\Delta \mathbf{p}_{ij}$ in Eq.(6) by element-wise product with the RoI’s width and height, as $\Delta \mathbf{p}_{ij} = \gamma \cdot \Delta \widehat{\mathbf{p}}_{ij} \circ (w, h)$. Here $\gamma$ is a pre-defined scalar to modulate the magnitude of the offsets. It is empirically set to $\gamma=0.1$. The offset normalization is necessary to make the offset learning invariant to RoI size. The fc layer is learned by back-propagation, as detailed in appendix A.</p>
+<p><strong>Position-Sensitive (PS) RoI Pooling [7]</strong> It is fully convolutional and different from RoI pooling. Through a conv layer, all the input feature maps are firstly converted to $k^2$ \emph{score maps} for each object class (totally $C+1$ for $C$ object classes), as illustrated in the bottom branch in Figure~\ref{fig.deformable_psroi_pooling<em>structure}. Without need to distinguish between classes, such score maps are denoted as $\lbrace \mathbf{x}\</em>{i,j}\rbrace$ where $(i,j)$ enumerates all bins. Pooling is performed on these score maps. The output value for $(i,j)$-th bin is obtained by summation from one score map $\mathbf{x}_{i,j}$ corresponding to that bin. In short, the difference from RoI pooling in Eq.(5) is that a general feature map $\mathbf{x}$ is replaced by a specific positive-sensitive score map $\mathbf{x}_{i,j}$. </p>
+<p>In deformable PS RoI pooling, the only change in Eq.(6) is that $\mathbf{x}$ is also modified to $\mathbf{x}_{i,j}$. However, the offset learning is different. It follows the <code>fully convolutional</code> spirit in [7], as illustrated in Figure 4. In the top branch, a conv layer generates the full spatial resolution offset fields. For each RoI (also for each class), PS RoI pooling is applied on such fields to obtain <em>normalized</em> offsets $\Delta \widehat{\mathbf{p}}_{ij}$, which are then transformed to the real offsets $\Delta \mathbf{p}_{ij}$ in the same way as in deformable RoI pooling described above.</p>
+<h3 id="2-3-Deformable-ConvNets"><a href="#2-3-Deformable-ConvNets" class="headerlink" title="2.3. Deformable ConvNets"></a>2.3. Deformable ConvNets</h3><p>Both deformable convolution and RoI pooling modules have the same input and output as their plain versions. Hence, they can readily replace their plain counterparts in existing CNNs. In the training, these added conv and fc layers for offset learning are initialized with zero weights. Their learning rates are set to $\beta$ times ($\beta = 1$ by default, and $\beta = 0.01$ for the fc layer in Faster R-CNN) of the learning rate for the existing layers. They are trained via back propagation through the bilinear interpolation operations in Eq.(3) and Eq.(4). The resulting CNNs are called <em>deformable ConvNets</em>.</p>
+<p>To integrate deformable ConvNets with the state-of-the-art CNN architectures, we note that these architectures consist of two stages. First, a deep fully convolutional network generates feature maps over the whole input image. Second, a shallow task specific network generates results from the feature maps. We elaborate the two steps below.</p>
+<p><strong>Deformable Convolution for Feature Extraction</strong> We adopt two state-of-the-art architectures for feature extraction: ResNet-101 [22] and a modifed version of Inception-ResNet [51]. Both are pre-trained on ImageNet [8] classification dataset.</p>
+<p>The original Inception-ResNet is designed for image recognition. It has a feature misalignment issue and problematic for dense prediction tasks. It is modified to fix the alignment problem [20]. The modified version is dubbed as “Aligned-Inception-ResNet” and is detailed in appendix B.</p>
+<p>Both models consist of several convolutional blocks, an average pooling and a 1000-way fc layer for ImageNet classification. The average pooling and the fc layers are removed. A randomly initialized 1 × 1 convolution is added at last to reduce the channel dimension to 1024. As in common practice [4, 7], the effective stride in the last convolutional block is reduced from 32 pixels to 16 pixels to increase the feature map resolution. Specifically, at the beginning of the last block, stride is changed from 2 to 1 (“conv5” for both ResNet-101 and Aligned-Inception-ResNet). To compensate, the dilation of all the convolution filters in this block (with kernel size &gt; 1) is changed from 1 to 2.</p>
+<p>Optionally, <em>deformable convolution</em> is applied to the last few convolutional layers (with kernel size &gt; 1). We experimented with different numbers of such layers and found 3 as a good trade-off for different tasks, as reported in Table 1.</p>
+<p><strong>Segmentation and Detection Networks</strong> A task specific network is built upon the output feature maps from the feature extraction network mentioned above.</p>
+<p>In the below, $C$ denotes the number of object classes.</p>
+<p>DeepLab [5] is a state-of-the-art method for semantic segmentation. It adds a 1 × 1 convolutional layer over the feature maps to generates (C + 1) maps that represent the per-pixel classification scores. A following softmax layer then outputs the per-pixel probabilities.</p>
+<p>Category-Aware RPN is almost the same as the region proposal network in [47], except that the 2-class (object or not) convolutional classifier is replaced by a (C + 1)-class convolutional classifier. It can be considered as a simplified version of SSD [40].</p>
+<p>Faster R-CNN [47] is the state-of-the-art detector. In our implementation, the RPN branch is added on the top of the conv4 block, following [47]. In the previous practice [22, 24], the RoI pooling layer is inserted between the conv4 and the conv5 blocks in ResNet-101, leaving 10 layers for each RoI. This design achieves good accuracy but has high per-RoI computation. Instead, we adopt a simplified design as in [38]. The RoI pooling layer is added at last1. On top of the pooled RoI features, two fc layers of dimension 1024 are added, followed by the bounding box regression and the classification branches. Although such simplification (from 10 layer conv5 block to 2 fc layers) would slightly decrease the accuracy, it still makes a strong enough baseline and is not a concern in this work.</p>
+<p>Optionally, the RoI pooling layer can be changed to deformable RoI pooling.</p>
+<p>R-FCN [7] is another state-of-the-art detector. It has negligible per-RoI computation cost. We follow the original implementation. Optionally, its RoI pooling layer can be changed to deformable position-sensitive RoI pooling.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Y.-L. Boureau, J. Ponce, and Y. LeCun. A theoretical analysis of feature pooling in visual recognition. In ICML, 2010. 1</p>
+<p>[2] B. D. Brabandere, X. Jia, T. Tuytelaars, and L. V. Gool. Dynamic filter networks. In NIPS, 2016. 6</p>
+<p>[3] J. Bruna and S. Mallat. Invariant scattering convolution networks. TPAMI, 2013. 6</p>
+<p>[4] L.-C. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. In ICLR, 2015. 4, 7</p>
+<p>[5] L.-C. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and fully connected crfs. arXiv preprint arXiv:1606.00915, 2016. 4, 6, 7</p>
+<p>[6] M. Cordts, M. Omran, S. Ramos, T. Rehfeld, M. Enzweiler, R. Benenson, U. Franke, S. Roth, and B. Schiele. The cityscapes dataset for semantic urban scene understanding. In CVPR, 2016. 7</p>
+<p>[7] J. Dai, Y. Li, K. He, and J. Sun. R-fcn: Object detection via region-based fully convolutional networks. In NIPS, 2016. 1, 2, 3, 4, 5, 6</p>
+<p>[8] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei. Imagenet: A large-scale hierarchical image database. In CVPR, 2009. 4, 10</p>
+<p>[9] S. Dieleman, J. D. Fauw, and K. Kavukcuoglu. Exploiting cyclic symmetry in convolutional neural networks. arXiv preprint arXiv:1602.02660, 2016. 6</p>
+<p>[10] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The PASCAL Visual Object Classes (VOC) Challenge. IJCV, 2010. 7</p>
+<p>[11] P. F. Felzenszwalb, R. B. Girshick, D. McAllester, and D. Ramanan. Object detection with discriminatively trained part-based models. TPAMI, 2010. 2, 6</p>
+<p>[12] W. T. Freeman and E. H. Adelson. The design and use of steerable filters. TPAMI, 1991. 6</p>
+<p>[13] R. Gens and P. M. Domingos. Deep symmetry networks. In NIPS, 2014. 6</p>
+<p>[14] S. Gidaris and N. Komodakis. Object detection via a multiregion &amp; semantic segmentation-aware cnn model. In ICCV, 2015. 9</p>
+<p>[15] R. Girshick. Fast R-CNN. In ICCV, 2015. 1, 2, 3, 6, 7</p>
+<p>[16] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In CVPR, 2014. 1, 3, 6</p>
+<p>[17] R. Girshick, F. Iandola, T. Darrell, and J. Malik. Deformable part models are convolutional neural networks.</p>
+<p>[20] K. He, X. Zhang, S. Ren, and J. Sun. Aligned-inceptionresnet model, unpublished work. 4, 10</p>
+<p>[21] K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV, 2014. 6</p>
+<p>[22] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In CVPR, 2016. 4, 10</p>
+<p>[23] M. Holschneider, R. Kronland-Martinet, J. Morlet, and P. Tchamitchian. A real-time algorithm for signal analysis with the help of the wavelet transform. Wavelets: Time-Frequency Methods and Phase Space, page 289297, 1989. 6</p>
+<p>[24] J. Huang, V. Rathod, C. Sun, M. Zhu, A. Korattikara, A. Fathi, I. Fischer, Z. Wojna, Y. Song, S. Guadarrama, and K. Murphy. Speed/accuracy trade-offs for modern convolutional object detectors. arXiv preprint arXiv:1611.10012, 2016. 4</p>
+<p>[25] J.-H. Jacobsen, J. van Gemert, Z. Lou, and A. W.M.Smeulders. Structured receptive fields in cnns. In CVPR, 2016. 6</p>
+<p>[26] M. Jaderberg, K. Simonyan, A. Zisserman, and K. Kavukcuoglu. Spatial transformer networks. In NIPS, 2015. 2, 5</p>
+<p>[27] Y. Jeon and J. Kim. Active convolution: Learning the shape of convolution for image classification. In CVPR, 2017. 5</p>
+<p>[28] Y. Jia, C. Huang, and T. Darrell. Beyond spatial pyramids: Receptive field learning for pooled image features. In CVPR, 2012. 6</p>
+<p>[29] A. Kanazawa, A. Sharma, and D. Jacobs. Locally scale-invariant convolutional neural networks. In NIPS, 2014. 6</p>
+<p>[30] J. J. Koenderink and A. J. van Doom. Representation of local geometry in the visual system. Biological Cybernetics, 55(6):367–375, Mar. 1987. 6</p>
+<p>[31] A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet classification with deep convolutional neural networks. In NIPS, 2012. 1</p>
+<p>[32] D.LaptevandJ.M.Buhmann.Transformation-invariantcon-volutional jungles. In CVPR, 2015. 6</p>
+<p>[33] D. Laptev, N. Savinov, J. M. Buhmann, and M. Pollefeys. Ti-pooling: transformation-invariant pooling for feature learning in convolutional neural networks. arXiv preprint arXiv:1604.06318, 2016. 6</p>
+<p>[34] S. Lazebnik, C. Schmid, and J. Ponce. Beyond bags of features: Spatial pyramid matching for recognizing natural scene categories. In CVPR, 2006. 6</p>
+<p>[35] Y. LeCun and Y. Bengio. Convolutional networks for images, speech, and time series. The handbook of brain theory and neural networks, 1995. 1</p>
+<p>[36] K. Lenc and A. Vedaldi. Understanding image representations by measuring their equivariance and equivalence. In CVPR, 2015. 6</p>
+<p>[37] C.-H. Lin and S. Lucey. Inverse compositional spatial transformer networks. arXiv preprint arXiv:1612.03897, 2016. arXiv preprint arXiv:1409.5403, 2014. 6</p>
+<p>[18] B. Hariharan, P. Arbeláez, L. Bourdev, S. Maji, and J. Malik. 5 Semantic contours from inverse detectors. In ICCV, 2011. 7 [19] B. Hariharan, P. Arbeláez, R. Girshick, and J. Malik. Simultaneous detection and segmentation. In ECCV. 2014. 7</p>
+<p>[38] T.-Y.Lin,P.Dollár,R.Girshick,K.He,B.Hariharan,and S. Belongie. Feature pyramid networks for object detection. In CVPR, 2017. 4, 7</p>
+<p>[39] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ra- manan, P. Dolla ́r, and C. L. Zitnick. Microsoft COCO: Common objects in context. In ECCV. 2014. 7</p>
+<p>[40] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed. Ssd: Single shot multibox detector. In ECCV, 2016. 1, 4</p>
+<p>[41] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015. 1, 6, 7</p>
+<p>[42] D. G. Lowe. Object recognition from local scale-invariant features. In ICCV, 1999. 1, 6</p>
+<p>[43] W. Luo, Y. Li, R. Urtasun, and R. Zemel. Understanding the effective receptive field in deep convolutional neural networks. arXiv preprint arXiv:1701.04128, 2017. 6</p>
+<p>[44] W.Ouyang,X.Wang,X.Zeng,S.Qiu,P.Luo,Y.Tian,H.Li, S. Yang, Z. Wang, C.-C. Loy, and X. Tang. Deepid-net: Deformable deep convolutional neural networks for object detection. In CVPR, 2015. 6</p>
+<p>[45] P. Perona. Deformable kernels for early vision. TPAMI, 1995. 6</p>
+<p>[46] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. In CVPR, 2016. 1</p>
+<p>[47] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015. 1, 3, 4, 6, 7</p>
+<p>[48] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. TPAMI, 2016. 7</p>
+<p>[49] E. Rublee, V. Rabaud, K. Konolige, and G. Bradski. Orb: an efficient alternative to sift or surf. In ICCV, 2011. 6</p>
+<p>[50] K. Sohn and H. Lee. Learning invariant representations with local transformations. In ICML, 2012. 6</p>
+<p>[51] C.Szegedy,S.Ioffe,V.Vanhoucke,andA.Alemi.Inception-v4, inception-resnet and the impact of residual connections on learning. arXiv preprint arXiv:1602.07261, 2016. 4, 10</p>
+<p>[52] C. Szegedy, S. Reed, D. Erhan, and D. Anguelov. Scalable, high-quality object detection. arXiv:1412.1441v2, 2014. 1</p>
+<p>[53] D. E. Worrall, S. J. Garbin, D. Turmukhambetov, and G. J. Brostow. Harmonic networks: Deep translation and rotation equivariance. arXiv preprint arXiv:1612.04642, 2016. 6</p>
+<p>[54] F. Yu and V. Koltun. Multi-scale context aggregation by dilated convolutions. In ICLR, 2016. 6</p>
+<p>[55] F. Yu, V. Koltun, and T. Funkhouser. Dilated residual networks. In CVPR, 2017. 6</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Deformable Convolutional Networks论文翻译——中英文对照
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Deformable Convolutional Networks论文翻译——中文版</title>
+    <link href="noahsnail.com/2017/11/29/2017-11-29-Deformable%20Convolutional%20Networks%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>noahsnail.com/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中文版/</id>
+    <published>2017-11-29T08:44:57.000Z</published>
+    <updated>2017-12-07T08:29:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="Deformable-Convolutional-Networks"><a href="#Deformable-Convolutional-Networks" class="headerlink" title="Deformable Convolutional Networks"></a>Deformable Convolutional Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>卷积神经网络（CNN）由于其构建模块固定的几何结构天然地局限于建模几何变换。在这项工作中，我们引入了两个新的模块来提高CNN的转换建模能力，即可变形卷积和可变形RoI池化。两者都基于这样的想法：增加模块中的空间采样位置以及额外的偏移量，并且从目标任务中学习偏移量，而不需要额外的监督。新模块可以很容易地替换现有CNN中的普通模块，并且可以通过标准的反向传播便易地进行端对端训练，从而产生<em>可变形卷积网络</em>。大量的实验验证了我们方法的性能。我们首次证明了在深度CNN中学习密集空间变换对于复杂的视觉任务（如目标检测和语义分割）是有效的。代码发布在<a href="https://github.com/msracver/Deformable-ConvNets" target="_blank" rel="external">https://github.com/msracver/Deformable-ConvNets</a>。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>视觉识别中的一个关键挑战是如何在目标尺度，姿态，视点和部件变形中适应几何变化或建模几何变换。一般来说，有两种方法。首先是建立具有足够期望变化的训练数据集。这通常通过增加现有的数据样本来实现，例如通过仿射变换。鲁棒的表示可以从数据中学习，但是通常以昂贵的训练和复杂的模型参数为代价。其次是使用变换不变的特征和算法。这一类包含了许多众所周知的技术，如SIFT（尺度不变特征变换）[42]和基于滑动窗口的目标检测范例。</p>
+<p>上述方法有两个缺点。首先，几何变换被假定是固定并且已知的。这样的先验知识被用来扩充数据，并设计特征和算法。这个假设阻止了对具有未知几何变换的新任务的泛化能力，这些新任务没有被正确地建模。其次，手工设计的不变特征和算法对于过于复杂的变换可能是困难的或不可行的，即使在已知复杂变化的情况下。</p>
+<p>最近，卷积神经网络（CNNs）[35]在图像分类[31]，语义分割[41]和目标检测[16]等视觉识别任务中取得了显著的成功。不过，他们仍然有上述两个缺点。它们对几何变换建模的能力主要来自大量的数据增强，大的模型容量以及一些简单的手工设计模块（例如，对小的平移具有不变性的最大池化[1]）。</p>
+<p>简而言之，CNN本质上局限于建模大型，未知的转换。该限制源于CNN模块的固定几何结构：卷积单元在固定位置对输入特征图进行采样；池化层以一个固定的比例降低空间分辨率；一个RoI（感兴趣区域）池化层把RoI分成固定的空间组块等等。缺乏处理几何变换的内部机制。这会导致明显的问题。举一个例子，同一CNN层中所有激活单元的感受野大小是相同的。对于在空间位置上编码语义的高级CNN层来说，这是不可取的。由于不同的位置可能对应不同尺度或形变的目标，所以对于具有精细定位的视觉识别来说，例如使用全卷积网络的语义分割[41]，尺度或感受野大小的自适应确定是理想的情况。又如，尽管最近目标检测已经取得了显著而迅速的进展[16,52,15,47,46,40,7]，但所有方法仍然依赖于基于特征提取的粗糙边界框。这显然是次优的，特别是对于非刚性目标。</p>
+<p>在这项工作中，我们引入了两个新的模块，大大提高了CNN建模几何变换的能力。首先是<em>可变形卷积</em>。它将2D偏移添加到标准卷积中的常规网格采样位置上。它可以使采样网格自由形变。如图1所示。偏移量通过附加的卷积层从前面的特征图中学习。因此，变形以局部的，密集的和自适应的方式受到输入特征的限制。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/dcn-fig1.png" alt="Figure 1"></p>
+<p>图1：3×3标准卷积和可变形卷积中采样位置的示意图。（a）标准卷积的定期采样网格（绿点）。（b）变形的采样位置（深蓝色点）和可变形卷积中增大的偏移量（浅蓝色箭头）。（c）（d）是（b）的特例，表明可变形卷积泛化到了各种尺度（各向异性）、长宽比和旋转的变换。</p>
+<p>第二个是<em>可变形的RoI池化</em>。它为前面的RoI池化的常规bin分区中的每个bin位置添加一个偏移量[15,7]。类似地，从前面的特征映射和RoI中学习偏移量，使得具有不同形状的目标能够自适应的进行部件定位。</p>
+<p>两个模块都轻量的。它们为偏移学习增加了少量的参数和计算。他们可以很容易地取代深层CNN中简单的对应部分，并且可以很容易地通过标准的反向传播进行端对端的训练。所得到的CNN被称为<em>可变形卷积网络</em>，或<em>可变形ConvNets</em>。</p>
+<p>我们的方法与空间变换网络[26]和可变形部件模型[11]具有类似的高层精神。它们都有内部的转换参数，纯粹从数据中学习这些参数。可变形ConvNets的一个关键区别在于它们以简单，高效，深入和端到端的方式处理密集的空间变换。在3.1节中，我们详细讨论了我们的工作与以前的工作的关系，并分析了可变形ConvNets的优越性。</p>
+<h2 id="2-可变形卷积网络"><a href="#2-可变形卷积网络" class="headerlink" title="2. 可变形卷积网络"></a>2. 可变形卷积网络</h2><p>CNN中的特征映射和卷积是3D的。可变形卷积和RoI池化模块都在2D空间域上运行。在整个通道维度上的操作保持不变。在不丧失泛化能力的情况下，为了符号清晰，这些模块在2D中描述。扩展到3D很简单。</p>
+<h3 id="2-1-可变形卷积"><a href="#2-1-可变形卷积" class="headerlink" title="2.1. 可变形卷积"></a>2.1. 可变形卷积</h3><p>2D卷积包含两步：1）用规则的网格$\mathcal{R}$在输入特征映射$\mathbf{x}$上采样；2）对$\mathbf{w}$加权的采样值求和。网格$\mathcal{R}$定义了感受野的大小和扩张。例如，$$\mathcal{R}=\lbrace (-1, -1), (-1, 0), \ldots, (0,1), (1, 1)\rbrace$$定义了一个扩张大小为$1$的$3 \times 3$卷积核。</p>
+<p>对于输出特征映射$\mathbf{y}$上的每个位置$\mathbf{p}_0$，我们有$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n) \tag{1}$$其中$\mathbf{p}_n$枚举了$\mathcal{R}$中的位置。</p>
+<p>在可变形卷积中，规则的网格$\mathcal{R}$通过偏移$\lbrace \Delta \mathbf{p}_n|n=1,…,N\rbrace$增大，其中$N=|\mathcal{R}|$。公式(1)变为$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n).\tag{2}$$</p>
+<p>现在，采样是在不规则且有偏移的位置$\mathbf{p}_n + \Delta \mathbf{p}_n$上。由于偏移$\Delta \mathbf{p}_n$通常是小数，公式(2)可以通过双线性插值实现为$$\mathbf{x}(\mathbf{p})=\sum_\mathbf{q} G(\mathbf{q},\mathbf{p})\cdot \mathbf{x}(\mathbf{q}), \tag{3} $$其中$\mathbf{p}$表示任意（小数）位置(公式(2)中$\mathbf{p}=\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n$)，$\mathbf{q}$枚举了特征映射$\mathbf{x}$中所有整体空间位置，$G(\cdot,\cdot)$是双线性插值的核。注意$G$是二维的。它被分为两个一维核$$ G(\mathbf{q},\mathbf{p})=g(q_x,p_x)\cdot g(q_y,p_y), \tag{4}$$其中$g(a,b)=max(0,1-|a-b|)$。公式(3)可以快速计算因为$G(\mathbf{q},\mathbf{p})$仅对于一些$\mathbf{q}$是非零的。</p>
+<p>如图2所示，通过在相同的输入特征映射上应用卷积层来获得偏移。卷积核具有与当前卷积层相同的空间分辨率和扩张（例如，在图2中也具有扩张为1的$3\times 3$）。输出偏移域与输入特征映射具有相同的空间分辨率。通道维度$2N$对应于$N$个2D偏移量。在训练过程中，同时学习用于生成输出特征的卷积核和偏移量。为了学习偏移量，梯度通过等式(3)和(4)中的双线性运算进行反向传播。详见附录A。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/fcn-fig2.png" alt="Figure 2"></p>
+<p>图2：3×3可变形卷积的说明。</p>
+<h3 id="2-2-可变形RoI池化"><a href="#2-2-可变形RoI池化" class="headerlink" title="2.2. 可变形RoI池化"></a>2.2. 可变形RoI池化</h3><p>在所有基于区域提出的目标检测方法中都使用了RoI池化功能[16,15,47,7]。它将任意大小的输入矩形区域转换为固定大小的特征。</p>
+<p><strong>RoI池化[15]</strong>给定输入特征映射$\mathbf{x}$、RoI的大小$w\times h$和左上角$\mathbf{p}_0$，RoI池化将ROI分到$k\times k$（$k$是一个自由参数）个bin中，并输出$k\times k$的特征映射$\mathbf{y}$。对于$(i,j)$-th bin ($0\le i,j &lt; k$)，我们有$$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p})/n_{ij},\tag{5}$$其中$n_{ij}$是bin中的像素数量。第$(i,j)$个bin跨度为$\lfloor i \frac{w}{k} \rfloor \le p_x &lt; \lceil (i+1)\frac{w}{k}\rceil$和$\lfloor j \frac{h}{k}\rfloor \le p_y &lt; \lceil (j+1)\frac{h}{k} \rceil$。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Deformable Convolutional Networks论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Linux下Caffe、Docker、Tensorflow，PyTorch环境搭建(CentOS 7)</title>
     <link href="noahsnail.com/2017/11/29/2017-11-29-Linux%E4%B8%8BCaffe%E3%80%81Docker%E3%80%81Tensorflow%E3%80%81PyTorch%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(CentOS%207)/"/>
     <id>noahsnail.com/2017/11/29/2017-11-29-Linux下Caffe、Docker、Tensorflow、PyTorch环境搭建(CentOS 7)/</id>
     <published>2017-11-29T02:36:00.000Z</published>
-    <updated>2017-11-29T03:10:08.000Z</updated>
+    <updated>2017-12-07T08:09:15.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>注：模型的训练、测试、部署都可以通过Docker环境完成，环境问题会更少。</p>
@@ -50,7 +264,7 @@
 <h2 id="5-Tensorflow安装"><a href="#5-Tensorflow安装" class="headerlink" title="5. Tensorflow安装"></a>5. Tensorflow安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install tensorflow-gpu</div></pre></td></tr></table></figure>
 <h2 id="6-PyTorch安装"><a href="#6-PyTorch安装" class="headerlink" title="6. PyTorch安装"></a>6. PyTorch安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pip install http://download.pytorch.org/whl/cu80/torch-0.1.12.post2-cp27-none-linux_x86_64.whl</div><div class="line">pip install torchvision</div><div class="line">pip install lmdb</div><div class="line">pip install mahotas</div><div class="line">pip install cffi</div></pre></td></tr></table></figure>
 <h2 id="7-Docker安装"><a href="#7-Docker安装" class="headerlink" title="7. Docker安装"></a>7. Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Install docker</div><div class="line">sudo yum install docker-ce</div><div class="line"></div><div class="line"># Start docker</div><div class="line">sudo systemctl start docker</div><div class="line"></div><div class="line"># Test docker</div><div class="line">sudo docker run hello-world</div></pre></td></tr></table></figure>
-<h2 id="8-Nvidia-Docker安装"><a href="#8-Nvidia-Docker安装" class="headerlink" title="8. Nvidia-Docker安装"></a>8. Nvidia-Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Install nvida-docker</div><div class="line"># https://github.com/NVIDIA/nvidia-docker</div><div class="line">wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker-1.0.1-1.x86_64.rpm</div><div class="line"></div><div class="line">sudo rpm -i /tmp/nvidia-docker*.rpm &amp;&amp; rm /tmp/nvidia-docker*.rpm</div><div class="line"></div><div class="line"># start</div><div class="line">sudo systemctl start nvidia-docker</div><div class="line"></div><div class="line"># Test nvidia-smi</div><div class="line">nvidia-docker run --rm nvidia/cuda nvidia-smi</div></pre></td></tr></table></figure>]]></content>
+<h2 id="8-Nvidia-Docker安装"><a href="#8-Nvidia-Docker安装" class="headerlink" title="8. Nvidia-Docker安装"></a>8. Nvidia-Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"># Install nvida-docker</div><div class="line"># https://github.com/NVIDIA/nvidia-docker</div><div class="line">wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker-1.0.1-1.x86_64.rpm</div><div class="line"></div><div class="line">sudo rpm -i /tmp/nvidia-docker*.rpm &amp;&amp; rm /tmp/nvidia-docker*.rpm</div><div class="line"></div><div class="line"># start</div><div class="line">sudo systemctl start nvidia-docker</div><div class="line"></div><div class="line"># Test nvidia-smi</div><div class="line">nvidia-docker run --rm nvidia/cuda nvidia-smi</div><div class="line"></div><div class="line">#link docker to a large disk space.</div><div class="line"># copy Docker files:</div><div class="line">cp -R /var/lib/docker/ [xx path]</div><div class="line"># backup original Docker files:</div><div class="line">mv /var/lib/docker/ /var/lib/docker.backup</div><div class="line"># add link to new Docker files:</div><div class="line">ln -s [xx path] /var/lib/docker</div><div class="line"></div><div class="line"># add other user into docker group. Then run docker without sudo</div><div class="line">sudo /usr/sbin/groupadd docker</div><div class="line">sudo gpasswd -a $&#123;USER&#125; docker</div><div class="line">sudo systemctl restart docker</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -462,7 +676,7 @@
     <link href="noahsnail.com/2017/11/19/2017-11-19-Convolutional%20Neural%20Network%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(%E4%B8%80)/"/>
     <id>noahsnail.com/2017/11/19/2017-11-19-Convolutional Neural Network学习笔记(一)/</id>
     <published>2017-11-19T15:16:17.000Z</published>
-    <updated>2017-11-22T01:11:22.000Z</updated>
+    <updated>2017-12-06T14:02:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Convolutional-Neural-Network"><a href="#1-Convolutional-Neural-Network" class="headerlink" title="1. Convolutional Neural Network"></a>1. Convolutional Neural Network</h2><h3 id="1-1-Computer-Vision"><a href="#1-1-Computer-Vision" class="headerlink" title="1.1 Computer Vision"></a>1.1 Computer Vision</h3><p>Computer Vision Problems</p>
@@ -474,8 +688,7 @@
 <p>Deep Learning on large images</p>
 <p>implement convolutional operations</p>
 <h3 id="1-2-Edge-Detection-Example"><a href="#1-2-Edge-Detection-Example" class="headerlink" title="1.2 Edge Detection Example"></a>1.2 Edge Detection Example</h3><h3 id="1-3-More-edge-detection"><a href="#1-3-More-edge-detection" class="headerlink" title="1.3 More edge detection"></a>1.3 More edge detection</h3><p>Soble Filter</p>
-<h3 id="1-4-Padding"><a href="#1-4-Padding" class="headerlink" title="1.4 Padding"></a>1.4 Padding</h3><p>In order to build deep neural networks, one modification to the basic convolutional operation that you need to really use is padding. There are two downsides in convolution, one is that every time you apply a convolutional operator, your image shrinks,</p>
-]]></content>
+<h3 id="1-4-Padding"><a href="#1-4-Padding" class="headerlink" title="1.4 Padding"></a>1.4 Padding</h3>]]></content>
     
     <summary type="html">
     
@@ -868,7 +1081,7 @@
     <link href="noahsnail.com/2017/09/24/2017-9-24-Structuring%20Machine%20Learning%20Projects%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(%E4%B8%80)/"/>
     <id>noahsnail.com/2017/09/24/2017-9-24-Structuring Machine Learning Projects学习笔记(一)/</id>
     <published>2017-09-24T05:39:05.000Z</published>
-    <updated>2017-11-21T14:31:55.000Z</updated>
+    <updated>2017-12-06T13:59:53.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Introduction-to-ML-Strategy"><a href="#1-Introduction-to-ML-Strategy" class="headerlink" title="1. Introduction to ML Strategy"></a>1. Introduction to ML Strategy</h2><h4 id="1-1-Why-ML-Strategy"><a href="#1-1-Why-ML-Strategy" class="headerlink" title="1.1 Why ML Strategy?"></a>1.1 Why ML Strategy?</h4><p>Teach you ways of analyzing a machine learning problem that will point you in the direction of the most promising things to try.</p>
@@ -890,7 +1103,24 @@
 <h2 id="2-Setting-up-your-goal"><a href="#2-Setting-up-your-goal" class="headerlink" title="2. Setting up your goal"></a>2. Setting up your goal</h2><h4 id="2-1-Single-number-evaluation-metric"><a href="#2-1-Single-number-evaluation-metric" class="headerlink" title="2.1 Single number evaluation metric"></a>2.1 Single number evaluation metric</h4><p>Set up a single real number evaluation metric for your problem.</p>
 <p>Dev set + single number evaluation metric.</p>
 <h4 id="2-2-Satisficing-and-Optimiziong-metric"><a href="#2-2-Satisficing-and-Optimiziong-metric" class="headerlink" title="2.2 Satisficing and Optimiziong metric"></a>2.2 Satisficing and Optimiziong metric</h4><p>multiple metrics</p>
-<h4 id="2-3-Train-dev-test-distribution"><a href="#2-3-Train-dev-test-distribution" class="headerlink" title="2.3 Train/dev/test distribution"></a>2.3 Train/dev/test distribution</h4><h4 id="2-4-Size-of-the-dev-and-test-sets"><a href="#2-4-Size-of-the-dev-and-test-sets" class="headerlink" title="2.4 Size of the dev and test sets"></a>2.4 Size of the dev and test sets</h4><h4 id="2-5-When-to-change-dev-test-sets-and-metrics"><a href="#2-5-When-to-change-dev-test-sets-and-metrics" class="headerlink" title="2.5 When to change dev/test sets and metrics"></a>2.5 When to change dev/test sets and metrics</h4>]]></content>
+<h4 id="2-3-Train-dev-test-distribution"><a href="#2-3-Train-dev-test-distribution" class="headerlink" title="2.3 Train/dev/test distribution"></a>2.3 Train/dev/test distribution</h4><p>Setting up the training, development and test sets have a huge impact on productivity. It is important to choose the development and test sets from the same distribution and it must be taken randomly from all the data.</p>
+<ul>
+<li>Guideline<br>Choose a development set and test set to reflect data you expect to get in the future and consider important to do well.</li>
+</ul>
+<h4 id="2-4-Size-of-dev-and-test-sets"><a href="#2-4-Size-of-dev-and-test-sets" class="headerlink" title="2.4 Size of dev and test sets"></a>2.4 Size of dev and test sets</h4><p>Set your dev set to be big enough to detect differences in algorithm/models you’re trying out.</p>
+<p>Set your test set to be big enough to give high confidence in the overall performance of your system.</p>
+<h4 id="2-5-When-to-change-dev-test-sets-and-metrics"><a href="#2-5-When-to-change-dev-test-sets-and-metrics" class="headerlink" title="2.5 When to change dev/test sets and metrics"></a>2.5 When to change dev/test sets and metrics</h4><p>Orthogonalization for cat pictures: anti-porn</p>
+<ol>
+<li>So far we’ve only discussed how to define a metric to evaluate classifiers.</li>
+<li>Worry separately about how to do well on this metric.</li>
+</ol>
+<h2 id="3-Comparing-to-humanlevel-performance"><a href="#3-Comparing-to-humanlevel-performance" class="headerlink" title="3. Comparing to humanlevel performance"></a>3. Comparing to humanlevel performance</h2><h4 id="3-1-Why-human-level-performance"><a href="#3-1-Why-human-level-performance" class="headerlink" title="3.1 Why human-level performance?"></a>3.1 Why human-level performance?</h4><p>Why compare to human-level performance?<br>Humans are quite good at a lot of tasks. So long as ML is worse than humans, you can:</p>
+<ul>
+<li>Get labeled data from humans.</li>
+<li>Gain insight from manual error analysis:<br>Why did a person get this right?</li>
+<li>Better analysis of bias/variance.</li>
+</ul>
+<h4 id="3-2-Avoidable-bias"><a href="#3-2-Avoidable-bias" class="headerlink" title="3.2 Avoidable bias"></a>3.2 Avoidable bias</h4>]]></content>
     
     <summary type="html">
     
@@ -1299,179 +1529,6 @@ Epoch:  4 | Step:  1 | batch x:  [ 6.  8.  2.  4.  1.] | betch y:  [  5.   3.   
     <summary type="html">
     
       PyTorch基本用法(四)——回归
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Improving Deep Neural Networks学习笔记(二)</title>
-    <link href="noahsnail.com/2017/09/18/2017-9-18-Improving%20Deep%20Neural%20Networks%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(%E4%BA%8C)/"/>
-    <id>noahsnail.com/2017/09/18/2017-9-18-Improving Deep Neural Networks学习笔记(二)/</id>
-    <published>2017-09-18T13:53:18.000Z</published>
-    <updated>2017-09-21T14:32:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="4-Optimization-algorithms"><a href="#4-Optimization-algorithms" class="headerlink" title="4. Optimization algorithms"></a>4. Optimization algorithms</h2><h4 id="4-1-Mini-batch-gradient-descent"><a href="#4-1-Mini-batch-gradient-descent" class="headerlink" title="4.1 Mini-batch gradient descent"></a>4.1 Mini-batch gradient descent</h4><p>$x^{\{t\}}$，$y^{\{t\}}$ is used to index into different mini batches. $x^{[t]}$，$y^{[t]}$ is used to index into different layer. $x^{(t)}$，$y^{(t)}$ is used to index into different examples.</p>
-<p>Batch gradient descent is to process entire training set at the same time. Mini-batch gradient descent is to process single mini batch $x^{\{t\}}$，$y^{\{t\}}$ at the same time.</p>
-<p>Run forward propagation and back propagation once on mini batch is called one iteration.</p>
-<p>Mini-batch gradient descent runs much faster than batch gradient descent.</p>
-<h4 id="4-2-Understanding-mini-batch-gradient-descent"><a href="#4-2-Understanding-mini-batch-gradient-descent" class="headerlink" title="4.2 Understanding mini-batch gradient descent"></a>4.2 Understanding mini-batch gradient descent</h4><p>If mini-batch size = m, it’s batch gradient descend.<br>If mini-batch size = 1, it’s stochastic gradient descend.<br>In pracice, mini-batch size between 1 and m.</p>
-<p>Batch gradient descend: too long per iteration.<br>Stochastic gradient descend: lose speed up from vectorization.<br>Mini-batch gradient descend: Faster learning, 1. vectorization 2. Make progress without needing to wait.</p>
-<p>Choosing mini-batch size:</p>
-<p>If small training set(m &lt;= 2000), use batch gradient descend.<br>Typical mini-batch size: 64, 128, 256, 512, 1024(rare).</p>
-<h4 id="4-3-Exponentially-weighted-averages"><a href="#4-3-Exponentially-weighted-averages" class="headerlink" title="4.3 Exponentially weighted averages"></a>4.3 Exponentially weighted averages</h4><p>$$V_t = \beta V_{t-1} + (1-\beta)\theta_t$$</p>
-<p>View $V_t$ as approximately averaging over $\frac {1} {1 - \beta}$.</p>
-<p>It’s called moving average in the statistics literature.</p>
-<p>$\beta = 0.9$：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/ewa_1.png" alt="Figure 1"></p>
-<p>$\beta = 0.9(red)$，$\beta = 0.98(green)$，$\beta = 0.5(yellow)$：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/ewa_2.png" alt="Figure 2"></p>
-<h4 id="4-4-Understanding-exponentially-weighted-averages"><a href="#4-4-Understanding-exponentially-weighted-averages" class="headerlink" title="4.4 Understanding exponentially weighted averages"></a>4.4 Understanding exponentially weighted averages</h4><p>$\theta$ is the temperature of the day.</p>
-<p>$$v_{100} = 0.9v_{99} + 0.1 \theta_{100}$$$$v_{99} = 0.9v_{98} + 0.1 \theta_{99}$$$$…$$</p>
-<p>So $$v_{100} = 0.1 * \theta _{100} + 0.1 * 0.9 * \theta _{99} + … + 0.1 * 0.9^{i} * \theta _{100-i} + …$$</p>
-<p>Th coefficients is $$0.1 + 0.1 * 0.9 + 0.1 * 0.9^2 + …$$</p>
-<p>All of these coefficients, add up to one or add up to very close to one. It is called bias correction.</p>
-<p>$$(1 - \epsilon)^{\frac {1} {\epsilon}} \approx \frac {1} {e}$$ $$\frac {1} {e} \approx 0.3679$$</p>
-<p>Implement exponentially weighted average:</p>
-<p>$$v_0 = 0$$$$v_1 = \beta v_0 + (1- \beta) \theta _1$$$$v_2 = \beta v_1 + (1- \beta) \theta _2$$$$…$$</p>
-<p>Exponentially weighted average takes very low memory.</p>
-<h4 id="4-5-Bias-correction-in-exponentially-weighted-averages"><a href="#4-5-Bias-correction-in-exponentially-weighted-averages" class="headerlink" title="4.5 Bias correction in exponentially weighted averages"></a>4.5 Bias correction in exponentially weighted averages</h4><p>It’s not a very good estimate of the first several day’s temperature. Bias correction is used to mofity this estimate that makes it much better. The formula is: $$\frac {v_t} {1 - \beta^t} = \beta v_{t-1} + (1- \beta) \theta _t.$$</p>
-<h4 id="4-6-Gradient-descent-with-momentum"><a href="#4-6-Gradient-descent-with-momentum" class="headerlink" title="4.6 Gradient descent with momentum"></a>4.6 Gradient descent with momentum</h4><p>Gradient descent with momentum almost always works faster than the standard gradient descent algorithm. The basic idea is to compute an exponentially weighted average of gradients, and then use that gradient to update weights instead.</p>
-<p>On iteration t:</p>
-<ol>
-<li>compute $dw$, db on current mini-batch.</li>
-<li>compute $v_{dw}$, $v_{db}$<br>$$v_{dw} = \beta v_{dw} + (1 - \beta)dw$$$$v_{db} = \beta v_{db} + (1 - \beta)db$$</li>
-<li>update dw, db<br>$$w = w - \alpha v_{dw}$$$$b = b - \alpha v_{db}$$</li>
-</ol>
-<p>There are two hyperparameters, the most common value for $\beta$ is 0.9.</p>
-<p>Another formula is $v_{dw} = \beta v_{dw} + dw$, you need to modify corresponding $\alpha$.</p>
-<h4 id="4-7-RMSprop"><a href="#4-7-RMSprop" class="headerlink" title="4.7 RMSprop"></a>4.7 RMSprop</h4><p>RMSprop stands for root mean square prop, that can also speed up gradient descent.</p>
-<p>On iteration t:</p>
-<ol>
-<li>compute $dw$, db on current mini-batch.</li>
-<li>compute $s_{dw}$, $s_{db}$<br>$$s_{dw} = \beta s_{dw} + (1 - \beta){dw}^2$$$$s_{db} = \beta s_{db} + (1 - \beta){db}^2$$</li>
-<li>update dw, db<br>$$w = w - \alpha \frac {dw} {\sqrt {s_{dw}}}$$$$b = b - \alpha \frac {db} {\sqrt {s_{db}}}$$</li>
-</ol>
-<p>In practice, in order to avoid $\sqrt {s_{dw}}$ being very close zero:</p>
-<p>$$w = w - \alpha \frac {dw} {\sqrt {s_{dw}} + \epsilon}$$$$b = b - \alpha \frac {db} {\sqrt {s_{db}} + \epsilon}$$</p>
-<p>Usually $$\epsilon = 10^{-8}$$</p>
-<h4 id="4-8-Adam-optimization-algorithm"><a href="#4-8-Adam-optimization-algorithm" class="headerlink" title="4.8 Adam optimization algorithm"></a>4.8 Adam optimization algorithm</h4><p>$$v_{dw}=0, s_{dw}=0,v_{db},s_{db}=0$$</p>
-<p>On iteration t:</p>
-<p>$$v_{dw} = \beta_1 v_{dw} + (1 - \beta_1)dw$$$$v_{db} = \beta_1 v_{db} + (1 - \beta_1)db$$</p>
-<p>$$s_{dw} = \beta_2 s_{dw} + (1 - \beta_2){dw}^2$$$$s_{db} = \beta_2 s_{db} + (1 - \beta_2){db}^2$$</p>
-<p>Bias correction:</p>
-<p>$$v_{dw}^{bc} = \frac {v_{dw}} {1 - \beta_1^t}, v_{db}^{bc} = \frac {v_{db}} {1 - \beta_1^t}$$$$s_{dw}^{bc} = \frac {s_{dw}} {1 - \beta_2^t}, s_{db}^{bc} = \frac {s_{db}} {1 - \beta_2^t}$$</p>
-<p>Update weight:</p>
-<p>$$w = w - \alpha \frac {v_{dw}^{bc}} {\sqrt {s_{dw}^{bc}} + \epsilon}$$$$b = b - \alpha \frac {v_{db}^{bc}} {\sqrt {s_{db}^{bc}} + \epsilon}$$</p>
-<p>Adam combines the effect of gradient descent with momentum together with gradient descent with RMSprop. It’s a commonly used learning algorithm that is proven to be very effective for many different neural networks of a very wide variety of architectures.\</p>
-<p>$\alpha$ needs to be tuned. $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}$.</p>
-<p>Adam stands for Adaptive Moment Estimation.</p>
-<h4 id="4-9-Learning-rate-decay"><a href="#4-9-Learning-rate-decay" class="headerlink" title="4.9 Learning rate decay"></a>4.9 Learning rate decay</h4><p>Learning rate decay is slowly reduce the learning rate.</p>
-<p>$$\alpha = \frac {1} {1 + {decay rate} * epochs} \alpha_0$$</p>
-<p>$\alpha_0$ is the initial learning rate.</p>
-<p>Other learning rate decay methods:</p>
-<p>$\alpha = 0.95^{epochs}\alpha_0$, this is called exponentially decay.</p>
-<p>$\alpha = \frac {k} {\sqrt {epochs} } \alpha_0$, $\alpha = \frac {k} {\sqrt t} \alpha_0$.</p>
-<p>$\alpha = {\frac {1} {2}}^{epochs} \alpha _0$, this is called a discrete staircase.</p>
-<h4 id="4-10-The-problem-of-local-optima"><a href="#4-10-The-problem-of-local-optima" class="headerlink" title="4.10 The problem of local optima"></a>4.10 The problem of local optima</h4><p>In very high-dimensional spaces you’re actually much more likely to run into a saddle point, rather than local optimum.</p>
-<ul>
-<li>Unlikely to get stuck in a bad local optima.</li>
-<li>Plateaus can make learning slow.</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      Improving Deep Neural Networks学习笔记(二)
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PyTorch基本用法(三)——激活函数</title>
-    <link href="noahsnail.com/2017/09/18/2017-9-18-PyTorch%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%B8%89)%E2%80%94%E2%80%94%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/"/>
-    <id>noahsnail.com/2017/09/18/2017-9-18-PyTorch基本用法(三)——激活函数/</id>
-    <published>2017-09-18T12:25:07.000Z</published>
-    <updated>2017-09-18T13:15:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是关于PyTorch的激活函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> func</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># 定义数据x</span></div><div class="line">x = torch.linspace(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">200</span>)</div><div class="line">x = Variable(x)</div><div class="line">np_x = x.data.numpy()</div><div class="line"></div><div class="line"><span class="comment"># 通过激活函数处理x</span></div><div class="line">y_relu = func.relu(x).data.numpy()</div><div class="line">y_sigmoid = func.sigmoid(x).data.numpy()</div><div class="line">y_tanh = func.tanh(x).data.numpy()</div><div class="line">y_softmax = func.softplus(x).data.numpy()</div><div class="line"></div><div class="line"><span class="comment"># 绘制激活函数图</span></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">221</span>)</div><div class="line">plt.plot(np_x, y_relu, c = <span class="string">'red'</span>, label = <span class="string">'relu'</span>)</div><div class="line">plt.ylim((<span class="number">-1</span>, <span class="number">5</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">222</span>)</div><div class="line">plt.plot(np_x, y_sigmoid, c = <span class="string">'red'</span>, label = <span class="string">'sigmoid'</span>)</div><div class="line">plt.ylim((<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">223</span>)</div><div class="line">plt.plot(np_x, y_tanh, c = <span class="string">'red'</span>, label = <span class="string">'tanh'</span>)</div><div class="line">plt.ylim((<span class="number">-1</span>, <span class="number">1</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">224</span>)</div><div class="line">plt.plot(np_x, y_softmax, c = <span class="string">'red'</span>, label = <span class="string">'softmax'</span>)</div><div class="line">plt.ylim((<span class="number">-1</span>, <span class="number">5</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/ac_func.png" alt="Figure"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      PyTorch基本用法(三)——激活函数
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PyTorch基本用法(二)——Variable</title>
-    <link href="noahsnail.com/2017/09/18/2017-9-18-PyTorch%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95(%E4%BA%8C)%E2%80%94%E2%80%94Variable/"/>
-    <id>noahsnail.com/2017/09/18/2017-9-18-PyTorch基本用法(二)——Variable/</id>
-    <published>2017-09-18T10:46:11.000Z</published>
-    <updated>2017-09-18T12:24:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>本文主要是PyTorch中Variable变量的一些用法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"></div><div class="line">tensor = torch.FloatTensor([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</div><div class="line"></div><div class="line"><span class="comment"># 定义Variable, requires_grad用来指定是否需要计算梯度</span></div><div class="line">variable = Variable(tensor, requires_grad = <span class="keyword">True</span>)</div><div class="line"></div><div class="line"><span class="keyword">print</span> tensor</div><div class="line"><span class="keyword">print</span> variable</div></pre></td></tr></table></figure>
-<pre><code> 1  2
- 3  4
-[torch.FloatTensor of size 2x2]
-
-Variable containing:
- 1  2
- 3  4
-[torch.FloatTensor of size 2x2]
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 计算x^2的均值</span></div><div class="line">tensor_mean = torch.mean(tensor * tensor)</div><div class="line">variable_mean = torch.mean(variable * variable)</div><div class="line"><span class="keyword">print</span> tensor_mean</div><div class="line"><span class="keyword">print</span> variable_mean</div></pre></td></tr></table></figure>
-<pre><code>7.5
-Variable containing:
- 7.5000
-[torch.FloatTensor of size 1]
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># variable进行反向传播</span></div><div class="line"><span class="comment"># 梯度计算如下：</span></div><div class="line"><span class="comment"># variable_mean = 1/4 * sum(variable * variable)</span></div><div class="line"><span class="comment"># d(variable_mean)/d(variable) = 1/4 * 2 * variable = 1/2 * variable</span></div><div class="line">variable_mean.backward()</div><div class="line"></div><div class="line"><span class="comment"># 输出variable中的梯度</span></div><div class="line"><span class="keyword">print</span> variable.grad</div></pre></td></tr></table></figure>
-<pre><code>Variable containing:
- 0.5000  1.0000
- 1.5000  2.0000
-[torch.FloatTensor of size 2x2]
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># *表示逐元素点乘,不是矩阵乘法</span></div><div class="line"><span class="keyword">print</span> tensor * tensor</div><div class="line"><span class="keyword">print</span> variable * variable</div></pre></td></tr></table></figure>
-<pre><code>  1   4
-  9  16
-[torch.FloatTensor of size 2x2]
-
-Variable containing:
-  1   4
-  9  16
-[torch.FloatTensor of size 2x2]
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 输出variable中的data, data是tensor</span></div><div class="line"><span class="keyword">print</span> variable.data</div></pre></td></tr></table></figure>
-<pre><code> 1  2
- 3  4
-[torch.FloatTensor of size 2x2]
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      PyTorch基本用法(二)——Variable
     
     </summary>
     
