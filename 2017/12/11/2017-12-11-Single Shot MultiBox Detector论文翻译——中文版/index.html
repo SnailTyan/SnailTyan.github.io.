@@ -1,0 +1,821 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Single Shot MultiBox Detector论文翻译——中文版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Single Shot MultiBox Detector论文翻译——中文版">
+<meta property="og:url" content="noahsnail.com/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中文版/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Single Shot MultiBox Detector论文翻译——中文版">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig1.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig2.png">
+<meta property="og:updated_time" content="2017-12-14T07:00:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Single Shot MultiBox Detector论文翻译——中文版">
+<meta name="twitter:description" content="Single Shot MultiBox Detector论文翻译——中文版">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中文版/"/>
+
+
+
+
+
+  <title>Single Shot MultiBox Detector论文翻译——中文版 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中文版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Single Shot MultiBox Detector论文翻译——中文版</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Single Shot MultiBox Detector论文翻译——中文版
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="SSD-Single-Shot-MultiBox-Detector"><a href="#SSD-Single-Shot-MultiBox-Detector" class="headerlink" title="SSD: Single Shot MultiBox Detector"></a>SSD: Single Shot MultiBox Detector</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种使用单个深度神经网络来检测图像中的目标的方法。我们的方法命名为SSD，将边界框的输出空间离散化为不同长宽比的一组默认框和并缩放每个特征映射的位置。在预测时，网络会在每个默认框中为每个目标类别的出现生成分数，并对框进行调整以更好地匹配目标形状。此外，网络还结合了不同分辨率的多个特征映射的预测，自然地处理各种尺寸的目标。相对于需要目标提出的方法，SSD非常简单，因为它完全消除了提出生成和随后的像素或特征重新采样阶段，并将所有计算封装到单个网络中。这使得SSD易于训练和直接集成到需要检测组件的系统中。PASCAL VOC，COCO和ILSVRC数据集上的实验结果证实，SSD对于利用额外的目标提出步骤的方法具有竞争性的准确性，并且速度更快，同时为训练和推断提供了统一的框架。对于300×300的输入，SSD在VOC2007测试中以59FPS的速度在Nvidia Titan X上达到$74.3\%$的mAP，对于512×512的输入，SSD达到了$76.9\%$的mAP，优于参照的最先进的Faster R-CNN模型。与其他单阶段方法相比，即使输入图像尺寸较小，SSD也具有更高的精度。代码获取：<a href="https://github.com/weiliu89/caffe/tree/ssd" target="_blank" rel="external">https://github.com/weiliu89/caffe/tree/ssd</a>。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>目前最先进的目标检测系统是以下方法的变种：假设边界框，每个框重采样像素或特征，并应用一个高质量的分类器。自从选择性搜索[1]通过在PASCAL VOC，COCO和ILSVRC上所有基于Faster R-CNN[2]的检测都取得了当前领先的结果（尽管具有更深的特征如[3]），这种流程在检测基准数据上流行开来。尽管这些方法准确，但对于嵌入式系统而言，这些方法的计算量过大，即使是高端硬件，对于实时应用而言也太慢。通常，这些方法的检测速度是以每帧秒（SPF）度量，甚至最快的高精度检测器，Faster R-CNN，仅以每秒7帧（FPS）的速度运行。已经有很多尝试通过处理检测流程中的每个阶段来构建更快的检测器（参见第4节中的相关工作），但是到目前为止，显著提高的速度仅以显著降低的检测精度为代价。</p>
+<p>本文提出了第一个基于深度网络的目标检测器，它不对边界框假设的像素或特征进行重采样，并且与其它方法有一样精确度。这对高精度检测在速度上有显著提高（在VOC2007测试中，59FPS和$74.3\%$的mAP，与Faster R-CNN 7FPS和$73.2\%$的mAP或者YOLO 45 FPS和$63.4\%$的mAP相比）。速度的根本改进来自消除边界框提出和随后的像素或特征重采样阶段。我们并不是第一个这样做的人（查阅[4,5]），但是通过增加一系列改进，我们设法比以前的尝试显著提高了准确性。我们的改进包括使用小型卷积滤波器来预测边界框位置中的目标类别和偏移量，使用不同长宽比检测的单独预测器（滤波器），并将这些滤波器应用于网络后期的多个特征映射中，以执行多尺度检测。通过这些修改——特别是使用多层进行不同尺度的预测——我们可以使用相对较低的分辨率输入实现高精度，进一步提高检测速度。虽然这些贡献可能单独看起来很小，但是我们注意到由此产生的系统将PASCAL VOC实时检测的准确度从YOLO的$63.4\%$的mAP提高到我们的SSD的$74.3\%$的mAP。相比于最近备受瞩目的残差网络方面的工作[3]，在检测精度上这是相对更大的提高。而且，显著提高的高质量检测速度可以扩大计算机视觉使用的设置范围。</p>
+<p>我们总结我们的贡献如下：</p>
+<ul>
+<li><p>我们引入了SSD，这是一种针对多个类别的单次检测器，比先前的先进的单次检测器（YOLO）更快，并且准确得多，事实上，与执行显式区域提出和池化的更慢的技术具有相同的精度（包括Faster R-CNN）。</p>
+</li>
+<li><p>SSD的核心是预测固定的一系列默认边界框的类别分数和边界框偏移，使用更小的卷积滤波器应用到特征映射上。</p>
+</li>
+<li><p>为了实现高检测精度，我们根据不同尺度的特征映射生成不同尺度的预测，并通过纵横比明确分开预测。</p>
+</li>
+<li><p>这些设计功能使得即使在低分辨率输入图像上也能实现简单的端到端训练和高精度，从而进一步提高速度与精度之间的权衡。</p>
+</li>
+<li><p>实验包括在PASCAL VOC，COCO和ILSVRC上评估具有不同输入大小的模型的时间和精度分析，并与最近的一系列最新方法进行比较。</p>
+</li>
+</ul>
+<h2 id="2-单次检测器-SSD"><a href="#2-单次检测器-SSD" class="headerlink" title="2. 单次检测器(SSD)"></a>2. 单次检测器(SSD)</h2><p>本节描述我们提出的SSD检测框架（2.1节）和相关的训练方法（2.2节）。之后，2.3节介绍了数据集特有的模型细节和实验结果。</p>
+<h3 id="2-1-模型"><a href="#2-1-模型" class="headerlink" title="2.1 模型"></a>2.1 模型</h3><p>SSD方法基于前馈卷积网络，该网络产生固定大小的边界框集合，并对这些边界框中存在的目标类别实例进行评分，然后进行非极大值抑制步骤来产生最终的检测结果。早期的网络层基于用于高质量图像分类的标准架构（在任何分类层之前被截断），我们将其称为基础网络。然后，我们将辅助结构添加到网络中以产生具有以下关键特征的检测：</p>
+<p><strong>用于检测的多尺度特征映射</strong>。我们将卷积特征层添加到截取的基础网络的末端。这些层在尺寸上逐渐减小，并允许在多个尺度上对检测结果进行预测。用于预测检测的卷积模型对于每个特征层都是不同的（查阅Overfeat[4]和YOLO[5]在单尺度特征映射上的操作）。</p>
+<p><strong>用于检测的卷积预测器</strong>。每个添加的特征层（或者任选的来自基础网络的现有特征层）可以使用一组卷积滤波器产生固定的检测预测集合。这些在图2中的SSD网络架构的上部指出。对于具有$p$通道的大小为$m \times n$的特征层，潜在检测的预测参数的基本元素是$3 \times 3 \times p$的<em>小核</em>得到某个类别的分数，或者相对于默认框坐标的形状偏移。在应用卷积核的$m \times n$的每个位置，它会产生一个输出值。边界框偏移输出值是相对每个特征映射位置的相对默认框位置来度量的（查阅YOLO[5]的架构，该步骤使用中间全连接层而不是卷积滤波器）。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ssd-fig1.png" alt="Figure 2"></p>
+<p>图2：两个单次检测模型的比较：SSD和YOLO[5]。我们的SSD模型在基础网络的末端添加了几个特征层，它预测了不同尺度和长宽比的默认边界框的偏移量及其相关的置信度。300×300输入尺寸的SSD在VOC2007 <code>test</code>上的准确度上明显优于448×448的YOLO的准确度，同时也提高了速度。</p>
+<p><strong>默认边界框和长宽比</strong>。对于网络顶部的多个特征映射，我们将一组默认边界框与每个特征映射单元相关联。默认边界框以卷积的方式平铺特征映射，以便每个边界框相对于其对应单元的位置是固定的。在每个特征映射单元中，我们预测单元中相对于默认边界框形状的偏移量，以及指出每个边界框中存在的每个类别实例的类别分数。具体而言，对于给定位置处的$k$个边界框中的每一个，我们计算$c$个类别分数和相对于原始默认边界框形状的$4$个偏移量。这导致在特征映射中的每个位置周围应用总共$(c+4)k$个滤波器，对于$m\times n$的特征映射取得$(c+4)kmn$个输出。有关默认边界框的说明，请参见图1。我们的默认边界框与Faster R-CNN[2]中使用的<em>锚边界框</em>相似，但是我们将它们应用到不同分辨率的几个特征映射上。在几个特征映射中允许不同的默认边界框形状让我们有效地离散可能的输出框形状的空间。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ssd-fig2.png" alt="Figure 1"></p>
+<p>图1：SSD框架。（a）在训练期间，SSD仅需要每个目标的输入图像和真实边界框。以卷积方式，我们评估具有不同尺度（例如（b）和（c）中的8×8和4×4）的几个特征映射中每个位置处不同长宽比的默认框的小集合（例如4个）。对于每个默认边界框，我们预测所有目标类别（$(c_1, c_2, \dots, c_p)$）的形状偏移量和置信度。在训练时，我们首先将这些默认边界框与实际的边界框进行匹配。例如，我们已经与猫匹配两个默认边界框，与狗匹配了一个，这被视为积极的，其余的是消极的。模型损失是定位损失（例如，Smooth L1[6]）和置信度损失（例如Softmax）之间的加权和。</p>
+<h2 id="2-2-训练"><a href="#2-2-训练" class="headerlink" title="2.2 训练"></a>2.2 训练</h2><p>训练SSD和训练使用区域提出的典型检测器之间的关键区别在于，需要将真实信息分配给固定的检测器输出集合中的特定输出。在YOLO[5]的训练中、Faster R-CNN[2]和MultiBox[7]的区域提出阶段，一些版本也需要这样的操作。一旦确定了这个分配，损失函数和反向传播就可以应用端到端了。训练也涉及选择默认边界框集合和缩放进行检测，以及难例挖掘和数据增强策略。</p>
+<p><strong>匹配策略</strong>。在训练过程中，我们需要确定哪些默认边界框对应实际边界框的检测，并相应地训练网络。对于每个实际边界框，我们从默认边界框中选择，这些框会在位置，长宽比和尺度上变化。我们首先将每个实际边界框与具有最好的Jaccard重叠（如MultiBox[7]）的边界框相匹配。与MultiBox不同的是，我们将默认边界框匹配到Jaccard重叠高于阈值（0.5）的任何实际边界框。这简化了学习问题，允许网络为多个重叠的默认边界框预测高分，而不是要求它只挑选具有最大重叠的一个边界框。</p>
+<p><strong>训练目标函数</strong>。SSD训练目标函数来自于MultiBox目标[7,8]，但扩展到处理多个目标类别。设$x_{ij}^p = \lbrace 1,0 \rbrace$是第$i$个默认边界框匹配到类别$p$的第$j$个实际边界框的指示器。在上面的匹配策略中，我们有$\sum_i x_{ij}^p \geq 1$。总体目标损失函数是定位损失（loc）和置信度损失（conf）的加权和：$$L(x, c, l, g) = \frac{1}{N}(L_{conf}(x, c) + \alpha L_{loc}(x, l, g)) \tag{1}$$其中N是匹配的默认边界框的数量。如果$N=0$，则将损失设为0。定位损失是预测框($l$)与真实框($g$)参数之间的Smooth L1损失[6]。类似于Faster R-CNN[2]，我们回归默认边界框($d$)的中心偏移量($cx, cy$)和其宽度($w$)、高度($h$)的偏移量。$$<br>L_{loc}(x,l,g) = \sum_{i \in Pos}^N \sum_{m \in \lbrace cx, cy, w, h \rbrace} x_{ij}^k \mathtt{smooth}_{L1}(l_{i}^m - \hat{g}_j^m) \\<br>\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d_i^w \quad \quad<br>\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d_i^h \\<br>\hat{g}_j^{w} = \log\Big(\frac{g_j^{w}}{d_i^w}\Big) \quad \quad<br>\hat{g}_j^{h} = \log\Big(\frac{g_j^{h}}{d_i^h}\Big)<br>\tag{2}<br>$$置信度损失是在多类别置信度($c$)上的softmax损失。<br>$$<br>L_{conf}(x, c) = - \sum_{i\in Pos}^N x_{ij}^p log(\hat{c}_i^p) - \sum_{i\in Neg} log(\hat{c}_i^0)\quad \mathtt{where}\quad\hat{c}_i^p = \frac{\exp(c_i^p)}{\sum_p \exp(c_i^p)}<br>\tag{3}<br>$$<br>通过交叉验证权重项$\alpha$设为1。</p>
+<p><strong>为默认边界框选择尺度和长宽比</strong>。为了处理不同的目标尺度，一些方法[4,9]建议处理不同尺寸的图像，然后将结果合并。然而，通过利用单个网络中几个不同层的特征映射进行预测，我们可以模拟相同的效果，同时还可以跨所有目标尺度共享参数。以前的工作[10,11]已经表明，使用低层的特征映射可以提高语义分割的质量，因为低层会捕获输入目标的更多细节。同样，[12]表明，从特征映射上添加全局上下文池化可以有助于平滑分割结果。受这些方法的启发，我们使用较低和较高的特征映射进行检测。图1显示了框架中使用的两个示例性特征映射（8×8和4×4）。在实践中，我们可以使用更多的具有很少计算开支的特征映射。</p>
+<p>已知网络中不同层的特征映射具有不同的（经验的）感受野大小[13]。幸运的是，在SSD框架内，默认边界框不需要对应于每层的实际感受野。我们设计平铺默认边界框，以便特定的特征映射学习响应目标的特定尺度。假设我们要使用$m$个特征映射进行预测。每个特征映射默认边界框的尺度计算如下：$$s_k = s_\text{min} + \frac{s_\text{max} - s_\text{min}}{m - 1} (k - 1),\quad k\in [1, m]$$其中$s_\text{min}$为0.2，$s_\text{max}$为0.9，意味着最低层具有0.2的尺度，最高层具有0.9的尺度，并且在它们之间的所有层是规则间隔的。我们为默认边界框添加不同的长宽比，并将它们表示为$a_r \in {1, 2, 3, \frac{1}{2}, \frac{1}{3}}$。我们可以计算每个边界框的宽度($w_k^a = s_k\sqrt{a_r}$)和高度($h_k^a = s_k / \sqrt{a_r}$)。对于长宽比为1，我们还添加了一个默认边界框，其尺度为$s’_k = \sqrt{s_k s_{k+1}}$，在每个特征映射位置得到6个默认边界框。我们将每个默认边界框的中心设置为$(\frac{i+0.5}{|f_k|}, \frac{j+0.5}{|f_k|})$，其中$|f_k|$是第$k$个平方特征映射的大小，$i, j\in [0, |f_k|)$。在实践中，也可以设计默认边界框的分布以最适合特定的数据集。如何设计最佳平铺也是一个悬而未决的问题。</p>
+<p>通过将所有默认边界框的预测与许多特征映射所有位置的不同尺度和高宽比相结合，我们有不同的预测集合，涵盖各种输入目标大小和形状。例如，在图1中，狗被匹配到4×4特征映射中的默认边界框，而不是8×8特征映射中的任何默认框。这是因为那些边界框有不同的尺度，不匹配狗的边界框，因此在训练期间被认为是负例。</p>
+<p><strong>难例挖掘</strong>。在匹配步骤之后，大多数默认边界框为负例，尤其是当可能的默认边界框数量较多时。这在正的训练实例和负的训练实例之间引入了显著的不平衡。我们不使用所有负例，而是使用每个默认边界框的最高置信度损失来排序它们，并挑选最高的置信度，以便负例和正例之间的比例至多为3:1。我们发现这会导致更快的优化和更稳定的训练。</p>
+<p><strong>数据增强</strong>。为了使模型对各种输入目标大小和形状更鲁棒，每张训练图像都是通过以下选项之一进行随机采样的：</p>
+<ul>
+<li>使用整个原始输入图像。</li>
+<li>采样一个图像块，使得与目标之间的<em>最小</em>Jaccard重叠为0.1，0.3，0.5，0.7或0.9。</li>
+<li>随机采样一个图像块。</li>
+</ul>
+<p>每个采样图像块的大小是原始图像大小的[0.1，1]，长宽比在$\frac {1} {2}$和2之间。如果实际边界框的中心在采用的图像块中，我们保留实际边界框与采样图像块的重叠部分。在上述采样步骤之后，除了应用类似于文献[14]中描述的一些光度变形之外，将每个采样图像块调整到固定尺寸并以0.5的概率进行水平翻转。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享，如果觉得有收获就打赏吧！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中英文对照/" rel="next" title="Single Shot MultiBox Detector论文翻译——中英文对照">
+                <i class="fa fa-chevron-left"></i> Single Shot MultiBox Detector论文翻译——中英文对照
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/13/2017-12-13-非极大值抑制(Non-Maximum Suppression)/" rel="prev" title="非极大值抑制(Non-Maximum Suppression)">
+                非极大值抑制(Non-Maximum Suppression) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">316</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
