@@ -101,7 +101,10 @@
 <meta property="og:description" content="Single Shot MultiBox Detector论文翻译——中文版">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig1.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig2.png">
-<meta property="og:updated_time" content="2017-12-14T07:00:12.000Z">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-table1.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig3.png">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ssd-fig4.png">
+<meta property="og:updated_time" content="2017-12-15T13:04:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Single Shot MultiBox Detector论文翻译——中文版">
 <meta name="twitter:description" content="Single Shot MultiBox Detector论文翻译——中文版">
@@ -391,6 +394,16 @@
 <li>随机采样一个图像块。</li>
 </ul>
 <p>每个采样图像块的大小是原始图像大小的[0.1，1]，长宽比在$\frac {1} {2}$和2之间。如果实际边界框的中心在采用的图像块中，我们保留实际边界框与采样图像块的重叠部分。在上述采样步骤之后，除了应用类似于文献[14]中描述的一些光度变形之外，将每个采样图像块调整到固定尺寸并以0.5的概率进行水平翻转。</p>
+<h2 id="3-实验结果"><a href="#3-实验结果" class="headerlink" title="3. 实验结果"></a>3. 实验结果</h2><p><strong>基础网络</strong>。我们的实验全部基于VGG16[15]，它是在ILSVRC CLS-LOC数据集[16]上预先训练的。类似于DeepLab-LargeFOV[17]，我们将<code>fc6</code>和<code>fc7</code>转换为卷积层，从fc6和fc7中重采样参数，将pool5从$2\times 2-s2$更改为$3\times 3-s1$，并使用空洞算法[18]来填补这个“小洞”。我们删除所有的丢弃层和<code>fc8</code>层。我们使用SGD对得到的模型进行微调，初始学习率为$10^{-3}$，动量为0.9，权重衰减为0.0005，批数据大小为32。每个数据集的学习速率衰减策略略有不同，我们将在后面详细描述。完整的训练和测试代码建立在Caffe[19]上并开源：<a href="https://github.com/weiliu89/caffe/tree/ SSD" target="_blank" rel="external">https://github.com/weiliu89/caffe/tree/ssd</a>。</p>
+<h3 id="3-1-PASCAL-VOC2007"><a href="#3-1-PASCAL-VOC2007" class="headerlink" title="3.1 PASCAL VOC2007"></a>3.1 PASCAL VOC2007</h3><p>在这个数据集上，我们在VOC2007 <code>test</code>（4952张图像）上比较了Fast R-CNN[6]和FAST R-CNN[2]。所有的方法都在相同的预训练好的VGG16网络上进行微调。</p>
+<p>图2显示了SSD300模型的架构细节。我们使用conv4_3，conv7（fc7），conv8_2，conv9_2，conv10_2和conv11_2来预测位置和置信度。我们在conv4_3上设置了尺度为0.1的默认边界框。我们使用“xavier”方法[20]初始化所有新添加的卷积层的参数。对于conv4_3，conv10_2和conv11_2，我们只在每个特征映射位置上关联了4个默认边界框——忽略$\frac {1} {3} $和3的长宽比。对于所有其它层，我们像2.2节描述的那样放置了6个默认边界框。如[12]所指出的，与其它层相比，由于conv4_3具有不同的特征尺度，所以我们使用[12]中引入的L2正则化技术将特征映射中每个位置的特征标准缩放到20，在反向传播过程中学习尺度。对于40k次迭代，我们使用$10^{-3}$的学习率，然后继续用$10^{-4}$和$10^{-5}$的学习率训练10k迭代。当对VOC2007 $\texttt{trainval}$进行训练时，表1显示了我们的低分辨率SSD300模型已经比Fast R-CNN更准确。当我们用更大的$512\times 512$输入图像上训练SSD时，它更加准确，超过了Faster R-CNN $1.7\%$的mAP。如果我们用更多的（即07+12）数据来训练SSD，我们看到SSD300已经比Faster R-CNN好$1.1\%$，SSD512比Faster R-CNN好$3.6\%$。如果我们将SSD512用3.4节描述的COCO $\texttt{trainval35k}$来训练模型并在07+12数据集上进行微调，我们获得了最好的结果：$81.6\%$的mAP。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ssd-table1.png" alt="Table 1"></p>
+<p>表1：<strong>PASCAL VOC2007 <code>test</code>检测结果</strong>。Fast和Faster R-CNN都使用最小维度为600的输入图像。两个SSD模型使用完全相同的设置除了它们有不同的输入大小(300×300和512×512)。很明显更大的输入尺寸会导致更好的结果，并且更大的数据同样有帮助。数据：“07”：VOC2007 <code>trainval</code>，“07+12”：VOC2007和VOC2012 <code>trainval</code>的联合。“07+12+COCO”：首先在COCO <code>trainval35k</code>上训练然后在07+12上微调。</p>
+<p>为了更详细地了解我们两个SSD模型的性能，我们使用了[21]中的检测分析工具。图3显示了SSD可以检测到高质量（大白色区域）的各种目标类别。它大部分的确信检测是正确的。召回约为$85-90\%$，而“弱”（0.1 Jaccard重叠）标准则要高得多。与R-CNN[22]相比，SSD具有更小的定位误差，表明SSD可以更好地定位目标，因为它直接学习回归目标形状和分类目标类别，而不是使用两个解耦步骤。然而，SSD对类似的目标类别（特别是对于动物）有更多的混淆，部分原因是我们共享多个类别的位置。图4显示SSD对边界框大小非常敏感。换句话说，它在较小目标上比在较大目标上的性能要差得多。这并不奇怪，因为这些小目标甚至可能在顶层没有任何信息。增加输入尺寸（例如从300×300到512×512）可以帮助改进检测小目标，但仍然有很大的改进空间。积极的一面，我们可以清楚地看到SSD在大型目标上的表现非常好。而且对于不同长宽比的目标，它是非常鲁棒的，因为我们使用每个特征映射位置的各种长宽比的默认框。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ssd-fig3.png" alt="Figure 3"></p>
+<p>图3：<strong>SSD512在VOC2007 <code>test</code>中的动物，车辆和家具上的性能可视化</strong>。第一行显示由于定位不佳（Loc），与相似类别（Sim）混淆，与其它（Oth）或背景（BG）相关的正确检测（Cor）或假阳性的累积分数。红色的实线表示随着检测次数的增加，强标准（0.5 Jaccard重叠）下的召回变化。红色虚线是使用弱标准（0.1 Jaccard重叠）。最下面一行显示了排名靠前的假阳性类型的分布。</p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/ssd-fig4.png" alt="Figure 4"></p>
+<p>图4：<strong>使用[21]在VOC2007 <code>test</code>设置上不同目标特性的灵敏度和影响</strong>。左边的图显示了BBox面积对每个类别的影响，右边的图显示了长宽比的影响。关键：BBox区域：XS=超小；S=小；M=中等；L=大；XL=超大。长宽比：XT=超高/窄；T=高；M=中等；W=宽；XW =超宽。</p>
 
       
     </div>
@@ -538,7 +551,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">316</span>
+                <span class="site-state-item-count">317</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -549,7 +562,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -560,7 +573,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -595,7 +608,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实验结果"><span class="nav-number">1.5.</span> <span class="nav-text">3. 实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PASCAL-VOC2007"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 PASCAL VOC2007</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

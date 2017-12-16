@@ -99,15 +99,15 @@
 <meta property="og:url" content="noahsnail.com/2017/12/13/2017-12-13-非极大值抑制(Non-Maximum Suppression)/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="非极大值抑制(Non-Maximum Suppression)">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/nms.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20171216215049280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/nms-0.6.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/nms-0.5.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/nms.png">
-<meta property="og:updated_time" content="2017-12-15T09:31:50.000Z">
+<meta property="og:updated_time" content="2017-12-16T13:53:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="非极大值抑制(Non-Maximum Suppression)">
 <meta name="twitter:description" content="非极大值抑制(Non-Maximum Suppression)">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/nms.png">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171216215049280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -355,7 +355,7 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-什么是非极大值抑制"><a href="#1-什么是非极大值抑制" class="headerlink" title="1. 什么是非极大值抑制"></a>1. 什么是非极大值抑制</h2><p>非极大值抑制，简称为NMS算法，英文为Non-Maximum Suppression。其思想是搜素局部最大值，抑制极大值。NMS算法在不同应用中的具体实现不太一样，但思想是一样的。非极大值抑制，在计算机视觉任务中得到了广泛的应用，例如边缘检测、人脸检测、目标检测（DPM，YOLO，SSD，Faster R-CNN）等。</p>
 <h2 id="2-为什么要用非极大值抑制"><a href="#2-为什么要用非极大值抑制" class="headerlink" title="2. 为什么要用非极大值抑制"></a>2. 为什么要用非极大值抑制</h2><p>以目标检测为例：目标检测的过程中在同一目标的位置上会产生大量的候选框，这些候选框相互之间可能会有重叠，此时我们需要利用非极大值抑制找到最佳的目标边界框，消除冗余的边界框。Demo如下图：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/nms.png" alt="Object Detection"></p>
+<p><img src="http://img.blog.csdn.net/20171216215049280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Object Detection"></p>
 <p>左图是人脸检测的候选框结果，每个边界框有一个置信度得分(confidence score)，如果不使用非极大值抑制，就会有多个候选框出现。右图是使用非极大值抑制之后的结果，符合我们人脸检测的预期结果。</p>
 <h2 id="3-如何使用非极大值抑制"><a href="#3-如何使用非极大值抑制" class="headerlink" title="3. 如何使用非极大值抑制"></a>3. 如何使用非极大值抑制</h2><p><strong>前提：</strong>目标边界框列表及其对应的置信度得分列表，设定阈值，阈值用来删除重叠较大的边界框。<br><strong>IoU</strong>：intersection-over-union，即两个边界框的交集部分除以它们的并集。</p>
 <p>非极大值抑制的流程如下：</p>
@@ -476,6 +476,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/12/16/2017-12-16-计算机系统概述/" rel="prev" title="计算机系统概述">
+                计算机系统概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -546,7 +550,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">316</span>
+                <span class="site-state-item-count">317</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -557,7 +561,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -568,7 +572,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
