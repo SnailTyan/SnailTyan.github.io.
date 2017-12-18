@@ -107,7 +107,12 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20171216224209114?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171216231320942?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171216233141888?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-12-16T15:40:00.000Z">
+<meta property="og:image" content="http://img.blog.csdn.net/20171218133317075?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171218134122094?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171218145942048?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171218153833835?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171218160629039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-18T08:22:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Single Shot MultiBox Detector论文翻译——中文版">
 <meta name="twitter:description" content="Single Shot MultiBox Detector论文翻译——中文版">
@@ -419,6 +424,23 @@
 <h3 id="3-3-PASCAL-VOC2012"><a href="#3-3-PASCAL-VOC2012" class="headerlink" title="3.3 PASCAL VOC2012"></a>3.3 PASCAL VOC2012</h3><p>除了我们使用VOC2012 <code>trainval</code>和VOC2007 <code>trainval</code>，<code>test</code>（21503张图像）进行训练，以及在VOC2012 <code>test</code>（10991张图像）上进行测试之外，我们使用与上述基本的VOC2007实验相同的设置。我们用$10^{−3}$的学习率对模型进行60k次的迭代训练，然后使用$10^{−4}$的学习率进行20k次迭代训练。表4显示了我们的SSD300和SSD512模型的结果。我们看到了与我们在VOC2007 <code>test</code>中观察到的相同的性能趋势。我们的SSD300比Fast/Faster R-CNN提高了准确性。通过将训练和测试图像大小增加到512×512，我们比Faster R-CNN的准确率提高了$4.5\%$。与YOLO相比，SSD更精确，可能是由于使用了来自多个特征映射的卷积默认边界框和我们在训练期间的匹配策略。当对从COCO上训练的模型进行微调后，我们的SSD512达到了$80.0\%$的mAP，比Faster R-CNN高了$4.1\%$。</p>
 <p><img src="http://img.blog.csdn.net/20171216233141888?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Table 4"></p>
 <p>表4： <strong>PASCAL VOC2012 <code>test</code>上的检测结果</strong>. Fast和Faster R-CNN使用最小维度为600的图像，而YOLO的图像大小为448× 48。数据：“07++12”：VOC2007 <code>trainval</code>，<code>test</code>和VOC2012 <code>trainval</code>。“07++12+COCO”：先在COCO <code>trainval135k</code>上训练然后在07++12上微调。</p>
+<h3 id="3-4-COCO"><a href="#3-4-COCO" class="headerlink" title="3.4 COCO"></a>3.4 COCO</h3><p>为了进一步验证SSD框架，我们在COCO数据集上对SSD300和SSD512架构进行了训练。由于COCO中的目标往往比PASCAL VOC中的更小，因此我们对所有层使用较小的默认边界框。我们遵循2.2节中提到的策略，但是现在我们最小的默认边界框尺度是0.15而不是0.2，并且conv4_3上的默认边界框尺度是0.07（例如，300×300图像中的21个像素）。</p>
+<p>我们使用<code>trainval35k</code>[24]进行训练。我们首先用$10^{−3}$的学习率对模型进行训练，进行160k次迭代，然后继续以$10^{−4}$和$10^{−5}$的学习率各进行40k次迭代。表5显示了<code>test-dev2015</code>的结果。与我们在PASCAL VOC数据集中观察到的结果类似，SSD300在mAP@0.5和mAP@[0.5:0.95]中都优于Fast R-CNN。SSD300与ION 24]和Faster R-CNN[25]具有相似的mAP@0.75，但是mAP@0.5更差。通过将图像尺寸增加到512×512，我们的SSD512在这两个标准中都优于Faster R-CNN[25]。有趣的是，我们观察到SSD512在mAP@0.75中要好$5.3\%$，但是在mAP@0.5中只好$1.2\%$。我们也观察到，对于大型目标，AP（$4.8\%$）和AR（$4.6\%$）的效果要好得多，但对于小目标，AP（$1.3\%$）和AR（$2.0\%$）有相对更少的改进。与ION相比，大型和小型目标的AR改进更为相似（$5.4\%$和$3.9\%$）。我们推测Faster R-CNN在较小的目标上比SSD更具竞争力，因为它在RPN部分和Fast R-CNN部分都执行了两个边界框细化步骤。在图5中，我们展示了SSD512模型在COCO <code>test-dev</code>上的一些检测实例。</p>
+<p><img src="http://img.blog.csdn.net/20171218133317075?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Table 5"></p>
+<p>表5：<strong>COCO <code>test-dev2015</code>检测结果</strong>。</p>
+<p><img src="http://img.blog.csdn.net/20171218134122094?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Figure 5"></p>
+<p>图5：<strong>SSD512模型在COCO <code>test-dev</code>上的检测实例</strong>。我们展示了分数高于0.6的检测。每种颜色对应一种目标类别。</p>
+<h3 id="3-5-初步的ILSVRC结果"><a href="#3-5-初步的ILSVRC结果" class="headerlink" title="3.5 初步的ILSVRC结果"></a>3.5 初步的ILSVRC结果</h3><p>我们将在COCO上应用的相同网络架构应用于ILSVRC DET数据集[16]。我们使用[22]中使用的ILSVRC2014 DET<code>train</code>和<code>val1</code>来训练SSD300模型。我们首先用$10^{−3}$的学习率对模型进行训练，进行了320k次的迭代，然后以$10^{−4}$继续迭代80k次，以$10^{−5}$迭代40k次。我们可以在<code>val2</code>数据集上[22]实现43.4 mAP。再一次证明了SSD是用于高质量实时检测的通用框架。</p>
+<h3 id="3-6-为小目标准确率进行数据增强"><a href="#3-6-为小目标准确率进行数据增强" class="headerlink" title="3.6 为小目标准确率进行数据增强"></a>3.6 为小目标准确率进行数据增强</h3><p>SSD没有如Faster R-CNN中后续的特征重采样步骤，小目标的分类任务对SSD来说相对困难，正如我们的分析（见图4）所示。2.2描述的数据增强有助于显著提高性能，特别是在PASCAL VOC等小数据集上。策略产生的随机裁剪可以被认为是“放大”操作，并且可以产生许多更大的训练样本。为了实现创建更多小型训练样本的“缩小”操作，我们首先将图像随机放置在填充了平均值的原始图像大小为16x的画布上，然后再进行任意的随机裁剪操作。因为通过引入这个新的“扩展”数据增强技巧，我们有更多的训练图像，所以我们必须将训练迭代次数加倍。我们已经在多个数据集上看到了一致的$2\%-3\%$的mAP增长，如表6所示。具体来说，图6显示新的增强技巧显著提高了模型在小目标上的性能。这个结果强调了数据增强策略对最终模型精度的重要性。</p>
+<p><img src="http://img.blog.csdn.net/20171218145942048?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Table 6"></p>
+<p>表6：<strong>我们使用图像扩展数据增强技巧在多个数据集上的结果。</strong>$SSD300^{*}$和$SSD512^{*}$是用新的数据增强训练的模型。</p>
+<p><img src="http://img.blog.csdn.net/20171218153833835?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Figure 6"></p>
+<p>图6：<strong>具有新的数据增强的目标尺寸在[21]中使用的VOC2007<code>test</code>数据集上灵敏度及影响</strong>。最上一行显示了原始SSD300和SSD512模型上每个类别的BBox面积的影响，最下面一行对应使用新的数据增强训练技巧的$SSD300^{*}$和$SSD512^{*}$模型。新的数据增强技巧显然有助于显著检测小目标。</p>
+<p>改进SSD的另一种方法是设计一个更好的默认边界框平铺，使其位置和尺度与特征映射上每个位置的感受野更好地对齐。我们将这个留给未来工作。</p>
+<h3 id="3-7-推断时间"><a href="#3-7-推断时间" class="headerlink" title="3.7 推断时间"></a>3.7 推断时间</h3><p>考虑到我们的方法产生大量边界框，在推断期间执行非最大值抑制（nms）是必要的。通过使用0.01的置信度阈值，我们可以过滤大部分边界框。然后，我们应用nms，每个类别0.45的Jaccard重叠，并保留每张图像的前200个检测。对于SSD300和20个VOC类别，这个步骤每张图像花费大约1.7毫秒，接近在所有新增层上花费的总时间（2.4毫秒）。我们使用Titan X、cuDNN v4、Intel Xeon E5-2667v3@3.20GHz以及批大小为8来测量速度。</p>
+<p>表7显示了SSD，Faster R-CNN[2]和YOLO[5]之间的比较。我们的SSD300和SSD512的速度和精度均优于Faster R-CNN。虽然Fast YOLO[5]可以以155FPS的速度运行，但其准确性却降低了近$22\%$的mAP。就我们所知，SSD300是第一个实现$70\%$以上mAP的实时方法。请注意，大约$80\%$前馈时间花费在基础网络上（本例中为VGG16）。因此，使用更快的基础网络可以进一步提高速度，这也可能使SSD512模型达到实时。</p>
+<p><img src="http://img.blog.csdn.net/20171218160629039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Figure 7"></p>
+<p>表7：<strong>Pascal VOC2007 <code>test</code>上的结果</strong>。SSD300是唯一可以取得$70\%$以上mAP的实现检测方法。通过使用更大的输入图像，SSD512在精度上超过了所有方法同时保持近似实时的速度。</p>
 
       
     </div>
@@ -577,7 +599,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -588,7 +610,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -623,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实验结果"><span class="nav-number">1.5.</span> <span class="nav-text">3. 实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PASCAL-VOC2007"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 PASCAL VOC2007</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模型分析"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 模型分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-PASCAL-VOC2012"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 PASCAL VOC2012</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实验结果"><span class="nav-number">1.5.</span> <span class="nav-text">3. 实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PASCAL-VOC2007"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 PASCAL VOC2007</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模型分析"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 模型分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-PASCAL-VOC2012"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 PASCAL VOC2012</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-COCO"><span class="nav-number">1.5.4.</span> <span class="nav-text">3.4 COCO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-初步的ILSVRC结果"><span class="nav-number">1.5.5.</span> <span class="nav-text">3.5 初步的ILSVRC结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-为小目标准确率进行数据增强"><span class="nav-number">1.5.6.</span> <span class="nav-text">3.6 为小目标准确率进行数据增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-推断时间"><span class="nav-number">1.5.7.</span> <span class="nav-text">3.7 推断时间</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
