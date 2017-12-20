@@ -103,13 +103,13 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20171217210233200?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217210308504?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217210359992?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/giphy.gif">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-3bf21864a5897262.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217211323831?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217211732300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217211823115?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217211903693?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217211953651?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-12-17T13:20:20.000Z">
+<meta property="og:updated_time" content="2017-12-20T06:45:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeNet神经网络">
 <meta name="twitter:description" content="LeNet神经网络">
@@ -368,7 +368,7 @@
 <p><img src="http://img.blog.csdn.net/20171217210308504?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图像的表示"></p>
 <p>LeNet网络除去输入输出层总共有六层网络。第一层是卷积层（C1层），卷积核的大小为<code>5\*5</code>，卷积核数量为<code>6</code>个，输入图像的大小为<code>32*32</code>，因此输入数据在进行第一层卷积之后，输出结果为大小为<code>28*28</code>，数量为<code>6</code>个的feature map。卷积操作如下面两幅图所示：</p>
 <p><img src="http://img.blog.csdn.net/20171217210359992?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="卷积演示"></p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/giphy.gif" alt="卷积演示"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-3bf21864a5897262.gif?imageMogr2/auto-orient/strip" alt="卷积演示"></p>
 <p>卷积操作的过程可描述为：卷积核在图像上滑动，滑动步长为1（即每次移动一格，水平方向从左到右，到最右边之后再从最左边开始，向下移动一格，重复从左到右滑动），当卷积核与图像的一个局部块重合时进行卷积运行，卷积计算方式为图像块对应位置的数与卷积核对应位置的数相乘，然后将所有相乘结果相加即为feature map的值，<strong>相乘累加之后的结果位于卷积核中心点的位置</strong>，因此如果是<code>3\*3</code>的卷积核，feature map比原图像在水平和垂直方向上分别减少两行（上下各一行）和两列（左右各一列），因此上面图像原图为<code>5*5</code>，卷积核为<code>3\*3</code>，卷积结果大小为<code>3*3</code>，即<code>(5-2)*(5-2)</code>，如果卷积核为<code>5*5</code>，则卷积结果大小为<code>(5-4)*(5-4)</code>。上图中的卷积核为：<br><img src="http://img.blog.csdn.net/20171217211323831?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="卷积核"></p>
 <p>由于神经网络层与层的结构是通过连接来实现的，因此输入层与第一个卷积层的连接数量应为<code>(32-2-2)\*(32-2-2)\*(5\*5+1)\*6= 28\*28\*156 =122304</code>。</p>
 <p>卷积的作用主要是：通过卷积运算，可以使原信号特征增强，并且降低噪音。在图像上卷积之后主要是减少图像噪声，提取图像的特征。例如sobel算子就是一种卷积运算，主要是提取图像的边缘特征。卷积网络能很好地适应图像的平移不变性：例如稍稍移动一幅猫的图像，它仍然是一幅猫的图像。卷积操作保留了图像块之间的空间信息，进行卷积操作的图像块之间的相对位置关系没有改变。图像在不同卷积核上进行卷积之后的效果图如下：</p>
