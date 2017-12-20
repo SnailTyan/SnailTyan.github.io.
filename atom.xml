@@ -137,7 +137,7 @@
     <link href="noahsnail.com/2017/12/16/2017-12-16-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/"/>
     <id>noahsnail.com/2017/12/16/2017-12-16-计算机系统概述/</id>
     <published>2017-12-16T12:41:45.000Z</published>
-    <updated>2017-12-19T03:23:27.000Z</updated>
+    <updated>2017-12-20T01:55:50.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-冯·诺依曼结构的主要思想"><a href="#1-冯·诺依曼结构的主要思想" class="headerlink" title="1. 冯·诺依曼结构的主要思想"></a>1. 冯·诺依曼结构的主要思想</h2><p>1.计算机应由运算器、控制器、存储器、输入设备和输出设备五个基本部件组成。<br>2.各基本部件的功能：</p>
@@ -152,7 +152,9 @@
 <li>程序执行前<br>数据和指令事先存放在存储器中，每条指令和数据都有地址，指令按顺序存放，指令由OP、ADDR字段组成，程序起始地址放置在PC中</li>
 <li>执行程序<br>1.根据PC取指令<br>2.指令译码<br>3.取操作数<br>4.指令执行<br>5.回写结果<br>6.修改PC值<br>7.执行下一条指令</li>
 </ul>
-]]></content>
+<h2 id="3-编译程序和解释程序"><a href="#3-编译程序和解释程序" class="headerlink" title="3. 编译程序和解释程序"></a>3. 编译程序和解释程序</h2><p>编译程序（Compiler）：将高级语言源程序转换为机器级目标程序，执行时只需要启动目标程序即可。</p>
+<p>解释程序（Interpreter）：将高级语言语句逐条翻译成机器程序并立即执行，不生成目标文件。</p>
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2>]]></content>
     
     <summary type="html">
     
@@ -242,7 +244,7 @@
     <link href="noahsnail.com/2017/12/11/2017-12-11-Single%20Shot%20MultiBox%20Detector%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
     <id>noahsnail.com/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中文版/</id>
     <published>2017-12-11T07:54:17.000Z</published>
-    <updated>2017-12-18T11:50:36.000Z</updated>
+    <updated>2017-12-19T14:22:13.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> | &nbsp; <a href="https://cloud.tencent.com/developer/column/1642" target="_blank" rel="external">云+社区</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
@@ -324,6 +326,7 @@
 <p>表7显示了SSD，Faster R-CNN[2]和YOLO[5]之间的比较。我们的SSD300和SSD512的速度和精度均优于Faster R-CNN。虽然Fast YOLO[5]可以以155FPS的速度运行，但其准确性却降低了近$22\%$的mAP。就我们所知，SSD300是第一个实现$70\%$以上mAP的实时方法。请注意，大约$80\%$前馈时间花费在基础网络上（本例中为VGG16）。因此，使用更快的基础网络可以进一步提高速度，这也可能使SSD512模型达到实时。</p>
 <p><img src="http://img.blog.csdn.net/20171218160629039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Figure 7"></p>
 <p>表7：<strong>Pascal VOC2007 <code>test</code>上的结果</strong>。SSD300是唯一可以取得$70\%$以上mAP的实现检测方法。通过使用更大的输入图像，SSD512在精度上超过了所有方法同时保持近似实时的速度。</p>
+<h2 id="4-相关工作"><a href="#4-相关工作" class="headerlink" title="4. 相关工作"></a>4. 相关工作</h2><p>在图像中有两种建立的用于目标检测的方法，一种基于滑动窗口，另一种基于区域提出分类。在卷积神经网络出现之前，这两种方法的最新技术——可变形部件模型（DPM）[26]和选择性搜索[1]——具有相当的性能。然而，在R-CNN[22]结合选择性搜索区域提出和基于后分类的卷积网络带来的显著改进后，区域提出目标检测方法变得流行。</p>
 ]]></content>
     
     <summary type="html">
@@ -344,7 +347,7 @@
     <link href="noahsnail.com/2017/12/11/2017-12-11-Single%20Shot%20MultiBox%20Detector%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
     <id>noahsnail.com/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中英文对照/</id>
     <published>2017-12-11T07:53:47.000Z</published>
-    <updated>2017-12-19T09:15:14.000Z</updated>
+    <updated>2017-12-20T03:39:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> | &nbsp; <a href="https://cloud.tencent.com/developer/column/1642" target="_blank" rel="external">云+社区</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
