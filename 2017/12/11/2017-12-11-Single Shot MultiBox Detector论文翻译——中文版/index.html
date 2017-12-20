@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20171218145942048?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171218153833835?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171218160629039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-12-19T14:22:13.000Z">
+<meta property="og:updated_time" content="2017-12-20T08:40:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Single Shot MultiBox Detector论文翻译——中文版">
 <meta name="twitter:description" content="Single Shot MultiBox Detector论文翻译——中文版">
@@ -442,6 +442,66 @@
 <p><img src="http://img.blog.csdn.net/20171218160629039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Figure 7"></p>
 <p>表7：<strong>Pascal VOC2007 <code>test</code>上的结果</strong>。SSD300是唯一可以取得$70\%$以上mAP的实现检测方法。通过使用更大的输入图像，SSD512在精度上超过了所有方法同时保持近似实时的速度。</p>
 <h2 id="4-相关工作"><a href="#4-相关工作" class="headerlink" title="4. 相关工作"></a>4. 相关工作</h2><p>在图像中有两种建立的用于目标检测的方法，一种基于滑动窗口，另一种基于区域提出分类。在卷积神经网络出现之前，这两种方法的最新技术——可变形部件模型（DPM）[26]和选择性搜索[1]——具有相当的性能。然而，在R-CNN[22]结合选择性搜索区域提出和基于后分类的卷积网络带来的显著改进后，区域提出目标检测方法变得流行。</p>
+<p>最初的R-CNN方法已经以各种方式进行了改进。第一套方法提高了后分类的质量和速度，因为它需要对成千上万的裁剪图像进行分类，这是昂贵和耗时的。SPPnet[9]显著加快了原有的R-CNN方法。它引入了一个空间金字塔池化层，该层对区域大小和尺度更鲁棒，并允许分类层重用多个图像分辨率下生成的特征映射上计算的特征。Fast R-CNN[6]扩展了SPPnet，使得它可以通过最小化置信度和边界框回归的损失来对所有层进行端到端的微调，最初在MultiBox[7]中引入用于学习目标。</p>
+<p>第二套方法使用深度神经网络提高了提出生成的质量。在最近的工作MultiBox[7,8]中，基于低级图像特征的选择性搜索区域提出直接被单独的深度神经网络生成的提出所取代。这进一步提高了检测精度，但是导致了一些复杂的设置，需要训练两个具有依赖关系的神经网络。Faster R-CNN[2]将选择性搜索提出替换为区域提出网络（RPN）学习到的区域提出，并引入了一种方法，通过交替两个网络之间的微调共享卷积层和预测层将RPN和Fast R-CNN结合在一起。通过这种方式，使用区域提出池化中级特征，并且最后的分类步骤比较便宜。我们的SSD与Faster R-CNN中的区域提出网络（RPN）非常相似，因为我们也使用一组固定的（默认）边界框进行预测，类似于RPN中的锚边界框。但是，我们不是使用这些来池化特征并评估另一个分类器，而是为每个目标类别在每个边界框中同时生成一个分数。因此，我们的方法避免了将RPN与Fast R-CNN合并的复杂性，并且更容易训练，更快且更直接地集成到其它任务中。</p>
+<p>与我们的方法直接相关的另一组方法，完全跳过提出步骤，直接预测多个类别的边界框和置信度。OverFeat[4]是滑动窗口方法的深度版本，在知道了底层目标类别的置信度之后，直接从最顶层的特征映射的每个位置预测边界框。YOLO[5]使用整个最顶层的特征映射来预测多个类别和边界框（这些类别共享）的置信度。我们的SSD方法属于这一类，因为我们没有提出步骤，但使用默认边界框。然而，我们的方法比现有方法更灵活，因为我们可以在不同尺度的多个特征映射的每个特征位置上使用不同长宽比的默认边界框。如果我们只从最顶层的特征映射的每个位置使用一个默认框，我们的SSD将具有与OverFeat[4]相似的架构；如果我们使用整个最顶层的特征映射，并添加一个全连接层进行预测来代替我们的卷积预测器，并且没有明确地考虑多个长宽比，我们可以近似地再现YOLO[5]。</p>
+<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>本文介绍了SSD，一种快速的单次多类别目标检测器。我们模型的一个关键特性是使用网络顶部多个特征映射的多尺度卷积边界框输出。这种表示使我们能够高效地建模可能的边界框形状空间。我们通过实验验证，在给定合适训练策略的情况下，大量仔细选择的默认边界框会提高性能。我们构建的SSD模型比现有的方法至少要多一个数量级的边界框预测采样位置，尺度和长宽比[5,7]。我们证明了给定相同的VGG-16基础架构，SSD在准确性和速度方面与其对应的最先进的目标检测器相比毫不逊色。在PASCAL VOC和COCO上，我们的SSD512模型的性能明显优于最先进的Faster R-CNN[2]，而速度提高了3倍。我们的实时SSD300模型运行速度为59FPS，比目前的实时YOLO[5]更快，同时显著提高了检测精度。</p>
+<p>除了单独使用之外，我们相信我们的整体和相对简单的SSD模型为采用目标检测组件的大型系统提供了有用的构建模块。一个有前景的未来方向是探索它作为系统的一部分，使用循环神经网络来同时检测和跟踪视频中的目标。</p>
+<h2 id="6-致谢"><a href="#6-致谢" class="headerlink" title="6. 致谢"></a>6. 致谢</h2><p>这项工作是在谷歌的一个实习项目开始的，并在UNC继续。我们要感谢Alex Toshev进行有益的讨论，并感谢Google的Image Understanding和DistBelief团队。我们也感谢Philip Ammirato和Patrick Poirson提供有用的意见。我们感谢NVIDIA提供的GPU，并对NSF 1452851,1446631,1526367,1533771的支持表示感谢。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p>Uijlings, J.R., van de Sande, K.E., Gevers, T., Smeulders, A.W.: Selective search for object recognition. IJCV (2013)</p>
+</li>
+<li><p>Ren, S., He, K., Girshick, R., Sun, J.: Faster R-CNN: Towards real-time object detection with region proposal networks. In: NIPS. (2015)</p>
+</li>
+<li><p>He, K., Zhang, X., Ren, S., Sun, J.:Deep residual learning for image recognition. In:CVPR. (2016)</p>
+</li>
+<li><p>Sermanet, P., Eigen, D., Zhang, X., Mathieu, M., Fergus, R., LeCun, Y.: Overfeat:Integrated recognition, localization and detection using convolutional networks. In: ICLR. (2014)</p>
+</li>
+<li><p>Redmon, J., Divvala, S., Girshick, R., Farhadi, A.: You only look once: Unified, real-time object detection. In: CVPR. (2016)</p>
+</li>
+<li><p>Girshick, R.: Fast R-CNN. In: ICCV. (2015)</p>
+</li>
+<li><p>Erhan, D., Szegedy, C., Toshev, A., Anguelov, D.: Scalable object detection using deep neural networks. In: CVPR. (2014)</p>
+</li>
+<li><p>Szegedy, C., Reed, S., Erhan, D., Anguelov, D.: Scalable, high-quality object detection. arXiv preprint arXiv:1412.1441 v3 (2015)</p>
+</li>
+<li><p>He, K., Zhang, X., Ren, S., Sun, J.: Spatial pyramid pooling in deep convolutional networks for visual recognition. In: ECCV. (2014)</p>
+</li>
+<li><p>Long, J., Shelhamer, E., Darrell, T.: Fully convolutional networks for semantic segmentation. In: CVPR. (2015)</p>
+</li>
+<li><p>Hariharan, B., Arbeláez, P., Girshick, R., Malik, J.: Hypercolumns for object segmentation and fine-grained localization. In: CVPR. (2015)</p>
+</li>
+<li><p>Liu, W., Rabinovich, A., Berg, A.C.: ParseNet: Looking wider to see better.In:ILCR.(2016)</p>
+</li>
+<li><p>Zhou, B., Khosla, A., Lapedriza, A., Oliva, A., Torralba, A.: Object detector semerge in deep scene cnns. In: ICLR. (2015)</p>
+</li>
+<li><p>Howard, A.G.: Some improvements on deep convolutional neural network based image classification. arXiv preprint arXiv:1312.5402 (2013)</p>
+</li>
+<li><p>Simonyan, K., Zisserman, A.: Very deep convolutional networks for large-scale image recognition. In: NIPS. (2015)</p>
+</li>
+<li><p>Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z., Karpathy, A., Khosla, A., Bernstein, M., Berg, A.C., Fei-Fei, L.: Imagenet large scale visual recognition challenge. IJCV (2015)</p>
+</li>
+<li><p>Chen, L.C., Papandreou, G., Kokkinos, I., Murphy, K., Yuille, A.L.: Semantic image segmentation with deep convolutional nets and fully connected crfs. In: ICLR. (2015)</p>
+</li>
+<li><p>Holschneider, M., Kronland-Martinet, R., Morlet, J., Tchamitchian, P.: Areal-time algorithm for signal analysis with the help of the wavelet transform. In: Wavelets. Springer (1990) 286–297</p>
+</li>
+<li><p>Jia, Y., Shelhamer, E., Donahue, J., Karayev, S., Long, J., Girshick, R., Guadarrama, S., Darrell, T.: Caffe: Convolutional architecture for fast feature embedding. In: MM. (2014)</p>
+</li>
+<li><p>Glorot, X., Bengio, Y.: Understanding the difficulty of training deep feedforward neural networks. In: AISTATS. (2010)</p>
+</li>
+<li><p>Hoiem, D., Chodpathumwan, Y., Dai, Q.: Diagnosing error in object detectors. In: ECCV 2012. (2012)</p>
+</li>
+<li><p>Girshick, R., Donahue, J., Darrell, T., Malik, J.: Rich feature hierarchies for accurate object detection and semantic segmentation. In: CVPR. (2014)</p>
+</li>
+<li><p>Zhang, L., Lin, L., Liang, X., He, K.: Is faster r-cnn doing well for pedestrian detection. In: ECCV. (2016)</p>
+</li>
+<li><p>Bell, S., Zitnick, C.L., Bala, K., Girshick, R.: Inside-outside net:Detecting objects in context with skip pooling and recurrent neural networks. In: CVPR. (2016)</p>
+</li>
+<li><p>COCO: Common Objects in Context. <a href="http://mscoco.org/dataset/#detections-leaderboard" target="_blank" rel="external">http://mscoco.org/dataset/#detections-leaderboard</a> (2016) [Online; accessed 25-July-2016].</p>
+</li>
+<li><p>Felzenszwalb, P., McAllester, D., Ramanan, D.: A discriminatively trained, multiscale, deformable part model. In: CVPR. (2008)</p>
+</li>
+</ol>
 
       
     </div>
@@ -646,7 +706,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实验结果"><span class="nav-number">1.5.</span> <span class="nav-text">3. 实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PASCAL-VOC2007"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 PASCAL VOC2007</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模型分析"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 模型分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-PASCAL-VOC2012"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 PASCAL VOC2012</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-COCO"><span class="nav-number">1.5.4.</span> <span class="nav-text">3.4 COCO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-初步的ILSVRC结果"><span class="nav-number">1.5.5.</span> <span class="nav-text">3.5 初步的ILSVRC结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-为小目标准确率进行数据增强"><span class="nav-number">1.5.6.</span> <span class="nav-text">3.6 为小目标准确率进行数据增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-推断时间"><span class="nav-number">1.5.7.</span> <span class="nav-text">3.7 推断时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-相关工作"><span class="nav-number">1.6.</span> <span class="nav-text">4. 相关工作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">SSD: Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-单次检测器-SSD"><span class="nav-number">1.3.</span> <span class="nav-text">2. 单次检测器(SSD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.4.</span> <span class="nav-text">2.2 训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实验结果"><span class="nav-number">1.5.</span> <span class="nav-text">3. 实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-PASCAL-VOC2007"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.1 PASCAL VOC2007</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模型分析"><span class="nav-number">1.5.2.</span> <span class="nav-text">3.2 模型分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-PASCAL-VOC2012"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.3 PASCAL VOC2012</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-COCO"><span class="nav-number">1.5.4.</span> <span class="nav-text">3.4 COCO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-初步的ILSVRC结果"><span class="nav-number">1.5.5.</span> <span class="nav-text">3.5 初步的ILSVRC结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-为小目标准确率进行数据增强"><span class="nav-number">1.5.6.</span> <span class="nav-text">3.6 为小目标准确率进行数据增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-推断时间"><span class="nav-number">1.5.7.</span> <span class="nav-text">3.7 推断时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-相关工作"><span class="nav-number">1.6.</span> <span class="nav-text">4. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结论"><span class="nav-number">1.7.</span> <span class="nav-text">5. 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-致谢"><span class="nav-number">1.8.</span> <span class="nav-text">6. 致谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.9.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
             
 
           </div>
