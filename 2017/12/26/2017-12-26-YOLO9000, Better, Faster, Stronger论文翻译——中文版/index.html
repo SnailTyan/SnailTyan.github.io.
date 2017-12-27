@@ -99,10 +99,13 @@
 <meta property="og:url" content="noahsnail.com/2017/12/26/2017-12-26-YOLO9000, Better, Faster, Stronger论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
-<meta property="og:updated_time" content="2017-12-26T10:09:18.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-27T10:33:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
 <meta name="twitter:description" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -350,6 +353,27 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="YOLO9000-Better-Faster-Stronger"><a href="#YOLO9000-Better-Faster-Stronger" class="headerlink" title="YOLO9000: Better, Faster, Stronger"></a>YOLO9000: Better, Faster, Stronger</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们引入了一个先进的实时目标检测系统YOLO9000，可以检测超过9000个目标类别。首先，我们提出了对YOLO检测方法的各种改进，既有新颖性，也有前期的工作。改进后的模型YOLOv2在PASCAL VOC和COCO等标准检测任务上是最先进的。使用一种新颖的，多尺度训练方法，同样的YOLOv2模型可以以不同的尺寸运行，从而在速度和准确性之间提供了一个简单的折衷。在67FPS时，YOLOv2在VOC 2007上获得了76.8 mAP。在40FPS时，YOLOv2获得了78.6 mAP，比使用ResNet的Faster R-CNN和SSD等先进方法表现更出色，同时仍然运行速度显著更快。最后我们提出了一种联合训练目标检测与分类的方法。使用这种方法，我们在COCO检测数据集和ImageNet分类数据集上同时训练YOLO9000。我们的联合训练允许YOLO9000预测未标注的检测数据目标类别的检测结果。我们在ImageNet检测任务上验证了我们的方法。YOLO9000在ImageNet检测验证集上获得19.7 mAP，尽管200个类别中只有44个具有检测数据。在没有COCO的156个类别上，YOLO9000获得16.0 mAP。但YOLO可以检测到200多个类别；它预测超过9000个不同目标类别的检测结果。并且它仍然能实时运行。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>通用目的的目标检测应该快速，准确，并且能够识别各种各样的目标。自从引入神经网络以来，检测框架变得越来越快速和准确。但是，大多数检测方法仍然受限于一小部分目标。</p>
+<p>与分类和标记等其他任务的数据集相比，目前目标检测数据集是有限的。最常见的检测数据集包含成千上万到数十万张具有成百上千个标签的图像[3][10][2]。分类数据集有数以百万计的图像，数十或数十万个类别[20][2]。</p>
+<p>我们希望检测能够扩展到目标分类的级别。但是，标注检测图像要比标注分类或贴标签要昂贵得多（标签通常是用户免费提供的）。因此，我们不太可能在近期内看到与分类数据集相同规模的检测数据集。</p>
+<p>我们提出了一种新的方法来利用我们已经拥有的大量分类数据，并用它来扩大当前检测系统的范围。我们的方法使用目标分类的分层视图，允许我们将不同的数据集组合在一起。</p>
+<p>我们还提出了一种联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
+<p>使用这种方法我们训练YOLO9000，一个实时的目标检测器，可以检测超过9000种不同的目标类别。首先，我们改进YOLO基础检测系统，产生最先进的实时检测器YOLOv2。然后利用我们的数据集组合方法和联合训练算法对来自ImageNet的9000多个类别以及COCO的检测数据训练了一个模型。</p>
+<p>我们的所有代码和预训练模型都可在线获得：<a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>。</p>
+<h2 id="2-更好"><a href="#2-更好" class="headerlink" title="2. 更好"></a>2. 更好</h2><p>与最先进的检测系统相比，YOLO有许多缺点。YOLO与Fast R-CNN相比的误差分析表明，YOLO造成了大量的定位误差。此外，与基于区域提出的方法相比，YOLO召回率相对较低。因此，我们主要侧重于提高召回率和改进定位，同时保持分类准确性。</p>
+<p>计算机视觉一般趋向于更大，更深的网络[6][18][17]。更好的性能通常取决于训练更大的网络或将多个模型组合在一起。但是，在YOLOv2中，我们需要一个更精确的检测器，它仍然很快。我们不是扩大我们的网络，而是简化网络，然后让表示更容易学习。我们将过去的工作与我们自己的新概念汇集起来，以提高YOLO的性能。表2列出了结果总结。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
+<p><strong>表2：从YOLO到YOLOv2的路径</strong>。列出的大部分设计决定都会导致mAP的显著增加。有两个例外是切换到具有锚盒的一个全卷积网络和使用新网络。切换到锚盒风格的方法增加了召回，而不改变mAP，而使用新网络会削减$33\%$的计算量。</p>
+<p><strong>批标准化</strong>。批标准化导致收敛性的显著改善，同时消除了对其他形式正则化的需求[7]。通过在YOLO的所有卷积层上添加批标准化，我们在mAP中获得了超过$2\%$的改进。批标准化也有助于模型正则化。通过批标准化，我们可以从模型中删除丢弃而不会过拟合。</p>
+<p><strong>高分辨率分类器</strong>。所有最先进的检测方法都使用在ImageNet[16]上预训练的分类器。从AlexNet开始，大多数分类器对小于256×256[8]的输入图像进行操作。原来的YOLO以224×224的分辨率训练分类器网络，并将分辨率提高到448进行检测。这意味着网络必须同时切换到学习目标检测和调整到新的输入分辨率。</p>
+<p>对于YOLOv2，我们首先ImageNet上以448×448的分辨率对分类网络进行10个迭代周期的微调。这给了网络时间来调整其滤波器以便更好地处理更高分辨率的输入。然后，我们在检测上微调得到的网络。这个高分辨率分类网络使我们增加了近$4\%$的mAP。</p>
+<p><strong>具有锚盒的卷积</strong>。YOLO直接使用卷积特征提取器顶部的全连接层来预测边界框的坐标。Faster R-CNN使用手动选择的先验来预测边界框而不是直接预测坐标[15]。Faster R-CNN中的区域提出网络（RPN）仅使用卷积层来预测锚盒的偏移和置信度。由于预测层是卷积的，所以RPN在特征映射的每个位置上预测这些偏移。预测偏移而不是坐标简化了问题，并且使网络更容易学习。</p>
+<p>我们从YOLO中移除全连接层，并使用锚盒来预测边界框。首先，我们消除了一个池化层，使网络卷积层输出具有更高的分辨率。我们还缩小了网络，操作416×416的输入图像而不是448×448。我们这样做是因为我们要在我们的特征映射中有奇数个位置，所以只有一个中心单元。目标，特别是大目标，往往占据图像的中心，所以在中心有一个单独的位置来预测这些目标，而不是四个都在附近的位置是很好的。YOLO的卷积层将图像下采样32倍，所以通过使用416的输入图像，我们得到了13×13的输出特征映射。</p>
+<p>当我们移动到锚盒时，我们也将类预测机制与空间位置分离，预测每个锚盒的类别和目标。在YOLO之后，目标预测仍然预测了实际值和提出的边界框的IOU，并且类别预测预测了当存在目标时该类别的条件概率。</p>
+<p>使用锚盒，我们在精度上得到了一个小下降。YOLO每张图像只预测98个边界框，但是使用锚盒我们的模型预测超过一千。如果没有锚盒，我们的中间模型将获得69.5的mAP，召回率为$81\%$。具有锚盒我们的模型得到了69.2 mAP，召回率为$88\%$。尽管mAP下降，但召回率的上升意味着我们的模型有更大的提升空间。</p>
+<p><strong>维度聚类</strong>。当锚盒与YOLO一起使用时，我们遇到了两个问题。首先是边界框尺寸是手工挑选的。网络可以学习适当调整边界框，但如果我们为网络选择更好的先验，我们可以使网络更容易学习它以便预测好的检测。</p>
+<p>我们不用手工选择先验，而是在训练集边界框上运行k-means聚类，自动找到好的先验。如果我们使用具有欧几里得距离的标准k-means，那么较大的边界框比较小的边界框产生更多的误差。然而，我们真正想要的是导致好的IOU分数的先验，这是独立于边界框大小的。因此，对于我们的距离度量，我们使用：$$d(\text{box}, \text{centroid}) = 1 - \text{IOU}(\text{box}, \text{centroid})$$我们运行各种$k$值的k-means，并画出平均IOU与最接近的几何中心，见图2。我们选择$k=5$作为模型复杂性和高召回率之间的良好折衷。聚类中心与手工挑选的锚盒明显不同。有更短更宽的边界框和更高更细的边界框。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
+<p><strong>图2：VOC和COCO的聚类边界框尺寸</strong>。我们对边界框的维度进行k-means聚类，以获得我们模型的良好先验。左图显示了我们通过对$k$的各种选择得到的平均IOU。我们发现$k = 5$给出了一个很好的召回率与模型复杂度的权衡。右图显示了VOC和COCO的相对中心。这两种先验都赞成更薄更高的边界框，而COCO比VOC在尺寸上有更大的变化。</p>
 
       
     </div>
@@ -554,7 +578,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO9000-Better-Faster-Stronger"><span class="nav-number">1.</span> <span class="nav-text">YOLO9000: Better, Faster, Stronger</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO9000-Better-Faster-Stronger"><span class="nav-number">1.</span> <span class="nav-text">YOLO9000: Better, Faster, Stronger</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-更好"><span class="nav-number">1.3.</span> <span class="nav-text">2. 更好</span></a></li></ol></li></ol></div>
             
 
           </div>
