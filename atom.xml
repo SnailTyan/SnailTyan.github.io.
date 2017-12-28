@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2017-12-26T14:09:23.000Z</updated>
+  <updated>2017-12-28T08:27:19.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,49 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>递归——汉诺塔</title>
+    <link href="noahsnail.com/2017/12/28/2017-12-28-%E9%80%92%E5%BD%92%E2%80%94%E2%80%94%E6%B1%89%E8%AF%BA%E5%A1%94/"/>
+    <id>noahsnail.com/2017/12/28/2017-12-28-递归——汉诺塔/</id>
+    <published>2017-12-28T08:14:55.000Z</published>
+    <updated>2017-12-28T08:27:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
+<h2 id="1-递归"><a href="#1-递归" class="headerlink" title="1. 递归"></a>1. 递归</h2><p>一个函数调用其自身，就是递归。</p>
+<h2 id="2-汉诺塔"><a href="#2-汉诺塔" class="headerlink" title="2. 汉诺塔"></a>2. 汉诺塔</h2><ul>
+<li>问题描述</li>
+</ul>
+<p>有一个梵塔，塔内有三个座A、B、C，A座上有诺干个盘子，盘子大小不等，大的在下，小的在上。把这些个盘子从A座移到C座，中间可以借用B座但每次只能允许移动一个盘子，并且在移动过程中，3个座上的盘子始终保持大盘在下，小盘在上。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ff813c41cf57033f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="汉诺塔问题"></p>
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Hanoi</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span> src, <span class="keyword">char</span> mid, <span class="keyword">char</span> dest)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>) &#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt; src &lt;&lt; <span class="string">"-&gt;"</span> &lt;&lt; dest &lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    Hanoi(n - <span class="number">1</span>, src, dest, mid);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt; src &lt;&lt; <span class="string">"-&gt;"</span> &lt;&lt; dest &lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    Hanoi(n - <span class="number">1</span>, mid, src, dest);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; n;</div><div class="line">    Hanoi(n, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>总结：汉诺塔问题是递归中的经典问题了。</strong></p>
+<p>源码地址：<a href="https://github.com/SnailTyan/programming-and-algorithms/blob/master/hanoi.cpp" target="_blank" rel="external">汉诺塔</a>，记得给个star。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="http://www.icourse163.org/course/PKU-1001894005" target="_blank" rel="external">程序设计与算法（二）算法基础</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      递归——汉诺塔
+    
+    </summary>
+    
+      <category term="程序设计与算法" scheme="noahsnail.com/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="递归" scheme="noahsnail.com/tags/%E9%80%92%E5%BD%92/"/>
+    
+  </entry>
+  
+  <entry>
     <title>递归——求阶乘</title>
     <link href="noahsnail.com/2017/12/26/2017-12-26-%E9%80%92%E5%BD%92%E2%80%94%E2%80%94%E6%B1%82%E9%98%B6%E4%B9%98/"/>
     <id>noahsnail.com/2017/12/26/2017-12-26-递归——求阶乘/</id>
     <published>2017-12-26T14:02:18.000Z</published>
-    <updated>2017-12-26T14:09:23.000Z</updated>
+    <updated>2017-12-28T08:20:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
 <h2 id="1-递归"><a href="#1-递归" class="headerlink" title="1. 递归"></a>1. 递归</h2><p>一个函数调用其自身，就是递归。</p>
@@ -60,7 +98,7 @@
     <link href="noahsnail.com/2017/12/26/2017-12-26-YOLO9000,%20Better,%20Faster,%20Stronger%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
     <id>noahsnail.com/2017/12/26/2017-12-26-YOLO9000, Better, Faster, Stronger论文翻译——中文版/</id>
     <published>2017-12-26T08:42:26.000Z</published>
-    <updated>2017-12-27T10:33:27.000Z</updated>
+    <updated>2017-12-28T09:23:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="YOLO9000-Better-Faster-Stronger"><a href="#YOLO9000-Better-Faster-Stronger" class="headerlink" title="YOLO9000: Better, Faster, Stronger"></a>YOLO9000: Better, Faster, Stronger</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们引入了一个先进的实时目标检测系统YOLO9000，可以检测超过9000个目标类别。首先，我们提出了对YOLO检测方法的各种改进，既有新颖性，也有前期的工作。改进后的模型YOLOv2在PASCAL VOC和COCO等标准检测任务上是最先进的。使用一种新颖的，多尺度训练方法，同样的YOLOv2模型可以以不同的尺寸运行，从而在速度和准确性之间提供了一个简单的折衷。在67FPS时，YOLOv2在VOC 2007上获得了76.8 mAP。在40FPS时，YOLOv2获得了78.6 mAP，比使用ResNet的Faster R-CNN和SSD等先进方法表现更出色，同时仍然运行速度显著更快。最后我们提出了一种联合训练目标检测与分类的方法。使用这种方法，我们在COCO检测数据集和ImageNet分类数据集上同时训练YOLO9000。我们的联合训练允许YOLO9000预测未标注的检测数据目标类别的检测结果。我们在ImageNet检测任务上验证了我们的方法。YOLO9000在ImageNet检测验证集上获得19.7 mAP，尽管200个类别中只有44个具有检测数据。在没有COCO的156个类别上，YOLO9000获得16.0 mAP。但YOLO可以检测到200多个类别；它预测超过9000个不同目标类别的检测结果。并且它仍然能实时运行。</p>
@@ -70,6 +108,8 @@
 <p>我们提出了一种新的方法来利用我们已经拥有的大量分类数据，并用它来扩大当前检测系统的范围。我们的方法使用目标分类的分层视图，允许我们将不同的数据集组合在一起。</p>
 <p>我们还提出了一种联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
 <p>使用这种方法我们训练YOLO9000，一个实时的目标检测器，可以检测超过9000种不同的目标类别。首先，我们改进YOLO基础检测系统，产生最先进的实时检测器YOLOv2。然后利用我们的数据集组合方法和联合训练算法对来自ImageNet的9000多个类别以及COCO的检测数据训练了一个模型。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p><strong>图1：YOLO9000</strong>。YOLO9000可以实时检测许多目标类别。</p>
 <p>我们的所有代码和预训练模型都可在线获得：<a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>。</p>
 <h2 id="2-更好"><a href="#2-更好" class="headerlink" title="2. 更好"></a>2. 更好</h2><p>与最先进的检测系统相比，YOLO有许多缺点。YOLO与Fast R-CNN相比的误差分析表明，YOLO造成了大量的定位误差。此外，与基于区域提出的方法相比，YOLO召回率相对较低。因此，我们主要侧重于提高召回率和改进定位，同时保持分类准确性。</p>
 <p>计算机视觉一般趋向于更大，更深的网络[6][18][17]。更好的性能通常取决于训练更大的网络或将多个模型组合在一起。但是，在YOLOv2中，我们需要一个更精确的检测器，它仍然很快。我们不是扩大我们的网络，而是简化网络，然后让表示更容易学习。我们将过去的工作与我们自己的新概念汇集起来，以提高YOLO的性能。表2列出了结果总结。</p>
@@ -86,6 +126,31 @@
 <p>我们不用手工选择先验，而是在训练集边界框上运行k-means聚类，自动找到好的先验。如果我们使用具有欧几里得距离的标准k-means，那么较大的边界框比较小的边界框产生更多的误差。然而，我们真正想要的是导致好的IOU分数的先验，这是独立于边界框大小的。因此，对于我们的距离度量，我们使用：$$d(\text{box}, \text{centroid}) = 1 - \text{IOU}(\text{box}, \text{centroid})$$我们运行各种$k$值的k-means，并画出平均IOU与最接近的几何中心，见图2。我们选择$k=5$作为模型复杂性和高召回率之间的良好折衷。聚类中心与手工挑选的锚盒明显不同。有更短更宽的边界框和更高更细的边界框。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
 <p><strong>图2：VOC和COCO的聚类边界框尺寸</strong>。我们对边界框的维度进行k-means聚类，以获得我们模型的良好先验。左图显示了我们通过对$k$的各种选择得到的平均IOU。我们发现$k = 5$给出了一个很好的召回率与模型复杂度的权衡。右图显示了VOC和COCO的相对中心。这两种先验都赞成更薄更高的边界框，而COCO比VOC在尺寸上有更大的变化。</p>
+<p>在表1中我们将平均IOU与我们聚类策略中最接近的先验以及手工选取的锚盒进行了比较。仅有5个先验中心的平均IOU为61.0，其性能类似于9个锚盒的60.9。如果我们使用9个中心，我们会看到更高的平均IOU。这表明使用k-means来生成我们的边界框会以更好的表示开始训练模型，并使得任务更容易学习。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><strong>表1：VOC 2007上最接近先验的边界框平均IOU</strong>。VOC 2007上目标的平均IOU与其最接近的，使用不同生成方法之前未经修改的平均值。聚类结果比使用手工选择的先验结果要更好。</p>
+<p><strong>直接位置预测</strong>。当YOLO使用锚盒时，我们会遇到第二个问题：模型不稳定，特别是在早期的迭代过程中。大部分的不稳定来自预测边界框的$(x,y)$位置。在区域提出网络中，网络预测值$t_x$和$t_y$，$(x,y)$中心坐标计算如下：<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
+<p>这个公式是不受限制的，所以任何锚盒都可以在图像任一点结束，而不管在哪个位置预测该边界框。随机初始化模型需要很长时间才能稳定以预测合理的偏移量。</p>
+<p>我们没有预测偏移量，而是按照YOLO的方法预测相对于网格单元位置的位置坐标。这限制了落到$0$和$1$之间的真实值。我们使用逻辑激活来限制网络的预测落在这个范围内。</p>
+<p>网络预测输出特征映射中每个单元的5个边界框。网络预测每个边界框的5个坐标，$t_x$，$t_y$，$t_w$，$t_h$和$t_o$。如果单元从图像的左上角偏移了$(c_x, c_y)$，并且边界框先验的宽度和高度为$p_w$，$p_h$，那么预测对应：<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
+<p><strong>图3：具有维度先验和位置预测的边界框</strong>。我们预测边界框的宽度和高度作为聚类中心的偏移量。我们使用sigmoid函数预测边界框相对于滤波器应用位置的中心坐标。</p>
+<p>由于我们限制位置预测参数化更容易学习，使网络更稳定。使用维度聚类以及直接预测边界框中心位置的方式比使用锚盒的版本将YOLO提高了近$5\%$。</p>
+<p><strong>细粒度功能</strong>。这个修改后的YOLO在13×13特征映射上预测检测结果。虽然这对于大型目标来说已经足够了，但它可以从用于定位较小目标的更细粒度的特征中受益。Faster R-CNN和SSD都在网络的各种特征映射上运行他们提出的网络，以获得一系列的分辨率。我们采用不同的方法，仅仅添加一个通道层，从26x26分辨率的更早层中提取特征。</p>
+<p><strong>多尺度训练</strong>。原来的YOLO使用448×448的输入分辨率。通过添加锚盒，我们将分辨率更改为416×416。但是，由于我们的模型只使用卷积层和池化层，因此它可以实时调整大小。我们希望YOLOv2能够鲁棒的运行在不同大小的图像上，因此我们可以将其训练到模型中。</p>
+<p>我们没有固定的输入图像大小，每隔几次迭代就改变网络。每隔10个批次我们的网络会随机选择一个新的图像尺寸大小。由于我们的模型缩减了32倍，我们从下面的32的倍数中选择：{320,352，…，608}。因此最小的选项是320×320，最大的是608×608。我们调整网络的尺寸并继续训练。</p>
+<p>这个制度迫使网络学习如何在各种输入维度上做好预测。这意味着相同的网络可以预测不同分辨率下的检测结果。在更小尺寸上网络运行速度更快，因此YOLOv2在速度和准确性之间提供了一个简单的折衷。</p>
+<p>在低分辨率YOLOv2作为一个便宜，相当准确的检测器。在288×288时，其运行速度超过90FPS，mAP与Fast R-CNN差不多。这使其成为小型GPU，高帧率视频或多视频流的理想选择。</p>
+<p>在高分辨率下，YOLOv2是VOC 2007上最先进的检测器，达到了78.6 mAP，同时仍保持运行在实时速度之上。请参阅表3，了解YOLOv2与VOC 2007其他框架的比较。图4</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p><strong>表3：PASCAL VOC 2007的检测框架</strong>。YOLOv2比先前的检测方法更快，更准确。它也可以以不同的分辨率运行，以便在速度和准确性之间进行简单折衷。每个YOLOv2条目实际上是具有相同权重的相同训练模型，只是以不同的大小进行评估。所有的时间信息都是在Geforce GTX Titan X（原始的，而不是Pascal模型）上测得的。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p><strong>图4：VOC 2007上的准确性与速度。</strong></p>
+<p><strong>进一步实验</strong>。我们在VOC 2012上训练YOLOv2进行检测。表4显示了YOLOv2与其他最先进的检测系统的比较性能。YOLOv2取得了73.4 mAP同时运行速度比竞争方法快的多。我们在COCO上进行了训练，并在表5中与其他方法进行比较。在VOC度量（IOU = 0.5）上，YOLOv2得到44.0 mAP，与SSD和Faster R-CNN相当。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p><strong>表4：PASCAL VOC2012 <code>test</code>上的检测结果</strong>。YOLOv2与最先进的检测器如具有ResNet的Faster R-CNN、SSD512在标准数据集上运行，YOLOv2比它们快2-10倍。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><strong>表5：在COCO <code>test-dev2015</code>上的结果。表参考[11]</strong></p>
 ]]></content>
     
     <summary type="html">
@@ -106,7 +171,7 @@
     <link href="noahsnail.com/2017/12/26/2017-12-26-YOLO9000,%20Better,%20Faster,%20Stronger%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
     <id>noahsnail.com/2017/12/26/2017-12-26-YOLO9000, Better, Faster, Stronger论文翻译——中英文对照/</id>
     <published>2017-12-26T08:42:04.000Z</published>
-    <updated>2017-12-27T10:33:40.000Z</updated>
+    <updated>2017-12-28T09:23:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h1 id="YOLO9000-Better-Faster-Stronger"><a href="#YOLO9000-Better-Faster-Stronger" class="headerlink" title="YOLO9000: Better, Faster, Stronger"></a>YOLO9000: Better, Faster, Stronger</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We introduce YOLO9000, a state-of-the-art, real-time object detection system that can detect over 9000 object categories. First we propose various improvements to the YOLO detection method, both novel and drawn from prior work. The improved model, YOLOv2, is state-of-the-art on standard detection tasks like PASCAL VOC and COCO. Using a novel, multi-scale training method the same YOLOv2 model can run at varying sizes, offering an easy tradeoff between speed and accuracy. At 67 FPS, YOLOv2 gets 76.8 mAP on VOC 2007. At 40 FPS, YOLOv2 gets 78.6 mAP, outperforming state-of-the-art methods like Faster R-CNN with ResNet and SSD while still running significantly faster. Finally we propose a method to jointly train on object detection and classification. Using this method we train YOLO9000 simultaneously on the COCO detection dataset and the ImageNet classification dataset. Our joint training allows YOLO9000 to predict detections for object classes that don’t have labelled detection data. We validate our approach on the ImageNet detection task. YOLO9000 gets 19.7 mAP on the ImageNet detection validation set despite only having detection data for 44 of the 200 classes. On the 156 classes not in COCO, YOLO9000 gets 16.0 mAP. But YOLO can detect more than just 200 classes; it predicts detections for more than 9000 different object categories. And it still runs in real-time.</p>
@@ -122,7 +187,11 @@
 <p>We also propose a joint training algorithm that allows us to train object detectors on both detection and classification data. Our method leverages labeled detection images to learn to precisely localize objects while it uses classification images to increase its vocabulary and robustness.</p>
 <p>我们还提出了一种联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
 <p>Using this method we train YOLO9000, a real-time object detector that can detect over 9000 different object categories. First we improve upon the base YOLO detection system to produce YOLOv2, a state-of-the-art, real-time detector. Then we use our dataset combination method and joint training algorithm to train a model on more than 9000 classes from ImageNet as well as detection data from COCO.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p><strong>Figure 1: YOLO9000</strong>. YOLO9000 can detect a wide variety of object classes in real-time.</p>
 <p>使用这种方法我们训练YOLO9000，一个实时的目标检测器，可以检测超过9000种不同的目标类别。首先，我们改进YOLO基础检测系统，产生最先进的实时检测器YOLOv2。然后利用我们的数据集组合方法和联合训练算法对来自ImageNet的9000多个类别以及COCO的检测数据训练了一个模型。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p><strong>图1：YOLO9000</strong>。YOLO9000可以实时检测许多目标类别。</p>
 <p>All of our code and pre-trained models are available online at <a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>.</p>
 <p>我们的所有代码和预训练模型都可在线获得：<a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>。</p>
 <h2 id="2-Better"><a href="#2-Better" class="headerlink" title="2. Better"></a>2. Better</h2><p>YOLO suffers from a variety of shortcomings relative to state-of-the-art detection systems. Error analysis of YOLO compared to Fast R-CNN shows that YOLO makes a significant number of localization errors. Furthermore, YOLO has relatively low recall compared to region proposal-based methods. Thus we focus mainly on improving recall and localization while maintaining classification accuracy.</p>
@@ -156,20 +225,59 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
 <p><strong>图2：VOC和COCO的聚类边界框尺寸</strong>。我们对边界框的维度进行k-means聚类，以获得我们模型的良好先验。左图显示了我们通过对$k$的各种选择得到的平均IOU。我们发现$k = 5$给出了一个很好的召回率与模型复杂度的权衡。右图显示了VOC和COCO的相对中心。这两种先验都赞成更薄更高的边界框，而COCO比VOC在尺寸上有更大的变化。</p>
 <p>We compare the average IOU to closest prior of our clustering strategy and the hand-picked anchor boxes in Table 1. At only 5 priors the centroids perform similarly to 9 anchor boxes with an average IOU of 61.0 compared to 60.9. If we use 9 centroids we see a much higher average IOU. This indicates that using k-means to generate our bounding box starts the model off with a better representation and makes the task easier to learn.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><strong>Table 1: Average IOU of boxes to closest priors on VOC 2007</strong>. The average IOU of objects on VOC 2007 to their closest, unmodified prior using different generation methods. Clustering gives much better results than using hand-picked priors.</p>
+<p>在表1中我们将平均IOU与我们聚类策略中最接近的先验以及手工选取的锚盒进行了比较。仅有5个先验中心的平均IOU为61.0，其性能类似于9个锚盒的60.9。如果我们使用9个中心，我们会看到更高的平均IOU。这表明使用k-means来生成我们的边界框会以更好的表示开始训练模型，并使得任务更容易学习。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><strong>表1：VOC 2007上最接近先验的边界框平均IOU</strong>。VOC 2007上目标的平均IOU与其最接近的，使用不同生成方法之前未经修改的平均值。聚类结果比使用手工选择的先验结果要更好。</p>
 <p><strong>Direct location prediction</strong>. When using anchor boxes with YOLO we encounter a second issue: model instability, especially during early iterations. Most of the instability comes from predicting the $(x,y)$ locations for the box. In region proposal networks the network predicts values $t_x$ and $t_y$ and the $(x,y)$ center coordinates are calculated as:<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
+<p><strong>直接位置预测</strong>。当YOLO使用锚盒时，我们会遇到第二个问题：模型不稳定，特别是在早期的迭代过程中。大部分的不稳定来自预测边界框的$(x,y)$位置。在区域提出网络中，网络预测值$t_x$和$t_y$，$(x,y)$中心坐标计算如下：<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
 <p>For example, a prediction of $t_x = 1$ would shift the box to the right by the width of the anchor box, a prediction of $t_x = -1$ would shift it to the left by the same amount.</p>
+<p>例如，预测$t_x = 1$会将边界框向右移动锚盒的宽度，预测$t_x = -1$会将其向左移动相同的宽度。</p>
 <p>This formulation is unconstrained so any anchor box can end up at any point in the image, regardless of what location predicted the box. With random initialization the model takes a long time to stabilize to predicting sensible offsets.</p>
+<p>这个公式是不受限制的，所以任何锚盒都可以在图像任一点结束，而不管在哪个位置预测该边界框。随机初始化模型需要很长时间才能稳定以预测合理的偏移量。</p>
 <p>Instead of predicting offsets we follow the approach of YOLO and predict location coordinates relative to the location of the grid cell. This bounds the ground truth to fall between $0$ and $1$. We use a logistic activation to constrain the network’s predictions to fall in this range.</p>
+<p>我们没有预测偏移量，而是按照YOLO的方法预测相对于网格单元位置的位置坐标。这限制了落到$0$和$1$之间的真实值。我们使用逻辑激活来限制网络的预测落在这个范围内。</p>
 <p>The network predicts 5 bounding boxes at each cell in the output feature map. The network predicts 5 coordinates for each bounding box, $t_x$, $t_y$, $t_w$, $t_h$, and $t_o$. If the cell is offset from the top left corner of the image by $(c_x, c_y)$ and the bounding box prior has width and height $p_w$, $p_h$, then the predictions correspond to:<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
+<p><strong>Figure 3: Bounding boxes with dimension priors and location prediction</strong>. We predict the width and height of the box as offsets from cluster centroids. We predict the center coordinates of the box relative to the location of filter application using a sigmoid function.</p>
+<p>网络预测输出特征映射中每个单元的5个边界框。网络预测每个边界框的5个坐标，$t_x$，$t_y$，$t_w$，$t_h$和$t_o$。如果单元从图像的左上角偏移了$(c_x, c_y)$，并且边界框先验的宽度和高度为$p_w$，$p_h$，那么预测对应：<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
+<p><strong>图3：具有维度先验和位置预测的边界框</strong>。我们预测边界框的宽度和高度作为聚类中心的偏移量。我们使用sigmoid函数预测边界框相对于滤波器应用位置的中心坐标。</p>
 <p>Since we constrain the location prediction the parametrization is easier to learn, making the network more stable. Using dimension clusters along with directly predicting the bounding box center location improves YOLO by almost $5\%$ over the version with anchor boxes.</p>
+<p>由于我们限制位置预测参数化更容易学习，使网络更稳定。使用维度聚类以及直接预测边界框中心位置的方式比使用锚盒的版本将YOLO提高了近$5\%$。</p>
 <p><strong>Fine-Grained Features</strong>. This modified YOLO predicts detections on a 13 × 13 feature map. While this is sufficient for large objects, it may benefit from finer grained features for localizing smaller objects. Faster R-CNN and SSD both run their proposal networks at various feature maps in the network to get a range of resolutions. We take a different approach, simply adding a passthrough layer that brings features from an earlier layer at 26 × 26 resolution.</p>
+<p><strong>细粒度功能</strong>。这个修改后的YOLO在13×13特征映射上预测检测结果。虽然这对于大型目标来说已经足够了，但它可以从用于定位较小目标的更细粒度的特征中受益。Faster R-CNN和SSD都在网络的各种特征映射上运行他们提出的网络，以获得一系列的分辨率。我们采用不同的方法，仅仅添加一个直通层，从26x26分辨率的更早层中提取特征。</p>
 <p>The passthrough layer concatenates the higher resolution features with the low resolution features by stacking adjacent features into different channels instead of spatial locations, similar to the identity mappings in ResNet. This turns the 26 × 26 × 512 feature map into a 13 × 13 × 2048 feature map, which can be concatenated with the original features. Our detector runs on top of this expanded feature map so that it has access to fine grained features. This gives a modest $1\%$ performance increase.</p>
+<p>直通层通过将相邻特征堆叠到不同的通道而不是空间位置来连接较高分辨率特征和较低分辨率特征，类似于ResNet中的恒等映射。这将26×26×512特征映射变成13×13×2048特征映射，其可以与原始特征连接。我们的检测器运行在这个扩展的特征映射的顶部，以便它可以访问细粒度的特征。这会使性能提高$1\%$。</p>
 <p><strong>Multi-Scale Training</strong>. The original YOLO uses an input resolution of 448 × 448. With the addition of anchor boxes we changed the resolution to 416×416. However, since our model only uses convolutional and pooling layers it can be resized on the fly. We want YOLOv2 to be robust to running on images of different sizes so we train this into the model.</p>
+<p><strong>多尺度训练</strong>。原来的YOLO使用448×448的输入分辨率。通过添加锚盒，我们将分辨率更改为416×416。但是，由于我们的模型只使用卷积层和池化层，因此它可以实时调整大小。我们希望YOLOv2能够鲁棒的运行在不同大小的图像上，因此我们可以将其训练到模型中。</p>
 <p>Instead of fixing the input image size we change the network every few iterations. Every 10 batches our network randomly chooses a new image dimension size. Since our model downsamples by a factor of 32, we pull from the following multiples of 32: {320, 352, …, 608}. Thus the smallest option is 320 × 320 and the largest is 608 × 608. We resize the network to that dimension and continue training.</p>
+<p>我们没有固定的输入图像大小，每隔几次迭代就改变网络。每隔10个批次我们的网络会随机选择一个新的图像尺寸大小。由于我们的模型缩减了32倍，我们从下面的32的倍数中选择：{320,352，…，608}。因此最小的选项是320×320，最大的是608×608。我们调整网络的尺寸并继续训练。</p>
 <p>This regime forces the network to learn to predict well across a variety of input dimensions. This means the same network can predict detections at different resolutions. The network runs faster at smaller sizes so YOLOv2 offers an easy tradeoff between speed and accuracy.</p>
+<p>这个制度迫使网络学习如何在各种输入维度上做好预测。这意味着相同的网络可以预测不同分辨率下的检测结果。在更小尺寸上网络运行速度更快，因此YOLOv2在速度和准确性之间提供了一个简单的折衷。</p>
 <p>At low resolutions YOLOv2 operates as a cheap, fairly accurate detector. At 288 × 288 it runs at more than 90 FPS with mAP almost as good as Fast R-CNN. This makes it ideal for smaller GPUs, high framerate video, or multiple video streams.</p>
+<p>在低分辨率YOLOv2作为一个便宜，相当准确的检测器。在288×288时，其运行速度超过90FPS，mAP与Fast R-CNN差不多。这使其成为小型GPU，高帧率视频或多视频流的理想选择。</p>
 <p>At high resolution YOLOv2 is a state-of-the-art detector with 78.6 mAP on VOC 2007 while still operating above real-time speeds. See Table 3 for a comparison of YOLOv2 with other frameworks on VOC 2007. Figure 4</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p><strong>Table 3: Detection frameworks on PASCAL VOC 2007</strong>. YOLOv2 is faster and more accurate than prior detection methods. It can also run at different resolutions for an easy tradeoff between speed and accuracy. Each YOLOv2 entry is actually the same trained model with the same weights, just evaluated at a different size. All timing information is on a Geforce GTX Titan X (original, not Pascal model).</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p><strong>Figure 4: Accuracy and speed on VOC 2007.</strong></p>
+<p>在高分辨率下，YOLOv2是VOC 2007上最先进的检测器，达到了78.6 mAP，同时仍保持运行在实时速度之上。请参阅表3，了解YOLOv2与VOC 2007其他框架的比较。图4</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p><strong>表3：PASCAL VOC 2007的检测框架</strong>。YOLOv2比先前的检测方法更快，更准确。它也可以以不同的分辨率运行，以便在速度和准确性之间进行简单折衷。每个YOLOv2条目实际上是具有相同权重的相同训练模型，只是以不同的大小进行评估。所有的时间信息都是在Geforce GTX Titan X（原始的，而不是Pascal模型）上测得的。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p><strong>图4：VOC 2007上的准确性与速度。</strong></p>
 <p><strong>Further Experiments</strong>. We train YOLOv2 for detection on VOC 2012. Table 4 shows the comparative performance of YOLOv2 versus other state-of-the-art detection systems. YOLOv2 achieves 73.4 mAP while running far faster than competing methods. We also train on COCO and compare to other methods in Table 5. On the VOC metric (IOU = .5) YOLOv2 gets 44.0 mAP, comparable to SSD and Faster R-CNN.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p><strong>Table 4: PASCAL VOC2012 test detection results</strong>. YOLOv2 performs on par with state-of-the-art detectors like Faster R-CNN with ResNet and SSD512 and is 2−10× faster.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><strong>Table 5: Results on COCO <code>test-dev2015</code>. Table adapted from [11]</strong></p>
+<p><strong>进一步实验</strong>。我们在VOC 2012上训练YOLOv2进行检测。表4显示了YOLOv2与其他最先进的检测系统的比较性能。YOLOv2取得了73.4 mAP同时运行速度比竞争方法快的多。我们在COCO上进行了训练，并在表5中与其他方法进行比较。在VOC度量（IOU = 0.5）上，YOLOv2得到44.0 mAP，与SSD和Faster R-CNN相当。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p><strong>表4：PASCAL VOC2012 <code>test</code>上的检测结果</strong>。YOLOv2与最先进的检测器如具有ResNet的Faster R-CNN、SSD512在标准数据集上运行，YOLOv2比它们快2-10倍。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><strong>表5：在COCO <code>test-dev2015</code>上的结果。表参考[11]</strong></p>
 <h2 id="3-Faster"><a href="#3-Faster" class="headerlink" title="3. Faster"></a>3. Faster</h2><p>We want detection to be accurate but we also want it to be fast. Most applications for detection, like robotics or self-driving cars, rely on low latency predictions. In order to maximize performance we design YOLOv2 to be fast from the ground up.</p>
 <p>Most detection frameworks rely on VGG-16 as the base feature extractor [17]. VGG-16 is a powerful, accurate classification network but it is needlessly complex. The convolutional layers of VGG-16 require 30.69 billion floating point operations for a single pass over a single image at 224 × 224 resolution.</p>
 <p>The YOLO framework uses a custom network based on the Googlenet architecture [19]. This network is faster than VGG-16, only using 8.52 billion operations for a forward pass. However, it’s accuracy is slightly worse than VGG-16. For single-crop, top-5 accuracy at 224 × 224, YOLO’s custom model gets $88.0\%$ ImageNet compared to $90.0\%$ for VGG-16.</p>
@@ -1964,44 +2072,6 @@
     
     
       <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Check failed shape[i] &gt;= 0 (-1 vs. 0)错误</title>
-    <link href="noahsnail.com/2017/10/13/2017-10-13-Check%20failed-%20shape%5Bi%5D%20%3E=%200%20(-1%20vs.%200)%E9%94%99%E8%AF%AF/"/>
-    <id>noahsnail.com/2017/10/13/2017-10-13-Check failed- shape[i] &gt;= 0 (-1 vs. 0)错误/</id>
-    <published>2017-10-13T02:00:22.000Z</published>
-    <updated>2017-10-13T02:12:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>在使用Caffe模型进行图像分类时，通常使用的图像大小为<code>224 * 224</code>，如果改变输入图像的大小，有时候会碰到<code>Check failed: shape[i] &gt;= 0 (-1 vs. 0)</code>错误。</p>
-<ul>
-<li>背景</li>
-</ul>
-<p>使用ResNet-50进行图像分类训练，输入图像的大小为<code>160 *160</code>。</p>
-<ul>
-<li>错误</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">I1013 10:53:03.395526 76959 net.cpp:129] Top shape: 16 2048 5 5 (819200)</div><div class="line">I1013 10:53:03.395531 76959 net.cpp:137] Memory required for data: 1889075264</div><div class="line">I1013 10:53:03.395539 76959 layer_factory.hpp:77] Creating layer res5c_relu</div><div class="line">I1013 10:53:03.395553 76959 net.cpp:84] Creating Layer res5c_relu</div><div class="line">I1013 10:53:03.395567 76959 net.cpp:406] res5c_relu &lt;- res5c</div><div class="line">I1013 10:53:03.395594 76959 net.cpp:367] res5c_relu -&gt; res5c (in-place)</div><div class="line">I1013 10:53:03.395841 76959 net.cpp:122] Setting up res5c_relu</div><div class="line">I1013 10:53:03.395855 76959 net.cpp:129] Top shape: 16 2048 5 5 (819200)</div><div class="line">I1013 10:53:03.395861 76959 net.cpp:137] Memory required for data: 1892352064</div><div class="line">I1013 10:53:03.395869 76959 layer_factory.hpp:77] Creating layer pool5</div><div class="line">I1013 10:53:03.395900 76959 net.cpp:84] Creating Layer pool5</div><div class="line">I1013 10:53:03.395908 76959 net.cpp:406] pool5 &lt;- res5c</div><div class="line">I1013 10:53:03.395931 76959 net.cpp:380] pool5 -&gt; pool5</div><div class="line">F1013 10:53:03.396807 76959 blob.cpp:32] Check failed: shape[i] &gt;= 0 (-1 vs. 0)</div><div class="line">*** Check failure stack trace: ***</div><div class="line">    @     0x7fa7eef89e6d  (unknown)</div><div class="line">    @     0x7fa7eef8bced  (unknown)</div><div class="line">    @     0x7fa7eef89a5c  (unknown)</div><div class="line">    @     0x7fa7eef8c63e  (unknown)</div><div class="line">    @     0x7fa7f6141829  caffe::Blob&lt;&gt;::Reshape()</div><div class="line">    @     0x7fa7f6141581  caffe::Blob&lt;&gt;::Reshape()</div><div class="line">    @     0x7fa7f6200958  caffe::PoolingLayer&lt;&gt;::Reshape()</div><div class="line">    @     0x7fa7f61b14d8  caffe::CuDNNPoolingLayer&lt;&gt;::Reshape()</div><div class="line">    @     0x7fa7f6167d29  caffe::Layer&lt;&gt;::SetUp()</div><div class="line">    @     0x7fa7f6240213  caffe::Net&lt;&gt;::Init()</div><div class="line">    @     0x7fa7f623e7ea  caffe::Net&lt;&gt;::Net()</div><div class="line">    @     0x7fa7f62711e1  caffe::Solver&lt;&gt;::InitTrainNet()</div><div class="line">    @     0x7fa7f6270a75  caffe::Solver&lt;&gt;::Init()</div><div class="line">    @     0x7fa7f62705a7  caffe::Solver&lt;&gt;::Solver()</div><div class="line">    @     0x7fa7f627dc66  caffe::SGDSolver&lt;&gt;::SGDSolver()</div><div class="line">    @     0x7fa7f6287ab1  caffe::Creator_SGDSolver&lt;&gt;()</div><div class="line">    @           0x4215f5  caffe::SolverRegistry&lt;&gt;::CreateSolver()</div><div class="line">    @           0x41bdce  train()</div><div class="line">    @           0x41e167  main</div><div class="line">    @     0x7fa7e20eeb35  __libc_start_main</div><div class="line">    @           0x41aa69  (unknown)</div></pre></td></tr></table></figure>
-<ul>
-<li>解决方案</li>
-</ul>
-<p>错误日志中可以看出问题出在<code>pool5层</code>，它的输入为<code>Top shape: 16 2048 5 5 (819200)</code>，即<code>16 * 2048 * 5 * 5</code>，<code>16</code>是<code>batch_size</code>，<code>2048</code>为<code>channel</code>数量，即kernel个数，feature map大小为<code>5 * 5</code>，在prototxt中找到<code>pool5层</code>，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">layer &#123;</div><div class="line">    bottom: &quot;res5c&quot;</div><div class="line">    top: &quot;pool5&quot;</div><div class="line">    name: &quot;pool5&quot;</div><div class="line">    type: &quot;Pooling&quot;</div><div class="line">    pooling_param &#123;</div><div class="line">        kernel_size: 7</div><div class="line">        stride: 1</div><div class="line">        pool: AVE</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>kernel size为7，比5大，因此将7改为5，重新训练，没问题。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      Check failed shape[i] &gt;= 0 (-1 vs. 0)错误
-    
-    </summary>
-    
-      <category term="Caffe" scheme="noahsnail.com/categories/Caffe/"/>
-    
-    
-      <category term="Caffe" scheme="noahsnail.com/tags/Caffe/"/>
     
   </entry>
   

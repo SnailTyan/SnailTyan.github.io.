@@ -99,13 +99,20 @@
 <meta property="og:url" content="noahsnail.com/2017/12/26/2017-12-26-YOLO9000, Better, Faster, Stronger论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-27T10:33:27.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-28T09:23:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
 <meta name="twitter:description" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -358,6 +365,8 @@
 <p>我们提出了一种新的方法来利用我们已经拥有的大量分类数据，并用它来扩大当前检测系统的范围。我们的方法使用目标分类的分层视图，允许我们将不同的数据集组合在一起。</p>
 <p>我们还提出了一种联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
 <p>使用这种方法我们训练YOLO9000，一个实时的目标检测器，可以检测超过9000种不同的目标类别。首先，我们改进YOLO基础检测系统，产生最先进的实时检测器YOLOv2。然后利用我们的数据集组合方法和联合训练算法对来自ImageNet的9000多个类别以及COCO的检测数据训练了一个模型。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p><strong>图1：YOLO9000</strong>。YOLO9000可以实时检测许多目标类别。</p>
 <p>我们的所有代码和预训练模型都可在线获得：<a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>。</p>
 <h2 id="2-更好"><a href="#2-更好" class="headerlink" title="2. 更好"></a>2. 更好</h2><p>与最先进的检测系统相比，YOLO有许多缺点。YOLO与Fast R-CNN相比的误差分析表明，YOLO造成了大量的定位误差。此外，与基于区域提出的方法相比，YOLO召回率相对较低。因此，我们主要侧重于提高召回率和改进定位，同时保持分类准确性。</p>
 <p>计算机视觉一般趋向于更大，更深的网络[6][18][17]。更好的性能通常取决于训练更大的网络或将多个模型组合在一起。但是，在YOLOv2中，我们需要一个更精确的检测器，它仍然很快。我们不是扩大我们的网络，而是简化网络，然后让表示更容易学习。我们将过去的工作与我们自己的新概念汇集起来，以提高YOLO的性能。表2列出了结果总结。</p>
@@ -374,6 +383,31 @@
 <p>我们不用手工选择先验，而是在训练集边界框上运行k-means聚类，自动找到好的先验。如果我们使用具有欧几里得距离的标准k-means，那么较大的边界框比较小的边界框产生更多的误差。然而，我们真正想要的是导致好的IOU分数的先验，这是独立于边界框大小的。因此，对于我们的距离度量，我们使用：$$d(\text{box}, \text{centroid}) = 1 - \text{IOU}(\text{box}, \text{centroid})$$我们运行各种$k$值的k-means，并画出平均IOU与最接近的几何中心，见图2。我们选择$k=5$作为模型复杂性和高召回率之间的良好折衷。聚类中心与手工挑选的锚盒明显不同。有更短更宽的边界框和更高更细的边界框。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
 <p><strong>图2：VOC和COCO的聚类边界框尺寸</strong>。我们对边界框的维度进行k-means聚类，以获得我们模型的良好先验。左图显示了我们通过对$k$的各种选择得到的平均IOU。我们发现$k = 5$给出了一个很好的召回率与模型复杂度的权衡。右图显示了VOC和COCO的相对中心。这两种先验都赞成更薄更高的边界框，而COCO比VOC在尺寸上有更大的变化。</p>
+<p>在表1中我们将平均IOU与我们聚类策略中最接近的先验以及手工选取的锚盒进行了比较。仅有5个先验中心的平均IOU为61.0，其性能类似于9个锚盒的60.9。如果我们使用9个中心，我们会看到更高的平均IOU。这表明使用k-means来生成我们的边界框会以更好的表示开始训练模型，并使得任务更容易学习。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><strong>表1：VOC 2007上最接近先验的边界框平均IOU</strong>。VOC 2007上目标的平均IOU与其最接近的，使用不同生成方法之前未经修改的平均值。聚类结果比使用手工选择的先验结果要更好。</p>
+<p><strong>直接位置预测</strong>。当YOLO使用锚盒时，我们会遇到第二个问题：模型不稳定，特别是在早期的迭代过程中。大部分的不稳定来自预测边界框的$(x,y)$位置。在区域提出网络中，网络预测值$t_x$和$t_y$，$(x,y)$中心坐标计算如下：<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
+<p>这个公式是不受限制的，所以任何锚盒都可以在图像任一点结束，而不管在哪个位置预测该边界框。随机初始化模型需要很长时间才能稳定以预测合理的偏移量。</p>
+<p>我们没有预测偏移量，而是按照YOLO的方法预测相对于网格单元位置的位置坐标。这限制了落到$0$和$1$之间的真实值。我们使用逻辑激活来限制网络的预测落在这个范围内。</p>
+<p>网络预测输出特征映射中每个单元的5个边界框。网络预测每个边界框的5个坐标，$t_x$，$t_y$，$t_w$，$t_h$和$t_o$。如果单元从图像的左上角偏移了$(c_x, c_y)$，并且边界框先验的宽度和高度为$p_w$，$p_h$，那么预测对应：<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
+<p><strong>图3：具有维度先验和位置预测的边界框</strong>。我们预测边界框的宽度和高度作为聚类中心的偏移量。我们使用sigmoid函数预测边界框相对于滤波器应用位置的中心坐标。</p>
+<p>由于我们限制位置预测参数化更容易学习，使网络更稳定。使用维度聚类以及直接预测边界框中心位置的方式比使用锚盒的版本将YOLO提高了近$5\%$。</p>
+<p><strong>细粒度功能</strong>。这个修改后的YOLO在13×13特征映射上预测检测结果。虽然这对于大型目标来说已经足够了，但它可以从用于定位较小目标的更细粒度的特征中受益。Faster R-CNN和SSD都在网络的各种特征映射上运行他们提出的网络，以获得一系列的分辨率。我们采用不同的方法，仅仅添加一个通道层，从26x26分辨率的更早层中提取特征。</p>
+<p><strong>多尺度训练</strong>。原来的YOLO使用448×448的输入分辨率。通过添加锚盒，我们将分辨率更改为416×416。但是，由于我们的模型只使用卷积层和池化层，因此它可以实时调整大小。我们希望YOLOv2能够鲁棒的运行在不同大小的图像上，因此我们可以将其训练到模型中。</p>
+<p>我们没有固定的输入图像大小，每隔几次迭代就改变网络。每隔10个批次我们的网络会随机选择一个新的图像尺寸大小。由于我们的模型缩减了32倍，我们从下面的32的倍数中选择：{320,352，…，608}。因此最小的选项是320×320，最大的是608×608。我们调整网络的尺寸并继续训练。</p>
+<p>这个制度迫使网络学习如何在各种输入维度上做好预测。这意味着相同的网络可以预测不同分辨率下的检测结果。在更小尺寸上网络运行速度更快，因此YOLOv2在速度和准确性之间提供了一个简单的折衷。</p>
+<p>在低分辨率YOLOv2作为一个便宜，相当准确的检测器。在288×288时，其运行速度超过90FPS，mAP与Fast R-CNN差不多。这使其成为小型GPU，高帧率视频或多视频流的理想选择。</p>
+<p>在高分辨率下，YOLOv2是VOC 2007上最先进的检测器，达到了78.6 mAP，同时仍保持运行在实时速度之上。请参阅表3，了解YOLOv2与VOC 2007其他框架的比较。图4</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p><strong>表3：PASCAL VOC 2007的检测框架</strong>。YOLOv2比先前的检测方法更快，更准确。它也可以以不同的分辨率运行，以便在速度和准确性之间进行简单折衷。每个YOLOv2条目实际上是具有相同权重的相同训练模型，只是以不同的大小进行评估。所有的时间信息都是在Geforce GTX Titan X（原始的，而不是Pascal模型）上测得的。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p><strong>图4：VOC 2007上的准确性与速度。</strong></p>
+<p><strong>进一步实验</strong>。我们在VOC 2012上训练YOLOv2进行检测。表4显示了YOLOv2与其他最先进的检测系统的比较性能。YOLOv2取得了73.4 mAP同时运行速度比竞争方法快的多。我们在COCO上进行了训练，并在表5中与其他方法进行比较。在VOC度量（IOU = 0.5）上，YOLOv2得到44.0 mAP，与SSD和Faster R-CNN相当。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p><strong>表4：PASCAL VOC2012 <code>test</code>上的检测结果</strong>。YOLOv2与最先进的检测器如具有ResNet的Faster R-CNN、SSD512在标准数据集上运行，YOLOv2比它们快2-10倍。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><strong>表5：在COCO <code>test-dev2015</code>上的结果。表参考[11]</strong></p>
 
       
     </div>
@@ -521,7 +555,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">324</span>
+                <span class="site-state-item-count">325</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
