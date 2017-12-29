@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-28T09:23:03.000Z">
+<meta property="og:updated_time" content="2017-12-29T02:06:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
 <meta name="twitter:description" content="YOLO9000, Better, Faster, Stronger论文翻译——中文版">
@@ -408,6 +408,8 @@
 <p><strong>表4：PASCAL VOC2012 <code>test</code>上的检测结果</strong>。YOLOv2与最先进的检测器如具有ResNet的Faster R-CNN、SSD512在标准数据集上运行，YOLOv2比它们快2-10倍。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
 <p><strong>表5：在COCO <code>test-dev2015</code>上的结果。表参考[11]</strong></p>
+<h2 id="3-更快"><a href="#3-更快" class="headerlink" title="3. 更快"></a>3. 更快</h2><p>我们希望检测是准确的，但我们也希望它快速。大多数检测应用（如机器人或自动驾驶机车）依赖于低延迟预测。为了最大限度提高性能，我们从头开始设计YOLOv2。</p>
+<p>大多数检测框架依赖于VGG-16作为的基本特征提取器[17]。VGG-16是一个强大的，准确的分类网络，但它是不必要的复杂。在单张图像224×224分辨率的情况下VGG-16的卷积层运行一次传递需要306.90亿次浮点运算。</p>
 
       
     </div>
@@ -423,7 +425,7 @@
       
         
   <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持技术分享，如果觉得有收获就打赏吧！</div>
+    <div>如果有收获，可以请我喝杯咖啡！</div>
     <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
       <span>赏</span>
     </button>
@@ -612,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO9000-Better-Faster-Stronger"><span class="nav-number">1.</span> <span class="nav-text">YOLO9000: Better, Faster, Stronger</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-更好"><span class="nav-number">1.3.</span> <span class="nav-text">2. 更好</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO9000-Better-Faster-Stronger"><span class="nav-number">1.</span> <span class="nav-text">YOLO9000: Better, Faster, Stronger</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-更好"><span class="nav-number">1.3.</span> <span class="nav-text">2. 更好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-更快"><span class="nav-number">1.4.</span> <span class="nav-text">3. 更快</span></a></li></ol></li></ol></div>
             
 
           </div>
