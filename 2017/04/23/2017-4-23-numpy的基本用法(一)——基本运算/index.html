@@ -99,7 +99,7 @@
 <meta property="og:url" content="noahsnail.com/2017/04/23/2017-4-23-numpy的基本用法(一)——基本运算/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="numpy的基本用法(一)——基本运算">
-<meta property="og:updated_time" content="2017-04-23T13:07:44.000Z">
+<meta property="og:updated_time" content="2018-01-03T05:10:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="numpy的基本用法(一)——基本运算">
 <meta name="twitter:description" content="numpy的基本用法(一)——基本运算">
@@ -350,6 +350,9 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文主要是关于numpy的一些基本运算的用法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">import numpy as np</div><div class="line"></div><div class="line"># Test 1</div><div class="line"># 定义矩阵</div><div class="line">arr = np.array([[1, 2, 3],</div><div class="line">                [4, 5, 6]])</div><div class="line">print arr</div><div class="line"></div><div class="line"># Test 1 Result</div><div class="line">[[1 2 3]</div><div class="line"> [4 5 6]]</div><div class="line"></div><div class="line"># Test 2</div><div class="line"># 矩阵的维度</div><div class="line">print &apos;number of dim: &apos;, arr.ndim</div><div class="line"># 矩阵的shape,即每一维度上的元素个数</div><div class="line">print &apos;shape: &apos;, arr.shape</div><div class="line"># 矩阵的元素总数</div><div class="line">print &apos;size: &apos;, arr.size</div><div class="line"># 矩阵的元素类型</div><div class="line">print &apos;dtype: &apos;, arr.dtype</div><div class="line"></div><div class="line"># Test 2 Result</div><div class="line">number of dim:  2</div><div class="line">shape:  (2, 3)</div><div class="line">size:  6</div><div class="line">dtype:  int64</div><div class="line"></div><div class="line"># Test 3</div><div class="line"># 定义矩阵及矩阵的元素类型——int32, int64, float32, float64</div><div class="line">a = np.array([1, 2, 3], dtype = np.int32)</div><div class="line">print a</div><div class="line">print a.ndim</div><div class="line">print a.shape</div><div class="line">print a.size</div><div class="line">print a.dtype</div><div class="line"></div><div class="line"></div><div class="line"># Test 3 Result</div><div class="line">[1 2 3]</div><div class="line">1</div><div class="line">(3,)</div><div class="line">3</div><div class="line">int32</div><div class="line"></div><div class="line"># Test 4</div><div class="line"># 定义零矩阵</div><div class="line">z = np.zeros((3, 4), dtype = np.int16)</div><div class="line">print z</div><div class="line">print z.dtype</div><div class="line"></div><div class="line"># 定义空矩阵</div><div class="line">n = np.empty((3, 4))</div><div class="line">print n</div><div class="line"></div><div class="line"># Test 4 Result</div><div class="line">[[0 0 0 0]</div><div class="line"> [0 0 0 0]</div><div class="line"> [0 0 0 0]]</div><div class="line">int16</div><div class="line"></div><div class="line">[[ 0.  0.  0.  0.]</div><div class="line"> [ 0.  0.  0.  0.]</div><div class="line"> [ 0.  0.  0.  0.]]</div><div class="line"></div><div class="line"># Test 5</div><div class="line"># 定义向量, 10-20之间, 元素间隔为2, 左闭右开</div><div class="line">a = np.arange(10, 20, 2)</div><div class="line">print a</div><div class="line"></div><div class="line"># 定义向量并转为矩阵</div><div class="line">b = np.arange(12).reshape((3, 4))</div><div class="line">print b</div><div class="line"></div><div class="line"># 定义向量, 类型是线性间隔</div><div class="line">a = np.linspace(1, 10, 6).reshape((2, 3))</div><div class="line">print a</div><div class="line"></div><div class="line"># Test 5 Result</div><div class="line">[10 12 14 16 18]</div><div class="line"></div><div class="line">[[ 0  1  2  3]</div><div class="line"> [ 4  5  6  7]</div><div class="line"> [ 8  9 10 11]]</div><div class="line"></div><div class="line">[[  1.    2.8   4.6]</div><div class="line"> [  6.4   8.2  10. ]]</div><div class="line"></div><div class="line"># Test 6</div><div class="line"># 矩阵的加、减、点乘、平方</div><div class="line">a = np.array([10, 20, 30, 40])</div><div class="line">b = np.arange(4)</div><div class="line">c = a - b</div><div class="line">d = a + b</div><div class="line">print a, b</div><div class="line">print c, d</div><div class="line">e = a * b</div><div class="line">print e</div><div class="line">f = e ** 2</div><div class="line">print f</div><div class="line"></div><div class="line"># Test 6 Result</div><div class="line">[10 20 30 40] [0 1 2 3]</div><div class="line">[10 19 28 37] [10 21 32 43]</div><div class="line">[  0  20  60 120]</div><div class="line">[    0   400  3600 14400]</div><div class="line"></div><div class="line"># Test 7</div><div class="line"># 矩阵的三角运算——sin, cos, tan</div><div class="line">sin = 10 * np.sin(a)</div><div class="line">print sin</div><div class="line"></div><div class="line"># 矩阵的判断</div><div class="line">print b &lt; 3</div><div class="line">print b == 3</div><div class="line"></div><div class="line"># Test 7 Result</div><div class="line">[-5.44021111  9.12945251 -9.88031624  7.4511316 ]</div><div class="line"></div><div class="line">[ True  True  True False]</div><div class="line">[False False False  True]</div><div class="line"></div><div class="line"># Test 8</div><div class="line"># 矩阵的点乘及乘法</div><div class="line">a = [ [1, 1], [0, 1]]</div><div class="line">b = np.arange(4).reshape((2, 2))</div><div class="line">c = a * b</div><div class="line">d = np.dot(a, b)</div><div class="line">print c</div><div class="line">print d</div><div class="line"></div><div class="line"># Test 8 Result</div><div class="line">[[0 1]</div><div class="line"> [0 3]]</div><div class="line">[[2 4]</div><div class="line"> [2 3]]</div><div class="line"></div><div class="line"># Test 9</div><div class="line"># np.random返回随机的浮点数，在半开区间 [0.0, 1.0)</div><div class="line"># 定义随机矩阵</div><div class="line">a = np.random.random((2, 4))</div><div class="line">print a</div><div class="line"></div><div class="line"># Test 9 Result</div><div class="line">[[ 0.93213483  0.58102186  0.98259187  0.27387014]</div><div class="line"> [ 0.43796835  0.98195976  0.29343791  0.94752226]]</div><div class="line"></div><div class="line"># Test 10</div><div class="line"># 矩阵的求和, 最小值, 最大值</div><div class="line">print np.sum(a)</div><div class="line">print np.min(a)</div><div class="line">print np.max(a)</div><div class="line"></div><div class="line"># 矩阵某一维度的求和, 最小值, 最大值, 0是列, 1是行</div><div class="line">print np.sum(a, axis = 1)</div><div class="line">print np.max(a, axis = 1)</div><div class="line">print np.min(a, axis = 0)</div><div class="line"></div><div class="line"># Test 10 Result</div><div class="line">5.43050697485</div><div class="line">0.273870140282</div><div class="line">0.982591870104</div><div class="line"></div><div class="line">[ 2.7696187   2.66088828]</div><div class="line">[ 0.98259187  0.98195976]</div><div class="line">[ 0.43796835  0.58102186  0.29343791  0.27387014]</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://www.youtube.com/user/MorvanZhou" target="_blank" rel="external">https://www.youtube.com/user/MorvanZhou</a></li>
+</ol>
 
       
     </div>
@@ -472,8 +475,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -488,7 +500,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">325</span>
+                <span class="site-state-item-count">327</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -536,6 +548,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -552,7 +580,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>

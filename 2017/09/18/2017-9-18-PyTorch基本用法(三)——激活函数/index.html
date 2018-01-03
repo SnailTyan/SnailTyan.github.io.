@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="PyTorch基本用法(三)——激活函数">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ac_func.png">
-<meta property="og:updated_time" content="2017-09-18T13:15:51.000Z">
+<meta property="og:updated_time" content="2018-01-03T03:48:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PyTorch基本用法(三)——激活函数">
 <meta name="twitter:description" content="PyTorch基本用法(三)——激活函数">
@@ -354,6 +354,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> func</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># 定义数据x</span></div><div class="line">x = torch.linspace(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">200</span>)</div><div class="line">x = Variable(x)</div><div class="line">np_x = x.data.numpy()</div><div class="line"></div><div class="line"><span class="comment"># 通过激活函数处理x</span></div><div class="line">y_relu = func.relu(x).data.numpy()</div><div class="line">y_sigmoid = func.sigmoid(x).data.numpy()</div><div class="line">y_tanh = func.tanh(x).data.numpy()</div><div class="line">y_softmax = func.softplus(x).data.numpy()</div><div class="line"></div><div class="line"><span class="comment"># 绘制激活函数图</span></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">221</span>)</div><div class="line">plt.plot(np_x, y_relu, c = <span class="string">'red'</span>, label = <span class="string">'relu'</span>)</div><div class="line">plt.ylim((<span class="number">-1</span>, <span class="number">5</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">222</span>)</div><div class="line">plt.plot(np_x, y_sigmoid, c = <span class="string">'red'</span>, label = <span class="string">'sigmoid'</span>)</div><div class="line">plt.ylim((<span class="number">0</span>, <span class="number">1</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">223</span>)</div><div class="line">plt.plot(np_x, y_tanh, c = <span class="string">'red'</span>, label = <span class="string">'tanh'</span>)</div><div class="line">plt.ylim((<span class="number">-1</span>, <span class="number">1</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>, figsize = (<span class="number">8</span>, <span class="number">6</span>))</div><div class="line">plt.subplot(<span class="number">224</span>)</div><div class="line">plt.plot(np_x, y_softmax, c = <span class="string">'red'</span>, label = <span class="string">'softmax'</span>)</div><div class="line">plt.ylim((<span class="number">-1</span>, <span class="number">5</span>))</div><div class="line">plt.legend(loc = <span class="string">'best'</span>)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <p>运行结果：</p>
 <p><img src="http://ocs628urt.bkt.clouddn.com/ac_func.png" alt="Figure"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://www.youtube.com/user/MorvanZhou" target="_blank" rel="external">https://www.youtube.com/user/MorvanZhou</a></li>
+</ol>
 
       
     </div>
@@ -476,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -492,7 +504,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">325</span>
+                <span class="site-state-item-count">327</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -540,6 +552,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -556,7 +584,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>

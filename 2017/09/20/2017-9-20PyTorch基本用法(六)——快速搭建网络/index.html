@@ -101,7 +101,7 @@
 <meta property="og:description" content="PyTorch基本用法(六)——快速搭建网络">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/classification_1_0.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/classification_4_0.png">
-<meta property="og:updated_time" content="2017-09-20T11:23:57.000Z">
+<meta property="og:updated_time" content="2018-01-03T05:11:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PyTorch基本用法(六)——快速搭建网络">
 <meta name="twitter:description" content="PyTorch基本用法(六)——快速搭建网络">
@@ -363,6 +363,9 @@
 )
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义优化方法</span></div><div class="line">optimizer = torch.optim.SGD(net.parameters(), lr = <span class="number">0.02</span>)</div><div class="line"><span class="comment"># 定义损失函数</span></div><div class="line">loss_func = torch.nn.CrossEntropyLoss()</div><div class="line"></div><div class="line">plt.ion()</div><div class="line"></div><div class="line"><span class="comment"># 训练过程</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">100</span>):</div><div class="line">    prediction = net(x)</div><div class="line">    loss = loss_func(prediction, y)</div><div class="line"></div><div class="line">    optimizer.zero_grad()</div><div class="line">    loss.backward()</div><div class="line">    optimizer.step()</div><div class="line"></div><div class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</div><div class="line">        plt.cla()</div><div class="line">        <span class="comment"># 获取概率最大的类别的索引</span></div><div class="line">        prediction = torch.max(F.softmax(prediction), <span class="number">1</span>)[<span class="number">1</span>]</div><div class="line">        <span class="comment"># 将输出结果变为一维</span></div><div class="line">        pred_y = prediction.data.numpy().squeeze()</div><div class="line">        target_y = y.data.numpy()</div><div class="line">        plt.scatter(x.data.numpy()[:, <span class="number">0</span>], x.data.numpy()[:, <span class="number">1</span>], c = pred_y, s = <span class="number">100</span>, lw = <span class="number">0</span>, cmap = <span class="string">'RdYlGn'</span>)</div><div class="line">        <span class="comment"># 计算准确率</span></div><div class="line">        accuracy = sum(pred_y == target_y) / <span class="number">200.0</span></div><div class="line">        plt.text(<span class="number">1.5</span>, <span class="number">-4</span>, <span class="string">'Accuracy=%.2f'</span> % accuracy, fontdict = &#123;<span class="string">'size'</span>: <span class="number">10</span>, <span class="string">'color'</span>:  <span class="string">'red'</span>&#125;)</div><div class="line">        plt.pause(<span class="number">0.1</span>)</div><div class="line"></div><div class="line">plt.ioff()</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <p><img src="http://ocs628urt.bkt.clouddn.com/classification_4_0.png" alt="png"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://www.youtube.com/user/MorvanZhou" target="_blank" rel="external">https://www.youtube.com/user/MorvanZhou</a></li>
+</ol>
 
       
     </div>
@@ -485,8 +488,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -501,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">325</span>
+                <span class="site-state-item-count">327</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -549,6 +561,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -565,7 +593,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>
