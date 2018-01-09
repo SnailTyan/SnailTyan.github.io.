@@ -102,7 +102,8 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c642d73ad24cb3a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-98e52746671d844a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-abef3f8be1f00b8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-08T11:12:33.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-826524060db73235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-09T08:48:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN论文翻译——中文版">
 <meta name="twitter:description" content="Faster R-CNN论文翻译——中文版">
@@ -376,6 +377,16 @@
 <p>为了生成区域提议，我们在最后的共享卷积层输出的卷积特征映射上滑动一个小网络。这个小网络将输入卷积特征映射的$n×n$空间窗口作为输入。每个滑动窗口映射到一个低维特征（ZF为256维，VGG为512维，后面是ReLU[33]）。这个特征被输入到两个子全连接层——一个边界框回归层（reg）和一个边界框分类层（cls）。在本文中，我们使用$n=3$，注意输入图像上的有效感受野是大的（ZF和VGG分别为171和228个像素）。图3（左）显示了这个小型网络的一个位置。请注意，因为小网络以滑动窗口方式运行，所有空间位置共享全连接层。这种架构通过一个n×n卷积层，后面是两个子1×1卷积层（分别用于reg和cls）自然地实现。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-abef3f8be1f00b8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
 <p>图3：左：区域提议网络（RPN）。右：在PASCAL VOC 2007测试集上使用RPN提议的示例检测。我们的方法可以检测各种尺度和长宽比的目标。</p>
+<h4 id="3-1-1-锚点"><a href="#3-1-1-锚点" class="headerlink" title="3.1.1 锚点"></a>3.1.1 锚点</h4><p>在每个滑动窗口位置，我们同时预测多个区域提议，其中每个位置可能提议的最大数目表示为$k$。因此，<em>reg</em>层具有$4k$个输出，编码$k$个边界框的坐标，<em>cls</em>层输出$2k$个分数，估计每个提议是目标或不是目标的概率。相对于我们称之为锚点的$k$个参考边界框，$k$个提议是参数化的。锚点位于所讨论的滑动窗口的中心，并与一个尺度和长宽比相关（图3左）。默认情况下，我们使用3个尺度和3个长宽比，在每个滑动位置产生$k=9$个锚点。对于大小为W×H（通常约为2400）的卷积特征映射，总共有$WHk$个锚点。</p>
+<p><strong>平移不变的锚点</strong></p>
+<p>我们的方法的一个重要特性是它是<em>平移不变</em>的，无论是在锚点还是计算相对于锚点的区域提议的函数。如果在图像中平移目标，提议应该平移，并且同样的函数应该能够在任一位置预测提议。这个平移不变的属性是由我们的方法保证的。作为比较，MultiBox方法[27]使用k-means生成800个锚点，这不是平移不变的。所以如果平移目标，MultiBox不保证会生成相同的提议。</p>
+<p>平移不变特性也减小了模型的大小。MultiBox有$(4+1)\times 800$维的全连接输出层，而我们的方法在$k=9$个锚点的情况下有$(4+2)\times 9$维的卷积输出层。因此，对于VGG-16，我们的输出层具有$2.8\times10^4$个参数（对于VGG-16为$512\times(4+2)\times9$），比MultiBox输出层的$6.1\times10^6$个参数少了两个数量级（对于MultiBox [27]中的GoogleNet[34]为$1536\times(4+1)\times800$）。如果考虑到特征投影层，我们的提议层仍然比MultiBox少一个数量级。我们期望我们的方法在PASCAL VOC等小数据集上有更小的过拟合风险。</p>
+<p><strong>多尺度锚点作为回归参考</strong></p>
+<p>我们的锚点设计提出了一个新的方案来解决多尺度（和长宽比）。如图1所示，多尺度预测有两种流行的方法。第一种方法是基于图像/特征金字塔，例如DPM[8]和基于CNN的方法[9]，[1]，[2]中。图像在多个尺度上进行缩放，并且针对每个尺度（图1（a））计算特征映射（HOG[8]或深卷积特征[9]，[1]，[2]）。这种方法通常是有用的，但是非常耗时。第二种方法是在特征映射上使用多尺度（和/或长宽比）的滑动窗口。例如，在DPM[8]中，使用不同的滤波器大小（例如5×7和7×5）分别对不同长宽比的模型进行训练。如果用这种方法来解决多尺度问题，可以把它看作是一个“滤波器金字塔”（图1（b））。第二种方法通常与第一种方法联合采用[8]。</p>
+<p>作为比较，我们的基于锚点方法建立在锚点金字塔上，这是更具成本效益的。我们的方法参照多尺度和长宽比的锚盒来分类和回归边界框。它只依赖单一尺度的图像和特征映射，并使用单一尺寸的滤波器（特征映射上的滑动窗口）。我们通过实验来展示这个方案解决多尺度和尺寸的效果（表8）。</p>
+<p>表8：Faster R-CNN在PAS-CAL VOC 2007测试数据集上使用不同锚点设置的检测结果。网络是VGG-16。训练数据是VOC 2007训练集。使用3个尺度和3个长宽比（$69.9\%$）的默认设置，与表3中的相同。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-826524060db73235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 8"></p>
+<p>由于这种基于锚点的多尺度设计，我们可以简单地使用在单尺度图像上计算的卷积特征，Fast R-CNN检测器也是这样做的[2]。多尺度锚点设计是共享特征的关键组件，不需要额外的成本来处理尺度。</p>
 
       
     </div>
@@ -523,7 +534,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">329</span>
+                <span class="site-state-item-count">330</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -545,7 +556,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -580,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
