@@ -103,7 +103,8 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-98e52746671d844a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-abef3f8be1f00b8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-826524060db73235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-09T08:48:25.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-bc1c54a298806dc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-12T07:41:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN论文翻译——中文版">
 <meta name="twitter:description" content="Faster R-CNN论文翻译——中文版">
@@ -387,6 +388,15 @@
 <p>表8：Faster R-CNN在PAS-CAL VOC 2007测试数据集上使用不同锚点设置的检测结果。网络是VGG-16。训练数据是VOC 2007训练集。使用3个尺度和3个长宽比（$69.9\%$）的默认设置，与表3中的相同。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-826524060db73235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 8"></p>
 <p>由于这种基于锚点的多尺度设计，我们可以简单地使用在单尺度图像上计算的卷积特征，Fast R-CNN检测器也是这样做的[2]。多尺度锚点设计是共享特征的关键组件，不需要额外的成本来处理尺度。</p>
+<h4 id="3-1-2-损失函数"><a href="#3-1-2-损失函数" class="headerlink" title="3.1.2 损失函数"></a>3.1.2 损失函数</h4><p>为了训练RPN，我们为每个锚点分配一个二值类别标签（是目标或不是目标）。我们给两种锚点分配一个正标签：（i）具有与实际边界框的重叠最高交并比（IoU）的锚点，或者（ii）具有与实际边界框的重叠超过0.7 IoU的锚点。注意，单个真实边界框可以为多个锚点分配正标签。通常第二个条件足以确定正样本；但我们仍然采用第一个条件，因为在一些极少数情况下，第二个条件可能找不到正样本。对于所有的真实边界框，如果一个锚点的IoU比率低于0.3，我们给非正面的锚点分配一个负标签。既不正面也不负面的锚点不会有助于训练目标函数。</p>
+<p>根据这些定义，我们对目标函数Fast R-CNN[2]中的多任务损失进行最小化。我们对图像的损失函数定义为：$$<br>L(\lbrace p_i \rbrace, \lbrace t_i \rbrace) = \frac{1}{N_{cls}}\sum_i L_{cls}(p_i, p^{*}_i) \\ + \lambda\frac{1}{N_{reg}}\sum_i p^{*}_i L_{reg}(t_i, t^{*}_i).<br>$$其中，$i$是一个小批量数据中锚点的索引，$p_i$是锚点$i$作为目标的预测概率。如果锚点为正，真实标签$p^{*}_i$为1，如果锚点为负，则为0。$t_i$是表示预测边界框4个参数化坐标的向量，而$t^{*}_i$是与正锚点相关的真实边界框的向量。分类损失$L_{cls}$是两个类别上（目标或不是目标）的对数损失。对于回归损失，我们使用$L_{reg}(t_i, t^{*}_i)=R(t_i - t^{*}_i)$，其中$R$是在[2]中定义的鲁棒损失函数（平滑$L_1$）。项$p^{*}_i L_{reg}$表示回归损失仅对于正锚点激活，否则被禁用（$p^{*}_i=0$）。<em>cls</em>和<em>reg</em>层的输出分别由${p_i}$和${t_i}$组成。</p>
+<p>这两个项用$N_{cls}$和$N_{reg}$进行标准化，并由一个平衡参数$\lambda$加权。在我们目前的实现中（如在发布的代码中），方程（1）中的$cls$项通过小批量数据的大小（即$N_{cls}=256$）进行归一化，$reg$项根据锚点位置的数量（即，$N_{reg}\sim 24000$）进行归一化。默认情况下，我们设置$\lambda=10$，因此<em>cls</em>和<em>reg</em>项的权重大致相等。我们通过实验显示，结果对宽范围的$\lambda$值不敏感(表9)。我们还注意到，上面的归一化不是必需的，可以简化。</p>
+<p>表9：Faster R-CNN使用方程(1)中不同的$\lambda$值在PASCAL VOC 2007测试集上的检测结果。网络是VGG-16。训练数据是VOC 2007训练集。使用$\lambda = 10$（$69.9\%$）的默认设置与表3中的相同。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-bc1c54a298806dc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 9"></p>
+<p>对于边界框回归，我们采用[5]中的4个坐标参数化：$$<br>t_{\textrm{x}} =  (x - x_{\textrm{a}})/w_{\textrm{a}},\quad<br>t_{\textrm{y}} = (y - y_{\textrm{a}})/h_{\textrm{a}},\\<br>t_{\textrm{w}} = \log(w / w_{\textrm{a}}), \quad<br>t_{\textrm{h}} = \log(h / h_{\textrm{a}}),\\<br>t^{*}_{\textrm{x}} =  (x^{*} - x_{\textrm{a}})/w_{\textrm{a}},\quad<br>t^{*}_{\textrm{y}} = (y^{*} - y_{\textrm{a}})/h_{\textrm{a}},\\<br>t^{*}_{\textrm{w}} = \log(w^{*} / w_{\textrm{a}}),\quad<br>t^{*}_{\textrm{h}} = \log(h^{*} / h_{\textrm{a}}),<br>$$ 其中，$x$，$y$，$w$和$h$表示边界框的中心坐标及其宽和高。变量$x$，$x_{\textrm{a}}$和$x^{*}$分别表示预测边界框，锚盒和实际边界框（类似于$y, w, h$）。这可以被认为是从锚盒到邻近的实际边界框的回归。</p>
+<p>然而，我们的方法通过与之前的基于RoI（感兴趣区域）方法[1]，[2]不同的方式来实现边界框回归。在[1]，[2]中，对任意大小的RoI池化的特征执行边界框回归，并且回归权重由所有区域大小共享。在我们的公式中，用于回归的特征在特征映射上具有相同的空间大小（3×3）。为了说明不同的大小，学习一组$k$个边界框回归器。每个回归器负责一个尺度和一个长宽比，而$k$个回归器不共享权重。因此，由于锚点的设计，即使特征具有固定的尺度/比例，仍然可以预测各种尺寸的边界框。</p>
+<h4 id="3-1-3-训练RPN"><a href="#3-1-3-训练RPN" class="headerlink" title="3.1.3 训练RPN"></a>3.1.3 训练RPN</h4><p>RPN可以通过反向传播和随机梯度下降（SGD）进行端对端训练[35]。我们遵循[2]的“以图像为中心”的采样策略来训练这个网络。每个小批量数据都从包含许多正面和负面示例锚点的单张图像中产生。对所有锚点的损失函数进行优化是可能的，但是这样会偏向于负样本，因为它们是占主导地位的。取而代之的是，我们在图像中随机采样256个锚点，计算一个小批量数据的损失函数，其中采样的正锚点和负锚点的比率可达1:1。如果图像中的正样本少于128个，我们使用负样本填充小批量数据。</p>
+<p>我们通过从标准方差为0.01的零均值高斯分布中提取权重来随机初始化所有新层。所有其他层（即共享卷积层）通过预训练的ImageNet分类模型[36]来初始化，如同标准实践[5]。我们调整ZF网络的所有层，以及VGG网络的conv3_1及其之上的层以节省内存[2]。对于60k的小批量数据，我们使用0.001的学习率，对于PASCAL VOC数据集中的下一个20k小批量数据，使用0.0001。我们使用0.9的动量和0.0005的重量衰减[37]。我们的实现使用Caffe[38]。</p>
 
       
     </div>
@@ -534,7 +544,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">330</span>
+                <span class="site-state-item-count">333</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -591,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-损失函数"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-训练RPN"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 训练RPN</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
