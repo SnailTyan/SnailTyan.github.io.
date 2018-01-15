@@ -104,7 +104,8 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-abef3f8be1f00b8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-826524060db73235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-bc1c54a298806dc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-12T07:41:13.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0c59e60ab2a9291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-15T10:51:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN论文翻译——中文版">
 <meta name="twitter:description" content="Faster R-CNN论文翻译——中文版">
@@ -397,6 +398,17 @@
 <p>然而，我们的方法通过与之前的基于RoI（感兴趣区域）方法[1]，[2]不同的方式来实现边界框回归。在[1]，[2]中，对任意大小的RoI池化的特征执行边界框回归，并且回归权重由所有区域大小共享。在我们的公式中，用于回归的特征在特征映射上具有相同的空间大小（3×3）。为了说明不同的大小，学习一组$k$个边界框回归器。每个回归器负责一个尺度和一个长宽比，而$k$个回归器不共享权重。因此，由于锚点的设计，即使特征具有固定的尺度/比例，仍然可以预测各种尺寸的边界框。</p>
 <h4 id="3-1-3-训练RPN"><a href="#3-1-3-训练RPN" class="headerlink" title="3.1.3 训练RPN"></a>3.1.3 训练RPN</h4><p>RPN可以通过反向传播和随机梯度下降（SGD）进行端对端训练[35]。我们遵循[2]的“以图像为中心”的采样策略来训练这个网络。每个小批量数据都从包含许多正面和负面示例锚点的单张图像中产生。对所有锚点的损失函数进行优化是可能的，但是这样会偏向于负样本，因为它们是占主导地位的。取而代之的是，我们在图像中随机采样256个锚点，计算一个小批量数据的损失函数，其中采样的正锚点和负锚点的比率可达1:1。如果图像中的正样本少于128个，我们使用负样本填充小批量数据。</p>
 <p>我们通过从标准方差为0.01的零均值高斯分布中提取权重来随机初始化所有新层。所有其他层（即共享卷积层）通过预训练的ImageNet分类模型[36]来初始化，如同标准实践[5]。我们调整ZF网络的所有层，以及VGG网络的conv3_1及其之上的层以节省内存[2]。对于60k的小批量数据，我们使用0.001的学习率，对于PASCAL VOC数据集中的下一个20k小批量数据，使用0.0001。我们使用0.9的动量和0.0005的重量衰减[37]。我们的实现使用Caffe[38]。</p>
+<h3 id="3-2-RPN和Fast-R-CNN共享特征"><a href="#3-2-RPN和Fast-R-CNN共享特征" class="headerlink" title="3.2 RPN和Fast R-CNN共享特征"></a>3.2 RPN和Fast R-CNN共享特征</h3><p>到目前为止，我们已经描述了如何训练用于区域提议生成的网络，没有考虑将利用这些提议的基于区域的目标检测CNN。对于检测网络，我们采用Fast R-CNN[2]。接下来我们介绍一些算法，学习由RPN和Fast R-CNN组成的具有共享卷积层的统一网络（图2）。</p>
+<p>独立训练的RPN和Fast R-CNN将以不同的方式修改卷积层。因此，我们需要开发一种允许在两个网络之间共享卷积层的技术，而不是学习两个独立的网络。我们讨论三个方法来训练具有共享特征的网络：</p>
+<p>（一）交替训练。在这个解决方案中，我们首先训练RPN，并使用这些提议来训练Fast R-CNN。由Fast R-CNN微调的网络然后被用于初始化RPN，并且重复这个过程。这是本文所有实验中使用的解决方案。</p>
+<p>（二）近似联合训练。在这个解决方案中，RPN和Fast R-CNN网络在训练期间合并成一个网络，如图2所示。在每次SGD迭代中，前向传递生成区域提议，在训练Fast R-CNN检测器将这看作是固定的、预计算的提议。反向传播像往常一样进行，其中对于共享层，组合来自RPN损失和Fast R-CNN损失的反向传播信号。这个解决方案很容易实现。但是这个解决方案忽略了关于提议边界框的坐标（也是网络响应）的导数，因此是近似的。在我们的实验中，我们实验发现这个求解器产生了相当的结果，与交替训练相比，训练时间减少了大约$25-50\%$。这个求解器包含在我们发布的Python代码中。</p>
+<p>（三）非近似的联合训练。如上所述，由RPN预测的边界框也是输入的函数。Fast R-CNN中的RoI池化层[2]接受卷积特征以及预测的边界框作为输入，所以理论上有效的反向传播求解器也应该包括关于边界框坐标的梯度。在上述近似联合训练中，这些梯度被忽略。在一个非近似的联合训练解决方案中，我们需要一个关于边界框坐标可微分的RoI池化层。这是一个重要的问题，可以通过[15]中提出的“RoI扭曲”层给出解决方案，这超出了本文的范围。</p>
+<p>四步交替训练。在本文中，我们采用实用的四步训练算法，通过交替优化学习共享特征。在第一步中，我们按照3.1.3节的描述训练RPN。该网络使用ImageNet的预训练模型进行初始化，并针对区域提议任务进行了端到端的微调。在第二步中，我们使用由第一步RPN生成的提议，由Fast R-CNN训练单独的检测网络。该检测网络也由ImageNet的预训练模型进行初始化。此时两个网络不共享卷积层。在第三步中，我们使用检测器网络来初始化RPN训练，但是我们修正共享的卷积层，并且只对RPN特有的层进行微调。现在这两个网络共享卷积层。最后，保持共享卷积层的固定，我们对Fast R-CNN的独有层进行微调。因此，两个网络共享相同的卷积层并形成统一的网络。类似的交替训练可以运行更多的迭代，但是我们只观察到可以忽略的改进。</p>
+<h3 id="3-3-实现细节"><a href="#3-3-实现细节" class="headerlink" title="3.3 实现细节"></a>3.3 实现细节</h3><p>我们在单尺度图像上训练和测试区域提议和目标检测网络[1]，[2]。我们重新缩放图像，使得它们的短边是$s=600$像素[2]。多尺度特征提取（使用图像金字塔）可能会提高精度，但不会表现出速度与精度的良好折衷[2]。在重新缩放的图像上，最后卷积层上的ZF和VGG网络的总步长为16个像素，因此在调整大小（〜500×375）之前，典型的PASCAL图像上的总步长为〜10个像素。即使如此大的步长也能提供良好的效果，尽管步幅更小，精度可能会进一步提高。</p>
+<p>对于锚点，我们使用了3个尺度，边界框面积分别为$128^2$，$256^2$和$512^2$个像素，以及1:1，1:2和2:1的长宽比。这些超参数不是针对特定数据集仔细选择的，我们将在下一节中提供有关其作用的消融实验。如上所述，我们的解决方案不需要图像金字塔或滤波器金字塔来预测多个尺度的区域，节省了大量的运行时间。图3（右）显示了我们的方法在广泛的尺度和长宽比方面的能力。表1显示了使用ZF网络的每个锚点学习到的平均提议大小。我们注意到，我们的算法允许预测比基础感受野更大。这样的预测不是不可能的——如果只有目标的中间部分是可见的，那么仍然可以粗略地推断出目标的范围。</p>
+<p>表1：使用ZF网络的每个锚点学习到的平均提议大小（$s=600$的数字）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0c59e60ab2a9291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p>跨越图像边界的锚盒需要小心处理。在训练过程中，我们忽略了所有的跨界锚点，所以不会造成损失。对于一个典型的$1000 \times 600$的图片，总共将会有大约20000（$\approx 60 \times 40 \times 9$）个锚点。跨界锚点被忽略，每张图像约有6000个锚点用于训练。如果跨界异常值在训练中不被忽略，则会在目标函数中引入大的，难以纠正的误差项，且训练不会收敛。但在测试过程中，我们仍然将全卷积RPN应用于整张图像。这可能会产生跨边界的提议边界框，我们剪切到图像边界。</p>
 
       
     </div>
@@ -544,7 +556,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">333</span>
+                <span class="site-state-item-count">334</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -566,7 +578,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -601,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-损失函数"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-训练RPN"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 训练RPN</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-损失函数"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-训练RPN"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 训练RPN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-RPN和Fast-R-CNN共享特征"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 RPN和Fast R-CNN共享特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-实现细节"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3 实现细节</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
