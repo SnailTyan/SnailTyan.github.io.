@@ -105,7 +105,14 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-826524060db73235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-bc1c54a298806dc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0c59e60ab2a9291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-15T10:51:04.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-080d4e4637bcdc70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-177b4a366a189074.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4b5a998e2030ae51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-46f5639b269219ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c7a00aed8338a0df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a13f952d720081c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a86328f2b0beb621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-01-18T10:59:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN论文翻译——中文版">
 <meta name="twitter:description" content="Faster R-CNN论文翻译——中文版">
@@ -409,6 +416,78 @@
 <p>表1：使用ZF网络的每个锚点学习到的平均提议大小（$s=600$的数字）。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-0c59e60ab2a9291c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
 <p>跨越图像边界的锚盒需要小心处理。在训练过程中，我们忽略了所有的跨界锚点，所以不会造成损失。对于一个典型的$1000 \times 600$的图片，总共将会有大约20000（$\approx 60 \times 40 \times 9$）个锚点。跨界锚点被忽略，每张图像约有6000个锚点用于训练。如果跨界异常值在训练中不被忽略，则会在目标函数中引入大的，难以纠正的误差项，且训练不会收敛。但在测试过程中，我们仍然将全卷积RPN应用于整张图像。这可能会产生跨边界的提议边界框，我们剪切到图像边界。</p>
+<p>一些RPN提议互相之间高度重叠。为了减少冗余，我们在提议区域根据他们的<em>cls</em>分数采取非极大值抑制（NMS）。我们将NMS的IoU阈值固定为0.7，这就给每张图像留下了大约2000个提议区域。正如我们将要展示的那样，NMS不会损害最终的检测准确性，但会大大减少提议的数量。在NMS之后，我们使用前N个提议区域来进行检测。接下来，我们使用2000个RPN提议对Fast R-CNN进行训练，但在测试时评估不同数量的提议。</p>
+<h2 id="4-实验"><a href="#4-实验" class="headerlink" title="4. 实验"></a>4. 实验</h2><h3 id="4-1-PASCAL-VOC上的实验"><a href="#4-1-PASCAL-VOC上的实验" class="headerlink" title="4.1 PASCAL VOC上的实验"></a>4.1 PASCAL VOC上的实验</h3><p>我们在PASCAL VOC 2007检测基准数据集[11]上全面评估了我们的方法。这个数据集包含大约5000张训练评估图像和在20个目标类别上的5000张测试图像。我们还提供了一些模型在PASCAL VOC 2012基准数据集上的测试结果。对于ImageNet预训练网络，我们使用具有5个卷积层和3个全连接层的ZF网络[32]的“快速”版本以及具有13个卷积层和3个全连接层的公开的VGG-16模型[3]。我们主要评估检测的平均精度均值（mAP），因为这是检测目标的实际指标（而不是关注目标提议代理度量）。</p>
+<p>表2（顶部）显示了使用各种区域提议方法进行训练和测试的Fast R-CNN结果。这些结果使用ZF网络。对于选择性搜索（SS）[4]，我们通过“快速”模式生成约2000个提议。对于EdgeBoxes（EB）[6]，我们通过调整0.7 IoU的默认EB设置生成提议。SS在Fast R-CNN框架下的mAP为$58.7\%$，EB的mAP为$58.6\%$。RPN与Fast R-CNN取得了有竞争力的结果，使用多达300个提议，mAP为$59.9\%$。由于共享卷积计算，使用RPN比使用SS或EB产生了更快的检测系统；较少的建议也减少了区域方面的全连接层成本（表5）。</p>
+<p>表2：PASCAL VOC 2007测试集上的检测结果（在VOC 2007训练评估集上进行了训练）。检测器是带有ZF的Fast R-CNN，但使用各种提议方法进行训练和测试。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-080d4e4637bcdc70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
+<p>表5：K40 GPU上的时间（ms），除了SS提议是在CPU上评估。“区域方面”包括NMS，池化，全连接和softmax层。查看我们发布的代码来分析运行时间。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-177b4a366a189074.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><strong>RPN上的消融实验</strong>。为了研究RPN作为提议方法的性能，我们进行了几项消融研究。首先，我们显示了RPN和Fast R-CNN检测网络共享卷积层的效果。为此，我们在四步训练过程的第二步之后停止训练。使用单独的网络将结果略微减少到$58.7\%$（RPN+ZF，非共享，表2）。我们观察到，这是因为在第三步中，当使用检测器调整的特征来微调RPN时，提议质量得到了改善。</p>
+<p>接下来，我们分析RPN对训练Fast R-CNN检测网络的影响。为此，我们通过使用2000个SS提议和ZF网络来训练Fast R-CNN模型。我们固定这个检测器，并通过改变测试时使用的提议区域来评估检测的mAP。在这些消融实验中，RPN不与检测器共享特征。</p>
+<p>在测试阶段用300个RPN提议替换SS提议得到了$56.8\%$的MAP。mAP的损失是因为训练/测试提议不一致。这个结果作为以下比较的基准。</p>
+<p>有些令人惊讶的是，RPN在测试时使用排名最高的100个提议仍然会导致有竞争力的结果（$55.1\%$），表明排名靠前的RPN提议是准确的。相反的，使用排名靠前的6000个RPN提议（无NMS）具有相当的mAP（$55.2\%$），这表明NMS不会损害检测mAP并可能减少误报。</p>
+<p>接下来，我们通过在测试时分别关闭RPN的<em>cls</em>和<em>reg</em>输出来调查RPN的作用。当<em>cls</em>层在测试时被移除（因此不使用NMS/排名），我们从未得分的区域中随机采样$N$个提议。当$N=1000$($55.8\<br>%$)时，mAP几乎没有变化，但是当$N=100$时，会大大降低到$44.6\%$。这表明<em>cls</em>分数考虑了排名最高的提议的准确性。</p>
+<p>另一方面，当在测试阶段移除<em>reg</em>层（所以提议变成锚盒）时，mAP将下降到$52.1\%$。这表明高质量的提议主要是由于回归的边界框。锚盒虽然具有多个尺度和长宽比，但不足以进行准确的检测。</p>
+<h3 id="4-2-在MS-COCO上的实验"><a href="#4-2-在MS-COCO上的实验" class="headerlink" title="4.2 在MS COCO上的实验"></a>4.2 在MS COCO上的实验</h3><p>我们在Microsoft COCO目标检测数据集[12]上提供了更多的结果。这个数据集包含80个目标类别。我们用训练集上的8万张图像，验证集上的4万张图像以及测试开发集上的2万张图像进行实验。我们评估了$IoU \in [0.5:0.05:0.95]$的平均mAP（COCO标准度量，简称为mAP@[.5,.95]）和mAP@0.5（PASCAL VOC度量）。</p>
+<p>我们的系统对这个数据集做了一些小的改动。我们在8 GPU实现上训练我们的模型，RPN（每个GPU 1个）和Fast R-CNN（每个GPU 2个）的有效最小批大小为8个。RPN步骤和Fast R-CNN步骤都以24万次迭代进行训练，学习率为0.003，然后以0.0003的学习率进行8万次迭代。我们修改了学习率（从0.003而不是0.001开始），因为小批量数据的大小发生了变化。对于锚点，我们使用3个长宽比和4个尺度（加上$64^2$），这主要是通过处理这个数据集上的小目标来激发的。此外，在我们的Fast R-CNN步骤中，负样本定义为与实际边界框的最大IOU在[0，0.5)区间内的样本，而不是[1]，[2]中使用的[0.1,0.5)之间。我们注意到，在SPPnet系统[1]中，在[0.1，0.5)中的负样本用于网络微调，但[0,0.5)中的负样本仍然在具有难例挖掘SVM步骤中被访问。但是Fast R-CNN系统[2]放弃了SVM步骤，所以[0,0.1]中的负样本都不会被访问。包括这些[0,0.1)的样本，在Fast R-CNN和Faster R-CNN系统在COCO数据集上改进了mAP@0.5（但对PASCAL VOC的影响可以忽略不计）。</p>
+<p>其余的实现细节与PASCAL VOC相同。特别的是，我们继续使用300个提议和单一尺度（$s=600$）测试。COCO数据集上的测试时间仍然是大约200ms处理一张图像。</p>
+<p>在表11中，我们首先报告了使用本文实现的Fast R-CNN系统[2]的结果。我们的Fast R-CNN基准在<code>test-dev</code>数据集上有$39.3\%$的mAP@0.5，比[2]中报告的更高。我们推测造成这种差距的原因主要是由于负样本的定义以及小批量大小的变化。我们也注意到mAP@[.5，.95]恰好相当。</p>
+<p>表11：在MS COCO数据集上的目标检测结果(%)。模型是VGG-16。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4b5a998e2030ae51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 11"></p>
+<p>接下来我们评估我们的Faster R-CNN系统。使用COCO训练集训练，在COCO测试开发集上Faster R-CNNN有$42.1\%$的mAP@0.5和$21.5\%$的mAP@[0.5，0.95]。与相同协议下的Fast R-CNN相比，mAP@0.5要高$2.8\%$，mAP@[.5, .95]要高$2.2\%$（表11）。这表明，在更高的IoU阈值上，RPN对提高定位精度表现出色。使用COCO训练集训练，在COCO测试开发集上Faster R-CNN有$42.7\%$的mAP@0.5和$21.9\%$的mAP@[.5, .95]。图6显示了MS COCO测试开发数据集中的一些结果。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-46f5639b269219ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 6"></p>
+<p>图6：使用Faster R-CNN系统在MS COCO test-dev数据集上选择的目标检测结果示例。该模型是VGG-16，训练数据是COCO训练数据（在测试开发数据集上为$42.7\%$的mAP@0.5）。每个输出框都与一个类别标签和[0, 1]之间的softmax分数相关联。使用0.6的分数阈值来显示这些图像。对于每张图像，一种颜色表示该图像中的一个目标类别。</p>
+<p><strong>在ILSVRC和COCO 2015比赛中的Faster R-CNN</strong>。我们已经证明，由于RPN通过神经网络完全学习了提议区域，Faster R-CNN从更好的特征中受益更多。即使将深度增加到100层以上，这种观察仍然是有效的[18]。仅用101层残差网络（ResNet-101）代替VGG-16，Faster R-CNN系统就将mAP从$41.5<br>%/21.2\%$（VGG-16）增加到$48.4\%/27.2\%$（ResNet-101）。与其他改进正交于Faster R-CNN，何等人[18]在COCO测试开发数据集上获得了单模型$55.7\%/34.9\%$的结果和$59.0\%/37.4\%$的组合结果，在COCO 2015目标检测竞赛中获得了第一名。同样的系统[18]也在ILSVRC 2015目标检测竞赛中获得了第一名，超过第二名绝对的$8.5\%$。RPN也是ILSVRC2015定位和COCO2015分割竞赛第一名获奖输入的基石，详情请分别参见[18]和[15]。</p>
+<h3 id="4-3-从MS-COCO到PASCAL-VOC"><a href="#4-3-从MS-COCO到PASCAL-VOC" class="headerlink" title="4.3 从MS COCO到PASCAL VOC"></a>4.3 从MS COCO到PASCAL VOC</h3><p>大规模数据对改善深度神经网络至关重要。接下来，我们调查MS COCO数据集如何帮助改进在PASCAL VOC上的检测性能。</p>
+<p>作为一个简单的基准数据，我们直接在PASCAL VOC数据集上评估COCO检测模型，<em>而无需在任何PASCAL VOC数据上进行微调</em>。这种评估是可能的，因为COCO类别是PASCAL VOC上类别的超集。在这个实验中忽略COCO专有的类别，softmax层仅在20个类别和背景上执行。这种设置下PASCAL VOC 2007测试集上的mAP为$76.1\%$（表12）。即使没有利用PASCAL VOC的数据，这个结果也好于在VOC07+12($73.2\%$)上训练的模型的结果。</p>
+<p>然后我们在VOC数据集上对COCO检测模型进行微调。在这个实验中，COCO模型代替了ImageNet的预训练模型（用于初始化网络权重），Faster R-CNN系统按3.2节所述进行微调。这样做在PASCAL VOC 2007测试集上可以达到$78.8\%$的mAP。来自COCO集合的额外数据增加了$5.6\%$的mAP。表6显示，在PASCAL VOC 2007上，使用COCO+VOC训练的模型在每个类别上具有最好的AP值。在PASCAL VOC 2012测试集（表12和表7）中也观察到类似的改进。我们注意到获得这些强大结果的测试时间速度仍然是每张图像200ms左右。</p>
+<p>表6：Fast R-CNN检测器和VGG-16在PASCAL VOC 2007测试集上的结果。对于RPN，Fast R-CNN的训练时的提议数量是2000。$RPN^*$表示取消共享特征的版本。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-c7a00aed8338a0df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
+<p>表12：使用不同的训练数据在PASCAL VOC 2007测试集和2012测试集上检测Faster R-CNN的检测mAP（％）。模型是VGG-16。“COCO”表示COCO<code>trainval</code>数据集用于训练。另见表6和表7。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-a13f952d720081c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 12"></p>
+<p>表7：Fast R-CNN检测器和VGG-16在PASCAL VOC 2012测试集上的结果。对于RPN，Fast R-CNN的训练时的提议数量是2000。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-a86328f2b0beb621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 7"></p>
+<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们已经提出了RPN来生成高效，准确的区域提议。通过与下游检测网络共享卷积特征，区域提议步骤几乎是零成本的。我们的方法使统一的，基于深度学习的目标检测系统能够以接近实时的帧率运行。学习到的RPN也提高了区域提议的质量，从而提高了整体的目标检测精度。</p>
+<h2 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h2><p>[1] K. He, X. Zhang, S. Ren, and J. Sun, “Spatial pyramid pooling in deep convolutional networks for visual recognition,” in European Conference on Computer Vision (ECCV), 2014.</p>
+<p>[2] R. Girshick, “Fast R-CNN,” in IEEE International Conference on Computer Vision (ICCV), 2015.</p>
+<p>[3] K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” in International Conference on Learning Representations (ICLR), 2015.</p>
+<p>[4] J. R. Uijlings, K. E. van de Sande, T. Gevers, and A. W. Smeulders, “Selective search for object recognition,” International<br>Journal of Computer Vision (IJCV), 2013.</p>
+<p>[5] R. Girshick, J. Donahue, T. Darrell, and J. Malik, “Rich feature hierarchies for accurate object detection and semantic segmentation,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2014.</p>
+<p>[6] C. L. Zitnick and P. Dollár, “Edge boxes: Locating object proposals from edges,” in European Conference on Computer Vision(ECCV),2014.</p>
+<p>[7] J. Long, E. Shelhamer, and T. Darrell, “Fully convolutional networks for semantic segmentation,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015.</p>
+<p>[8] P. F. Felzenszwalb, R. B. Girshick, D. McAllester, and D. Ramanan, “Object detection with discriminatively trained part-based models,” IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2010.</p>
+<p>[9] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun, “Overfeat: Integrated recognition, localization and detection using convolutional networks,” in International Conference on Learning Representations (ICLR), 2014.</p>
+<p>[10] S. Ren, K. He, R. Girshick, and J. Sun, “FasterR-CNN: Towards real-time object detection with region proposal networks,” in<br>Neural Information Processing Systems (NIPS), 2015.</p>
+<p>[11] M. Everingham, L. Van Gool, C. K. I. Williams, J. Winn, and A. Zisserman, “The PASCAL Visual Object Classes Challenge 2007 (VOC2007) Results,” 2007.</p>
+<p>[12] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollár, and C. L. Zitnick, “Microsoft COCO: Common Objects in Context,” in European Conference on Computer Vision (ECCV), 2014.</p>
+<p>[13] S. Song and J. Xiao, “Deep sliding shapes for amodal 3d object detection in rgb-d images,” arXiv:1511.02300, 2015.</p>
+<p>[14] J. Zhu, X. Chen, and A. L. Yuille, “DeePM: A deep part-based model for object detection and semantic part localization,” arXiv:1511.07131, 2015.</p>
+<p>[15] J. Dai, K. He, and J. Sun, “Instance-aware semantic segmentation via multi-task network cascades,” arXiv:1512.04412, 2015.</p>
+<p>[16] J. Johnson, A. Karpathy, and L. Fei-Fei, “Densecap: Fully convolutional localization networks for dense captioning,” arXiv:1511.07571, 2015.</p>
+<p>[17] D. Kislyuk, Y. Liu, D. Liu, E. Tzeng, and Y. Jing, “Human curation and convnets: Powering item-to-item recommendations on pinterest,” arXiv:1511.04003, 2015.</p>
+<p>[18] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for image recognition,” arXiv:1512.03385, 2015.</p>
+<p>[19] J. Hosang, R. Benenson, and B. Schiele, “How good are detection proposals, really?” in British Machine Vision Conference (BMVC), 2014.</p>
+<p>[20] J. Hosang, R. Benenson, P. Dollar, and B. Schiele, “What makes for effective detection proposals?” IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2015.</p>
+<p>[21] N. Chavali, H. Agrawal, A. Mahendru, and D. Batra, “Object-Proposal Evaluation Protocol is ’Gameable’,” arXiv: 1505.05836, 2015.</p>
+<p>[22] J. Carreira and C. Sminchisescu, “CPMC: Automatic object segmentation using constrained parametric min-cuts,” IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2012.</p>
+<p>[23] P. Arbelaez, J. Pont-Tuset, J. T. Barron, F. Marques, and J. Malik, “Multiscale combinatorial grouping,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2014.</p>
+<p>[24] B. Alexe, T. Deselaers, and V. Ferrari, “Measuring the objectness of image windows,” IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2012.</p>
+<p>[25] C. Szegedy, A. Toshev, and D. Erhan, “Deep neural networks for object detection,” in Neural Information Processing Systems (NIPS), 2013.</p>
+<p>[26] D. Erhan, C. Szegedy, A. Toshev, and D. Anguelov, “Scalable object detection using deep neural networks,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2014.</p>
+<p>[27] C. Szegedy, S. Reed, D. Erhan, and D. Anguelov, “Scalable, high-quality object detection,” arXiv:1412.1441 (v1), 2015.</p>
+<p>[28] P. O. Pinheiro, R. Collobert, and P. Dollar, “Learning to segment object candidates,” in Neural Information Processing Systems (NIPS), 2015.</p>
+<p>[29] J. Dai, K. He, and J. Sun, “Convolutional feature masking for joint object and stuff segmentation,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015.</p>
+<p>[30] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun, “Object detection networks on convolutional feature maps,” arXiv:1504.06066, 2015.</p>
+<p>[31] J. K. Chorowski, D. Bahdanau, D. Serdyuk, K. Cho, and Y. Bengio, “Attention-based models for speech recognition,” in Neural Information Processing Systems (NIPS), 2015.</p>
+<p>[32] M. D. Zeiler and R. Fergus, “Visualizing and understanding convolutional neural networks,” in European Conference on Computer Vision (ECCV), 2014.</p>
+<p>[33] V. Nair and G. E. Hinton, “Rectified linear units improve restricted boltzmann machines,” in International Conference on Machine Learning (ICML), 2010.</p>
+<p>[34] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, and A. Rabinovich, “Going deeper with convolutions,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015.</p>
+<p>[35] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel, “Backpropagation applied to handwritten zip code recognition,” Neural computation, 1989.</p>
+<p>[36] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei, “ImageNet Large Scale Visual Recognition Challenge,” in International Journal of Computer Vision (IJCV), 2015.</p>
+<p>[37] A. Krizhevsky, I. Sutskever, and G. Hinton, “Imagenet classification with deep convolutional neural networks,” in Neural Information Processing Systems (NIPS), 2012.</p>
+<p>[38] Y. Jia, E. Shelhamer, J. Donahue, S. Karayev, J. Long, R. Girshick, S. Guadarrama, and T. Darrell, “Caffe: Convolutional architecture for fast feature embedding,” arXiv:1408.5093, 2014.</p>
+<p>[39] K. Lenc and A. Vedaldi, “R-CNN minus R,” in British Machine Vision Conference (BMVC), 2015.</p>
 
       
     </div>
@@ -556,7 +635,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">334</span>
+                <span class="site-state-item-count">335</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -613,7 +692,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-损失函数"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-训练RPN"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 训练RPN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-RPN和Fast-R-CNN共享特征"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 RPN和Fast R-CNN共享特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-实现细节"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3 实现细节</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><span class="nav-number">1.</span> <span class="nav-text">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FASTER-R-CNN"><span class="nav-number">1.4.</span> <span class="nav-text">3. FASTER R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-区域提议网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 区域提议网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-锚点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-损失函数"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-训练RPN"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 训练RPN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-RPN和Fast-R-CNN共享特征"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 RPN和Fast R-CNN共享特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-实现细节"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3 实现细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-实验"><span class="nav-number">1.5.</span> <span class="nav-text">4. 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-PASCAL-VOC上的实验"><span class="nav-number">1.5.1.</span> <span class="nav-text">4.1 PASCAL VOC上的实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-在MS-COCO上的实验"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.2 在MS COCO上的实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-从MS-COCO到PASCAL-VOC"><span class="nav-number">1.5.3.</span> <span class="nav-text">4.3 从MS COCO到PASCAL VOC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结论"><span class="nav-number">1.6.</span> <span class="nav-text">5. 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REFERENCES"><span class="nav-number">1.7.</span> <span class="nav-text">REFERENCES</span></a></li></ol></li></ol></div>
             
 
           </div>
