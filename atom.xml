@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2018-01-19T02:34:53.000Z</updated>
+  <updated>2018-01-22T09:22:30.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,113 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>R-FCN论文翻译——中文版</title>
+    <link href="noahsnail.com/2018/01/22/2018-01-22-R-FCN%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>noahsnail.com/2018/01/22/2018-01-22-R-FCN论文翻译——中文版/</id>
+    <published>2018-01-22T08:49:02.000Z</published>
+    <updated>2018-01-22T09:22:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><a href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks" class="headerlink" title="R-FCN: Object Detection via Region-based Fully Convolutional Networks"></a>R-FCN: Object Detection via Region-based Fully Convolutional Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了基于区域的全卷积网络，以实现准确和高效的目标检测。与先前的基于区域的检测器（如Fast/Faster R-CNN [6，18]）相比，这些检测器应用昂贵的每个区域子网络数百次，我们的基于区域的检测器是全卷积的，几乎所有计算都在整张图像上共享。为了实现这一目标，我们提出了位置敏感分数图，以解决图像分类中的平移不变性与目标检测中的平移变化之间的困境。因此，我们的方法可以自然地采用全卷积图像分类器的主干网络，如最新的残差网络（ResNets）[9]，用于目标检测。我们使用101层ResNet在PASCAL VOC数据集上展示了具有竞争力的结果（例如，2007数据集上$83.6\%$的mAP）。同时，我们的测试结果是以每张图像170ms的测试速度实现的，比Faster R-CNN对应部分速度快2.5-20倍。代码公开发布在：[<a href="https://github.com/daijifeng001/r-fcn](https://github.com/daijifeng001/r-fcn）。" target="_blank" rel="external">https://github.com/daijifeng001/r-fcn](https://github.com/daijifeng001/r-fcn）。</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] S. Bell, C. L. Zitnick, K. Bala, and R. Girshick. Inside-outside net: Detecting objects in context with skip pooling and recurrent neural networks. In CVPR, 2016.</p>
+<p>[2] L.-C. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. In ICLR, 2015.</p>
+<p>[3] J. Dai, K. He, Y. Li, S. Ren, and J. Sun. Instance-sensitive fully convolutional networks.arXiv:1603.08678, 2016.</p>
+<p>[4] D. Erhan, C. Szegedy, A. Toshev, and D. Anguelov. Scalable object detection using deep neural networks. In CVPR, 2014.</p>
+<p>[5] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The PASCAL Visual Object Classes (VOC) Challenge. IJCV, 2010.</p>
+<p>[6] R. Girshick. Fast R-CNN. In ICCV, 2015.</p>
+<p>[7] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection<br>and semantic segmentation. In CVPR, 2014.</p>
+<p>[8] K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual<br>recognition. In ECCV. 2014.</p>
+<p>[9] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In CVPR, 2016.</p>
+<p>[10] A. Krizhevsky, I. Sutskever, and G. Hinton. Imagenet classification with deep convolutional neural networks. In NIPS, 2012.</p>
+<p>[11] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropa- gation applied to handwritten zip code recognition. Neural computation, 1989.</p>
+<p>[12] K. Lenc and A. Vedaldi. R-CNN minus R. In BMVC, 2015.</p>
+<p>[13] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollár, and C. L. Zitnick. Microsoft COCO: Common objects in context. In ECCV, 2014.</p>
+<p>[14] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed. SSD: Single shot multibox detector. arXiv:1512.02325v2, 2015.</p>
+<p>[15] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.</p>
+<p>[16] S. Mallat. A wavelet tour of signal processing. Academic press, 1999.</p>
+<p>[17] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. In CVPR, 2016.</p>
+<p>[18] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015.</p>
+<p>[19] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun. Object detection networks on convolutional feature maps. arXiv:1504.06066, 2015.</p>
+<p>[20] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015.</p>
+<p>[21] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014.</p>
+<p>[22] A. Shrivastava, A. Gupta, and R. Girshick. Training region-based object detectors with online hard example mining. In CVPR, 2016.</p>
+<p>[23] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.</p>
+<p>[24] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, and A. Rabinovich. Going deeper with convolutions. In CVPR, 2015.</p>
+<p>[25] C. Szegedy, A. Toshev, and D. Erhan. Deep neural networks for object detection. In NIPS, 2013.</p>
+<p>[26] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna. Rethinking the inception architecture for computer vision. In CVPR, 2016.</p>
+<p>[27] J. R. Uijlings, K. E. van de Sande, T. Gevers, and A. W. Smeulders. Selective search for object recognition. IJCV, 2013.</p>
+<p>[28] C. L. Zitnick and P. Dollár. Edge boxes: Locating object proposals from edges. In ECCV, 2014.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      R-FCN论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>R-FCN论文翻译——中英文对照</title>
+    <link href="noahsnail.com/2018/01/22/2018-01-22-R-FCN%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>noahsnail.com/2018/01/22/2018-01-22-R-FCN论文翻译——中英文对照/</id>
+    <published>2018-01-22T08:48:09.000Z</published>
+    <updated>2018-01-22T09:22:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><a href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks" class="headerlink" title="R-FCN: Object Detection via Region-based Fully Convolutional Networks"></a>R-FCN: Object Detection via Region-based Fully Convolutional Networks</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We present region-based, fully convolutional networks for accurate and efficient object detection. In contrast to previous region-based detectors such as Fast/Faster R-CNN [6, 18] that apply a costly per-region subnetwork hundreds of times, our region-based detector is fully convolutional with almost all computation shared on the entire image. To achieve this goal, we propose position-sensitive score maps to address a dilemma between translation-invariance in image classification and translation-variance in object detection. Our method can thus naturally adopt fully convolutional image classifier backbones, such as the latest Residual Networks (ResNets) [9], for object detection. We show competitive results on the PASCAL VOC datasets (e.g., $83.6\%$ mAP on the 2007 set) with the 101-layer ResNet. Meanwhile, our result is achieved at a test-time speed of 170ms per image, 2.5-20× faster than the Faster R-CNN counterpart. Code is made publicly available at: <a href="https://github.com/daijifeng001/r-fcn" target="_blank" rel="external">https://github.com/daijifeng001/r-fcn</a>.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了基于区域的全卷积网络，以实现准确和高效的目标检测。与先前的基于区域的检测器（如Fast/Faster R-CNN [6，18]）相比，这些检测器应用昂贵的每个区域子网络数百次，我们的基于区域的检测器是全卷积的，几乎所有计算都在整张图像上共享。为了实现这一目标，我们提出了位置敏感分数图，以解决图像分类中的平移不变性与目标检测中的平移变化之间的困境。因此，我们的方法可以自然地采用全卷积图像分类器的主干网络，如最新的残差网络（ResNets）[9]，用于目标检测。我们使用101层ResNet在PASCAL VOC数据集上展示了具有竞争力的结果（例如，2007数据集上$83.6\%$的mAP）。同时，我们的测试结果是以每张图像170ms的测试速度实现的，比Faster R-CNN对应部分速度快2.5-20倍。代码公开发布在：[<a href="https://github.com/daijifeng001/r-fcn](https://github.com/daijifeng001/r-fcn）。" target="_blank" rel="external">https://github.com/daijifeng001/r-fcn](https://github.com/daijifeng001/r-fcn）。</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] S. Bell, C. L. Zitnick, K. Bala, and R. Girshick. Inside-outside net: Detecting objects in context with skip pooling and recurrent neural networks. In CVPR, 2016.</p>
+<p>[2] L.-C. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. In ICLR, 2015.</p>
+<p>[3] J. Dai, K. He, Y. Li, S. Ren, and J. Sun. Instance-sensitive fully convolutional networks.arXiv:1603.08678, 2016.</p>
+<p>[4] D. Erhan, C. Szegedy, A. Toshev, and D. Anguelov. Scalable object detection using deep neural networks. In CVPR, 2014.</p>
+<p>[5] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The PASCAL Visual Object Classes (VOC) Challenge. IJCV, 2010.</p>
+<p>[6] R. Girshick. Fast R-CNN. In ICCV, 2015.</p>
+<p>[7] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection<br>and semantic segmentation. In CVPR, 2014.</p>
+<p>[8] K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual<br>recognition. In ECCV. 2014.</p>
+<p>[9] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In CVPR, 2016.</p>
+<p>[10] A. Krizhevsky, I. Sutskever, and G. Hinton. Imagenet classification with deep convolutional neural networks. In NIPS, 2012.</p>
+<p>[11] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropa- gation applied to handwritten zip code recognition. Neural computation, 1989.</p>
+<p>[12] K. Lenc and A. Vedaldi. R-CNN minus R. In BMVC, 2015.</p>
+<p>[13] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollár, and C. L. Zitnick. Microsoft COCO: Common objects in context. In ECCV, 2014.</p>
+<p>[14] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed. SSD: Single shot multibox detector. arXiv:1512.02325v2, 2015.</p>
+<p>[15] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.</p>
+<p>[16] S. Mallat. A wavelet tour of signal processing. Academic press, 1999.</p>
+<p>[17] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. In CVPR, 2016.</p>
+<p>[18] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015.</p>
+<p>[19] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun. Object detection networks on convolutional feature maps. arXiv:1504.06066, 2015.</p>
+<p>[20] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015.</p>
+<p>[21] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014.</p>
+<p>[22] A. Shrivastava, A. Gupta, and R. Girshick. Training region-based object detectors with online hard example mining. In CVPR, 2016.</p>
+<p>[23] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.</p>
+<p>[24] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, and A. Rabinovich. Going deeper with convolutions. In CVPR, 2015.</p>
+<p>[25] C. Szegedy, A. Toshev, and D. Erhan. Deep neural networks for object detection. In NIPS, 2013.</p>
+<p>[26] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna. Rethinking the inception architecture for computer vision. In CVPR, 2016.</p>
+<p>[27] J. R. Uijlings, K. E. van de Sande, T. Gevers, and A. W. Smeulders. Selective search for object recognition. IJCV, 2013.</p>
+<p>[28] C. L. Zitnick and P. Dollár. Edge boxes: Locating object proposals from edges. In ECCV, 2014.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      R-FCN论文翻译——中英文对照
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux下shell显示用户名和主机名</title>
@@ -317,7 +424,7 @@
     <link href="noahsnail.com/2018/01/03/2018-01-03-Faster%20R-CNN%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
     <id>noahsnail.com/2018/01/03/2018-01-03-Faster R-CNN论文翻译——中英文对照/</id>
     <published>2018-01-03T03:40:43.000Z</published>
-    <updated>2018-01-19T11:01:56.000Z</updated>
+    <updated>2018-01-22T07:40:28.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
@@ -456,15 +563,51 @@
 <p>We also evaluate the effects of more powerful networks on the proposal quality of RPN alone. We use VGG-16 to train the RPN, and still use the above detector of SS+ZF. The mAP improves from $56.8\%$ (using RPN+ZF) to $59.2\%$ (using RPN+VGG). This is a promising result, because it suggests that the proposal quality of RPN+VGG is better than that of RPN+ZF. Because proposals of RPN+ZF are competitive with SS (both are $58.7\%$ when consistently used for training and testing), we may expect RPN+VGG to be better than SS. The following experiments justify this hypothesis.</p>
 <p>我们还单独评估了更强大的网络对RPN提议质量的影响。我们使用VGG-16来训练RPN，仍然使用上述的SS+ZF检测器。mAP从$56.8\%$（使用RPN+ZF）提高到$59.2\%$（使用RPN+VGG）。这是一个很有希望的结果，因为这表明RPN+VGG的提议质量要好于RPN+ZF。由于RPN+ZF的提议与SS具有竞争性（当一致用于训练和测试时，都是$58.7\%$），所以我们可以预期RPN+VGG比SS更好。以下实验验证了这个假设。</p>
 <p><strong>Performance of VGG-16</strong>. Table 3 shows the results of VGG-16 for both proposal and detection. Using RPN+VGG, the result is $68.5\%$ for unshared features, slightly higher than the SS baseline. As shown above, this is because the proposals generated by RPN+VGG are more accurate than SS. Unlike SS that is pre-defined, the RPN is actively trained and benefits from better networks. For the feature-shared variant, the result is $69.9\%$——better than the strong SS baseline, yet with nearly cost-free proposals. We further train the RPN and detection network on the union set of PASCAL VOC 2007 trainval and 2012 trainval. The mAP is $73.2\%$. Figure 5 shows some results on the PASCAL VOC 2007 test set. On the PASCAL VOC 2012 test set (Table 4), our method has an mAP of $70.4\%$ trained on the union set of VOC 2007 trainval+test and VOC 2012 trainval. Table 6 and Table 7 show the detailed numbers.</p>
+<p>Table 3: Detection results on PASCAL VOC 2007 test set. The detector is Fast R-CNN and VGG-16. Training data: “07”: VOC 2007 trainval, “07+12”: union set of VOC 2007 trainval and VOC 2012 trainval. For RPN, the train-time proposals for Fast R-CNN are 2000. †: this number was reported in [2]; using the repository provided by this paper, this result is higher (68.1).</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-7ef031eb63281279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p>Table 4: Detection results on PASCAL VOC 2012 test set. The detector is Fast R-CNN and VGG-16. Training data: “07”: VOC 2007 trainval, “07++12”: union set of VOC 2007 trainval+test and VOC 2012 trainval. For RPN, the train-time proposals for Fast R-CNN are 2000. †: <a href="http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html</a>. ‡: <a href="http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html</a>. §: <a href="http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html</a>.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b5cd235c5fd0edda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p>Table 6: Results on PASCAL VOC 2007 test set with Fast R-CNN detectors and VGG-16. For RPN, the train-time proposals for Fast R-CNN are 2000. ${RPN}^*$ denotes the unsharing feature version.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b467027b93e0c354.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
+<p>Table 7: Results on PASCAL VOC 2012 test set with Fast R-CNN detectors and VGG-16. For RPN, the train-time proposals for Fast R-CNN are 2000.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-05f914ecf164ea59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 7"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b113e5ae5f7d4d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
+<p>Figure 5: Selected examples of object detection results on the PASCAL VOC 2007 test set using the Faster R-CNN system. The model is VGG-16 and the training data is 07+12 trainval ($73.2\%$ mAP on the 2007 test set). Our method detects objects of a wide range of scales and aspect ratios. Each output box is associated with a category label and a softmax score in [0, 1]. A score threshold of 0.6 is used to display these images. The running time for obtaining these results is 198ms per image, including all steps.</p>
 <p><strong>VGG-16</strong>的性能。表3显示了VGG-16的提议和检测结果。使用RPN+VGG，非共享特征的结果是$68.5\%$，略高于SS的基准。如上所示，这是因为RPN+VGG生成的提议比SS更准确。与预先定义的SS不同，RPN是主动训练的并从更好的网络中受益。对于特性共享的变种，结果是$69.9\%$——比强壮的SS基准更好，但几乎是零成本的提议。我们在PASCAL VOC 2007和2012的训练评估数据集上进一步训练RPN和检测网络。该mAP是$73.2\%$。图5显示了PASCAL VOC 2007测试集的一些结果。在PASCAL VOC 2012测试集（表4）中，我们的方法在VOC 2007的<code>trainval+test</code>和VOC 2012的<code>trainval</code>的联合数据集上训练的模型取得了$70.4\%$的mAP。表6和表7显示了详细的数字。</p>
+<p>表3：PASCAL VOC 2007测试集的检测结果。检测器是Fast R-CNN和VGG-16。训练数据：“07”：VOC 2007 trainval，“07 + 12”：VOC 2007 trainval和VOC 2012 trainval的联合训练集。对于RPN，训练时Fast R-CNN的提议数量为2000。†：[2]中报道的数字；使用本文提供的仓库，这个结果更高（68.1）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-7ef031eb63281279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p>表4：PASCAL VOC 2012测试集的检测结果。检测器是Fast R-CNN和VGG-16。训练数据：“07”：VOC 2007 trainval，“07 + 12”：VOC 2007 trainval和VOC 2012 trainval的联合训练集。对于RPN，训练时Fast R-CNN的提议数量为2000。†：<a href="http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html</a>。‡：<a href="http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html</a>。§：<a href="http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html</a>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b5cd235c5fd0edda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p>表6：使用Fast R-CNN检测器和VGG-16在PASCAL VOC 2007测试集上的结果。对于RPN，训练时Fast R-CNN的提议数量为2000。${RPN}^*$表示没有共享特征的版本。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b467027b93e0c354.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
+<p>表7：使用Fast R-CNN检测器和VGG-16在PASCAL VOC 2012测试集上的结果。对于RPN，训练时Fast R-CNN的提议数量为2000。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-05f914ecf164ea59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 7"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b113e5ae5f7d4d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
+<p>图5：使用Faster R-CNN系统在PASCAL VOC 2007测试集上选择的目标检测结果示例。该模型是VGG-16，训练数据是07+12 trainval（2007年测试集中$73.2\%$的mAP）。我们的方法检测广泛的尺度和长宽比目标。每个输出框都与类别标签和[0，1]之间的softmax分数相关联。使用0.6的分数阈值来显示这些图像。获得这些结果的运行时间为每张图像198ms，包括所有步骤。</p>
 <p>In Table 5 we summarize the running time of the entire object detection system. SS takes 1-2 seconds depending on content (on average about 1.5s), and Fast R-CNN with VGG-16 takes 320ms on 2000 SS proposals (or 223ms if using SVD on fully-connected layers [2]). Our system with VGG-16 takes in total 198ms for both proposal and detection. With the convolutional features shared, the RPN alone only takes 10ms computing the additional layers. Our region-wise computation is also lower, thanks to fewer proposals (300 per image). Our system has a frame-rate of 17 fps with the ZF net.</p>
-<p>Sensitivities to Hyper-parameters. In Table 8 we investigate the settings of anchors. By default we use 3 scales and 3 aspect ratios (69.9% mAP in Table 8). If using just one anchor at each position, the mAP drops by a considerable margin of 3-4%. The mAP is higher if using 3 scales (with 1 aspect ratio) or 3 aspect ratios (with 1 scale), demonstrating that using anchors of multiple sizes as the regression references is an effective solution. Using just 3 scales with 1 aspect ratio (69.8%) is as good as using 3 scales with 3 aspect ratios on this dataset, suggesting that scales and aspect ratios are not disentangled dimensions for the detection accuracy. But we still adopt these two dimensions in our designs to keep our system flexible.</p>
-<p>In Table 9 we compare different values of   in Equation (1). By default we use   = 10 which makes the two terms in Equation (1) roughly equally weighted after normalization. Table 9 shows that our result is impacted just marginally (by ⇠ 1%) when   is within a scale of about two orders of magnitude (1 to 100). This demonstrates that the result is insensitive to   in a wide range.</p>
-<p>Analysis of Recall-to-IoU. Next we compute the recall of proposals at different IoU ratios with ground-truth boxes. It is noteworthy that the Recall-to-IoU metric is just loosely [19], [20], [21] related to the ultimate detection accuracy. It is more appropriate to use this metric to diagnose the proposal method than to evaluate it.</p>
-<p>In Figure 4, we show the results of using 300, 1000, and 2000 proposals. We compare with SS and EB, and the N proposals are the top-N ranked ones based on the confidence generated by these methods. The plots show that the RPN method behaves gracefully when the number of proposals drops from 2000 to 300. This explains why the RPN has a good ultimate detection mAP when using as few as 300 proposals. As we analyzed before, this property is mainly attributed to the cls term of the RPN. The recall of SS and EB drops more quickly than RPN when the proposals are fewer.</p>
-<p>One-Stage Detection vs. Two-Stage Proposal + Detection. The OverFeat paper [9] proposes a detection method that uses regressors and classifiers on sliding windows over convolutional feature maps. OverFeat is a one-stage, class-specific detection pipeline, and ours is a two-stage cascade consisting of class-agnostic proposals and class-specific detections. In OverFeat, the region-wise features come from a sliding window of one aspect ratio over a scale pyramid. These features are used to simultaneously determine the location and category of objects. In RPN, the features are from square (3⇥3) sliding windows and predict proposals relative to anchors with different scales and aspect ratios. Though both methods use sliding windows, the region proposal task is only the first stage of Faster R-CNN—the downstream Fast R-CNN detector attends to the proposals to refine them. In the second stage of our cascade, the region-wise features are adaptively pooled [1], [2] from proposal boxes that more faithfully cover the features of the regions. We believe these features lead to more accurate detections.</p>
-<p>To compare the one-stage and two-stage systems, we emulate the OverFeat system (and thus also circum- vent other differences of implementation details) by one-stage Fast R-CNN. In this system, the “proposals” are dense sliding windows of 3 scales (128, 256, 512) and 3 aspect ratios (1:1, 1:2, 2:1). Fast R-CNN is trained to predict class-specific scores and regress box locations from these sliding windows. Because the OverFeat system adopts an image pyramid, we also evaluate using convolutional features extracted from 5 scales. We use those 5 scales as in [1], [2].</p>
-<p>Table 10 compares the two-stage system and two variants of the one-stage system. Using the ZF model, the one-stage system has an mAP of 53.9%. This is lower than the two-stage system (58.7%) by 4.8%. This experiment justifies the effectiveness of cascaded region proposals and object detection. Similar observations are reported in [2], [39], where replacing SS region proposals with sliding windows leads to ⇠6% degradation in both papers. We also note that the one-stage system is slower as it has considerably more proposals to process.</p>
+<p>在表5中我们总结了整个目标检测系统的运行时间。根据内容（平均大约1.5s），SS需要1-2秒，而使用VGG-16的Fast R-CNN在2000个SS提议上需要320ms（如果在全连接层上使用SVD[2]，则需要223ms）。我们的VGG-16系统在提议和检测上总共需要198ms。在共享卷积特征的情况下，单独RPN只需要10ms计算附加层。我们的区域计算也较低，这要归功于较少的提议（每张图片300个）。我们的采用ZF网络的系统，帧速率为17fps。</p>
+<p><strong>Sensitivities to Hyper-parameters</strong>. In Table 8 we investigate the settings of anchors. By default we use 3 scales and 3 aspect ratios ($69.9\%$ mAP in Table 8). If using just one anchor at each position, the mAP drops by a considerable margin of $3-4\%$. The mAP is higher if using 3 scales (with 1 aspect ratio) or 3 aspect ratios (with 1 scale), demonstrating that using anchors of multiple sizes as the regression references is an effective solution. Using just 3 scales with 1 aspect ratio ($69.8\%$) is as good as using 3 scales with 3 aspect ratios on this dataset, suggesting that scales and aspect ratios are not disentangled dimensions for the detection accuracy. But we still adopt these two dimensions in our designs to keep our system flexible.</p>
+<p><strong>对超参数的敏感度</strong>。在表8中，我们调查锚点的设置。默认情况下，我们使用3个尺度和3个长宽比（表8中$69.9\%$的mAP）。如果在每个位置只使用一个锚点，那么mAP的下降幅度将是$3-4\%$。如果使用3个尺度（1个长宽比）或3个长宽比（1个尺度），则mAP更高，表明使用多种尺寸的锚点作为回归参考是有效的解决方案。在这个数据集上，仅使用具有1个长宽比（$69.8\%$）的3个尺度与使用具有3个长宽比的3个尺度一样好，这表明尺度和长宽比不是检测准确度的解决维度。但我们仍然在设计中采用这两个维度来保持我们的系统灵活性。</p>
+<p>In Table 9 we compare different values of $\lambda$ in Equation (1). By default we use $\lambda=10$ which makes the two terms in Equation (1) roughly equally weighted after normalization. Table 9 shows that our result is impacted just marginally (by $\sim 1\%$) when $\lambda$ is within a scale of about two orders of magnitude (1 to 100). This demonstrates that the result is insensitive to $\lambda$ in a wide range.</p>
+<p>在表9中，我们比较了公式（1）中$\lambda$的不同值。默认情况下，我们使用$\lambda=10$，这使方程（1）中的两个项在归一化之后大致相等地加权。表9显示，当$\lambda$在大约两个数量级（1到100）的范围内时，我们的结果只是稍微受到影响（$\sim 1\%$）。这表明结果对宽范围内的$\lambda$不敏感。</p>
+<p><strong>Analysis of Recall-to-IoU</strong>. Next we compute the recall of proposals at different IoU ratios with ground-truth boxes. It is noteworthy that the Recall-to-IoU metric is just loosely [19], [20], [21] related to the ultimate detection accuracy. It is more appropriate to use this metric to diagnose the proposal method than to evaluate it.</p>
+<p><strong>分析IoU召回率</strong>。接下来，我们使用实际边界框来计算不同IoU比率的提议召回率。值得注意的是，Recall-to-IoU度量与最终的检测精度的相关性是松散的[19，20，21]。使用这个指标来诊断提议方法比评估提议方法更合适。</p>
+<p>In Figure 4, we show the results of using 300, 1000, and 2000 proposals. We compare with SS and EB, and the N proposals are the top-N ranked ones based on the confidence generated by these methods. The plots show that the RPN method behaves gracefully when the number of proposals drops from 2000 to 300. This explains why the RPN has a good ultimate detection mAP when using as few as 300 proposals. As we analyzed before, this property is mainly attributed to the <em>cls</em> term of the RPN. The recall of SS and EB drops more quickly than RPN when the proposals are fewer.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-642bbc2685598aeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p>Figure 4: Recall vs. IoU overlap ratio on the PASCAL VOC 2007 test set.</p>
+<p>在图4中，我们显示了使用300，1000和2000个提议的结果。我们与SS和EB进行比较，根据这些方法产生的置信度，N个提议是排名前N的提议。从图中可以看出，当提议数量从2000个减少到300个时，RPN方法表现优雅。这就解释了为什么RPN在使用300个提议时具有良好的最终检测mAP。正如我们之前分析过的，这个属性主要归因于RPN的<em>cls</em>项。当提议较少时，SS和EB的召回率下降的比RPN更快。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-642bbc2685598aeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p>图4：PASCAL VOC 2007测试集上的召回率和IoU重叠率。</p>
+<p><strong>One-Stage Detection vs. Two-Stage Proposal + Detection</strong>. The OverFeat paper [9] proposes a detection method that uses regressors and classifiers on sliding windows over convolutional feature maps. OverFeat is a one-stage, class-specific detection pipeline, and ours is a two-stage cascade consisting of class-agnostic proposals and class-specific detections. In OverFeat, the region-wise features come from a sliding window of one aspect ratio over a scale pyramid. These features are used to simultaneously determine the location and category of objects. In RPN, the features are from square ($3\times 3$) sliding windows and predict proposals relative to anchors with different scales and aspect ratios. Though both methods use sliding windows, the region proposal task is only the first stage of Faster R-CNN —— the downstream Fast R-CNN detector attends to the proposals to refine them. In the second stage of our cascade, the region-wise features are adaptively pooled [1], [2] from proposal boxes that more faithfully cover the features of the regions. We believe these features lead to more accurate detections.</p>
+<p><strong>一阶段检测与两阶段提议+检测</strong>。OverFeat论文[9]提出了一种在卷积特征映射的滑动窗口上使用回归器和分类器的检测方法。OverFeat是一个一阶段，类别特定的检测流程，而我们的是两阶段级联，包括类不可知的提议和类别特定的检测。在OverFeat中，区域特征来自一个尺度金字塔上一个长宽比的滑动窗口。这些特征用于同时确定目标的位置和类别。在RPN中，这些特征来自正方形（$3\times 3$）滑动窗口，并且预测相对于锚点具有不同尺度和长宽比的提议。虽然这两种方法都使用滑动窗口，但区域提议任务只是Faster R-CNN的第一阶段——下游的Fast R-CNN检测器会致力于对提议进行细化。在我们级联的第二阶段，在更忠实覆盖区域特征的提议框中，区域特征自适应地聚集[1]，[2]。我们相信这些功能会带来更准确的检测结果。</p>
+<p>To compare the one-stage and two-stage systems, we emulate the OverFeat system (and thus also circumvent other differences of implementation details) by one-stage Fast R-CNN. In this system, the “proposals” are dense sliding windows of 3 scales (128, 256, 512) and 3 aspect ratios (1:1, 1:2, 2:1). Fast R-CNN is trained to predict class-specific scores and regress box locations from these sliding windows. Because the OverFeat system adopts an image pyramid, we also evaluate using convolutional features extracted from 5 scales. We use those 5 scales as in [1], [2].</p>
+<p>为了比较一阶段和两阶段系统，我们通过一阶段Fast R-CNN来模拟OverFeat系统（从而也规避了实现细节的其他差异）。在这个系统中，“提议”是3个尺度（128，256，512）和3个长宽比（1:1，1:2，2:1）的密集滑动窗口。训练Fast R-CNN来预测类别特定的分数，并从这些滑动窗口中回归边界框位置。由于OverFeat系统采用图像金字塔，我们也使用从5个尺度中提取的卷积特征进行评估。我们使用[1]，[2]中5个尺度。</p>
+<p>Table 10 compares the two-stage system and two variants of the one-stage system. Using the ZF model, the one-stage system has an mAP of $53.9\%$. This is lower than the two-stage system ($58.7\%$) by $4.8\%$. This experiment justifies the effectiveness of cascaded region proposals and object detection. Similar observations are reported in [2], [39], where replacing SS region proposals with sliding windows leads to $\sim 6\%$ degradation in both papers. We also note that the one-stage system is slower as it has considerably more proposals to process.</p>
+<p>Table 10: One-Stage Detection vs. Two-Stage Proposal + Detection. Detection results are on the PASCAL VOC 2007 test set using the ZF model and Fast R-CNN. RPN uses unshared features.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-69037e42236cc9c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 10"></p>
+<p>表10比较了两阶段系统和一阶段系统的两个变种。使用ZF模型，一阶段系统具有$53.9\%$的mAP。这比两阶段系统（$58.7\%$）低$4.8\%$。这个实验验证了级联区域提议和目标检测的有效性。在文献[2]，[39]中报道了类似的观察结果，在这两篇论文中，用滑动窗取代SS区域提议会导致$\sim 6\%$的退化。我们也注意到，一阶段系统更慢，因为它产生了更多的提议。</p>
+<p>表10：一阶段检测与两阶段提议+检测。使用ZF模型和Fast R-CNN在PASCAL VOC 2007测试集上的检测结果。RPN使用未共享的功能。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-69037e42236cc9c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 10"></p>
 <h3 id="4-2-Experiments-on-MS-COCO"><a href="#4-2-Experiments-on-MS-COCO" class="headerlink" title="4.2 Experiments on MS COCO"></a>4.2 Experiments on MS COCO</h3><p>We present more results on the Microsoft COCO object detection dataset [12]. This dataset involves 80 object categories. We experiment with the 80k images on the training set, 40k images on the validation set, and 20k images on the test-dev set. We evaluate the mAP averaged for $IoU \in [0.5:0.05:0.95]$ (COCO’s standard metric, simply denoted as mAP@[.5, .95]) and mAP@0.5 (PASCAL VOC’s metric).</p>
 <h3 id="4-2-在MS-COCO上的实验"><a href="#4-2-在MS-COCO上的实验" class="headerlink" title="4.2 在MS COCO上的实验"></a>4.2 在MS COCO上的实验</h3><p>我们在Microsoft COCO目标检测数据集[12]上提供了更多的结果。这个数据集包含80个目标类别。我们用训练集上的8万张图像，验证集上的4万张图像以及测试开发集上的2万张图像进行实验。我们评估了$IoU \in [0.5:0.05:0.95]$的平均mAP（COCO标准度量，简称为mAP@[.5,.95]）和mAP@0.5（PASCAL VOC度量）。</p>
 <p>There are a few minor changes of our system made for this dataset. We train our models on an 8-GPU implementation, and the effective mini-batch size becomes 8 for RPN (1 per GPU) and 16 for Fast R-CNN (2 per GPU). The RPN step and Fast R-CNN step are both trained for 240k iterations with a learning rate of 0.003 and then for 80k iterations with 0.0003. We modify the learning rates (starting with 0.003 instead of 0.001) because the mini-batch size is changed. For the anchors, we use 3 aspect ratios and 4 scales (adding $64^2$), mainly motivated by handling small objects on this dataset. In addition, in our Fast R-CNN step, the negative samples are defined as those with a maximum IoU with ground truth in the interval of [0,0.5), instead of [0.1,0.5) used in [1], [2]. We note that in the SPPnet system [1], the negative samples in [0.1, 0.5) are used for network fine-tuning, but the negative samples in [0, 0.5) are still visited in the SVM step with hard-negative mining. But the Fast R-CNN system [2] abandons the SVM step, so the negative samples in [0,0.1) are never visited. Including these [0,0.1) samples improves mAP@0.5 on the COCO dataset for both Fast R-CNN and Faster R-CNN systems (but the impact is negligible on PASCAL VOC).</p>
@@ -501,7 +644,7 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-c7a00aed8338a0df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
 <p>表12：使用不同的训练数据在PASCAL VOC 2007测试集和2012测试集上检测Faster R-CNN的检测mAP（％）。模型是VGG-16。“COCO”表示COCO<code>trainval</code>数据集用于训练。另见表6和表7。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-a13f952d720081c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 12"></p>
-<p>表7：Fast R-CNN检测器和VGG-16在PASCAL VOC 2012测试集上的结果。对于RPN，Fast R-CNN的训练时的提议数量是2000。</p>
+<p>表7：Fast R-CNN检测器和VGG-16在PASCAL VOC 2012测试集上的结果。对于RPN，Fast R-CNN训练时的提议数量为2000。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-a86328f2b0beb621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 7"></p>
 <h2 id="5-CONCLUSION"><a href="#5-CONCLUSION" class="headerlink" title="5. CONCLUSION"></a>5. CONCLUSION</h2><p>We have presented RPNs for efficient and accurate region proposal generation. By sharing convolutional features with the down-stream detection network, the region proposal step is nearly cost-free. Our method enables a unified, deep-learning-based object detection system to run at near real-time frame rates. The learned RPN also improves region proposal quality and thus the overall object detection accuracy.</p>
 <h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们已经提出了RPN来生成高效，准确的区域提议。通过与下游检测网络共享卷积特征，区域提议步骤几乎是零成本的。我们的方法使统一的，基于深度学习的目标检测系统能够以接近实时的帧率运行。学习到的RPN也提高了区域提议的质量，从而提高了整体的目标检测精度。</p>
@@ -564,7 +707,7 @@
     <link href="noahsnail.com/2018/01/03/2018-01-03-Faster%20R-CNN%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
     <id>noahsnail.com/2018/01/03/2018-01-03-Faster R-CNN论文翻译——中文版/</id>
     <published>2018-01-03T03:39:54.000Z</published>
-    <updated>2018-01-18T10:59:01.000Z</updated>
+    <updated>2018-01-22T07:19:12.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
@@ -634,6 +777,30 @@
 <p>有些令人惊讶的是，RPN在测试时使用排名最高的100个提议仍然会导致有竞争力的结果（$55.1\%$），表明排名靠前的RPN提议是准确的。相反的，使用排名靠前的6000个RPN提议（无NMS）具有相当的mAP（$55.2\%$），这表明NMS不会损害检测mAP并可能减少误报。</p>
 <p>接下来，我们通过在测试时分别关闭RPN的<em>cls</em>和<em>reg</em>输出来调查RPN的作用。当<em>cls</em>层在测试时被移除（因此不使用NMS/排名），我们从未得分的区域中随机采样$N$个提议。当$N=1000$($55.8\<br>%$)时，mAP几乎没有变化，但是当$N=100$时，会大大降低到$44.6\%$。这表明<em>cls</em>分数考虑了排名最高的提议的准确性。</p>
 <p>另一方面，当在测试阶段移除<em>reg</em>层（所以提议变成锚盒）时，mAP将下降到$52.1\%$。这表明高质量的提议主要是由于回归的边界框。锚盒虽然具有多个尺度和长宽比，但不足以进行准确的检测。</p>
+<p>我们还单独评估了更强大的网络对RPN提议质量的影响。我们使用VGG-16来训练RPN，仍然使用上述的SS+ZF检测器。mAP从$56.8\%$（使用RPN+ZF）提高到$59.2\%$（使用RPN+VGG）。这是一个很有希望的结果，因为这表明RPN+VGG的提议质量要好于RPN+ZF。由于RPN+ZF的提议与SS具有竞争性（当一致用于训练和测试时，都是$58.7\%$），所以我们可以预期RPN+VGG比SS更好。以下实验验证了这个假设。</p>
+<p><strong>VGG-16</strong>的性能。表3显示了VGG-16的提议和检测结果。使用RPN+VGG，非共享特征的结果是$68.5\%$，略高于SS的基准。如上所示，这是因为RPN+VGG生成的提议比SS更准确。与预先定义的SS不同，RPN是主动训练的并从更好的网络中受益。对于特性共享的变种，结果是$69.9\%$——比强壮的SS基准更好，但几乎是零成本的提议。我们在PASCAL VOC 2007和2012的训练评估数据集上进一步训练RPN和检测网络。该mAP是$73.2\%$。图5显示了PASCAL VOC 2007测试集的一些结果。在PASCAL VOC 2012测试集（表4）中，我们的方法在VOC 2007的<code>trainval+test</code>和VOC 2012的<code>trainval</code>的联合数据集上训练的模型取得了$70.4\%$的mAP。表6和表7显示了详细的数字。</p>
+<p>表3：PASCAL VOC 2007测试集的检测结果。检测器是Fast R-CNN和VGG-16。训练数据：“07”：VOC 2007 trainval，“07 + 12”：VOC 2007 trainval和VOC 2012 trainval的联合训练集。对于RPN，训练时Fast R-CNN的提议数量为2000。†：[2]中报道的数字；使用本文提供的仓库，这个结果更高（68.1）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-7ef031eb63281279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p>表4：PASCAL VOC 2012测试集的检测结果。检测器是Fast R-CNN和VGG-16。训练数据：“07”：VOC 2007 trainval，“07 + 12”：VOC 2007 trainval和VOC 2012 trainval的联合训练集。对于RPN，训练时Fast R-CNN的提议数量为2000。†：<a href="http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html</a>。‡：<a href="http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html</a>。§：<a href="http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html</a>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b5cd235c5fd0edda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p>表6：使用Fast R-CNN检测器和VGG-16在PASCAL VOC 2007测试集上的结果。对于RPN，训练时Fast R-CNN的提议数量为2000。${RPN}^*$表示没有共享特征的版本。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b467027b93e0c354.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
+<p>表7：使用Fast R-CNN检测器和VGG-16在PASCAL VOC 2012测试集上的结果。对于RPN，训练时Fast R-CNN的提议数量为2000。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-05f914ecf164ea59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 7"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b113e5ae5f7d4d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
+<p>图5：使用Faster R-CNN系统在PASCAL VOC 2007测试集上选择的目标检测结果示例。该模型是VGG-16，训练数据是07+12 trainval（2007年测试集中$73.2\%$的mAP）。我们的方法检测广泛的尺度和长宽比目标。每个输出框都与类别标签和[0，1]之间的softmax分数相关联。使用0.6的分数阈值来显示这些图像。获得这些结果的运行时间为每张图像198ms，包括所有步骤。</p>
+<p>在表5中我们总结了整个目标检测系统的运行时间。根据内容（平均大约1.5s），SS需要1-2秒，而使用VGG-16的Fast R-CNN在2000个SS提议上需要320ms（如果在全连接层上使用SVD[2]，则需要223ms）。我们的VGG-16系统在提议和检测上总共需要198ms。在共享卷积特征的情况下，单独RPN只需要10ms计算附加层。我们的区域计算也较低，这要归功于较少的提议（每张图片300个）。我们的采用ZF网络的系统，帧速率为17fps。</p>
+<p><strong>对超参数的敏感度</strong>。在表8中，我们调查锚点的设置。默认情况下，我们使用3个尺度和3个长宽比（表8中$69.9\%$的mAP）。如果在每个位置只使用一个锚点，那么mAP的下降幅度将是$3-4\%$。如果使用3个尺度（1个长宽比）或3个长宽比（1个尺度），则mAP更高，表明使用多种尺寸的锚点作为回归参考是有效的解决方案。在这个数据集上，仅使用具有1个长宽比（$69.8\%$）的3个尺度与使用具有3个长宽比的3个尺度一样好，这表明尺度和长宽比不是检测准确度的解决维度。但我们仍然在设计中采用这两个维度来保持我们的系统灵活性。</p>
+<p>在表9中，我们比较了公式（1）中$\lambda$的不同值。默认情况下，我们使用$\lambda=10$，这使方程（1）中的两个项在归一化之后大致相等地加权。表9显示，当$\lambda$在大约两个数量级（1到100）的范围内时，我们的结果只是稍微受到影响（$\sim 1\%$）。这表明结果对宽范围内的$\lambda$不敏感。</p>
+<p><strong>分析IoU召回率</strong>。接下来，我们使用实际边界框来计算不同IoU比率的提议召回率。值得注意的是，Recall-to-IoU度量与最终的检测精度的相关性是松散的[19，20，21]。使用这个指标来诊断提议方法比评估提议方法更合适。</p>
+<p>在图4中，我们显示了使用300，1000和2000个提议的结果。我们与SS和EB进行比较，根据这些方法产生的置信度，N个提议是排名前N的提议。从图中可以看出，当提议数量从2000个减少到300个时，RPN方法表现优雅。这就解释了为什么RPN在使用300个提议时具有良好的最终检测mAP。正如我们之前分析过的，这个属性主要归因于RPN的<em>cls</em>项。当提议较少时，SS和EB的召回率下降的比RPN更快。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-642bbc2685598aeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p>图4：PASCAL VOC 2007测试集上的召回率和IoU重叠率。</p>
+<p><strong>一阶段检测与两阶段提议+检测</strong>。OverFeat论文[9]提出了一种在卷积特征映射的滑动窗口上使用回归器和分类器的检测方法。OverFeat是一个一阶段，类别特定的检测流程，而我们的是两阶段级联，包括类不可知的提议和类别特定的检测。在OverFeat中，区域特征来自一个尺度金字塔上一个长宽比的滑动窗口。这些特征用于同时确定目标的位置和类别。在RPN中，这些特征来自正方形（$3\times 3$）滑动窗口，并且预测相对于锚点具有不同尺度和长宽比的提议。虽然这两种方法都使用滑动窗口，但区域提议任务只是Faster R-CNN的第一阶段——下游的Fast R-CNN检测器会致力于对提议进行细化。在我们级联的第二阶段，在更忠实覆盖区域特征的提议框中，区域特征自适应地聚集[1]，[2]。我们相信这些功能会带来更准确的检测结果。</p>
+<p>为了比较一阶段和两阶段系统，我们通过一阶段Fast R-CNN来模拟OverFeat系统（从而也规避了实现细节的其他差异）。在这个系统中，“提议”是3个尺度（128，256，512）和3个长宽比（1:1，1:2，2:1）的密集滑动窗口。训练Fast R-CNN来预测类别特定的分数，并从这些滑动窗口中回归边界框位置。由于OverFeat系统采用图像金字塔，我们也使用从5个尺度中提取的卷积特征进行评估。我们使用[1]，[2]中5个尺度。</p>
+<p>表10比较了两阶段系统和一阶段系统的两个变种。使用ZF模型，一阶段系统具有$53.9\%$的mAP。这比两阶段系统（$58.7\%$）低$4.8\%$。这个实验验证了级联区域提议和目标检测的有效性。在文献[2]，[39]中报道了类似的观察结果，在这两篇论文中，用滑动窗取代SS区域提议会导致$\sim 6\%$的退化。我们也注意到，一阶段系统更慢，因为它产生了更多的提议。</p>
+<p>表10：一阶段检测与两阶段提议+检测。使用ZF模型和Fast R-CNN在PASCAL VOC 2007测试集上的检测结果。RPN使用未共享的功能。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-69037e42236cc9c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 10"></p>
 <h3 id="4-2-在MS-COCO上的实验"><a href="#4-2-在MS-COCO上的实验" class="headerlink" title="4.2 在MS COCO上的实验"></a>4.2 在MS COCO上的实验</h3><p>我们在Microsoft COCO目标检测数据集[12]上提供了更多的结果。这个数据集包含80个目标类别。我们用训练集上的8万张图像，验证集上的4万张图像以及测试开发集上的2万张图像进行实验。我们评估了$IoU \in [0.5:0.05:0.95]$的平均mAP（COCO标准度量，简称为mAP@[.5,.95]）和mAP@0.5（PASCAL VOC度量）。</p>
 <p>我们的系统对这个数据集做了一些小的改动。我们在8 GPU实现上训练我们的模型，RPN（每个GPU 1个）和Fast R-CNN（每个GPU 2个）的有效最小批大小为8个。RPN步骤和Fast R-CNN步骤都以24万次迭代进行训练，学习率为0.003，然后以0.0003的学习率进行8万次迭代。我们修改了学习率（从0.003而不是0.001开始），因为小批量数据的大小发生了变化。对于锚点，我们使用3个长宽比和4个尺度（加上$64^2$），这主要是通过处理这个数据集上的小目标来激发的。此外，在我们的Fast R-CNN步骤中，负样本定义为与实际边界框的最大IOU在[0，0.5)区间内的样本，而不是[1]，[2]中使用的[0.1,0.5)之间。我们注意到，在SPPnet系统[1]中，在[0.1，0.5)中的负样本用于网络微调，但[0,0.5)中的负样本仍然在具有难例挖掘SVM步骤中被访问。但是Fast R-CNN系统[2]放弃了SVM步骤，所以[0,0.1]中的负样本都不会被访问。包括这些[0,0.1)的样本，在Fast R-CNN和Faster R-CNN系统在COCO数据集上改进了mAP@0.5（但对PASCAL VOC的影响可以忽略不计）。</p>
 <p>其余的实现细节与PASCAL VOC相同。特别的是，我们继续使用300个提议和单一尺度（$s=600$）测试。COCO数据集上的测试时间仍然是大约200ms处理一张图像。</p>
@@ -1378,116 +1545,6 @@
     
     
       <category term="枚举" scheme="noahsnail.com/tags/%E6%9E%9A%E4%B8%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机系统概述</title>
-    <link href="noahsnail.com/2017/12/16/2017-12-16-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/"/>
-    <id>noahsnail.com/2017/12/16/2017-12-16-计算机系统概述/</id>
-    <published>2017-12-16T12:41:45.000Z</published>
-    <updated>2017-12-26T02:13:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-冯·诺依曼结构的主要思想"><a href="#1-冯·诺依曼结构的主要思想" class="headerlink" title="1. 冯·诺依曼结构的主要思想"></a>1. 冯·诺依曼结构的主要思想</h2><p>1.计算机应由运算器、控制器、存储器、输入设备和输出设备五个基本部件组成。<br>2.各基本部件的功能：</p>
-<ul>
-<li>存储器不仅能存放数据，而且也能存放指令，形式上两者没有区别，但计算机应能区分数据和指令。</li>
-<li>控制器应能自动取出指令执行。</li>
-<li>运算器应能进行加/减/乘/除四种基本算数运算，并且也能进行一些逻辑运算和附加运算。</li>
-<li>操作人员可以通过输入设备、输出设备和主机进行通信。</li>
-</ul>
-<p>3.内部以二进制表示指令和数据。每条指令由操作码和地址码两部分组成。操作码指出操作类型，地址码指出操作数的地址。由一串指令组成程序。<br>4.采用“存储程序”的工作方式。</p>
-<h2 id="2-计算机是如何工作的"><a href="#2-计算机是如何工作的" class="headerlink" title="2. 计算机是如何工作的"></a>2. 计算机是如何工作的</h2><ul>
-<li>程序执行前<br>数据和指令事先存放在存储器中，每条指令和数据都有地址，指令按顺序存放，指令由OP、ADDR字段组成，程序起始地址放置在PC中</li>
-<li>执行程序<br>1.根据PC取指令<br>2.指令译码<br>3.取操作数<br>4.指令执行<br>5.回写结果<br>6.修改PC值<br>7.执行下一条指令</li>
-</ul>
-<h2 id="3-编译程序和解释程序"><a href="#3-编译程序和解释程序" class="headerlink" title="3. 编译程序和解释程序"></a>3. 编译程序和解释程序</h2><p>编译程序（Compiler）：将高级语言源程序转换为机器级目标程序，执行时只需要启动目标程序即可。</p>
-<p>解释程序（Interpreter）：将高级语言语句逐条翻译成机器程序并立即执行，不生成目标文件。</p>
-<h2 id="4-典型程序的转换处理过程"><a href="#4-典型程序的转换处理过程" class="headerlink" title="4. 典型程序的转换处理过程"></a>4. 典型程序的转换处理过程</h2><ul>
-<li>GCC + Linux<br>hello.c(源程序)经过预处理(cpp)变为hello.i(源程序)，再经过编译(ccl)变为hello.s(汇编指令)，再经过汇编(as)变为hello.o(可重定位目标程序，二进制)，然后链接(ld)printf.o，形成可执行程序(二进制)。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      计算机系统概述
-    
-    </summary>
-    
-      <category term="计算机系统" scheme="noahsnail.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="计算机系统" scheme="noahsnail.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>非极大值抑制(Non-Maximum Suppression)</title>
-    <link href="noahsnail.com/2017/12/13/2017-12-13-%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6(Non-Maximum%20Suppression)/"/>
-    <id>noahsnail.com/2017/12/13/2017-12-13-非极大值抑制(Non-Maximum Suppression)/</id>
-    <published>2017-12-13T05:19:22.000Z</published>
-    <updated>2017-12-21T09:46:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-什么是非极大值抑制"><a href="#1-什么是非极大值抑制" class="headerlink" title="1. 什么是非极大值抑制"></a>1. 什么是非极大值抑制</h2><p>非极大值抑制，简称为NMS算法，英文为Non-Maximum Suppression。其思想是搜素局部最大值，抑制极大值。NMS算法在不同应用中的具体实现不太一样，但思想是一样的。非极大值抑制，在计算机视觉任务中得到了广泛的应用，例如边缘检测、人脸检测、目标检测（DPM，YOLO，SSD，Faster R-CNN）等。</p>
-<h2 id="2-为什么要用非极大值抑制"><a href="#2-为什么要用非极大值抑制" class="headerlink" title="2. 为什么要用非极大值抑制"></a>2. 为什么要用非极大值抑制</h2><p>以目标检测为例：目标检测的过程中在同一目标的位置上会产生大量的候选框，这些候选框相互之间可能会有重叠，此时我们需要利用非极大值抑制找到最佳的目标边界框，消除冗余的边界框。Demo如下图：</p>
-<p><img src="http://img.blog.csdn.net/20171216215049280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Object Detection"><br>左图是人脸检测的候选框结果，每个边界框有一个置信度得分(confidence score)，如果不使用非极大值抑制，就会有多个候选框出现。右图是使用非极大值抑制之后的结果，符合我们人脸检测的预期结果。</p>
-<h2 id="3-如何使用非极大值抑制"><a href="#3-如何使用非极大值抑制" class="headerlink" title="3. 如何使用非极大值抑制"></a>3. 如何使用非极大值抑制</h2><p><strong>前提：</strong>目标边界框列表及其对应的置信度得分列表，设定阈值，阈值用来删除重叠较大的边界框。<br><strong>IoU</strong>：intersection-over-union，即两个边界框的交集部分除以它们的并集。</p>
-<p>非极大值抑制的流程如下：</p>
-<ul>
-<li><p>根据置信度得分进行排序</p>
-</li>
-<li><p>选择置信度最高的比边界框添加到最终输出列表中，将其从边界框列表中删除</p>
-</li>
-<li><p>计算所有边界框的面积</p>
-</li>
-<li><p>计算置信度最高的边界框与其它候选框的IoU。</p>
-</li>
-<li><p>删除IoU大于阈值的边界框</p>
-</li>
-<li><p>重复上述过程，直至边界框列表为空。</p>
-</li>
-</ul>
-<p>Python代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line"></div><div class="line">import cv2</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"></div><div class="line">&quot;&quot;&quot;</div><div class="line">    Non-max Suppression Algorithm</div><div class="line"></div><div class="line">    @param list  Object candidate bounding boxes</div><div class="line">    @param list  Confidence score of bounding boxes</div><div class="line">    @param float IoU threshold</div><div class="line"></div><div class="line">    @return Rest boxes after nms operation</div><div class="line">&quot;&quot;&quot;</div><div class="line">def nms(bounding_boxes, confidence_score, threshold):</div><div class="line">    # If no bounding boxes, return empty list</div><div class="line">    if len(bounding_boxes) == 0:</div><div class="line">        return [], []</div><div class="line"></div><div class="line">    # Bounding boxes</div><div class="line">    boxes = np.array(bounding_boxes)</div><div class="line"></div><div class="line">    # coordinates of bounding boxes</div><div class="line">    start_x = boxes[:, 0]</div><div class="line">    start_y = boxes[:, 1]</div><div class="line">    end_x = boxes[:, 2]</div><div class="line">    end_y = boxes[:, 3]</div><div class="line"></div><div class="line">    # Confidence scores of bounding boxes</div><div class="line">    score = np.array(confidence_score)</div><div class="line"></div><div class="line">    # Picked bounding boxes</div><div class="line">    picked_boxes = []</div><div class="line">    picked_score = []</div><div class="line"></div><div class="line">    # Compute areas of bounding boxes</div><div class="line">    areas = (end_x - start_x + 1) * (end_y - start_y + 1)</div><div class="line"></div><div class="line">    # Sort by confidence score of bounding boxes</div><div class="line">    order = np.argsort(score)</div><div class="line"></div><div class="line">    # Iterate bounding boxes</div><div class="line">    while order.size &gt; 0:</div><div class="line">        # The index of largest confidence score</div><div class="line">        index = order[-1]</div><div class="line"></div><div class="line">        # Pick the bounding box with largest confidence score</div><div class="line">        picked_boxes.append(bounding_boxes[index])</div><div class="line">        picked_score.append(confidence_score[index])</div><div class="line"></div><div class="line">        # Compute ordinates of intersection-over-union(IOU)</div><div class="line">        x1 = np.maximum(start_x[index], start_x[order[:-1]])</div><div class="line">        x2 = np.minimum(end_x[index], end_x[order[:-1]])</div><div class="line">        y1 = np.maximum(start_y[index], start_y[order[:-1]])</div><div class="line">        y2 = np.minimum(end_y[index], end_y[order[:-1]])</div><div class="line"></div><div class="line">        # Compute areas of intersection-over-union</div><div class="line">        w = np.maximum(0.0, x2 - x1 + 1)</div><div class="line">        h = np.maximum(0.0, y2 - y1 + 1)</div><div class="line">        intersection = w * h</div><div class="line"></div><div class="line">        # Compute the ratio between intersection and union</div><div class="line">        ratio = intersection / (areas[index] + areas[order[:-1]] - intersection)</div><div class="line"></div><div class="line">        left = np.where(ratio &lt; threshold)</div><div class="line">        order = order[left]</div><div class="line"></div><div class="line">    return picked_boxes, picked_score</div><div class="line"></div><div class="line"></div><div class="line"># Image name</div><div class="line">image_name = &apos;nms.jpg&apos;</div><div class="line"></div><div class="line"># Bounding boxes</div><div class="line">bounding_boxes = [(187, 82, 337, 317), (150, 67, 305, 282), (246, 121, 368, 304)]</div><div class="line">confidence_score = [0.9, 0.75, 0.8]</div><div class="line"></div><div class="line"># Read image</div><div class="line">image = cv2.imread(image_name)</div><div class="line"></div><div class="line"># Copy image as original</div><div class="line">org = image.copy()</div><div class="line"></div><div class="line"># Draw parameters</div><div class="line">font = cv2.FONT_HERSHEY_SIMPLEX</div><div class="line">font_scale = 1</div><div class="line">thickness = 2</div><div class="line"></div><div class="line"># IoU threshold</div><div class="line">threshold = 0.4</div><div class="line"></div><div class="line"># Draw bounding boxes and confidence score</div><div class="line">for (start_x, start_y, end_x, end_y), confidence in zip(bounding_boxes, confidence_score):</div><div class="line">    (w, h), baseline = cv2.getTextSize(str(confidence), font, font_scale, thickness)</div><div class="line">    cv2.rectangle(org, (start_x, start_y - (2 * baseline + 5)), (start_x + w, start_y), (0, 255, 255), -1)</div><div class="line">    cv2.rectangle(org, (start_x, start_y), (end_x, end_y), (0, 255, 255), 2)</div><div class="line">    cv2.putText(org, str(confidence), (start_x, start_y), font, font_scale, (0, 0, 0), thickness)</div><div class="line"></div><div class="line"># Run non-max suppression algorithm</div><div class="line">picked_boxes, picked_score = nms(bounding_boxes, confidence_score, threshold)</div><div class="line"></div><div class="line"># Draw bounding boxes and confidence score after non-maximum supression</div><div class="line">for (start_x, start_y, end_x, end_y), confidence in zip(picked_boxes, picked_score):</div><div class="line">    (w, h), baseline = cv2.getTextSize(str(confidence), font, font_scale, thickness)</div><div class="line">    cv2.rectangle(image, (start_x, start_y - (2 * baseline + 5)), (start_x + w, start_y), (0, 255, 255), -1)</div><div class="line">    cv2.rectangle(image, (start_x, start_y), (end_x, end_y), (0, 255, 255), 2)</div><div class="line">    cv2.putText(image, str(confidence), (start_x, start_y), font, font_scale, (0, 0, 0), thickness)</div><div class="line"></div><div class="line"># Show image</div><div class="line">cv2.imshow(&apos;Original&apos;, org)</div><div class="line">cv2.imshow(&apos;NMS&apos;, image)</div><div class="line">cv2.waitKey(0)</div></pre></td></tr></table></figure>
-<p>源码下载地址：<a href="https://github.com/SnailTyan/deep-learning-tools/blob/master/nms.py" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-tools/blob/master/nms.py</a><br>记得给个Star。Demo原图在<code>README.md</code>里。</p>
-<p>实验结果：</p>
-<ul>
-<li>阈值为0.6</li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20171216214920610?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="threshold = 0.6"></p>
-<ul>
-<li><p>阈值为0.5<br><img src="http://img.blog.csdn.net/20171216215016695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="threshold = 0.5"></p>
-</li>
-<li><p>阈值为0.4<br><img src="http://img.blog.csdn.net/20171216215049280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="threshold = 0.4"></p>
-</li>
-</ul>
-<h2 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4. 参考资料"></a>4. 参考资料</h2><ol>
-<li><p><a href="https://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/" target="_blank" rel="external">https://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/</a></p>
-</li>
-<li><p><a href="http://cs.brown.edu/~pff/papers/lsvm-pami.pdf" target="_blank" rel="external">http://cs.brown.edu/~pff/papers/lsvm-pami.pdf</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/shuzfan/article/details/52711706" target="_blank" rel="external">http://blog.csdn.net/shuzfan/article/details/52711706</a></p>
-</li>
-<li><p><a href="http://www.cnblogs.com/liekkas0626/p/5219244.html" target="_blank" rel="external">http://www.cnblogs.com/liekkas0626/p/5219244.html</a></p>
-</li>
-<li><p><a href="http://www.tk4479.net/yzhang6_10/article/details/50886747" target="_blank" rel="external">http://www.tk4479.net/yzhang6_10/article/details/50886747</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/qq_14845119/article/details/52064928" target="_blank" rel="external">http://blog.csdn.net/qq_14845119/article/details/52064928</a></p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      非极大值抑制(Non-Maximum Suppression)
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
     
   </entry>
   
