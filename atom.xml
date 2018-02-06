@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2018-01-31T11:02:56.000Z</updated>
+  <updated>2018-02-06T11:05:41.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,359 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>动手学深度学习(一)——线性回归(gluon)</title>
+    <link href="noahsnail.com/2018/02/06/2018-02-06-%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E4%B8%80)%E2%80%94%E2%80%94%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92(gluon)/"/>
+    <id>noahsnail.com/2018/02/06/2018-02-06-动手学深度学习(一)——线性回归(gluon)/</id>
+    <published>2018-02-06T10:59:38.000Z</published>
+    <updated>2018-02-06T11:05:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
+<h2 id="创建数据集"><a href="#创建数据集" class="headerlink" title="创建数据集"></a>创建数据集</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入mxnet</span></div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</div><div class="line"></div><div class="line"><span class="comment"># 导入mxnet的gluon, ndarray, autograd</span></div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> gluon</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> autograd</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> ndarray <span class="keyword">as</span> nd</div><div class="line"></div><div class="line"><span class="comment"># 设置随机种子</span></div><div class="line">mx.random.seed(<span class="number">1</span>)</div><div class="line">random.seed(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 训练数据的维度</span></div><div class="line">num_inputs = <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment"># 训练数据的样本数量</span></div><div class="line">num_examples = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="comment"># 实际的权重w</span></div><div class="line">true_w = [<span class="number">2</span>, <span class="number">-3.4</span>]</div><div class="line"></div><div class="line"><span class="comment"># 实际的偏置b</span></div><div class="line">true_b = <span class="number">4.2</span></div><div class="line"></div><div class="line"><span class="comment"># 随机生成均值为0, 方差为1, 服从正态分布的训练数据X, </span></div><div class="line">X = nd.random_normal(shape=(num_examples, num_inputs))</div><div class="line"></div><div class="line"><span class="comment"># 根据X, w, b生成对应的输出y</span></div><div class="line">y = true_w[<span class="number">0</span>] * X[:, <span class="number">0</span>] + true_w[<span class="number">1</span>] * X[:, <span class="number">1</span>] + true_b </div><div class="line"></div><div class="line"><span class="comment"># 给y加上随机噪声</span></div><div class="line">y += <span class="number">0.01</span> * nd.random_normal(shape=y.shape)</div></pre></td></tr></table></figure>
+<h2 id="数据展示"><a href="#数据展示" class="headerlink" title="数据展示"></a>数据展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># 绘制数据的散点图 </span></div><div class="line">plt.scatter(X[:, <span class="number">1</span>].asnumpy(), y.asnumpy())</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-1ddbc52187302d98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="数据展示"></p>
+<h2 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a>数据读取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 训练时的批数据大小</span></div><div class="line">batch_size = <span class="number">10</span></div><div class="line"></div><div class="line"><span class="comment"># 创建数据集</span></div><div class="line">dataset = gluon.data.ArrayDataset(X, y)</div><div class="line"></div><div class="line"><span class="comment"># 读取数据</span></div><div class="line">data_iter = gluon.data.DataLoader(dataset, batch_size, shuffle=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 查看数据</span></div><div class="line"><span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter:</div><div class="line">    <span class="keyword">print</span> data, label</div><div class="line">    <span class="keyword">break</span></div></pre></td></tr></table></figure>
+<pre><code>[[-2.11255503  0.61242002]
+ [ 2.18546367 -0.48856559]
+ [ 0.91085583  0.38985687]
+ [-0.56097323  1.44421673]
+ [ 0.31765923 -1.75729597]
+ [-0.57738042  2.03963804]
+ [-0.91808975  0.64181799]
+ [-0.20269176  0.21012937]
+ [-0.22549874  0.19895147]
+ [ 1.42844415  0.06982213]]
+&lt;NDArray 10x2 @cpu(0)&gt; 
+[ -2.11691356  10.22533131   4.70613146  -1.82755637  10.82125568
+  -3.88111711   0.17608714   3.07074499   3.06542921   6.82972908]
+&lt;NDArray 10 @cpu(0)&gt;
+</code></pre><h2 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义一个空的模型</span></div><div class="line">net = gluon.nn.Sequential()</div><div class="line"></div><div class="line"><span class="comment"># 加入一个Dense层</span></div><div class="line">net.add(gluon.nn.Dense(<span class="number">1</span>))</div></pre></td></tr></table></figure>
+<h2 id="初始化模型参数"><a href="#初始化模型参数" class="headerlink" title="初始化模型参数"></a>初始化模型参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net.initialize()</div></pre></td></tr></table></figure>
+<h2 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">square_loss = gluon.loss.L2Loss()</div></pre></td></tr></table></figure>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">trainer = gluon.Trainer(net.collect_params(), <span class="string">'sgd'</span>, &#123;<span class="string">'learning_rate'</span>: <span class="number">0.01</span>&#125;)</div></pre></td></tr></table></figure>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义训练的迭代周期</span></div><div class="line">epochs = <span class="number">5</span></div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> xrange(epochs):</div><div class="line">    <span class="comment"># 总的loss</span></div><div class="line">    total_loss = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter:</div><div class="line">        <span class="comment"># 记录梯度</span></div><div class="line">        <span class="keyword">with</span> autograd.record():</div><div class="line">            <span class="comment"># 计算预测值</span></div><div class="line">            output = net(data)</div><div class="line">            <span class="comment"># 计算loss</span></div><div class="line">            loss = square_loss(output, label)</div><div class="line">        <span class="comment"># 根据loss进行反向传播计算梯度</span></div><div class="line">        loss.backward()</div><div class="line">        <span class="comment"># 更新权重, batch_size用来进行梯度平均</span></div><div class="line">        trainer.step(batch_size)</div><div class="line">        <span class="comment"># 计算总的loss</span></div><div class="line">        total_loss += nd.sum(loss).asscalar()</div><div class="line">        </div><div class="line">    <span class="keyword">print</span> <span class="string">"Epoch %d, average loss: %f"</span> % (epoch, total_loss/num_examples)</div></pre></td></tr></table></figure>
+<pre><code>Epoch 0, average loss: 7.403182
+Epoch 1, average loss: 0.854247
+Epoch 2, average loss: 0.099864
+Epoch 3, average loss: 0.011887
+Epoch 4, average loss: 0.001479
+</code></pre><h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h2><p><a href="https://github.com/SnailTyan/gluon-practice-code" target="_blank" rel="external">https://github.com/SnailTyan/gluon-practice-code</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p>ArrayDataset<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/data.html#mxnet.gluon.data.ArrayDataset" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/data.html#mxnet.gluon.data.ArrayDataset</a>  </p>
+</li>
+<li><p>DataLoader<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/data.html?highlight=dataload#mxnet.gluon.data.DataLoader" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/data.html?highlight=dataload#mxnet.gluon.data.DataLoader</a>  </p>
+</li>
+<li><p>Sequential<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=gluon.nn.sequential#mxnet.gluon.nn.Sequential" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=gluon.nn.sequential#mxnet.gluon.nn.Sequential</a>  </p>
+</li>
+<li><p>L2Loss<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/loss.html?highlight=l2loss#mxnet.gluon.loss.L2Loss" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/loss.html?highlight=l2loss#mxnet.gluon.loss.L2Loss</a>  </p>
+</li>
+<li><p>Trainer<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=trainer#mxnet.gluon.Trainer" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=trainer#mxnet.gluon.Trainer</a>  </p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      动手学深度学习(一)——线性回归(gluon)
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Caffe Model Zoo</title>
+    <link href="noahsnail.com/2018/02/02/2018-02-02-Caffe%20Model%20Zoo/"/>
+    <id>noahsnail.com/2018/02/02/2018-02-02-Caffe Model Zoo/</id>
+    <published>2018-02-02T10:59:55.000Z</published>
+    <updated>2018-02-02T10:59:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>Caffe有许多分类的预训练模型及网络结构，我自己训练过的模型总结在Github上，基本上涵盖了大部分的分类模型，包括AlexNet，VGG，GoogLeNet，Inception系列，ResNet，SENet，DenseNet，SqueezeNet。</p>
+<p>其中会碰到不少坑，例如VGG给的结构已经太旧了，需要根据新版本Caffe的进行修改，DenseNet训练有些地方需要修改等。鉴于以上原因，我自己整理了一个Caffe Model Zoo，都是已经使用Caffe训练过模型的。</p>
+<p>Github地址：<a href="https://github.com/SnailTyan/caffe-model-zoo" target="_blank" rel="external">https://github.com/SnailTyan/caffe-model-zoo</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Caffe Model Zoo
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深度学习模型训练流程</title>
+    <link href="noahsnail.com/2018/02/02/2018-02-02-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B/"/>
+    <id>noahsnail.com/2018/02/02/2018-02-02-深度学习模型训练流程/</id>
+    <published>2018-02-02T08:37:32.000Z</published>
+    <updated>2018-02-04T14:02:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>工作中训练了很多的深度学习模型，目前到了上升到方法论的角度来看了。日常工作中有的人可能已经在遵循方法论做事，可能自己没有注意，有的人可能没有遵循方法论在做事，虽然可能最后的结果差不多，但花费的时间和精力应该会差别很大，当然这是我自己的感受。我们不必完全按照方法论来做，但基本流程跟方法论应该一致。</p>
+<p>下面的具体步骤以图像分类，识别图像中的猫为例。</p>
+<h2 id="1-问题定义"><a href="#1-问题定义" class="headerlink" title="1. 问题定义"></a>1. 问题定义</h2><p>问题定义，“what，how，why”中的what，首先要弄清楚自己要干什么，然后调研相关的技术，确定解决方案。例如这一步中我的工作是进行图像分类，问题定义是图像分类——识别猫，相关的技术包括各种分类模型，各种深度学习框架。我选择的是BN-Inception + Caffe。</p>
+<h2 id="2-确定评估标准"><a href="#2-确定评估标准" class="headerlink" title="2. 确定评估标准"></a>2. 确定评估标准</h2><p>根据问题定义，确定了相关技术之后，不要着急动手去做，先确定评估标准，怎么评价模型的好坏，例如分类猫可以通过准确率（Precision）、召回率（Recall）、F1、ROC曲线、AUC面积等。确定了评估标准之后，评估数据集也要准备好。</p>
+<h2 id="3-确定Baseline和Target"><a href="#3-确定Baseline和Target" class="headerlink" title="3. 确定Baseline和Target"></a>3. 确定Baseline和Target</h2><ul>
+<li>Baseline</li>
+</ul>
+<p>有了评估标准后，需要确定一个Baseline，例如可以简单快速的训练一个模型或已经有一个Pretrained Model，在评估数据集上进行评估，得到一个指标作为Baseline，然后在Baseline的基础上进行提高，确定Baseline类似于敏捷开发中的快速原型开发。</p>
+<ul>
+<li>Target</li>
+</ul>
+<p>有了Baseline之后，可以确定一个目标，但这个目标不能是拍脑袋出来的，如果你的业务与别人的业务类似，例如色情识别，可以使用大厂（BAT)的模型先在评估数据集上得出一个结果，目标定为达到他们的水平或超过他们的水平。如果不跟别人的业务类似，那么需要根据具体的业务需求确定一个目标。目标还是要有的，起码确定一个方向。</p>
+<h2 id="4-模型训练"><a href="#4-模型训练" class="headerlink" title="4. 模型训练"></a>4. 模型训练</h2><p>模型训练这部分就没太多说的了，深度学习工程师的基本功。</p>
+<h2 id="5-模型评估"><a href="#5-模型评估" class="headerlink" title="5. 模型评估"></a>5. 模型评估</h2><p>将训练的模型在评估数据集上进行评估，分析评估结果，与上一次的模型结果以及Target进行对比。将错误的数据取出来，分析存在的问题，讨论调整的方向，记录实验结果。</p>
+<h2 id="6-模型再训练"><a href="#6-模型再训练" class="headerlink" title="6. 模型再训练"></a>6. 模型再训练</h2><p>重复步骤4、5，直至达到目标。如果模型还不错，可以将模型放到Beta环境测试，分析线上的结果，重复步骤4、5。</p>
+<h2 id="7-服务部署"><a href="#7-服务部署" class="headerlink" title="7. 服务部署"></a>7. 服务部署</h2><p>如果模型在Beta环境也不错，则可以进行线上测试，继续重复步骤4、5，因为有的模型需要不断的进行迭代更新。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://towardsdatascience.com/machine-learning-in-practice-what-are-the-steps-a4b15ee18546" target="_blank" rel="external">https://towardsdatascience.com/machine-learning-in-practice-what-are-the-steps-a4b15ee18546</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      深度学习模型训练流程
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中英文对照</title>
+    <link href="noahsnail.com/2018/02/02/2018-02-02-Detecting%20Text%20in%20Natural%20Image%20with%20Connectionist%20Text%20Proposal%20Network%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>noahsnail.com/2018/02/02/2018-02-02-Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中英文对照/</id>
+    <published>2018-02-02T07:15:37.000Z</published>
+    <updated>2018-02-06T09:47:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network"><a href="#Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network" class="headerlink" title="Detecting Text in Natural Image with Connectionist Text Proposal Network"></a>Detecting Text in Natural Image with Connectionist Text Proposal Network</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We propose a novel Connectionist Text Proposal Network (CTPN) that accurately localizes text lines in natural image. The CTPN detects a text line in a sequence of fine-scale text proposals directly in convolutional feature maps. We develop a vertical anchor mechanism that jointly predicts location and text/non-text score of each fixed-width proposal, considerably improving localization accuracy. The sequential proposals are naturally connected by a recurrent neural network, which is seamlessly incorporated into the convolutional network, resulting in an end-to-end trainable model. This allows the CTPN to explore rich context information of image, making it powerful to detect extremely ambiguous text. The CTPN works reliably on multi-scale and multi-language text without further post-processing, departing from previous bottom-up methods requiring multi-step post filtering. It achieves 0.88 and 0.61 F-measure on the ICDAR 2013 and 2015 benchmarks, surpassing recent results [8,35] by a large margin. The CTPN is computationally efficient with 0.14s/image, by using the very deep VGG16 model [27]. Online demo is available at: <a href="http://textdet.com/" target="_blank" rel="external">http://textdet.com/</a>.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种新颖的连接文本提议网络（CTPN），它能够准确定位自然图像中的文本行。CTPN直接在卷积特征映射中的一系列细粒度文本提议中检测文本行。我们开发了一个垂直锚点机制，联合预测每个固定宽度提议的位置和文本/非文本分数，大大提高了定位精度。序列提议通过循环神经网络自然地连接起来，该网络无缝地结合到卷积网络中，从而形成端到端的可训练模型。这使得CTPN可以探索丰富的图像上下文信息，使其能够检测极其模糊的文本。CTPN在多尺度和多语言文本上可靠地工作，而不需要进一步的后处理，脱离了以前的自底向上需要多步后过滤的方法。它在ICDAR 2013和2015的基准数据集上达到了0.88和0.61的F-measure，大大超过了最近的结果[8，35]。通过使用非常深的VGG16模型[27]，CTPN的计算效率为0.14s每张图像。在线演示获取地址：<a href="http://textdet.com/" target="_blank" rel="external">http://textdet.com/</a>。</p>
+<h2 id="Keywords"><a href="#Keywords" class="headerlink" title="Keywords"></a>Keywords</h2><p>Scene text detection, convolutional network, recurrent neural network, anchor mechanism</p>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>场景文本检测；卷积网络；循环神经网络；锚点机制</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Reading text in natural image has recently attracted increasing attention in computer vision [8,14,15,10,35,11,9,1,28,32]. This is due to its numerous practical applications such as image OCR, multi-language translation, image retrieval, etc. It includes two sub tasks: text detection and recognition. This work focus on the detection task [14,1,28,32], which is more challenging than recognition task carried out on a well-cropped word image [15,9]. Large variance of text patterns and highly cluttered background pose main challenge of accurate text localization.</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>在自然图像中阅读文本最近在计算机视觉中引起越来越多的关注[8，14，15，10，35，11，9，1，28，32]。这是由于它的许多实际应用，如图像OCR，多语言翻译，图像检索等。它包括两个子任务：文本检测和识别。这项工作的重点是检测任务[14，1，28，32]，这是比在一个良好的裁剪字图像[15，9]进行的识别任务更具有挑战性。文本模式的大变化和高度杂乱的背景构成了精确文本定位的主要挑战。</p>
+<p>Current approaches for text detection mostly employ a bottom-up pipeline [28,1,14,32,33]. They commonly start from low-level character or stroke detection, which is typically followed by a number of subsequent steps: non-text component filtering, text line construction and text line verification. These multi-step bottom-up approaches are generally complicated with less robustness and reliability. Their performance heavily rely on the results of character detection, and connected-components methods or sliding-window methods have been proposed. These methods commonly explore low-level features (e.g., based on SWT [3,13], MSER [14,33,23], or HoG [28]) to distinguish text candidates from background. However, they are not robust by identifying individual strokes or characters separately, without context information. For example, it is more confident for people to identify a sequence of characters than an individual one, especially when a character is extremely ambiguous. These limitations often result in a large number of non-text components in character detection, causing main difficulties for handling them in following steps. Furthermore, these false detections are easily accumulated sequentially in bottom-up pipeline, as pointed out in [28]. To address these problems, we exploit strong deep features for detecting text information directly in convolutional maps. We develop text anchor mechanism that accurately predicts text locations in fine scale. Then, an in-network recurrent architecture is proposed to connect these fine-scale text proposals in sequences, allowing them to encode rich context information.</p>
+<p>目前的文本检测方法大多采用自下而上的流程[28，1，14，32，33]。它们通常从低级别字符或笔画检测开始，后面通常会跟随一些后续步骤：非文本组件过滤，文本行构建和文本行验证。这些自底向上的多步骤方法通常复杂，鲁棒性和可靠性较差。它们的性能很大程度上依赖于字符检测的结果，并且已经提出了连接组件方法或滑动窗口方法。这些方法通常探索低级特征（例如，基于SWT[3，13]，MSER[14，33，23]或HoG[28]）来区分候选文本和背景。但是，如果没有上下文信息，他们不能鲁棒的单独识别各个笔划或字符。例如，相比单个字符人们更信任一个字符序列，特别是当一个字符非常模糊时。这些限制在字符检测中通常会导致大量非文本组件，在后续步骤中的主要困难是处理它们。此外，正如[28]所指出的，这些误检很容易在自下而上的过程中连续累积。为了解决这些问题，我们利用强大的深度特征直接在卷积映射中检测文本信息。我们开发的文本锚点机制能在细粒度上精确预测文本位置。然后，我们提出了一种网内循环架构，用于按顺序连接这些细粒度的文本提议，从而允许它们编码丰富的上下文信息。</p>
+<p>Deep Convolutional Neural Networks (CNN) have recently advanced general object detection substantially [25,5,6]. The state-of-the-art method is Faster Region-CNN (R-CNN) system [25] where a Region Proposal Network (RPN) is proposed to generate high-quality class-agnostic object proposals directly from convolutional feature maps. Then the RPN proposals are fed into a Fast R-CNN [5] model for further classification and refinement, leading to the state-of-the-art performance on generic object detection. However, it is difficult to apply these general object detection systems directly to scene text detection, which generally requires a higher localization accuracy. In generic object detection, each object has a well-defined closed boundary [2], while such a well-defined boundary may not exist in text, since a text line or word is composed of a number of separate characters or strokes. For object detection, a typical correct detection is defined loosely, e.g., by an overlap of &gt; 0.5 between the detected bounding box and its ground truth (e.g., the PASCAL standard [4]), since people can recognize an object easily from major part of it. By contrast, reading text comprehensively is a fine-grained recognition task which requires a correct detection that covers a full region of a text line or word. Therefore, text detection generally requires a more accurate localization, leading to a different evaluation standard, e.g., the Wolf’s standard [30] which is commonly employed by text benchmarks [19,21].</p>
+<p>深度卷积神经网络（CNN）最近已经基本实现了一般物体检测[25，5，6]。最先进的方法是Faster Region-CNN（R-CNN）系统[25]，其中提出了区域提议网络（RPN）直接从卷积特征映射中生成高质量类别不可知的目标提议。然后将RPN提议输入Faster R-CNN[5]模型进行进一步的分类和微调，从而实现通用目标检测的最新性能。然而，很难将这些通用目标检测系统直接应用于场景文本检测，这通常需要更高的定位精度。在通用目标检测中，每个目标都有一个明确的封闭边界[2]，而在文本中可能不存在这样一个明确定义的边界，因为文本行或单词是由许多单独的字符或笔划组成的。对于目标检测，典型的正确检测是松散定义的，例如，检测到的边界框与其实际边界框（例如，PASCAL标准[4]）之间的重叠&gt;0.5，因为人们可以容易地从目标的主要部分识别它。相比之下，综合阅读文本是一个细粒度的识别任务，需要正确的检测，覆盖文本行或字的整个区域。因此，文本检测通常需要更准确的定义，导致不同的评估标准，例如文本基准中常用的Wolf标准[19，21]。</p>
+<p>In this work, we fill this gap by extending the RPN architecture [25] to accurate text line localization. We present several technical developments that tailor generic object detection model elegantly towards our problem. We strive for a further step by proposing an in-network recurrent mechanism that allows our model to detect text sequence directly in the convolutional maps, avoiding further post-processing by an additional costly CNN detection model.</p>
+<p>在这项工作中，我们通过将RPN架构[25]扩展到准确的文本行定义来填补这个空白。我们提出了几种技术发展，针对我们的问题可以优雅地调整通用目标检测模型。我们通过提出一种网络内循环机制争取更进一步，使我们的模型能够直接在卷积映射中检测文本序列，避免通过额外昂贵的CNN检测模型进行进一步的后处理。</p>
+<h3 id="1-1-Contributions"><a href="#1-1-Contributions" class="headerlink" title="1.1 Contributions"></a>1.1 Contributions</h3><p>We propose a novel Connectionist Text Proposal Network (CTPN) that directly localizes text sequences in convolutional layers. This overcomes a number of main limitations raised by previous bottom-up approaches building on character detection. We leverage the advantages of strong deep convolutional features and sharing computation mechanism, and propose the CTPN architecture which is described in Fig. 1. It makes the following major contributions:</p>
+<h3 id="1-1-贡献"><a href="#1-1-贡献" class="headerlink" title="1.1 贡献"></a>1.1 贡献</h3><p>我们提出了一种连接文本提议网络（CTPN），它可以直接定位卷积图层中的文本序列。这克服了以前的自下而上的方法建立在字符检测基础上提出的一些主要限制。我们利用强卷积深度特性和共享计算机制的优点，提出了如图1所示的CTPN架构。主要贡献如下：</p>
+<p>First, we cast the problem of text detection into localizing a sequence of fine-scale text proposals. We develop an anchor regression mechanism that jointly predicts vertical location and text/non-text score of each text proposal, resulting in an excellent localization accuracy. This departs from the RPN prediction of a whole object, which is difficult to provide a satisfied localization accuracy.</p>
+<p>首先，我们将文本检测的问题转化为一系列精细的文本提议。我们开发了一个锚定回归机制，可以联合预测每个文本提案的垂直位置和文本/非文本分数，从而获得出色的定位精度。这背离了整个对象的RPN预测，难以提供满意的定位精度。</p>
+<p>Second, we propose an in-network recurrence mechanism that elegantly connects sequential text proposals in the convolutional feature maps. This connection allows our detector to explore meaningful context information of text line, making it powerful to detect extremely challenging text reliably.</p>
+<p>其次，我们提出了一种在卷积特征映射中优雅连接顺序文本提议的网络内重复机制。通过这种连接，我们的探测器可以探索文本行的有意义的上下文信息，使其能够可靠地检测极具挑战性的文本。</p>
+<p>Third, both methods are integrated seamlessly to meet the nature of text sequence, resulting in a unified end-to-end trainable model. Our method is able to handle multi-scale and multi-lingual text in a single process, avoiding further post filtering or refinement.</p>
+<p>第三，两种方法无缝集成，以符合文本序列的性质，从而形成统一的端到端可训练模型。 我们的方法能够在单个过程中处理多尺度和多语言的文本，避免进一步的过滤或细化。</p>
+<p>Fourth, our method achieves new state-of-the-art results on a number of benchmarks, significantly improving recent results (e.g., 0.88 F-measure over 0.83 in [8] on the ICDAR 2013, and 0.61 F-measure over 0.54 in [35] on the ICDAR 2015). Furthermore, it is computationally efficient, resulting in a 0.14s/image running time (on the ICDAR 2013) by using the very deep VGG16 model [27].</p>
+<p>第四，我们的方法在许多基准上达到了最新的最新成果，显着改善了最近的结果（例如，2013年ICDAR的[8]中0.88的F-measure超过0.83，而0.64的F-measure超过0.54 [35]在ICDAR 2015上）。 此外，通过使用非常深的VGG16模型[27]，这在计算上是高效的，导致了0.14s /图像运行时间（在ICDAR 2013上）。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p>Busta, M., Neumann, L., Matas, J.: Fastext: Efficient unconstrained scene text detector (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Cheng, M., Zhang, Z., Lin, W., Torr, P.: Bing: Binarized normed gradients for objectness estimation at 300fps (2014), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Epshtein, B., Ofek, E., Wexler, Y.: Detecting text in natural scenes with stroke width transform (2010), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Everingham, M., Gool, L.V., Williams, C.K.I., Winn, J., Zisserman, A.: The pascal visual object classes (voc) challenge. International Journal of Computer Vision (IJCV) 88(2), 303–338 (2010)</p>
+</li>
+<li><p>Girshick, R.: Fast r-cnn (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Girshick, R., Donahue, J., Darrell, T., Malik, J.: Rich feature hierarchies for accurate object detection and semantic segmentation (2014), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Graves, A., Schmidhuber, J.: Framewise phoneme classification with bidirectional lstm and other neural network architectures. Neural Networks 18(5), 602–610 (2005)</p>
+</li>
+<li><p>Gupta, A., Vedaldi, A., Zisserman, A.: Synthetic data for text localisation in natural images (2016), in IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>He,P.,Huang,W.,Qiao,Y.,Loy,C.C.,Tang,X.:Readingscenetextindeepconvo- lutional sequences (2016), in The 30th AAAI Conference on Artificial Intelligence (AAAI-16)</p>
+</li>
+<li><p>He, T., Huang, W., Qiao, Y., Yao, J.: Accurate text localization in natural image with cascaded convolutional text network (2016), arXiv:1603.09423</p>
+</li>
+<li><p>He, T., Huang, W., Qiao, Y., Yao, J.: Text-attentional convolutional neural net- works for scene text detection. IEEE Trans. Image Processing (TIP) 25, 2529–2541 (2016)</p>
+</li>
+<li><p>Hochreiter, S., Schmidhuber, J.: Long short-term memory. Neural Networks 9(8), 1735–1780 (1997)</p>
+</li>
+<li><p>Huang, W., Lin, Z., Yang, J., Wang, J.: Text localization in natural images using stroke feature transform and text covariance descriptors (2013), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Huang, W., Qiao, Y., Tang, X.: Robust scene text detection with convolutional neural networks induced mser trees (2014), in European Conference on Computer Vision (ECCV)</p>
+</li>
+<li><p>Jaderberg, M., Simonyan, K., Vedaldi, A., Zisserman, A.: Reading text in the wild with convolutional neural networks. International Journal of Computer Vision (IJCV) (2016)</p>
+</li>
+<li><p>Jaderberg, M., Vedaldi, A., Zisserman, A.: Deep features for text spotting (2014), in European Conference on Computer Vision (ECCV)</p>
+</li>
+<li><p>Jia, Y., Shelhamer, E., Donahue, J., Karayev, S., Long, J., Girshick, R., Guadarrama, S., Darrell, T.: Caffe: Convolutional architecture for fast feature embedding (2014), in ACM International Conference on Multimedia (ACM MM)</p>
+</li>
+<li><p>Karatzas,D.,Gomez-Bigorda,L.,Nicolaou,A.,Ghosh,S.,Bagdanov,A.,Iwamura, M., Matas, J., Neumann, L., Chandrasekhar, V.R., Lu, S., Shafait, F., Uchida, S.,Valveny, E.: Icdar 2015 competition on robust reading (2015), in International Conference on Document Analysis and Recognition (ICDAR)</p>
+</li>
+<li><p>Karatzas, D., Shafait, F., Uchida, S., Iwamura, M., i Bigorda, L.G., Mestre, S.R., Mas, J., Mota, D.F., Almazan, J.A., de las Heras., L.P.: Icdar 2013 robust reading competition (2013), in International Conference on Document Analysis and Recognition (ICDAR)</p>
+</li>
+<li><p>Mao, J., Li, H., Zhou, W., Yan, S., Tian, Q.: Scale based region growing for scene text detection (2013), in ACM International Conference on Multimedia (ACM MM)</p>
+</li>
+<li><p>Minetto, R., Thome, N., Cord, M., Fabrizio, J., Marcotegui, B.: Snoopertext: A multiresolution system for text detection in complex visual scenes (2010), in IEEE International Conference on Pattern Recognition (ICIP)</p>
+</li>
+<li><p>Neumann, L., Matas, J.: Efficient scene text localization and recognition with local character refinement (2015), in International Conference on Document Analysis and Recognition (ICDAR)</p>
+</li>
+<li><p>Neumann, L., Matas, J.: Real-time lexicon-free scene text localization and recognition. In IEEE Trans. Pattern Analysis and Machine Intelligence (TPAMI) (2015)</p>
+</li>
+<li><p>Pan, Y., Hou, X., Liu, C.: Hybrid approach to detect and localize texts in natural scene images. IEEE Trans. Image Processing (TIP) 20, 800–813 (2011)</p>
+</li>
+<li><p>Ren, S., He, K., Girshick, R., Sun, J.: Faster R-CNN: Towards real-time object detection with region proposal networks (2015), in Neural Information Processing Systems (NIPS)</p>
+</li>
+<li><p>Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z., Karpathy, A., Khosla, A., Bernstein, M., Berg, A.C., Li, F.: Imagenet large scale visual recognition challenge. International Journal of Computer Vision (IJCV) 115(3), 211–252 (2015)</p>
+</li>
+<li><p>Simonyan, K., Zisserman, A.: Very deep convolutional networks for large-scale image recognition (2015), in International Conference on Learning Representation (ICLR)</p>
+</li>
+<li><p>Tian, S., Pan, Y., Huang, C., Lu, S., Yu, K., Tan, C.L.: Text flow: A unified text detection system in natural scene images (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Wang, K., Babenko, B., Belongie, S.: End-to-end scene text recognition (2011), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Wolf, C., Jolion, J.: Object count / area graphs for the evaluation of object detection and segmentation algorithms. International Journal of Document Analysis 8, 280–296 (2006)</p>
+</li>
+<li><p>Yao, C., Bai, X., Liu, W.: A unified framework for multioriented text detection and recognition. IEEE Trans. Image Processing (TIP) 23(11), 4737–4749 (2014)</p>
+</li>
+<li><p>Yin, X.C., Pei, W.Y., Zhang, J., Hao, H.W.: Multi-orientation scene text detection with adaptive clustering. IEEE Trans. Pattern Analysis and Machine Intelligence (TPAMI) 37, 1930–1937 (2015)</p>
+</li>
+<li><p>Yin, X.C., Yin, X., Huang, K., Hao, H.W.: Robust text detection in natural scene images. IEEE Trans. Pattern Analysis and Machine Intelligence (TPAMI) 36, 970–983 (2014)</p>
+</li>
+<li><p>Zhang, Z., Shen, W., Yao, C., Bai, X.: Symmetry-based text line detection in natural scenes (2015), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Zhang, Z., Zhang, C., Shen, W., Yao, C., Liu, W., Bai, X.: Multi-oriented text de- tection with fully convolutional networks (2016), in IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中英文对照
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版</title>
+    <link href="noahsnail.com/2018/02/02/2018-02-02-Detecting%20Text%20in%20Natural%20Image%20with%20Connectionist%20Text%20Proposal%20Network%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>noahsnail.com/2018/02/02/2018-02-02-Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版/</id>
+    <published>2018-02-02T07:14:50.000Z</published>
+    <updated>2018-02-05T09:32:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<h1 id="Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network"><a href="#Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network" class="headerlink" title="Detecting Text in Natural Image with Connectionist Text Proposal Network"></a>Detecting Text in Natural Image with Connectionist Text Proposal Network</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种新颖的连接文本提议网络（CTPN），它能够准确定位自然图像中的文本行。CTPN直接在卷积特征映射中的一系列细粒度文本提议中检测文本行。我们开发了一个垂直锚点机制，联合预测每个固定宽度提议的位置和文本/非文本分数，大大提高了定位精度。序列提议通过循环神经网络自然地连接起来，该网络无缝地结合到卷积网络中，从而形成端到端的可训练模型。这使得CTPN可以探索丰富的图像上下文信息，使其能够检测极其模糊的文本。CTPN在多尺度和多语言文本上可靠地工作，而不需要进一步的后处理，脱离了以前的自底向上需要多步后过滤的方法。它在ICDAR 2013和2015的基准数据集上达到了0.88和0.61的F-measure，大大超过了最近的结果[8，35]。通过使用非常深的VGG16模型[27]，CTPN的计算效率为0.14s每张图像。在线演示获取地址：<a href="http://textdet.com/" target="_blank" rel="external">http://textdet.com/</a>。</p>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>场景文本检测；卷积网络；循环神经网络；锚点机制</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p>Busta, M., Neumann, L., Matas, J.: Fastext: Efficient unconstrained scene text detector (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Cheng, M., Zhang, Z., Lin, W., Torr, P.: Bing: Binarized normed gradients for objectness estimation at 300fps (2014), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Epshtein, B., Ofek, E., Wexler, Y.: Detecting text in natural scenes with stroke width transform (2010), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Everingham, M., Gool, L.V., Williams, C.K.I., Winn, J., Zisserman, A.: The pascal visual object classes (voc) challenge. International Journal of Computer Vision (IJCV) 88(2), 303–338 (2010)</p>
+</li>
+<li><p>Girshick, R.: Fast r-cnn (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Girshick, R., Donahue, J., Darrell, T., Malik, J.: Rich feature hierarchies for accurate object detection and semantic segmentation (2014), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Graves, A., Schmidhuber, J.: Framewise phoneme classification with bidirectional lstm and other neural network architectures. Neural Networks 18(5), 602–610 (2005)</p>
+</li>
+<li><p>Gupta, A., Vedaldi, A., Zisserman, A.: Synthetic data for text localisation in natural images (2016), in IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>He,P.,Huang,W.,Qiao,Y.,Loy,C.C.,Tang,X.:Readingscenetextindeepconvo- lutional sequences (2016), in The 30th AAAI Conference on Artificial Intelligence (AAAI-16)</p>
+</li>
+<li><p>He, T., Huang, W., Qiao, Y., Yao, J.: Accurate text localization in natural image with cascaded convolutional text network (2016), arXiv:1603.09423</p>
+</li>
+<li><p>He, T., Huang, W., Qiao, Y., Yao, J.: Text-attentional convolutional neural net- works for scene text detection. IEEE Trans. Image Processing (TIP) 25, 2529–2541 (2016)</p>
+</li>
+<li><p>Hochreiter, S., Schmidhuber, J.: Long short-term memory. Neural Networks 9(8), 1735–1780 (1997)</p>
+</li>
+<li><p>Huang, W., Lin, Z., Yang, J., Wang, J.: Text localization in natural images using stroke feature transform and text covariance descriptors (2013), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Huang, W., Qiao, Y., Tang, X.: Robust scene text detection with convolutional neural networks induced mser trees (2014), in European Conference on Computer Vision (ECCV)</p>
+</li>
+<li><p>Jaderberg, M., Simonyan, K., Vedaldi, A., Zisserman, A.: Reading text in the wild with convolutional neural networks. International Journal of Computer Vision (IJCV) (2016)</p>
+</li>
+<li><p>Jaderberg, M., Vedaldi, A., Zisserman, A.: Deep features for text spotting (2014), in European Conference on Computer Vision (ECCV)</p>
+</li>
+<li><p>Jia, Y., Shelhamer, E., Donahue, J., Karayev, S., Long, J., Girshick, R., Guadarrama, S., Darrell, T.: Caffe: Convolutional architecture for fast feature embedding (2014), in ACM International Conference on Multimedia (ACM MM)</p>
+</li>
+<li><p>Karatzas,D.,Gomez-Bigorda,L.,Nicolaou,A.,Ghosh,S.,Bagdanov,A.,Iwamura, M., Matas, J., Neumann, L., Chandrasekhar, V.R., Lu, S., Shafait, F., Uchida, S.,Valveny, E.: Icdar 2015 competition on robust reading (2015), in International Conference on Document Analysis and Recognition (ICDAR)</p>
+</li>
+<li><p>Karatzas, D., Shafait, F., Uchida, S., Iwamura, M., i Bigorda, L.G., Mestre, S.R., Mas, J., Mota, D.F., Almazan, J.A., de las Heras., L.P.: Icdar 2013 robust reading competition (2013), in International Conference on Document Analysis and Recognition (ICDAR)</p>
+</li>
+<li><p>Mao, J., Li, H., Zhou, W., Yan, S., Tian, Q.: Scale based region growing for scene text detection (2013), in ACM International Conference on Multimedia (ACM MM)</p>
+</li>
+<li><p>Minetto, R., Thome, N., Cord, M., Fabrizio, J., Marcotegui, B.: Snoopertext: A multiresolution system for text detection in complex visual scenes (2010), in IEEE International Conference on Pattern Recognition (ICIP)</p>
+</li>
+<li><p>Neumann, L., Matas, J.: Efficient scene text localization and recognition with local character refinement (2015), in International Conference on Document Analysis and Recognition (ICDAR)</p>
+</li>
+<li><p>Neumann, L., Matas, J.: Real-time lexicon-free scene text localization and recognition. In IEEE Trans. Pattern Analysis and Machine Intelligence (TPAMI) (2015)</p>
+</li>
+<li><p>Pan, Y., Hou, X., Liu, C.: Hybrid approach to detect and localize texts in natural scene images. IEEE Trans. Image Processing (TIP) 20, 800–813 (2011)</p>
+</li>
+<li><p>Ren, S., He, K., Girshick, R., Sun, J.: Faster R-CNN: Towards real-time object detection with region proposal networks (2015), in Neural Information Processing Systems (NIPS)</p>
+</li>
+<li><p>Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z., Karpathy, A., Khosla, A., Bernstein, M., Berg, A.C., Li, F.: Imagenet large scale visual recognition challenge. International Journal of Computer Vision (IJCV) 115(3), 211–252 (2015)</p>
+</li>
+<li><p>Simonyan, K., Zisserman, A.: Very deep convolutional networks for large-scale image recognition (2015), in International Conference on Learning Representation (ICLR)</p>
+</li>
+<li><p>Tian, S., Pan, Y., Huang, C., Lu, S., Yu, K., Tan, C.L.: Text flow: A unified text detection system in natural scene images (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Wang, K., Babenko, B., Belongie, S.: End-to-end scene text recognition (2011), in IEEE International Conference on Computer Vision (ICCV)</p>
+</li>
+<li><p>Wolf, C., Jolion, J.: Object count / area graphs for the evaluation of object detection and segmentation algorithms. International Journal of Document Analysis 8, 280–296 (2006)</p>
+</li>
+<li><p>Yao, C., Bai, X., Liu, W.: A unified framework for multioriented text detection and recognition. IEEE Trans. Image Processing (TIP) 23(11), 4737–4749 (2014)</p>
+</li>
+<li><p>Yin, X.C., Pei, W.Y., Zhang, J., Hao, H.W.: Multi-orientation scene text detection with adaptive clustering. IEEE Trans. Pattern Analysis and Machine Intelligence (TPAMI) 37, 1930–1937 (2015)</p>
+</li>
+<li><p>Yin, X.C., Yin, X., Huang, K., Hao, H.W.: Robust text detection in natural scene images. IEEE Trans. Pattern Analysis and Machine Intelligence (TPAMI) 36, 970–983 (2014)</p>
+</li>
+<li><p>Zhang, Z., Shen, W., Yao, C., Bai, X.: Symmetry-based text line detection in natural scenes (2015), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+<li><p>Zhang, Z., Zhang, C., Shen, W., Yao, C., Liu, W., Bai, X.: Multi-oriented text de- tection with fully convolutional networks (2016), in IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>动手学深度学习(一)——线性回归从零开始</title>
     <link href="noahsnail.com/2018/01/31/2018-01-31-%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E4%B8%80)%E2%80%94%E2%80%94%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/"/>
     <id>noahsnail.com/2018/01/31/2018-01-31-动手学深度学习(一)——线性回归从零开始/</id>
     <published>2018-01-31T10:10:57.000Z</published>
-    <updated>2018-01-31T11:02:56.000Z</updated>
+    <updated>2018-02-01T02:04:51.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
@@ -1242,550 +1590,6 @@ True
     
     
       <category term="递归" scheme="noahsnail.com/tags/%E9%80%92%E5%BD%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>YOLO9000, Better, Faster, Stronger论文翻译——中文版</title>
-    <link href="noahsnail.com/2017/12/26/2017-12-26-YOLO9000,%20Better,%20Faster,%20Stronger%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
-    <id>noahsnail.com/2017/12/26/2017-12-26-YOLO9000, Better, Faster, Stronger论文翻译——中文版/</id>
-    <published>2017-12-26T08:42:26.000Z</published>
-    <updated>2017-12-29T07:15:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
-<h1 id="YOLO9000-Better-Faster-Stronger"><a href="#YOLO9000-Better-Faster-Stronger" class="headerlink" title="YOLO9000: Better, Faster, Stronger"></a>YOLO9000: Better, Faster, Stronger</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们引入了一个先进的实时目标检测系统YOLO9000，可以检测超过9000个目标类别。首先，我们提出了对YOLO检测方法的各种改进，既有新颖性，也有前期的工作。改进后的模型YOLOv2在PASCAL VOC和COCO等标准检测任务上是最先进的。使用一种新颖的，多尺度训练方法，同样的YOLOv2模型可以以不同的尺寸运行，从而在速度和准确性之间提供了一个简单的折衷。在67FPS时，YOLOv2在VOC 2007上获得了76.8 mAP。在40FPS时，YOLOv2获得了78.6 mAP，比使用ResNet的Faster R-CNN和SSD等先进方法表现更出色，同时仍然运行速度显著更快。最后我们提出了一种联合训练目标检测与分类的方法。使用这种方法，我们在COCO检测数据集和ImageNet分类数据集上同时训练YOLO9000。我们的联合训练允许YOLO9000预测未标注的检测数据目标类别的检测结果。我们在ImageNet检测任务上验证了我们的方法。YOLO9000在ImageNet检测验证集上获得19.7 mAP，尽管200个类别中只有44个具有检测数据。在没有COCO的156个类别上，YOLO9000获得16.0 mAP。但YOLO可以检测到200多个类别；它预测超过9000个不同目标类别的检测结果。并且它仍然能实时运行。</p>
-<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>通用目的的目标检测应该快速，准确，并且能够识别各种各样的目标。自从引入神经网络以来，检测框架变得越来越快速和准确。但是，大多数检测方法仍然受限于一小部分目标。</p>
-<p>与分类和标记等其他任务的数据集相比，目前目标检测数据集是有限的。最常见的检测数据集包含成千上万到数十万张具有成百上千个标签的图像[3][10][2]。分类数据集有数以百万计的图像，数十或数十万个类别[20][2]。</p>
-<p>我们希望检测能够扩展到目标分类的级别。但是，标注检测图像要比标注分类或贴标签要昂贵得多（标签通常是用户免费提供的）。因此，我们不太可能在近期内看到与分类数据集相同规模的检测数据集。</p>
-<p>我们提出了一种新的方法来利用我们已经拥有的大量分类数据，并用它来扩大当前检测系统的范围。我们的方法使用目标分类的分层视图，允许我们将不同的数据集组合在一起。</p>
-<p>我们还提出了一种联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
-<p>使用这种方法我们训练YOLO9000，一个实时的目标检测器，可以检测超过9000种不同的目标类别。首先，我们改进YOLO基础检测系统，产生最先进的实时检测器YOLOv2。然后利用我们的数据集组合方法和联合训练算法对来自ImageNet的9000多个类别以及COCO的检测数据训练了一个模型。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
-<p><strong>图1：YOLO9000</strong>。YOLO9000可以实时检测许多目标类别。</p>
-<p>我们的所有代码和预训练模型都可在线获得：<a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>。</p>
-<h2 id="2-更好"><a href="#2-更好" class="headerlink" title="2. 更好"></a>2. 更好</h2><p>与最先进的检测系统相比，YOLO有许多缺点。YOLO与Fast R-CNN相比的误差分析表明，YOLO造成了大量的定位误差。此外，与基于区域提出的方法相比，YOLO召回率相对较低。因此，我们主要侧重于提高召回率和改进定位，同时保持分类准确性。</p>
-<p>计算机视觉一般趋向于更大，更深的网络[6][18][17]。更好的性能通常取决于训练更大的网络或将多个模型组合在一起。但是，在YOLOv2中，我们需要一个更精确的检测器，它仍然很快。我们不是扩大我们的网络，而是简化网络，然后让表示更容易学习。我们将过去的工作与我们自己的新概念汇集起来，以提高YOLO的性能。表2列出了结果总结。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
-<p><strong>表2：从YOLO到YOLOv2的路径</strong>。列出的大部分设计决定都会导致mAP的显著增加。有两个例外是切换到具有锚盒的一个全卷积网络和使用新网络。切换到锚盒风格的方法增加了召回，而不改变mAP，而使用新网络会削减$33\%$的计算量。</p>
-<p><strong>批标准化</strong>。批标准化导致收敛性的显著改善，同时消除了对其他形式正则化的需求[7]。通过在YOLO的所有卷积层上添加批标准化，我们在mAP中获得了超过$2\%$的改进。批标准化也有助于模型正则化。通过批标准化，我们可以从模型中删除丢弃而不会过拟合。</p>
-<p><strong>高分辨率分类器</strong>。所有最先进的检测方法都使用在ImageNet[16]上预训练的分类器。从AlexNet开始，大多数分类器对小于256×256[8]的输入图像进行操作。原来的YOLO以224×224的分辨率训练分类器网络，并将分辨率提高到448进行检测。这意味着网络必须同时切换到学习目标检测和调整到新的输入分辨率。</p>
-<p>对于YOLOv2，我们首先ImageNet上以448×448的分辨率对分类网络进行10个迭代周期的微调。这给了网络时间来调整其滤波器以便更好地处理更高分辨率的输入。然后，我们在检测上微调得到的网络。这个高分辨率分类网络使我们增加了近$4\%$的mAP。</p>
-<p><strong>具有锚盒的卷积</strong>。YOLO直接使用卷积特征提取器顶部的全连接层来预测边界框的坐标。Faster R-CNN使用手动选择的先验来预测边界框而不是直接预测坐标[15]。Faster R-CNN中的区域提出网络（RPN）仅使用卷积层来预测锚盒的偏移和置信度。由于预测层是卷积的，所以RPN在特征映射的每个位置上预测这些偏移。预测偏移而不是坐标简化了问题，并且使网络更容易学习。</p>
-<p>我们从YOLO中移除全连接层，并使用锚盒来预测边界框。首先，我们消除了一个池化层，使网络卷积层输出具有更高的分辨率。我们还缩小了网络，操作416×416的输入图像而不是448×448。我们这样做是因为我们要在我们的特征映射中有奇数个位置，所以只有一个中心单元。目标，特别是大目标，往往占据图像的中心，所以在中心有一个单独的位置来预测这些目标，而不是四个都在附近的位置是很好的。YOLO的卷积层将图像下采样32倍，所以通过使用416的输入图像，我们得到了13×13的输出特征映射。</p>
-<p>当我们移动到锚盒时，我们也将类预测机制与空间位置分离，预测每个锚盒的类别和目标。在YOLO之后，目标预测仍然预测了实际值和提出的边界框的IOU，并且类别预测预测了当存在目标时该类别的条件概率。</p>
-<p>使用锚盒，我们在精度上得到了一个小下降。YOLO每张图像只预测98个边界框，但是使用锚盒我们的模型预测超过一千。如果没有锚盒，我们的中间模型将获得69.5的mAP，召回率为$81\%$。具有锚盒我们的模型得到了69.2 mAP，召回率为$88\%$。尽管mAP下降，但召回率的上升意味着我们的模型有更大的提升空间。</p>
-<p><strong>维度聚类</strong>。当锚盒与YOLO一起使用时，我们遇到了两个问题。首先是边界框尺寸是手工挑选的。网络可以学习适当调整边界框，但如果我们为网络选择更好的先验，我们可以使网络更容易学习它以便预测好的检测。</p>
-<p>我们不用手工选择先验，而是在训练集边界框上运行k-means聚类，自动找到好的先验。如果我们使用具有欧几里得距离的标准k-means，那么较大的边界框比较小的边界框产生更多的误差。然而，我们真正想要的是导致好的IOU分数的先验，这是独立于边界框大小的。因此，对于我们的距离度量，我们使用：$$d(\text{box}, \text{centroid}) = 1 - \text{IOU}(\text{box}, \text{centroid})$$我们运行各种$k$值的k-means，并画出平均IOU与最接近的几何中心，见图2。我们选择$k=5$作为模型复杂性和高召回率之间的良好折衷。聚类中心与手工挑选的锚盒明显不同。有更短更宽的边界框和更高更细的边界框。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
-<p><strong>图2：VOC和COCO的聚类边界框尺寸</strong>。我们对边界框的维度进行k-means聚类，以获得我们模型的良好先验。左图显示了我们通过对$k$的各种选择得到的平均IOU。我们发现$k = 5$给出了一个很好的召回率与模型复杂度的权衡。右图显示了VOC和COCO的相对中心。这两种先验都赞成更薄更高的边界框，而COCO比VOC在尺寸上有更大的变化。</p>
-<p>在表1中我们将平均IOU与我们聚类策略中最接近的先验以及手工选取的锚盒进行了比较。仅有5个先验中心的平均IOU为61.0，其性能类似于9个锚盒的60.9。如果我们使用9个中心，我们会看到更高的平均IOU。这表明使用k-means来生成我们的边界框会以更好的表示开始训练模型，并使得任务更容易学习。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
-<p><strong>表1：VOC 2007上最接近先验的边界框平均IOU</strong>。VOC 2007上目标的平均IOU与其最接近的，使用不同生成方法之前未经修改的平均值。聚类结果比使用手工选择的先验结果要更好。</p>
-<p><strong>直接位置预测</strong>。当YOLO使用锚盒时，我们会遇到第二个问题：模型不稳定，特别是在早期的迭代过程中。大部分的不稳定来自预测边界框的$(x,y)$位置。在区域提出网络中，网络预测值$t_x$和$t_y$，$(x,y)$中心坐标计算如下：<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
-<p>这个公式是不受限制的，所以任何锚盒都可以在图像任一点结束，而不管在哪个位置预测该边界框。随机初始化模型需要很长时间才能稳定以预测合理的偏移量。</p>
-<p>我们没有预测偏移量，而是按照YOLO的方法预测相对于网格单元位置的位置坐标。这限制了落到$0$和$1$之间的真实值。我们使用逻辑激活来限制网络的预测落在这个范围内。</p>
-<p>网络预测输出特征映射中每个单元的5个边界框。网络预测每个边界框的5个坐标，$t_x$，$t_y$，$t_w$，$t_h$和$t_o$。如果单元从图像的左上角偏移了$(c_x, c_y)$，并且边界框先验的宽度和高度为$p_w$，$p_h$，那么预测对应：<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
-<p><strong>图3：具有维度先验和位置预测的边界框</strong>。我们预测边界框的宽度和高度作为聚类中心的偏移量。我们使用sigmoid函数预测边界框相对于滤波器应用位置的中心坐标。</p>
-<p>由于我们限制位置预测参数化更容易学习，使网络更稳定。使用维度聚类以及直接预测边界框中心位置的方式比使用锚盒的版本将YOLO提高了近$5\%$。</p>
-<p><strong>细粒度功能</strong>。这个修改后的YOLO在13×13特征映射上预测检测结果。虽然这对于大型目标来说已经足够了，但它可以从用于定位较小目标的更细粒度的特征中受益。Faster R-CNN和SSD都在网络的各种特征映射上运行他们提出的网络，以获得一系列的分辨率。我们采用不同的方法，仅仅添加一个通道层，从26x26分辨率的更早层中提取特征。</p>
-<p><strong>多尺度训练</strong>。原来的YOLO使用448×448的输入分辨率。通过添加锚盒，我们将分辨率更改为416×416。但是，由于我们的模型只使用卷积层和池化层，因此它可以实时调整大小。我们希望YOLOv2能够鲁棒的运行在不同大小的图像上，因此我们可以将其训练到模型中。</p>
-<p>我们没有固定的输入图像大小，每隔几次迭代就改变网络。每隔10个批次我们的网络会随机选择一个新的图像尺寸大小。由于我们的模型缩减了32倍，我们从下面的32的倍数中选择：{320,352，…，608}。因此最小的选项是320×320，最大的是608×608。我们调整网络的尺寸并继续训练。</p>
-<p>这个制度迫使网络学习如何在各种输入维度上做好预测。这意味着相同的网络可以预测不同分辨率下的检测结果。在更小尺寸上网络运行速度更快，因此YOLOv2在速度和准确性之间提供了一个简单的折衷。</p>
-<p>在低分辨率YOLOv2作为一个便宜，相当准确的检测器。在288×288时，其运行速度超过90FPS，mAP与Fast R-CNN差不多。这使其成为小型GPU，高帧率视频或多视频流的理想选择。</p>
-<p>在高分辨率下，YOLOv2是VOC 2007上最先进的检测器，达到了78.6 mAP，同时仍保持运行在实时速度之上。请参阅表3，了解YOLOv2与VOC 2007其他框架的比较。图4</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
-<p><strong>表3：PASCAL VOC 2007的检测框架</strong>。YOLOv2比先前的检测方法更快，更准确。它也可以以不同的分辨率运行，以便在速度和准确性之间进行简单折衷。每个YOLOv2条目实际上是具有相同权重的相同训练模型，只是以不同的大小进行评估。所有的时间信息都是在Geforce GTX Titan X（原始的，而不是Pascal模型）上测得的。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
-<p><strong>图4：VOC 2007上的准确性与速度。</strong></p>
-<p><strong>进一步实验</strong>。我们在VOC 2012上训练YOLOv2进行检测。表4显示了YOLOv2与其他最先进的检测系统的比较性能。YOLOv2取得了73.4 mAP同时运行速度比竞争方法快的多。我们在COCO上进行了训练，并在表5中与其他方法进行比较。在VOC度量（IOU = 0.5）上，YOLOv2得到44.0 mAP，与SSD和Faster R-CNN相当。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
-<p><strong>表4：PASCAL VOC2012 <code>test</code>上的检测结果</strong>。YOLOv2与最先进的检测器如具有ResNet的Faster R-CNN、SSD512在标准数据集上运行，YOLOv2比它们快2-10倍。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
-<p><strong>表5：在COCO <code>test-dev2015</code>上的结果。表参考[11]</strong></p>
-<h2 id="3-更快"><a href="#3-更快" class="headerlink" title="3. 更快"></a>3. 更快</h2><p>我们希望检测是准确的，但我们也希望它快速。大多数检测应用（如机器人或自动驾驶机车）依赖于低延迟预测。为了最大限度提高性能，我们从头开始设计YOLOv2。</p>
-<p>大多数检测框架依赖于VGG-16作为的基本特征提取器[17]。VGG-16是一个强大的，准确的分类网络，但它是不必要的复杂。在单张图像224×224分辨率的情况下VGG-16的卷积层运行一次传递需要306.90亿次浮点运算。</p>
-<p>YOLO框架使用基于Googlenet架构[19]的自定义网络。这个网络比VGG-16更快，一次前馈传播只有85.2亿次的操作。然而，它的准确性比VGG-16略差。在ImageNet上，对于单张裁剪图像，224×224分辨率下的<code>top-5</code>准确率，YOLO的自定义模型获得了$88.0\%$，而VGG-16则为$90.0\%$。</p>
-<p><strong>Darknet-19</strong>。我们提出了一个新的分类模型作为YOLOv2的基础。我们的模型建立在网络设计先前工作以及该领域常识的基础上。与VGG模型类似，我们大多使用3×3滤波器，并在每个池化步骤之后使通道数量加倍[17]。按照Network in Network（NIN）的工作，我们使用全局平均池化做预测以及1×1滤波器来压缩3×3卷积之间的特征表示[9]。我们使用批标准化来稳定训练，加速收敛，并正则化模型[7]。</p>
-<p>我们的最终模型叫做Darknet-19，它有19个卷积层和5个最大池化层。完整描述请看表6。Darknet-19只需要55.8亿次运算来处理图像，但在ImageNet上却达到了$72.9\%$的<code>top-1</code>准确率和$91.2\%$的<code>top-5</code>准确率。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-a2e2ce952c7cbc46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
-<p><strong>表6：Darknet-19。</strong></p>
-<p>如上所述，在我们对224×224的图像进行初始训练之后，我们对网络在更大的尺寸448上进行了微调。对于这种微调，我们使用上述参数进行训练，但是只有10个迭代周期，并且以$10^{−3}$的学习率开始。在这种更高的分辨率下，我们的网络达到了$76.5\%$的<code>top-1</code>准确率和$93.3\%$的<code>top-5</code>准确率。</p>
-<p><strong>检测训练</strong>。我们修改这个网络进行检测，删除了最后一个卷积层，加上了三个具有1024个滤波器的3×3卷积层，其后是最后的1×1卷积层与我们检测需要的输出数量。对于VOC，我们预测5个边界框，每个边界框有5个坐标和20个类别，所以有125个滤波器。我们还添加了从最后的3×3×512层到倒数第二层卷积层的直通层，以便我们的模型可以使用细粒度特征。</p>
-<p>我们训练网络160个迭代周期，初始学习率为$10^{−3}$，在60个和90个迭代周期时将学习率除以10。我们使用0.0005的权重衰减和0.9的动量。我们对YOLO和SSD进行类似的数据增强，随机裁剪，色彩偏移等。我们对COCO和VOC使用相同的训练策略。</p>
-<h2 id="4-更强"><a href="#4-更强" class="headerlink" title="4. 更强"></a>4. 更强</h2><p>我们提出了一个联合训练分类和检测数据的机制。我们的方法使用标记为检测的图像来学习边界框坐标预测和目标之类的特定检测信息以及如何对常见目标进行分类。它使用仅具有类别标签的图像来扩展可检测类别的数量。</p>
-<p>在训练期间，我们混合来自检测和分类数据集的图像。当我们的网络看到标记为检测的图像时，我们可以基于完整的YOLOv2损失函数进行反向传播。当它看到一个分类图像时，我们只能从该架构的分类特定部分反向传播损失。</p>
-<p>这种方法提出了一些挑战。检测数据集只有通用目标和通用标签，如“狗”或“船”。分类数据集具有更广更深的标签范围。ImageNet有超过一百种品种的狗，包括<code>Norfolk terrier</code>，<code>Yorkshire terrier</code>和<code>Bedlington terrier</code>。如果我们想在两个数据集上训练，我们需要一个连贯的方式来合并这些标签。</p>
-<p>大多数分类方法使用跨所有可能类别的softmax层来计算最终的概率分布。使用softmax假定这些类是相互排斥的。这给数据集的组合带来了问题，例如你不想用这个模型来组合ImageNet和COCO，因为类<code>Norfolk terrier</code>和<code>dog</code>不是相互排斥的。</p>
-<p>我们可以改为使用多标签模型来组合不假定互斥的数据集。这种方法忽略了我们已知的关于数据的所有结构，例如，所有的COCO类是互斥的。</p>
-<p><strong>分层分类</strong>。ImageNet标签是从WordNet中提取的，这是一个构建概念及其相互关系的语言数据库[12]。在WordNet中，<code>Norfolk terrier</code>和<code>Yorkshire terrier</code>都是<code>terrier</code>的下义词，<code>terrier</code>是一种<code>hunting dog</code>，<code>hunting dog</code>是<code>dog</code>，<code>dog</code>是<code>canine</code>等。分类的大多数方法为标签假设一个扁平结构，但是对于组合数据集，结构正是我们所需要的。</p>
-<p>WordNet的结构是有向图，而不是树，因为语言是复杂的。例如，<code>dog</code>既是一种<code>canine</code>，也是一种<code>domestic animal</code>，它们都是WordNet中的同义词。我们不是使用完整的图结构，而是通过从ImageNet的概念中构建分层树来简化问题。</p>
-<p>为了构建这棵树，我们检查了ImageNet中的视觉名词，并查看它们通过WordNet图到根节点的路径，在这种情况下是“物理对象”。许多同义词通过图只有一条路径，所以首先我们将所有这些路径添加到我们的树中。然后我们反复检查我们留下的概念，并尽可能少地添加生长树的路径。所以如果一个概念有两条路径到一个根，一条路径会给我们的树增加三条边，另一条只增加一条边，我们选择更短的路径。</p>
-<p>最终的结果是WordTree，一个视觉概念的分层模型。为了使用WordTree进行分类，我们预测每个节点的条件概率，以得到同义词集合中每个同义词下义词的概率。例如，在<code>terrier</code>节点我们预测：<br>$$<br>Pr(\text{Norfolk terrier} | \text{terrier}) \\<br>Pr(\text{Yorkshire terrier} | \text{terrier}) \\<br>Pr(\text{Bedlington terrier} | \text{terrier})\\<br>…\\<br>$$</p>
-<p>如果我们想要计算一个特定节点的绝对概率，我们只需沿着通过树到达根节点的路径，再乘以条件概率。所以如果我们想知道一张图片是否是<code>Norfolk terrier</code>，我们计算：<br>$$<br>Pr(\text{Norfolk terrier}) = Pr(\text{Norfolk terrier} | \text{terrier})\\<br>* Pr(\text{terrier} | \text{hunting dog}) \\<br>* \ldots * \\<br>*Pr(\text{mammal} | Pr(\text{animal})\\<br> * Pr(\text{animal} | \text{physical object})<br>$$</p>
-<p>为了分类目的，我们假定图像包含一个目标：$Pr(\text{physical object}) = 1$。</p>
-<p>为了验证这种方法，我们在使用1000类ImageNet构建的WordTree上训练Darknet-19模型。为了构建WordTree1k，我们添加了所有将标签空间从1000扩展到1369的中间节点。在训练过程中，我们将真实标签向树上面传播，以便如果图像被标记为<code>Norfolk terrier</code>，则它也被标记为<code>dog</code>和<code>mammal</code>等。为了计算条件概率，我们的模型预测了具有1369个值的向量，并且我们计算了相同概念的下义词在所有同义词集上的softmax，见图5。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ea0e04e34b0741ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
-<p><strong>图5：在ImageNet与WordTree上的预测</strong>。大多数ImageNet模型使用一个较大的softmax来预测概率分布。使用WordTree，我们可以在共同的下义词上执行多次softmax操作。</p>
-<p>使用与以前相同的训练参数，我们的分级Darknet-19达到$71.9\%$的<code>top-1</code>准确率和$90.4\%$的<code>top-5</code>准确率。尽管增加了369个额外的概念，而且我们的网络预测了一个树状结构，但我们的准确率仅下降了一点点。以这种方式进行分类也有一些好处。在新的或未知的目标类别上性能会优雅地降低。例如，如果网络看到一只狗的照片，但不确定它是什么类型的狗，它仍然会高度自信地预测“狗”，但是在下义位扩展之间有更低的置信度。</p>
-<p>这个构想也适用于检测。现在，我们不是假定每张图像都有一个目标，而是使用YOLOv2的目标预测器给我们$Pr(\text{physical object})$的值。检测器预测边界框和概率树。我们遍历树，在每个分割中采用最高的置信度路径，直到达到某个阈值，然后我们预测目标类。</p>
-<p><strong>联合分类和检测</strong>。现在我们可以使用WordTree组合数据集，我们可以在分类和检测上训练联合模型。我们想要训练一个非常大规模的检测器，所以我们使用COCO检测数据集和完整的ImageNet版本中的前9000个类来创建我们的组合数据集。我们还需要评估我们的方法，以便从ImageNet检测挑战中添加任何尚未包含的类。该数据集的相应WordTree有9418个类别。ImageNet是一个更大的数据集，所以我们通过对COCO进行过采样来平衡数据集，使得ImageNet仅仅大于4:1的比例。</p>
-<p>使用这种联合训练，YOLO9000学习使用COCO中的检测数据来查找图像中的目标，并学习使用来自ImageNet的数据对各种目标进行分类。</p>
-<p>我们在ImageNet检测任务上评估YOLO9000。ImageNet的检测任务与COCO共享44个目标类别，这意味着YOLO9000只能看到大多数测试图像的分类数据，而不是检测数据。YOLO9000在从未见过任何标记的检测数据的情况下，整体上获得了19.7 mAP，在不相交的156个目标类别中获得了16.0 mAP。这个mAP高于DPM的结果，但是YOLO9000在不同的数据集上训练，只有部分监督[4]。它也同时检测9000个其他目标类别，所有的都是实时的。</p>
-<p>当我们分析YOLO9000在ImageNet上的表现时，我们发现它很好地学习了新的动物种类，但是却在像服装和设备这样的学习类别中挣扎。新动物更容易学习，因为目标预测可以从COCO中的动物泛化的很好。相反，COCO没有任何类型的衣服的边界框标签，只针对人，因此YOLO9000正在努力建模“墨镜”或“泳裤”等类别。</p>
-<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们介绍了YOLOv2和YOLO9000，两个实时检测系统。YOLOv2在各种检测数据集上都是最先进的，也比其他检测系统更快。此外，它可以运行在各种图像大小，以提供速度和准确性之间的平滑折衷。</p>
-<p>YOLO9000是一个通过联合优化检测和分类来检测9000多个目标类别的实时框架。我们使用WordTree将各种来源的数据和我们的联合优化技术相结合，在ImageNet和COCO上同时进行训练。YOLO9000是在检测和分类之间缩小数据集大小差距的重要一步。</p>
-<p>我们的许多技术都可以泛化到目标检测之外。我们对ImageNet的WordTree表示为图像分类提供了更丰富，更详细的输出空间。使用分层分类的数据集组合在分类和分割领域将是有用的。像多尺度训练这样的训练技术可以为各种视觉任务提供益处。</p>
-<p>对于未来的工作，我们希望使用类似的技术来进行弱监督的图像分割。我们还计划使用更强大的匹配策略来改善我们的检测结果，以在训练期间将弱标签分配给分类数据。计算机视觉受到大量标记数据的祝福。我们将继续寻找方法，将不同来源和数据结构的数据整合起来，形成更强大的视觉世界模型。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] S. Bell, C. L. Zitnick, K. Bala, and R. Girshick. Inside-outside net: Detecting objects in context with skip pooling and recurrent neural networks. arXiv preprint arXiv:1512.04143, 2015. 6</p>
-<p>[2] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei- Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, pages 248–255. IEEE, 2009. 1</p>
-<p>[3] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The pascal visual object classes (voc) challenge. International journal of computer vision, 88(2):303– 338, 2010. 1</p>
-<p>[4] P. F. Felzenszwalb, R. B. Girshick, and D. McAllester. Discriminatively trained deformable part models, release 4. <a href="http://people.cs.uchicago.edu/pff/latent-release4/" target="_blank" rel="external">http://people.cs.uchicago.edu/pff/latent-release4/</a>. 8</p>
-<p>[5] R. B. Girshick. Fast R-CNN. CoRR, abs/1504.08083, 2015. 4, 5, 6</p>
-<p>[6] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. arXiv preprint arXiv:1512.03385, 2015. 2, 4, 5</p>
-<p>[7] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015. 2, 5</p>
-<p>[8] A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pages 1097–1105, 2012. 2</p>
-<p>[9] M. Lin, Q. Chen, and S. Yan. Network in network. arXiv preprint arXiv:1312.4400, 2013. 5</p>
-<p>[10] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollar, and C. L. Zitnick. Microsoft coco: Common objects in context. In European Conference on Computer Vision, pages 740–755. Springer, 2014. 1, 6</p>
-<p>[11] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. E. Reed. SSD: single shot multibox detector. CoRR, abs/1512.02325, 2015. 4, 5, 6</p>
-<p>[12] G. A. Miller, R. Beckwith, C. Fellbaum, D. Gross, and K. J. Miller. Introduction to wordnet: An on-line lexical database. International journal of lexicography, 3(4):235–244, 1990. 6</p>
-<p>[13] J. Redmon. Darknet: Open source neural networks in c. <a href="http://pjreddie.com/darknet/" target="_blank" rel="external">http://pjreddie.com/darknet/</a>, 2013–2016. 5</p>
-<p>[14] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. arXiv preprint arXiv:1506.02640, 2015. 4, 5</p>
-<p>[15] S. Ren, K. He, R. Girshick, and J. Sun. Faster r-cnn: Towards real-time object detection with region proposal net- works. arXiv preprint arXiv:1506.01497, 2015. 2, 3, 4, 5, 6</p>
-<p>[16] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. International Journal of Computer Vision (IJCV), 2015. 2</p>
-<p>[17] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014. 2, 5</p>
-<p>[18] C. Szegedy, S. Ioffe, and V. Vanhoucke. Inception-v4, inception-resnet and the impact of residual connections on learning. CoRR, abs/1602.07261, 2016. 2</p>
-<p>[19] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich. Going deeper with convolutions. CoRR, abs/1409.4842, 2014. 5</p>
-<p>[20] B. Thomee, D. A. Shamma, G. Friedland, B. Elizalde, K. Ni, D. Poland, D. Borth, and L.-J. Li. Yfcc100m: The new data in multimedia research. Communications of the ACM, 59(2):64–73, 2016. 1</p>
-]]></content>
-    
-    <summary type="html">
-    
-      YOLO9000, Better, Faster, Stronger论文翻译——中文版
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>YOLO9000, Better, Faster, Stronger论文翻译——中英文对照</title>
-    <link href="noahsnail.com/2017/12/26/2017-12-26-YOLO9000,%20Better,%20Faster,%20Stronger%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
-    <id>noahsnail.com/2017/12/26/2017-12-26-YOLO9000, Better, Faster, Stronger论文翻译——中英文对照/</id>
-    <published>2017-12-26T08:42:04.000Z</published>
-    <updated>2017-12-29T08:09:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
-<h1 id="YOLO9000-Better-Faster-Stronger"><a href="#YOLO9000-Better-Faster-Stronger" class="headerlink" title="YOLO9000: Better, Faster, Stronger"></a>YOLO9000: Better, Faster, Stronger</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We introduce YOLO9000, a state-of-the-art, real-time object detection system that can detect over 9000 object categories. First we propose various improvements to the YOLO detection method, both novel and drawn from prior work. The improved model, YOLOv2, is state-of-the-art on standard detection tasks like PASCAL VOC and COCO. Using a novel, multi-scale training method the same YOLOv2 model can run at varying sizes, offering an easy tradeoff between speed and accuracy. At 67 FPS, YOLOv2 gets 76.8 mAP on VOC 2007. At 40 FPS, YOLOv2 gets 78.6 mAP, outperforming state-of-the-art methods like Faster R-CNN with ResNet and SSD while still running significantly faster. Finally we propose a method to jointly train on object detection and classification. Using this method we train YOLO9000 simultaneously on the COCO detection dataset and the ImageNet classification dataset. Our joint training allows YOLO9000 to predict detections for object classes that don’t have labelled detection data. We validate our approach on the ImageNet detection task. YOLO9000 gets 19.7 mAP on the ImageNet detection validation set despite only having detection data for 44 of the 200 classes. On the 156 classes not in COCO, YOLO9000 gets 16.0 mAP. But YOLO can detect more than just 200 classes; it predicts detections for more than 9000 different object categories. And it still runs in real-time.</p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们引入了一个先进的实时目标检测系统YOLO9000，可以检测超过9000个目标类别。首先，我们提出了对YOLO检测方法的各种改进，既有新颖性，也有前期的工作。改进后的模型YOLOv2在PASCAL VOC和COCO等标准检测任务上是最先进的。使用一种新颖的，多尺度训练方法，同样的YOLOv2模型可以以不同的尺寸运行，从而在速度和准确性之间提供了一个简单的折衷。在67FPS时，YOLOv2在VOC 2007上获得了76.8 mAP。在40FPS时，YOLOv2获得了78.6 mAP，比使用ResNet的Faster R-CNN和SSD等先进方法表现更出色，同时仍然运行速度显著更快。最后我们提出了一种联合训练目标检测与分类的方法。使用这种方法，我们在COCO检测数据集和ImageNet分类数据集上同时训练YOLO9000。我们的联合训练允许YOLO9000预测未标注的检测数据目标类别的检测结果。我们在ImageNet检测任务上验证了我们的方法。YOLO9000在ImageNet检测验证集上获得19.7 mAP，尽管200个类别中只有44个具有检测数据。在没有COCO的156个类别上，YOLO9000获得16.0 mAP。但YOLO可以检测到200多个类别；它预测超过9000个不同目标类别的检测结果。并且它仍然能实时运行。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>General purpose object detection should be fast, accurate, and able to recognize a wide variety of objects. Since the introduction of neural networks, detection frameworks have become increasingly fast and accurate. However, most detection methods are still constrained to a small set of objects.</p>
-<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>通用目的的目标检测应该快速，准确，并且能够识别各种各样的目标。自从引入神经网络以来，检测框架变得越来越快速和准确。但是，大多数检测方法仍然受限于一小部分目标。</p>
-<p>Current object detection datasets are limited compared to datasets for other tasks like classification and tagging. The most common detection datasets contain thousands to hundreds of thousands of images with dozens to hundreds of tags [3] [10] [2]. Classification datasets have millions of images with tens or hundreds of thousands of categories [20] [2].</p>
-<p>与分类和标记等其他任务的数据集相比，目前目标检测数据集是有限的。最常见的检测数据集包含成千上万到数十万张具有成百上千个标签的图像[3][10][2]。分类数据集有数以百万计的图像，数十或数十万个类别[20][2]。</p>
-<p>We would like detection to scale to level of object classification. However, labelling images for detection is far more expensive than labelling for classification or tagging (tags are often user-supplied for free). Thus we are unlikely to see detection datasets on the same scale as classification datasets in the near future.</p>
-<p>我们希望检测能够扩展到目标分类的级别。但是，标注检测图像要比标注分类或贴标签要昂贵得多（标签通常是用户免费提供的）。因此，我们不太可能在近期内看到与分类数据集相同规模的检测数据集。</p>
-<p>We propose a new method to harness the large amount of classification data we already have and use it to expand the scope of current detection systems. Our method uses a hierarchical view of object classification that allows us to combine distinct datasets together.</p>
-<p>我们提出了一种新的方法来利用我们已经拥有的大量分类数据，并用它来扩大当前检测系统的范围。我们的方法使用目标分类的分层视图，允许我们将不同的数据集组合在一起。</p>
-<p>We also propose a joint training algorithm that allows us to train object detectors on both detection and classification data. Our method leverages labeled detection images to learn to precisely localize objects while it uses classification images to increase its vocabulary and robustness.</p>
-<p>我们还提出了一种联合训练算法，使我们能够在检测和分类数据上训练目标检测器。我们的方法利用标记的检测图像来学习精确定位物体，同时使用分类图像来增加词表和鲁棒性。</p>
-<p>Using this method we train YOLO9000, a real-time object detector that can detect over 9000 different object categories. First we improve upon the base YOLO detection system to produce YOLOv2, a state-of-the-art, real-time detector. Then we use our dataset combination method and joint training algorithm to train a model on more than 9000 classes from ImageNet as well as detection data from COCO.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
-<p><strong>Figure 1: YOLO9000</strong>. YOLO9000 can detect a wide variety of object classes in real-time.</p>
-<p>使用这种方法我们训练YOLO9000，一个实时的目标检测器，可以检测超过9000种不同的目标类别。首先，我们改进YOLO基础检测系统，产生最先进的实时检测器YOLOv2。然后利用我们的数据集组合方法和联合训练算法对来自ImageNet的9000多个类别以及COCO的检测数据训练了一个模型。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d55daf8a11cf7f5d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
-<p><strong>图1：YOLO9000</strong>。YOLO9000可以实时检测许多目标类别。</p>
-<p>All of our code and pre-trained models are available online at <a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>.</p>
-<p>我们的所有代码和预训练模型都可在线获得：<a href="http://pjreddie.com/yolo9000/" target="_blank" rel="external">http://pjreddie.com/yolo9000/</a>。</p>
-<h2 id="2-Better"><a href="#2-Better" class="headerlink" title="2. Better"></a>2. Better</h2><p>YOLO suffers from a variety of shortcomings relative to state-of-the-art detection systems. Error analysis of YOLO compared to Fast R-CNN shows that YOLO makes a significant number of localization errors. Furthermore, YOLO has relatively low recall compared to region proposal-based methods. Thus we focus mainly on improving recall and localization while maintaining classification accuracy.</p>
-<h2 id="2-更好"><a href="#2-更好" class="headerlink" title="2. 更好"></a>2. 更好</h2><p>与最先进的检测系统相比，YOLO有许多缺点。YOLO与Fast R-CNN相比的误差分析表明，YOLO造成了大量的定位误差。此外，与基于区域提出的方法相比，YOLO召回率相对较低。因此，我们主要侧重于提高召回率和改进定位，同时保持分类准确性。</p>
-<p>Computer vision generally trends towards larger, deeper networks [6] [18] [17]. Better performance often hinges on training larger networks or ensembling multiple models together. However, with YOLOv2 we want a more accurate detector that is still fast. Instead of scaling up our network, we simplify the network and then make the representation easier to learn. We pool a variety of ideas from past work with our own novel concepts to improve YOLO’s performance. A summary of results can be found in Table 2.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
-<p><strong>Table 2: The path from YOLO to YOLOv2</strong>. Most of the listed design decisions lead to significant increases in mAP. Two exceptions are switching to a fully convolutional network with anchor boxes and using the new network. Switching to the anchor box style approach increased recall without changing mAP while using the new network cut computation by $33\%$.</p>
-<p>计算机视觉一般趋向于更大，更深的网络[6][18][17]。更好的性能通常取决于训练更大的网络或将多个模型组合在一起。但是，在YOLOv2中，我们需要一个更精确的检测器，它仍然很快。我们不是扩大我们的网络，而是简化网络，然后让表示更容易学习。我们将过去的工作与我们自己的新概念汇集起来，以提高YOLO的性能。表2列出了结果总结。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-c241c5fec7ef581b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
-<p><strong>表2：从YOLO到YOLOv2的路径</strong>。列出的大部分设计决定都会导致mAP的显著增加。有两个例外是切换到具有锚盒的一个全卷积网络和使用新网络。切换到锚盒风格的方法增加了召回，而不改变mAP，而使用新网络会削减$33\%$的计算量。</p>
-<p><strong>Batch Normalization</strong>. Batch normalization leads to significant improvements in convergence while eliminating the need for other forms of regularization [7]. By adding batch normalization on all of the convolutional layers in YOLO we get more than $2\%$ improvement in mAP. Batch normalization also helps regularize the model. With batch normalization we can remove dropout from the model without overfitting.</p>
-<p><strong>批标准化</strong>。批标准化导致收敛性的显著改善，同时消除了对其他形式正则化的需求[7]。通过在YOLO的所有卷积层上添加批标准化，我们在mAP中获得了超过$2\%$的改进。批标准化也有助于模型正则化。通过批标准化，我们可以从模型中删除丢弃而不会过拟合。</p>
-<p><strong>High Resolution Classifier</strong>. All state-of-the-art detection methods use classifier pre-trained on ImageNet [16]. Starting with AlexNet most classifiers operate on input images smaller than 256 × 256 [8]. The original YOLO trains the classifier network at 224 × 224 and increases the resolution to 448 for detection. This means the network has to simultaneously switch to learning object detection and adjust to the new input resolution.</p>
-<p><strong>高分辨率分类器</strong>。所有最先进的检测方法都使用在ImageNet[16]上预训练的分类器。从AlexNet开始，大多数分类器对小于256×256[8]的输入图像进行操作。原来的YOLO以224×224的分辨率训练分类器网络，并将分辨率提高到448进行检测。这意味着网络必须同时切换到学习目标检测和调整到新的输入分辨率。</p>
-<p>For YOLOv2 we first fine tune the classification network at the full 448 × 448 resolution for 10 epochs on ImageNet. This gives the network time to adjust its filters to work better on higher resolution input. We then fine tune the resulting network on detection. This high resolution classification network gives us an increase of almost $4\%$ mAP.</p>
-<p>对于YOLOv2，我们首先ImageNet上以448×448的分辨率对分类网络进行10个迭代周期的微调。这给了网络时间来调整其滤波器以便更好地处理更高分辨率的输入。然后，我们在检测上微调得到的网络。这个高分辨率分类网络使我们增加了近$4\%$的mAP。</p>
-<p><strong>Convolutional With Anchor Boxes</strong>. YOLO predicts the coordinates of bounding boxes directly using fully connected layers on top of the convolutional feature extractor. Instead of predicting coordinates directly Faster R-CNN predicts bounding boxes using hand-picked priors [15]. Using only convolutional layers the region proposal network (RPN) in Faster R-CNN predicts offsets and confidences for anchor boxes. Since the prediction layer is convolutional, the RPN predicts these offsets at every location in a feature map. Predicting offsets instead of coordinates simplifies the problem and makes it easier for the network to learn.</p>
-<p><strong>具有锚盒的卷积</strong>。YOLO直接使用卷积特征提取器顶部的全连接层来预测边界框的坐标。Faster R-CNN使用手动选择的先验来预测边界框而不是直接预测坐标[15]。Faster R-CNN中的区域提出网络（RPN）仅使用卷积层来预测锚盒的偏移和置信度。由于预测层是卷积的，所以RPN在特征映射的每个位置上预测这些偏移。预测偏移而不是坐标简化了问题，并且使网络更容易学习。</p>
-<p>We remove the fully connected layers from YOLO and use anchor boxes to predict bounding boxes. First we eliminate one pooling layer to make the output of the network’s convolutional layers higher resolution. We also shrink the network to operate on 416 input images instead of 448×448. We do this because we want an odd number of locations in our feature map so there is a single center cell. Objects, especially large objects, tend to occupy the center of the image so it’s good to have a single location right at the center to predict these objects instead of four locations that are all nearby. YOLO’s convolutional layers downsample the image by a factor of 32 so by using an input image of 416 we get an output feature map of 13 × 13.</p>
-<p>我们从YOLO中移除全连接层，并使用锚盒来预测边界框。首先，我们消除了一个池化层，使网络卷积层输出具有更高的分辨率。我们还缩小了网络，操作416×416的输入图像而不是448×448。我们这样做是因为我们要在我们的特征映射中有奇数个位置，所以只有一个中心单元。目标，特别是大目标，往往占据图像的中心，所以在中心有一个单独的位置来预测这些目标，而不是四个都在附近的位置是很好的。YOLO的卷积层将图像下采样32倍，所以通过使用416的输入图像，我们得到了13×13的输出特征映射。</p>
-<p>When we move to anchor boxes we also decouple the class prediction mechanism from the spatial location and instead predict class and objectness for every anchor box. Following YOLO, the objectness prediction still predicts the IOU of the ground truth and the proposed box and the class predictions predict the conditional probability of that class given that there is an object.</p>
-<p>当我们移动到锚盒时，我们也将类预测机制与空间位置分离，预测每个锚盒的类别和目标。在YOLO之后，目标预测仍然预测了实际值和提出的边界框的IOU，并且类别预测预测了当存在目标时该类别的条件概率。</p>
-<p>Using anchor boxes we get a small decrease in accuracy. YOLO only predicts 98 boxes per image but with anchor boxes our model predicts more than a thousand. Without anchor boxes our intermediate model gets 69.5 mAP with a recall of $81\%$. With anchor boxes our model gets 69.2 mAP with a recall of $88\%$. Even though the mAP decreases, the increase in recall means that our model has more room to improve.</p>
-<p>使用锚盒，我们在精度上得到了一个小下降。YOLO每张图像只预测98个边界框，但是使用锚盒我们的模型预测超过一千。如果没有锚盒，我们的中间模型将获得69.5的mAP，召回率为$81\%$。具有锚盒我们的模型得到了69.2 mAP，召回率为$88\%$。尽管mAP下降，但召回率的上升意味着我们的模型有更大的提升空间。</p>
-<p><strong>Dimension Clusters</strong>. We encounter two issues with anchor boxes when using them with YOLO. The first is that the box dimensions are hand picked. The network can learn to adjust the boxes appropriately but if we pick better priors for the network to start with we can make it easier for the network to learn to predict good detections.</p>
-<p><strong>维度聚类</strong>。当锚盒与YOLO一起使用时，我们遇到了两个问题。首先是边界框尺寸是手工挑选的。网络可以学习适当调整边界框，但如果我们为网络选择更好的先验，我们可以使网络更容易学习它以便预测好的检测。</p>
-<p>Instead of choosing priors by hand, we run k-means clustering on the training set bounding boxes to automatically find good priors. If we use standard k-means with Euclidean distance larger boxes generate more error than smaller boxes. However, what we really want are priors that lead to good IOU scores, which is independent of the size of the box. Thus for our distance metric we use:$$d(\text{box}, \text{centroid}) = 1 - \text{IOU}(\text{box}, \text{centroid})$$ We run k-means for various values of $k$ and plot the average IOU with closest centroid, see Figure 2. We choose $k=5$ as a good tradeoff between model complexity and high recall. The cluster centroids are significantly different than hand-picked anchor boxes. There are fewer short, wide boxes and more tall, thin boxes.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
-<p><strong>Figure 2: Clustering box dimensions on VOC and COCO</strong>. We run k-means clustering on the dimensions of bounding boxes to get good priors for our model. The left image shows the average IOU we get with various choices for $k$. We find that $k = 5$ gives a good tradeoff for recall vs. complexity of the model. The right image shows the relative centroids for VOC and COCO. Both sets of priors favor thinner, taller boxes while COCO has greater variation in size than VOC.</p>
-<p>我们不用手工选择先验，而是在训练集边界框上运行k-means聚类，自动找到好的先验。如果我们使用具有欧几里得距离的标准k-means，那么较大的边界框比较小的边界框产生更多的误差。然而，我们真正想要的是导致好的IOU分数的先验，这是独立于边界框大小的。因此，对于我们的距离度量，我们使用：$$d(\text{box}, \text{centroid}) = 1 - \text{IOU}(\text{box}, \text{centroid})$$我们运行各种$k$值的k-means，并画出平均IOU与最接近的几何中心，见图2。我们选择$k=5$作为模型复杂性和高召回率之间的良好折衷。聚类中心与手工挑选的锚盒明显不同。有更短更宽的边界框和更高更细的边界框。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-162ddaa683691557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
-<p><strong>图2：VOC和COCO的聚类边界框尺寸</strong>。我们对边界框的维度进行k-means聚类，以获得我们模型的良好先验。左图显示了我们通过对$k$的各种选择得到的平均IOU。我们发现$k = 5$给出了一个很好的召回率与模型复杂度的权衡。右图显示了VOC和COCO的相对中心。这两种先验都赞成更薄更高的边界框，而COCO比VOC在尺寸上有更大的变化。</p>
-<p>We compare the average IOU to closest prior of our clustering strategy and the hand-picked anchor boxes in Table 1. At only 5 priors the centroids perform similarly to 9 anchor boxes with an average IOU of 61.0 compared to 60.9. If we use 9 centroids we see a much higher average IOU. This indicates that using k-means to generate our bounding box starts the model off with a better representation and makes the task easier to learn.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
-<p><strong>Table 1: Average IOU of boxes to closest priors on VOC 2007</strong>. The average IOU of objects on VOC 2007 to their closest, unmodified prior using different generation methods. Clustering gives much better results than using hand-picked priors.</p>
-<p>在表1中我们将平均IOU与我们聚类策略中最接近的先验以及手工选取的锚盒进行了比较。仅有5个先验中心的平均IOU为61.0，其性能类似于9个锚盒的60.9。如果我们使用9个中心，我们会看到更高的平均IOU。这表明使用k-means来生成我们的边界框会以更好的表示开始训练模型，并使得任务更容易学习。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcc892861fb0b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
-<p><strong>表1：VOC 2007上最接近先验的边界框平均IOU</strong>。VOC 2007上目标的平均IOU与其最接近的，使用不同生成方法之前未经修改的平均值。聚类结果比使用手工选择的先验结果要更好。</p>
-<p><strong>Direct location prediction</strong>. When using anchor boxes with YOLO we encounter a second issue: model instability, especially during early iterations. Most of the instability comes from predicting the $(x,y)$ locations for the box. In region proposal networks the network predicts values $t_x$ and $t_y$ and the $(x,y)$ center coordinates are calculated as:<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
-<p><strong>直接位置预测</strong>。当YOLO使用锚盒时，我们会遇到第二个问题：模型不稳定，特别是在早期的迭代过程中。大部分的不稳定来自预测边界框的$(x,y)$位置。在区域提出网络中，网络预测值$t_x$和$t_y$，$(x,y)$中心坐标计算如下：<br>$$<br>x = (t_x * w_a) - x_a\\<br>y = (t_y * h_a) - y_a<br>$$</p>
-<p>For example, a prediction of $t_x = 1$ would shift the box to the right by the width of the anchor box, a prediction of $t_x = -1$ would shift it to the left by the same amount.</p>
-<p>例如，预测$t_x = 1$会将边界框向右移动锚盒的宽度，预测$t_x = -1$会将其向左移动相同的宽度。</p>
-<p>This formulation is unconstrained so any anchor box can end up at any point in the image, regardless of what location predicted the box. With random initialization the model takes a long time to stabilize to predicting sensible offsets.</p>
-<p>这个公式是不受限制的，所以任何锚盒都可以在图像任一点结束，而不管在哪个位置预测该边界框。随机初始化模型需要很长时间才能稳定以预测合理的偏移量。</p>
-<p>Instead of predicting offsets we follow the approach of YOLO and predict location coordinates relative to the location of the grid cell. This bounds the ground truth to fall between $0$ and $1$. We use a logistic activation to constrain the network’s predictions to fall in this range.</p>
-<p>我们没有预测偏移量，而是按照YOLO的方法预测相对于网格单元位置的位置坐标。这限制了落到$0$和$1$之间的真实值。我们使用逻辑激活来限制网络的预测落在这个范围内。</p>
-<p>The network predicts 5 bounding boxes at each cell in the output feature map. The network predicts 5 coordinates for each bounding box, $t_x$, $t_y$, $t_w$, $t_h$, and $t_o$. If the cell is offset from the top left corner of the image by $(c_x, c_y)$ and the bounding box prior has width and height $p_w$, $p_h$, then the predictions correspond to:<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
-<p><strong>Figure 3: Bounding boxes with dimension priors and location prediction</strong>. We predict the width and height of the box as offsets from cluster centroids. We predict the center coordinates of the box relative to the location of filter application using a sigmoid function.</p>
-<p>网络预测输出特征映射中每个单元的5个边界框。网络预测每个边界框的5个坐标，$t_x$，$t_y$，$t_w$，$t_h$和$t_o$。如果单元从图像的左上角偏移了$(c_x, c_y)$，并且边界框先验的宽度和高度为$p_w$，$p_h$，那么预测对应：<br>$$<br>b_x = \sigma(t_x) + c_x \\<br>b_y = \sigma(t_y)  + c_y\\<br>b_w = p_w e^{t_w}\\<br>b_h = p_h e^{t_h}\\<br>Pr(\text{object}) * IOU(b, \text{object}) = \sigma(t_o)<br>$$</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b783aaa8bf51da01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
-<p><strong>图3：具有维度先验和位置预测的边界框</strong>。我们预测边界框的宽度和高度作为聚类中心的偏移量。我们使用sigmoid函数预测边界框相对于滤波器应用位置的中心坐标。</p>
-<p>Since we constrain the location prediction the parametrization is easier to learn, making the network more stable. Using dimension clusters along with directly predicting the bounding box center location improves YOLO by almost $5\%$ over the version with anchor boxes.</p>
-<p>由于我们限制位置预测参数化更容易学习，使网络更稳定。使用维度聚类以及直接预测边界框中心位置的方式比使用锚盒的版本将YOLO提高了近$5\%$。</p>
-<p><strong>Fine-Grained Features</strong>. This modified YOLO predicts detections on a 13 × 13 feature map. While this is sufficient for large objects, it may benefit from finer grained features for localizing smaller objects. Faster R-CNN and SSD both run their proposal networks at various feature maps in the network to get a range of resolutions. We take a different approach, simply adding a passthrough layer that brings features from an earlier layer at 26 × 26 resolution.</p>
-<p><strong>细粒度功能</strong>。这个修改后的YOLO在13×13特征映射上预测检测结果。虽然这对于大型目标来说已经足够了，但它可以从用于定位较小目标的更细粒度的特征中受益。Faster R-CNN和SSD都在网络的各种特征映射上运行他们提出的网络，以获得一系列的分辨率。我们采用不同的方法，仅仅添加一个直通层，从26x26分辨率的更早层中提取特征。</p>
-<p>The passthrough layer concatenates the higher resolution features with the low resolution features by stacking adjacent features into different channels instead of spatial locations, similar to the identity mappings in ResNet. This turns the 26 × 26 × 512 feature map into a 13 × 13 × 2048 feature map, which can be concatenated with the original features. Our detector runs on top of this expanded feature map so that it has access to fine grained features. This gives a modest $1\%$ performance increase.</p>
-<p>直通层通过将相邻特征堆叠到不同的通道而不是空间位置来连接较高分辨率特征和较低分辨率特征，类似于ResNet中的恒等映射。这将26×26×512特征映射变成13×13×2048特征映射，其可以与原始特征连接。我们的检测器运行在这个扩展的特征映射的顶部，以便它可以访问细粒度的特征。这会使性能提高$1\%$。</p>
-<p><strong>Multi-Scale Training</strong>. The original YOLO uses an input resolution of 448 × 448. With the addition of anchor boxes we changed the resolution to 416×416. However, since our model only uses convolutional and pooling layers it can be resized on the fly. We want YOLOv2 to be robust to running on images of different sizes so we train this into the model.</p>
-<p><strong>多尺度训练</strong>。原来的YOLO使用448×448的输入分辨率。通过添加锚盒，我们将分辨率更改为416×416。但是，由于我们的模型只使用卷积层和池化层，因此它可以实时调整大小。我们希望YOLOv2能够鲁棒的运行在不同大小的图像上，因此我们可以将其训练到模型中。</p>
-<p>Instead of fixing the input image size we change the network every few iterations. Every 10 batches our network randomly chooses a new image dimension size. Since our model downsamples by a factor of 32, we pull from the following multiples of 32: {320, 352, …, 608}. Thus the smallest option is 320 × 320 and the largest is 608 × 608. We resize the network to that dimension and continue training.</p>
-<p>我们没有固定的输入图像大小，每隔几次迭代就改变网络。每隔10个批次我们的网络会随机选择一个新的图像尺寸大小。由于我们的模型缩减了32倍，我们从下面的32的倍数中选择：{320,352，…，608}。因此最小的选项是320×320，最大的是608×608。我们调整网络的尺寸并继续训练。</p>
-<p>This regime forces the network to learn to predict well across a variety of input dimensions. This means the same network can predict detections at different resolutions. The network runs faster at smaller sizes so YOLOv2 offers an easy tradeoff between speed and accuracy.</p>
-<p>这个制度迫使网络学习如何在各种输入维度上做好预测。这意味着相同的网络可以预测不同分辨率下的检测结果。在更小尺寸上网络运行速度更快，因此YOLOv2在速度和准确性之间提供了一个简单的折衷。</p>
-<p>At low resolutions YOLOv2 operates as a cheap, fairly accurate detector. At 288 × 288 it runs at more than 90 FPS with mAP almost as good as Fast R-CNN. This makes it ideal for smaller GPUs, high framerate video, or multiple video streams.</p>
-<p>在低分辨率YOLOv2作为一个便宜，相当准确的检测器。在288×288时，其运行速度超过90FPS，mAP与Fast R-CNN差不多。这使其成为小型GPU，高帧率视频或多视频流的理想选择。</p>
-<p>At high resolution YOLOv2 is a state-of-the-art detector with 78.6 mAP on VOC 2007 while still operating above real-time speeds. See Table 3 for a comparison of YOLOv2 with other frameworks on VOC 2007. Figure 4</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
-<p><strong>Table 3: Detection frameworks on PASCAL VOC 2007</strong>. YOLOv2 is faster and more accurate than prior detection methods. It can also run at different resolutions for an easy tradeoff between speed and accuracy. Each YOLOv2 entry is actually the same trained model with the same weights, just evaluated at a different size. All timing information is on a Geforce GTX Titan X (original, not Pascal model).</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
-<p><strong>Figure 4: Accuracy and speed on VOC 2007.</strong></p>
-<p>在高分辨率下，YOLOv2是VOC 2007上最先进的检测器，达到了78.6 mAP，同时仍保持运行在实时速度之上。请参阅表3，了解YOLOv2与VOC 2007其他框架的比较。图4</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-81d88933e66593ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
-<p><strong>表3：PASCAL VOC 2007的检测框架</strong>。YOLOv2比先前的检测方法更快，更准确。它也可以以不同的分辨率运行，以便在速度和准确性之间进行简单折衷。每个YOLOv2条目实际上是具有相同权重的相同训练模型，只是以不同的大小进行评估。所有的时间信息都是在Geforce GTX Titan X（原始的，而不是Pascal模型）上测得的。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-addcb9e360378378.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
-<p><strong>图4：VOC 2007上的准确性与速度。</strong></p>
-<p><strong>Further Experiments</strong>. We train YOLOv2 for detection on VOC 2012. Table 4 shows the comparative performance of YOLOv2 versus other state-of-the-art detection systems. YOLOv2 achieves 73.4 mAP while running far faster than competing methods. We also train on COCO and compare to other methods in Table 5. On the VOC metric (IOU = .5) YOLOv2 gets 44.0 mAP, comparable to SSD and Faster R-CNN.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
-<p><strong>Table 4: PASCAL VOC2012 test detection results</strong>. YOLOv2 performs on par with state-of-the-art detectors like Faster R-CNN with ResNet and SSD512 and is 2−10× faster.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
-<p><strong>Table 5: Results on COCO <code>test-dev2015</code>. Table adapted from [11]</strong></p>
-<p><strong>进一步实验</strong>。我们在VOC 2012上训练YOLOv2进行检测。表4显示了YOLOv2与其他最先进的检测系统的比较性能。YOLOv2取得了73.4 mAP同时运行速度比竞争方法快的多。我们在COCO上进行了训练，并在表5中与其他方法进行比较。在VOC度量（IOU = 0.5）上，YOLOv2得到44.0 mAP，与SSD和Faster R-CNN相当。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6f95b93c86276dae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
-<p><strong>表4：PASCAL VOC2012 <code>test</code>上的检测结果</strong>。YOLOv2与最先进的检测器如具有ResNet的Faster R-CNN、SSD512在标准数据集上运行，YOLOv2比它们快2-10倍。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2041029fefb69883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
-<p><strong>表5：在COCO <code>test-dev2015</code>上的结果。表参考[11]</strong></p>
-<h2 id="3-Faster"><a href="#3-Faster" class="headerlink" title="3. Faster"></a>3. Faster</h2><p>We want detection to be accurate but we also want it to be fast. Most applications for detection, like robotics or self-driving cars, rely on low latency predictions. In order to maximize performance we design YOLOv2 to be fast from the ground up.</p>
-<h2 id="3-更快"><a href="#3-更快" class="headerlink" title="3. 更快"></a>3. 更快</h2><p>我们希望检测是准确的，但我们也希望它快速。大多数检测应用（如机器人或自动驾驶机车）依赖于低延迟预测。为了最大限度提高性能，我们从头开始设计YOLOv2。</p>
-<p>Most detection frameworks rely on VGG-16 as the base feature extractor [17]. VGG-16 is a powerful, accurate classification network but it is needlessly complex. The convolutional layers of VGG-16 require 30.69 billion floating point operations for a single pass over a single image at 224 × 224 resolution.</p>
-<p>大多数检测框架依赖于VGG-16作为的基本特征提取器[17]。VGG-16是一个强大的，准确的分类网络，但它是不必要的复杂。在单张图像224×224分辨率的情况下VGG-16的卷积层运行一次前馈传播需要306.90亿次浮点运算。</p>
-<p>The YOLO framework uses a custom network based on the Googlenet architecture [19]. This network is faster than VGG-16, only using 8.52 billion operations for a forward pass. However, it’s accuracy is slightly worse than VGG-16. For single-crop, top-5 accuracy at 224 × 224, YOLO’s custom model gets $88.0\%$ ImageNet compared to $90.0\%$ for VGG-16.</p>
-<p>YOLO框架使用基于Googlenet架构[19]的自定义网络。这个网络比VGG-16更快，一次前馈传播只有85.2亿次的操作。然而，它的准确性比VGG-16略差。在ImageNet上，对于单张裁剪图像，224×224分辨率下的<code>top-5</code>准确率，YOLO的自定义模型获得了$88.0\%$，而VGG-16则为$90.0\%$。</p>
-<p><strong>Darknet-19</strong>. We propose a new classification model to be used as the base of YOLOv2. Our model builds off of prior work on network design as well as common knowledge in the field. Similar to the VGG models we use mostly 3 × 3 filters and double the number of channels after every pooling step [17]. Following the work on Network in Network (NIN) we use global average pooling to make predictions as well as 1 × 1 filters to compress the feature representation between 3 × 3 convolutions [9]. We use batch normalization to stabilize training, speed up convergence, and regularize the model [7].</p>
-<p><strong>Darknet-19</strong>。我们提出了一个新的分类模型作为YOLOv2的基础。我们的模型建立在网络设计先前工作以及该领域常识的基础上。与VGG模型类似，我们大多使用3×3滤波器，并在每个池化步骤之后使通道数量加倍[17]。按照Network in Network（NIN）的工作，我们使用全局平均池化做预测以及1×1滤波器来压缩3×3卷积之间的特征表示[9]。我们使用批标准化来稳定训练，加速收敛，并正则化模型[7]。</p>
-<p>Our final model, called Darknet-19, has 19 convolutional layers and 5 maxpooling layers. For a full description see Table 6. Darknet-19 only requires 5.58 billion operations to process an image yet achieves $72.9\%$ top-1 accuracy and $91.2\%$ top-5 accuracy on ImageNet.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-a2e2ce952c7cbc46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
-<p><strong>Table 6: Darknet-19.</strong></p>
-<p>我们的最终模型叫做Darknet-19，它有19个卷积层和5个最大池化层。完整描述请看表6。Darknet-19只需要55.8亿次运算来处理图像，但在ImageNet上却达到了$72.9\%$的<code>top-1</code>准确率和$91.2\%$的<code>top-5</code>准确率。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-a2e2ce952c7cbc46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
-<p><strong>表6：Darknet-19。</strong></p>
-<p><strong>Training for classification</strong>. We train the network on the standard ImageNet 1000 class classification dataset for 160 epochs using stochastic gradient descent with a starting learning rate of 0.1, polynomial rate decay with a power of 4, weight decay of 0.0005 and momentum of 0.9 using the Darknet neural network framework [13]. During training we use standard data augmentation tricks including random crops, rotations, and hue, saturation, and exposure shifts.</p>
-<p><strong>分类训练</strong>。我们使用Darknet神经网络结构，使用随机梯度下降，初始学习率为0.1，学习率多项式衰减系数为4，权重衰减为0.0005，动量为0.9，在标准ImageNet 1000类分类数据集上训练网络160个迭代周期[13]。在训练过程中，我们使用标准的数据增强技巧，包括随机裁剪，旋转，色调，饱和度和曝光偏移。</p>
-<p>As discussed above, after our initial training on images at 224 × 224 we fine tune our network at a larger size, 448. For this fine tuning we train with the above parameters but for only 10 epochs and starting at a learning rate of $10^{−3}$. At this higher resolution our network achieves a top-1 accuracy of $76.5\%$ and a top-5 accuracy of $93.3\%$.</p>
-<p>如上所述，在我们对224×224的图像进行初始训练之后，我们对网络在更大的尺寸448上进行了微调。对于这种微调，我们使用上述参数进行训练，但是只有10个迭代周期，并且以$10^{−3}$的学习率开始。在这种更高的分辨率下，我们的网络达到了$76.5\%$的<code>top-1</code>准确率和$93.3\%$的<code>top-5</code>准确率。</p>
-<p><strong>Training for detection</strong>. We modify this network for detection by removing the last convolutional layer and instead adding on three 3 × 3 convolutional layers with 1024 filters each followed by a final 1 × 1 convolutional layer with the number of outputs we need for detection. For VOC we predict 5 boxes with 5 coordinates each and 20 classes per box so 125 filters. We also add a passthrough layer from the final 3 × 3 × 512 layer to the second to last convolutional layer so that our model can use fine grain features.</p>
-<p><strong>检测训练</strong>。我们修改这个网络进行检测，删除了最后一个卷积层，加上了三个具有1024个滤波器的3×3卷积层，其后是最后的1×1卷积层与我们检测需要的输出数量。对于VOC，我们预测5个边界框，每个边界框有5个坐标和20个类别，所以有125个滤波器。我们还添加了从最后的3×3×512层到倒数第二层卷积层的直通层，以便我们的模型可以使用细粒度特征。</p>
-<p>We train the network for 160 epochs with a starting learning rate of $10^{−3}$, dividing it by 10 at 60 and 90 epochs. We use a weight decay of 0.0005 and momentum of 0.9. We use a similar data augmentation to YOLO and SSD with random crops, color shifting, etc. We use the same training strategy on COCO and VOC.</p>
-<p>我们训练网络160个迭代周期，初始学习率为$10^{−3}$，在60个和90个迭代周期时将学习率除以10。我们使用0.0005的权重衰减和0.9的动量。我们对YOLO和SSD进行类似的数据增强，随机裁剪，色彩偏移等。我们对COCO和VOC使用相同的训练策略。</p>
-<h2 id="4-Stronger"><a href="#4-Stronger" class="headerlink" title="4. Stronger"></a>4. Stronger</h2><p>We propose a mechanism for jointly training on classification and detection data. Our method uses images labelled for detection to learn detection-specific information like bounding box coordinate prediction and objectness as well as how to classify common objects. It uses images with only class labels to expand the number of categories it can detect.</p>
-<h2 id="4-更强"><a href="#4-更强" class="headerlink" title="4. 更强"></a>4. 更强</h2><p>我们提出了一个联合训练分类和检测数据的机制。我们的方法使用标记为检测的图像来学习边界框坐标预测和目标之类的特定检测信息以及如何对常见目标进行分类。它使用仅具有类别标签的图像来扩展可检测类别的数量。</p>
-<p>During training we mix images from both detection and classification datasets. When our network sees an image labelled for detection we can backpropagate based on the full YOLOv2 loss function. When it sees a classification image we only backpropagate loss from the classification-specific parts of the architecture.</p>
-<p>在训练期间，我们混合来自检测和分类数据集的图像。当我们的网络看到标记为检测的图像时，我们可以基于完整的YOLOv2损失函数进行反向传播。当它看到一个分类图像时，我们只能从该架构的分类特定部分反向传播损失。</p>
-<p>This approach presents a few challenges. Detection datasets have only common objects and general labels, like <code>dog</code> or <code>boat</code>. Classification datasets have a much wider and deeper range of labels. ImageNet has more than a hundred breeds of dog, including <code>Norfolk terrier</code>, <code>Yorkshire terrier</code>, and <code>Bedlington terrier</code>. If we want to train on both datasets we need a coherent way to merge these labels.</p>
-<p>这种方法提出了一些挑战。检测数据集只有通用目标和通用标签，如“狗”或“船”。分类数据集具有更广更深的标签范围。ImageNet有超过一百种品种的狗，包括<code>Norfolk terrier</code>，<code>Yorkshire terrier</code>和<code>Bedlington terrier</code>。如果我们想在两个数据集上训练，我们需要一个连贯的方式来合并这些标签。</p>
-<p>Most approaches to classification use a softmax layer across all the possible categories to compute the final probability distribution. Using a softmax assumes the classes are mutually exclusive. This presents problems for combining datasets, for example you would not want to combine ImageNet and COCO using this model because the classes <code>Norfolk terrier</code> and <code>dog</code> are not mutually exclusive.</p>
-<p>大多数分类方法使用跨所有可能类别的softmax层来计算最终的概率分布。使用softmax假定这些类是互斥的。这给数据集的组合带来了问题，例如你不想用这个模型来组合ImageNet和COCO，因为类<code>Norfolk terrier</code>和<code>dog</code>不是互斥的。</p>
-<p>We could instead use a multi-label model to combine the datasets which does not assume mutual exclusion. This approach ignores all the structure we do know about the data, for example that all of the COCO classes are mutually exclusive.</p>
-<p>我们可以改为使用多标签模型来组合不假定互斥的数据集。这种方法忽略了我们已知的关于数据的所有结构，例如，所有的COCO类是互斥的。</p>
-<p><strong>Hierarchical classification</strong>. ImageNet labels are pulled from WordNet, a language database that structures concepts and how they relate [12]. In WordNet, <code>Norfolk terrier</code> and <code>Yorkshire terrier</code> are both hyponyms of <code>terrier</code> which is a type of <code>hunting dog</code>, which is a type of <code>dog</code>, which is a <code>canine</code>, etc. Most approaches to classification assume a flat structure to the labels however for combining datasets, structure is exactly what we need.</p>
-<p><strong>分层分类</strong>。ImageNet标签是从WordNet中提取的，这是一个构建概念及其相互关系的语言数据库[12]。在WordNet中，<code>Norfolk terrier</code>和<code>Yorkshire terrier</code>都是<code>terrier</code>的下义词，<code>terrier</code>是一种<code>hunting dog</code>，<code>hunting dog</code>是<code>dog</code>，<code>dog</code>是<code>canine</code>等。分类的大多数方法为标签假设一个扁平结构，但是对于组合数据集，结构正是我们所需要的。</p>
-<p>WordNet is structured as a directed graph, not a tree, because language is complex. For example a <code>dog</code> is both a type of <code>canine</code> and a type of <code>domestic animal</code> which are both synsets in WordNet. Instead of using the full graph structure, we simplify the problem by building a hierarchical tree from the concepts in ImageNet.</p>
-<p>WordNet的结构是有向图，而不是树，因为语言是复杂的。例如，<code>dog</code>既是一种<code>canine</code>，也是一种<code>domestic animal</code>，它们都是WordNet中的同义词。我们不是使用完整的图结构，而是通过从ImageNet的概念中构建分层树来简化问题。</p>
-<p>To build this tree we examine the visual nouns in ImageNet and look at their paths through the WordNet graph to the root node, in this case “physical object”. Many synsets only have one path through the graph so first we add all of those paths to our tree. Then we iteratively examine the concepts we have left and add the paths that grow the tree by as little as possible. So if a concept has two paths to the root and one path would add three edges to our tree and the other would only add one edge, we choose the shorter path.</p>
-<p>为了构建这棵树，我们检查了ImageNet中的视觉名词，并查看它们通过WordNet图到根节点的路径，在这种情况下是“物理对象”。许多同义词通过图只有一条路径，所以首先我们将所有这些路径添加到我们的树中。然后我们反复检查我们留下的概念，并尽可能少地添加生长树的路径。所以如果一个概念有两条路径到一个根，一条路径会给我们的树增加三条边，另一条只增加一条边，我们选择更短的路径。</p>
-<p>The final result is WordTree, a hierarchical model of visual concepts. To perform classification with WordTree we predict conditional probabilities at every node for the probability of each hyponym of that synset given that synset. For example, at the <code>terrier</code> node we predict:<br>$$<br>Pr(\text{Norfolk terrier} | \text{terrier}) \\<br>Pr(\text{Yorkshire terrier} | \text{terrier}) \\<br>Pr(\text{Bedlington terrier} | \text{terrier})\\<br>…\\<br>$$</p>
-<p>最终的结果是WordTree，一个视觉概念的分层模型。为了使用WordTree进行分类，我们预测每个节点的条件概率，以得到同义词集合中每个同义词下义词的概率。例如，在<code>terrier</code>节点我们预测：<br>$$<br>Pr(\text{Norfolk terrier} | \text{terrier}) \\<br>Pr(\text{Yorkshire terrier} | \text{terrier}) \\<br>Pr(\text{Bedlington terrier} | \text{terrier})\\<br>…\\<br>$$</p>
-<p>If we want to compute the absolute probability for a particular node we simply follow the path through the tree to the root node and multiply to conditional probabilities. So if we want to know if a picture is of a <code>Norfolk terrier</code> we compute:<br>$$<br>Pr(\text{Norfolk terrier}) = Pr(\text{Norfolk terrier} | \text{terrier})\\<br>* Pr(\text{terrier} | \text{hunting dog}) \\<br>* \ldots * \\<br>*Pr(\text{mammal} | Pr(\text{animal})\\<br> * Pr(\text{animal} | \text{physical object})<br>$$</p>
-<p>如果我们想要计算一个特定节点的绝对概率，我们只需沿着通过树到达根节点的路径，再乘以条件概率。所以如果我们想知道一张图片是否是<code>Norfolk terrier</code>，我们计算：<br>$$<br>Pr(\text{Norfolk terrier}) = Pr(\text{Norfolk terrier} | \text{terrier})\\<br>* Pr(\text{terrier} | \text{hunting dog}) \\<br>* \ldots * \\<br>*Pr(\text{mammal} | Pr(\text{animal})\\<br> * Pr(\text{animal} | \text{physical object})<br>$$</p>
-<p>For classification purposes we assume that the the image contains an object: $Pr(\text{physical object}) = 1$. </p>
-<p>为了分类目的，我们假定图像包含一个目标：$Pr(\text{physical object}) = 1$。</p>
-<p>To validate this approach we train the Darknet-19 model on WordTree built using the 1000 class ImageNet. To build WordTree1k we add in all of the intermediate nodes which expands the label space from 1000 to 1369. During training we propagate ground truth labels up the tree so that if an image is labelled as a <code>Norfolk terrier</code> it also gets labelled as a <code>dog</code> and a <code>mammal</code>, etc. To compute the conditional probabilities our model predicts a vector of 1369 values and we compute the softmax over all sysnsets that are hyponyms of the same concept, see Figure 5.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ea0e04e34b0741ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
-<p><strong>Figure 5: Prediction on ImageNet vs WordTree</strong>. Most ImageNet models use one large softmax to predict a probability distribution. Using WordTree we perform multiple softmax operations over co-hyponyms.</p>
-<p>为了验证这种方法，我们在使用1000类ImageNet构建的WordTree上训练Darknet-19模型。为了构建WordTree1k，我们添加了所有将标签空间从1000扩展到1369的中间节点。在训练过程中，我们将真实标签向树上面传播，以便如果图像被标记为<code>Norfolk terrier</code>，则它也被标记为<code>dog</code>和<code>mammal</code>等。为了计算条件概率，我们的模型预测了具有1369个值的向量，并且我们计算了相同概念的下义词在所有同义词集上的softmax，见图5。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ea0e04e34b0741ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
-<p><strong>图5：在ImageNet与WordTree上的预测</strong>。大多数ImageNet模型使用一个较大的softmax来预测概率分布。使用WordTree，我们可以在共同的下义词上执行多次softmax操作。</p>
-<p>Using the same training parameters as before, our hierarchical Darknet-19 achieves $71.9\%$ top-1 accuracy and $90.4\%$ top-5 accuracy. Despite adding 369 additional concepts and having our network predict a tree structure our accuracy only drops marginally. Performing classification in this manner also has some benefits. Performance degrades gracefully on new or unknown object categories. For example, if the network sees a picture of a dog but is uncertain what type of dog it is, it will still predict <code>dog</code> with high confidence but have lower confidences spread out among the hyponyms.</p>
-<p>使用与以前相同的训练参数，我们的分级Darknet-19达到$71.9\%$的<code>top-1</code>准确率和$90.4\%$的<code>top-5</code>准确率。尽管增加了369个额外的概念，而且我们的网络预测了一个树状结构，但我们的准确率仅下降了一点点。以这种方式进行分类也有一些好处。在新的或未知的目标类别上性能会优雅地降低。例如，如果网络看到一只狗的照片，但不确定它是什么类型的狗，它仍然会高度自信地预测“狗”，但是在下义位扩展之间有更低的置信度。</p>
-<p>This formulation also works for detection. Now, instead of assuming every image has an object, we use YOLOv2’s objectness predictor to give us the value of $Pr(\text{physical object})$. The detector predicts a bounding box and the tree of probabilities. We traverse the tree down, taking the highest confidence path at every split until we reach some threshold and we predict that object class.</p>
-<p>这个构想也适用于检测。现在，我们不是假定每张图像都有一个目标，而是使用YOLOv2的目标预测器给我们$Pr(\text{physical object})$的值。检测器预测边界框和概率树。我们遍历树，在每个分割中采用最高的置信度路径，直到达到某个阈值，然后我们预测目标类。</p>
-<p><strong>Dataset combination with WordTree</strong>. We can use WordTree to combine multiple datasets together in a sensible fashion. We simply map the categories in the datasets to synsets in the tree. Figure 6 shows an example of using WordTree to combine the labels from ImageNet and COCO. WordNet is extremely diverse so we can use this technique with most datasets.</p>
-<p><strong>与WordTree的数据集组合</strong>。我们可以使用WordTree以合理的方式将多个数据集组合在一起。我们只需将数据集中的类别映射到树中的synsets即可。图6显示了使用WordTree来组合来自ImageNet和COCO的标签的示例。WordNet是非常多样化的，所以我们可以在大多数数据集中使用这种技术。</p>
-<p><strong>Joint classification and detection</strong>. Now that we can combine datasets using WordTree we can train our joint model on classification and detection. We want to train an extremely large scale detector so we create our combined dataset using the COCO detection dataset and the top 9000 classes from the full ImageNet release. We also need to evaluate our method so we add in any classes from the ImageNet detection challenge that were not already included. The corresponding WordTree for this dataset has 9418 classes. ImageNet is a much larger dataset so we balance the dataset by oversampling COCO so that ImageNet is only larger by a factor of 4:1.</p>
-<p><strong>联合分类和检测</strong>。现在我们可以使用WordTree组合数据集，我们可以在分类和检测上训练联合模型。我们想要训练一个非常大规模的检测器，所以我们使用COCO检测数据集和完整的ImageNet版本中的前9000个类来创建我们的组合数据集。我们还需要评估我们的方法，以便从ImageNet检测挑战中添加任何尚未包含的类。该数据集的相应WordTree有9418个类别。ImageNet是一个更大的数据集，所以我们通过对COCO进行过采样来平衡数据集，使得ImageNet仅仅大于4:1的比例。</p>
-<p>Using this dataset we train YOLO9000. We use the base YOLOv2 architecture but only 3 priors instead of 5 to limit the output size. When our network sees a detection image we backpropagate loss as normal. For classification loss, we only backpropagate loss at or above the corresponding level of the label. For example, if the label is <code>dog</code> we do assign any error to predictions further down in the tree, <code>German Shepherd</code> versus <code>Golden Retriever</code>, because we do not have that information.</p>
-<p>使用这个数据集我们训练YOLO9000。我们使用基础的YOLOv2架构，但只有3个先验而不是5个来限制输出大小。当我们的网络看到一个检测图像时，我们正常的反向传播损失。对于分类损失，我们仅在等于或高于标签对应的层反向传播损失。例如，如果标签是“狗”，我们确实沿着树向下进一步预测“德国牧羊犬”与“金毛猎犬”之间的差异，因为我们没有这些信息。</p>
-<p>When it sees a classification image we only backpropagate classification loss. To do this we simply find the bounding box that predicts the highest probability for that class and we compute the loss on just its predicted tree. We also assume that the predicted box overlaps what would be the ground truth label by at least 0.3 IOU and we backpropagate objectness loss based on this assumption.</p>
-<p>当它看到分类图像时，我们只能反向传播分类损失。要做到这一点，我们只需找到预测该类别最高概率的边界框，然后计算其预测树上的损失。我们还假设预测边界框与真实标签重叠至少0.3的IOU，并且基于这个假设反向传播目标损失。</p>
-<p>Using this joint training, YOLO9000 learns to find objects in images using the detection data in COCO and it learns to classify a wide variety of these objects using data from ImageNet.</p>
-<p>使用这种联合训练，YOLO9000学习使用COCO中的检测数据来查找图像中的目标，并学习使用来自ImageNet的数据对各种目标进行分类。</p>
-<p>We evaluate YOLO9000 on the ImageNet detection task. The detection task for ImageNet shares on 44 object categories with COCO which means that YOLO9000 has only seen classification data for the majority of the test images, not detection data. YOLO9000 gets 19.7 mAP overall with 16.0 mAP on the disjoint 156 object classes that it has never seen any labelled detection data for. This mAP is higher than results achieved by DPM but YOLO9000 is trained on different datasets with only partial supervision [4]. It also is simultaneously detecting 9000 other object categories, all in real-time.</p>
-<p>我们在ImageNet检测任务上评估YOLO9000。ImageNet的检测任务与COCO共享44个目标类别，这意味着YOLO9000只能看到大多数测试图像的分类数据，而不是检测数据。YOLO9000在从未见过任何标记的检测数据的情况下，整体上获得了19.7 mAP，在不相交的156个目标类别中获得了16.0 mAP。这个mAP高于DPM的结果，但是YOLO9000在不同的数据集上训练，只有部分监督[4]。它也同时检测9000个其他目标类别，所有的都是实时的。</p>
-<p>When we analyze YOLO9000’s performance on ImageNet we see it learns new species of animals well but struggles with learning categories like clothing and equipment. New animals are easier to learn because the objectness predictions generalize well from the animals in COCO. Conversely, COCO does not have bounding box label for any type of clothing, only for person, so YOLO9000 struggles to model categories like “sunglasses” or “swimming trunks”.</p>
-<p>当我们分析YOLO9000在ImageNet上的表现时，我们发现它很好地学习了新的动物种类，但是却在像服装和设备这样的学习类别中挣扎。新动物更容易学习，因为目标预测可以从COCO中的动物泛化的很好。相反，COCO没有任何类型的衣服的边界框标签，只针对人，因此YOLO9000正在努力建模“墨镜”或“泳裤”等类别。</p>
-<h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5. Conclusion"></a>5. Conclusion</h2><p>We introduce YOLOv2 and YOLO9000, real-time detection systems. YOLOv2 is state-of-the-art and faster than other detection systems across a variety of detection datasets. Furthermore, it can be run at a variety of image sizes to provide a smooth tradeoff between speed and accuracy.</p>
-<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们介绍了YOLOv2和YOLO9000，两个实时检测系统。YOLOv2在各种检测数据集上都是最先进的，也比其他检测系统更快。此外，它可以运行在各种图像大小，以提供速度和准确性之间的平滑折衷。</p>
-<p>YOLO9000 is a real-time framework for detection more than 9000 object categories by jointly optimizing detection and classification. We use WordTree to combine data from various sources and our joint optimization technique to train simultaneously on ImageNet and COCO. YOLO9000 is a strong step towards closing the dataset size gap between detection and classification.</p>
-<p>YOLO9000是一个通过联合优化检测和分类来检测9000多个目标类别的实时框架。我们使用WordTree将各种来源的数据和我们的联合优化技术相结合，在ImageNet和COCO上同时进行训练。YOLO9000是在检测和分类之间缩小数据集大小差距的重要一步。</p>
-<p>Many of our techniques generalize outside of object detection. Our WordTree representation of ImageNet offers a richer, more detailed output space for image classification. Dataset combination using hierarchical classification would be useful in the classification and segmentation domains. Training techniques like multi-scale training could provide benefit across a variety of visual tasks.</p>
-<p>我们的许多技术都可以泛化到目标检测之外。我们对ImageNet的WordTree表示为图像分类提供了更丰富，更详细的输出空间。使用分层分类的数据集组合在分类和分割领域将是有用的。像多尺度训练这样的训练技术可以为各种视觉任务提供益处。</p>
-<p>For future work we hope to use similar techniques for weakly supervised image segmentation. We also plan to improve our detection results using more powerful matching strategies for assigning weak labels to classification data during training. Computer vision is blessed with an enormous amount of labelled data. We will continue looking for ways to bring different sources and structures of data together to make stronger models of the visual world.</p>
-<p>对于未来的工作，我们希望使用类似的技术来进行弱监督的图像分割。我们还计划使用更强大的匹配策略来改善我们的检测结果，以在训练期间将弱标签分配给分类数据。计算机视觉受到大量标记数据的祝福。我们将继续寻找方法，将不同来源和数据结构的数据整合起来，形成更强大的视觉世界模型。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] S. Bell, C. L. Zitnick, K. Bala, and R. Girshick. Inside-outside net: Detecting objects in context with skip pooling and recurrent neural networks. arXiv preprint arXiv:1512.04143, 2015. 6</p>
-<p>[2] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei- Fei. Imagenet: A large-scale hierarchical image database. In Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, pages 248–255. IEEE, 2009. 1</p>
-<p>[3] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The pascal visual object classes (voc) challenge. International journal of computer vision, 88(2):303– 338, 2010. 1</p>
-<p>[4] P. F. Felzenszwalb, R. B. Girshick, and D. McAllester. Discriminatively trained deformable part models, release 4. <a href="http://people.cs.uchicago.edu/pff/latent-release4/" target="_blank" rel="external">http://people.cs.uchicago.edu/pff/latent-release4/</a>. 8</p>
-<p>[5] R. B. Girshick. Fast R-CNN. CoRR, abs/1504.08083, 2015. 4, 5, 6</p>
-<p>[6] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. arXiv preprint arXiv:1512.03385, 2015. 2, 4, 5</p>
-<p>[7] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015. 2, 5</p>
-<p>[8] A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet classification with deep convolutional neural networks. In Advances in neural information processing systems, pages 1097–1105, 2012. 2</p>
-<p>[9] M. Lin, Q. Chen, and S. Yan. Network in network. arXiv preprint arXiv:1312.4400, 2013. 5</p>
-<p>[10] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollar, and C. L. Zitnick. Microsoft coco: Common objects in context. In European Conference on Computer Vision, pages 740–755. Springer, 2014. 1, 6</p>
-<p>[11] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. E. Reed. SSD: single shot multibox detector. CoRR, abs/1512.02325, 2015. 4, 5, 6</p>
-<p>[12] G. A. Miller, R. Beckwith, C. Fellbaum, D. Gross, and K. J. Miller. Introduction to wordnet: An on-line lexical database. International journal of lexicography, 3(4):235–244, 1990. 6</p>
-<p>[13] J. Redmon. Darknet: Open source neural networks in c. <a href="http://pjreddie.com/darknet/" target="_blank" rel="external">http://pjreddie.com/darknet/</a>, 2013–2016. 5</p>
-<p>[14] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. arXiv preprint arXiv:1506.02640, 2015. 4, 5</p>
-<p>[15] S. Ren, K. He, R. Girshick, and J. Sun. Faster r-cnn: Towards real-time object detection with region proposal net- works. arXiv preprint arXiv:1506.01497, 2015. 2, 3, 4, 5, 6</p>
-<p>[16] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. International Journal of Computer Vision (IJCV), 2015. 2</p>
-<p>[17] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556, 2014. 2, 5</p>
-<p>[18] C. Szegedy, S. Ioffe, and V. Vanhoucke. Inception-v4, inception-resnet and the impact of residual connections on learning. CoRR, abs/1602.07261, 2016. 2</p>
-<p>[19] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich. Going deeper with convolutions. CoRR, abs/1409.4842, 2014. 5</p>
-<p>[20] B. Thomee, D. A. Shamma, G. Friedland, B. Elizalde, K. Ni, D. Poland, D. Borth, and L.-J. Li. Yfcc100m: The new data in multimedia research. Communications of the ACM, 59(2):64–73, 2016. 1</p>
-]]></content>
-    
-    <summary type="html">
-    
-      YOLO9000, Better, Faster, Stronger论文翻译——中英文对照
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>枚举——熄灯问题</title>
-    <link href="noahsnail.com/2017/12/21/2017-12-21-%E6%9E%9A%E4%B8%BE%E2%80%94%E2%80%94%E7%86%84%E7%81%AF%E9%97%AE%E9%A2%98/"/>
-    <id>noahsnail.com/2017/12/21/2017-12-21-枚举——熄灯问题/</id>
-    <published>2017-12-21T13:40:31.000Z</published>
-    <updated>2017-12-26T02:13:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
-<h2 id="1-枚举"><a href="#1-枚举" class="headerlink" title="1. 枚举"></a>1. 枚举</h2><p>枚举是基于逐个尝试答案的一种问题求解策略。</p>
-<h2 id="2-熄灯问题（POJ1222）"><a href="#2-熄灯问题（POJ1222）" class="headerlink" title="2. 熄灯问题（POJ1222）"></a>2. 熄灯问题（POJ1222）</h2><ul>
-<li><p>问题描述<br>有一个由按钮组成的矩阵，其中每行有6个按钮，共5行。每个按钮的位置上有一盏灯。当按下一个按钮后，该按钮以及周围位置(上边、下边、左边、右边)的灯都会改变一次。<br><img src="http://upload-images.jianshu.io/upload_images/3232548-cc19012d907ceb5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"><br>如果灯原来是点亮的，就会被熄灭；如果灯原来是熄灭的，则会被点亮。在矩阵角上的按钮改变3盏灯的状态；在矩阵边上的按钮改变4盏灯的状态；其他的按钮改变5盏灯的状态。<br><img src="http://upload-images.jianshu.io/upload_images/3232548-a4dbfb424bd5e04b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"><br>与一盏灯毗邻的多个按钮被按下时，一个操作会抵消另一次操作的结果。对矩阵中的每盏灯设置一个初始状态。请你按按钮，直至每一盏等都熄灭。</p>
-</li>
-<li><p>输入<br>5行组成，每一行包括6个数字（0或1）。相邻两个数字之间用单个空格隔开。0表示灯的初始状态是熄灭的，1表示灯的初始状态是点亮的。</p>
-</li>
-<li><p>输出<br>5行组成，每一行包括6个数字（0或1）。相邻两个数字之间用单个空格隔开。其中的1表示需要把对应的按钮按下，0则表示不需要按对应的按钮。</p>
-</li>
-<li><p>输入样例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0 1 1 0 1 0</div><div class="line">1 0 0 1 1 1</div><div class="line">0 0 1 0 0 1</div><div class="line">1 0 0 1 0 1</div><div class="line">0 1 1 1 0 0</div></pre></td></tr></table></figure>
-</li>
-<li><p>输出样例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1 0 1 0 0 1</div><div class="line">1 1 0 1 0 1</div><div class="line">0 0 1 0 1 1</div><div class="line">1 0 0 1 0 0</div><div class="line">0 1 0 0 0 0</div></pre></td></tr></table></figure>
-</li>
-<li><p>分析<br>假设当前灯亮，按钮按一次，灯变灭，再按一次，灯又变亮，恢复到了初始状态，因此，按钮按两次是没意义的。结论：按钮按偶数次没意义，按钮按奇数次与按一次一样，因此，每个按钮最多按一次。</p>
-</li>
-<li><p>解题思路</p>
-</li>
-</ul>
-<ol>
-<li>枚举所有可能的按钮状态，每种状态计算一下最后的情况，看是否都熄灭。所有状态数为$2^{30}$，因此这种方案不可行。</li>
-<li>如果存在某个局部，一旦这个局部的状态确定，那么剩下的其它状态只能是确定的一种，或不多的n种，则只需要枚举这个局部即可。以第一行为例，假设它就是那个局部，如果第一行的状态确定了，是不是第二行的状态就确定了呢？答案是是的，因为第一行按钮按过之后，亮的灯只有按第二行才能将其熄灭。同理，第二行按钮按下后，只能通过第三行按钮来控制灯熄灭。</li>
-<li>枚举第一行的所有可能状态，每个位置有0和1两种状态，共6个位置，因此第一行的所有可能状态为$2^6=64$种，枚举状态可以通过递归实现。如果使用每个比特位代表一个灯的话，则可能的状态为数字0-63。</li>
-</ol>
-<ul>
-<li>方法一</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 枚举第一行的所有可能状态</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">all_status</span><span class="params">(status_list, status, depth)</span>:</span></div><div class="line">    rows, columns = status.shape</div><div class="line">    other = status.copy()</div><div class="line">    other[<span class="number">0</span>, depth] = <span class="number">1</span></div><div class="line">    <span class="keyword">if</span> depth == columns - <span class="number">1</span>:</div><div class="line">        status_list.append(status.copy())    </div><div class="line">        status_list.append(other.copy())</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        all_status(status_list, status.copy(), depth + <span class="number">1</span>)</div><div class="line">        all_status(status_list, other.copy(), depth + <span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 如果按钮按下，更改灯的状态</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">light_change</span><span class="params">(input_data, i, j)</span>:</span></div><div class="line">    rows, columns = input_data.shape</div><div class="line">    input_data[i, j] = (input_data[i, j] + <span class="number">1</span>) % <span class="number">2</span></div><div class="line">    <span class="keyword">if</span> (i - <span class="number">1</span>) &gt;= <span class="number">0</span>:</div><div class="line">        input_data[i - <span class="number">1</span>, j] = (input_data[i - <span class="number">1</span>, j] + <span class="number">1</span>) % <span class="number">2</span></div><div class="line">    <span class="keyword">if</span> (i + <span class="number">1</span>) &lt; rows:</div><div class="line">        input_data[i + <span class="number">1</span>, j] = (input_data[i + <span class="number">1</span>, j] + <span class="number">1</span>) % <span class="number">2</span></div><div class="line">    <span class="keyword">if</span> (j - <span class="number">1</span>) &gt;= <span class="number">0</span>:</div><div class="line">        input_data[i, j - <span class="number">1</span>] = (input_data[i, j - <span class="number">1</span>] + <span class="number">1</span>) % <span class="number">2</span></div><div class="line">    <span class="keyword">if</span> (j + <span class="number">1</span>) &lt; columns:</div><div class="line">        input_data[i, j + <span class="number">1</span>] = (input_data[i, j + <span class="number">1</span>] + <span class="number">1</span>) % <span class="number">2</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 尝试关闭所有灯</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">light_off</span><span class="params">(input_data, output_data)</span>:</span></div><div class="line">    rows, columns = input_data.shape</div><div class="line">    <span class="comment"># 根据第一行按钮的状态修改灯的亮灭</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, columns):</div><div class="line">        <span class="keyword">if</span> output_data[<span class="number">0</span>, i] == <span class="number">1</span>:</div><div class="line">            light_change(input_data, <span class="number">0</span>, i)</div><div class="line">    <span class="comment"># 从第二行开始，每一行的按钮都使上一行的灯熄灭</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, rows):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> xrange(<span class="number">0</span>, columns):</div><div class="line">            <span class="keyword">if</span> input_data[i - <span class="number">1</span>, j] == <span class="number">1</span>:</div><div class="line">                light_change(input_data, i, j)</div><div class="line">                output_data[i, j] = <span class="number">1</span></div><div class="line">    <span class="keyword">if</span> np.sum(input_data) == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span>, output_data</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span>, output_data</div><div class="line"></div><div class="line"><span class="comment"># 输出指定格式的结果</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_result</span><span class="params">(output_data)</span>:</span></div><div class="line">    rows, columns = output_data.shape</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(rows):</div><div class="line">        binary_string = <span class="string">''</span></div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> xrange(columns):</div><div class="line">            binary_string += str(output_data[i, j])</div><div class="line">        <span class="keyword">print</span> binary_string</div><div class="line"></div><div class="line">input_list = []</div><div class="line">input_data = np.array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</div><div class="line">                       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</div><div class="line">                       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">                       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">                       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>]], dtype = <span class="string">'int8'</span>)</div><div class="line">input_list.append(input_data)</div><div class="line">input_data = np.array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</div><div class="line">                       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</div><div class="line">                       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</div><div class="line">                       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">                       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>]], dtype = <span class="string">'int8'</span>)</div><div class="line">input_list.append(input_data)</div><div class="line">status_list = []</div><div class="line">status = np.zeros((<span class="number">5</span>, <span class="number">6</span>), dtype = <span class="string">'int8'</span>)</div><div class="line">all_status(status_list, status, <span class="number">0</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(input_list)):</div><div class="line">    input_data = input_list[i]</div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> xrange(len(status_list)):</div><div class="line">        flag, output_data = light_off(input_data.copy(), status_list[j].copy())</div><div class="line">        <span class="keyword">if</span> flag:</div><div class="line">            <span class="keyword">print</span> j</div><div class="line">            <span class="keyword">print</span> <span class="string">'PUZZLE #%d'</span> % (i + <span class="number">1</span>)</div><div class="line">            print_result(output_data)</div><div class="line">            <span class="keyword">break</span></div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PUZZLE #1</div><div class="line">101001</div><div class="line">110101</div><div class="line">001011</div><div class="line">100100</div><div class="line">010000</div><div class="line">PUZZLE #2</div><div class="line">100111</div><div class="line">110000</div><div class="line">000100</div><div class="line">110101</div><div class="line">101101</div></pre></td></tr></table></figure>
-<ul>
-<li>方法二</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 取特定位置上的比特，索引从0开始</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_bit</span><span class="params">(number, index)</span>:</span></div><div class="line">    <span class="keyword">return</span> (number &gt;&gt; index) &amp; <span class="number">1</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 设定特定位置上的比特</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_bit</span><span class="params">(number, index, value)</span>:</span></div><div class="line">    <span class="keyword">return</span> number | (value &lt;&lt; index)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 特定位置上的比特反转</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">flip</span><span class="params">(number, index)</span>:</span></div><div class="line">    <span class="keyword">return</span> number ^ (<span class="number">1</span> &lt;&lt; index)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 如果按钮按下，更改灯的状态</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">light_change</span><span class="params">(input_data, i, j)</span>:</span></div><div class="line">    rows = <span class="number">5</span></div><div class="line">    columns = <span class="number">6</span></div><div class="line">    input_data[i] = flip(input_data[i], j)</div><div class="line">    <span class="keyword">if</span> (i - <span class="number">1</span>) &gt;= <span class="number">0</span>:</div><div class="line">        input_data[i - <span class="number">1</span>] = flip(input_data[i - <span class="number">1</span>], j)</div><div class="line">    <span class="keyword">if</span> (i + <span class="number">1</span>) &lt; rows:</div><div class="line">        input_data[i + <span class="number">1</span>] = flip(input_data[i + <span class="number">1</span>], j)</div><div class="line">    <span class="keyword">if</span> (j - <span class="number">1</span>) &gt;= <span class="number">0</span>:</div><div class="line">        input_data[i] = flip(input_data[i], j - <span class="number">1</span>)</div><div class="line">    <span class="keyword">if</span> (j + <span class="number">1</span>) &lt; columns:</div><div class="line">        input_data[i] = flip(input_data[i], j + <span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 尝试关闭所有灯</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">light_off</span><span class="params">(input_data, output_data)</span>:</span></div><div class="line">    rows = <span class="number">5</span></div><div class="line">    columns = <span class="number">6</span></div><div class="line">    <span class="comment"># 根据第一行按钮的状态修改灯的亮灭</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, columns):</div><div class="line">        <span class="keyword">if</span> get_bit(output_data[<span class="number">0</span>], i) == <span class="number">1</span>:</div><div class="line">            light_change(input_data, <span class="number">0</span>, i)</div><div class="line">    <span class="comment"># 从第二行开始，每一行的按钮都使上一行的灯熄灭</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, rows):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> xrange(<span class="number">0</span>, columns):</div><div class="line">            <span class="keyword">if</span> get_bit(input_data[i - <span class="number">1</span>], j) == <span class="number">1</span>:</div><div class="line">                light_change(input_data, i, j)</div><div class="line">                output_data[i] = set_bit(output_data[i], j, <span class="number">1</span>)</div><div class="line">    <span class="keyword">if</span> input_data[<span class="number">-1</span>] == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 输出指定格式的结果</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_result</span><span class="params">(output_data)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(output_data)):</div><div class="line">        binary_string = bin(output_data[i])[<span class="number">2</span>:]</div><div class="line">        diff = <span class="number">6</span> - len(binary_string)</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> xrange(diff):</div><div class="line">            binary_string = <span class="string">'0'</span> + binary_string</div><div class="line">        <span class="keyword">print</span> binary_string</div><div class="line"></div><div class="line"></div><div class="line">input_list = []</div><div class="line">input_data = [int(<span class="string">'011010'</span>, <span class="number">2</span>), int(<span class="string">'100111'</span>, <span class="number">2</span>), int(<span class="string">'001001'</span>, <span class="number">2</span>), int(<span class="string">'100101'</span>, <span class="number">2</span>), int(<span class="string">'011100'</span>, <span class="number">2</span>)]</div><div class="line">input_list.append(input_data)</div><div class="line">input_data = [int(<span class="string">'001010'</span>, <span class="number">2</span>), int(<span class="string">'101011'</span>, <span class="number">2</span>), int(<span class="string">'001011'</span>, <span class="number">2</span>), int(<span class="string">'101100'</span>, <span class="number">2</span>), int(<span class="string">'010100'</span>, <span class="number">2</span>)]</div><div class="line">input_list.append(input_data)</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(input_list)):</div><div class="line">    input_data = input_list[i]</div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> xrange(<span class="number">64</span>):</div><div class="line">        copy = [input_data[x] <span class="keyword">for</span> x <span class="keyword">in</span> xrange(len(input_data))]</div><div class="line">        output_data = [<span class="number">0</span> <span class="keyword">for</span> k <span class="keyword">in</span> xrange(<span class="number">5</span>)]</div><div class="line">        output_data[<span class="number">0</span>] = j</div><div class="line">        flag = light_off(copy, output_data)</div><div class="line">        <span class="keyword">if</span> flag:</div><div class="line">            <span class="keyword">print</span> <span class="string">'PUZZLE #%d'</span> % (i + <span class="number">1</span>)</div><div class="line">            print_result(output_data)</div><div class="line">            <span class="keyword">break</span></div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PUZZLE #1</div><div class="line">101001</div><div class="line">110101</div><div class="line">001011</div><div class="line">100100</div><div class="line">010000</div><div class="line">PUZZLE #2</div><div class="line">100111</div><div class="line">110000</div><div class="line">000100</div><div class="line">110101</div><div class="line">101101</div></pre></td></tr></table></figure>
-<p><strong>总结：这个问题比较复杂，其中隐含的一点就是局部状态确定后，后面的状态都会被确定，此时需要枚举局部状态。方法一与方法二的求解思路是一样，但实现方式不一样，方法一使用Numpy来处理数据，而方法二使用比特来处理数据。</strong></p>
-<p>源码地址：<a href="https://github.com/SnailTyan/programming-and-algorithms/blob/master/turn_off_light_numpy.py" target="_blank" rel="external">Numpy方法</a>，<a href="https://github.com/SnailTyan/programming-and-algorithms/blob/master/turn_off_light_binary.py" target="_blank" rel="external">二进制比特方法</a>，记得给个star。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="http://www.icourse163.org/course/PKU-1001894005" target="_blank" rel="external">程序设计与算法（二）算法基础</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      枚举——熄灯问题
-    
-    </summary>
-    
-      <category term="程序设计与算法" scheme="noahsnail.com/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="枚举" scheme="noahsnail.com/tags/%E6%9E%9A%E4%B8%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>枚举——称硬币</title>
-    <link href="noahsnail.com/2017/12/20/2017-12-20-%E6%9E%9A%E4%B8%BE%E2%80%94%E2%80%94%E7%A7%B0%E7%A1%AC%E5%B8%81/"/>
-    <id>noahsnail.com/2017/12/20/2017-12-20-枚举——称硬币/</id>
-    <published>2017-12-20T12:36:16.000Z</published>
-    <updated>2017-12-21T13:51:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
-<h2 id="1-枚举"><a href="#1-枚举" class="headerlink" title="1. 枚举"></a>1. 枚举</h2><p>枚举是基于逐个尝试答案的一种问题求解策略。</p>
-<h2 id="2-称硬币（POJ1013）"><a href="#2-称硬币（POJ1013）" class="headerlink" title="2. 称硬币（POJ1013）"></a>2. 称硬币（POJ1013）</h2><ul>
-<li><p>问题描述<br>有12枚硬币。其中有11枚真币和1枚假币。假币和真币重量不同，但不知道假币比真币轻还是重。现在，用一架天平称了这些币三次，告诉你称的结果，请你找出假币并且确定假币是轻是重（数据保证一定能找出来）。</p>
-</li>
-<li><p>输入<br>第一行是测试数据组数。<br>每组数据有三行，每行表示一次称量的结果。银币标号为A-L。每次称量的结果用三个以空格隔开的字符串表示：天平左边放置的硬币、天平右边放置的硬币、平衡状态。其中平衡状态用<code>up</code>，<code>down</code>或<code>even</code>表示，分别为右端高、右端低和平衡。天平左右的硬币数总是相等的。</p>
-</li>
-<li><p>输出<br>输出哪一个标号的银币是假币，并说明它比真币轻还是重。</p>
-</li>
-<li><p>输入样例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">ABCD EFGH even</div><div class="line">ABCI EFJK up</div><div class="line">ABIJ EFGH even</div></pre></td></tr></table></figure>
-</li>
-<li><p>输出样例<br>K is the counterfeit coin and it is light.</p>
-</li>
-<li><p>解题思路</p>
-</li>
-</ul>
-<p>对于每一枚硬币先假设它是轻的，看这样是否符合称量结果。如果符合，问题即解决。如果不符合，就假设它是重的，看是否符合称量结果。把所有硬币都试一遍，一定能找到特殊硬币。</p>
-<ul>
-<li>分析</li>
-</ul>
-<p>根据硬币的状态（轻重）和硬币所处的位置（左右或无）可以判断出称重结果，如果三次判断的结果与真实结果都相符，则当前硬币及当前状态即为结果。</p>
-<ul>
-<li>代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">input_data = [[&apos;ABCD&apos;, &apos;EFGH&apos;, &apos;even&apos;], [&apos;ABCI&apos;, &apos;EFJK&apos;, &apos;up&apos;], [&apos;ABIJ&apos;, &apos;EFGH&apos;, &apos;even&apos;]]</div><div class="line">labels = &apos;ABCDEFGHIJKL&apos;</div><div class="line">label_status = [&apos;light&apos;, &apos;heavy&apos;]</div><div class="line">for label in labels:</div><div class="line">    for status in label_status:</div><div class="line">        for data in input_data:</div><div class="line">            flag = True</div><div class="line">            left = data[0]</div><div class="line">            right = data[1]</div><div class="line">            result = data[2]</div><div class="line">            if label in left:</div><div class="line">                if status == &apos;light&apos;:</div><div class="line">                    should_be = &apos;down&apos;</div><div class="line">                else:</div><div class="line">                    should_be = &apos;up&apos;</div><div class="line">            elif label in right:</div><div class="line">                if status == &apos;light&apos;:</div><div class="line">                    should_be = &apos;up&apos;</div><div class="line">                else:</div><div class="line">                    should_be = &apos;down&apos;</div><div class="line">            else:</div><div class="line">                should_be = &apos;even&apos;</div><div class="line">            if should_be != result:</div><div class="line">                flag = False</div><div class="line">                break</div><div class="line">        if flag:</div><div class="line">            print &apos;%s is the counterfeit coin and it is %s.&apos; % (label, status)</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">K is the counterfeit coin and it is light.</div></pre></td></tr></table></figure>
-<p><strong>总结：有时候枚举问题并不像那么明显，需要仔细的分析与思考才能想到，当问题不是非常复杂时，有时可以先从枚举开始尝试解决问题。</strong></p>
-<p>源码地址：<a href="https://github.com/SnailTyan/programming-and-algorithms/blob/master/weigh_coins.py" target="_blank" rel="external">https://github.com/SnailTyan/programming-and-algorithms/blob/master/weigh_coins.py</a>，记得给个star。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="http://www.icourse163.org/course/PKU-1001894005" target="_blank" rel="external">程序设计与算法（二）算法基础</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      枚举——称硬币
-    
-    </summary>
-    
-      <category term="程序设计与算法" scheme="noahsnail.com/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="枚举" scheme="noahsnail.com/tags/%E6%9E%9A%E4%B8%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>枚举——生理周期</title>
-    <link href="noahsnail.com/2017/12/19/2017-12-19-%E6%9E%9A%E4%B8%BE%E2%80%94%E2%80%94%E7%94%9F%E7%90%86%E5%91%A8%E6%9C%9F/"/>
-    <id>noahsnail.com/2017/12/19/2017-12-19-枚举——生理周期/</id>
-    <published>2017-12-19T12:49:34.000Z</published>
-    <updated>2017-12-20T12:35:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
-<h2 id="1-枚举"><a href="#1-枚举" class="headerlink" title="1. 枚举"></a>1. 枚举</h2><p>枚举是基于逐个尝试答案的一种问题求解策略。</p>
-<h2 id="2-生理周期"><a href="#2-生理周期" class="headerlink" title="2. 生理周期"></a>2. 生理周期</h2><ul>
-<li><p>问题描述<br>人有体力、情商、智商的高峰日子，它们分别每隔23天、28天和33天出现一次。对于每个人，我们想知道何时三个高峰落在同一天。给定三个高峰出现的日子p，e和i(不一定是第一次高峰出现的日子)，再给定另一个指定的日子d，你的任务是输出日子d之后,下一次三个高峰落在同一天的日子(用距离d的天数表示)。例如：给定日子为10，下次出现三个高峰同一天的日子是12,则输出2。</p>
-</li>
-<li><p>输入<br>输入四个整数：p，e，i和d。p，e，i分别表示体力、情感和智力高峰出现的日子。d是给定的日子，可能小于p，e或i。所有给定日子是非负的并且小于或等于365，所求的日子小于或等于21252。</p>
-</li>
-<li><p>输出<br>从给定日子起，下一次三个高峰同一天的日子(距离给定日子的天数)。</p>
-</li>
-<li><p>输入样例<br>0 0 0 0<br>0 0 0 100<br>5 20 34 325<br>4 5 6 7<br>283 102 23 320<br>203 301 203 40<br>-1 -1 -1 -1<br>四个-1表示输入结果，四个数字分别表示p，e，i，d。</p>
-</li>
-<li><p>输出样例<br>Case 1: the next triple peak occurs in 21252 days.<br>Case 2: the next triple peak occurs in 21152 days.<br>Case 3: the next triple peak occurs in 19575 days.<br>Case 4: the next triple peak occurs in 16994 days.<br>Case 5: the next triple peak occurs in 8910 days.<br>Case 6: the next triple peak occurs in 10789 days.</p>
-</li>
-</ul>
-<ul>
-<li>解法一</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">input_data = [[0, 0, 0, 0],</div><div class="line">              [0, 0, 0, 100],</div><div class="line">              [5, 20, 34, 325],</div><div class="line">              [4, 5, 6, 7],</div><div class="line">              [283, 102, 23, 320],</div><div class="line">              [203, 301, 203, 40]]</div><div class="line">max_days = 21252</div><div class="line">p_circle = 23</div><div class="line">e_circle = 28</div><div class="line">i_circle = 33</div><div class="line"></div><div class="line">for data in input_data:</div><div class="line">    p = data[0]</div><div class="line">    e = data[1]</div><div class="line">    i = data[2]</div><div class="line">    d = data[3]</div><div class="line">    for day in xrange(d + 1, max_days + 1):</div><div class="line">        if abs(day - p) % p_circle == 0 and abs(day - e) % e_circle == 0 and abs(day - i) % i_circle == 0:</div><div class="line">            print &apos;the next triple peak occurs in %d days.&apos; % (day - d)</div><div class="line">            break</div></pre></td></tr></table></figure>
-<ul>
-<li>输出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">the next triple peak occurs in 21252 days.</div><div class="line">the next triple peak occurs in 21152 days.</div><div class="line">the next triple peak occurs in 19575 days.</div><div class="line">the next triple peak occurs in 16994 days.</div><div class="line">the next triple peak occurs in 8910 days.</div><div class="line">the next triple peak occurs in 10789 days.</div></pre></td></tr></table></figure>
-<ul>
-<li>用时</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">executed in 32ms</div></pre></td></tr></table></figure>
-<p>分析：遍历每一天，得出最终的解。</p>
-<ul>
-<li>方法二</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"># _*_ coding: utf-8 _*_</div><div class="line"></div><div class="line">input_data = [[0, 0, 0, 0],</div><div class="line">              [0, 0, 0, 100],</div><div class="line">              [5, 20, 34, 325],</div><div class="line">              [4, 5, 6, 7],</div><div class="line">              [283, 102, 23, 320],</div><div class="line">              [203, 301, 203, 40]]</div><div class="line">max_days = 21252</div><div class="line">p_circle = 23</div><div class="line">e_circle = 28</div><div class="line">i_circle = 33</div><div class="line"></div><div class="line">for data in input_data:</div><div class="line">    p = data[0]</div><div class="line">    e = data[1]</div><div class="line">    i = data[2]</div><div class="line">    d = data[3]</div><div class="line"></div><div class="line">    circles = (max_days - i) // i_circle</div><div class="line">    </div><div class="line">    for circle in xrange(1, circles + 1):</div><div class="line">        day = i + i_circle * circle</div><div class="line">        if (day - p) % p_circle == 0 and (day - e) % e_circle == 0:</div><div class="line">            print &apos;the next triple peak occurs in %d days.&apos; % (day - d)</div><div class="line">            break</div></pre></td></tr></table></figure>
-<ul>
-<li>输出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">the next triple peak occurs in 21252 days.</div><div class="line">the next triple peak occurs in 21152 days.</div><div class="line">the next triple peak occurs in 19575 days.</div><div class="line">the next triple peak occurs in 16994 days.</div><div class="line">the next triple peak occurs in 8910 days.</div><div class="line">the next triple peak occurs in 10789 days.</div></pre></td></tr></table></figure>
-<ul>
-<li>用时</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">executed in 17ms</div></pre></td></tr></table></figure>
-<p>分析：其实中间有许多日子可以跳过。</p>
-<p><strong>总结：虽然枚举就是一个个去尝试，但在求解问题时往往不需要尝试每一个可能。通过一些逻辑可以合理的避免一些无用的尝试。从时间上也可以看出时间节省了大约一半。</strong></p>
-<p>源码地址：<a href="https://github.com/SnailTyan/programming-and-algorithms/blob/master/physical_period.py" target="_blank" rel="external">https://github.com/SnailTyan/programming-and-algorithms/blob/master/physical_period.py</a>，记得给个star。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="http://www.icourse163.org/course/PKU-1001894005" target="_blank" rel="external">程序设计与算法（二）算法基础</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      枚举——生理周期
-    
-    </summary>
-    
-      <category term="程序设计与算法" scheme="noahsnail.com/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="枚举" scheme="noahsnail.com/tags/%E6%9E%9A%E4%B8%BE/"/>
     
   </entry>
   
