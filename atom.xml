@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2018-02-06T11:05:41.000Z</updated>
+  <updated>2018-02-08T02:05:44.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,43 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nohup python缓存问题</title>
+    <link href="noahsnail.com/2018/02/07/2018-02-07-nohup%20python%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/"/>
+    <id>noahsnail.com/2018/02/07/2018-02-07-nohup python缓存问题/</id>
+    <published>2018-02-07T09:08:12.000Z</published>
+    <updated>2018-02-08T02:05:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>深度学习用python跑数据时，经常会用到<code>nohup</code>命令，通常的命令格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup python [python source file] (&gt; [log file]) 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<p>如果没有指定输出文件，<code>nohup</code>会将输出放到<code>nohup.out</code>文件中，但在程序运行过程中<code>nohup.out</code>文件中不能实时的看到python的输出，原因是python的输出有缓冲。</p>
+<p>解决方案如下：</p>
+<ul>
+<li>方案一</li>
+</ul>
+<p>使用<code>-u</code>参数，使python输出不进行缓冲，命令格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup python -u [python source file] (&gt; [log file]) 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<ul>
+<li>方案二</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export PYTHONUNBUFFERED=1</div><div class="line">nohup python [python source file] (&gt; [log file]) 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://stackoverflow.com/questions/12919980/nohup-is-not-writing-log-to-output-file" target="_blank" rel="external">https://stackoverflow.com/questions/12919980/nohup-is-not-writing-log-to-output-file</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      nohup python缓存问题
+    
+    </summary>
+    
+      <category term="Python" scheme="noahsnail.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="noahsnail.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>动手学深度学习(一)——线性回归(gluon)</title>
@@ -152,7 +189,7 @@ Epoch 4, average loss: 0.001479
     <link href="noahsnail.com/2018/02/02/2018-02-02-Detecting%20Text%20in%20Natural%20Image%20with%20Connectionist%20Text%20Proposal%20Network%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
     <id>noahsnail.com/2018/02/02/2018-02-02-Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中英文对照/</id>
     <published>2018-02-02T07:15:37.000Z</published>
-    <updated>2018-02-06T09:47:01.000Z</updated>
+    <updated>2018-02-07T10:44:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
@@ -169,16 +206,25 @@ Epoch 4, average loss: 0.001479
 <p>In this work, we fill this gap by extending the RPN architecture [25] to accurate text line localization. We present several technical developments that tailor generic object detection model elegantly towards our problem. We strive for a further step by proposing an in-network recurrent mechanism that allows our model to detect text sequence directly in the convolutional maps, avoiding further post-processing by an additional costly CNN detection model.</p>
 <p>在这项工作中，我们通过将RPN架构[25]扩展到准确的文本行定义来填补这个空白。我们提出了几种技术发展，针对我们的问题可以优雅地调整通用目标检测模型。我们通过提出一种网络内循环机制争取更进一步，使我们的模型能够直接在卷积映射中检测文本序列，避免通过额外昂贵的CNN检测模型进行进一步的后处理。</p>
 <h3 id="1-1-Contributions"><a href="#1-1-Contributions" class="headerlink" title="1.1 Contributions"></a>1.1 Contributions</h3><p>We propose a novel Connectionist Text Proposal Network (CTPN) that directly localizes text sequences in convolutional layers. This overcomes a number of main limitations raised by previous bottom-up approaches building on character detection. We leverage the advantages of strong deep convolutional features and sharing computation mechanism, and propose the CTPN architecture which is described in Fig. 1. It makes the following major contributions:</p>
-<h3 id="1-1-贡献"><a href="#1-1-贡献" class="headerlink" title="1.1 贡献"></a>1.1 贡献</h3><p>我们提出了一种连接文本提议网络（CTPN），它可以直接定位卷积图层中的文本序列。这克服了以前的自下而上的方法建立在字符检测基础上提出的一些主要限制。我们利用强卷积深度特性和共享计算机制的优点，提出了如图1所示的CTPN架构。主要贡献如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-3c885b0226d1b773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p>Fig. 1: (a) Architecture of the Connectionist Text Proposal Network (CTPN). We densely slide a 3×3 spatial window through the last convolutional maps (conv5 ) of the VGG16 model [27]. The sequential windows in each row are recurrently connected by a Bi-directional LSTM (BLSTM) [7], where the convolutional feature (3×3×C) of each window is used as input of the 256D BLSTM (including two 128D LSTMs). The RNN layer is connected to a 512D fully-connected layer, followed by the output layer, which jointly predicts text/non-text scores, y-axis coordinates and side-refinement offsets of $k$ anchors. (b) The CTPN outputs sequential fixed-width fine-scale text proposals. Color of each box indicates the text/non-text score. Only the boxes with positive scores are presented.</p>
+<h3 id="1-1-贡献"><a href="#1-1-贡献" class="headerlink" title="1.1 贡献"></a>1.1 贡献</h3><p>我们提出了一种新颖的连接文本提议网络（CTPN），它可以直接定位卷积层中的文本序列。这克服了以前的建立在字符检测基础上的自下而上方法带来的一些主要限制。我们利用强深度卷积特性和共享计算机制的优点，提出了如图1所示的CTPN架构。主要贡献如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-3c885b0226d1b773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p>图1：（a）连接文本提议网络（CTPN）的架构。我们通过VGG16模型[27]的最后一个卷积映射（conv5）密集地滑动3×3空间窗口。每行的序列窗口通过双向LSTM（BLSTM）[7]循环连接，其中每个窗口的卷积特征（3×3×C）被用作256维的BLSTM（包括两个128维的LSTM）的输入。RNN层连接到512维的全连接层，接着是输出层，联合预测$k$个锚点的文本/非文本分数，y轴坐标和边缘调整偏移。（b）CTPN输出连续的固定宽度细粒度文本提议。每个框的颜色表示文本/非文本分数。只显示文本框正例的分数。</p>
 <p>First, we cast the problem of text detection into localizing a sequence of fine-scale text proposals. We develop an anchor regression mechanism that jointly predicts vertical location and text/non-text score of each text proposal, resulting in an excellent localization accuracy. This departs from the RPN prediction of a whole object, which is difficult to provide a satisfied localization accuracy.</p>
-<p>首先，我们将文本检测的问题转化为一系列精细的文本提议。我们开发了一个锚定回归机制，可以联合预测每个文本提案的垂直位置和文本/非文本分数，从而获得出色的定位精度。这背离了整个对象的RPN预测，难以提供满意的定位精度。</p>
+<p>首先，我们将文本检测的问题转化为一系列细粒度的文本提议。我们开发了一个锚点回归机制，可以联合预测每个文本提议的垂直位置和文本/非文本分数，从而获得出色的定位精度。这背离了整个目标的RPN预测，RPN预测难以提供令人满意的定位精度。</p>
 <p>Second, we propose an in-network recurrence mechanism that elegantly connects sequential text proposals in the convolutional feature maps. This connection allows our detector to explore meaningful context information of text line, making it powerful to detect extremely challenging text reliably.</p>
-<p>其次，我们提出了一种在卷积特征映射中优雅连接顺序文本提议的网络内重复机制。通过这种连接，我们的探测器可以探索文本行的有意义的上下文信息，使其能够可靠地检测极具挑战性的文本。</p>
+<p>其次，我们提出了一种在卷积特征映射中优雅连接序列文本提议的网络内循环机制。通过这种连接，我们的检测器可以探索文本行有意义的上下文信息，使其能够可靠地检测极具挑战性的文本。</p>
 <p>Third, both methods are integrated seamlessly to meet the nature of text sequence, resulting in a unified end-to-end trainable model. Our method is able to handle multi-scale and multi-lingual text in a single process, avoiding further post filtering or refinement.</p>
-<p>第三，两种方法无缝集成，以符合文本序列的性质，从而形成统一的端到端可训练模型。 我们的方法能够在单个过程中处理多尺度和多语言的文本，避免进一步的过滤或细化。</p>
+<p>第三，两种方法无缝集成，以符合文本序列的性质，从而形成统一的端到端可训练模型。我们的方法能够在单个过程中处理多尺度和多语言的文本，避免进一步的后过滤或细化。</p>
 <p>Fourth, our method achieves new state-of-the-art results on a number of benchmarks, significantly improving recent results (e.g., 0.88 F-measure over 0.83 in [8] on the ICDAR 2013, and 0.61 F-measure over 0.54 in [35] on the ICDAR 2015). Furthermore, it is computationally efficient, resulting in a 0.14s/image running time (on the ICDAR 2013) by using the very deep VGG16 model [27].</p>
-<p>第四，我们的方法在许多基准上达到了最新的最新成果，显着改善了最近的结果（例如，2013年ICDAR的[8]中0.88的F-measure超过0.83，而0.64的F-measure超过0.54 [35]在ICDAR 2015上）。 此外，通过使用非常深的VGG16模型[27]，这在计算上是高效的，导致了0.14s /图像运行时间（在ICDAR 2013上）。</p>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<p>第四，我们的方法在许多基准数据集上达到了新的最先进成果，显著改善了最近的结果（例如，0.88的F-measure超过了2013年ICDAR的[8]中的0.83，而0.64的F-measure超过了ICDAR2015上[35]中的0.54 ）。此外，通过使用非常深的VGG16模型[27]，这在计算上是高效的，导致了每张图像0.14s的运行时间（在ICDAR 2013上）。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p><strong>Text detection.</strong> Past works in scene text detection have been dominated by bottom-up approaches which are generally built on stroke or character detection. They can be roughly grouped into two categories, connected-components (CCs) based approaches and sliding-window based methods. The CCs based approaches discriminate text and non-text pixels by using a fast filter, and then text pixels are greedily grouped into stroke or character candidates, by using low-level properties, e.g., intensity, color, gradient, etc. [33,14,32,13,3]. The sliding-window based methods detect character candidates by densely moving a multi-scale window through an image. The character or non-character window is discriminated by a pre-trained classifier, by using manually-designed features [28,29], or recent CNN features [16]. However, both groups of methods commonly suffer from poor performance of character detection, causing accumulated errors in following component filtering and text line construction steps. Furthermore, robustly filtering out non-character components or confidently verifying detected text lines are even difficult themselves [1,33,14]. Another limitation is that the sliding-window methods are computationally expensive, by running a classifier on a huge number of the sliding windows.</p>
+<p><strong>文本检测</strong>。过去在场景文本检测中的作品一直以自下而上的方法为主，一般建立在笔画或字符检测之上。它们可以粗略地分为两类，基于连接元件（CC）的方法和基于滑动窗口的方法。基于CC的方法通过使用快速滤波器来识别文本和非文本像素，然后通过使用低级属性（例如强度，颜色，梯度等）将文本像素粗略地分组为笔划或候选字符。[33，14，32，13，3。基于滑动窗口的方法通过在图像中密集地移动多尺度窗口来检测候选字符。字符或非字符窗口通过预先训练的分类器，使用手动设计的特征[28,29]或最近的CNN特征[16]进行区分。然而，这两种方法通常都会受到字符检测性能较差的影响，导致在组件过滤和文本行构建步骤中出现累积错误。而且，强大地过滤非字符组件或者自信地验证检测到的文本行本身就更加困难[1,33,14]。另一个限制是通过在大量的滑动窗口上运行分类器，滑动窗口方法在计算上是昂贵的。</p>
+<p><strong>Object detection.</strong> Convolutional Neural Networks (CNN) have recently advanced general object detection substantially [25,5,6]. A common strategy is to generate a number of object proposals by employing inexpensive low-level features, and then a strong CNN classifier is applied to further classify and refine the generated proposals. Selective Search (SS) [4] which generates class-agnostic object proposals, is one of the most popular methods applied in recent leading object detection systems, such as Region CNN (R-CNN) [6] and its extensions [5]. Recently, Ren et al. [25] proposed a Faster R-CNN system for object detection. They proposed a Region Proposal Network (RPN) that generates high-quality class-agnostic object proposals directly from the convolutional feature maps. The RPN is fast by sharing convolutional computation. However, the RPN proposals are not discriminative, and require a further refinement and classification by an additional costly CNN model, e.g., the Fast R-CNN model [5]. More importantly, text is different significantly from general objects, making it difficult to directly apply general object detection system to this highly domain-specific task.</p>
+<p><strong>目标检测。</strong>卷积神经网络（CNN）近来已经基本实现了通用目标检测[25,5,6]。一个常见的策略是通过使用廉价的低级特征来生成多个对象提议，然后使用强CNN分类器来进一步对生成的提议进行分类和细化。生成类别不可知对象提议的选择性搜索（SS）[4]是目前领先的对象检测系统中应用最广泛的方法之一，如CNN（R-CNN）[6]及其扩展[5]。最近，Ren等人[25]提出了更快的R-CNN系统的对象检测。他们提出了一个区域提议网络（RPN），可以直接从卷积特征地图生成高质量的类别不可知对象提议。 RPN分享卷积计算是快速的。然而，RPN建议不具有区别性，需要通过额外的成本高昂的CNN模型（如Fast R-CNN模型[5]）进一步细化和分类。更重要的是，文本与一般对象有很大的不同，因此很难直接将通用对象检测系统应用到这个高度领域的任务中。</p>
+<h2 id="3-Connectionist-Text-Proposal-Network"><a href="#3-Connectionist-Text-Proposal-Network" class="headerlink" title="3. Connectionist Text Proposal Network"></a>3. Connectionist Text Proposal Network</h2><p>This section presents details of the Connectionist Text Proposal Network (CTPN). It includes three key contributions that make it reliable and accurate for text localization: detecting text in fine-scale proposals, recurrent connectionist text proposals, and side-refinement.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><p>Busta, M., Neumann, L., Matas, J.: Fastext: Efficient unconstrained scene text detector (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
 </li>
 <li><p>Cheng, M., Zhang, Z., Lin, W., Torr, P.: Bing: Binarized normed gradients for objectness estimation at 300fps (2014), in IEEE Computer Vision and Pattern Recognition (CVPR)</p>
@@ -270,12 +316,23 @@ Epoch 4, average loss: 0.001479
     <link href="noahsnail.com/2018/02/02/2018-02-02-Detecting%20Text%20in%20Natural%20Image%20with%20Connectionist%20Text%20Proposal%20Network%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
     <id>noahsnail.com/2018/02/02/2018-02-02-Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版/</id>
     <published>2018-02-02T07:14:50.000Z</published>
-    <updated>2018-02-05T09:32:27.000Z</updated>
+    <updated>2018-02-07T10:39:54.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <h1 id="Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network"><a href="#Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network" class="headerlink" title="Detecting Text in Natural Image with Connectionist Text Proposal Network"></a>Detecting Text in Natural Image with Connectionist Text Proposal Network</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种新颖的连接文本提议网络（CTPN），它能够准确定位自然图像中的文本行。CTPN直接在卷积特征映射中的一系列细粒度文本提议中检测文本行。我们开发了一个垂直锚点机制，联合预测每个固定宽度提议的位置和文本/非文本分数，大大提高了定位精度。序列提议通过循环神经网络自然地连接起来，该网络无缝地结合到卷积网络中，从而形成端到端的可训练模型。这使得CTPN可以探索丰富的图像上下文信息，使其能够检测极其模糊的文本。CTPN在多尺度和多语言文本上可靠地工作，而不需要进一步的后处理，脱离了以前的自底向上需要多步后过滤的方法。它在ICDAR 2013和2015的基准数据集上达到了0.88和0.61的F-measure，大大超过了最近的结果[8，35]。通过使用非常深的VGG16模型[27]，CTPN的计算效率为0.14s每张图像。在线演示获取地址：<a href="http://textdet.com/" target="_blank" rel="external">http://textdet.com/</a>。</p>
 <h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>场景文本检测；卷积网络；循环神经网络；锚点机制</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>在自然图像中阅读文本最近在计算机视觉中引起越来越多的关注[8，14，15，10，35，11，9，1，28，32]。这是由于它的许多实际应用，如图像OCR，多语言翻译，图像检索等。它包括两个子任务：文本检测和识别。这项工作的重点是检测任务[14，1，28，32]，这是比在一个良好的裁剪字图像[15，9]进行的识别任务更具有挑战性。文本模式的大变化和高度杂乱的背景构成了精确文本定位的主要挑战。</p>
+<p>目前的文本检测方法大多采用自下而上的流程[28，1，14，32，33]。它们通常从低级别字符或笔画检测开始，后面通常会跟随一些后续步骤：非文本组件过滤，文本行构建和文本行验证。这些自底向上的多步骤方法通常复杂，鲁棒性和可靠性较差。它们的性能很大程度上依赖于字符检测的结果，并且已经提出了连接组件方法或滑动窗口方法。这些方法通常探索低级特征（例如，基于SWT[3，13]，MSER[14，33，23]或HoG[28]）来区分候选文本和背景。但是，如果没有上下文信息，他们不能鲁棒的单独识别各个笔划或字符。例如，相比单个字符人们更信任一个字符序列，特别是当一个字符非常模糊时。这些限制在字符检测中通常会导致大量非文本组件，在后续步骤中的主要困难是处理它们。此外，正如[28]所指出的，这些误检很容易在自下而上的过程中连续累积。为了解决这些问题，我们利用强大的深度特征直接在卷积映射中检测文本信息。我们开发的文本锚点机制能在细粒度上精确预测文本位置。然后，我们提出了一种网内循环架构，用于按顺序连接这些细粒度的文本提议，从而允许它们编码丰富的上下文信息。</p>
+<p>深度卷积神经网络（CNN）最近已经基本实现了一般物体检测[25，5，6]。最先进的方法是Faster Region-CNN（R-CNN）系统[25]，其中提出了区域提议网络（RPN）直接从卷积特征映射中生成高质量类别不可知的目标提议。然后将RPN提议输入Faster R-CNN[5]模型进行进一步的分类和微调，从而实现通用目标检测的最新性能。然而，很难将这些通用目标检测系统直接应用于场景文本检测，这通常需要更高的定位精度。在通用目标检测中，每个目标都有一个明确的封闭边界[2]，而在文本中可能不存在这样一个明确定义的边界，因为文本行或单词是由许多单独的字符或笔划组成的。对于目标检测，典型的正确检测是松散定义的，例如，检测到的边界框与其实际边界框（例如，PASCAL标准[4]）之间的重叠&gt;0.5，因为人们可以容易地从目标的主要部分识别它。相比之下，综合阅读文本是一个细粒度的识别任务，需要正确的检测，覆盖文本行或字的整个区域。因此，文本检测通常需要更准确的定义，导致不同的评估标准，例如文本基准中常用的Wolf标准[19，21]。</p>
+<p>在这项工作中，我们通过将RPN架构[25]扩展到准确的文本行定义来填补这个空白。我们提出了几种技术发展，针对我们的问题可以优雅地调整通用目标检测模型。我们通过提出一种网络内循环机制争取更进一步，使我们的模型能够直接在卷积映射中检测文本序列，避免通过额外昂贵的CNN检测模型进行进一步的后处理。</p>
+<h3 id="1-1-贡献"><a href="#1-1-贡献" class="headerlink" title="1.1 贡献"></a>1.1 贡献</h3><p>我们提出了一种新颖的连接文本提议网络（CTPN），它可以直接定位卷积层中的文本序列。这克服了以前的建立在字符检测基础上的自下而上方法带来的一些主要限制。我们利用强深度卷积特性和共享计算机制的优点，提出了如图1所示的CTPN架构。主要贡献如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-3c885b0226d1b773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p>图1：（a）连接文本提议网络（CTPN）的架构。我们通过VGG16模型[27]的最后一个卷积映射（conv5）密集地滑动3×3空间窗口。每行的序列窗口通过双向LSTM（BLSTM）[7]循环连接，其中每个窗口的卷积特征（3×3×C）被用作256维的BLSTM（包括两个128维的LSTM）的输入。RNN层连接到512维的全连接层，接着是输出层，联合预测$k$个锚点的文本/非文本分数，y轴坐标和边缘调整偏移。（b）CTPN输出连续的固定宽度细粒度文本提议。每个框的颜色表示文本/非文本分数。只显示文本框正例的分数。</p>
+<p>首先，我们将文本检测的问题转化为一系列细粒度的文本提议。我们开发了一个锚点回归机制，可以联合预测每个文本提议的垂直位置和文本/非文本分数，从而获得出色的定位精度。这背离了整个目标的RPN预测，RPN预测难以提供令人满意的定位精度。</p>
+<p>其次，我们提出了一种在卷积特征映射中优雅连接序列文本提议的网络内循环机制。通过这种连接，我们的检测器可以探索文本行有意义的上下文信息，使其能够可靠地检测极具挑战性的文本。</p>
+<p>第三，两种方法无缝集成，以符合文本序列的性质，从而形成统一的端到端可训练模型。我们的方法能够在单个过程中处理多尺度和多语言的文本，避免进一步的后过滤或细化。</p>
+<p>第四，我们的方法在许多基准数据集上达到了新的最先进成果，显著改善了最近的结果（例如，0.88的F-measure超过了2013年ICDAR的[8]中的0.83，而0.64的F-measure超过了ICDAR2015上[35]中的0.54 ）。此外，通过使用非常深的VGG16模型[27]，这在计算上是高效的，导致了每张图像0.14s的运行时间（在ICDAR 2013上）。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><p>Busta, M., Neumann, L., Matas, J.: Fastext: Efficient unconstrained scene text detector (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
 </li>
@@ -1543,46 +1600,6 @@ True
     <summary type="html">
     
       递归——汉诺塔
-    
-    </summary>
-    
-      <category term="程序设计与算法" scheme="noahsnail.com/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="递归" scheme="noahsnail.com/tags/%E9%80%92%E5%BD%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>递归——求阶乘</title>
-    <link href="noahsnail.com/2017/12/26/2017-12-26-%E9%80%92%E5%BD%92%E2%80%94%E2%80%94%E6%B1%82%E9%98%B6%E4%B9%98/"/>
-    <id>noahsnail.com/2017/12/26/2017-12-26-递归——求阶乘/</id>
-    <published>2017-12-26T14:02:18.000Z</published>
-    <updated>2017-12-28T08:20:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
-<h2 id="1-递归"><a href="#1-递归" class="headerlink" title="1. 递归"></a>1. 递归</h2><p>一个函数调用其自身，就是递归。</p>
-<h2 id="2-求阶乘"><a href="#2-求阶乘" class="headerlink" title="2. 求阶乘"></a>2. 求阶乘</h2><ul>
-<li><p>问题描述<br>求n的阶乘，n&gt;=0。</p>
-</li>
-<li><p>代码</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># _*_ coding: utf-8</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">factorial</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> n * factorial(n - <span class="number">1</span>)</div><div class="line">    </div><div class="line"><span class="keyword">print</span> factorial(<span class="number">5</span>)</div></pre></td></tr></table></figure>
-<ul>
-<li>结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">120</div></pre></td></tr></table></figure>
-<p><strong>总结：求阶乘问题算是递归中最简单的问题了。</strong></p>
-<p>源码地址：<a href="https://github.com/SnailTyan/programming-and-algorithms/blob/master/factorial.py" target="_blank" rel="external">求阶乘</a>，记得给个star。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="http://www.icourse163.org/course/PKU-1001894005" target="_blank" rel="external">程序设计与算法（二）算法基础</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      递归——求阶乘
     
     </summary>
     
