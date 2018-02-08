@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-3c885b0226d1b773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-02-07T10:39:54.000Z">
+<meta property="og:updated_time" content="2018-02-08T06:35:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版">
 <meta name="twitter:description" content="Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版">
@@ -364,6 +364,9 @@
 <p>其次，我们提出了一种在卷积特征映射中优雅连接序列文本提议的网络内循环机制。通过这种连接，我们的检测器可以探索文本行有意义的上下文信息，使其能够可靠地检测极具挑战性的文本。</p>
 <p>第三，两种方法无缝集成，以符合文本序列的性质，从而形成统一的端到端可训练模型。我们的方法能够在单个过程中处理多尺度和多语言的文本，避免进一步的后过滤或细化。</p>
 <p>第四，我们的方法在许多基准数据集上达到了新的最先进成果，显著改善了最近的结果（例如，0.88的F-measure超过了2013年ICDAR的[8]中的0.83，而0.64的F-measure超过了ICDAR2015上[35]中的0.54 ）。此外，通过使用非常深的VGG16模型[27]，这在计算上是高效的，导致了每张图像0.14s的运行时间（在ICDAR 2013上）。</p>
+<h2 id="2-相关工作"><a href="#2-相关工作" class="headerlink" title="2. 相关工作"></a>2. 相关工作</h2><p><strong>文本检测</strong>。过去在场景文本检测中的工作一直以自下而上的方法为主，一般建立在笔画或字符检测上。它们可以粗略地分为两类，基于连接组件（CC）的方法和基于滑动窗口的方法。基于CC的方法通过使用快速滤波器来区分文本和非文本像素，然后通过使用低级属性（例如强度，颜色，梯度等[33，14，32，13，3]）将文本像素贪婪地分为笔划或候选字符。基于滑动窗口的方法通过在图像中密集地滑动多尺度窗口来检测候选字符。字符或非字符窗口通过预先训练的分类器，使用手动设计的特征[28，29]或最近的CNN特征[16]进行区分。然而，这两种方法通常都会受到较差的字符检测性能的影响，导致在接下来的组件过滤和文本行构建步骤中出现累积的错误。此外，强大地过滤非字符组件或者自信地验证检测到的文本行本身就更加困难[1，33，14]。另一个限制是通过在大量的滑动窗口上运行分类器，滑动窗口方法在计算上是昂贵的。</p>
+<p><strong>目标检测。</strong>卷积神经网络（CNN）近来在通用目标检测[25，5，6]上已经取得了实质的进步。一个常见的策略是通过使用廉价的低级特征来生成许多目标提议，然后使用强CNN分类器来进一步对生成的提议进行分类和细化。生成类别不可知目标提议的选择性搜索（SS）[4]是目前领先的目标检测系统中应用最广泛的方法之一，如CNN（R-CNN）[6]及其扩展[5]。最近，Ren等人[25]提出了Faster R-CNN目标检测系统。他们提出了一个区域提议网络（RPN），可以直接从卷积特征映射中生成高质量的类别不可知的目标提议。通过共享卷积计算RPN是快速的。然而，RPN提议不具有判别性，需要通过额外的成本高昂的CNN模型（如Fast R-CNN模型[5]）进一步细化和分类。更重要的是，文本与一般目标有很大的不同，因此很难直接将通用目标检测系统应用到这个高度领域化的任务中。</p>
+<h2 id="3-连接文本提议网络"><a href="#3-连接文本提议网络" class="headerlink" title="3. 连接文本提议网络"></a>3. 连接文本提议网络</h2><p>本节介绍连接文本提议网络（CTPN）的细节。它包括三个关键的贡献，使文本定位可靠和准确：检测细粒度提议中的文本，循环连接文本提议和边缘细化。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><p>Busta, M., Neumann, L., Matas, J.: Fastext: Efficient unconstrained scene text detector (2015), in IEEE International Conference on Computer Vision (ICCV)</p>
 </li>
@@ -583,7 +586,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">344</span>
+                <span class="site-state-item-count">346</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -640,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network"><span class="nav-number">1.</span> <span class="nav-text">Detecting Text in Natural Image with Connectionist Text Proposal Network</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键词"><span class="nav-number">1.2.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.3.</span> <span class="nav-text">1. 引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-贡献"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.1 贡献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.4.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Detecting-Text-in-Natural-Image-with-Connectionist-Text-Proposal-Network"><span class="nav-number">1.</span> <span class="nav-text">Detecting Text in Natural Image with Connectionist Text Proposal Network</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键词"><span class="nav-number">1.2.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.3.</span> <span class="nav-text">1. 引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-贡献"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.1 贡献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-number">1.4.</span> <span class="nav-text">2. 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-连接文本提议网络"><span class="nav-number">1.5.</span> <span class="nav-text">3. 连接文本提议网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.6.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
             
 
           </div>
