@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2018-02-08T08:19:15.000Z</updated>
+  <updated>2018-02-08T08:43:15.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -20,9 +20,33 @@
     <link href="noahsnail.com/2018/02/08/2018-02-08-Python%E4%B8%AD%E7%9A%84__all__/"/>
     <id>noahsnail.com/2018/02/08/2018-02-08-Python中的__all__/</id>
     <published>2018-02-08T08:19:15.000Z</published>
-    <updated>2018-02-08T08:19:15.000Z</updated>
+    <updated>2018-02-08T08:43:15.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1. 动机"></a>1. 动机</h2><p>今天看MXNet的gluon源码时发现<code>mxnet.gluon.data.vision</code>有<code>__all__</code>如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">__all__ = [&apos;MNIST&apos;, &apos;FashionMNIST&apos;, &apos;CIFAR10&apos;, &apos;CIFAR100&apos;,</div><div class="line">           &apos;ImageRecordDataset&apos;, &apos;ImageFolderDataset&apos;]</div></pre></td></tr></table></figure>
+<h2 id="2-作用"><a href="#2-作用" class="headerlink" title="2. 作用"></a>2. 作用</h2><p><code>__all__</code>是一个字符串list，用来定义模块中对于<code>from XXX import *</code>时要对外导出的符号，即要暴露的借口，但它只对<code>import *</code>起作用，对<code>from XXX import XXX</code>不起作用。</p>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h2><p><code>all.py</code>文件时要导出的模块，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">__all__ = [&apos;x&apos;, &apos;y&apos;, &apos;test&apos;]</div><div class="line"></div><div class="line">x = 2</div><div class="line">y = 3</div><div class="line">z = 4</div><div class="line"></div><div class="line">def test():</div><div class="line">	print(&apos;test&apos;)</div></pre></td></tr></table></figure>
+<ul>
+<li>测试文件一</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">from foo import *</div><div class="line">print(&apos;x: &apos;, x)</div><div class="line"></div><div class="line">print(&apos;y: &apos;, y)</div><div class="line">print(&apos;z: &apos;, z)</div><div class="line"></div><div class="line">test()</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">x:  2</div><div class="line">y:  3</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;test.py&quot;, line 6, in &lt;module&gt;</div><div class="line">    print(&apos;z: &apos;, z)</div><div class="line">NameError: name &apos;z&apos; is not defined</div></pre></td></tr></table></figure>
+<ul>
+<li>测试文件二</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from foo import *</div><div class="line">from foo import z</div><div class="line">print(&apos;x: &apos;, x)</div><div class="line"></div><div class="line">print(&apos;y: &apos;, y)</div><div class="line">print(&apos;z: &apos;, z)</div><div class="line"></div><div class="line">test()</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x:  2</div><div class="line">y:  3</div><div class="line">z:  4</div><div class="line">test</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://stackoverflow.com/questions/44834/can-someone-explain-all-in-python" target="_blank" rel="external">https://stackoverflow.com/questions/44834/can-someone-explain-all-in-python</a></li>
+</ol>
 ]]></content>
     
     <summary type="html">

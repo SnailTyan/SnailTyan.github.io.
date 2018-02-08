@@ -99,7 +99,7 @@
 <meta property="og:url" content="noahsnail.com/2018/02/08/2018-02-08-Python中的__all__/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Python中的__all__">
-<meta property="og:updated_time" content="2018-02-08T08:19:15.000Z">
+<meta property="og:updated_time" content="2018-02-08T08:43:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中的__all__">
 <meta name="twitter:description" content="Python中的__all__">
@@ -348,6 +348,30 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-动机"><a href="#1-动机" class="headerlink" title="1. 动机"></a>1. 动机</h2><p>今天看MXNet的gluon源码时发现<code>mxnet.gluon.data.vision</code>有<code>__all__</code>如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">__all__ = [&apos;MNIST&apos;, &apos;FashionMNIST&apos;, &apos;CIFAR10&apos;, &apos;CIFAR100&apos;,</div><div class="line">           &apos;ImageRecordDataset&apos;, &apos;ImageFolderDataset&apos;]</div></pre></td></tr></table></figure>
+<h2 id="2-作用"><a href="#2-作用" class="headerlink" title="2. 作用"></a>2. 作用</h2><p><code>__all__</code>是一个字符串list，用来定义模块中对于<code>from XXX import *</code>时要对外导出的符号，即要暴露的借口，但它只对<code>import *</code>起作用，对<code>from XXX import XXX</code>不起作用。</p>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h2><p><code>all.py</code>文件时要导出的模块，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">__all__ = [&apos;x&apos;, &apos;y&apos;, &apos;test&apos;]</div><div class="line"></div><div class="line">x = 2</div><div class="line">y = 3</div><div class="line">z = 4</div><div class="line"></div><div class="line">def test():</div><div class="line">	print(&apos;test&apos;)</div></pre></td></tr></table></figure>
+<ul>
+<li>测试文件一</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">from foo import *</div><div class="line">print(&apos;x: &apos;, x)</div><div class="line"></div><div class="line">print(&apos;y: &apos;, y)</div><div class="line">print(&apos;z: &apos;, z)</div><div class="line"></div><div class="line">test()</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">x:  2</div><div class="line">y:  3</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;test.py&quot;, line 6, in &lt;module&gt;</div><div class="line">    print(&apos;z: &apos;, z)</div><div class="line">NameError: name &apos;z&apos; is not defined</div></pre></td></tr></table></figure>
+<ul>
+<li>测试文件二</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from foo import *</div><div class="line">from foo import z</div><div class="line">print(&apos;x: &apos;, x)</div><div class="line"></div><div class="line">print(&apos;y: &apos;, y)</div><div class="line">print(&apos;z: &apos;, z)</div><div class="line"></div><div class="line">test()</div></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x:  2</div><div class="line">y:  3</div><div class="line">z:  4</div><div class="line">test</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://stackoverflow.com/questions/44834/can-someone-explain-all-in-python" target="_blank" rel="external">https://stackoverflow.com/questions/44834/can-someone-explain-all-in-python</a></li>
+</ol>
 
       
     </div>
@@ -466,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -529,6 +562,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-动机"><span class="nav-number">1.</span> <span class="nav-text">1. 动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-作用"><span class="nav-number">2.</span> <span class="nav-text">2. 作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-测试"><span class="nav-number">3.</span> <span class="nav-text">3. 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
