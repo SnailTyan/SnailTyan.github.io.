@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="动手学深度学习(二)——正则化(从零开始)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动手学深度学习(二)——正则化(从零开始)">
+<meta property="og:url" content="noahsnail.com/2018/03/08/2018-03-08-动手学深度学习(二)——正则化(从零开始)/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="动手学深度学习(二)——正则化(从零开始)">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-bd038b77c2ef488a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-8d88c219f34f10ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-08T11:12:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动手学深度学习(二)——正则化(从零开始)">
+<meta name="twitter:description" content="动手学深度学习(二)——正则化(从零开始)">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-bd038b77c2ef488a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="noahsnail.com/2018/03/08/2018-03-08-动手学深度学习(二)——正则化(从零开始)/"/>
+
+
+
+
+
+  <title>动手学深度学习(二)——正则化(从零开始) | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="noahsnail.com/2018/03/08/2018-03-08-动手学深度学习(二)——正则化(从零开始)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">动手学深度学习(二)——正则化(从零开始)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  动手学深度学习(二)——正则化(从零开始)
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
+<h2 id="高维线性回归"><a href="#高维线性回归" class="headerlink" title="高维线性回归"></a>高维线性回归</h2><p>使用线性函数$y = 0.05 + \sum_{i = 1}^p 0.01x_i +  \text{noise}$生成数据样本，噪音服从均值0和标准差为0.01的正态分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入mxnet</span></div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</div><div class="line"></div><div class="line"><span class="comment"># 设置随机种子</span></div><div class="line">random.seed(<span class="number">2</span>)</div><div class="line">mx.random.seed(<span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> gluon</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> ndarray <span class="keyword">as</span> nd</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> autograd</div></pre></td></tr></table></figure>
+<h2 id="生成数据集"><a href="#生成数据集" class="headerlink" title="生成数据集"></a>生成数据集</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 训练数据数量</span></div><div class="line">num_train = <span class="number">20</span></div><div class="line"></div><div class="line"><span class="comment"># 测试数据数量</span></div><div class="line">num_test = <span class="number">100</span></div><div class="line"></div><div class="line"><span class="comment"># 输入数据特征维度</span></div><div class="line">num_inputs = <span class="number">200</span></div><div class="line"></div><div class="line"><span class="comment"># 实际权重</span></div><div class="line">true_w = nd.ones((num_inputs, <span class="number">1</span>)) * <span class="number">0.01</span></div><div class="line"></div><div class="line"><span class="comment"># 实际偏置</span></div><div class="line">true_b = <span class="number">0.05</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 生成数据</span></div><div class="line">X = nd.random_normal(shape=(num_train + num_test, num_inputs))</div><div class="line">y = nd.dot(X, true_w) + true_b</div><div class="line"></div><div class="line"><span class="comment"># 添加随机噪声</span></div><div class="line">y += <span class="number">0.01</span> * nd.random_normal(shape=y.shape)</div><div class="line"></div><div class="line"><span class="comment"># 训练数据和测试数据</span></div><div class="line">X_train, X_test = X[:num_train, :], X[num_train:, :]</div><div class="line">y_train, y_test = y[:num_train], y[num_train:]</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 批数据大小</span></div><div class="line">batch_size = <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 通过yield进行数据读取</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_iter</span><span class="params">(num_examples)</span>:</span></div><div class="line">    <span class="comment"># 产生样本的索引</span></div><div class="line">    idx = list(range(num_examples))</div><div class="line">    <span class="comment"># 将索引随机打乱</span></div><div class="line">    random.shuffle(idx)</div><div class="line">    <span class="comment"># 迭代一个epoch</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_examples, batch_size):</div><div class="line">        <span class="comment"># 依次取出样本的索引, 这种实现方式在num_examples/batch_size不能整除时也适用</span></div><div class="line">        j = nd.array(idx[i:min((i + batch_size), num_examples)])</div><div class="line">        <span class="comment"># 根据提供的索引取元素</span></div><div class="line">        <span class="keyword">yield</span> nd.take(X, j), nd.take(y, j)</div></pre></td></tr></table></figure>
+<h2 id="初始化模型参数"><a href="#初始化模型参数" class="headerlink" title="初始化模型参数"></a>初始化模型参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_params</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># 随机初始化权重w</span></div><div class="line">    w = nd.random_normal(shape=(num_inputs, <span class="number">1</span>))</div><div class="line">    <span class="comment"># 偏置b初始化为0</span></div><div class="line">    b = nd.zeros((<span class="number">1</span>,))</div><div class="line">    <span class="comment"># w, b放入list里</span></div><div class="line">    params = [w, b]</div><div class="line"></div><div class="line">    <span class="comment"># 需要计算反向传播, 添加自动求导</span></div><div class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> params:</div><div class="line">        param.attach_grad()</div><div class="line">    <span class="keyword">return</span> params</div></pre></td></tr></table></figure>
+<h2 id="L-2-范数正则化"><a href="#L-2-范数正则化" class="headerlink" title="$L_2$ 范数正则化"></a>$L_2$ 范数正则化</h2><p>在训练时最小化函数为：$\text{loss} + \lambda \sum_{p \in \textrm{params}}|p|_2^2。$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># L2范数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">L2_penalty</span><span class="params">(w, b)</span>:</span></div><div class="line">    <span class="keyword">return</span> ((w**<span class="number">2</span>).sum() + b ** <span class="number">2</span>) / <span class="number">2</span></div></pre></td></tr></table></figure>
+<h2 id="定义训练和测试"><a href="#定义训练和测试" class="headerlink" title="定义训练和测试"></a>定义训练和测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</div><div class="line">mpl.rcParams[<span class="string">'figure.dpi'</span>]= <span class="number">120</span></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 定义网络</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">net</span><span class="params">(X, w, b)</span>:</span></div><div class="line">    <span class="keyword">return</span> nd.dot(X, w) + b</div><div class="line"></div><div class="line"><span class="comment"># 损失函数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">square_loss</span><span class="params">(yhat, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> (yhat - y.reshape(yhat.shape)) ** <span class="number">2</span> / <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment"># 梯度下降</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sgd</span><span class="params">(params, lr, batch_size)</span>:</span></div><div class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> params:</div><div class="line">        param[:] = param - lr * param.grad / batch_size</div><div class="line"></div><div class="line"><span class="comment"># 测试</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(net, params, X, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> square_loss(net(X, *params), y).mean().asscalar()</div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(_lambda)</span>:</span></div><div class="line">    <span class="comment"># 定义训练的迭代周期</span></div><div class="line">    epochs = <span class="number">10</span></div><div class="line">    <span class="comment"># 定义学习率</span></div><div class="line">    learning_rate = <span class="number">0.005</span></div><div class="line">    <span class="comment"># 初始化参数</span></div><div class="line">    w, b = params = init_params()</div><div class="line">    <span class="comment"># 训练损失</span></div><div class="line">    train_loss = []</div><div class="line">    <span class="comment"># 测试损失</span></div><div class="line">    test_loss = []</div><div class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</div><div class="line">        <span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter(num_train):</div><div class="line">            <span class="comment"># 记录梯度</span></div><div class="line">            <span class="keyword">with</span> autograd.record():</div><div class="line">                 <span class="comment"># 计算预测值</span></div><div class="line">                output = net(data, *params)</div><div class="line">                <span class="comment"># 计算loss</span></div><div class="line">                loss = square_loss(output, label) + _lambda * L2_penalty(*params)</div><div class="line">            <span class="comment"># 反向传播</span></div><div class="line">            loss.backward()</div><div class="line">            <span class="comment"># 更新梯度</span></div><div class="line">            sgd(params, learning_rate, batch_size)</div><div class="line">            <span class="comment"># 训练损失</span></div><div class="line">            train_loss.append(test(net, params, X_train, y_train))</div><div class="line">            <span class="comment"># 测试损失</span></div><div class="line">            test_loss.append(test(net, params, X_test, y_test))</div><div class="line">            </div><div class="line">    <span class="comment"># 绘制损失图像</span></div><div class="line">    plt.plot(train_loss)</div><div class="line">    plt.plot(test_loss)</div><div class="line">    plt.legend([<span class="string">'train'</span>, <span class="string">'test'</span>])</div><div class="line">    plt.show()</div><div class="line">    <span class="keyword">return</span> <span class="string">'learned w[:10]:'</span>, w[:<span class="number">10</span>].T, <span class="string">'learned b:'</span>, b</div></pre></td></tr></table></figure>
+<h1 id="观察过拟合"><a href="#观察过拟合" class="headerlink" title="观察过拟合"></a>观察过拟合</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">train(<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-bd038b77c2ef488a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Overfitting"></p>
+<pre><code>(&apos;learned w[:10]:&apos;, 
+ [[ 1.04817176 -0.02568593  0.86764956  0.29322267  0.01006179 -0.56152576
+    0.38436398 -0.30840367 -2.32450151  0.03733355]]
+ &lt;NDArray 1x10 @cpu(0)&gt;, &apos;learned b:&apos;, 
+ [ 0.79914856]
+ &lt;NDArray 1 @cpu(0)&gt;)
+</code></pre><h2 id="使用正则化"><a href="#使用正则化" class="headerlink" title="使用正则化"></a>使用正则化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">train(<span class="number">5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-8d88c219f34f10ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal"></p>
+<pre><code>(&apos;learned w[:10]:&apos;, 
+ [[ 0.00107633 -0.00052574  0.00450233 -0.00110545 -0.0068391  -0.00181657
+   -0.00530632  0.00512845 -0.00742549 -0.00058495]]
+ &lt;NDArray 1x10 @cpu(0)&gt;, &apos;learned b:&apos;, 
+ [ 0.00449432]
+ &lt;NDArray 1 @cpu(0)&gt;)
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/01/2018-03-01-动手学深度学习(二)——欠拟合和过拟合/" rel="next" title="动手学深度学习(二)——欠拟合和过拟合">
+                <i class="fa fa-chevron-left"></i> 动手学深度学习(二)——欠拟合和过拟合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">352</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#高维线性回归"><span class="nav-number">1.</span> <span class="nav-text">高维线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成数据集"><span class="nav-number">2.</span> <span class="nav-text">生成数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化模型参数"><span class="nav-number">3.</span> <span class="nav-text">初始化模型参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L-2-范数正则化"><span class="nav-number">4.</span> <span class="nav-text">$L_2$ 范数正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义训练和测试"><span class="nav-number">5.</span> <span class="nav-text">定义训练和测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察过拟合"><span class="nav-number"></span> <span class="nav-text">观察过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用正则化"><span class="nav-number">1.</span> <span class="nav-text">使用正则化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
