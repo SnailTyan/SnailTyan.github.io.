@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2018-03-08T11:12:40.000Z</updated>
+  <updated>2018-03-09T10:09:44.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>动手学深度学习(二)——正则化(gluon)</title>
+    <link href="noahsnail.com/2018/03/09/2018-03-09-%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E4%BA%8C)%E2%80%94%E2%80%94%E6%AD%A3%E5%88%99%E5%8C%96(gluon)/"/>
+    <id>noahsnail.com/2018/03/09/2018-03-09-动手学深度学习(二)——正则化(gluon)/</id>
+    <published>2018-03-09T10:07:25.000Z</published>
+    <updated>2018-03-09T10:09:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
+<h2 id="高维线性回归数据集"><a href="#高维线性回归数据集" class="headerlink" title="高维线性回归数据集"></a>高维线性回归数据集</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入mxnet</span></div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</div><div class="line"></div><div class="line"><span class="comment"># 设置随机种子</span></div><div class="line">random.seed(<span class="number">2</span>)</div><div class="line">mx.random.seed(<span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> gluon</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> ndarray <span class="keyword">as</span> nd</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> autograd</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 训练数据数量</span></div><div class="line">num_train = <span class="number">20</span></div><div class="line"></div><div class="line"><span class="comment"># 测试数据数量</span></div><div class="line">num_test = <span class="number">100</span></div><div class="line"></div><div class="line"><span class="comment"># 输入数据特征维度</span></div><div class="line">num_inputs = <span class="number">200</span></div><div class="line"></div><div class="line"><span class="comment"># 实际权重</span></div><div class="line">true_w = nd.ones((num_inputs, <span class="number">1</span>)) * <span class="number">0.01</span></div><div class="line"></div><div class="line"><span class="comment"># 实际偏置</span></div><div class="line">true_b = <span class="number">0.05</span></div><div class="line"></div><div class="line"><span class="comment"># 生成数据</span></div><div class="line">X = nd.random_normal(shape=(num_train + num_test, num_inputs))</div><div class="line">y = nd.dot(X, true_w) + true_b</div><div class="line"></div><div class="line"><span class="comment"># 添加随机噪声</span></div><div class="line">y += <span class="number">0.01</span> * nd.random_normal(shape=y.shape)</div><div class="line"></div><div class="line"><span class="comment"># 训练数据和测试数据</span></div><div class="line">X_train, X_test = X[:num_train, :], X[num_train:, :]</div><div class="line">y_train, y_test = y[:num_train], y[num_train:]</div></pre></td></tr></table></figure>
+<h2 id="定义训练和测试"><a href="#定义训练和测试" class="headerlink" title="定义训练和测试"></a>定义训练和测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</div><div class="line">mpl.rcParams[<span class="string">'figure.dpi'</span>]= <span class="number">120</span></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="comment"># 批数据大小</span></div><div class="line">batch_size = <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 创建数据集</span></div><div class="line">dataset_train = gluon.data.ArrayDataset(X_train, y_train)</div><div class="line"></div><div class="line"><span class="comment"># 读取数据</span></div><div class="line">data_iter = gluon.data.DataLoader(dataset_train, batch_size, shuffle=<span class="keyword">True</span>)</div><div class="line"></div><div class="line"><span class="comment"># 损失函数</span></div><div class="line">square_loss = gluon.loss.L2Loss()</div><div class="line"></div><div class="line"><span class="comment"># 测试</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(net, X, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> square_loss(net(X), y).mean().asscalar()</div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(weight_decay)</span>:</span></div><div class="line">    <span class="comment"># 定义训练的迭代周期</span></div><div class="line">    epochs = <span class="number">10</span></div><div class="line">    <span class="comment"># 定义学习率</span></div><div class="line">    learning_rate = <span class="number">0.005</span></div><div class="line">    <span class="comment"># 定义网络</span></div><div class="line">    net = gluon.nn.Sequential()</div><div class="line">    <span class="keyword">with</span> net.name_scope():</div><div class="line">        net.add(gluon.nn.Dense(<span class="number">1</span>))</div><div class="line">    <span class="comment">#net.collect_params().initialize(mx.init.Normal(sigma=1))</span></div><div class="line">    <span class="comment"># 初始化网络参数</span></div><div class="line">    net.initialize(mx.init.Normal(sigma=<span class="number">1</span>))</div><div class="line">    <span class="comment"># SGD训练, 使用权重衰减代替L2正则化</span></div><div class="line">    trainer = gluon.Trainer(net.collect_params(), <span class="string">'sgd'</span>, &#123;<span class="string">'learning_rate'</span>: learning_rate, <span class="string">'wd'</span>: weight_decay&#125;)</div><div class="line">    <span class="comment"># 训练损失</span></div><div class="line">    train_loss = []</div><div class="line">    <span class="comment"># 测试损失</span></div><div class="line">    test_loss = []</div><div class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</div><div class="line">        <span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter:</div><div class="line">            <span class="comment"># 记录梯度</span></div><div class="line">            <span class="keyword">with</span> autograd.record():</div><div class="line">                <span class="comment"># 计算预测值</span></div><div class="line">                output = net(data)</div><div class="line">                <span class="comment"># 计算损失</span></div><div class="line">                loss = square_loss(output, label)</div><div class="line">            <span class="comment"># 反向传播</span></div><div class="line">            loss.backward()</div><div class="line">            <span class="comment"># 更新权重</span></div><div class="line">            trainer.step(batch_size)</div><div class="line">            <span class="comment"># 训练损失</span></div><div class="line">            train_loss.append(test(net, X_train, y_train))</div><div class="line">            <span class="comment"># 测试损失</span></div><div class="line">            test_loss.append(test(net, X_test, y_test))</div><div class="line">    <span class="comment"># 绘制图像</span></div><div class="line">    plt.plot(train_loss)</div><div class="line">    plt.plot(test_loss)</div><div class="line">    plt.legend([<span class="string">'train'</span>,<span class="string">'test'</span>])</div><div class="line">    plt.show()</div><div class="line">    <span class="keyword">return</span> (<span class="string">'learned w[:10]:'</span>, net[<span class="number">0</span>].weight.data()[:,:<span class="number">10</span>], <span class="string">'\nlearned b:'</span>, net[<span class="number">0</span>].bias.data())</div></pre></td></tr></table></figure>
+<h2 id="训练模型并观察过拟合"><a href="#训练模型并观察过拟合" class="headerlink" title="训练模型并观察过拟合"></a>训练模型并观察过拟合</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">train(<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-bd038b77c2ef488a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Overfitting"></p>
+<pre><code>(&apos;learned w[:10]:&apos;, 
+ [[ 1.04817235 -0.02568591  0.86764944  0.29322273  0.01006198 -0.56152564
+    0.38436413 -0.3084037  -2.32450151  0.03733355]]
+ &lt;NDArray 1x10 @cpu(0)&gt;, &apos;\nlearned b:&apos;, 
+ [ 0.79914868]
+ &lt;NDArray 1 @cpu(0)&gt;)
+</code></pre><h2 id="使用Gluon的正则化"><a href="#使用Gluon的正则化" class="headerlink" title="使用Gluon的正则化"></a>使用Gluon的正则化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">train(<span class="number">5</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-8d88c219f34f10ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal"></p>
+<pre><code>(&apos;learned w[:10]:&apos;, 
+ [[ 0.00107634 -0.00052574  0.00450234 -0.00110544 -0.00683913 -0.00181657
+   -0.00530634  0.00512847 -0.00742552 -0.00058494]]
+ &lt;NDArray 1x10 @cpu(0)&gt;, &apos;\nlearned b:&apos;, 
+ [ 0.00449433]
+ &lt;NDArray 1 @cpu(0)&gt;)
+</code></pre><h2 id="可用权重衰减代替L2正则化的原因"><a href="#可用权重衰减代替L2正则化的原因" class="headerlink" title="可用权重衰减代替L2正则化的原因"></a>可用权重衰减代替L2正则化的原因</h2><p><img src="http://upload-images.jianshu.io/upload_images/3232548-c9da036502d1949d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="推导"></p>
+<p>注：图片来自Gluon社区。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      动手学深度学习(二)——正则化(gluon)
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>动手学深度学习(二)——正则化(从零开始)</title>
@@ -1379,41 +1423,6 @@ True
     
     
       <category term="PyTorch" scheme="noahsnail.com/tags/PyTorch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Jupyter Notebook的使用</title>
-    <link href="noahsnail.com/2018/01/12/2018-01-12-Jupyter%20Notebook%E7%9A%84%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
-    <id>noahsnail.com/2018/01/12/2018-01-12-Jupyter Notebook的快捷键/</id>
-    <published>2018-01-12T06:33:19.000Z</published>
-    <updated>2018-01-12T10:08:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>Jupyter Notebook有两种不同的键盘输入模式。编辑模式允许输入代码/文本到一个单元格中，并以绿色单元格边框表示，此时命令模式的快捷键不起作用。命令模式将键盘绑定到计算机级别的操作，并由具有蓝色左边距的灰色单元格边框指示，可以用快捷键命令运行单元格，移动单元格，切换单元格编辑状态等，此时编辑模式下的快捷键不起作用。</p>
-<h2 id="2-快捷键"><a href="#2-快捷键" class="headerlink" title="2. 快捷键"></a>2. 快捷键</h2><p>快捷键可以在Jupyter Notebook的顶部<code>Help &gt; Keyboard Shortcuts</code>查看。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4b1b471b4000769e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Mac键盘"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-cd725ab926c6e94c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="命令模式"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-af5158fe2348a7bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="编辑模式"></p>
-<h2 id="3-设置自动显示变量值"><a href="#3-设置自动显示变量值" class="headerlink" title="3. 设置自动显示变量值"></a>3. 设置自动显示变量值</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from IPython.core.interactiveshell import InteractiveShell</div><div class="line">InteractiveShell.ast_node_interactivity = &quot;all&quot;</div></pre></td></tr></table></figure>
-<h2 id="4-查看文档"><a href="#4-查看文档" class="headerlink" title="4. 查看文档"></a>4. 查看文档</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?str.split</div></pre></td></tr></table></figure>
-<h2 id="5-展示绘制的图像"><a href="#5-展示绘制的图像" class="headerlink" title="5. 展示绘制的图像"></a>5. 展示绘制的图像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div></pre></td></tr></table></figure>
-<h2 id="6-查看魔法命令"><a href="#6-查看魔法命令" class="headerlink" title="6. 查看魔法命令"></a>6. 查看魔法命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%lsmagic</div></pre></td></tr></table></figure>
-<p><a href="http://ipython.readthedocs.io/en/stable/interactive/magics.html" target="_blank" rel="external">魔法命令文档</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># 设置环境变量</div><div class="line">%env TEST = &apos;test&apos;</div><div class="line"></div><div class="line"># 执行其它的ipynb文件</div><div class="line">%run ./a.ipynb</div><div class="line"></div><div class="line"># 导入文件内容</div><div class="line">%load utils.py</div><div class="line"></div><div class="line"></div><div class="line"># 列出所有的全局变量(str类型)</div><div class="line">%who str</div><div class="line"></div><div class="line"># 显示当前代码的执行时间</div><div class="line">%%time</div><div class="line"></div><div class="line"># 执行当前代码100000次，显示最快三次的均值</div><div class="line">%%timeit</div><div class="line"></div><div class="line"># 将当前单元的代码输出到文件中</div><div class="line">%%writefile a.py</div><div class="line"></div><div class="line"># 显示文件内容</div><div class="line">%pycat a.py</div><div class="line"></div><div class="line"># 执行shell命令，以!开头</div><div class="line">!ls</div></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/" target="_blank" rel="external">https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      Jupyter Notebook的使用
-    
-    </summary>
-    
-      <category term="Python" scheme="noahsnail.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="noahsnail.com/tags/Python/"/>
     
   </entry>
   
