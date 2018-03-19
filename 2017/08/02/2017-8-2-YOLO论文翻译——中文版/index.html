@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-bff0418267352b20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-ad521e84069f8289.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a8fbfeaf0bf7961a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-21T07:50:34.000Z">
+<meta property="og:updated_time" content="2018-03-19T10:28:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YOLO论文翻译——中文版">
 <meta name="twitter:description" content="You Only Look Once——Unified, Real-Time Object Detection论文翻译——中文版">
@@ -359,6 +359,7 @@
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="You-Only-Look-Once-Unified-Real-Time-Object-Detection"><a href="#You-Only-Look-Once-Unified-Real-Time-Object-Detection" class="headerlink" title="You Only Look Once: Unified, Real-Time Object Detection"></a>You Only Look Once: Unified, Real-Time Object Detection</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了YOLO，一种新的目标检测方法。以前的目标检测工作重新利用分类器来执行检测。相反，我们将目标检测框架看作回归问题从空间上分割边界框和相关的类别概率。单个神经网络在一次评估中直接从完整图像上预测边界框和类别概率。由于整个检测流水线是单一网络，因此可以直接对检测性能进行端到端的优化。</p>
 <p>我们的统一架构非常快。我们的基础YOLO模型以45帧/秒的速度实时处理图像。网络的一个较小版本，快速YOLO，每秒能处理惊人的155帧，同时实现其它实时检测器两倍的mAP。与最先进的检测系统相比，YOLO产生了更多的定位误差，但不太可能在背景上的预测假阳性。最后，YOLO学习目标非常通用的表示。当从自然图像到艺术品等其它领域泛化时，它都优于其它检测方法，包括DPM和R-CNN。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>人们瞥一眼图像，立即知道图像中的物体是什么，它们在哪里以及它们如何相互作用。人类的视觉系统是快速和准确的，使我们能够执行复杂的任务，如驾驶时没有多少有意识的想法。快速，准确的目标检测算法可以让计算机在没有专门传感器的情况下驾驶汽车，使辅助设备能够向人类用户传达实时的场景信息，并表现出对一般用途和响应机器人系统的潜力。</p>
@@ -651,7 +652,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">355</span>
+                <span class="site-state-item-count">356</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

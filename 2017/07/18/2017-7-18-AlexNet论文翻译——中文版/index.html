@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Table%202.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Figure%203.png">
 <meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Figure%204.png">
-<meta property="og:updated_time" content="2017-11-29T07:58:13.000Z">
+<meta property="og:updated_time" content="2018-03-19T10:28:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AlexNet论文翻译——中文版">
 <meta name="twitter:description" content="AlexNet论文翻译——中文版">
@@ -359,6 +359,7 @@
 <p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
 <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="ImageNet-Classification-with-Deep-Convolutional-Neural-Networks"><a href="#ImageNet-Classification-with-Deep-Convolutional-Neural-Networks" class="headerlink" title="ImageNet Classification with Deep Convolutional Neural Networks"></a>ImageNet Classification with Deep Convolutional Neural Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们训练了一个大型深度卷积神经网络来将<code>ImageNet LSVRC-2010</code>竞赛的120万高分辨率的图像分到1000不同的类别中。在测试数据上，我们得到了<code>top-1 37.5%, top-5 17.0%</code>的错误率，这个结果比目前的最好结果好很多。这个神经网络有6000万参数和650000个神经元，包含5个卷积层（某些卷积层后面带有池化层）和3个全连接层，最后是一个1000维的softmax。为了训练的更快，我们使用了非饱和神经元并对卷积操作进行了非常有效的GPU实现。为了减少全连接层的过拟合，我们采用了一个最近开发的名为<code>dropout</code>的正则化方法，结果证明是非常有效的。我们也使用这个模型的一个变种参加了<code>ILSVRC-2012</code>竞赛，赢得了冠军并且与第二名 <code>top-5 26.2%</code>的错误率相比，我们取得了<code>top-5 15.3%</code>的错误率。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h2><p>当前的目标识别方法基本上都使用了机器学习方法。为了提高目标识别的性能，我们可以收集更大的数据集，学习更强大的模型，使用更好的技术来防止过拟合。直到最近，标注图像的数据集都相对较小--在几万张图像的数量级上（例如，NORB[16]，Caltech-101/256 [8, 9]和CIFAR-10/100 [12]）。简单的识别任务在这样大小的数据集上可以被解决的相当好，尤其是如果通过标签保留变换进行数据增强的情况下。例如，目前在MNIST数字识别任务上（&lt;0.3%）的最好准确率已经接近了人类水平[4]。但真实环境中的对象表现出了相当大的可变性，因此为了学习识别它们，有必要使用更大的训练数据集。实际上，小图像数据集的缺点已经被广泛认识到（例如，Pinto et al. [21]），但收集上百万图像的标注数据仅在最近才变得的可能。新的更大的数据集包括LabelMe [23]，它包含了数十万张完全分割的图像，ImageNet [6]，它包含了22000个类别上的超过1500万张标注的高分辨率的图像。</p>
 <p>为了从数百万张图像中学习几千个对象，我们需要一个有很强学习能力的模型。然而对象识别任务的巨大复杂性意味着这个问题不能被指定，即使通过像ImageNet这样的大数据集，因此我们的模型应该也有许多先验知识来补偿我们所没有的数据。卷积神经网络(CNNs)构成了一个这样的模型[16, 11, 13, 18, 15, 22, 26]。它们的能力可以通过改变它们的广度和深度来控制，它们也可以对图像的本质进行强大且通常正确的假设（也就是说，统计的稳定性和像素依赖的局部性）。因此，与具有层次大小相似的标准前馈神经网络，CNNs有更少的连接和参数，因此它们更容易训练，而它们理论上的最佳性能可能仅比标准前馈神经网络差一点。</p>
@@ -588,7 +589,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">355</span>
+                <span class="site-state-item-count">356</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

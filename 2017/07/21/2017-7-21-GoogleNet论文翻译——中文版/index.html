@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20171220142538992?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171220142613935?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171220142648206?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-12-20T06:27:00.000Z">
+<meta property="og:updated_time" content="2018-03-19T10:28:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GoogLeNet论文翻译——中文版">
 <meta name="twitter:description" content="GoogLeNet论文翻译——中文版">
@@ -360,6 +360,7 @@
         <p><img src="http://img.blog.csdn.net/20171220142045506?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Deep Learning"></p>
 <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="Going-Deeper-with-Convolutions"><a href="#Going-Deeper-with-Convolutions" class="headerlink" title="Going Deeper with Convolutions"></a>Going Deeper with Convolutions</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们在ImageNet大规模视觉识别挑战赛2014（ILSVRC14）上提出了一种代号为Inception的深度卷积神经网络结构，并在分类和检测上取得了新的最好结果。这个架构的主要特点是提高了网络内部计算资源的利用率。通过精心的手工设计，我们在增加了网络深度和广度的同时保持了计算预算不变。为了优化质量，架构的设计以赫布理论和多尺度处理直觉为基础。我们在ILSVRC14提交中应用的一个特例被称为GoogLeNet，一个22层的深度网络，其质量在分类和检测的背景下进行了评估。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>过去三年中，由于深度学习和卷积网络的发展[10]，我们的目标分类和检测能力得到了显著提高。一个令人鼓舞的消息是，大部分的进步不仅仅是更强大硬件、更大数据集、更大模型的结果，而主要是新的想法、算法和网络结构改进的结果。例如，ILSVRC 2014竞赛中最靠前的输入除了用于检测目的的分类数据集之外，没有使用新的数据资源。我们在ILSVRC 2014中的GoogLeNet提交实际使用的参数只有两年前Krizhevsky等人[9]获胜结构参数的1/12，而结果明显更准确。在目标检测前沿，最大的收获不是来自于越来越大的深度网络的简单应用，而是来自于深度架构和经典计算机视觉的协同，像Girshick等人[6]的R-CNN算法那样。</p>
 <p>另一个显著因素是随着移动和嵌入式设备的推动，我们的算法的效率很重要——尤其是它们的电力和内存使用。值得注意的是，正是包含了这个因素的考虑才得出了本文中呈现的深度架构设计，而不是单纯的为了提高准确率。对于大多数实验来说，模型被设计为在一次推断中保持15亿乘加的计算预算，所以最终它们不是单纯的学术好奇心，而是能在现实世界中应用，甚至是以合理的代价在大型数据集上使用。</p>
@@ -591,7 +592,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">355</span>
+                <span class="site-state-item-count">356</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

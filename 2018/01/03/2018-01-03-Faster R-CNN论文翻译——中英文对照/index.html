@@ -139,7 +139,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c7a00aed8338a0df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a13f952d720081c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a86328f2b0beb621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-22T07:40:28.000Z">
+<meta property="og:updated_time" content="2018-03-19T10:27:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN论文翻译——中英文对照">
 <meta name="twitter:description" content="Faster R-CNN论文翻译——中英文对照">
@@ -390,6 +390,7 @@
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><a href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks" class="headerlink" title="Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks"></a>Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>State-of-the-art object detection networks depend on region proposal algorithms to hypothesize object locations. Advances like SPPnet [1] and Fast R-CNN [2] have reduced the running time of these detection networks, exposing region proposal computation as a bottleneck. In this work, we introduce a Region Proposal Network (RPN) that shares full-image convolutional features with the detection network, thus enabling nearly cost-free region proposals. An RPN is a fully convolutional network that simultaneously predicts object bounds and objectness scores at each position. The RPN is trained end-to-end to generate high-quality region proposals, which are used by Fast R-CNN for detection. We further merge RPN and Fast R-CNN into a single network by sharing their convolutional features——using the recently popular terminology of neural networks with “attention” mechanisms, the RPN component tells the unified network where to look. For the very deep VGG-16 model [3], our detection system has a frame rate of 5fps (including all steps) on a GPU, while achieving state-of-the-art object detection accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with only 300 proposals per image. In ILSVRC and COCO 2015 competitions, Faster R-CNN and RPN are the foundations of the 1st-place winning entries in several tracks. Code has been made publicly available.</p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>最先进的目标检测网络依靠区域提出算法来假设目标的位置。SPPnet[1]和Fast R-CNN[2]等研究已经减少了这些检测网络的运行时间，使得区域提出计算成为一个瓶颈。在这项工作中，我们引入了一个区域提出网络（RPN），该网络与检测网络共享全图像的卷积特征，从而使近乎零成本的区域提出成为可能。RPN是一个全卷积网络，可以同时在每个位置预测目标边界和目标分数。RPN经过端到端的训练，可以生成高质量的区域提出，由Fast R-CNN用于检测。我们将RPN和Fast R-CNN通过共享卷积特征进一步合并为一个单一的网络——使用最近流行的具有“注意力”机制的神经网络术语，RPN组件告诉统一网络在哪里寻找。对于非常深的VGG-16模型[3]，我们的检测系统在GPU上的帧率为5fps（包括所有步骤），同时在PASCAL VOC 2007，2012和MS COCO数据集上实现了最新的目标检测精度，每个图像只有300个提出。在ILSVRC和COCO 2015竞赛中，Faster R-CNN和RPN是多个比赛中获得第一名输入的基础。代码可公开获得。</p>
 <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Recent advances in object detection are driven by the success of region proposal methods (e.g., [4]) and region-based convolutional neural networks (R-CNNs) [5]. Although region-based CNNs were computationally expensive as originally developed in [5], their cost has been drastically reduced thanks to sharing convolutions across proposals [1], [2]. The latest incarnation, Fast R-CNN [2], achieves near real-time rates using very deep networks [3], <em>when ignoring the time spent on region proposals</em>. Now, proposals are the test-time computational bottleneck in state-of-the-art detection systems.</p>
@@ -796,7 +797,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">355</span>
+                <span class="site-state-item-count">356</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

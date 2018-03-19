@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20171217204902530?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217204958489?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171217205057153?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUXVpbmN1bnRpYWw=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-12-17T12:52:24.000Z">
+<meta property="og:updated_time" content="2018-03-19T10:27:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deformable Convolutional Networks论文翻译——中文版">
 <meta name="twitter:description" content="Deformable Convolutional Networks论文翻译——中文版">
@@ -362,6 +362,7 @@
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="Deformable-Convolutional-Networks"><a href="#Deformable-Convolutional-Networks" class="headerlink" title="Deformable Convolutional Networks"></a>Deformable Convolutional Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>卷积神经网络（CNN）由于其构建模块固定的几何结构天然地局限于建模几何变换。在这项工作中，我们引入了两个新的模块来提高CNN的转换建模能力，即可变形卷积和可变形RoI池化。两者都基于这样的想法：增加模块中的空间采样位置以及额外的偏移量，并且从目标任务中学习偏移量，而不需要额外的监督。新模块可以很容易地替换现有CNN中的普通模块，并且可以通过标准的反向传播便易地进行端对端训练，从而产生<em>可变形卷积网络</em>。大量的实验验证了我们方法的性能。我们首次证明了在深度CNN中学习密集空间变换对于复杂的视觉任务（如目标检测和语义分割）是有效的。代码发布在<a href="https://github.com/msracver/Deformable-ConvNets" target="_blank" rel="external">https://github.com/msracver/Deformable-ConvNets</a>。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>视觉识别中的一个关键挑战是如何在目标尺度，姿态，视点和部件变形中适应几何变化或建模几何变换。一般来说，有两种方法。首先是建立具有足够期望变化的训练数据集。这通常通过增加现有的数据样本来实现，例如通过仿射变换。鲁棒的表示可以从数据中学习，但是通常以昂贵的训练和复杂的模型参数为代价。其次是使用变换不变的特征和算法。这一类包含了许多众所周知的技术，如SIFT（尺度不变特征变换）[42]和基于滑动窗口的目标检测范例。</p>
 <p>上述方法有两个缺点。首先，几何变换被假定是固定并且已知的。这样的先验知识被用来扩充数据，并设计特征和算法。这个假设阻止了对具有未知几何变换的新任务的泛化能力，这些新任务没有被正确地建模。其次，手工设计的不变特征和算法对于过于复杂的变换可能是困难的或不可行的，即使在已知复杂变化的情况下。</p>
@@ -663,7 +664,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">355</span>
+                <span class="site-state-item-count">356</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

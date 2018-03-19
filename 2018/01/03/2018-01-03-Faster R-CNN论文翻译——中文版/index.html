@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c7a00aed8338a0df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a13f952d720081c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a86328f2b0beb621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-01-31T10:56:22.000Z">
+<meta property="og:updated_time" content="2018-03-19T10:27:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN论文翻译——中文版">
 <meta name="twitter:description" content="Faster R-CNN论文翻译——中文版">
@@ -370,6 +370,7 @@
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks"><a href="#Faster-R-CNN-Towards-Real-Time-Object-Detection-with-Region-Proposal-Networks" class="headerlink" title="Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks"></a>Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>最先进的目标检测网络依靠区域提出算法来假设目标的位置。SPPnet[1]和Fast R-CNN[2]等研究已经减少了这些检测网络的运行时间，使得区域提出计算成为一个瓶颈。在这项工作中，我们引入了一个区域提出网络（RPN），该网络与检测网络共享全图像的卷积特征，从而使近乎零成本的区域提出成为可能。RPN是一个全卷积网络，可以同时在每个位置预测目标边界和目标分数。RPN经过端到端的训练，可以生成高质量的区域提出，由Fast R-CNN用于检测。我们将RPN和Fast R-CNN通过共享卷积特征进一步合并为一个单一的网络——使用最近流行的具有“注意力”机制的神经网络术语，RPN组件告诉统一网络在哪里寻找。对于非常深的VGG-16模型[3]，我们的检测系统在GPU上的帧率为5fps（包括所有步骤），同时在PASCAL VOC 2007，2012和MS COCO数据集上实现了最新的目标检测精度，每个图像只有300个提出。在ILSVRC和COCO 2015竞赛中，Faster R-CNN和RPN是多个比赛中获得第一名输入的基础。代码可公开获得。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>目标检测的最新进展是由区域提出方法（例如[4]）和基于区域的卷积神经网络（R-CNN）[5]的成功驱动的。尽管在[5]中最初开发的基于区域的CNN计算成本很高，但是由于在各种提议中共享卷积，所以其成本已经大大降低了[1][2]。<em>忽略花费在区域提议上的时间</em>，最新版本Fast R-CNN[2]利用非常深的网络[3]实现了接近实时的速率。现在，提议是最新的检测系统中测试时间的计算瓶颈。</p>
 <p>区域提议方法通常依赖廉价的特征和简练的推断方案。选择性搜索[4]是最流行的方法之一，它贪婪地合并基于设计的低级特征的超级像素。然而，与有效的检测网络[2]相比，选择性搜索速度慢了一个数量级，在CPU实现中每张图像的时间为2秒。EdgeBoxes[6]目前提供了在提议质量和速度之间的最佳权衡，每张图像0.2秒。尽管如此，区域提议步骤仍然像检测网络那样消耗同样多的运行时间。</p>
@@ -666,7 +667,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">355</span>
+                <span class="site-state-item-count">356</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
