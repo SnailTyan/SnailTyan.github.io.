@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="noahsnail.com/"/>
-  <updated>2018-03-19T03:41:48.000Z</updated>
+  <updated>2018-03-20T10:54:56.000Z</updated>
   <id>noahsnail.com/</id>
   
   <author>
@@ -16,14 +16,120 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Feature Pyramid Networks for Object Detection论文翻译——中英文对照</title>
+    <link href="noahsnail.com/2018/03/20/2018-03-20-Feature%20Pyramid%20Networks%20for%20Object%20Detection%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>noahsnail.com/2018/03/20/2018-03-20-Feature Pyramid Networks for Object Detection论文翻译——中英文对照/</id>
+    <published>2018-03-20T10:30:55.000Z</published>
+    <updated>2018-03-20T10:54:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h1 id="Feature-Pyramid-Networks-for-Object-Detection"><a href="#Feature-Pyramid-Networks-for-Object-Detection" class="headerlink" title="Feature Pyramid Networks for Object Detection"></a>Feature Pyramid Networks for Object Detection</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Feature pyramids are a basic component in recognition systems for detecting objects at different scales. But recent deep learning object detectors have avoided pyramid representations, in part because they are compute and memory intensive. In this paper, we exploit the inherent multi-scale, pyramidal hierarchy of deep convolutional networks to construct feature pyramids with marginal extra cost. A top-down architecture with lateral connections is developed for building high-level semantic feature maps at all scales. This architecture, called a Feature Pyramid Network (FPN), shows significant improvement as a generic feature extractor in several applications. Using FPN in a basic Faster R-CNN system, our method achieves state-of-the-art single-model results on the COCO detection benchmark without bells and whistles, surpassing all existing single-model entries including those from the COCO 2016 challenge winners. In addition, our method can run at 6 FPS on a GPU and thus is a practical and accurate solution to multi-scale object detection. Code will be made publicly available.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>特征金字塔是识别系统中用于检测不同尺度目标的基本组件。但最近的深度学习目标检测器已经避免了金字塔表示，部分原因是它们是计算和内存密集型的。在本文中，我们利用深度卷积网络内在的多尺度、金字塔分级来构造具有很少额外成本的特征金字塔。开发了一种具有横向连接的自顶向下架构，用于在所有尺度上构建高级语义特征映射。这种称为特征金字塔网络（FPN）的架构在几个应用程序中作为通用特征提取器表现出了显著的改进。在一个基本的Faster R-CNN系统中使用FPN，没有任何不必要的东西，我们的方法可以在COCO检测基准数据集上取得最先进的单模型结果，结果超过了所有现有的单模型输入，包括COCO 2016挑战赛的获奖者。此外，我们的方法可以在GPU上以6FPS运行，因此是多尺度目标检测的实用和准确的解决方案。代码将公开发布。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Recognizing objects at vastly different scales is a fundamental challenge in computer vision. Feature pyramids built upon image pyramids (for short we call these featurized image pyramids) form the basis of a standard solution [1] (Fig. 1(a)). These pyramids are scale-invariant in the sense that an object’s scale change is offset by shifting its level in the pyramid. Intuitively, this property enables a model to detect objects across a large range of scales by scanning the model over both positions and pyramid levels.</p>
+<p>Featurized image pyramids were heavily used in the era of hand-engineered features [5, 25]. They were so critical that object detectors like DPM [7] required dense scale sampling to achieve good results (e.g., 10 scales per octave). For recognition tasks, engineered features have largely been replaced with features computed by deep convolutional networks (ConvNets) [19, 20]. Aside from being capable of representing higher-level semantics, ConvNets are also more robust to variance in scale and thus facilitate recognition from features computed on a single input scale [15, 11, 29] (Fig. 1(b)). But even with this robustness, pyramids are still needed to get the most accurate results. All recent top entries in the ImageNet [33] and COCO [21] detection challenges use multi-scale testing on featurized image pyramids (e.g., [16, 35]). The principle advantage of featurizing each level of an image pyramid is that it produces a multi-scale feature representation in which all levels are semantically strong, including the high-resolution levels.</p>
+<p>Nevertheless, featurizing each level of an image pyramid has obvious limitations. Inference time increases considerably (e.g., by four times [11]), making this approach impractical for real applications. Moreover, training deep networks end-to-end on an image pyramid is infeasible in terms of memory, and so, if exploited, image pyramids are used only at test time [15, 11, 16, 35], which creates an inconsistency between train/test-time inference. For these reasons, Fast and Faster R-CNN [11, 29] opt to not use featurized image pyramids under default settings.</p>
+<p>However, image pyramids are not the only way to compute a multi-scale feature representation. A deep ConvNet computes a feature hierarchy layer by layer, and with subsampling layers the feature hierarchy has an inherent multi-scale, pyramidal shape. This in-network feature hierarchy produces feature maps of different spatial resolutions, but introduces large semantic gaps caused by different depths. The high-resolution maps have low-level features that harm their representational capacity for object recognition.</p>
+<p>The Single Shot Detector (SSD) [22] is one of the first attempts at using a ConvNet’s pyramidal feature hierarchy as if it were a featurized image pyramid (Fig. 1(c)). Ideally, the SSD-style pyramid would reuse the multi-scale feature maps from different layers computed in the forward pass and thus come free of cost. But to avoid using low-level features SSD foregoes reusing already computed layers and instead builds the pyramid starting from high up in the network (e.g., conv4 3 of VGG nets [36]) and then by adding several new layers. Thus it misses the opportunity to reuse the higher-resolution maps of the feature hierarchy. We show that these are important for detecting small objects.</p>
+<p>The goal of this paper is to naturally leverage the pyra- midal shape of a ConvNet’s feature hierarchy while creating a feature pyramid that has strong semantics at all scales. To achieve this goal, we rely on an architecture that combines low-resolution, semantically strong features with high-resolution, semantically weak features via a top-down pathway and lateral connections (Fig. 1(d)). The result is a feature pyramid that has rich semantics at all levels and is built quickly from a single input image scale. In other words, we show how to create in-network feature pyramids that can be used to replace featurized image pyramids with- out sacrificing representational power, speed, or memory.</p>
+<p>Similar architectures adopting top-down and skip connections are popular in recent research [28, 17, 8, 26]. Their goals are to produce a single high-level feature map of a fine resolution on which the predictions are to be made (Fig. 2 top). On the contrary, our method leverages the architecture as a feature pyramid where predictions (e.g., object detections) are independently made on each level (Fig. 2 bottom). Our model echoes a featurized image pyramid, which has not been explored in these works.</p>
+<p>We evaluate our method, called a Feature Pyramid Net- work (FPN), in various systems for detection and segmentation [11, 29, 27]. Without bells and whistles, we report a state-of-the-art single-model result on the challenging COCO detection benchmark [21] simply based on FPN and a basic Faster R-CNN detector [29], surpassing all exist- ing heavily-engineered single-model entries of competition winners. In ablation experiments, we find that for bounding box proposals, FPN significantly increases the Average Recall (AR) by 8.0 points; for object detection, it improves the COCO-style Average Precision (AP) by 2.3 points and PASCAL-style AP by 3.8 points, over a strong single-scale baseline of Faster R-CNN on ResNets [16]. Our method is also easily extended to mask proposals and improves both instance segmentation AR and speed over state-of-the-art methods that heavily depend on image pyramids.</p>
+<p>In addition, our pyramid structure can be trained end-to-end with all scales and is used consistently at train/test time, which would be memory-infeasible using image pyramids. As a result, FPNs are able to achieve higher accuracy than all existing state-of-the-art methods. Moreover, this improvement is achieved without increasing testing time over the single-scale baseline. We believe these advances will facilitate future research and applications. Our code will be made publicly available.</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p><strong>Hand-engineered features and early neural networks.</strong> SIFT features [25] were originally extracted at scale-space extrema and used for feature point matching. HOG features [5], and later SIFT features as well, were computed densely over entire image pyramids. These HOG and SIFT pyramids have been used in numerous works for image classification, object detection, human pose estimation, and more. There has also been significant interest in computing featurized image pyramids quickly. Dollar et al.[6] demonstrated fast pyramid computation by first computing a sparsely sampled (in scale) pyramid and then interpolating missing levels. Before HOG and SIFT, early work on face detection with ConvNets [38, 32] computed shallow networks over image pyramids to detect faces across scales.</p>
+<p><strong>Deep ConvNet object detectors</strong>. With the development of modern deep ConvNets [19], object detectors like OverFeat [34] and R-CNN [12] showed dramatic improvements in accuracy. OverFeat adopted a strategy similar to early neural network face detectors by applying a ConvNet as a sliding window detector on an image pyramid. R-CNN adopted a region proposal-based strategy [37] in which each proposal was scale-normalized before classifying with a ConvNet. SPPnet [15] demonstrated that such region-based detectors could be applied much more efficiently on feature maps extracted on a single image scale. Recent and more accurate detection methods like Fast R-CNN [11] and Faster R-CNN [29] advocate using features computed from a single scale, because it offers a good trade-off between accuracy and speed. Multi-scale detection, however, still performs better, especially for small objects.</p>
+<p><strong>Methods using multiple layers</strong>. A number of recent approaches improve detection and segmentation by using different layers in a ConvNet. FCN [24] sums partial scores for each category over multiple scales to compute semantic segmentations. Hypercolumns [13] uses a similar method for object instance segmentation. Several other approaches (HyperNet [18], ParseNet [23], and ION [2]) concatenate features of multiple layers before computing predictions, which is equivalent to summing transformed features. SSD [22] and MS-CNN [3] predict objects at multiple layers of the feature hierarchy without combining features or scores.</p>
+<p>There are recent methods exploiting lateral/skip connections that associate low-level feature maps across resolutions and semantic levels, including U-Net [31] and SharpMask [28] for segmentation, Recombinator networks [17] for face detection, and Stacked Hourglass networks [26] for keypoint estimation. Ghiasi et al. [8] present a Laplacian pyramid presentation for FCNs to progressively refine segmentation. Although these methods adopt architectures with pyramidal shapes, they are unlike featurized image pyramids [5, 7, 34] where predictions are made independently at all levels, see Fig. 2. In fact, for the pyramidal architecture in Fig. 2 (top), image pyramids are still needed to recognize objects across multiple scales [28].</p>
+<h2 id="3-Feature-Pyramid-Networks"><a href="#3-Feature-Pyramid-Networks" class="headerlink" title="3. Feature Pyramid Networks"></a>3. Feature Pyramid Networks</h2><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] E. H. Adelson, C. H. Anderson, J. R. Bergen, P. J. Burt, and J. M. Ogden. Pyramid methods in image processing. RCA engineer, 1984.</p>
+<p>[2] S. Bell, C. L. Zitnick, K. Bala, and R. Girshick. Inside-outside net: Detecting objects in context with skip pooling and recurrent neural networks. In CVPR, 2016.</p>
+<p>[3] Z. Cai, Q. Fan, R. S. Feris, and N. Vasconcelos. A unified multi-scale deep convolutional neural network for fast object detection. In ECCV, 2016.</p>
+<p>[4] J. Dai, K. He, Y. Li, S. Ren, and J. Sun. Instance-sensitive fully convolutional networks. In ECCV, 2016.</p>
+<p>[5] N. Dalal and B. Triggs. Histograms of oriented gradients for human detection. In CVPR, 2005.</p>
+<p>[6] P. Dollar, R. Appel, S. Belongie, and P. Perona. Fast feature pyramids for object detection. TPAMI, 2014.</p>
+<p>[7] P.F.Felzenszwalb,R.B.Girshick,D.McAllester,andD.Ramanan. Object detection with discriminatively trained part-based models. TPAMI, 2010.</p>
+<p>[8] G.GhiasiandC.C.Fowlkes.Laplacianpyramidreconstruction and refinement for semantic segmentation. In ECCV, 2016.</p>
+<p>[9] S. Gidaris and N. Komodakis. Object detection via a multi-region &amp; semantic segmentation-aware CNN model. In ICCV, 2015.</p>
+<p>[10] S. Gidaris and N. Komodakis. Attend refine repeat: Active box proposal generation via in-out localization. In BMVC, 2016.</p>
+<p>[11] R. Girshick. Fast R-CNN. In ICCV, 2015.</p>
+<p>[12] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In CVPR, 2014.</p>
+<p>[13] B.Hariharan,P.Arbelaez,R.Girshick,andJ.Malik.Hypercolumns for object segmentation and fine-grained localization. In CVPR, 2015.</p>
+<p>[14] K. He, G. Gkioxari, P. Dollar, and R. Girshick. Mask r-cnn. arXiv:1703.06870, 2017.</p>
+<p>[15] K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV. 2014.</p>
+<p>[16] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In CVPR, 2016.</p>
+<p>[17] S. Honari, J. Yosinski, P. Vincent, and C. Pal. Recombinator networks: Learning coarse-to-fine feature aggregation. In CVPR, 2016.</p>
+<p>[18] T. Kong, A. Yao, Y. Chen, and F. Sun. Hypernet: Towards accurate region proposal generation and joint object detection. In CVPR, 2016.</p>
+<p>[19] A. Krizhevsky, I. Sutskever, and G. Hinton. ImageNet classification with deep convolutional neural networks. In NIPS, 2012.</p>
+<p>[20] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropagation applied to handwritten zip code recognition. Neural computation, 1989.</p>
+<p>[21] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollár, and C. L. Zitnick. Microsoft COCO: Common objects in context. In ECCV, 2014.</p>
+<p>[22] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed. SSD: Single shot multibox detector. In ECCV, 2016.</p>
+<p>[23] W. Liu, A. Rabinovich, and A. C. Berg. ParseNet: Looking wider to see better. In ICLR workshop, 2016.</p>
+<p>[24] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.</p>
+<p>[25] D. G. Lowe. Distinctive image features from scale-invariant keypoints. IJCV, 2004.</p>
+<p>[26] A. Newell, K. Yang, and J. Deng. Stacked hourglass networks for human pose estimation. In ECCV, 2016.</p>
+<p>[27] P. O. Pinheiro, R. Collobert, and P. Dollar. Learning to segment object candidates. In NIPS, 2015.</p>
+<p>[28] P. O. Pinheiro, T.-Y. Lin, R. Collobert, and P. Dollár. Learning to refine object segments. In ECCV, 2016.</p>
+<p>[29] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015.</p>
+<p>[30] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun. Object detection networks on convolutional feature maps. PAMI, 2016.</p>
+<p>[31] O. Ronneberger, P. Fischer, and T. Brox. U-Net: Convolutional networks for biomedical image segmentation. In MIC- CAI, 2015.</p>
+<p>[32] H. Rowley, S. Baluja, and T. Kanade. Human face detection in visual scenes. Technical Report CMU-CS-95-158R, Carnegie Mellon University, 1995.</p>
+<p>[33] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015.</p>
+<p>[34] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014.</p>
+<p>[35] A. Shrivastava, A. Gupta, and R. Girshick. Training region-based object detectors with online hard example mining. In CVPR, 2016.</p>
+<p>[36] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.</p>
+<p>[37] J. R. Uijlings, K. E. van de Sande, T. Gevers, and A. W. Smeulders. Selective search for object recognition. IJCV, 2013.</p>
+<p>[38] R. Vaillant, C. Monrocq, and Y. LeCun. Original approach for the localisation of objects in images. IEE Proc. on Vision, Image, and Signal Processing, 1994.</p>
+<p>[39] S. Zagoruyko and N. Komodakis. Wide residual networks. In BMVC, 2016.</p>
+<p>[40] S. Zagoruyko, A. Lerer, T.-Y. Lin, P. O. Pinheiro, S. Gross, S. Chintala, and P. Dollár. A multipath network for object detection. In BMVC, 2016. 10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Feature Pyramid Networks for Object Detection论文翻译——中英文对照
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Feature Pyramid Networks for Object Detection论文翻译——中文版</title>
+    <link href="noahsnail.com/2018/03/20/2018-03-20-Feature%20Pyramid%20Networks%20for%20Object%20Detection%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>noahsnail.com/2018/03/20/2018-03-20-Feature Pyramid Networks for Object Detection论文翻译——中文版/</id>
+    <published>2018-03-20T10:30:15.000Z</published>
+    <updated>2018-03-20T10:43:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h1 id="Feature-Pyramid-Networks-for-Object-Detection"><a href="#Feature-Pyramid-Networks-for-Object-Detection" class="headerlink" title="Feature Pyramid Networks for Object Detection"></a>Feature Pyramid Networks for Object Detection</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>特征金字塔是识别系统中用于检测不同尺度目标的基本组件。但最近的深度学习目标检测器已经避免了金字塔表示，部分原因是它们是计算和内存密集型的。在本文中，我们利用深度卷积网络内在的多尺度、金字塔分级来构造具有很少额外成本的特征金字塔。开发了一种具有横向连接的自顶向下架构，用于在所有尺度上构建高级语义特征映射。这种称为特征金字塔网络（FPN）的架构在几个应用程序中作为通用特征提取器表现出了显著的改进。在一个基本的Faster R-CNN系统中使用FPN，没有任何不必要的东西，我们的方法可以在COCO检测基准数据集上取得最先进的单模型结果，结果超过了所有现有的单模型输入，包括COCO 2016挑战赛的获奖者。此外，我们的方法可以在GPU上以6FPS运行，因此是多尺度目标检测的实用和准确的解决方案。代码将公开发布。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Feature Pyramid Networks for Object Detection论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深度学习中的优化方法</title>
     <link href="noahsnail.com/2018/03/19/2018-03-19-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"/>
     <id>noahsnail.com/2018/03/19/2018-03-19-深度学习中的优化方法/</id>
     <published>2018-03-19T03:33:03.000Z</published>
-    <updated>2018-03-19T03:41:48.000Z</updated>
+    <updated>2018-03-20T02:01:37.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><h2 id="2-SGD"><a href="#2-SGD" class="headerlink" title="2. SGD"></a>2. SGD</h2><h2 id="3-Momentum"><a href="#3-Momentum" class="headerlink" title="3. Momentum"></a>3. Momentum</h2><h2 id="4-Adam"><a href="#4-Adam" class="headerlink" title="4. Adam"></a>4. Adam</h2><h2 id="5-Adamgrad"><a href="#5-Adamgrad" class="headerlink" title="5. Adamgrad"></a>5. Adamgrad</h2>]]></content>
+<h2 id="1-优化算法"><a href="#1-优化算法" class="headerlink" title="1. 优化算法"></a>1. 优化算法</h2><h2 id="2-SGD"><a href="#2-SGD" class="headerlink" title="2. SGD"></a>2. SGD</h2><h2 id="3-Momentum"><a href="#3-Momentum" class="headerlink" title="3. Momentum"></a>3. Momentum</h2><h2 id="4-Adam"><a href="#4-Adam" class="headerlink" title="4. Adam"></a>4. Adam</h2><h2 id="5-Adamgrad"><a href="#5-Adamgrad" class="headerlink" title="5. Adamgrad"></a>5. Adamgrad</h2>]]></content>
     
     <summary type="html">
     
@@ -230,7 +336,7 @@ Epoch 4. Loss: 0.426575, Train acc 0.846070, Test acc 0.849159
     <link href="noahsnail.com/2018/03/01/2018-03-01-%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E4%BA%8C)%E2%80%94%E2%80%94%E6%AC%A0%E6%8B%9F%E5%90%88%E5%92%8C%E8%BF%87%E6%8B%9F%E5%90%88/"/>
     <id>noahsnail.com/2018/03/01/2018-03-01-动手学深度学习(二)——欠拟合和过拟合/</id>
     <published>2018-03-01T10:49:47.000Z</published>
-    <updated>2018-03-01T10:51:59.000Z</updated>
+    <updated>2018-03-08T11:09:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
@@ -1075,218 +1181,6 @@ Epoch 4, average loss: 0.001479
     <summary type="html">
     
       Detecting Text in Natural Image with Connectionist Text Proposal Network论文翻译——中文版
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>动手学深度学习(一)——线性回归从零开始</title>
-    <link href="noahsnail.com/2018/01/31/2018-01-31-%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E4%B8%80)%E2%80%94%E2%80%94%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/"/>
-    <id>noahsnail.com/2018/01/31/2018-01-31-动手学深度学习(一)——线性回归从零开始/</id>
-    <published>2018-01-31T10:10:57.000Z</published>
-    <updated>2018-02-01T02:04:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><p>ndarray文档<br><a href="https://mxnet.incubator.apache.org/api/python/ndarray.html" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/ndarray.html</a></p>
-</li>
-<li><p>yield用法<br><a href="https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/</a></p>
-</li>
-<li><p>matplotlib用法<br><a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.plot.html" target="_blank" rel="external">https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.plot.html</a><br><a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html" target="_blank" rel="external">https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html</a></p>
-</li>
-<li><p>指数平滑法<br><a href="http://blog.csdn.net/tz_zs/article/details/78341306" target="_blank" rel="external">http://blog.csdn.net/tz_zs/article/details/78341306</a><br><a href="http://blog.csdn.net/cl1143015961/article/details/41081183" target="_blank" rel="external">http://blog.csdn.net/cl1143015961/article/details/41081183</a></p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入mxnet的ndarray, autograd</span></div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> autograd</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> ndarray <span class="keyword">as</span> nd</div></pre></td></tr></table></figure>
-<h2 id="创建数据集"><a href="#创建数据集" class="headerlink" title="创建数据集"></a>创建数据集</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 训练数据的维度</span></div><div class="line">num_inputs = <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment"># 训练数据的样本数量</span></div><div class="line">num_examples = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="comment"># 实际的权重w</span></div><div class="line">true_w = [<span class="number">2</span>, <span class="number">-3.4</span>]</div><div class="line"></div><div class="line"><span class="comment"># 实际的偏置b</span></div><div class="line">true_b = <span class="number">4.2</span></div><div class="line"></div><div class="line"><span class="comment"># 随机生成均值为0, 方差为1, 服从正态分布的训练数据X, </span></div><div class="line">X = nd.random_normal(shape=(num_examples, num_inputs))</div><div class="line"></div><div class="line"><span class="comment"># 根据X, w, b生成对应的输出y</span></div><div class="line">y = true_w[<span class="number">0</span>] * X[:, <span class="number">0</span>] + true_w[<span class="number">1</span>] * X[:, <span class="number">1</span>] + true_b </div><div class="line"></div><div class="line"><span class="comment"># 给y加上随机噪声</span></div><div class="line">y += <span class="number">0.01</span> * nd.random_normal(shape=y.shape)</div></pre></td></tr></table></figure>
-<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(X[<span class="number">0</span>], y[<span class="number">0</span>])</div></pre></td></tr></table></figure>
-<pre><code>(
-[ 1.16307867  0.48380461]
-&lt;NDArray 2 @cpu(0)&gt;, 
-[ 4.87962484]
-&lt;NDArray 1 @cpu(0)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># 绘制数据的散点图 </span></div><div class="line">plt.scatter(X[:, <span class="number">1</span>].asnumpy(), y.asnumpy())</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6c96e43fde1069ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
-<h2 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a>数据读取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="comment"># 训练时的批数据大小</span></div><div class="line">batch_size = <span class="number">10</span></div><div class="line"></div><div class="line"><span class="comment"># 通过yield进行数据读取</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_iter</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># 产生样本的索引</span></div><div class="line">    idx = list(range(num_examples))</div><div class="line">    <span class="comment"># 将索引随机打乱</span></div><div class="line">    random.shuffle(idx)</div><div class="line">    <span class="comment"># 迭代一个epoch, xrange循环时效率比range更高</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, num_examples, batch_size):</div><div class="line">        <span class="comment"># 依次取出样本的索引, 这种实现方式在num_examples/batch_size不能整除时也适用</span></div><div class="line">        j = nd.array(idx[i:min((i + batch_size), num_examples)])</div><div class="line">        <span class="comment"># 根据提供的索引取元素</span></div><div class="line">        <span class="keyword">yield</span> nd.take(X, j), nd.take(y, j)</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 查看data_iter是否是generator函数</span></div><div class="line"><span class="keyword">from</span> inspect <span class="keyword">import</span> isgeneratorfunction </div><div class="line"><span class="keyword">print</span> isgeneratorfunction(data_iter)</div><div class="line"></div><div class="line"><span class="comment"># data_iter类似于类的定义, 而data_iter()相当于一个类的实例, 当然是匿名实例</span></div><div class="line"><span class="keyword">import</span> types </div><div class="line"><span class="keyword">print</span> isinstance(data_iter(), types.GeneratorType)</div><div class="line"></div><div class="line"><span class="comment"># 读取数据测试</span></div><div class="line"><span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter():</div><div class="line">    print(data, label)</div><div class="line">    <span class="keyword">break</span></div></pre></td></tr></table></figure>
-<pre><code>True
-True
-(
-[[ 1.18770552 -0.46362698]
- [-3.15577412  2.19352984]
- [-0.45067298 -0.96665388]
- [ 0.05416773 -1.21203637]
- [-1.49418294 -1.61555624]
- [-0.93778831 -1.69338322]
- [ 0.91439158  1.31797135]
- [ 0.82403505  0.33020774]
- [-0.19660901  1.13431609]
- [ 0.15364595  1.01133049]]
-&lt;NDArray 10x2 @cpu(0)&gt;, 
-[ 8.17057896 -9.57918072  6.58949089  8.41831684  6.69815683  8.08473206
-  1.54548573  4.73358202 -0.0632825   1.06603777]
-&lt;NDArray 10 @cpu(0)&gt;)
-</code></pre><h2 id="初始化模型参数"><a href="#初始化模型参数" class="headerlink" title="初始化模型参数"></a>初始化模型参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 随机初始化权重w</span></div><div class="line">w = nd.random_normal(shape=(num_inputs, <span class="number">1</span>))</div><div class="line"><span class="comment"># 偏置b初始化为0</span></div><div class="line">b = nd.zeros((<span class="number">1</span>,))</div><div class="line"><span class="comment"># w, b放入list里</span></div><div class="line">params = [w, b]</div><div class="line"></div><div class="line"><span class="comment"># 需要计算反向传播, 添加自动求导</span></div><div class="line"><span class="keyword">for</span> param <span class="keyword">in</span> params:</div><div class="line">    param.attach_grad()</div></pre></td></tr></table></figure>
-<h2 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义运算y = w * x + b</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">net</span><span class="params">(X)</span>:</span></div><div class="line">    <span class="comment"># 向量, 矩阵乘用dot</span></div><div class="line">    <span class="keyword">return</span> nd.dot(X, w) + b</div></pre></td></tr></table></figure>
-<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义平方损失</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">square_loss</span><span class="params">(yhat, y)</span>:</span></div><div class="line">    <span class="comment"># 注意这里我们把y变形成yhat的形状来避免矩阵形状的自动转换</span></div><div class="line">    <span class="comment"># loss为预测值减去真实值</span></div><div class="line">    <span class="keyword">return</span> (yhat - y.reshape(yhat.shape)) ** <span class="number">2</span></div></pre></td></tr></table></figure>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义随机梯度下降法</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">SGD</span><span class="params">(params, lr)</span>:</span></div><div class="line">    <span class="comment"># 对参数进行梯度下降</span></div><div class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> params:</div><div class="line">        <span class="comment"># 这样写不会创建新的param, 而是会写在原来的param里, 新的param没有梯度</span></div><div class="line">        param[:] = param - lr * param.grad</div></pre></td></tr></table></figure>
-<h2 id="数据可视化-1"><a href="#数据可视化-1" class="headerlink" title="数据可视化"></a>数据可视化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 模型函数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">real_fn</span><span class="params">(X)</span>:</span></div><div class="line">    <span class="keyword">return</span> true_w[<span class="number">0</span>] * X[:, <span class="number">0</span>] - true_w[<span class="number">1</span>] * X[:, <span class="number">1</span>] + true_b</div><div class="line"></div><div class="line"><span class="comment"># 绘制损失随训练迭代次数变化的折线图，以及预测值和真实值的散点图</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot</span><span class="params">(losses, X, sample_size=<span class="number">100</span>)</span>:</span></div><div class="line">    xs = list(range(len(losses)))</div><div class="line">    <span class="comment"># 绘制两个子图</span></div><div class="line">    fig, (ax1, ax2) = plt.subplots(<span class="number">1</span>, <span class="number">2</span>)</div><div class="line">    <span class="comment"># 子图一设置标题</span></div><div class="line">    ax1.set_title(<span class="string">'Loss during training'</span>)</div><div class="line">    <span class="comment"># 绘制loss图像, 蓝色实线</span></div><div class="line">    ax1.plot(xs, losses, <span class="string">'-b'</span>)</div><div class="line">    <span class="comment"># 子图二设置标题</span></div><div class="line">    ax2.set_title(<span class="string">'Estimated vs Real Function'</span>)</div><div class="line">    <span class="comment"># 绘制预测值, 蓝色的小圈</span></div><div class="line">    ax2.plot(X[:sample_size, <span class="number">0</span>].asnumpy(), net(X[:sample_size, :]).asnumpy(), <span class="string">'ob'</span>, label = <span class="string">'Estimated'</span>)</div><div class="line">    <span class="comment"># 绘制实际值, 绿色的星号</span></div><div class="line">    ax2.plot(X[:sample_size, <span class="number">0</span>].asnumpy(), real_fn(X[:sample_size, :]).asnumpy(), <span class="string">'*g'</span>, label = <span class="string">'Real Value'</span>)</div><div class="line">    <span class="comment"># 绘制图例</span></div><div class="line">    ax2.legend()</div><div class="line">    <span class="comment"># 显示图像</span></div><div class="line">    plt.show()</div></pre></td></tr></table></figure>
-<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义训练的迭代周期</span></div><div class="line">epochs = <span class="number">5</span></div><div class="line"><span class="comment"># 定义学习率</span></div><div class="line">learning_rate = <span class="number">0.01</span></div><div class="line"><span class="comment"># 迭代次数</span></div><div class="line">niter = <span class="number">0</span></div><div class="line"><span class="comment"># 保存loss</span></div><div class="line">losses = []</div><div class="line"><span class="comment"># 移动平均损失（加权）</span></div><div class="line">moving_loss = <span class="number">0</span></div><div class="line"><span class="comment"># 指数平滑系数</span></div><div class="line">smoothing_constant = <span class="number">0.01</span></div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> xrange(epochs):</div><div class="line">    <span class="comment"># 总的loss</span></div><div class="line">    total_loss = <span class="number">0</span></div><div class="line">    <span class="comment"># 迭代训练</span></div><div class="line">    <span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter():</div><div class="line">        <span class="comment"># 记录梯度</span></div><div class="line">        <span class="keyword">with</span> autograd.record():</div><div class="line">            <span class="comment"># 计算预测值</span></div><div class="line">            output = net(data)</div><div class="line">            <span class="comment"># 计算loss</span></div><div class="line">            loss = square_loss(output, label)</div><div class="line">        <span class="comment"># 根据loss进行反向传播计算梯度</span></div><div class="line">        loss.backward()</div><div class="line">        <span class="comment"># 使用随机梯度下降求解(BSGD)</span></div><div class="line">        SGD(params, learning_rate)</div><div class="line">        <span class="comment"># 计算总的loss</span></div><div class="line">        total_loss += nd.sum(loss).asscalar()</div><div class="line">        </div><div class="line">        <span class="comment"># 记录每读取一个数据点后，损失的移动平均值的变化</span></div><div class="line">        <span class="comment"># 迭代次数加一</span></div><div class="line">        niter += <span class="number">1</span></div><div class="line">        <span class="comment"># 计算当前损失</span></div><div class="line">        current_loss = nd.mean(loss).asscalar()</div><div class="line">        <span class="comment"># 计算移动平均损失，指数平滑方法</span></div><div class="line">        moving_loss = (<span class="number">1</span> - smoothing_constant) * moving_loss + smoothing_constant * current_loss</div><div class="line">        <span class="comment"># 计算估计损失</span></div><div class="line">        est_loss = moving_loss / (<span class="number">1</span> - (<span class="number">1</span> - smoothing_constant) ** niter)</div><div class="line">        </div><div class="line">        <span class="comment"># 输出迭代信息</span></div><div class="line">        <span class="keyword">if</span> (niter + <span class="number">1</span>) % <span class="number">100</span> == <span class="number">0</span>:</div><div class="line">            <span class="comment"># 保存估计损失</span></div><div class="line">            losses.append(est_loss)</div><div class="line">            <span class="keyword">print</span> <span class="string">'Epoch %s, batch %s. Moving average of loss: %s. Average loss: %f'</span> % (epoch, niter, est_loss, total_loss / num_examples)</div><div class="line">            plot(losses, X)</div></pre></td></tr></table></figure>
-<pre><code>Epoch 0, batch 99. Moving average of loss: 0.378590331091. Average loss: 0.625015
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/3232548-fee287ab3b5ee00d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Epoch 0"></p>
-<pre><code>Epoch 1, batch 199. Moving average of loss: 0.10108379838. Average loss: 0.000099
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/3232548-717702568291112c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Epoch 1"></p>
-<pre><code>Epoch 2, batch 299. Moving average of loss: 0.033726038259. Average loss: 0.000099
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/3232548-22f698714a953be8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Epoch 2"></p>
-<pre><code>Epoch 3, batch 399. Moving average of loss: 0.0120152144263. Average loss: 0.000099
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/3232548-69d060709150ed87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Epoch 3"></p>
-<pre><code>Epoch 4, batch 499. Moving average of loss: 0.00441111205064. Average loss: 0.000101
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/3232548-c0e3a8bd94c0537a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Epoch 4"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> w </div><div class="line"><span class="keyword">print</span> true_w</div><div class="line"><span class="keyword">print</span> b</div><div class="line"><span class="keyword">print</span> true_b</div></pre></td></tr></table></figure>
-<pre><code>[[ 1.99982905]
- [-3.40232825]]
-&lt;NDArray 2x1 @cpu(0)&gt;
-[2, -3.4]
-
-[ 4.20024347]
-&lt;NDArray 1 @cpu(0)&gt;
-4.2
-</code></pre><h2 id="其他学习率"><a href="#其他学习率" class="headerlink" title="其他学习率"></a>其他学习率</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">learning_rate = 0.001</div><div class="line"></div><div class="line">Epoch 0, batch 99. Moving average of loss: 4.20676625843. Average loss: 5.549237</div><div class="line">Epoch 1, batch 199. Moving average of loss: 1.1782055765. Average loss: 0.098550</div><div class="line">Epoch 2, batch 299. Moving average of loss: 0.393321947036. Average loss: 0.001857</div><div class="line">Epoch 3, batch 399. Moving average of loss: 0.13944143045. Average loss: 0.000127</div><div class="line">Epoch 4, batch 499. Moving average of loss: 0.0505110244825. Average loss: 0.000096</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">learning_rate = 0.1</div><div class="line"></div><div class="line">Epoch 0, batch 99. Moving average of loss: 3.79341099229e+13. Average loss: 26080307360862.457031</div><div class="line">Epoch 1, batch 199. Moving average of loss: 1.7174457145e+28. Average loss: 15303785876879711197739352064.000000</div><div class="line">Epoch 2, batch 299. Moving average of loss: nan. Average loss: nan</div><div class="line">Epoch 3, batch 399. Moving average of loss: nan. Average loss: nan</div><div class="line">Epoch 4, batch 499. Moving average of loss: nan. Average loss: nan</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">learning_rate = 1</div><div class="line"></div><div class="line">Epoch 0, batch 99. Moving average of loss: nan. Average loss: nan</div><div class="line">Epoch 1, batch 199. Moving average of loss: nan. Average loss: nan</div><div class="line">Epoch 2, batch 299. Moving average of loss: nan. Average loss: nan</div><div class="line">Epoch 3, batch 399. Moving average of loss: nan. Average loss: nan</div><div class="line">Epoch 4, batch 499. Moving average of loss: nan. Average loss: nan</div></pre></td></tr></table></figure>
-<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h2><p><a href="https://github.com/SnailTyan/gluon-practice-code" target="_blank" rel="external">https://github.com/SnailTyan/gluon-practice-code</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      动手学深度学习(一)——线性回归从零开始
-    
-    </summary>
-    
-      <category term="深度学习" scheme="noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>R-FCN论文翻译——中文版</title>
-    <link href="noahsnail.com/2018/01/22/2018-01-22-R-FCN%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
-    <id>noahsnail.com/2018/01/22/2018-01-22-R-FCN论文翻译——中文版/</id>
-    <published>2018-01-22T08:49:02.000Z</published>
-    <updated>2018-03-19T10:26:57.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
-<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
-<h1 id="R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks"><a href="#R-FCN-Object-Detection-via-Region-based-Fully-Convolutional-Networks" class="headerlink" title="R-FCN: Object Detection via Region-based Fully Convolutional Networks"></a>R-FCN: Object Detection via Region-based Fully Convolutional Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了基于区域的全卷积网络，以实现准确和高效的目标检测。与先前的基于区域的检测器（如Fast/Faster R-CNN [6，18]）相比，这些检测器应用昂贵的每个区域子网络数百次，我们的基于区域的检测器是全卷积的，几乎所有计算都在整张图像上共享。为了实现这一目标，我们提出了位置敏感分数图，以解决图像分类中的平移不变性与目标检测中的平移变化之间的困境。因此，我们的方法可以自然地采用全卷积图像分类器的主干网络，如最新的残差网络（ResNets）[9]，用于目标检测。我们使用101层ResNet在PASCAL VOC数据集上展示了具有竞争力的结果（例如，2007数据集上$83.6\%$的mAP）。同时，我们的测试结果是以每张图像170ms的测试速度实现的，比Faster R-CNN对应部分速度快2.5-20倍。代码公开发布在：[<a href="https://github.com/daijifeng001/r-fcn](https://github.com/daijifeng001/r-fcn）。" target="_blank" rel="external">https://github.com/daijifeng001/r-fcn](https://github.com/daijifeng001/r-fcn）。</a></p>
-<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>流行的目标检测深度网络家族[8，6，18]通过感兴趣区域（RoI）池化层[6]可以划分成两个子网络：（1）独立于RoI的共享“全卷积”子网络，（ii）不共享计算的RoI子网络。这种分解[8]以往是由开创性的分类架构产生的，例如AlexNet[10]和VGG Nets[23]等，在设计上它由两个子网络组成——一个卷积子网络以空间池化层结束，后面是几个全连接（fc）层。因此，图像分类网络中的（最后一个）空间池化层在目标检测网络中[8，6，18]自然地变成了RoI池化层。</p>
-<p>但是最近最先进的图像分类网络，如ResNet（ResNets）[9]和GoogLeNets[24，26]是全卷积的。通过类比，在目标检测架构中使用所有卷积层来构建共享的卷积子网络似乎是很自然的，使得RoI的子网络没有隐藏层。然而，在这项工作中通过经验性的调查发现，这个天真的解决方案有相当差的检测精度，不符合网络的优秀分类精度。为了解决这个问题，在ResNet论文[9]中，Faster R-CNN检测器[18]的RoI池层不自然地插入在两组卷积层之间——这创建了更深的RoI子网络，其改善了精度，由于非共享的RoI计算，因此是以更低的速度为代价。</p>
-<p>我们认为，前述的非自然设计是由于增加图像分类的变换不变性与目标检测的平移可变性而导致的两难境地。一方面，图像级别的分类任务有利于平移不变性——图像内目标的移动应该是无差别的。因此，深度（全）卷积架构尽可能保持平移不变，这一点可以从ImageNet分类[9，24，26]的主要结果中得到证实。另一方面，目标检测任务的定位表示需要一定程度上的平移可变性。例如，在候选框内目标变换应该产生有意义的响应，用于描述候选框与目标的重叠程度。我们假设图像分类网络中较深的卷积层对平移不太敏感。为了解决这个困境，ResNet论文的检测流程[9]将RoI池化层插入到卷积中——特定区域的操作打破了平移不变性，当在不同区域进行评估时，RoI后卷积层不再是平移不变的。然而，这个设计牺牲了训练和测试效率，因为它引入了大量的区域层（表1）。</p>
-<p>表1：使用ResNet-101的基于区域的检测器方法[9]。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-e49d8208168f16ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
-<p>在本文中，我们开发了一个称为基于区域的全卷积网络（R-FCN）框架来进行目标检测。我们的网络由共享的全卷积架构组成，就像FCN[15]一样。为了将平移可变性并入FCN，我们通过使用一组专门的卷积层作为FCN输出来构建一组位置敏感的分数图。这些分数图中的每一个都对关于相对空间位置（的位置信息进行编码例如，“在目标的左边”）。在这个FCN之上，我们添加了一个位置敏感的RoI池化层，它从这些分数图中获取信息，并且后面没有权重（卷积/fc）层。整个架构是端到端的学习。所有可学习的层都是卷积的，并在整个图像上共享，但对目标检测所需的空间信息进行编码。图1说明了关键思想，表1比较了基于区域的检测器方法。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6d1b73b6df12510e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
-<p>图1：R-FCN目标检测的主要思想。在这个例子中，由全卷积网络生成了k×k=3×3的位置敏感分数图。对于RoI中的每个k×k组块，仅在$k^2$个映射中的一个上执行池化（用不同的颜色标记）。</p>
-<p>使用101层残余网络（ResNet-101）[9]作为主干网络，我们的R-FCN在PASCAL VOC 2007数据集和2012数据集上分别获得了$83.6\%$ mAP和 $82.0\%$ mAP。同时，使用ResNet-101，我们的结果在测试时是以每张图像170ms的速度实现的，比[9]中对应的Faster R-CNN + ResNet-101快了2.5倍到20倍。这些实验表明，我们的方法设法解决平移不变性/可变性和全卷积图像级分类器之间的困境，如ResNet可以有效地转换为全卷积目标检测器。代码公开发布在：<a href="https://github.com/daijifeng001/r-fcn" target="_blank" rel="external">https://github.com/daijifeng001/r-fcn</a>。</p>
-<h2 id="2-我们的方法"><a href="#2-我们的方法" class="headerlink" title="2. 我们的方法"></a>2. 我们的方法</h2><p><strong>概述</strong>。根据R-CNN[7]，我们采用了流行的两阶段目标检测策略[7，8，6，18，1，22]，其中包括：（i）区域提议和（ii）区域分类。尽管不依赖区域提议的方法确实存在（例如，[17，14]），但是基于区域的系统在几个基准数据集中仍然具有领先的准确性[5，13，20]。我们通过区域提议网络（RPN）提取候选区域[18]，其本身就是一个全卷积架构。在[18]之后，我们在RPN和R-FCN之间的共享特征。图2显示了系统的概述。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-9ee5daf021af0b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
-<p>图2：R-FCN的总体架构。区域建议网络（RPN）[18]提出了候选RoI，然后将其应用于评分图上。所有可学习的权重层都是卷积的，并在整个图像上计算；每个RoI的计算成本可以忽略不计。</p>
-<p>R-FCN以位置敏感的RoI池化层结束。该层聚合最后一个卷积层的输出，并为每个RoI生成分数。与[8，6]不同的是，我们的位置敏感RoI层进行选择性池化，并且$k\times k$个组块中的每一个仅聚合$k\times k$分数图中一个得分图的响应。通过端到端的训练，这个RoI层可以管理最后一个卷积层来学习专门的位置敏感分数图。图1说明了这个想法。图3和图4显示了一个例子。详细介绍如下。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0bda584afbb25033.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
-<p>图3：行人类别的R-FCN(k×k=3×3)可视化。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ac5cfc8cd2269840.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
-<p>图4：当RoI不能正确重叠目标时的可视化。</p>
-<p><strong>主干架构</strong>。本文中典型的R-FCN是基于ResNet-101[9]的，但其他网络[10,23]也适用。ResNet-101有100个卷积层，后面是全局平均池化和1000类的全连接层。我们删除了平均池化层和全连接层，只使用卷积层来计算特征映射。我们使用由[9]的作者发布的ResNet-101，在ImageNet[20]上预训练。ResNet-101中的最后一个卷积块是2048维，我们附加一个随机初始化的1024维的1×1卷积层来降维（准确地说，这增加了表1中的深度）。然后，我们应用$k^2(C+1)$通道卷积层来生成分数图，如下所述。</p>
-<p><strong>位置敏感的分数图和位置敏感的RoI池化</strong>。为了将位置信息显式地编码到每个RoI中，我们用规则网格将每个RoI矩形分成$k \times k$的组块。对于大小为$w \times h$的RoI矩形，组块的大小为$\approx \frac{w}{k} \times \frac{h}{k}$[8,6]。在我们的方法中，构建最后的卷积层为每个类别产生$k^2$分数图。在第$(i,j)$个组块（$0 \leq i,j \leq k-1$）中，我们定义了一个位置敏感的RoI池化操作，它只在第$(i,j)$个分数映射中进行池化：$$r_c(i,j ~|~ \Theta) = \sum_{(x,y)\in \text{bin}(i,j)} z_{i,j,c}(x+x_0, y+y_0 ~|~ \Theta)/n. $$ 其中$r_c(i,j)$是第$(i,j)$个组块中第$c$个类别的池化响应，$z_{i,j,c}$是$k^2(C+1)$分数图中的一个分数图，$(x_0, y_0)$表示一个RoI的左上角，$n$是组块中的像素数量，$\Theta$表示网络的所有可学习参数。第$(i,j)$个组块跨越$\lfloor i\frac{w}{k} \rfloor \leq x &lt; \lceil (i+1)\frac{w}{k} \rceil$和$\lfloor j\frac{h}{k} \rfloor \leq y &lt; \lceil (j+1)\frac{h}{k} \rceil$。公式（1）的操作如图1所示，其中颜色表示一对$(i,j)$。方程（1）执行平均池化（正如我们在本文中使用的那样），但是也可以执行最大池化。</p>
-<p>$k^2$位置敏感的分数会在RoI上投票。在本文中，我们通过对分数进行平均来简单地投票，为每个RoI产生一个$(C+1)$维向量：$r_c(\Theta)=\sum_{i,j}r_c(i,j ~|~ \Theta)$。然后，我们计算跨类别的softmax响应：$s_c(\Theta)=e^{r_c(\Theta)} / \sum_{c’=0}^C e^{r_{c’}(\Theta)}$。它们被用来评估训练期间的交叉熵损失以及在推断期间的RoI名。</p>
-<p>我们以类似的方式进一步解决边界框回归[7，6]。除了上面的$k^2(C+1)$维卷积层，我们在边界框回归上附加了一个$4k^2$维兄弟卷积层。在这组$4k^2$维映射上执行位置敏感的RoI池化，为每个RoI生成一个$4k^2$维的向量。然后通过平均投票聚合到$4$维向量中。这个$4$维向量将边界框参数化为$t=(t_x, t_y, t_w, t_h)$，参见[6]中的参数化。我们注意到为简单起见，我们执行类别不可知的边界框回归，但类别特定的对应部分（即，具有$4k^2C$维输出层）是适用的。</p>
-<p>位置敏感分数图的概念部分受到了[3]的启发，它开发了用于实例级语义分割的FCN。我们进一步介绍了位置敏感的RoI池化层，它可以让学习的分数图用于目标检测。RoI层之后没有可学习的层，使得区域计算几乎是零成本的，并加速训练和推断。</p>
-<p><strong>训练</strong>。通过预先计算的区域提议，很容易端到端训练R-FCN架构。根据[6]，我们定义的损失函数是每个RoI的交叉熵损失和边界框回归损失的总和：$L(s, t_{x,y,w,h}) = L_{cls}(s_{c^{*}}) + \lambda [c^{*}&gt;0] L_{reg}(t, t^*)$。这里$c^{*}$是RoI的真实标签（$c^{*}=0$表示背景）。$L_{cls}(s_{c^{*}})=-\log(s_{c^{*}})$是分类的交叉熵损失，$L_{reg}$是[6]中定义的边界框回归损失，$t^*$表示真实的边界框。$[c^{*}&gt;0]$是一个指标，如果参数为true，则等于1，否则为0。我们将平衡权重设置为$\lambda=1$，如[6]中所示。我们将正样本定义为与真实边界框重叠的交并比（IoU）至少为0.5的ROI，否则为负样本。</p>
-<p>我们的方法很容易在训练期间采用在线难例挖掘（OHEM）[22]。我们可忽略的每个RoI计算使得几乎零成本的样例挖掘成为可能。假设每张图像有$N$个提议，在前向传播中，我们评估所有$N$个提议的损失。然后，我们按损失对所有的RoI（正例和负例）进行分类，并选择具有最高损失的$B$个RoI。反向传播[11]是基于选定的样例进行的。由于我们每个RoI的计算可以忽略不计，所以前向传播时间几乎不受$N$的影响，与[22]中的OHEM Fast R-CNN相比，这可能使训练时间加倍。我们在下一节的表3中提供全面的时间统计。</p>
-<p>我们使用0.0005的权重衰减和0.9的动量。默认情况下，我们使用单尺度训练：调整图像的大小，使得尺度（图像的较短边）为600像素[6，18]。每个GPU拥有1张图像，并为反向传播选择$B=128$个RoI。我们用8个GPU来训练模型（所以有效的最小批数据大小是$8\times$）。在VOC上我们对R-FCN进行微调，使用0.001学习率进行2万次迭代和使用0.0001学习率进行1万次迭代。为了使R-FCN与RPN共享特征（图2），我们采用[18]中的四步交替训练，交替训练RPN和R-FCN。</p>
-<p><strong>推断</strong>。如图2所示，在RPN和R-FCN之间计算共享的特征映射（在一个单一尺度的图像上）。然后，RPN部分提出RoI，R-FCN部分在其上评估类别分数并回归边界框。在推断过程中，我们评估了300个RoI进行公平比较，如[18]中那样。作为标准实践，使用0.3的IoU阈值[7]，通过非极大值抑制（NMS）对结果进行后处理。</p>
-<p><strong>空洞和步长</strong>。我们的全卷积架构享有FCN广泛使用的语义分割的网络修改的好处[15，2]。特别的是，我们将ResNet-101的有效步长从32像素降低到了16像素，增加了分数图的分辨率。conv$4$阶段[9]（stride = 16）之前和之后的所有层都保持不变；第一个conv$5$块中的stride=2操作被修改为stride=1，并且conv$5$阶段的所有卷积滤波器都被“hole algorithm”[15,2]（“Algorithme atrous”[16]）修改来弥补减少的步幅。为了进行公平的比较，RPN是在conv$4$阶段（与R-FCN共享）之上计算的，就像[9]中Faster R-CNN的情况那样，所以RPN不会受空洞行为的影响。下表显示了R-FCN的消融结果（$k\times k = 7\times 7$，没有难例挖掘）。这个空洞行为提高了2.6点的mAP。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-afe80544fef65225.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table"></p>
-<p><strong>可视化</strong>。在图3和图4中，当$k × k = 3 × 3$时，我们可视化R-FCN学习的位置敏感分数图。期望这些专门的分数图将在目标特定的相对位置被强烈激活。例如，“顶部中心敏感”分数图大致在目标的顶部中心位置附近呈现高分数。如果一个候选框与一个真实目标精确重叠（图3），则RoI中的大部分$k^2$组块都被强烈地激活，并且他们的投票导致高分。相反，如果一个候选框与一个真实的目标没有正确的重叠（图4），那么RoI中的一些$k^2$组块没有被激活，投票分数也很低。</p>
-<h2 id="3-相关工作"><a href="#3-相关工作" class="headerlink" title="3. 相关工作"></a>3. 相关工作</h2><p>R-CNN[7]已经证明了在深度网络中使用区域提议[27，28]的有效性。R-CNN评估裁剪区域和变形区域的卷积网络，计算不在区域之间共享（表1）。SPPnet[8]Fast R-CNN[6]和Faster R-CNN[18]是“半卷积”的，卷积子网络在整张图像上进行共享计算，另一个子网络评估单个区域。</p>
-<p>有可以被认为是“全卷积”模型的目标检测器。OverFeat[21]通过在共享卷积特征映射上滑动多尺度窗口来检测目标；同样地，在Fast R-CNN[6]和[12]中，研究了用滑动窗口替代区域提议。在这些情况下，可以将一个单尺度的滑动窗口重新设计为单个卷积层。Faster R-CNN [18]中的RPN组件是一个全卷积检测器，它可以相对于多个尺寸的参考框（锚点）预测边界框。最初的RPN在[18]中是类不可知的，但是它的类特定的对应部分也是适用的（参见[14]），我们在下面进行评估。</p>
-<p>另一个目标检测器家族采用全连接（fc）层来在整张图像上生成整体的目标检测结果，如[25，4，17]。</p>
-<h2 id="4-实验"><a href="#4-实验" class="headerlink" title="4. 实验"></a>4. 实验</h2><p>###4.1 PASCAL VOC上的实验</p>
-<p>我们在有20个目标类别的PASCAL VOC[5]上进行实验。我们根据[6]对VOC 2007 trainval和VOC 2012 trainval（“07 + 12”）的联合数据集进行训练，并在VOC 2007测试集上进行评估。目标检测精度通过平均精度均值（mAP）来度量。</p>
-<p><strong>与其它全卷积策略的比较</strong></p>
-<p>虽然全卷积检测器是可用的，但是实验表明，它们要达到良好的精度是复杂的。我们使用ResNet-101研究以下全卷积策略（或“几乎”全卷积策略，每个RoI只有一个分类器全连接层）：</p>
-<p><strong>Naïve Faster R-CNN</strong>。如介绍中所讨论的，可以使用ResNet-101中的所有卷积层来计算共享特征映射，并且在最后的卷积层（conv5之后）之后采用RoI池化。在每个RoI上评估一个廉价的21类全连接层（所以这个变体是“几乎”全卷积的）。空洞窍门是用来进行公平比较的。</p>
-<p><strong>类别特定的RPN</strong>。这个RPN按照[18]进行训练，除了两类（是目标或不是）卷积分类器层被替换为21类卷积分类器层。为了公平的比较，对于这个类别特定的RPN，我们使用具有空洞窍门的ResNet-101的conv5层来处理。</p>
-<p><strong>没有位置灵敏度的R-FCN</strong>。通过设置$k=1$，我们移除了R-FCN的位置灵敏度。这相当于在每个RoI内进行全局池化。</p>
-<p>分析。表2显示了结果。我们注意到在ResNet论文[9]中的标准（非简单）Faster R-CNN与ResNet-101（参见表3）达到了$76.4\%$的mAP，在conv4和conv5之间插入了RoI池化层[9]。相比之下，简单的Faster R-CNN（在conv5之后应用RoI池化）具有$68.9\%$的更低的mAP（表2）。这种比较通过在Faster R-CNN系统的层之间插入RoI池化在经验上证明了尊重空间信息的重要性。在[19]中报道了类似的观测结果。</p>
-<p>表2：使用ResNet-101的全卷积（或“几乎”全卷积）策略之间的比较。表中的所有竞争者都使用了空洞窍门。不执行难例挖掘。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-8fcdc875fd2a1f5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
-<p>表3：使用ResNet-101比较Faster R-CNN和R-FCN。实际是在单个Nvidia K40 GPU上评估的。使用OHEM，在前向传播中计算每张图像的N个RoI，并且选择128个样本用于反向传播。在下面的[18]中使用了300个RoI进行测试。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-272222106febb153.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
-<p>类别特定的RPN具有$67.6\%$（表2）的mAP，比标准Faster R-CNN的$76.4\%$低约9个百分点。这个比较符合[6，12]中的观测结果——实际上，类别特定的RPN类似于使用密集滑动窗口作为提议的一种特殊形式的Fast R-CNN[6]，如[6，12]中所报道的较差结果。</p>
-<p>另一方面，我们的R-FCN系统具有更好的准确性（表2）。其mAP（$76.6\%$）与标准Faster R-CNN（$76.4%$，表3）相当。这些结果表明，我们的位置敏感策略设法编码有用的空间信息来定位目标，而在RoI池化之后不使用任何可学习的层。</p>
-<p>位置灵敏度的重要性通过设置$k=1$来进一步证明，其中R-FCN不能收敛。在这种退化的情况下，在RoI内不能显式捕获空间信息。此外，我们还报告了，如果简单Faster R-CNN的ROI池化输出分辨率为1×1，其能够收敛，但是mAP进一步下降到$61.7\%$（表2）。</p>
-<p><strong>与使用ResNet-101的Faster R-CNN的比较</strong></p>
-<p>接下来，我们与标准的“Faster R-CNN + ResNet-101”[9]进行比较，它是PASCAL VOC，MS COCO和ImageNet基准测试中最强劲的竞争对手和最佳表现者。我们在下面使用$k×k = 7×7$。表3显示了比较。Faster R-CNN评估了每个区域的10层子网络以达到良好的精度，但是R-FCN每个区域的成本可以忽略不计。在测试时使用300个RoI，Faster R-CNN每张图像花费0.42s，比我们的R-FCN慢了2.5倍，R-FCN每张图像只有0.17s（在K40 GPU上，这个数字在Titan X GPU上是0.11s）。R-FCN的训练速度也快于Faster R-CNN。此外，难例挖掘[22]没有增加R-FCN的训练成本（表3）。当从2000个RoI挖掘时训练R-FCN是可行的，在这种情况下，Faster R-CNN慢了6倍（2.9s vs. 0.46s）。但是实验表明，从更大的候选集（例如2000）中进行挖掘没有好处（表3）。所以我们在本文的其他部分使用了300个RoI来进行训练和推断。</p>
-<p>表4显示了更多的比较。在[8]中的多尺度训练之后，我们在每次训练迭代中调整图像大小，使得尺度从{400,500,600,700,800}像素中进行随机地采样。我们仍然测试600像素的单尺度，所以不添加测试时间成本。mAP是$80.5\%$。此外，我们在MS COCO [13]训练验证集上训练我们的模型，然后在PASCAL VOC数据集上对其进行微调。R-FCN达到$83.6\%$mAP（表4），接近也使用ResNet-101的[9]中的“Faster R-CNN +++”系统。我们注意到，我们的竞争结果是在每张图像0.17秒的测试速度下获得的，比花费3.36秒的Faster R-CNN +++快20倍，因为它进一步结合了迭代边界框回归，上下文和多尺度测试[9]。这些比较也可以在PASCAL VOC 2012测试集上观察到（表5）。</p>
-<p>表4：使用ResNet-101在PASCAL VOC 2007测试集上的比较。“Faster R-CNN +++”[9]使用迭代边界框回归，上下文和多尺度测试。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-24bd5bfd1d9ccdac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
-<p>表5：使用ResNet-101在PASCAL VOC 2012测试集上的比较。“07 ++ 12”[6]表示07训练+测试和12训练的联合数据集。†: <a href="http://host.robots.ox.ac.uk:8080/anonymous/44L5HI.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/44L5HI.html</a> ‡: <a href="http://host.robots.ox.ac.uk:8080/anonymous/MVCM2L.html" target="_blank" rel="external">http://host.robots.ox.ac.uk:8080/anonymous/MVCM2L.html</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-fc5b5c7fc3e4c4bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
-<p><strong>关于深度的影响</strong></p>
-<p>下表显示了使用不同深度的ResNets的R-FCN结果[9]。当深度从50增加到101时，我们的检测精度增加了，但是深度达到了152。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Depth"></p>
-<p><strong>关于区域提议的影响</strong></p>
-<p>R-FCN可以很容易地应用于其它的区域提议方法，如选择性搜索（SS）[27]和边缘框（EB）[28]。下表显示了使用不同提议的结果（使用ResNet-101）。R-FCN使用SS或EB运行，竞争性地展示了我们方法的泛化性。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Region Proposals"></p>
-<h3 id="4-2-MS-COCO上的实验"><a href="#4-2-MS-COCO上的实验" class="headerlink" title="4.2 MS COCO上的实验"></a>4.2 MS COCO上的实验</h3><p>接下来，我们评估MS COCO数据集[13]中的80个目标类别。我们的实验包括8万张训练集，4万张验证集和2万张测试开发集。我们将9万次迭代的学习率设为0.001，接下来的3万次迭代的学习率设为0.0001，有效的最小批数据大小为8。我们将交替训练[18]从4步扩展到5步（即在RPN训练步骤后停止），当共享特征时略微提高了在该数据集上的准确性；我们还报告了两步训练足以达到相当好的准确性，但不共享这些特征。</p>
-<p>结果如表6所示。我们单尺度训练的R-FCN基准模型的验证结果为$48.9\%/27.6\%$。这与Faster R-CNN的基准模型相当（$48.4\%/27.2\%$），但我们的测试速度是Faster R-CNN的2.5倍。值得注意的是，我们的方法在小尺寸的目标上表现更好（由[13]定义）。我们的多尺度训练（但是仍是单一尺度测试）的R-FCN在验证集上的结果为$49.1\%/27.8\%$，在测试开发集上的结果是$51.5\%/29.2\%$。考虑到COCO广泛的目标尺度，按照[9]我们进一步评估多尺度的测试变种，并使用{200，400，600，800，1000}的测试尺度。mAP是$53.2\%/31.5\%$。这个结果在MS COCO 2015比赛中接近第一名的成绩（Faster R-CNN+++和ResNet-101，$55.7\%/34.9\%$）。尽管如此，我们的方法更简单，并没有添加[9]中所使用的多样功能例如上下文或迭代边界框回归，并且在训练和测试中都更快。</p>
-<p>表6：使用ResNet-101在MS COCO数据集上比较。COCO式的AP在IoU∈[0.5，0.95]处评估。AP@0.5是PASCAL式的AP，在IoU=0.5处评估。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ec3fe15a633c74ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
-<h2 id="5-总结和将来的工作"><a href="#5-总结和将来的工作" class="headerlink" title="5. 总结和将来的工作"></a>5. 总结和将来的工作</h2><p>我们提出了基于区域的全卷积网络，这是一个简单但精确且高效的目标检测框架。我们的系统自然地采用了设计为全卷积的最先进的图像分类骨干网络，如ResNet。我们的方法实现了与Faster R-CNN对应网络相比更具竞争力的准确性，但是在训练和推断上都快得多。</p>
-<p>我们故意保持R-FCN系统如论文中介绍的那样简单。已经有一系列针对语义分割（例如，参见[2]）开发的FCN的正交扩展，以及用于目标检测的基于区域的方法的扩展（例如参见[9，1，22]）。我们期望我们的系统能够轻松享有这个领域的进步带来的好处。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] S. Bell, C. L. Zitnick, K. Bala, and R. Girshick. Inside-outside net: Detecting objects in context with skip pooling and recurrent neural networks. In CVPR, 2016.</p>
-<p>[2] L.-C. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. In ICLR, 2015.</p>
-<p>[3] J. Dai, K. He, Y. Li, S. Ren, and J. Sun. Instance-sensitive fully convolutional networks.arXiv:1603.08678, 2016.</p>
-<p>[4] D. Erhan, C. Szegedy, A. Toshev, and D. Anguelov. Scalable object detection using deep neural networks. In CVPR, 2014.</p>
-<p>[5] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The PASCAL Visual Object Classes (VOC) Challenge. IJCV, 2010.</p>
-<p>[6] R. Girshick. Fast R-CNN. In ICCV, 2015.</p>
-<p>[7] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection<br>and semantic segmentation. In CVPR, 2014.</p>
-<p>[8] K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual<br>recognition. In ECCV. 2014.</p>
-<p>[9] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In CVPR, 2016.</p>
-<p>[10] A. Krizhevsky, I. Sutskever, and G. Hinton. Imagenet classification with deep convolutional neural networks. In NIPS, 2012.</p>
-<p>[11] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropa- gation applied to handwritten zip code recognition. Neural computation, 1989.</p>
-<p>[12] K. Lenc and A. Vedaldi. R-CNN minus R. In BMVC, 2015.</p>
-<p>[13] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan, P. Dollár, and C. L. Zitnick. Microsoft COCO: Common objects in context. In ECCV, 2014.</p>
-<p>[14] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, and S. Reed. SSD: Single shot multibox detector. arXiv:1512.02325v2, 2015.</p>
-<p>[15] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015.</p>
-<p>[16] S. Mallat. A wavelet tour of signal processing. Academic press, 1999.</p>
-<p>[17] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. In CVPR, 2016.</p>
-<p>[18] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal networks. In NIPS, 2015.</p>
-<p>[19] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun. Object detection networks on convolutional feature maps. arXiv:1504.06066, 2015.</p>
-<p>[20] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015.</p>
-<p>[21] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014.</p>
-<p>[22] A. Shrivastava, A. Gupta, and R. Girshick. Training region-based object detectors with online hard example mining. In CVPR, 2016.</p>
-<p>[23] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015.</p>
-<p>[24] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, and A. Rabinovich. Going deeper with convolutions. In CVPR, 2015.</p>
-<p>[25] C. Szegedy, A. Toshev, and D. Erhan. Deep neural networks for object detection. In NIPS, 2013.</p>
-<p>[26] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna. Rethinking the inception architecture for computer vision. In CVPR, 2016.</p>
-<p>[27] J. R. Uijlings, K. E. van de Sande, T. Gevers, and A. W. Smeulders. Selective search for object recognition. IJCV, 2013.</p>
-<p>[28] C. L. Zitnick and P. Dollár. Edge boxes: Locating object proposals from edges. In ECCV, 2014.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      R-FCN论文翻译——中文版
     
     </summary>
     
