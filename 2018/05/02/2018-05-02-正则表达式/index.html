@@ -99,7 +99,7 @@
 <meta property="og:url" content="http://noahsnail.com/2018/05/02/2018-05-02-正则表达式/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="正则表达式">
-<meta property="og:updated_time" content="2018-05-03T01:43:44.000Z">
+<meta property="og:updated_time" content="2018-05-05T14:20:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式">
 <meta name="twitter:description" content="正则表达式">
@@ -360,31 +360,93 @@
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-正则表达式"><a href="#1-正则表达式" class="headerlink" title="1. 正则表达式"></a>1. 正则表达式</h2><p>正则表达式(Regular Expression)描述了一种字符串匹配模式，主要用来检索、替换匹配某种模式的字符串。</p>
-<h2 id="2-语法"><a href="#2-语法" class="headerlink" title="2. 语法"></a>2. 语法</h2><ul>
-<li>^</li>
-</ul>
-<p><code>^</code>表示字符串的开始，例：<code>^Th</code>表示以<code>Th</code>开头的字符串，可匹配<code>The</code>，<code>There</code>等。</p>
+<h2 id="2-正则表达式语法"><a href="#2-正则表达式语法" class="headerlink" title="2. 正则表达式语法"></a>2. 正则表达式语法</h2><p>下面以Python代码来展示正则表达式的匹配。</p>
 <ul>
-<li>$</li>
+<li><p><code>.</code><br><code>.</code>可以匹配任意单个字符，除了换行符。例如<code>.</code>可匹配<code>abc</code>中的任意一个字符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'.'</span>, <span class="string">'abc'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>^</code><br><code>^</code>表示字符串的开始，例：<code>^Th</code>表示匹配以<code>Th</code>开头的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'^Th'</span>, <span class="string">'This is a demo. This is a demo.'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'Th'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>$</code><br><code>$</code>表示字符串的结束，例：<code>demo$</code>表示匹配以<code>demo</code>结尾的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'demo$'</span>, <span class="string">'This is a demo. This is a demo'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'demo'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>*</code><br><code>*</code>匹配&gt;=0个在<code>*</code>号之前的字符。例：<code>test*</code>表示匹配以<code>tes</code>为起始值，其后为0个<code>t</code>或多个<code>t</code>的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'test*'</span>, <span class="string">'t te tes test testt'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'tes'</span>, <span class="string">'test'</span>, <span class="string">'testt'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>+</code><br><code>+</code>匹配&gt;=1个在<code>+</code>号之前的字符。例：<code>test+</code>表示匹配以<code>tes</code>为起始值，其后为1个<code>t</code>或多个<code>t</code>的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'test+'</span>, <span class="string">'t te tes test testt'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'test'</span>, <span class="string">'testt'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>?</code><br><code>?</code>之前的字符为可选字符。例：<code>test?</code>表示匹配以<code>tes</code>为起始值，其后为1个<code>t</code>或没有<code>t</code>的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'test?'</span>, <span class="string">'t te tes test testt'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'tes'</span>, <span class="string">'test'</span>, <span class="string">'test'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\</code><br><code>\</code>为转义字符，用于匹配一些保留的字符<code>[ ] ( ) { } . * + ? ^ $ \ |</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'test\?'</span>, <span class="string">'t te tes test? testt'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'test?'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>|</code><br><code>|</code>为或运算符，匹配符号前或后的字符。例：<code>te|st</code>表示匹配<code>te</code>或<code>st</code>的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'te|st'</span>, <span class="string">'t te tes test'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'te'</span>, <span class="string">'te'</span>, <span class="string">'te'</span>, <span class="string">'st'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>[ ]</code><br><code>[ ]</code>表示要匹配的字符种类，匹配方括号内的任意字符。例：<code>[test]</code>匹配括号中的任意一个字符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'[test]'</span>, <span class="string">'This is a test'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'s'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>, <span class="string">'e'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>[^ ]</code><br><code>[^ ]</code>表示不进行匹配的字符种类，匹配除了方括号里字符之外的任意字符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'[^test]'</span>, <span class="string">'This is a test'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'T'</span>, <span class="string">'h'</span>, <span class="string">'i'</span>, <span class="string">' '</span>, <span class="string">'i'</span>, <span class="string">' '</span>, <span class="string">'a'</span>, <span class="string">' '</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>{m,n}</code><br><code>{m,n}</code>表示匹配<code>(n-m+1)</code>个大括号之前的字符。例：<code>test{1,2}</code>表示匹配以<code>tes</code>为起始值，其后为<code>1-2</code>个<code>t</code>的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'test&#123;1,2&#125;'</span>, <span class="string">'This is a test testt'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'test'</span>, <span class="string">'testt'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>(xyz)</code><br><code>(xyz)</code>表示匹配与<code>()</code>内容完全相同的字符串。例：<code>(test){1,2}</code>表示匹配<code>1-2</code>个<code>test</code>，<code>test</code>是一个整体。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'(test)&#123;1,2&#125;'</span>, <span class="string">'This is a test testt'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'test'</span>, <span class="string">'test'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\w</code><br><code>\w</code>匹配所有字母数字以及下划线，即<code>[a-zA-z0-9_]</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\w'</span>, <span class="string">'Is this a test?_'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'I'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>, <span class="string">'h'</span>, <span class="string">'i'</span>, <span class="string">'s'</span>, <span class="string">'a'</span>, <span class="string">'t'</span>, <span class="string">'e'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\W</code><br><code>\W</code>匹配字母数字以及下划线之外的字符，即<code>[^\w]</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\W'</span>, <span class="string">'Is this a test?'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">' '</span>, <span class="string">' '</span>, <span class="string">' '</span>, <span class="string">'?'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\d</code><br><code>\d</code>匹配数字，即<code>[0-9]</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\d'</span>, <span class="string">'test 123'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\D</code><br><code>\D</code>匹配数字之外的字符，即<code>[^\d]</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\D'</span>, <span class="string">'test 123'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'t'</span>, <span class="string">'e'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>, <span class="string">' '</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\s</code><br><code>\s</code>匹配所有空格字符，即<code>[\t\n\f\r\p{Z}]</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\s'</span>, <span class="string">'test 123\n'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">' '</span>, <span class="string">'\n'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\S</code><br><code>\S</code>匹配非空格字符，即<code>[^\s]</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\S'</span>, <span class="string">'test 123\n'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'t'</span>, <span class="string">'e'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\n</code><br><code>\n</code>匹配一个换行符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\n'</span>, <span class="string">'test 123\n'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'\n'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\f</code><br><code>\f</code>匹配一个换页符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\f'</span>, <span class="string">'test 123\f'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'\x0c'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\r</code><br><code>\r</code>匹配一个回车符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\r'</span>, <span class="string">'test 123\r'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'\r'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\t</code><br><code>\t</code>匹配一个制表符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\t'</span>, <span class="string">'test 123\t'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'\t'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>\v</code><br><code>\v</code>匹配一个垂直制表符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'\v'</span>, <span class="string">'test 123\v'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果</span></div><div class="line">[<span class="string">'\x0b'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>?=</code><br><code>?=</code>是前置约束，表示要匹配的是<code>?=</code>之前的内容，但同时要匹配<code>?=</code>之后的内容，前置约束需要使用<code>()</code>。例：<code>Th(?=is)</code>表示要匹配<code>Th</code>，要找的是<code>This</code>中的<code>Th</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'Th(?=is)'</span>, <span class="string">'There or This or The?'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果，匹配的是This中的Th</span></div><div class="line">[<span class="string">'Th'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>?!</code><br><code>?!</code>也是前置约束，但与<code>?=</code>正好相反，也是要匹配<code>?!</code>之前的内容，但同时要不匹配<code>?!</code>之后的内容，前置约束需要使用<code>()</code>。例：<code>Th(?!is)</code>表示要匹配<code>Th</code>，要找的是非<code>This</code>中的<code>Th</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'Th(?!is)'</span>, <span class="string">'There or This or The?'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果，匹配的是There, The中的Th</span></div><div class="line">[<span class="string">'Th'</span>, <span class="string">'Th'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>?&lt;=</code><br><code>?&lt;=</code>是后置约束，表示要匹配的是<code>(?&lt;=)</code>之后的内容，但同时要匹配<code>(?&lt;=)</code>括号内的内容，后置约束需要使用<code>()</code>。例：<code>(?&lt;=H)e</code>表示要匹配<code>e</code>，要找的是<code>He</code>中的<code>e</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'(?&lt;=H)e'</span>, <span class="string">'The or He or She?'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果，匹配的是He中的e</span></div><div class="line">[<span class="string">'e'</span>]</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>?&lt;!</code><br><code>?&lt;!</code>是后置约束，表示要匹配的是<code>(?&lt;!)</code>之后的内容，但同时要不匹配<code>(?&lt;!)</code>括号内的内容，后置约束需要使用<code>()</code>。例：<code>(?&lt;!H)e</code>表示要匹配<code>e</code>，要找的是非<code>He</code>中的<code>e</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">print(re.findall(<span class="string">r'(?&lt;!H)e'</span>, <span class="string">'The or He or She?'</span>))</div><div class="line"></div><div class="line"><span class="comment"># 代码执行结果，匹配的是The, She中的e</span></div><div class="line">[<span class="string">'e'</span>, <span class="string">'e'</span>]</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<p><code>$</code>表示字符串的结束，例：<code>ch$</code>表示以<code>ch</code>结尾的字符串，可匹配<code>match</code>，<code>watch</code>等。</p>
-<ul>
-<li><p>*</p>
-</li>
-<li><p>?</p>
-</li>
-<li><p>+</p>
-</li>
-<li><p>.</p>
-</li>
-<li><p>\d</p>
-</li>
-<li><p>\w</p>
-</li>
-<li></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;font color=blue&gt;内容&lt;/font&gt;</div></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://juejin.im/entry/59a651116fb9a024844938b5" target="_blank" rel="external">https://juejin.im/entry/59a651116fb9a024844938b5</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://juejin.im/entry/59a651116fb9a024844938b5" target="_blank" rel="external">https://juejin.im/entry/59a651116fb9a024844938b5</a></li>
+</ol>
 
       
     </div>
@@ -599,7 +661,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-正则表达式"><span class="nav-number">1.</span> <span class="nav-text">1. 正则表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-语法"><span class="nav-number">2.</span> <span class="nav-text">2. 语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-正则表达式"><span class="nav-number">1.</span> <span class="nav-text">1. 正则表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-正则表达式语法"><span class="nav-number">2.</span> <span class="nav-text">2. 正则表达式语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
