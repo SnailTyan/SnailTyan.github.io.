@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-fe7dc60cb25e16e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-8cd3ccd4ff568cf7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-12fe7f1732d7caa8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-19T10:28:02.000Z">
+<meta property="og:updated_time" content="2018-05-15T09:22:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VGG论文翻译——中文版">
 <meta name="twitter:description" content="VGG论文翻译——中文版">
@@ -367,9 +367,7 @@
       
 
       
-        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-be89b53c52dac801.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Deep Learning"></p>
-<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+        <p><img src="http://upload-images.jianshu.io/upload_images/3232548-be89b53c52dac801.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Deep Learning"></p>
 <p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="Very-Deep-Convolutional-Networks-for-Large-Scale-Image-Recognition"><a href="#Very-Deep-Convolutional-Networks-for-Large-Scale-Image-Recognition" class="headerlink" title="Very Deep Convolutional Networks for Large-Scale Image Recognition"></a>Very Deep Convolutional Networks for Large-Scale Image Recognition</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在这项工作中，我们研究了卷积网络深度在大规模的图像识别环境下对准确性的影响。我们的主要贡献是使用非常小的（3×3）卷积滤波器架构对网络深度的增加进行了全面评估，这表明通过将深度推到16-19加权层可以实现对现有技术配置的显著改进。这些发现是我们的ImageNet Challenge 2014提交的基础，我们的团队在定位和分类过程中分别获得了第一名和第二名。我们还表明，我们的表示对于其他数据集泛化的很好，在其它数据集上取得了最好的结果。我们使我们的两个性能最好的ConvNet模型可公开获得，以便进一步研究计算机视觉中深度视觉表示的使用。</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h2><p>卷积网络（ConvNets）近来在大规模图像和视频识别方面取得了巨大成功（Krizhevsky等，2012；Zeiler＆Fergus，2013；Sermanet等，2014；Simonyan＆Zisserman，2014）由于大的公开图像存储库，例如ImageNet，以及高性能计算系统的出现，例如GPU或大规模分布式集群（Dean等，2012），使这成为可能。特别是，在深度视觉识别架构的进步中，ImageNet大型视觉识别挑战（ILSVRC）（Russakovsky等，2014）发挥了重要作用，它已经成为几代大规模图像分类系统的测试台，从高维度浅层特征编码（Perronnin等，2010）（ILSVRC-2011的获胜者）到深层ConvNets（Krizhevsky等，2012）（ILSVRC-2012的获奖者）。</p>
