@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2018-05-03T10:13:24.000Z</updated>
+  <updated>2018-05-24T07:42:30.000Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,404 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IO中同步、异步、阻塞、非阻塞的形象解释</title>
+    <link href="http://noahsnail.com/2018/05/24/2018-05-24-IO%E4%B8%AD%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%9A%84%E5%BD%A2%E8%B1%A1%E8%A7%A3%E9%87%8A/"/>
+    <id>http://noahsnail.com/2018/05/24/2018-05-24-IO中同步、异步、阻塞、非阻塞的形象解释/</id>
+    <published>2018-05-24T07:41:39.000Z</published>
+    <updated>2018-05-24T07:42:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>注：以下文字来自网络，具体作者不知。</strong></p>
+<p>老张爱喝茶，废话不说，煮开水。<br>出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。</p>
+<ol>
+<li>老张把水壶放到火上，立等水开。（同步阻塞）<br>老张觉得自己有点傻</li>
+<li>老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞）<br>老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。</li>
+<li>老张把响水壶放到火上，立等水开。（异步阻塞）<br>老张觉得这样傻等意义不大</li>
+<li>老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（异步非阻塞）<br>老张觉得自己聪明了。</li>
+</ol>
+<p>所谓同步异步，只是对于水壶而言。<br>普通水壶，同步；响水壶，异步。<br>虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。<br>同步只能让调用者去轮询自己（情况2中），造成老张效率的低下。</p>
+<p>所谓阻塞非阻塞，仅仅对于老张而言。<br>立等的老张，阻塞；看电视的老张，非阻塞。<br>情况1和情况3中老张就是阻塞的，媳妇喊他都不知道。虽然3中响水壶是异步的，可对于立等的老张没有太大的意义。所以一般异步是配合非阻塞使用的，这样才能发挥异步的效用。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      IO中同步、异步、阻塞、非阻塞的形象解释
+    
+    </summary>
+    
+      <category term="Python" scheme="http://noahsnail.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://noahsnail.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>概率论中的各种分布总结</title>
+    <link href="http://noahsnail.com/2018/05/24/2018-05-24-%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%88%86%E5%B8%83%E6%80%BB%E7%BB%93/"/>
+    <id>http://noahsnail.com/2018/05/24/2018-05-24-概率论中的各种分布总结/</id>
+    <published>2018-05-24T06:31:31.000Z</published>
+    <updated>2018-05-29T09:56:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-0-1分布"><a href="#1-0-1分布" class="headerlink" title="1. 0-1分布"></a>1. 0-1分布</h2><h2 id="2-均匀分布"><a href="#2-均匀分布" class="headerlink" title="2. 均匀分布"></a>2. 均匀分布</h2><h2 id="3-二项分布"><a href="#3-二项分布" class="headerlink" title="3. 二项分布"></a>3. 二项分布</h2><h2 id="4-泊松分布"><a href="#4-泊松分布" class="headerlink" title="4. 泊松分布"></a>4. 泊松分布</h2><h2 id="5-指数分布"><a href="#5-指数分布" class="headerlink" title="5. 指数分布"></a>5. 指数分布</h2><h2 id="6-正态分布"><a href="#6-正态分布" class="headerlink" title="6. 正态分布"></a>6. 正态分布</h2><h2 id="7-卡方分布"><a href="#7-卡方分布" class="headerlink" title="7. 卡方分布"></a>7. 卡方分布</h2><h2 id="8-T分布"><a href="#8-T分布" class="headerlink" title="8. T分布"></a>8. T分布</h2><h2 id="9-Gamma分布"><a href="#9-Gamma分布" class="headerlink" title="9. Gamma分布"></a>9. Gamma分布</h2><h2 id="10-Beta分布"><a href="#10-Beta分布" class="headerlink" title="10. Beta分布"></a>10. Beta分布</h2><h2 id="11-Laplace分布"><a href="#11-Laplace分布" class="headerlink" title="11. Laplace分布"></a>11. Laplace分布</h2><h2 id="12-Dirichlet分布"><a href="#12-Dirichlet分布" class="headerlink" title="12. Dirichlet分布"></a>12. Dirichlet分布</h2>]]></content>
+    
+    <summary type="html">
+    
+      概率论中的各种分布总结
+    
+    </summary>
+    
+      <category term="数学之美" scheme="http://noahsnail.com/categories/%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E/"/>
+    
+    
+      <category term="数学之美" scheme="http://noahsnail.com/tags/%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Unbroken</title>
+    <link href="http://noahsnail.com/2018/05/24/2018-05-24-Unbroken/"/>
+    <id>http://noahsnail.com/2018/05/24/2018-05-24-Unbroken/</id>
+    <published>2018-05-24T05:23:39.000Z</published>
+    <updated>2018-05-24T06:30:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-3dd38b789a3124b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Unbroken"></p>
+<p>励志视频：</p>
+<p>腾讯视频：<a href="https://v.qq.com/x/page/a0346ctbk24.html" target="_blank" rel="external">https://v.qq.com/x/page/a0346ctbk24.html</a></p>
+<p>Youtube：<a href="https://www.youtube.com/watch?v=26U_seo0a1g&amp;t=4s" target="_blank" rel="external">https://www.youtube.com/watch?v=26U_seo0a1g&amp;t=4s</a></p>
+<p>Unbroken——坚不可摧<br>You can’t connect the dots looking forward, you can only connect them looking backwards.</p>
+<p>你无法把过去的点滴与未来联系，只有透过回顾才能看见。</p>
+<p>So you have to trust that the dots will somehow connect in your future.</p>
+<p>所以你必须相信过去的点滴能够串联未来。</p>
+<p>You have to trust in something: your gut, destiny, life, karma, whatever.</p>
+<p>你必须有信念，不管那是你的胆识，命运，人生，还是因果报应。</p>
+<p>Because believing that the dots will connect down the road, will give you the confidence to follow your heart, even when it lead you off the well worn path. And that will make all the difference.</p>
+<p>因为唯有把过去的点滴串联起来，你才能有信心忠于自我，即使你的选择和常人不同。这会使你与众不同。</p>
+<p>Your time is limited, so don’t waste it living someone else’s life.</p>
+<p>你的生命有限，所以不要浪费你的时间在别人的生活里。</p>
+<p>Don’t be trapped by dogma, which is living with the results of other people’s thinking.</p>
+<p>不要被教条束缚，不要活在别人对你的期望之中。</p>
+<p>Don’t let the noise of others’ opinions drown out your own inner voice. You’ve got to find what you love.</p>
+<p>不要让来自他人的噪音抹去你自己内心的声音，你必须找到你所爱的东西。</p>
+<p>And that is as true for your work as it is for your lovers.</p>
+<p>包括你热爱的事业和你的伴侣。</p>
+<p>Your work is going to fill a large part of your life and the only way to be truly satisfied is to do what you believe is great work.</p>
+<p>事业将占据你的大半生，唯有相信你所做的工作是对的，你才能发自内心的得到满足。</p>
+<p>And the only way to do great work is to love what you do.</p>
+<p>而唯有爱你所做的事，才能成就不凡。</p>
+<p>If you haven’t found it yet, keep looking, and don’t settle.</p>
+<p>如若你还没有找到，继续寻找，别追去安逸。</p>
+<p>Have the courage to follow your heart and intuition, they somehow already know what you truly want to become.</p>
+<p>有勇气顺从自己的心和直觉，你的内心早就知道你未来的梦想。</p>
+<p>You’re going to have some ups and you’re goning to have some downs.</p>
+<p>你的旅途不可能一帆风顺，必然有起有落。</p>
+<p>Most people give up on themselves easily. You know the human spirit is powerful?!</p>
+<p>大多数人都轻易放弃，但你知道人的意志有多强大吗？</p>
+<p>There is nothing as powerful. It’s hard to kill the human spirit!</p>
+<p>人的意志是无可比拟的坚韧不屈！</p>
+<p>Anybody can feel good when they have their health, their bills are paid, they have happy relationships.</p>
+<p>任何人在财务、生活、感情、健康良好的环境下，都能感到幸福。</p>
+<p>Anybody can be positive then, anybody can have a larger vision then, anybody can have faith under those kinds of circumstances.</p>
+<p>在那样的环境下，任何人都能自得其满，任何人都能有伟大的理想，任何人都能有信念。</p>
+<p>The real challenge of growth, mentally, emotionally and spiritually comes when you get knocked down. It takes courage to act.</p>
+<p>在你被击倒时，你所面临的真正挑战是你的信念、信仰和意志。起身而行需要勇气。</p>
+<p>Part of being hungry when you have been defeated.</p>
+<p>被击倒仍能保持谦虚，</p>
+<p>It takes courage to start over again.</p>
+<p>需要勇气去放下并重新开始。</p>
+<p>Fear kills dreams.</p>
+<p>恐惧扼杀梦想。</p>
+<p>Fear kills hope.Fear, put people in the hospital.</p>
+<p>恐惧扼杀希望，恐惧使人一蹶不振。</p>
+<p>Fear can age you, can hold you back from doing something that you know within yourself that you are capable of doing, but it will paralyze you.</p>
+<p>恐惧使你衰老，阻止你去做你能做到的事，但是它也会使你麻木不仁。</p>
+<p>At the end of your feelings is nothing, but at the end of every principle is a promise.</p>
+<p>你的情绪跌宕起伏，但仍然一事无成，但是在每个原则之后是自我的承诺。</p>
+<p>Behind your little feelings, it might not be absolutely nothing at the end of your little feelings.</p>
+<p>你的喜怒哀乐，最后可能什么都没有。</p>
+<p>But behind every principle is a promise. And some of you in your life, the reason why you not at your goal right now, because you just all about your feelings.</p>
+<p>但是每当你下定决心，就是一种承诺。你们有些人，至今碌碌无为，原因只是你们太过于情绪化。</p>
+<p>All on your feellings, you don’t feel like waking up, so who does?</p>
+<p>你总被情绪所主导，早上不愿起床，谁想呢？</p>
+<p>Everyday you say “no” to your dreams, you might be pushing your dreams back a whole six months, a whole year!</p>
+<p>每天你不愿去面对自己的梦想，你也许会把目标延后六个月，或是一年！</p>
+<p>That one single day, that one day you didn’t get up could have pushed your stuff back, I don’t know how long.</p>
+<p>只是那没有起身鞭策自己的一瞬间，你不知后退了多少。</p>
+<p>Don’t allow your emotions to control you.</p>
+<p>别让你的情感控制你。</p>
+<p>We are emotional, but what you want to begin to discipline your emotion.</p>
+<p>我们是情感的动物，但是你必须控制你的情感。</p>
+<p>If you don’t discipline and contain your emotion, they will use you.</p>
+<p>你若无法控制他，你便将被它吞噬。</p>
+<p>You want it, and you are going to go all out to have it.</p>
+<p>你想要全力以赴，毫无保留。</p>
+<p>It’s not going to be easy, when you want to change. It’s not easy.</p>
+<p>当你尝试改变的时候，不会很容易。</p>
+<p>If it were in fact easy, everybody would do it.</p>
+<p>如果很容易，那人人皆可做到。</p>
+<p>But if you’re serious, you’ll go all out.</p>
+<p>但是你若认真对待，全力以赴。</p>
+<p>I’m in control here.</p>
+<p>我才是自己的主宰者。</p>
+<p>I’m not going to let this get me down, I’m not going to let this destroy me.</p>
+<p>我绝不会让外界事物打击我，摧毁我。</p>
+<p>I’m coming back!</p>
+<p>我将重新站起！</p>
+<p>And I’ll be stronger and better because of it!</p>
+<p>我将会变得更好，更坚强！</p>
+<p>You have got to make a declaration, that this is what you stand for!</p>
+<p>你必须要下定决心，这是你的意义!</p>
+<p>You’re standing up for your dreams, you’re standing up for peace of mind, you’re standing up for health.</p>
+<p>如果这是你想要的梦想，那不论是健康或是功成名就。</p>
+<p>Take full responsibility for your life!</p>
+<p>请对你的人生负完全的责任！</p>
+<p>Accept where you are and the responsibility that you’re going to take yourself where you want to go.</p>
+<p>接受现在的自己，并把坚信自己能够做得更好当作一种责任。</p>
+<p>You can decide that I am going to live each day as if it were my last!</p>
+<p>你可以选择把你的每一天当做最后一天来过！</p>
+<p>Live your life with passion! With some drive!</p>
+<p>活出你的激情！拿出你的魄力！</p>
+<p>Decided that you are going to push yourself.</p>
+<p>不断鞭策自己做得更好！</p>
+<p>The last chapter to your life has not been written yet, and it doen’t matter about what happened yesterday.</p>
+<p>人生的最后一章尚未写下，昨天种种的事情并不重要。</p>
+<p>It doesn’t matter about what happened to you, what matter is: what are you going to do about it?</p>
+<p>你发生了什么也没有关系，重要的是：你接下来打算怎么做？</p>
+<p>This year I will make this goal become a reality.</p>
+<p>今年我将使梦想成为现实。</p>
+<p>I won’t talk about it anymore. I can! I can!! I can!!!</p>
+<p>我已不想再谈论什么，我能行！我能行！！我能行！！！</p>
+<p>To persevere I think is important for everybody, don’t give up, don’t give in.</p>
+<p>我觉得坚持对每个人都很重要，不要放弃，不要妥协。</p>
+<p>There’s always an answer to everything.</p>
+<p>人生的每件事情总是有解答的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Unbroken
+    
+    </summary>
+    
+      <category term="励志" scheme="http://noahsnail.com/categories/%E5%8A%B1%E5%BF%97/"/>
+    
+    
+      <category term="励志" scheme="http://noahsnail.com/tags/%E5%8A%B1%E5%BF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>贝叶斯估计、最大似然估计、最大后验概率估计</title>
+    <link href="http://noahsnail.com/2018/05/17/2018-05-17-%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E3%80%81%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%E3%80%81%E6%9C%80%E5%A4%A7%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87%E4%BC%B0%E8%AE%A1/"/>
+    <id>http://noahsnail.com/2018/05/17/2018-05-17-贝叶斯估计、最大似然估计、最大后验概率估计/</id>
+    <published>2018-05-17T02:12:59.000Z</published>
+    <updated>2018-05-31T09:48:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://upload-images.jianshu.io/upload_images/3232548-aa0d1d09dec1ab6d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Bayes&#39; Theorem"></p>
+<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>贝叶斯估计、最大似然估计(MLE)、最大后验概率估计(MAP)这几个概念在机器学习和深度学习中经常碰到，读文章的时候还感觉挺明白，但独立思考时经常会傻傻分不清楚(😭)，因此希望通过本文对其进行总结。</p>
+<hr>
+
+<h2 id="2-背景知识"><a href="#2-背景知识" class="headerlink" title="2. 背景知识"></a>2. 背景知识</h2><p><strong>注：</strong>由于概率与数理统计需要了解的背景知识很多，因此这里只列出了部分内容，且写的较简略，许多概念的学习需要根据标题自己查找答案。</p>
+<h3 id="2-1-概率与统计"><a href="#2-1-概率与统计" class="headerlink" title="2.1 概率与统计"></a>2.1 概率与统计</h3><p>概率统计是很多人都学过的内容，但概率论与统计学的关系是什么？先看一下概率论与统计学在维基百科中的定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">概率论是集中研究概率及随机现象的数学分支，是研究随机性或不确定性等现象的数学。</div><div class="line">统计学是在数据分析的基础上，研究如何测定、收集、整理、归纳和分析反映数据数据，以便给出正确消息的科学。</div></pre></td></tr></table></figure></p>
+<p>下面的一段话引自LarrB Wasserman的《All of Statistics》，对概率和统计推断的研究内容进行了描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">The basic problem that we studB in probabilitB is: </div><div class="line">Given a data generating process, what are the properities of the outcomes?</div><div class="line"></div><div class="line">The basic problem of statistical inference is the inverse of probabilitB: </div><div class="line">Given the outcomes, what can we saB about the process that generated the data?</div></pre></td></tr></table></figure></p>
+<p>概率论是在给定条件（已知模型和参数）下，对要发生的事件（新输入数据）的预测。统计推断是在给定数据（训练数据）下，对数据生成方式（模型和参数）的归纳总结。概率论是统计学的数学基础，统计学是对概率论的应用。</p>
+<h3 id="2-2-描述统计和推断统计"><a href="#2-2-描述统计和推断统计" class="headerlink" title="2.2 描述统计和推断统计"></a>2.2 描述统计和推断统计</h3><p>统计学分为描述统计学和推断统计学。描述统计，是统计学中描绘或总结观察量基本情况的统计总称。推断统计指统计学中研究如何根据样本数据去推断总体数量特征的方法。</p>
+<p>描述统计是对数据的一种概括。描述统计是罗列所有数据，然后选择一些特征量（例如均值、方差、中位数、四分中位数等）对总体数据进行描述。推断统计是一种对数据的推测。推断统计无法获取所有数据，只能得到部分数据，然后根据得到的数据推测总体数据的情况。</p>
+<h3 id="2-3-联合概率和边缘概率"><a href="#2-3-联合概率和边缘概率" class="headerlink" title="2.3 联合概率和边缘概率"></a>2.3 联合概率和边缘概率</h3><p>假设有随机变量$A$和$B$，此时$P(A=a,B=b)$用于表示$A=a$且$B=b$同时发生的概率。这类包含多个条件且<font color="blue"><strong>所有条件同时成立</strong></font>的概率称为<strong>联合概率</strong>。请注意，联合概率并不是其中某个条件成立的概率，而是所有条件同时成立的概率。与之对应地，$P(A=a)$或$P(B=b)$这类<font color="blue"><strong>仅与单个随机变量有关</strong></font>的概率称为<strong>边缘概率</strong>。</p>
+<p>联合概率与边缘概率的关系如下：</p>
+<p>$$P(A=a)=\sum_{b}P(A=a,B=b)$$$$P(A=b)=\sum_{a}P(A=a,B=b)$$</p>
+<h3 id="2-4-条件概率"><a href="#2-4-条件概率" class="headerlink" title="2.4 条件概率"></a>2.4 条件概率</h3><p>条件概率表示在<font color="blue">条件$B=b$成立</font>的情况下，$A=a$的概率，记作$P(A=a|B=b)$，或者说条件概率是指事件$A=a$在另外一个事件$B=b$已经发生条件下的发生概率。为了简洁表示，后面省略a，b。</p>
+<p>联合概率、边缘概率、条件概率的关系如下：</p>
+<p>$$P(A|B)=\frac {P(A,B)} {P(B)}$$</p>
+<p>转换为乘法形式：</p>
+<p>$$P(A,B)=P(B)*P(A|B)=P(A)*P(B|A)$$</p>
+<h3 id="2-5-全概率公式"><a href="#2-5-全概率公式" class="headerlink" title="2.5 全概率公式"></a>2.5 全概率公式</h3><p>如果事件$A_1，A_2，A_3，\ldots，A_n$构成一个完备事件组，即它们两两互不相容（互斥），其和为全集；并且$P(A_i)$大于0，则对任意事件$B$有$$P(B)=P(B|A_1)P(A_1)+P(B|A_2)P(A_2)+\ldots+ P(B|A_n)P(A_n)=\sum^n_{i=1}P(B|A_i)P(A_i)$$上面的公式称为全概率公式。全概率公式是对复杂事件$A$的概率求解问题转化为了在不同情况下发生的简单事件的概率的求和问题。</p>
+<h3 id="2-6-贝叶斯公式"><a href="#2-6-贝叶斯公式" class="headerlink" title="2.6 贝叶斯公式"></a>2.6 贝叶斯公式</h3><p>由条件概率的乘法形式可得：</p>
+<p>$$P(A|B)=\frac {P(B|A)} {P(B)}*P(A)$$</p>
+<p>上面的式子称为贝叶斯公式，也叫做贝叶斯定理或贝叶斯法则。在贝叶斯定理中，每个名词都有约定俗成的名称：</p>
+<ul>
+<li>$P(A|B)$是已知$B$发生后$A$的条件概率，也由于得自$B$的取值而被称作$A$的后验概率，表示<font color="blue">事件$B$发生后，事件$A$发生的置信度</font>。</li>
+<li>$P(A)$是$A$的先验概率或边缘概率，表示<font color="blue">事件$A$发生的置信度</font>。</li>
+<li>$P(B|A)$是已知$A$发生后$B$的条件概率，也由于得自$A$的取值而被称作$B$的后验概率，也被称作似然函数。</li>
+<li>$P(B)$是$B$的先验概率或边缘概率，称为标准化常量。</li>
+<li>$\frac {P(B|A)} {P(B)}$称为标准似然比(这个叫法很多，没找到标准统一的叫法)，表示<font color="blue">事件$B$为事件$A$发生提供的支持程度</font>。</li>
+</ul>
+<p>因此贝叶斯公式可表示为：后验概率=似然函数*先验概率/标准化常量=标准似然比*先验概率。根据标准似然比的大小，可分为下面三种情况：</p>
+<ul>
+<li>如果标准似然比$&gt;1$，则先验概率$P(A)$得到增强，事件$B$的发生会增大事件$A$发生的可能性；</li>
+<li>如果标准似然比$=1$，则先验概率$P(A)$保持不变，事件$B$的发生不影响事件$A$发生的可能性； </li>
+<li>如果标准似然比$&lt;1$，则先验概率$P(A)$得到削弱，事件$B$的发生会降低事件$A$发生的可能性。</li>
+</ul>
+<p>由全概率公式、贝叶斯法则可得：<br>$$P(A_i|B)=\frac {P(B|A_i)P(A_i)} {P(B)}=\frac {P(B|A_i)P(A_i)} {\sum^n_{i=1}P(B|A_i)P(A_i)}$$</p>
+<h3 id="2-7-似然与概率"><a href="#2-7-似然与概率" class="headerlink" title="2.7 似然与概率"></a>2.7 似然与概率</h3><p>在英文中，似然（likelihood）和概率（probability）是同义词，都指事件发生的可能性。但在统计中，似然与概率是不同的东西。概率是已知参数，对结果可能性的预测。似然是已知结果，对参数是某个值的可能性预测。</p>
+<h3 id="2-8-似然函数与概率函数"><a href="#2-8-似然函数与概率函数" class="headerlink" title="2.8 似然函数与概率函数"></a>2.8 似然函数与概率函数</h3><p>对于函数$P(x|\theta)$，从不同的观测角度来看可以分为以下两种情况：</p>
+<ul>
+<li>如果$\theta$已知且保持不变，$x$是变量，则$P(x|\theta)$称为概率函数，表示不同$x$出现的概率。</li>
+<li>如果$x$已知且保持不变，$\theta$是变量，则$P(x|\theta)$称为似然函数，表示不同$\theta$下，$x$出现的概率，也记作$L(\theta|x)$或$L(x;\theta)$或$f(x;\theta)$。</li>
+</ul>
+<p><strong>注：</strong>注意似然函数的不同写法。</p>
+<h3 id="2-9-推断统计中需要了解的一些概念"><a href="#2-9-推断统计中需要了解的一些概念" class="headerlink" title="2.9 推断统计中需要了解的一些概念"></a>2.9 推断统计中需要了解的一些概念</h3><ul>
+<li>假设实际观测值与真实分布相关，试图根据观测值来推测真实分布</li>
+<li>由于观测值取值随机，因此由它们计算得到的估计值也是随机值</li>
+<li>估计方式多种多样，且不同估计方式得到的估计值也有所不同</li>
+</ul>
+<p>样本、样本容量、参数统计、非参数统计、估计量、真实分布、经验分布。</p>
+<h3 id="2-10-频率学派与贝叶斯学派"><a href="#2-10-频率学派与贝叶斯学派" class="headerlink" title="2.10 频率学派与贝叶斯学派"></a>2.10 频率学派与贝叶斯学派</h3><p><strong>注：</strong>频率学派与贝叶斯学派只是解决问题的角度不同。</p>
+<p>频率学派与贝叶斯学派探讨「不确定性」这件事时的出发点与立足点不同。频率学派从「自然」角度出发，试图直接为「事件」本身建模，即事件$A$在独立重复试验中发生的频率趋于极限$p$，那么这个极限就是该事件的概率。</p>
+<p>贝叶斯学派并不从试图刻画「事件」本身，而从「观察者」角度出发。贝叶斯学派并不试图说「事件本身是随机的」，或者「世界的本体带有某种随机性」，这套理论根本不言说关于「世界本体」的东西，而只是从「观察者知识不完备」这一出发点开始，构造一套在贝叶斯概率论的框架下可以对不确定知识做出推断的方法。</p>
+<p>频率学派的代表是最大似然估计；贝叶斯学派的代表是最大后验概率估计。</p>
+<h3 id="2-11-共轭先验"><a href="#2-11-共轭先验" class="headerlink" title="2.11 共轭先验"></a>2.11 共轭先验</h3><p>在贝叶斯统计中，如果后验分布与先验分布属于同类，则先验分布与后验分布被称为共轭分布，而先验分布被称为似然函数的共轭先验。</p>
+<h3 id="2-12-Beta分布"><a href="#2-12-Beta分布" class="headerlink" title="2.12 Beta分布"></a>2.12 Beta分布</h3><p>在概率论中，Beta分布也称Β分布，是指一组定义在$(0,1)$区间的连续概率分布，有两个参数$\alpha,\beta&gt;0$。Beta分布的概率密度为：</p>
+<p>$$\begin{align}f(x;\alpha,\beta)&amp;=\frac {x^{\alpha-1}(1-x)^{\beta-1}} {\int_{0}^1 \mu^{\alpha-1}(1-\mu)^{\beta-1}d\mu} \\&amp;= \frac{\Gamma(\alpha+\beta)} {\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1} \\&amp;=\frac {1} {B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}\end{align}$$其中，$\Gamma(z)$是$\Gamma$函数。随机变量$X$服从Beta分布写作$X\sim Beta(\alpha,\beta)$。</p>
+<hr>
+
+<h2 id="3-问题定义"><a href="#3-问题定义" class="headerlink" title="3. 问题定义"></a>3. 问题定义</h2><p>以抛硬币为例，假设我们有一枚硬币，现在要估计其正面朝上的概率$\theta$。为了对$\theta$进行估计，我们进行了10次实验（独立同分布，i.i.d.），这组实验记为$X=x_1，x_2，\ldots，x_{10}$，其中正面朝上的次数为6次，反面朝上的次数为4次，结果为$(1,0,1,1,0,0,0,1,1,1)$。</p>
+<h2 id="4-最大似然估计-MLE"><a href="#4-最大似然估计-MLE" class="headerlink" title="4. 最大似然估计(MLE)"></a>4. 最大似然估计(MLE)</h2><p>最大似然估计，英文为Maximum Likelihood Estimation，简写为MLE，也叫极大似然估计，是用来估计概率模型参数的一种方法。最大似然估计的思想是使得观测数据（样本）发生概率最大的参数就是最好的参数。</p>
+<p>对一个独立同分布的样本集来说，总体的似然就是每个样本似然的乘积。针对抛硬币的问题，似然函数可写作：$$L(X;\theta)=\prod_{i=0}^nP(x_i|\theta)=\theta^6(1-\theta)^4$$根据最大似然估计，使$L(X;\theta)$取得最大值的$\theta$即为估计结果，令$L(X;\theta)\prime =0$可得$\hat{\theta}=0.6$。似然函数图如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-c785fe210be37ef5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MLE"></p>
+<p>由于总体的似然就是每个样本似然的乘积，为了求解方便，我们通常会将似然函数转成对数似然函数，然后再求解。可以转成对数似然函数的主要原因是对数函数并不影响函数的凹凸性。因此上式可变为：$$lnL(X;\theta)=ln\prod_{i=0}^nP(x_i|\theta)=\sum_{i=0}^nln(P(x_i|\theta))=6ln(\theta)+4ln(1-\theta)$$令$ln(L(X;\theta)\prime) =0$可得$\hat{\theta}=0.6$。</p>
+<p><strong>正态分布的最大似然估计</strong></p>
+<p>假设样本服从正态分布$N\sim(\mu,\sigma^2)$，则其似然函数为$$L(\mu,\sigma^2)=\prod_{i=0}^n \frac {1} {\sqrt{2\pi} \sigma}e^{-\frac {(x_i-\mu)^2} {2\sigma^2}}$$对其取对数得：$$lnL(\mu,\sigma^2)=-\frac {n} {2}ln(2\pi) - \frac {n} {2} ln(\sigma^2) - \frac {1} {2\sigma^2} \sum_{i=0}^n(x_i-\mu)^2$$<br>分别对$\mu，\sigma^2$求偏导，并令偏导数为0，得：$$\begin{cases}<br>\frac {\partial lnL(\mu,\sigma^2)} {\partial \mu}= \frac {1} {\sigma^2} \sum_{i=0}^n(x_i-\mu) =0\\<br>\frac {\partial lnL(\mu,\sigma^2)} {\partial \sigma^2}= -\frac {n} {2\sigma^2} + \frac {1} {2\sigma^4}\sum_{i=0}^n(x_i-\mu)^2 =0<br>\end{cases}$$</p>
+<p>解得：<br>$$\begin{cases}<br>\hat{\mu}= \frac {1} {n} \sum_{i=0}^nx_i=\bar{x}\\<br>\hat{\sigma^2} = \frac {1} {n} \sum_{i=0}^n(x_i-\bar{x})^2<br>\end{cases}$$</p>
+<p>$\hat{\mu}，\hat{\sigma^2}$就是正态分布中$\mu，\sigma^2$的最大似然估计。</p>
+<p>最大似然估计的求解步骤：</p>
+<ul>
+<li>确定似然函数</li>
+<li>将似然函数转换为对数似然函数</li>
+<li>求对数似然函数的最大值（求导，解似然方程）</li>
+</ul>
+<hr>
+
+<h2 id="5-最大后验概率估计-MAP"><a href="#5-最大后验概率估计-MAP" class="headerlink" title="5. 最大后验概率估计(MAP)"></a>5. 最大后验概率估计(MAP)</h2><p>最大后验概率估计，英文为Maximum A Posteriori Estimation，简写为MAP。回到抛硬币的问题，最大似然估计认为使似然函数$P(X|\theta)$最大的参数$\theta$即为最好的$\theta$，此时最大似然估计是将$\theta$看作固定的值，只是其值未知；最大后验概率分布认为$\theta$是一个随机变量，即$\theta$具有某种概率分布，称为先验分布，求解时除了要考虑似然函数$P(X|\theta)$之外，还要考虑$\theta$的先验分布$P(\theta)$，因此其认为使$P(X|\theta)P(\theta)$取最大值的$\theta$就是最好的$\theta$。此时要最大化的函数变为$P(X|\theta)P(\theta)$，由于$X$的先验分布$P(X)$是固定的（可通过分析数据获得，其实我们也不关心$X$的分布，我们关心的是$\theta$），因此最大化函数可变为$\frac {P(X|\theta)P(\theta)} {P(X)}$，根据贝叶斯法则，要最大化的函数$\frac {P(X|\theta)P(\theta)} {P(X)}=P(\theta|X)$，因此要最大化的函数是$P(\theta|X)$，而$P(\theta|X)$是$\theta$的后验概率。最大后验概率估计可以看作是正则化的最大似然估计，当然机器学习或深度学习中的正则项通常是加法，而在最大后验概率估计中采用的是乘法，$P(\theta)$是正则项。在最大似然估计中，由于认为$\theta$是固定的，因此$P(\theta)=1$。</p>
+<p>最大后验概率估计的公式表示：$$\mathop{argmax}_{\theta}P(\theta|X)=\mathop{argmax}_{\theta}\frac {P(X|\theta)P(\theta)} {P(X)}\propto \mathop{argmax}_{\theta}P(X|\theta)P(\theta)$$</p>
+<p>在抛硬币的例子中，通常认为$\theta=0.5$的可能性最大，因此我们用均值为$0.5$，方差为$0.1$的高斯分布来描述$\theta$的先验分布，当然也可以使用其它的分布来描述$\theta$的先验分布。$\theta$的先验分布为：$$\frac {1} {\sqrt{2\pi}\sigma}e^{-\frac {(\theta-\mu)^2} {2\sigma^2}} = \frac {1} {10\sqrt{2\pi}}e^{-50(\theta-0.5)^2}$$先验分布的函数图如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-258e98a5b817b74d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Gaussian"></p>
+<p>在最大似然估计中，已知似然函数为$P(X|\theta)=\theta^6(1-\theta)^4$，因此：$$P(X|\theta)P(\theta)=\theta^6\times (1-\theta)^4\times \frac {1} {10\sqrt{2\pi}}\times e^{-50(\theta-0.5)^2}$$转换为对数函数：$$ln(P(X|\theta)P(\theta))=ln(\theta^6\times (1-\theta)^4 \times \frac {1} {10\sqrt{2\pi}}\times e^{-50(\theta-0.5)^2})=6ln(\theta)+4ln(1-\theta)+ln(\frac {1} {10\sqrt{2\pi}})-50(\theta-0.5)^2$$</p>
+<p>令$ln(P(X|\theta)P(\theta))\prime=0$，可得：$$100\theta^3-150\theta^2+40\theta+6=0$$由于$0\le\theta\le1$，解得：$\hat{\theta}\approx0.529$。$P(X|\theta)P(\theta)$的函数图像如下，基本符合$\theta$的估计值$\hat{\theta}$：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-3ab13f8b079cc3cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MAP"></p>
+<p>如果我们用均值为$0.6$，方差为$0.1$的高斯分布来描述$\theta$的先验分布，则$\hat{\theta}=0.6$。由此可见，在最大后验概率估计中，$\theta$的估计值与$\theta$的先验分布有很大的关系。这也说明一个合理的先验概率假设是非常重要的。如果先验分布假设错误，则会导致估计的参数值偏离实际的参数值。</p>
+<p><strong>先验分布为Beta分布</strong></p>
+<p>如果用$\alpha=3,\beta=3$的Beta分布来描述$\theta$的先验分布，则$$P(X|\theta)P(\theta)=\theta^6\times (1-\theta)^4\times \frac {1} {B(\alpha,\beta)}\times \theta^{\alpha-1}(1-\theta)^{\beta-1}$$令$P(X|\theta)P(\theta)\prime=0$求解可得：$$\hat{\theta}=\frac {\alpha+5} {\alpha + \beta +8}=\frac {8} {3 + 3 +8}\approx 0.57$$</p>
+<p>$Beta(3,3)$的概率密度图像如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-3956d07a43ac0e57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Beta(3,3)"></p>
+<p>最大后验概率估计的求解步骤：</p>
+<ul>
+<li>确定参数的先验分布以及似然函数</li>
+<li>确定参数的后验分布函数</li>
+<li>将后验分布函数转换为对数函数</li>
+<li>求对数函数的最大值（求导，解方程）</li>
+</ul>
+<hr>
+
+<h2 id="6-贝叶斯估计"><a href="#6-贝叶斯估计" class="headerlink" title="6. 贝叶斯估计"></a>6. 贝叶斯估计</h2><p>贝叶斯估计是最大后验估计的进一步扩展，贝叶斯估计同样假定$\theta$是一个随机变量，但贝叶斯估计并不是直接估计出$\theta$的某个特定值，而是估计$\theta$的分布，这是贝叶斯估计与最大后验概率估计不同的地方。在贝叶斯估计中，先验分布$P(X)$是不可忽略的。回到抛硬币的例子中，在已知$X$的情况下，描述$\theta$的分布即描述$P(\theta|X)$，$P(\theta|X)$是一种后验分布。如果后验分布的范围较窄，则估计值的准确度相对较高，反之，如果后验分布的范围较广，则估计值的准确度就较低。</p>
+<p>贝叶斯公式：$$P(\theta|X)=\frac {P(X|\theta)P(\theta)} {P(X)}$$</p>
+<p>在连续型随机变量中，由于$P(X)=\int_{\Theta}P(X|\theta)P(\theta)d\theta$，因此贝叶斯公式变为：$$P(\theta|X)=\frac {P(X|\theta)P(\theta)} {\int_{\Theta}P(X|\theta)P(\theta)d\theta}$$</p>
+<p>从上面的公式中可以看出，贝叶斯估计的求解非常复杂，因此选择合适的先验分布就非常重要。一般来说，计算积分$\int_{\theta}P(X|\theta)P(\theta)d\theta$是不可能的。对于这个抛硬币的例子来说，如果使用共轭先验分布，就可以更好的解决这个问题。二项分布参数的共轭先验是Beta分布，由于$\theta$的似然函数服从二项分布，因此在贝叶斯估计中，假设$\theta$的先验分布服从$P(\theta)\sim Beta(\alpha, \beta)$，Beta分布的概率密度公式为：$$f(x;\alpha,\beta)=\frac {1} {B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}$$因此，贝叶斯公式可写作：$$\begin{aligned} P(\theta|X)&amp;=\frac {P(X|\theta)P(\theta)} {\int_{\Theta}P(X|\theta)P(\theta)d\theta} \\ &amp;=\frac {\theta^6(1-\theta)^4 \frac {\theta^{\alpha-1}(1-\theta)^{\beta-1}} {B(\alpha,\beta)} } {\int_{\Theta}\theta^6(1-\theta)^4 \frac {\theta^{\alpha-1}(1-\theta)^{\beta-1}} {B(\alpha,\beta)}d\theta} \\&amp;=\frac {\theta^{\alpha+6-1}(1-\theta)^{\beta+4-1}} {\int_{\Theta}\theta^{\alpha+6-1}(1-\theta)^{\beta+4-1}d\theta} \\<br>&amp;=\frac {\theta^{\alpha+6-1}(1-\theta)^{\beta+4-1}} {B(\alpha+6-1,\beta+4-1)} \\<br>&amp;=Beta(\theta|\alpha+6-1,\beta+4-1) \\&amp;=Beta(\theta|\alpha+6,\beta+4)\end{aligned}$$从上面的公式可以看出，$P(\theta|X) \sim Beta(\theta|\alpha+6,\beta+4)$。其中$B$函数，也称$Beta$函数，是一个标准化常量，用来使整个概率的积分为1。$Beta(\theta|\alpha+6,\beta+4)$就是贝叶斯估计的结果。</p>
+<p>如果使用贝叶斯估计得到的$\theta$分布存在一个有限均值，则可以用后验分布的期望作为$\theta$的估计值。假设$\alpha=3,\beta=3$，在这种情况下，先验分布会在$0.5$处取得最大值，则$P(\theta|X) \sim Beta(\theta|9,7)$，$Beta(\theta|9,7)$的曲线如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-85c4b2ac27fbe731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Beta(9,7)"></p>
+<p>从上图可以看出，在$\alpha=3,\beta=3$的情况下，$\theta$的估计值$\hat{\theta}$应该在$0.6$附近。根据Beta分布的数学期望公式$E(\theta)=\frac {\alpha} {\alpha+\beta}$可得：$$\hat{\theta}=\int_{\Theta} \theta P(\theta|X)d\theta=E(\theta)=\frac {\alpha} {\alpha+\beta}=\frac {9} {9+7}=0.5625$$</p>
+<p><strong>注：</strong>二项分布参数的共轭先验是Beta分布，多项式分布参数的共轭先验是Dirichlet分布，指数分布参数的共轭先验是Gamma分布，⾼斯分布均值的共轭先验是另⼀个⾼斯分布，泊松分布的共轭先验是Gamma分布。</p>
+<p>贝叶斯估计要解决的不是如何估计参数，而是用来估计新测量数据出现的概率，对于新出现的数据$\tilde{x}$：</p>
+<p>$$P(\tilde{x}|X)=\int_{\Theta}P(\tilde{x}|\theta)P(\theta|X)d\theta=\int_{\Theta}P(\tilde{x}|\theta)\frac {P(X|\theta)P(\theta)} {P(X)}d\theta$$</p>
+<p>贝叶斯估计的求解步骤：</p>
+<ul>
+<li>确定参数的似然函数</li>
+<li>确定参数的先验分布，应是后验分布的共轭先验</li>
+<li>确定参数的后验分布函数</li>
+<li>根据贝叶斯公式求解参数的后验分布</li>
+</ul>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><p>从最大似然估计、最大后验概率估计到贝叶斯估计，从下表可以看出$\theta$的估计值$\hat{\theta}$是逐渐接近$0.5$的。从公式的变化可以看出，使用的信息是逐渐增多的。最大似然估计、最大后验概率估计中都是假设$\theta$未知，但是确定的值，都将使函数取得最大值的$\theta$作为估计值，区别在于最大化的函数不同，最大后验概率估计使用了$\theta$的先验概率。而在贝叶斯估计中，假设参数$\theta$是未知的随机变量，不是确定值，求解的是参数$\theta$在样本$X$上的后验分布。</p>
+<p><strong>注：</strong>最大后验概率估计和贝叶斯估计都采用Beta分布作为先验分布。</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>MLE</th>
+<th>MAP</th>
+<th>BE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\hat{\theta}$</td>
+<td>0.6</td>
+<td>0.57</td>
+<td>0.5625</td>
+</tr>
+<tr>
+<td>$f$</td>
+<td>$P(X&#124;\theta)$</td>
+<td>$P(X&#124;\theta)P(\theta)$</td>
+<td>$\frac {P(X&#124;\theta)P(\theta)} {P(X)}$</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>书籍：程序员的数学2——概率统计</li>
+<li><a href="https://www.zhihu.com/question/20269390" target="_blank" rel="external">概率论与统计学的关系是什么？</a></li>
+<li><a href="https://www.zhihu.com/question/20587681" target="_blank" rel="external">贝叶斯学派与频率学派有何不同？</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E7%8E%87%E8%AE%BA" target="_blank" rel="external">概率论</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%8E%A8%E8%AB%96%E7%B5%B1%E8%A8%88%E5%AD%B8" target="_blank" rel="external">推论统计学</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%8F%8F%E8%BF%B0%E7%BB%9F%E8%AE%A1%E5%AD%A6" target="_blank" rel="external">描述统计学</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%BB%9F%E8%AE%A1%E5%AD%A6" target="_blank" rel="external">统计学</a></li>
+<li><a href="https://blog.csdn.net/u011508640/article/details/72815981" target="_blank" rel="external">详解最大似然估计（MLE）、最大后验概率估计（MAP），以及贝叶斯公式的理解</a></li>
+<li><a href="https://www.zhihu.com/question/27462939" target="_blank" rel="external">如何理解条件概率？</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86" target="_blank" rel="external">贝叶斯定理</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html" target="_blank" rel="external">贝叶斯推断及其互联网应用（一）：定理简介</a></li>
+<li><a href="https://baike.baidu.com/item/%E5%85%A8%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F" target="_blank" rel="external">全概率公式</a></li>
+<li><a href="https://www.zhihu.com/question/19725590" target="_blank" rel="external">怎样用非数学语言讲解贝叶斯定理（Bayes’s theorem）？</a></li>
+<li><a href="http://yangfangs.github.io/2018/04/06/the-different-of-likelihood-and-probability/" target="_blank" rel="external">似然（likelihood）与概率（probability）的区别</a></li>
+<li><a href="https://www.zhihu.com/question/24124998" target="_blank" rel="external">如何通俗地理解概率论中的「极大似然估计法」?</a></li>
+<li><a href="https://www.matongxue.com/madocs/447.html" target="_blank" rel="external">如何通俗地理解“最大似然估计法”?</a></li>
+<li><a href="http://218.194.248.2/~wuxiaogang/cpcourse/other/static.pdf" target="_blank" rel="external">概率论与数理统计</a></li>
+<li><a href="https://www.ic.unicamp.br/~wainer/cursos/1s2013/ml/livro.pdf" target="_blank" rel="external">All of Statistics: A Concise Course in Statistical Inference</a></li>
+<li><a href="https://www.zhihu.com/question/19894595" target="_blank" rel="external">MLE，MAP，EM 和 point estimation 之间的关系是怎样的？</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E5%A4%A7%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87" target="_blank" rel="external">最大后验概率</a></li>
+<li><a href="https://www.jiqizhixin.com/articles/2018-01-09-6" target="_blank" rel="external">从最大似然估计开始，你需要打下的机器学习基石</a></li>
+<li><a href="https://www.zhihu.com/question/54082000" target="_blank" rel="external">如何理解似然函数?</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%85%B1%E8%BD%AD%E5%85%88%E9%AA%8C" target="_blank" rel="external">共轭先验</a></li>
+<li><a href="https://blog.csdn.net/lin360580306/article/details/51289543" target="_blank" rel="external">参数估计：最大似然估计（MLE），最大后验估计(MAP)，贝叶斯估计，经验贝叶斯(Empirical Bayes)与全贝叶斯(Full Bayes)</a></li>
+<li><a href="https://www.jiqizhixin.com/articles/041505" target="_blank" rel="external">什么是最大似然估计、最大后验估计以及贝叶斯参数估计</a></li>
+<li><a href="https://blog.csdn.net/baimafujinji/article/details/51374202" target="_blank" rel="external">先验概率、后验概率以及共轭先验</a></li>
+<li><a href="https://cosx.org/2013/01/lda-math-beta-dirichlet" target="_blank" rel="external">认识Beta/Dirichlet分布</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%CE%92%E5%88%86%E5%B8%83" target="_blank" rel="external">Β分布</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%CE%92%E5%87%BD%E6%95%B0" target="_blank" rel="external">Β函数</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Beta_distribution" target="_blank" rel="external">Beta distribution</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Beta_function" target="_blank" rel="external">Beta function</a></li>
+<li><a href="http://eurekastatistics.com/beta-distribution-pdf-grapher/" target="_blank" rel="external">Beta Distribution PDF Grapher</a></li>
+<li><a href="https://blog.csdn.net/yangliuy/article/details/8296481" target="_blank" rel="external">文本语言模型的参数估计-最大似然估计、MAP及贝叶斯估计</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%CE%93%E5%87%BD%E6%95%B0" target="_blank" rel="external">Γ函数</a></li>
+<li><a href="http://fooplot.com/" target="_blank" rel="external">使用的绘图工具</a></li>
+<li><a href="http://www.yunsuan.org/app/s2084" target="_blank" rel="external">求解一元三次方程的工具</a></li>
+<li><a href="https://www.zhihu.com/question/21134457" target="_blank" rel="external">你对贝叶斯统计都有怎样的理解？</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Bayesian_inference#Formal_description_of_Bayesian_inference" target="_blank" rel="external">Bayesian inference</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A9%9F%E7%8E%87%E5%AF%86%E5%BA%A6%E5%87%BD%E6%95%B8" target="_blank" rel="external">概率密度函数</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%B4%AF%E7%A7%AF%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0" target="_blank" rel="external">累积分布函数</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E4%BC%BC%E7%84%B6%E5%87%BD%E6%95%B0" target="_blank" rel="external">似然函数</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A6%82%E7%8E%87%E8%B4%A8%E9%87%8F%E5%87%BD%E6%95%B0" target="_blank" rel="external">概率质量函数</a></li>
+<li><a href="https://www.datascience.com/blog/introduction-to-bayesian-inference-learn-data-science-tutorials" target="_blank" rel="external">Introduction to Bayesian Inference</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      贝叶斯估计、最大似然估计、最大后验概率估计
+    
+    </summary>
+    
+      <category term="数学之美" scheme="http://noahsnail.com/categories/%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E/"/>
+    
+    
+      <category term="数学之美" scheme="http://noahsnail.com/tags/%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux的uptime命令</title>
@@ -1156,165 +1554,6 @@ Predicted labels:
     
     
       <category term="Python" scheme="http://noahsnail.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Docker搭建Anaconda Python3.6的练习环境</title>
-    <link href="http://noahsnail.com/2018/02/08/2018-02-08-%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAAnaconda%20Python3.6%E7%9A%84%E7%BB%83%E4%B9%A0%E7%8E%AF%E5%A2%83/"/>
-    <id>http://noahsnail.com/2018/02/08/2018-02-08-使用Docker搭建Anaconda Python3.6的练习环境/</id>
-    <published>2018-02-08T07:34:43.000Z</published>
-    <updated>2018-02-08T08:18:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>最近在看Python 3的相关内容，由于电脑里已经装了Anaconda 2.7，因此就在Docker里搭建了一个Anaconda Python3.6的练习环境。Dockerfile如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04</div><div class="line">MAINTAINER Tyan &lt;tyan.liu.git@gmail.com&gt;</div><div class="line"></div><div class="line"></div><div class="line"># Install basic dependencies</div><div class="line">RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</div><div class="line">        build-essential \</div><div class="line">        cmake \</div><div class="line">        git \</div><div class="line">        wget \</div><div class="line">        libopencv-dev \</div><div class="line">        libsnappy-dev \</div><div class="line">        python-dev \</div><div class="line">        python-pip \</div><div class="line">        tzdata \</div><div class="line">        vim</div><div class="line"></div><div class="line"></div><div class="line"># Install anaconda for python 3.6</div><div class="line">RUN wget --quiet https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh -O ~/anaconda.sh &amp;&amp; \</div><div class="line">    /bin/bash ~/anaconda.sh -b -p /opt/conda &amp;&amp; \</div><div class="line">    rm ~/anaconda.sh &amp;&amp; \</div><div class="line">    echo &quot;export PATH=/opt/conda/bin:$PATH&quot; &gt;&gt; ~/.bashrc</div><div class="line"></div><div class="line"></div><div class="line"># Set timezone</div><div class="line">RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</div><div class="line"></div><div class="line"></div><div class="line"># Set locale</div><div class="line">ENV LANG C.UTF-8 LC_ALL=C.UTF-8</div><div class="line"></div><div class="line"></div><div class="line"># Initialize workspace</div><div class="line">RUN mkdir /workspace</div><div class="line">WORKDIR /workspace</div></pre></td></tr></table></figure>
-<p>构建docker image命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker build -t python:3.6 .</div></pre></td></tr></table></figure>
-<p>运行docker image命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -ti --rm python:3.6</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      使用Docker搭建Anaconda Python3.6的练习环境
-    
-    </summary>
-    
-      <category term="Python" scheme="http://noahsnail.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://noahsnail.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nohup python缓存问题</title>
-    <link href="http://noahsnail.com/2018/02/07/2018-02-07-nohup%20python%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98/"/>
-    <id>http://noahsnail.com/2018/02/07/2018-02-07-nohup python缓存问题/</id>
-    <published>2018-02-07T09:08:12.000Z</published>
-    <updated>2018-02-08T07:28:07.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>深度学习用python跑数据时，经常会用到<code>nohup</code>命令，通常的命令格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup python [python source file] (&gt; [log file]) 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
-<p>如果没有指定输出文件，<code>nohup</code>会将输出放到<code>nohup.out</code>文件中，但在程序运行过程中<code>nohup.out</code>文件中不能实时的看到python的输出，原因是python的输出有缓冲。</p>
-<p>解决方案如下：</p>
-<ul>
-<li>方案一</li>
-</ul>
-<p>使用<code>-u</code>参数，使python输出不进行缓冲，命令格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup python -u [python source file] (&gt; [log file]) 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
-<ul>
-<li>方案二</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export PYTHONUNBUFFERED=1</div><div class="line">nohup python [python source file] (&gt; [log file]) 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://stackoverflow.com/questions/12919980/nohup-is-not-writing-log-to-output-file" target="_blank" rel="external">https://stackoverflow.com/questions/12919980/nohup-is-not-writing-log-to-output-file</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      nohup python缓存问题
-    
-    </summary>
-    
-      <category term="Python" scheme="http://noahsnail.com/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="http://noahsnail.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>动手学深度学习(一)——线性回归(gluon)</title>
-    <link href="http://noahsnail.com/2018/02/06/2018-02-06-%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0(%E4%B8%80)%E2%80%94%E2%80%94%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92(gluon)/"/>
-    <id>http://noahsnail.com/2018/02/06/2018-02-06-动手学深度学习(一)——线性回归(gluon)/</id>
-    <published>2018-02-06T10:59:38.000Z</published>
-    <updated>2018-02-09T06:31:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><strong>注：本文为李沐大神的《动手学深度学习》的课程笔记！</strong></p>
-<h2 id="创建数据集"><a href="#创建数据集" class="headerlink" title="创建数据集"></a>创建数据集</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入mxnet</span></div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</div><div class="line"></div><div class="line"><span class="comment"># 导入mxnet的gluon, ndarray, autograd</span></div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> gluon</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> autograd</div><div class="line"><span class="keyword">from</span> mxnet <span class="keyword">import</span> ndarray <span class="keyword">as</span> nd</div><div class="line"></div><div class="line"><span class="comment"># 设置随机种子</span></div><div class="line">mx.random.seed(<span class="number">1</span>)</div><div class="line">random.seed(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 训练数据的维度</span></div><div class="line">num_inputs = <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment"># 训练数据的样本数量</span></div><div class="line">num_examples = <span class="number">1000</span></div><div class="line"></div><div class="line"><span class="comment"># 实际的权重w</span></div><div class="line">true_w = [<span class="number">2</span>, <span class="number">-3.4</span>]</div><div class="line"></div><div class="line"><span class="comment"># 实际的偏置b</span></div><div class="line">true_b = <span class="number">4.2</span></div><div class="line"></div><div class="line"><span class="comment"># 随机生成均值为0, 方差为1, 服从正态分布的训练数据X, </span></div><div class="line">X = nd.random_normal(shape=(num_examples, num_inputs))</div><div class="line"></div><div class="line"><span class="comment"># 根据X, w, b生成对应的输出y</span></div><div class="line">y = true_w[<span class="number">0</span>] * X[:, <span class="number">0</span>] + true_w[<span class="number">1</span>] * X[:, <span class="number">1</span>] + true_b </div><div class="line"></div><div class="line"><span class="comment"># 给y加上随机噪声</span></div><div class="line">y += <span class="number">0.01</span> * nd.random_normal(shape=y.shape)</div></pre></td></tr></table></figure>
-<h2 id="数据展示"><a href="#数据展示" class="headerlink" title="数据展示"></a>数据展示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># 绘制数据的散点图 </span></div><div class="line">plt.scatter(X[:, <span class="number">1</span>].asnumpy(), y.asnumpy())</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-1ddbc52187302d98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="数据展示"></p>
-<h2 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a>数据读取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 训练时的批数据大小</span></div><div class="line">batch_size = <span class="number">10</span></div><div class="line"></div><div class="line"><span class="comment"># 创建数据集</span></div><div class="line">dataset = gluon.data.ArrayDataset(X, y)</div><div class="line"></div><div class="line"><span class="comment"># 读取数据</span></div><div class="line">data_iter = gluon.data.DataLoader(dataset, batch_size, shuffle=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 查看数据</span></div><div class="line"><span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter:</div><div class="line">    <span class="keyword">print</span> data, label</div><div class="line">    <span class="keyword">break</span></div></pre></td></tr></table></figure>
-<pre><code>[[-2.11255503  0.61242002]
- [ 2.18546367 -0.48856559]
- [ 0.91085583  0.38985687]
- [-0.56097323  1.44421673]
- [ 0.31765923 -1.75729597]
- [-0.57738042  2.03963804]
- [-0.91808975  0.64181799]
- [-0.20269176  0.21012937]
- [-0.22549874  0.19895147]
- [ 1.42844415  0.06982213]]
-&lt;NDArray 10x2 @cpu(0)&gt; 
-[ -2.11691356  10.22533131   4.70613146  -1.82755637  10.82125568
-  -3.88111711   0.17608714   3.07074499   3.06542921   6.82972908]
-&lt;NDArray 10 @cpu(0)&gt;
-</code></pre><h2 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义一个空的模型</span></div><div class="line">net = gluon.nn.Sequential()</div><div class="line"></div><div class="line"><span class="comment"># 加入一个Dense层</span></div><div class="line">net.add(gluon.nn.Dense(<span class="number">1</span>))</div></pre></td></tr></table></figure>
-<h2 id="初始化模型参数"><a href="#初始化模型参数" class="headerlink" title="初始化模型参数"></a>初始化模型参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net.initialize()</div></pre></td></tr></table></figure>
-<h2 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">square_loss = gluon.loss.L2Loss()</div></pre></td></tr></table></figure>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">trainer = gluon.Trainer(net.collect_params(), <span class="string">'sgd'</span>, &#123;<span class="string">'learning_rate'</span>: <span class="number">0.01</span>&#125;)</div></pre></td></tr></table></figure>
-<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 定义训练的迭代周期</span></div><div class="line">epochs = <span class="number">5</span></div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> xrange(epochs):</div><div class="line">    <span class="comment"># 总的loss</span></div><div class="line">    total_loss = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> data, label <span class="keyword">in</span> data_iter:</div><div class="line">        <span class="comment"># 记录梯度</span></div><div class="line">        <span class="keyword">with</span> autograd.record():</div><div class="line">            <span class="comment"># 计算预测值</span></div><div class="line">            output = net(data)</div><div class="line">            <span class="comment"># 计算loss</span></div><div class="line">            loss = square_loss(output, label)</div><div class="line">        <span class="comment"># 根据loss进行反向传播计算梯度</span></div><div class="line">        loss.backward()</div><div class="line">        <span class="comment"># 更新权重, batch_size用来进行梯度平均</span></div><div class="line">        trainer.step(batch_size)</div><div class="line">        <span class="comment"># 计算总的loss</span></div><div class="line">        total_loss += nd.sum(loss).asscalar()</div><div class="line">        </div><div class="line">    <span class="keyword">print</span> <span class="string">"Epoch %d, average loss: %f"</span> % (epoch, total_loss/num_examples)</div></pre></td></tr></table></figure>
-<pre><code>Epoch 0, average loss: 7.403182
-Epoch 1, average loss: 0.854247
-Epoch 2, average loss: 0.099864
-Epoch 3, average loss: 0.011887
-Epoch 4, average loss: 0.001479
-</code></pre><h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h2><p><a href="https://github.com/SnailTyan/gluon-practice-code" target="_blank" rel="external">https://github.com/SnailTyan/gluon-practice-code</a></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><p>ArrayDataset<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/data.html#mxnet.gluon.data.ArrayDataset" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/data.html#mxnet.gluon.data.ArrayDataset</a>  </p>
-</li>
-<li><p>DataLoader<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/data.html?highlight=dataload#mxnet.gluon.data.DataLoader" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/data.html?highlight=dataload#mxnet.gluon.data.DataLoader</a>  </p>
-</li>
-<li><p>Sequential<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=gluon.nn.sequential#mxnet.gluon.nn.Sequential" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=gluon.nn.sequential#mxnet.gluon.nn.Sequential</a>  </p>
-</li>
-<li><p>L2Loss<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/loss.html?highlight=l2loss#mxnet.gluon.loss.L2Loss" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/loss.html?highlight=l2loss#mxnet.gluon.loss.L2Loss</a>  </p>
-</li>
-<li><p>Trainer<br><a href="https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=trainer#mxnet.gluon.Trainer" target="_blank" rel="external">https://mxnet.incubator.apache.org/api/python/gluon/gluon.html?highlight=trainer#mxnet.gluon.Trainer</a>  </p>
-</li>
-</ul>
-<h2 id="代码地址-1"><a href="#代码地址-1" class="headerlink" title="代码地址"></a>代码地址</h2><p><a href="https://github.com/SnailTyan/gluon-practice-code" target="_blank" rel="external">https://github.com/SnailTyan/gluon-practice-code</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      动手学深度学习(一)——线性回归(gluon)
-    
-    </summary>
-    
-      <category term="深度学习" scheme="http://noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://noahsnail.com/tags/Deep-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Caffe Model Zoo</title>
-    <link href="http://noahsnail.com/2018/02/02/2018-02-02-Caffe%20Model%20Zoo/"/>
-    <id>http://noahsnail.com/2018/02/02/2018-02-02-Caffe Model Zoo/</id>
-    <published>2018-02-02T10:59:55.000Z</published>
-    <updated>2018-02-02T10:59:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p>Caffe有许多分类的预训练模型及网络结构，我自己训练过的模型总结在Github上，基本上涵盖了大部分的分类模型，包括AlexNet，VGG，GoogLeNet，Inception系列，ResNet，SENet，DenseNet，SqueezeNet。</p>
-<p>其中会碰到不少坑，例如VGG给的结构已经太旧了，需要根据新版本Caffe的进行修改，DenseNet训练有些地方需要修改等。鉴于以上原因，我自己整理了一个Caffe Model Zoo，都是已经使用Caffe训练过模型的。</p>
-<p>Github地址：<a href="https://github.com/SnailTyan/caffe-model-zoo" target="_blank" rel="external">https://github.com/SnailTyan/caffe-model-zoo</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      Caffe Model Zoo
-    
-    </summary>
-    
-      <category term="深度学习" scheme="http://noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://noahsnail.com/tags/Deep-Learning/"/>
     
   </entry>
   
