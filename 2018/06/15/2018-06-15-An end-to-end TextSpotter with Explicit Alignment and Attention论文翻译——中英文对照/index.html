@@ -1,0 +1,834 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照">
+<meta property="og:url" content="http://noahsnail.com/2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照">
+<meta property="og:updated_time" content="2018-06-18T07:20:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照">
+<meta name="twitter:description" content="An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/"/>
+
+
+
+
+
+  <title>An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h1 id="An-end-to-end-TextSpotter-with-Explicit-Alignment-and-Attention"><a href="#An-end-to-end-TextSpotter-with-Explicit-Alignment-and-Attention" class="headerlink" title="An end-to-end TextSpotter with Explicit Alignment and Attention"></a>An end-to-end TextSpotter with Explicit Alignment and Attention</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Text detection and recognition in natural images have long been considered as two separate tasks that are processed sequentially. Training of two tasks in a unified framework is non-trivial due to significant differences in optimisation difficulties. In this work, we present a conceptually simple yet efficient framework that simultaneously processes the two tasks in one shot. Our main contributions are three-fold: 1) we propose a novel text-alignment layer that allows it to precisely compute convolutional features of a text instance in arbitrary orientation, which is the key to boost the performance; 2) a character attention mechanism is introduced by using character spatial information as explicit supervision, leading to large improvements in recognition; 3) two technologies, together with a new RNN branch for word recognition, are integrated seamlessly into a single model which is end-to-end trainable. This allows the two tasks to work collaboratively by sharing convolutional features, which is critical to identify challenging text instances. Our model achieves impressive results in end-to-end recognition on the ICDAR2015 [1] dataset, significantly advancing most recent results [2], with improvements of F-measure from (0.54, 0.51, 0.47) to (0.82, 0.77, 0.63), by using a strong, weak and generic lexicon respectively. Thanks to joint training, our method can also serve as a good detector by achieving a new state-of-the-art detection performance on two datasets.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>长期以来，自然图像中的文本检测和识别被视为按顺序处理的两个独立任务。由于优化难度存在显着差异，在统一框架下培训两项任务并不重要。在这项工作中，我们提出了一个概念简单而高效的框架，可以同时处理两个任务。我们的主要贡献有三个：1）我们提出了一种新颖的文本对齐层，允许它精确地计算任意方向的文本实例的卷积特征，这是提高性能的关键；2）将字符空间信息作为显式监督引入角色注意机制，导致识别率大幅提高; 3）两种技术，连同一个新的RNN分支用于单词识别，可以无缝集成到一个端到端可训练的单一模型中。这允许两个任务通过共享卷积特征来协作工作，这对识别具有挑战性的文本实例是至关重要的。我们的模型在ICDAR2015 [1]数据集端到端识别方面取得了令人印象深刻的结果，显着推进了最新的研究成果[2]，F-度量从（0.54,0.51,0.47）提高到（0.82,0.77,0.63 ），分别使用强，弱和通用的词典。得益于联合训练，我们的方法还可以作为一个很好的检测器，通过在两个数据集上实现新的最先进的检测性能。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>The goal of text spotting is to map an input natural image into a set of character sequences or word transcripts and corresponding location. It has attracted increasing attention in the vision community, due to its numerous potential applications. It has made rapid progress riding on the wave of recent deep learning technologies, as substantiated by recent works [3, 4, 2, 5, 6, 7, 8, 9, 10, 11]. However, text spotting in the wild still remains an open problem, since text instances often exhibit vast diversity in font, scale and orientation with various illumination affects, which often come with a highly complicated background.</p>
+<p>Past works in text spotting often consider it as two individual tasks: text detection and word recognition, which are implemented sequentially. The goal of text detection is to precisely localize all text instances (e.g., words) in a natural image, and then a recognition model is processed repeatedly through all detected regions for recognizing corresponding text transcripts. Recent approaches for text detection are mainly extended from general object detectors (such as Faster R-CNN [12] and SSD [13]) by directly regressing a bounding box for each text instance, or from semantic segmentation methods (e.g., Fully Convolutional Networks (FCN) [14]) by predicting a text/non-text probability at each pixel. With careful model design and development, these approaches can be customized properly towards this highly domain-specific task, and achieve the state-of-the-art performance [4, 6, 7, 8, 9, 15]. The word recognition can be cast into a sequence labeling problem where convolutional recurrent models have been developed recently [9, 16]. Some of them were further incorporated with an attention mechanism for improving the performance [17, 18]. However, training two tasks separately does not exploit the full potential of convolutional networks, where the convolutional features are not shared. It is natural for us to make a more reliable decision if we clearly understand or recognize the meaning of a word and all characters within it. Besides, it is also possible to introduce a number of heuristic rules and hyper-parameters that are costly to tune, making the whole system highly complicated.</p>
+<p>Recent Mask R-CNN [19] incorporates an instance segmentation task into the Faster R-CNN [12] detection framework, resulting in a multi-task learning model that jointly predicts a bounding box and a segmentation mask for each object instance. Our work draws inspiration from this pipeline, but has a different goal of learning a direct mapping between an input image and a set of character sequences. We create a recurrent sequence modeling branch for word recognition within a text detection framework, where the RNN based word recognition is processed in parallel to the detection task.</p>
+<p>However, the RNN branch, where the gradients are back-propagated through time, is clearly much more difficult to optimize than the task of bounding box regression in detection. This naturally leads to significant differences in learning difficulties and convergence rates between two tasks, making the model particularly hard to be trained jointly. For example, the magnitude of images for training a text detection model is about 103 (e.g., 1000 training images in the ICDAR 2015 [1]) , but the number is increased significantly by many orders of magnitude when a RNN based text recognition model is trained, such as the 800K synthetic images used in [20]. Furthermore, simply using a set of character sequences as direct supervision may be too abstractive (high-level) to provide meaningful detailed information for training such an integrated model effectively, which will make the model difficult to convergence. In this work, we introduce strong spatial constraints in both word and character levels, which allows the model to be optimized gradually by reducing the search space at each step.</p>
+<p>Contributions In this work, we present a single-shot textspotter capable of learning a direct mapping between an input image and a set of character sequences or word transcripts. We propose a solution that combines a text-alignment layer tailed for multi-orientation text detection, together with a character attention mechanism that explicitly encodes strong spatial information of characters into the RNN branch, as shown in Fig. 1. These two technologies faithfully preserve the exact spatial information in both text instance and character levels, playing a key role in boosting the overall performance. We develop a principled learning strategy that allows the two tasks to be trained collaboratively by sharing convolutional features. Our main contributions are described as follows.</p>
+<p>Firstly, we develop a text-alignment layer by introducing a grid sampling scheme instead of conventional RoI pooling. It computes fixed-length convolutional features that precisely align to a detected text region of arbitrary orientation, successfully avoiding the negative effects caused by orientation changing and quantization factor of the RoI pooling.</p>
+<p>Secondly, we introduce a character attention mechanism by using character spatial information as an addition supervision. This explicitly encodes strong spatial attentions of characters into the model, which allows the RNN to focus on current attentional features in decoding, leading to performance boost in word recognition.</p>
+<p>Thirdly, both approaches, together with a new RNN branch for word recognition, are integrated elegantly into a CNN detection framework, resulting in a single model that can be trained in an end-to-end manner. We develop a principled and intuitive learning strategy that allows the two tasks to be trained effectively by sharing features, with fast convergence.</p>
+<p>Finally, we show by experiments that word recognition can significantly improve detection accuracy in our model, demonstrating strong complementary nature of them, which is unique to this highly domain-specific application. Our model achieves new state-of-the-art results on the ICDAR2015 in end-to-end recognition of multi-orientation texts, largely outperforming the most recent results in [2], with improvements of F-measure from (0.54, 0.51, 0.47) to (0.82, 0.77, 0.63) in terms of using a strong, weak and generic lexicon. Code is avail- able at <a href="https://github.com/tonghe90/textspotter" target="_blank" rel="external">https://github.com/tonghe90/textspotter</a></p>
+<p><strong>Related work</strong> Here we briefly introduce some related works on text detection, recognition and end-to-end wordspotting.</p>
+<p><em>Scene text detection</em> Recently, some methods cast previous character based detection [21, 22, 23, 24] into direct text region estimation [25, 8, 15, 26, 4, 27, 28], avoiding multiple bottom-up post-processing steps by taking word or text-line as a whole. Tian et al. [7] modified Faster-RCNN [12] by applying a recurrent structure on the convolution feature maps of the top layer horizontally. The methods in [4, 25] were inspired from [13]. They both explored the framework from generic objects and convert to scene text detection by adjusting the feature extraction process to this domain-specific task. However, these methods are based on prior boxes, which need to be carefully designed in order to fulfill the requirements for training. Methods of direct regression for inclined bounding boxes, instead of offsets to fixed prior boxes, have been proposed recently. EAST [8] designed a fully convolutional network structure which outputs a pixel-wise prediction map for text/non-text and five values for every point of text region, i.e., distances from the current point to the four edges with an inclined angle. He et al. [6] proposed a method to generate arbitrary quadrilaterals by calculating offsets between every point of text region and vertex coordinates.</p>
+<p>Scene text recognition With the success of recurrent neural networks on digit recognition and speech translation, a lot of works have been proposed for text recognition. He et al. [16] and Shi et al. [9, 29] treat text recognition as a sequence labeling problem by introducing LSTM [30] and connectionist temporal classification (CTC) [31] into a unified framework. [17] proposed an attention-based LSTM for text recognition, which mainly contains two parts: encoder and decoder. In the encoding stage, text images are transformed into a sequence of feature vectors by CNN/LSTM. Attention weights, indicating relative importance for recognition, will be learned during the decoding stage. However, these weights are totally learned by the distribution of data and no supervision is provided to guide the learning process.</p>
+<p><em>End-to-end wordspotting</em> End-to-end wordspotting is an emerging research area. Previous methods usually try to solve it by splitting the whole process into two independent problems: training two cascade models, one for detection and one for recognition. Detected text regions are firstly cropped from original image, followed by affine transforming and rescaling. Corrected images are repeatedly precessed by recognition model to get corresponding transcripts. However, training errors will be accumulated due to cascading models without sharable features. Li et al. [5] proposed a unified network that simultaneously localizes and recognizes text in one forward pass by sharing convolution features under a curriculum strategy. But the existing RoI pooling operation limits it to detect and recognize only horizontal examples. Busta et al. [2] brought up deep text spotter, which can solve wordspotting of multi-orientation problem. However, the method does not have sharable feature, meaning that the recognition loss of the later stage has no influence on the former localization results.</p>
+<h2 id="2-Single-Shot-TextSpotter-by-Joint-Detection-and-Recognition"><a href="#2-Single-Shot-TextSpotter-by-Joint-Detection-and-Recognition" class="headerlink" title="2. Single Shot TextSpotter by Joint Detection and Recognition"></a>2. Single Shot TextSpotter by Joint Detection and Recognition</h2><p>In this section, we present the details of the proposed textspotter which learns a direct mapping between an input image and a set of word transcripts with corresponding bounding boxes of arbitrary orientations. Our model is a fully convolutional architecture built on the PVAnet framework [32]. As shown in Fig. 2, we introduce a new recurrent branch for word recognition, which is integrated into our CNN model in parallel with the existing detection branch for text bounding box regression. The RNN branch is composed of a new text-alignment layer and a LSTM-based recurrent module with a novel character attention embedding mechanism. The text-alignment layer extracts precise sequence feature within the detected region, preventing encoding irrelevant texts or background information. The character attention embedding mechanism regulates the decoding process by providing more detailed supervisions of characters. Our textspotter directly outputs final results in one shot, without any post-processing step except for a simple non-maximum suppression (NMS).</p>
+<p>Network architecture Our model is a fully convolutional architecture inspired by [8], where a PVA network [32] is utilized as backbone due to its significantly low computational cost. Unlike generic objects, texts often have a much larger variations in both sizes and aspect ratios. Thus it not only needs to preserve local details for small-scale text instances, but also should maintain a large receptive field for very long instances. Inspired by the success in semantic segmentation [33], we exploit feature fusion by combining convolutional features of conv5, conv4, conv3 and conv2 layers gradually, with the goal of maintaining both local detailed features and high-level context information. This results in more reliable predictions on multi-scale text instances. Size of the top layer is $\frac {1} {4}$ of the input image for simplicity.</p>
+<p><strong>Text detection</strong> This branch is similar to that of [8], where a multi-task prediction is implemented at each spatial location on the top convolutional maps, by adopting an Intersection over Union (IoU) loss described in [34]. It contains two sub-branches on the top convolutional layer designed for joint text/non-text classification and multi-orientation bounding boxes regression. The first sub-branch returns a classification map with an equal spatial size of the top feature maps, indicating the predicted text/non-text probabilities using a softmax function. The second sub-branch outputs five localization maps with the same spatial size, which estimate five parameters for each bounding box with arbitrary orientation at each spatial location of text regions. The five parameters represent the distances of the current point to the top, bottom, left and right sides of an associated bounding box, together with its inclined orientation. With these configurations, the detection branch is able to predict a quadrilateral of arbitrary orientation for each text instance. The feature of the detected quadrilateral region is then feed into the RNN branch for word recognition via a <em>text-alignment</em> layer which is described below.</p>
+<h3 id="2-1-Text-Alignment-Layer"><a href="#2-1-Text-Alignment-Layer" class="headerlink" title="2.1. Text-Alignment Layer"></a>2.1. Text-Alignment Layer</h3><p>We create a new recurrent branch for word recognition, where a text-alignment layer is proposed to pre- cisely compute fixed-size convolutional features from a quadrilateral region of arbitrary size. The text-alignment layer is extended from RoI pooling [35] which is widely used for general objects detection. The RoI pooling computes a fixed-size convolutional features (e.g., 7 × 7) from a rectangle region of arbitrary size, by performing quantization operation. It can be integrated into the convolutional layers for in-network region cropping, which is a key component for end-to-end training a detection framework. However, directly applying the RoI pooling to a text region will lead to a significant performance drop in word recognition due to the issue of misalignment.</p>
+<p>– First, unlike object detection and classification where the RoI pooling computes global features of a RoI region for discriminating an object, word recognition requires more detailed and accurate local features and spatial information for predicting each character sequentially. As pointed out in [19], the RoI pooling performs quantizations which inevitably introduce misalignments between the original RoI region and the extracted features. Such misalignments have a significant negative effect on predicting characters, particularly on some small-scale ones such as ‘i’, ‘l’.</p>
+<ul>
+<li>Second, RoI pooling was designed for a rectangle region which is only capable of localizing horizontal instances. It will make larger misalignments when applied to multi-orientation text instances. Furthermore, a large amount of background information and irrelevant texts are easily encoded when a rectangle RoI region is applied to a highly inclined text instance, as shown in Fig. 3. This severely reduces the performance on RNN decoding process for recognizing sequential characters.</li>
+</ul>
+<p>Recent Mask R-CNN considers explicit per-pixel spatial correspondence by introducing RoIAlign pooling [19]. This inspires current work that develops a new text-alignment layer tailored for text instance which is a quadrilateral shape with arbitrary orientation. It provides strong word-level alignment with accurate per-pixel correspondence, which is of critical importance to extract exact text information from the convolutional maps, as shown in Fig. 3.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中文版/" rel="next" title="An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中文版">
+                <i class="fa fa-chevron-left"></i> An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中文版
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">369</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#An-end-to-end-TextSpotter-with-Explicit-Alignment-and-Attention"><span class="nav-number">1.</span> <span class="nav-text">An end-to-end TextSpotter with Explicit Alignment and Attention</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.3.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Single-Shot-TextSpotter-by-Joint-Detection-and-Recognition"><span class="nav-number">1.4.</span> <span class="nav-text">2. Single Shot TextSpotter by Joint Detection and Recognition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Text-Alignment-Layer"><span class="nav-number">1.4.1.</span> <span class="nav-text">2.1. Text-Alignment Layer</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/';
+        this.page.identifier = '2018/06/15/2018-06-15-An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照/';
+        this.page.title = 'An end-to-end TextSpotter with Explicit Alignment and Attention论文翻译——中英文对照';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
