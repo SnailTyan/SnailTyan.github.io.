@@ -99,10 +99,12 @@
 <meta property="og:url" content="http://noahsnail.com/2018/07/10/2018-07-10-Leetcode55——Jump Game/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Leetcode55——Jump Game">
-<meta property="og:updated_time" content="2018-07-10T10:22:06.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-d77ed2dd11c517c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-13T06:15:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode55——Jump Game">
 <meta name="twitter:description" content="Leetcode55——Jump Game">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-d77ed2dd11c517c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -359,6 +361,18 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-d77ed2dd11c517c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Jump Game"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>递归遍历所有的可能</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canJump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> jump(nums, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">jump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> start)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(start + nums[start] &gt;= nums.size() - <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= nums[start]; i++) &#123;</div><div class="line">            <span class="keyword">if</span>(nums[start + i] != <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">if</span>(jump(nums, start + i)) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    nums[start + i] = <span class="number">0</span>;   </div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        nums[start] = <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>贪心算法</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canJump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> current = nums.size() - <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = current - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] + i &gt;= current) &#123;</div><div class="line">                current = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(current == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/jump-game/description/" target="_blank" rel="external">https://leetcode.com/problems/jump-game/description/</a></li>
+</ol>
 
       
     </div>
@@ -432,6 +446,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/07/11/2018-07-11-Leetcode54——Spiral Matrix/" rel="prev" title="Leetcode54——Spiral Matrix">
+                Leetcode54——Spiral Matrix <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -487,8 +505,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -503,7 +530,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">376</span>
+                <span class="site-state-item-count">384</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -550,6 +577,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Description"><span class="nav-number">1.</span> <span class="nav-text">1. Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Solution"><span class="nav-number">2.</span> <span class="nav-text">2. Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
