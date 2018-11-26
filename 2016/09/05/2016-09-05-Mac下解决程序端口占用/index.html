@@ -1,0 +1,892 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Mac,Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="使用Mac开发经常会碰到端口被占用的问题，例如作者在使用Spring Boot开发应用时，在启动Application后，忘了关闭，又重启了一次Application，此时会报错误，而且由于重启Application，导致上一次的启动的Application找不到在哪关闭了，此时需要进入终端去查看8080端口对应的进程id，并根据id关闭对应的应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac下程序端口的查找及关闭">
+<meta property="og:url" content="http://noahsnail.com/2016/09/05/2016-09-05-Mac下解决程序端口占用/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="使用Mac开发经常会碰到端口被占用的问题，例如作者在使用Spring Boot开发应用时，在启动Application后，忘了关闭，又重启了一次Application，此时会报错误，而且由于重启Application，导致上一次的启动的Application找不到在哪关闭了，此时需要进入终端去查看8080端口对应的进程id，并根据id关闭对应的应用。">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/2016-09-05-3.png">
+<meta property="og:updated_time" content="2016-09-07T09:11:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac下程序端口的查找及关闭">
+<meta name="twitter:description" content="使用Mac开发经常会碰到端口被占用的问题，例如作者在使用Spring Boot开发应用时，在启动Application后，忘了关闭，又重启了一次Application，此时会报错误，而且由于重启Application，导致上一次的启动的Application找不到在哪关闭了，此时需要进入终端去查看8080端口对应的进程id，并根据id关闭对应的应用。">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/2016-09-05-3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/09/05/2016-09-05-Mac下解决程序端口占用/"/>
+
+
+
+
+
+  <title>Mac下程序端口的查找及关闭 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/09/05/2016-09-05-Mac下解决程序端口占用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mac下程序端口的查找及关闭</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/05/2016-09-05-Mac下解决程序端口占用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/09/05/2016-09-05-Mac下解决程序端口占用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  使用Mac开发经常会碰到端口被占用的问题，例如作者在使用Spring Boot开发应用时，在启动Application后，忘了关闭，又重启了一次Application，此时会报错误，而且由于重启Application，导致上一次的启动的Application找不到在哪关闭了，此时需要进入终端去查看8080端口对应的进程id，并根据id关闭对应的应用。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;使用Mac开发经常会碰到端口被占用的问题，例如作者在使用Spring Boot开发应用时，在启动Application后，忘了关闭，又重启了一次Application，此时会报错误，而且由于重启Application，导致上一次的启动的Application找不到在哪关闭了，此时需要进入终端去查看8080端口对应的进程id，并根据id关闭对应的应用。<br>错误信息如下图所示：  </p>
+<pre><code class="java"><span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.734</span> ERROR <span class="number">1681</span> --- [  restartedMain] o.a.coyote.http11.Http11NioProtocol      : Failed to start end point associated with ProtocolHandler [<span class="string">"http-nio-8080"</span>]
+
+java.net.BindException: Address already in use
+at sun.nio.ch.Net.bind0(Native Method) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.Net.bind(Net.java:<span class="number">433</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.Net.bind(Net.java:<span class="number">425</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:<span class="number">223</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:<span class="number">74</span>) ~[na:<span class="number">1.8</span>.0_91]
+at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:<span class="number">340</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:<span class="number">773</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:<span class="number">473</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.catalina.connector.Connector.startInternal(Connector.java:<span class="number">986</span>) [tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:<span class="number">147</span>) [tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.catalina.core.StandardService.addConnector(StandardService.java:<span class="number">239</span>) [tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.addPreviouslyRemovedConnectors(TomcatEmbeddedServletContainer.java:<span class="number">194</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:<span class="number">151</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:<span class="number">293</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:<span class="number">141</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:<span class="number">541</span>) [spring-context-<span class="number">4.2</span>.6.RELEASE.jar:<span class="number">4.2</span>.6.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:<span class="number">118</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:<span class="number">766</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.createAndRefreshContext(SpringApplication.java:<span class="number">361</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">307</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">1191</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">1180</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:<span class="number">1.8</span>.0_91]
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>) ~[na:<span class="number">1.8</span>.0_91]
+at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>) ~[na:<span class="number">1.8</span>.0_91]
+at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:<span class="number">49</span>) [spring-boot-devtools-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+
+<span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.735</span> ERROR <span class="number">1681</span> --- [  restartedMain] o.apache.catalina.core.StandardService   : Failed to start connector [Connector[HTTP/<span class="number">1.1</span>-<span class="number">8080</span>]]
+
+org.apache.catalina.LifecycleException: Failed to start component [Connector[HTTP/<span class="number">1.1</span>-<span class="number">8080</span>]]
+at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:<span class="number">153</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.catalina.core.StandardService.addConnector(StandardService.java:<span class="number">239</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.addPreviouslyRemovedConnectors(TomcatEmbeddedServletContainer.java:<span class="number">194</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:<span class="number">151</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:<span class="number">293</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:<span class="number">141</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:<span class="number">541</span>) [spring-context-<span class="number">4.2</span>.6.RELEASE.jar:<span class="number">4.2</span>.6.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:<span class="number">118</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:<span class="number">766</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.createAndRefreshContext(SpringApplication.java:<span class="number">361</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">307</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">1191</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">1180</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:<span class="number">1.8</span>.0_91]
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>) ~[na:<span class="number">1.8</span>.0_91]
+at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>) ~[na:<span class="number">1.8</span>.0_91]
+at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:<span class="number">49</span>) [spring-boot-devtools-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+Caused by: org.apache.catalina.LifecycleException: service.getName(): <span class="string">"Tomcat"</span>;  Protocol handler start failed
+at org.apache.catalina.connector.Connector.startInternal(Connector.java:<span class="number">993</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:<span class="number">147</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+... <span class="number">18</span> common frames omitted
+Caused by: java.net.BindException: Address already in use
+at sun.nio.ch.Net.bind0(Native Method) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.Net.bind(Net.java:<span class="number">433</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.Net.bind(Net.java:<span class="number">425</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:<span class="number">223</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:<span class="number">74</span>) ~[na:<span class="number">1.8</span>.0_91]
+at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:<span class="number">340</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:<span class="number">773</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:<span class="number">473</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+at org.apache.catalina.connector.Connector.startInternal(Connector.java:<span class="number">986</span>) ~[tomcat-embed-core-<span class="number">8.0</span>.33.jar:<span class="number">8.0</span>.33]
+... <span class="number">19</span> common frames omitted
+
+<span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.743</span>  INFO <span class="number">1681</span> --- [  restartedMain] o.apache.catalina.core.StandardService   : Stopping service Tomcat
+<span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.745</span>  INFO <span class="number">1681</span> --- [ost-startStop-<span class="number">1</span>] com.nhncorp.iims2.filter.IIMS2Filter     : [IIMS2Filter] destroy()
+<span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.745</span>  INFO <span class="number">1681</span> --- [ost-startStop-<span class="number">1</span>] c.n.iims2.filter.IIMS2InitialFilter      : [IIMS2InitialFilter] destroy()
+<span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.764</span>  WARN <span class="number">1681</span> --- [ost-startStop-<span class="number">1</span>] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [Abandoned connection cleanup thread] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.lang.Object.wait(Native Method)
+ java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:<span class="number">143</span>)
+ com.mysql.jdbc.AbandonedConnectionCleanupThread.run(AbandonedConnectionCleanupThread.java:<span class="number">43</span>)
+<span class="number">2016</span>-<span class="number">09</span>-<span class="number">05</span> <span class="number">09</span>:<span class="number">06</span>:<span class="number">26.770</span> ERROR <span class="number">1681</span> --- [  restartedMain] o.s.boot.SpringApplication               : Application startup failed
+
+org.springframework.boot.context.embedded.EmbeddedServletContainerException: Unable to start embedded Tomcat servlet container
+at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:<span class="number">165</span>) ~[spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:<span class="number">293</span>) ~[spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:<span class="number">141</span>) ~[spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:<span class="number">541</span>) ~[spring-context-<span class="number">4.2</span>.6.RELEASE.jar:<span class="number">4.2</span>.6.RELEASE]
+at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:<span class="number">118</span>) ~[spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:<span class="number">766</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.createAndRefreshContext(SpringApplication.java:<span class="number">361</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">307</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">1191</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at org.springframework.boot.SpringApplication.run(SpringApplication.java:<span class="number">1180</span>) [spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:<span class="number">1.8</span>.0_91]
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>) ~[na:<span class="number">1.8</span>.0_91]
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>) ~[na:<span class="number">1.8</span>.0_91]
+at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>) ~[na:<span class="number">1.8</span>.0_91]
+at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:<span class="number">49</span>) [spring-boot-devtools-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+Caused by: java.lang.IllegalStateException: Tomcat connector in failed state
+at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:<span class="number">159</span>) ~[spring-boot-<span class="number">1.3</span>.5.RELEASE.jar:<span class="number">1.3</span>.5.RELEASE]
+... <span class="number">15</span> common frames omitted
+</code></pre>
+<p>上面的一堆异常信息只说明了一件事，8080端口被占用了，应用无法启动。因此需要在终端下查找使用8080端口的进程并将之关闭。<br>查找端口对应的进程信息的命令有多个，目前我觉的最好用的是lsof命令，查找进程并关闭如下图所示：  </p>
+<p><img src="http://ocs628urt.bkt.clouddn.com/2016-09-05-3.png" alt="image"></p>
+<p>解释：lsof全称list open files，在linux/Mac环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。<br>lsof -i，-i参数是列出所有符合条件的进程。其他lsof命令的相关信息可以参考<br><a href="http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html" target="_blank" rel="external">http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html</a>。<br>查找出进程后，如图可以查看进程的相关信息，COMMAND为进程名称，PID为进程ID，FD：文件描述符，应用程序通过文件描述符识别该文件，TYPE：文件类型，DEVICE：指定磁盘的名称，SIZE：文件的大小，NODE：索引节点（文件在磁盘上的标识），NAME：打开文件的确切名称。<br>根据进程的PID可以使用kill命令将进程干掉，kill -9，-9表示强行杀死进程。在用kill命令杀死进程后，我们可以使用lsof -i:8080重新查找使用8080端口的进程，没找到，说明8080端口进程被杀死，此时，在eclipse中重启Spring Boot的Application就不会出错了。  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mac/" rel="tag"># Mac</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/02/2016-09-02-Java中List与Array的转换/" rel="next" title="Java中List与Array的转换">
+                <i class="fa fa-chevron-left"></i> Java中List与Array的转换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/06/2016-09-06-Java中的集合转换(lambda表达式)/" rel="prev" title="Java中的集合转换(lambda表达式)">
+                Java中的集合转换(lambda表达式) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">384</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/09/05/2016-09-05-Mac下解决程序端口占用/';
+        this.page.identifier = '2016/09/05/2016-09-05-Mac下解决程序端口占用/';
+        this.page.title = 'Mac下程序端口的查找及关闭';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

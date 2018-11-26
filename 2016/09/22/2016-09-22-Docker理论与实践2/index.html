@@ -1,0 +1,885 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Docker," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Docker学习笔记_For_Mac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker理论与实践（二）">
+<meta property="og:url" content="http://noahsnail.com/2016/09/22/2016-09-22-Docker理论与实践2/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Docker学习笔记_For_Mac">
+<meta property="og:updated_time" content="2016-09-22T05:12:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker理论与实践（二）">
+<meta name="twitter:description" content="Docker学习笔记_For_Mac">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/09/22/2016-09-22-Docker理论与实践2/"/>
+
+
+
+
+
+  <title>Docker理论与实践（二） | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/09/22/2016-09-22-Docker理论与实践2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker理论与实践（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/22/2016-09-22-Docker理论与实践2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/09/22/2016-09-22-Docker理论与实践2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Docker学习笔记_For_Mac
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
+<h2 id="1-Docker命令"><a href="#1-Docker命令" class="headerlink" title="1. Docker命令"></a>1. Docker命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 列出系统中的所有容器</span></div><div class="line">docker ps <span class="_">-a</span></div><div class="line"></div><div class="line"><span class="comment"># 结果</span></div><div class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES</div><div class="line">aadf299b179b        hello-world         <span class="string">"/hello"</span>            20 minutes ago      Exited (0) 20 minutes ago                       gloomy_khorana</div><div class="line"></div><div class="line"><span class="comment"># docker ps仅列出当前运行的容器</span></div><div class="line">docker ps</div><div class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</div><div class="line"></div><div class="line"><span class="comment"># 运行whalesay镜像</span></div><div class="line">docker fun docker/whalesay cowsay boo</div></pre></td></tr></table></figure>
+<h3 id="1-1-docker-run-hello-world解析"><a href="#1-1-docker-run-hello-world解析" class="headerlink" title="1.1 docker run hello-world解析"></a>1.1 docker run hello-world解析</h3><p>这个命令总共有三部分：</p>
+<ul>
+<li><p>docker：告诉操作系统你使用的是docker程序</p>
+</li>
+<li><p>run：创建和运行docker容器的子命令</p>
+</li>
+<li><p>hello-world：告诉docker将哪一个镜像加载到容器中</p>
+</li>
+</ul>
+<h3 id="1-2-docker-run-hello-world的运行过程"><a href="#1-2-docker-run-hello-world的运行过程" class="headerlink" title="1.2 docker run hello-world的运行过程"></a>1.2 docker run hello-world的运行过程</h3><p>image是一个文件系统，里面有运行时使用的参数。它没有状态且不能改变。容器是镜像的运行实例。命令执行时，Docker Engine会进行以下的步骤：</p>
+<ol>
+<li><p>检查hello-world软件镜像是否存在</p>
+</li>
+<li><p>如果不存在，从Docker Hub上下载hello-world</p>
+</li>
+<li><p>加载镜像到容器中并运行</p>
+</li>
+</ol>
+<p>运行是根据镜像的构建过程执行的，可能一直运行，也可能执行几个命令就退出。镜像可能是非常复杂的，例如镜像可以启动一个数据库软件。</p>
+<h2 id="2-创建自己的docker-image"><a href="#2-创建自己的docker-image" class="headerlink" title="2. 创建自己的docker image"></a>2. 创建自己的docker image</h2><h3 id="2-1-写一个Dockerfile"><a href="#2-1-写一个Dockerfile" class="headerlink" title="2.1 写一个Dockerfile"></a>2.1 写一个Dockerfile</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ mkdir Docker</div><div class="line"></div><div class="line">$ <span class="built_in">cd</span> Docker</div><div class="line"></div><div class="line">$ touch Dockerfile</div><div class="line"></div><div class="line">$ vim Dockerfile</div></pre></td></tr></table></figure>
+<p>在Dockerfile中加入下面的代码并保存：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FROM docker/whalesay:latest</div><div class="line">RUN apt-get -y update &amp;&amp; apt-get install -y fortunes</div><div class="line">CMD /usr/games/fortune <span class="_">-a</span> | cowsay</div></pre></td></tr></table></figure>
+<h3 id="2-2-从Dockerfile中创建image"><a href="#2-2-从Dockerfile中创建image" class="headerlink" title="2.2 从Dockerfile中创建image"></a>2.2 从Dockerfile中创建image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 查看Dockerfile内容</span></div><div class="line">$ cat Dockerfile</div><div class="line"></div><div class="line"><span class="comment"># 构建image</span></div><div class="line">$ docker build -t docker-whale .</div></pre></td></tr></table></figure>
+<h3 id="2-3-创建image的过程"><a href="#2-3-创建image的过程" class="headerlink" title="2.3 创建image的过程"></a>2.3 创建image的过程</h3><ul>
+<li>首先Docker检查确保有构建的需要的东西</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sending build context to Docker daemon 2.048 kB</div></pre></td></tr></table></figure>
+<ul>
+<li>然后Docker加载whalesay镜像</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Step 1 : FROM docker/whalesay:latest</div><div class="line"> ---&gt; 6b362a9f73eb</div></pre></td></tr></table></figure>
+<ul>
+<li>Docker开始执行<code>apt-get</code>命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">Step 2 : RUN apt-get -y update &amp;&amp; apt-get install -y fortunes</div><div class="line"> ---&gt; Running in 3c381fdef64a</div><div class="line">Ign http://archive.ubuntu.com trusty InRelease</div><div class="line">Get:1 http://archive.ubuntu.com trusty-updates InRelease [65.9 kB]</div><div class="line">Get:2 http://archive.ubuntu.com trusty-security InRelease [65.9 kB]</div><div class="line">Hit http://archive.ubuntu.com trusty Release.gpg</div><div class="line">Get:3 http://archive.ubuntu.com trusty-updates/main Sources [473 kB]</div><div class="line">Get:4 http://archive.ubuntu.com trusty-updates/restricted Sources [5247 B]</div><div class="line">Get:5 http://archive.ubuntu.com trusty-updates/universe Sources [207 kB]</div><div class="line">Get:6 http://archive.ubuntu.com trusty-updates/main amd64 Packages [1122 kB]</div><div class="line">Get:7 http://archive.ubuntu.com trusty-updates/restricted amd64 Packages [23.5 kB]</div><div class="line">Get:8 http://archive.ubuntu.com trusty-updates/universe amd64 Packages [483 kB]</div><div class="line">Hit http://archive.ubuntu.com trusty Release</div><div class="line">Get:9 http://archive.ubuntu.com trusty-security/main Sources [152 kB]</div><div class="line">Get:10 http://archive.ubuntu.com trusty-security/restricted Sources [3944 B]</div><div class="line">Get:11 http://archive.ubuntu.com trusty-security/universe Sources [49.4 kB]</div><div class="line">Get:12 http://archive.ubuntu.com trusty-security/main amd64 Packages [659 kB]</div><div class="line">Get:13 http://archive.ubuntu.com trusty-security/restricted amd64 Packages [20.2 kB]</div><div class="line">Get:14 http://archive.ubuntu.com trusty-security/universe amd64 Packages [178 kB]</div><div class="line">Hit http://archive.ubuntu.com trusty/main Sources</div><div class="line">Hit http://archive.ubuntu.com trusty/restricted Sources</div><div class="line">Hit http://archive.ubuntu.com trusty/universe Sources</div><div class="line">Hit http://archive.ubuntu.com trusty/main amd64 Packages</div><div class="line">Hit http://archive.ubuntu.com trusty/restricted amd64 Packages</div><div class="line">Hit http://archive.ubuntu.com trusty/universe amd64 Packages</div><div class="line">Fetched 3508 kB in 25s (139 kB/s)</div><div class="line">Reading package lists...</div><div class="line">Reading package lists...</div><div class="line">Building dependency tree...</div><div class="line">Reading state information...</div><div class="line">The following extra packages will be installed:</div><div class="line">  fortune-mod fortunes-min librecode0</div><div class="line">Suggested packages:</div><div class="line">  x11-utils bsdmainutils</div><div class="line">The following NEW packages will be installed:</div><div class="line">  fortune-mod fortunes fortunes-min librecode0</div><div class="line">0 upgraded, 4 newly installed, 0 to remove and 87 not upgraded.</div><div class="line">Need to get 1961 kB of archives.</div><div class="line">After this operation, 4817 kB of additional disk space will be used.</div><div class="line">Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main librecode0 amd64 3.6-21 [771 kB]</div><div class="line">Get:2 http://archive.ubuntu.com/ubuntu/ trusty/universe fortune-mod amd64 1:1.99.1-7 [39.5 kB]</div><div class="line">Get:3 http://archive.ubuntu.com/ubuntu/ trusty/universe fortunes-min all 1:1.99.1-7 [61.8 kB]</div><div class="line">Get:4 http://archive.ubuntu.com/ubuntu/ trusty/universe fortunes all 1:1.99.1-7 [1089 kB]</div><div class="line">debconf: unable to initialize frontend: Dialog</div><div class="line">debconf: (TERM is not set, so the dialog frontend is not usable.)</div><div class="line">debconf: falling back to frontend: Readline</div><div class="line">debconf: unable to initialize frontend: Readline</div><div class="line">debconf: (This frontend requires a controlling tty.)</div><div class="line">debconf: falling back to frontend: Teletype</div><div class="line">dpkg-preconfigure: unable to re-open stdin: </div><div class="line">Fetched 1961 kB in 8s (221 kB/s)</div><div class="line">Selecting previously unselected package librecode0:amd64.</div><div class="line">(Reading database ... 13116 files and directories currently installed.)</div><div class="line">Preparing to unpack .../librecode0_3.6-21_amd64.deb ...</div><div class="line">Unpacking librecode0:amd64 (3.6-21) ...</div><div class="line">Selecting previously unselected package fortune-mod.</div><div class="line">Preparing to unpack .../fortune-mod_1%3a1.99.1-7_amd64.deb ...</div><div class="line">Unpacking fortune-mod (1:1.99.1-7) ...</div><div class="line">Selecting previously unselected package fortunes-min.</div><div class="line">Preparing to unpack .../fortunes-min_1%3a1.99.1-7_all.deb ...</div><div class="line">Unpacking fortunes-min (1:1.99.1-7) ...</div><div class="line">Selecting previously unselected package fortunes.</div><div class="line">Preparing to unpack .../fortunes_1%3a1.99.1-7_all.deb ...</div><div class="line">Unpacking fortunes (1:1.99.1-7) ...</div><div class="line">Setting up librecode0:amd64 (3.6-21) ...</div><div class="line">Setting up fortune-mod (1:1.99.1-7) ...</div><div class="line">Setting up fortunes-min (1:1.99.1-7) ...</div><div class="line">Setting up fortunes (1:1.99.1-7) ...</div><div class="line">Processing triggers for libc-bin (2.19-0ubuntu6.6) ...</div><div class="line"> ---&gt; 5c6dbfc7a7ea</div></pre></td></tr></table></figure>
+<ul>
+<li>执行CMD命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Removing intermediate container 3c381fdef64a</div><div class="line">Step 3 : CMD /usr/games/fortune -a | cowsay</div><div class="line"> ---&gt; Running in b0df80e0d4c9</div><div class="line"> ---&gt; d1178b780ac6</div><div class="line">Removing intermediate container b0df80e0d4c9</div><div class="line">Successfully built d1178b780ac6</div></pre></td></tr></table></figure>
+<h3 id="2-4-测试自己创建的image"><a href="#2-4-测试自己创建的image" class="headerlink" title="2.4 测试自己创建的image"></a>2.4 测试自己创建的image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">$ docker images</div><div class="line"></div><div class="line">$ docker run docker-whale</div><div class="line"></div><div class="line"><span class="comment"># 结果</span></div><div class="line"> _________________________________________ </div><div class="line">/ I suppose some of the variation between \</div><div class="line">| Boston drivers and the rest of the      |</div><div class="line">| country is due to the progressive       |</div><div class="line">| Massachusetts Driver Education Manual   |</div><div class="line">| <span class="built_in">which</span> I happen to have <span class="keyword">in</span> my top desk   |</div><div class="line">| drawer. Some of the Tips <span class="keyword">for</span> Better     |</div><div class="line">| Driving are worth considering, to wit:  |</div><div class="line">|                                         |</div><div class="line">| [131.16d]:                              |</div><div class="line">|                                         |</div><div class="line">| <span class="string">"Directional signals are generally not  |</span></div><div class="line">| used except during vehicle              |</div><div class="line">|                                         |</div><div class="line">| inspection; however, a left-turn signal |</div><div class="line">| is appropriate when making              |</div><div class="line">|                                         |</div><div class="line">| a U-turn on a divided highway."         |</div><div class="line">|                                         |</div><div class="line">| [96.7b]:                                |</div><div class="line">|                                         |</div><div class="line">| <span class="string">"When paying tolls, remember that it is |</span></div><div class="line">| necessary to release the                |</div><div class="line">|                                         |</div><div class="line">| quarter a full 3 seconds before passing |</div><div class="line">| the basket if you are                   |</div><div class="line">|                                         |</div><div class="line">| traveling more than 60 MPH."            |</div><div class="line">|                                         |</div><div class="line">| [110.13]:                               |</div><div class="line">|                                         |</div><div class="line">| <span class="string">"When traveling on a one-way street,    |</span></div><div class="line">| stay to the right, so as not            |</div><div class="line">|                                         |</div><div class="line">\ to interfere with oncoming traffic."    /</div><div class="line"> ----------------------------------------- </div><div class="line">    \</div><div class="line">     \</div><div class="line">      \     </div><div class="line">                    <span class="comment">##        .            </span></div><div class="line">              <span class="comment">## ## ##       ==            </span></div><div class="line">           <span class="comment">## ## ## ##      ===            </span></div><div class="line">       /<span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span>___/ ===        </div><div class="line">  ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~   </div><div class="line">       \______ o          __/            </div><div class="line">        \    \        __/             </div><div class="line">          \____\______/</div></pre></td></tr></table></figure>
+<h2 id="3-在Docker-Hub上创建自己的仓库，与Git类似"><a href="#3-在Docker-Hub上创建自己的仓库，与Git类似" class="headerlink" title="3. 在Docker Hub上创建自己的仓库，与Git类似"></a>3. 在Docker Hub上创建自己的仓库，与Git类似</h2><p>略.</p>
+<h2 id="4-Tag-push-and-pull-your-image"><a href="#4-Tag-push-and-pull-your-image" class="headerlink" title="4. Tag, push, and pull your image"></a>4. Tag, push, and pull your image</h2><h3 id="Step-1-Tag-and-push-the-image"><a href="#Step-1-Tag-and-push-the-image" class="headerlink" title="Step 1: Tag and push the image"></a>Step 1: Tag and push the image</h3><ul>
+<li>用docker images查看你当前的image</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">docker-whale        latest              d1178b780ac6        2 hours ago         274.9 MB</div><div class="line">hello-world         latest              c54a2cc56cbb        11 weeks ago        1.848 kB</div><div class="line">docker/whalesay     latest              6b362a9f73eb        16 months ago       247 MB</div></pre></td></tr></table></figure>
+<ul>
+<li>用docker tag命令和IMAGE ID给image打上tag，YOUR_DOCKERHUB_NAME为你的Docker Hub帐号，它起一个namespace的作用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker tag d1178b780ac6 YOUR_DOCKERHUB_NAME/docker-whale:latest</div></pre></td></tr></table></figure>
+<ul>
+<li>docker images重新查看image</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">docker-whale             latest              d1178b780ac6        2 hours ago         274.9 MB</div><div class="line">snailtyan/docker-whale   latest              d1178b780ac6        2 hours ago         274.9 MB</div><div class="line">hello-world              latest              c54a2cc56cbb        11 weeks ago        1.848 kB</div><div class="line">docker/whalesay          latest              6b362a9f73eb        16 months ago       247 MB</div></pre></td></tr></table></figure>
+<ul>
+<li>使用docker login命令登录你的Docker Hub账户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ docker login</div><div class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don&apos;t have a Docker ID, head over to https://hub.docker.com to create one.</div><div class="line">Username: ***</div><div class="line">Password: </div><div class="line">Login Succeeded</div></pre></td></tr></table></figure>
+<ul>
+<li>使用docker push将image推送到Docker Hub</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$ docker push ***/docker-whale</div><div class="line">The push refers to a repository [docker.io/***/docker-whale]</div><div class="line">122284833f25: Pushed </div><div class="line">5f70bf18a086: Mounted from docker/whalesay </div><div class="line">d061ee1340ec: Mounted from docker/whalesay </div><div class="line">d511ed9e12e1: Mounted from docker/whalesay </div><div class="line">091abc5148e4: Mounted from docker/whalesay </div><div class="line">b26122d57afa: Mounted from docker/whalesay </div><div class="line">37ee47034d9b: Mounted from docker/whalesay </div><div class="line">528c8710fd95: Mounted from docker/whalesay </div><div class="line">1154ba695078: Mounted from docker/whalesay </div><div class="line">latest: digest: sha256:18a6032f5726bdd6cea7c15faa02d9dcf1f12ff591c42ca15fc95c0d83de04fc size: 2614</div></pre></td></tr></table></figure>
+<ul>
+<li>你可以在你的Docker Hub上看到<em>*</em>/docker-whale image了</li>
+</ul>
+<h3 id="Step-2-Pull-your-new-image"><a href="#Step-2-Pull-your-new-image" class="headerlink" title="Step 2: Pull your new image"></a>Step 2: Pull your new image</h3><ul>
+<li>先删除本地的docker-whale</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 用id删除image</div><div class="line">$ docker rmi -f 7d9495d03763</div><div class="line"></div><div class="line"># 用name删除image</div><div class="line">$ docker rmi -f docker-whale</div></pre></td></tr></table></figure>
+<ul>
+<li>通过docker run来pull image</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">$ docker run ***/docker-whale</div><div class="line">Unable to find image &apos;***/docker-whale:latest&apos; locally</div><div class="line">latest: Pulling from ***/docker-whale</div><div class="line"></div><div class="line">e190868d63f8: Already exists </div><div class="line">909cd34c6fd7: Already exists </div><div class="line">0b9bfabab7c1: Already exists </div><div class="line">a3ed95caeb02: Already exists </div><div class="line">00bf65475aba: Already exists </div><div class="line">c57b6bcc83e3: Already exists </div><div class="line">8978f6879e2f: Already exists </div><div class="line">8eed3712d2cf: Already exists </div><div class="line">2bb8a73a1829: Already exists </div><div class="line">Digest: sha256:18a6032f5726bdd6cea7c15faa02d9dcf1f12ff591c42ca15fc95c0d83de04fc</div><div class="line">Status: Downloaded newer image for ***/docker-whale:latest</div><div class="line"> ________________________________________ </div><div class="line">/ Would it help if I got out and pushed? \</div><div class="line">|                                        |</div><div class="line">\ -- Princess Leia Organa                /</div><div class="line"> ---------------------------------------- </div><div class="line">    \</div><div class="line">     \</div><div class="line">      \     </div><div class="line">                    ##        .            </div><div class="line">              ## ## ##       ==            </div><div class="line">           ## ## ## ##      ===            </div><div class="line">       /&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;___/ ===        </div><div class="line">  ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~   </div><div class="line">       \______ o          __/            </div><div class="line">        \    \        __/             </div><div class="line">          \____\______/</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/22/2016-09-21-Docker理论与实践1/" rel="next" title="Docker理论与实践（一）">
+                <i class="fa fa-chevron-left"></i> Docker理论与实践（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/22/2016-09-22-Docker理论与实践3/" rel="prev" title="Docker理论与实践（三）">
+                Docker理论与实践（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">384</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Docker命令"><span class="nav-number">1.</span> <span class="nav-text">1. Docker命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-docker-run-hello-world解析"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 docker run hello-world解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-docker-run-hello-world的运行过程"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 docker run hello-world的运行过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-创建自己的docker-image"><span class="nav-number">2.</span> <span class="nav-text">2. 创建自己的docker image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-写一个Dockerfile"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 写一个Dockerfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-从Dockerfile中创建image"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 从Dockerfile中创建image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-创建image的过程"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 创建image的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-测试自己创建的image"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 测试自己创建的image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-在Docker-Hub上创建自己的仓库，与Git类似"><span class="nav-number">3.</span> <span class="nav-text">3. 在Docker Hub上创建自己的仓库，与Git类似</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Tag-push-and-pull-your-image"><span class="nav-number">4.</span> <span class="nav-text">4. Tag, push, and pull your image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-Tag-and-push-the-image"><span class="nav-number">4.1.</span> <span class="nav-text">Step 1: Tag and push the image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-Pull-your-new-image"><span class="nav-number">4.2.</span> <span class="nav-text">Step 2: Pull your new image</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/09/22/2016-09-22-Docker理论与实践2/';
+        this.page.identifier = '2016/09/22/2016-09-22-Docker理论与实践2/';
+        this.page.title = 'Docker理论与实践（二）';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

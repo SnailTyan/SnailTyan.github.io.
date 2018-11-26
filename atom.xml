@@ -451,10 +451,10 @@
   
   <entry>
     <title>Caffe与NVIDIA Docker不兼容的问题</title>
-    <link href="http://noahsnail.com/2018/06/27/2018-6-27-Caffe%E4%B8%8ENVIDIA%20Docker%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://noahsnail.com/2018/06/27/2018-6-27-Caffe与NVIDIA Docker不兼容的问题/</id>
+    <link href="http://noahsnail.com/2018/06/27/2018-06-27-Caffe%E4%B8%8ENVIDIA%20Docker%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://noahsnail.com/2018/06/27/2018-06-27-Caffe与NVIDIA Docker不兼容的问题/</id>
     <published>2018-06-27T09:21:02.000Z</published>
-    <updated>2018-06-27T10:43:08.000Z</updated>
+    <updated>2018-11-26T10:12:34.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>今天在使用Dockerfile构建Caffe Docker Image时碰到了一个Caffe与NVIDIA Docker不兼容的问题，我使用的NVIDIA Docker为<code>FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04</code>，出现的错误为：</p>

@@ -1,0 +1,844 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Item 1知识点_Java EnumSet介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的EnumSet">
+<meta property="og:url" content="http://noahsnail.com/2016/09/27/2016-09-27-Java中的EnumSet/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Item 1知识点_Java EnumSet介绍">
+<meta property="og:updated_time" content="2016-10-06T03:31:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的EnumSet">
+<meta name="twitter:description" content="Item 1知识点_Java EnumSet介绍">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/09/27/2016-09-27-Java中的EnumSet/"/>
+
+
+
+
+
+  <title>Java中的EnumSet | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/09/27/2016-09-27-Java中的EnumSet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java中的EnumSet</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/27/2016-09-27-Java中的EnumSet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/09/27/2016-09-27-Java中的EnumSet/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Item 1知识点_Java EnumSet介绍
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
+<h1 id="1-EnumSet"><a href="#1-EnumSet" class="headerlink" title="1. EnumSet"></a>1. EnumSet</h1><p><code>EnumSet</code>是Java <code>Set</code>接口的一个特别实现，在JDK 1.5中开始支持，Enum类型也正式引入到了Java中。与其它保存枚举常量的<code>Set</code>相比，<code>EnumSet</code>具有更好的性能，同时其也是Java中的优秀特性之一。下面从三个方面来介绍<code>EnumSet</code>，what，how，when。</p>
+<h1 id="2-What-is-EnumSet"><a href="#2-What-is-EnumSet" class="headerlink" title="2. What is EnumSet"></a>2. What is EnumSet</h1><p><code>EnumSet</code>是<code>Set</code>接口的一个实现，它只能用来存储<code>Enum</code>常量或其子类，不能存储其它类型。<code>EnumSet</code>是设计模式中工厂方法创建实例的一个很好例子。</p>
+<p><code>EnumSet</code>被声明为<code>abstract class</code>类型，<code>EnumSet</code>有两种实现方式，<code>RegularEnumSet</code>和<code>JumboEnumSet</code>，但是这两种实现方式是包私有的，不能在包外访问，因此必须使用工厂方法来创建并返回<code>EnumSet</code>实例，不能通过构造函数来创建。<code>EnumSet</code>中提供了多种创建<code>EnumSet</code>实例的静态工厂方法，例如<code>of</code>方法（进行了函数重载），<code>copyOf</code>方法，<code>noneOf</code>方法等。</p>
+<h1 id="3-How-EnumSet-is-implemented-in-Java"><a href="#3-How-EnumSet-is-implemented-in-Java" class="headerlink" title="3. How EnumSet is implemented in Java"></a>3. How EnumSet is implemented in Java</h1><p>上面已经说了，<code>EnumSet</code>是一个抽象类，有两个具体实现：<code>java.util.RegularEnumSet</code>和<code>java.util.JumboEnumSet</code>。二者的主要区别在于前者使用<code>long</code>来表示元素的数量，而后者使用<code>long[]</code>来表示元素的数量。这二者中表示元素数量使用的是位域结构，即通过<code>long</code>的二进制位数来表示元素数量，例如：<code>RegularEnumSet</code>使用的是<code>long</code>表示元素数量，<code>long</code>数值是通过64位二进制表示的，因此其只能包含的元素最大数量为64，如果元素数目大于64，采用的是<code>JumboEnumSet</code>表示，<code>JumboEnumSet</code>的<code>long[]</code>中有一个<code>long</code>数值，就能表示64个元素，两个<code>long</code>数值就能表示128个元素，以此类推。</p>
+<h1 id="4-When-to-use-EnumSet-in-Java"><a href="#4-When-to-use-EnumSet-in-Java" class="headerlink" title="4. When to use EnumSet in Java"></a>4. When to use EnumSet in Java</h1><p>《Effective Java》中的Item 32讲述了一个<code>EnumSet</code>的使用场景，推荐去看一下。当你需要对枚举类型进行特定的分组时，你可以使用<code>EnumSet</code>。例如，一周中有七天，你想将周末单独分出来的时候（<em>enum int pattern</em>）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">enum</span> DayOfWeek&#123;</div><div class="line">     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">private</span> EnumSet weekend = EnumSet.of(SATURDAY,SUNDAY);</div></pre></td></tr></table></figure>
+<h1 id="5-Important-points-about-EnumSet"><a href="#5-Important-points-about-EnumSet" class="headerlink" title="5. Important points about EnumSet"></a>5. Important points about EnumSet</h1><ul>
+<li><p>一个<code>EnumSet</code>中只能包含一种枚举类型。</p>
+</li>
+<li><p><code>EnumSet</code>中不能放入<code>null</code>元素，放入会抛出空指针异常。</p>
+</li>
+<li><p><code>EnumSet</code>是线程非安全的。</p>
+</li>
+<li><p><code>EnumSet</code>的Iterator是自动防故障和弱一致的，不会抛出并发修改异常，即在迭代过程的中的修改结果不一定会在迭代过程中显示。 </p>
+</li>
+<li><p><code>EnumSet</code>是高性能的Java集合。由于是基于数组的访问，因此<code>add</code>，<code>contains</code>，<code>next</code>方法的时间复杂度为O(1)。</p>
+</li>
+<li><p>存储枚举常量时使用<code>EnumSet</code>而不要用<code>HashSet</code>。</p>
+</li>
+</ul>
+<h1 id="6-Source-Code-of-EnumSet"><a href="#6-Source-Code-of-EnumSet" class="headerlink" title="6. Source Code of EnumSet"></a>6. Source Code of EnumSet</h1><p>EnumSet:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">EnumSet</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">E</span>&gt;&gt; <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</div><div class="line">	...</div><div class="line">	EnumSet(Class&lt;E&gt;elementType, Enum&lt;?&gt;[] universe) &#123;</div><div class="line">        <span class="keyword">this</span>.elementType = elementType;</div><div class="line">        <span class="keyword">this</span>.universe    = universe;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates an empty enum set with the specified element type.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> &lt;E&gt; The class of the elements in the set</div><div class="line">     * <span class="doctag">@param</span> elementType the class object of the element type for this enum</div><div class="line">     *     set</div><div class="line">     * <span class="doctag">@return</span> An empty enum set of the specified type.</div><div class="line">     * <span class="doctag">@throws</span> NullPointerException if &lt;tt&gt;elementType&lt;/tt&gt; is null</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;E extends Enum&lt;E&gt;&gt; <span class="function">EnumSet&lt;E&gt; <span class="title">noneOf</span><span class="params">(Class&lt;E&gt; elementType)</span> </span>&#123;</div><div class="line">        Enum&lt;?&gt;[] universe = getUniverse(elementType);</div><div class="line">        <span class="keyword">if</span> (universe == <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassCastException(elementType + <span class="string">" not an enum"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (universe.length &lt;= <span class="number">64</span>)</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RegularEnumSet&lt;&gt;(elementType, universe);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> JumboEnumSet&lt;&gt;(elementType, universe);</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>RegularEnumSet:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RegularEnumSet</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">E</span>&gt;&gt; <span class="keyword">extends</span> <span class="title">EnumSet</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">	...</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Bit vector representation of this set.  The 2^k bit indicates the</div><div class="line">     * presence of universe[k] in this set.</div><div class="line">     */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> elements = <span class="number">0L</span>;</div><div class="line">	</div><div class="line">	RegularEnumSet(Class&lt;E&gt;elementType, Enum&lt;?&gt;[] universe) &#123;</div><div class="line">        <span class="keyword">super</span>(elementType, universe);</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>JumboEnumSet:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">JumboEnumSet</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">E</span>&gt;&gt; <span class="keyword">extends</span> <span class="title">EnumSet</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">334349849919042784L</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Bit vector representation of this set.  The ith bit of the jth</div><div class="line">     * element of this array represents the  presence of universe[64*j +i]</div><div class="line">     * in this set.</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> elements[];</div><div class="line"></div><div class="line">    <span class="comment">// Redundant - maintained for performance</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size = <span class="number">0</span>;</div><div class="line"></div><div class="line">    JumboEnumSet(Class&lt;E&gt;elementType, Enum&lt;?&gt;[] universe) &#123;</div><div class="line">        <span class="keyword">super</span>(elementType, universe);</div><div class="line">        elements = <span class="keyword">new</span> <span class="keyword">long</span>[(universe.length + <span class="number">63</span>) &gt;&gt;&gt; <span class="number">6</span>];</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="7-Example-of-EnumSet"><a href="#7-Example-of-EnumSet" class="headerlink" title="7. Example of EnumSet"></a>7. Example of EnumSet</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.EnumSet;</div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EnumSetDemo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">enum</span> Color &#123;</div><div class="line">        RED(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), GREEN(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), BLUE(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>);</div><div class="line">        <span class="keyword">private</span> <span class="keyword">int</span> r;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">int</span> g;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">int</span> b;</div><div class="line">        <span class="function"><span class="keyword">private</span> <span class="title">Color</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> g, <span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.r = r;</div><div class="line">            <span class="keyword">this</span>.g = g;</div><div class="line">            <span class="keyword">this</span>.b = b;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getR</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> r;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getG</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> g;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getB</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> b;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</div><div class="line">        <span class="comment">// this will draw line in yellow color</span></div><div class="line">        EnumSet&lt;Color&gt; yellow = EnumSet.of(Color.RED, Color.GREEN);</div><div class="line">        drawLine(yellow);</div><div class="line">        <span class="comment">// RED + GREEN + BLUE = WHITE</span></div><div class="line">        EnumSet&lt;Color&gt; white = EnumSet.of(Color.RED, Color.GREEN, Color.BLUE);</div><div class="line">        drawLine(white);</div><div class="line">        <span class="comment">// RED + BLUE = PINK</span></div><div class="line">        EnumSet&lt;Color&gt; pink = EnumSet.of(Color.RED, Color.BLUE);</div><div class="line">        drawLine(pink);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">drawLine</span><span class="params">(Set&lt;Color&gt; colors)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Requested Colors to draw lines : "</span> + colors);</div><div class="line">        <span class="keyword">for</span> (Color c : colors) &#123;</div><div class="line">            System.out.println(<span class="string">"drawing line in color : "</span> + c);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Output:</div><div class="line">Requested Colors to draw lines : [RED, GREEN]</div><div class="line">drawing line in color : RED</div><div class="line">drawing line in color : GREEN</div><div class="line"></div><div class="line">Requested Colors to draw lines : [RED, GREEN, BLUE]</div><div class="line">drawing line in color : RED</div><div class="line">drawing line in color : GREEN</div><div class="line">drawing line in color : BLUE</div><div class="line"></div><div class="line">Requested Colors to draw lines : [RED, BLUE]</div><div class="line">drawing line in color : RED</div><div class="line">drawing line in color : BLUE</div></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<p>1、<a href="https://jaxenter.com/enumset-in-java-regularenumset-vs-jumboenumset-106051.html" target="_blank" rel="external">https://jaxenter.com/enumset-in-java-regularenumset-vs-jumboenumset-106051.html</a></p>
+<p>2、Effective Java 2.0版本中的Item 1，本文就是在看《Effective Java》时看到的<code>EnumSet</code>，才想要仔细研究一下<code>EnumSet</code>的。Item 32讲述了<code>EnumSet</code>的使用场景。</p>
+<p>3、<a href="http://brokendreams.iteye.com/blog/2267485" target="_blank" rel="external">http://brokendreams.iteye.com/blog/2267485</a></p>
+<p>4、<a href="http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html" target="_blank" rel="external">http://javarevisited.blogspot.kr/2014/03/how-to-use-enumset-in-java-with-example.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/27/2016-09-27-Effective Java_介绍/" rel="next" title="Effective Java 2.0_中英文对照_第一章">
+                <i class="fa fa-chevron-left"></i> Effective Java 2.0_中英文对照_第一章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/27/2016-09-28-Java中的泛型/" rel="prev" title="Java中的泛型">
+                Java中的泛型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">384</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-EnumSet"><span class="nav-number">1.</span> <span class="nav-text">1. EnumSet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-What-is-EnumSet"><span class="nav-number">2.</span> <span class="nav-text">2. What is EnumSet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-How-EnumSet-is-implemented-in-Java"><span class="nav-number">3.</span> <span class="nav-text">3. How EnumSet is implemented in Java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-When-to-use-EnumSet-in-Java"><span class="nav-number">4.</span> <span class="nav-text">4. When to use EnumSet in Java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Important-points-about-EnumSet"><span class="nav-number">5.</span> <span class="nav-text">5. Important points about EnumSet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Source-Code-of-EnumSet"><span class="nav-number">6.</span> <span class="nav-text">6. Source Code of EnumSet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Example-of-EnumSet"><span class="nav-number">7.</span> <span class="nav-text">7. Example of EnumSet</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/09/27/2016-09-27-Java中的EnumSet/';
+        this.page.identifier = '2016/09/27/2016-09-27-Java中的EnumSet/';
+        this.page.title = 'Java中的EnumSet';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

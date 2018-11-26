@@ -1,0 +1,857 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="这部分参考文档包含了所有完全集成到Spring框架中的那些技术。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中文版_3.2">
+<meta property="og:url" content="http://noahsnail.com/2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="这部分参考文档包含了所有完全集成到Spring框架中的那些技术。">
+<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_work.png">
+<meta property="og:updated_time" content="2016-10-07T14:24:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中文版_3.2">
+<meta name="twitter:description" content="这部分参考文档包含了所有完全集成到Spring框架中的那些技术。">
+<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/spring_work.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/"/>
+
+
+
+
+
+  <title>Spring 5.0.0框架介绍_中文版_3.2 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring 5.0.0框架介绍_中文版_3.2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  这部分参考文档包含了所有完全集成到Spring框架中的那些技术。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
+<h3 id="3-2-容器概述"><a href="#3-2-容器概述" class="headerlink" title="3.2 容器概述"></a>3.2 容器概述</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.springframework.context.ApplicationContext</code>接口代表了Spring IoC容器并且负责实例化、配置和组装前面提到的beans。容器通过读取配置元数据得到说明什么对象要实例化、配置和组装。配置元数据可以用XML、Java注解或Java代码表示。它允许你表示构成应用的对象和对象间丰富的依赖关系。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spring提供了一些可以直接使用的<code>ApplicationContext</code>接口实现。在单独的应用中通常是创建一个 <code>ClassPathXmlApplicationContext</code>实例或<code>FileSystemXmlApplicationContext</code>实例。虽然XML是定义配置元数据的传统格式，但你可以指示容器支持使用Java注解或代码作为元数据的格式并通过提供少量的XML配置声明使容器支持这些额外的元数据格式。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在大多数应用场景中，不会要求用户用显式的代码来实例化一个或多个Spring IoC容器的。例如，在web应用场景中，在应用的<code>web.xml</code>文件中写一个简单的八行左右的样板web描述符XML就足够了（看3.13.4小节，『web应用中ApplicationContext的方便实例化』）。如果你正在使用Eclipse支持的Spring Tool Suite开发环境，可以很容易的通过点几下鼠标或键盘来创建样本配置。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的图是从一个高层次的视野来看Spring是如何工作的。你的应用类与配置元数据结合起来为的是在<code>ApplicationContext</code>创建和初始化之后，你有一个完整配置并可执行的系统或应用。</p>
+<p><strong>图3.1. Spring IoC容器</strong><br><img src="http://ocs628urt.bkt.clouddn.com/spring_work.png" alt="image"></p>
+<h4 id="3-2-1-配置元数据"><a href="#3-2-1-配置元数据" class="headerlink" title="3.2.1 配置元数据"></a>3.2.1 配置元数据</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上图所示，Spring IoC容器使用了一种<em>配置元数据</em>的方式；配置元数据表示你作为一个应用开发者应该告诉Spring容器怎样去实例化、配置并组装应用中的对象。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;习惯上用简单直观下XML形式来提供配置元数据，这一章大部分使用XML文件来表达Spring IoC容器的核心概念及功能。</p>
+<blockquote>
+<p>基于XML的元数据不是配置元数据的唯一许可形式。Spring IoC容器本身与配置元数据的实际书写形式是<em>完全</em>解构的。目前许多开发者在他们的Spring应用中选用基于Java配置的元数据形式。</p>
+</blockquote>
+<p>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关于Spring容器中使用其它元数据形式的信息，请看：</p>
+<ul>
+<li>基于注解的配置：Spring 2.5引入对了基于注解的配置元数据的支持。</li>
+<li>基于Java的配置：从Spring 3.0开始，Spring JavaConfig工程提供的许多功能开始成为Spring框架核心中的一部分。因此你可以通过Java而不是XML文件来定义外部应用程序的beans。为了使用这些新功能，请看<code>@Configuration</code>, <code>@Bean</code>, <code>@Import</code>和<code>@DependsOn</code>注解。</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spring配置包括至少一个且通常不止一个容器必须管理的bean定义。基于XML的配置元数据中，这些beans作为<code>&lt;bean&gt;</code>元素被配置在顶层<code>&lt;beans/&gt;</code>元素中。Java配置通常在<code>@Configuration</code>类中使用<code>@Bean</code>注解的方法。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这些bean定义与组成你应用的实际对象相对应。通常你会定义服务层对象，数据访问层对象（DAOs），描述对象例如Struts的<code>Action</code>实例，底层对象例如Hibernate的<code>SessionFactories</code>，JMS的<code>Queues</code>等等。容器中细粒度的领域对象通常是不配置的，因为一般是由DAOs和业务逻辑负责创建和加载领域对象。然而你可以使用Spring集成的AspectJ去配置IoC容器控制之外创建的对象。请看”使用Spring的AspectJ来依赖注入领域对象”。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的例子展示了基于XML配置元数据的基本结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;...&quot; class=&quot;...&quot;&gt;</div><div class="line">        &lt;!-- collaborators and configuration for this bean go here --&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;...&quot; class=&quot;...&quot;&gt;</div><div class="line">        &lt;!-- collaborators and configuration for this bean go here --&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- more bean definitions go here --&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>id</code>属性是一个你用来识别私有bean定义的字符串。<code>class</code>属性定义了bean的类型并且使用了完全限定类型名称(全限定名称或完全限定名)。<code>id</code>属性的值引用了协作对象。这个例子的中没有展示如何引用协作对象，更多信息请查看『依赖』。</p>
+<h4 id="3-2-2-实例化容器"><a href="#3-2-2-实例化容器" class="headerlink" title="3.2.2 实例化容器"></a>3.2.2 实例化容器</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实例化一个Spring IoC容器是简单的。一个或多个提供给<code>ApplicationContext</code>构造函数的定位路径实际上是资源字符串，可以让容器从各种例如局部文件系统，Java的<code>CLASSPATH</code>等外部资源中加载配置元数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ApplicationContext context =</div><div class="line">    new ClassPathXmlApplicationContext(new String[] &#123;&quot;services.xml&quot;, &quot;daos.xml&quot;&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在你学习Spring IoC容器之后，你可能想知道更多关于Spring的<code>Resource</code>抽象信息，像『第四章 资源』描述的那样，<code>Resource</code>抽象提供了一种从URI语法定义的位置中读取输入流的方便机制。<code>Resource</code>路径通常被用来构建应用程序上下文，正如4.7 小节『应用上下文和资源路径』描述的那样。</p>
+</blockquote>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的例子是服务层对象(<code>services.xml</code>)的配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;!-- services --&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;petStore&quot; class=&quot;org.springframework.samples.jpetstore.services.PetStoreServiceImpl&quot;&gt;</div><div class="line">        &lt;property name=&quot;accountDao&quot; ref=&quot;accountDao&quot;/&gt;</div><div class="line">        &lt;property name=&quot;itemDao&quot; ref=&quot;itemDao&quot;/&gt;</div><div class="line">        &lt;!-- additional collaborators and configuration for this bean go here --&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- more bean definitions for services go here --&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的例子是数据访问对象<code>daos.xml</code>的配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;accountDao&quot;</div><div class="line">        class=&quot;org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao&quot;&gt;</div><div class="line">        &lt;!-- additional collaborators and configuration for this bean go here --&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;itemDao&quot; class=&quot;org.springframework.samples.jpetstore.dao.jpa.JpaItemDao&quot;&gt;</div><div class="line">        &lt;!-- additional collaborators and configuration for this bean go here --&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- more bean definitions for data access objects go here --&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在之前的例子中，服务层包括类<code>PetStoreServiceImpl</code>和两个类型为<code>JpaAccountDao</code>和<code>JpaItemDao</code>数据访问对象（基于JPA对象/关系映射标准）。<code>property name</code>元素指的是JavaBean属性的名称，<code>ref</code>元素指的是另一个bean定义的名称。<code>id</code>和<code>ref</code>之间的连接表明了协作对象之间的关系。配置对象依赖的更详细信息请看『依赖』。</p>
+<p><strong>创建基于XML的元数据</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bean定义跨越多个XML文件是非常有用的。通常每一个独立的XML配置文件表示你架构中的一个逻辑层或模块。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在上面的例子中，外部bean定义从<code>services.xml</code>、<code>messageSource.xml</code>和<code>themeSource.xml</code>三个文件中加载。所有位置路径都是相对于进行导入的定义文件的，因此<code>services.xml</code>必须跟进行导入的文件在同一个目录下或同一个classpath位置下。如你所见，忽略了最前面的反斜杠，但给定的这些路径是相对的，最好是一点都不使用反斜杠。包括顶层的<code>&lt;beans/&gt;</code>元素在内，被导入的文件内容必须是依据Spring Schema有效的XML bean定义。</p>
+<blockquote>
+<p>在父目录的引用文件使用”../“相对路径是可以的，但不推荐这样做。这样做会产生一个当前应用之外文件依赖。引用文件特别不推荐在”classpath:” URLs中（例如”classpath:../services.xml”），运行时解析处理会选择”最近的”classpath根目录，然后去寻找它的父目录。Classpath配置的更改可能会导致进入一个不同且不正确的目录。</p>
+<p>你可以总是使用完全限定资源位置代替相对路径：例如，”file:C:/config/services.xml”或”classpath:/config/services.xml”。但是要注意你正在将你的应用配置与特定的绝对路径耦合。通常更可取的方式是间接的访问绝对路径，例如，通过”${…​}”占位符在运行时解析JVM系统属性。</p>
+</blockquote>
+<p>&nbsp;</p>
+<h4 id="3-2-3-使用容器"><a href="#3-2-3-使用容器" class="headerlink" title="3.2.3 使用容器"></a>3.2.3 使用容器</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>ApplicationContext</code>是一个更高级的工厂接口，它能维护不同beans及其依赖的注册表。使用方法<code>T getBean(String name, Class&lt;T&gt; requiredType)</code>你可以取回你的beans实例。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>ApplicationContext</code>能让你用下面的方式读取bean定义及访问它们：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// create and configure beans</div><div class="line">ApplicationContext context =</div><div class="line">    new ClassPathXmlApplicationContext(new String[] &#123;&quot;services.xml&quot;, &quot;daos.xml&quot;&#125;);</div><div class="line"></div><div class="line">// retrieve configured instance</div><div class="line">PetStoreService service = context.getBean(&quot;petStore&quot;, PetStoreService.class);</div><div class="line"></div><div class="line">// use configured instance</div><div class="line">List&lt;String&gt; userList = service.getUsernameList();</div></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以用<code>getBean()</code>取回你的beans实例。<code>ApplicationContext</code>接口有一些其它的方法来取回beans，但理想的应用代码应该绝不使用它们。事实上，你的应用代码应该完全不调用<code>getBean()</code>方法，因此完全不依赖Spring APIs。例如，Spring的集成web框架提供了各种web框架类的依赖注入，例如控制器和JSF管理的beans。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/07/2016-10-07-Java中的静态内部类/" rel="next" title="Java中的静态内部类">
+                <i class="fa fa-chevron-left"></i> Java中的静态内部类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/07/2016-10-07-Spring 5.0.0框架介绍_中文版_3.1/" rel="prev" title="Spring 5.0.0框架介绍_中文版_3.1">
+                Spring 5.0.0框架介绍_中文版_3.1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">384</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-容器概述"><span class="nav-number">1.</span> <span class="nav-text">3.2 容器概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-配置元数据"><span class="nav-number">1.1.</span> <span class="nav-text">3.2.1 配置元数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-实例化容器"><span class="nav-number">1.2.</span> <span class="nav-text">3.2.2 实例化容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-使用容器"><span class="nav-number">1.3.</span> <span class="nav-text">3.2.3 使用容器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/';
+        this.page.identifier = '2016/10/07/2016-10-07-Spring 5.0.0框架参考手册_中文版_3.2/';
+        this.page.title = 'Spring 5.0.0框架介绍_中文版_3.2';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

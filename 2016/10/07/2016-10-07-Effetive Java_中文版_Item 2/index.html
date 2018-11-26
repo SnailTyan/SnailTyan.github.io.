@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Effective Java_Item 2_2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 2.0_中文版_Item 2">
+<meta property="og:url" content="http://noahsnail.com/2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Effective Java_Item 2_2.0">
+<meta property="og:updated_time" content="2016-10-07T13:11:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java 2.0_中文版_Item 2">
+<meta name="twitter:description" content="Effective Java_Item 2_2.0">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/"/>
+
+
+
+
+
+  <title>Effective Java 2.0_中文版_Item 2 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective Java 2.0_中文版_Item 2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Effective Java_Item 2_2.0
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a></p>
+<h2 id="Item-2：当面临很多构造函数参数时，要考虑使用构建器"><a href="#Item-2：当面临很多构造函数参数时，要考虑使用构建器" class="headerlink" title="Item 2：当面临很多构造函数参数时，要考虑使用构建器"></a>Item 2：当面临很多构造函数参数时，要考虑使用构建器</h2><p>静态工厂和构造函数有一个共同的限制：对于大量可选参数它们都不能很好的扩展。考虑这样一种情况：用一个类来表示包装食品上的营养成分标签。这些标签有几个字段是必须的——每份含量、每罐含量（份数）、每份的卡路里，二十个以上的可选字段——总脂肪量、饱和脂肪量、转化脂肪、胆固醇、钠等等。大多数产品中这些可选字段中的仅有几个是非零值。</p>
+<p>你应该为这样的一个类写什么样的构造函数或静态工厂？习惯上，程序员使用重叠构造函数模式，在这种模式中只给第一个构造函数提供必要的参数，给第二个构造函数提供一个可选参数，给第三个构造函数提供两个可选参数，以此类推，最后的构造函数具有所有的可选参数。下面是一个实践中的例子。为了简便，只显示了四个可选字段：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Telescoping constructor pattern - does not scale well!</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize; <span class="comment">// (mL) required</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servings; <span class="comment">// (per container) required</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> calories; <span class="comment">// optional</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> fat; <span class="comment">// (g) optional</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> sodium; <span class="comment">// (mg) optional</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> carbohydrate; <span class="comment">// (g) optional</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>(servingSize, servings, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings, <span class="keyword">int</span> calories)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>(servingSize, servings, calories, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>(servingSize, servings, calories, fat, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat,</span></span></div><div class="line">			<span class="keyword">int</span> sodium) &#123;</div><div class="line">		<span class="keyword">this</span>(servingSize, servings, calories, fat, sodium, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat,</span></span></div><div class="line">			<span class="keyword">int</span> sodium, <span class="keyword">int</span> carbohydrate) &#123;</div><div class="line">		<span class="keyword">this</span>.servingSize = servingSize;</div><div class="line">		<span class="keyword">this</span>.servings = servings;</div><div class="line">		<span class="keyword">this</span>.calories = calories;</div><div class="line">		<span class="keyword">this</span>.fat = fat;</div><div class="line">		<span class="keyword">this</span>.sodium = sodium;</div><div class="line">		<span class="keyword">this</span>.carbohydrate = carbohydrate;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当你想创建一个实例时，你可以使用具有最短参数列表的构造函数，最短参数列表包含了所有你想设置的参数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts(<span class="number">240</span>, <span class="number">8</span>, <span class="number">100</span>, <span class="number">0</span>, <span class="number">35</span>, <span class="number">27</span>);</div></pre></td></tr></table></figure>
+<p>通常构造函数调用需要许多你不想设置的参数，但无论如何你不得不为它们传值。在这种情况下，我们给<code>fat</code>传了一个零值。只有六个参数可能还不是那么糟糕，但随着参数数目的增长它很快就会失控。</p>
+<p>简而言之，<strong>重叠构造函数模式有作用，但是当有许多参数时很难编写客户端代码，更难的是阅读代码。</strong>读者会很奇怪所有的这些值是什么意思，必须仔细的计算参数个数才能查明。一长串同类型的参数会引起细微的错误。如果客户端偶然的颠倒了两个这样的参数，编译器不会报错，但程序在运行时会出现错误的行为（Item 40）。</p>
+<p>当你面临许多构造函数参数时，第二个替代选择是<em>JavaBeans</em>模式，在这种模式中你要调用无参构造函数来创建对象，然后调用<code>setter</code>方法为每一个必要参数和每一个有兴趣的可选参数设置值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//JavaBeans Pattern - allows inconsistency, mandates mutability</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</div><div class="line">	<span class="comment">// Parameters initialized to default values (if any) private int servingSize</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> servingSize = -<span class="number">1</span>; <span class="comment">// Required; no default value</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> servings = -<span class="number">1</span>;<span class="comment">// Required; no default value</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> calories = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> fat = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> sodium = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> carbohydrate = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">()</span> </span>&#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// Setters</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServingSize</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">		servingSize = val;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServings</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">		servings = val;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCalories</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">		calories = val;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFat</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">		fat = val;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSodium</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">		sodium = val;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCarbohydrate</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">		carbohydrate = val;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个模式没有重叠构造函数模式的缺点。即使有点啰嗦，但它很容易创建实例，也很容易阅读写出来的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts();</div><div class="line">cocaCola.setServingSize(<span class="number">240</span>);</div><div class="line">cocaCola.setServings(<span class="number">8</span>);</div><div class="line">cocaCola.setCalories(<span class="number">100</span>);</div><div class="line">cocaCola.setSodium(<span class="number">35</span>);</div><div class="line">cocaCola.setCarbohydrate(<span class="number">27</span>);</div></pre></td></tr></table></figure>
+<p>遗憾的是，JavaBeans模式自身有着严重缺点。因为构造过程跨越多次调用，<strong>JavaBean在构造过程中可能会出现不一致的状态</strong>。JavaBean类不能只通过检查构造函数参数的有效性来保证一致性。当一个对象处于一种不一致的状态时，试图使用它可能会引起失败，这个失败很难从包含错误的代码中去掉，因此很难调试。与此相关的一个缺点是<em>JavaBeans模式排除了使一个类不可变的可能性*</em>（Item 15），因此需要程序员付出额外的努力来确保线程安全。</p>
+<p>当构造工作完成时，可以通过手动『冰冻』对象并且在冰冻完成之前不允许使用它来弥补这个缺点，但这种方式太笨重了，在实践中很少使用。而且，由于编译器不能保证程序员在使用对象之前调用了冰冻方法，因此它可能在运行时引起错误。</p>
+<p>幸运的是，这儿还有第三种替代方法，它结合了重叠构造函数模式的安全性和JavaBeans模式的可读性。它就是构建器模式[Gamma95， p. 97]。它不直接构建需要的对象，客户端调用具有所有参数的构造函数(或静态工厂)，得到一个构造器对象。然后客户端在构建器上调用类似于setter的方法来设置每个感兴趣的可选参数。最终，客户端调用无参构建方法来产生一个对象，这个对象是不可变的。构建器是它要构建的类的静态成员类（Item 22）。它在实践中的形式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Builder Pattern</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servings;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> calories;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> fat;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> sodium;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> carbohydrate;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</div><div class="line">		<span class="comment">// Required parameters</span></div><div class="line">		<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize;</div><div class="line">		<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servings;</div><div class="line">		<span class="comment">// Optional parameters - initialized to default values</span></div><div class="line">		<span class="keyword">private</span> <span class="keyword">int</span> calories = <span class="number">0</span>;</div><div class="line">		<span class="keyword">private</span> <span class="keyword">int</span> fat = <span class="number">0</span>;</div><div class="line">		<span class="keyword">private</span> <span class="keyword">int</span> carbohydrate = <span class="number">0</span>;</div><div class="line">		<span class="keyword">private</span> <span class="keyword">int</span> sodium = <span class="number">0</span>;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> servings)</span> </span>&#123;</div><div class="line">			<span class="keyword">this</span>.servingSize = servingSize;</div><div class="line">			<span class="keyword">this</span>.servings = servings;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> Builder <span class="title">calories</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">			calories = val;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> Builder <span class="title">fat</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">			fat = val;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> Builder <span class="title">carbohydrate</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">			carbohydrate = val;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> Builder <span class="title">sodium</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">			sodium = val;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="function"><span class="keyword">public</span> NutritionFacts <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> NutritionFacts(<span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="title">NutritionFacts</span><span class="params">(Builder builder)</span> </span>&#123;</div><div class="line">		servingSize = builder.servingSize;</div><div class="line">		servings = builder.servings;</div><div class="line">		calories = builder.calories;</div><div class="line">		fat = builder.fat;</div><div class="line">		sodium = builder.sodium;</div><div class="line">		carbohydrate = builder.carbohydrate;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意<code>NutritionFacts</code>是不可变的，所有参数的默认值都在一个单独的位置。构建器的<code>setter</code>方法返回的是构建器本身，为的是链式调用。客户端代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts.Builder(<span class="number">240</span>, <span class="number">8</span>).calories(<span class="number">100</span>).sodium(<span class="number">35</span>).carbohydrate(<span class="number">27</span>).build();</div></pre></td></tr></table></figure>
+<p>客户端代码很容器写，更重要的是很容易读。构建器模式模拟了命名可选参数，就像Ada和Python中的一样。类似于构造函数，构造器可以对它参数加上约束条件。构造器方法可以检查这些约束条件。将参数从构建器拷贝到对象中之后，可以在对象作用域而不是构造器作用域对约束条件进行检查，这是很关键的（Item 39）。如果违反了任何约束条件，构造器方法会抛出<code>IllegalStateException</code>异常（Item 60）。异常的详细信息会指出违反了哪一个约束条件（Item 63）。</p>
+<p>相比于构造函数，构建器的一个小优势在与构建器可以有许多可变参数。构造函数类似于方法，只能有一个可变参数。由于构造器用单独的方法设置每一个参数，因此像你喜欢的那样，它们能有许多可变参数，直到每个setter方法都有一个可变参数。</p>
+<p>构建器模式是灵活的。一个构建器可以用来构建多个对象。为了改变对象，构建器参数在创建对象时可以进行改变。构建器能自动填充一些字段，例如每次创建对象时序号自动增加。</p>
+<p>设置了参数的构建器形成了一个很好的抽象工厂[Gamma95，p.87]。换句话说，为了使某个方法能为客户端创建一个或多个对象，客户端可以传递这样的一个构建器到这个方法中。为了使这个用法可用，你需要用一个类型来表示构建器。如果你在使用JDK 1.5或之后的版本，只要一个泛型就能满足所有的构建器（Item 26），无论正在构建的是什么类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// A builder for objects of type T</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">build</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意我们可以声明<code>NutritionFacts.Builder</code>类来实现<code>Builder&lt;NutritionFacts&gt;</code>。</p>
+<p>带有构建器实例的方法通常使用绑定的通配符类型来约束构建器的类型参数（Item 28）。例如，构建树的方法通过使用客户端提供的构建器实例来构建每一个结点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">Tree <span class="title">buildTree</span><span class="params">(Builder&lt;? extends Node&gt; nodeBuilder)</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+<p>Java中传统的抽象工厂实现是类对象，<code>newInstance</code>方法扮演着<code>build</code>方法的角色。 这种用法问题重重。<code>newInstance</code>方法总是尝试调用类的无参构造函数，但无参构造函数可能并不存在。如果类没有访问无参构造函数，你不会收到编译时错误。而客户端代码必须处理运行时的<code>InstantiationException</code>或<code>IllegalAccessException</code>异常，这样既不雅观也不方便。<code>newInstance</code>也会传播无参构造函数抛出的任何异常，即使<code>newInstance</code>缺少对应的抛出语句块。换句话说，<code>Class.newInstance</code>打破了编译时的异常检测。上面的<code>Builder</code>接口弥补了这些缺陷。</p>
+<p>构建器模式也有它的缺点。为了创建对象，你必须首先创建它的构建器。虽然创建构建器的代价在实践中可能不是那么明显，但在某些性能优先关键的情况下它可能是一个问题。构建器模式比重叠构造函数模式更啰嗦，因此只有在参数足够多的情况下才去使用它，比如四个或更多。但要记住将来你可能会增加参数。如果你开始使用构造函数或静态工厂，当类发展到参数数目开始失控的情况下，才增加一个构建器，废弃的构造函数或静态工厂就像一个疼痛的拇指，最好是在开始就使用构建器。</p>
+<p>总之，当设计的类的构造函数或静态工厂有许多参数时，构建器模式是一个很好的选择，尤其是大多数参数是可选参数的情况下。与传统的重叠构造函数模式相比，使用构建器模式的客户端代码更易读易编写，与JavaBeans模式相比使用构建器模式更安全。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/07/2016-10-07-Effective Java_中英文对照_Item2/" rel="next" title="Effective Java 2.0_中英文对照_Item 2">
+                <i class="fa fa-chevron-left"></i> Effective Java 2.0_中英文对照_Item 2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/07/2016-10-07-Java中的可变参数/" rel="prev" title="Java中的可变参数Varargs">
+                Java中的可变参数Varargs <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">384</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Item-2：当面临很多构造函数参数时，要考虑使用构建器"><span class="nav-number">1.</span> <span class="nav-text">Item 2：当面临很多构造函数参数时，要考虑使用构建器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/';
+        this.page.identifier = '2016/10/07/2016-10-07-Effetive Java_中文版_Item 2/';
+        this.page.title = 'Effective Java 2.0_中文版_Item 2';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

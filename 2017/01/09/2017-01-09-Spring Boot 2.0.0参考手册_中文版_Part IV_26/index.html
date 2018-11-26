@@ -1,0 +1,1043 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Spring Boot," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring Boot 2.0.0参考手册_中文版_Part IV_26">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 2.0.0参考手册_中文版_Part IV_26">
+<meta property="og:url" content="http://noahsnail.com/2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring Boot 2.0.0参考手册_中文版_Part IV_26">
+<meta property="og:updated_time" content="2017-01-09T13:01:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot 2.0.0参考手册_中文版_Part IV_26">
+<meta name="twitter:description" content="Spring Boot 2.0.0参考手册_中文版_Part IV_26">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/"/>
+
+
+
+
+
+  <title>Spring Boot 2.0.0参考手册_中文版_Part IV_26 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Boot 2.0.0参考手册_中文版_Part IV_26</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Spring Boot 2.0.0参考手册_中文版_Part IV_26
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="26-Logging"><a href="#26-Logging" class="headerlink" title="26. Logging"></a>26. Logging</h2><p>Spring Boot所有的内部日志都采用Commons Logging，但开放了底层的日志实现。提供了对Java Util Logging，Log4J2和Logback的默认实现。在每个logger中都预先配置使用控制台作为输出，同时也可用可选的文件输出。</p>
+<p>默认情况下，如果使用<code>Starters</code>，Logback将作为日志。也要包含恰当的Logback规则来保证依赖库使用Java Util Logging，Commons Logging，Log4J或SLF4J都能正确工作。</p>
+<blockquote>
+<p>在Java中有许多日志框架可用。不必担心上面的列表看起来有点混乱。通常情况下你不需要改变你的日志依赖，Spring Boot默认情况下能很好的工作。</p>
+</blockquote>
+<h3 id="26-1-Log格式"><a href="#26-1-Log格式" class="headerlink" title="26.1 Log格式"></a>26.1 Log格式</h3><p>Spring Boot默认的日志输出看起来如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2014-03-05 10:57:51.112  INFO 45469 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/7.0.52</div><div class="line">2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1358 ms</div><div class="line">2014-03-05 10:57:51.698  INFO 45469 --- [ost-startStop-1] o.s.b.c.e.ServletRegistrationBean        : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</div><div class="line">2014-03-05 10:57:51.702  INFO 45469 --- [ost-startStop-1] o.s.b.c.embedded.FilterRegistrationBean  : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</div></pre></td></tr></table></figure>
+<p>下面的是输出项：</p>
+<ul>
+<li><p>Date and Time — 精确到毫秒且容易排序。</p>
+</li>
+<li><p>Log级别 — ERROR，WARN，INFO，DEBUG或TRACE。</p>
+</li>
+<li><p>进程ID。</p>
+</li>
+<li><p><code>---</code>分隔符来区分真正的日志信息的开始。</p>
+</li>
+<li><p>线程名称 — 用方括号包裹(在控制台输出中经常是缩减的)。</p>
+</li>
+<li><p>Logger名称 — 源类名(经常是简写)。</p>
+</li>
+<li><p>日志信息。</p>
+</li>
+</ul>
+<blockquote>
+<p>Logback没有FATAL级别（它映射到ERROR）。</p>
+</blockquote>
+<h3 id="26-2-控制台输出"><a href="#26-2-控制台输出" class="headerlink" title="26.2 控制台输出"></a>26.2 控制台输出</h3><p>默认的日志配置会将信息输出到控制台。默认情况下会输出<code>ERROR</code>，<code>WARN</code>和<code>INFO</code>级别的信息。你也可以通过<code>--debug</code>来启动你的应用，从而启用“debug”模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ java -jar myapp.jar --debug</div></pre></td></tr></table></figure>
+<blockquote>
+<p>你也可以在<code>application.properties</code>指定<code>debug=true</code>。</p>
+</blockquote>
+<p>当启用调试模式时，配置选择的核心logger（嵌入式容器，Hibernate和Spring Boot）来输出更多的信息。启动调试模式不会将你的应用配置成输出所有<code>DEBUG</code>级别的信息。</p>
+<p>或者，你可以用<code>--trace</code>标记（或在<code>application.properties</code>中添加<code>trace=true</code>）启动你的应用，从而启用“trace”模式。这将在选择的核心logger中（嵌入式容器，Hibernate模式生成和整个Spring文件夹）启用trace日志。</p>
+<h4 id="26-2-1-颜色编码输出"><a href="#26-2-1-颜色编码输出" class="headerlink" title="26.2.1 颜色编码输出"></a>26.2.1 颜色编码输出</h4><p>如果你的终端支持ANSI，颜色输出可以用来辅助阅读。你可以为<code>spring.output.ansi.enabled</code>设置一个支持值来覆盖自动检测。</p>
+<p>颜色编码用<code>%clr</code>转换词来配置。最简单的形式是根据日志级别进行颜色输出，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%clr(%5p)</div></pre></td></tr></table></figure>
+<p>日志级别与颜色的映射如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Level</th>
+<th style="text-align:left">Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">FATAL</td>
+<td style="text-align:left">Red</td>
+</tr>
+<tr>
+<td style="text-align:left">ERROR</td>
+<td style="text-align:left">Red</td>
+</tr>
+<tr>
+<td style="text-align:left">WARN</td>
+<td style="text-align:left">Yellow</td>
+</tr>
+<tr>
+<td style="text-align:left">INFO</td>
+<td style="text-align:left">Green</td>
+</tr>
+<tr>
+<td style="text-align:left">DEBUG</td>
+<td style="text-align:left">Green</td>
+</tr>
+<tr>
+<td style="text-align:left">TRACE</td>
+<td style="text-align:left">Green</td>
+</tr>
+</tbody>
+</table>
+<p>或者，你可以通过在转换器中提供选项来指定应该试用的颜色或风格。例如，为了使文本显示黄色：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;yellow&#125;</div></pre></td></tr></table></figure>
+<p>支持下面的颜色和风格：</p>
+<ul>
+<li>blue</li>
+<li>cyan</li>
+<li>faint</li>
+<li>green</li>
+<li>magenta</li>
+<li>red</li>
+<li>yellow</li>
+</ul>
+<h3 id="26-3-文件输出"><a href="#26-3-文件输出" class="headerlink" title="26.3 文件输出"></a>26.3 文件输出</h3><p>默认情况下，Spring Boot只能输出日志到控制台，不会写入日志文件。如果你想除了控制台之外还想写日志文件，你需要设置<code>logging.file</code>或<code>logging.path</code>属性（例如，在你的<code>application.properties</code>）。</p>
+<p>下表显示了<code>logging.*</code>属性怎样在一起使用：</p>
+<p><strong>表 26.1. Logging属性</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">logging.file</th>
+<th style="text-align:left">logging.path</th>
+<th style="text-align:left">Example</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(none</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">只输出到控制台</td>
+</tr>
+<tr>
+<td style="text-align:left">指定文件</td>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">my.log</td>
+<td style="text-align:left">写入指定的日志文件。名字可以是一个绝对位置或相对于当前目录。</td>
+</tr>
+<tr>
+<td style="text-align:left">(none)</td>
+<td style="text-align:left">Specific directory</td>
+<td style="text-align:left">/var/log</td>
+<td style="text-align:left">写<code>spring.log</code>到一个指定的目录。名字可以是一个绝对位置或相对于当前目录。</td>
+</tr>
+</tbody>
+</table>
+<p>当日志文件达到10M时日志文件将循环，至于控制台输出，默认情况下只输出<code>ERROR</code>，<code>WARN</code>和<code>INFO</code>级别的信息。</p>
+<blockquote>
+<p>日志系统在应用程序的生命周期早期进行初始化，同样地，通过<code>@PropertySource</code>注解加载的属性文件中将不会发现日志属性。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>日志属性独立于真正的日志基础架构之外。因此，Spring Boot不管理特定的配置主键（例如Logback的<code>logback.configurationFile</code>）。</p>
+</blockquote>
+<h3 id="26-4-日志级别"><a href="#26-4-日志级别" class="headerlink" title="26.4 日志级别"></a>26.4 日志级别</h3><p>Spring支持的所有日志系统都可以在Spring的<code>Environment</code>中设置日志级别（例如在<code>application.properties</code>设置），使用<code>logging.level.*=LEVEL</code>进行设置，<code>LEVEL</code>是TRACE，DEBUG，INFO，WARN，ERROR，FATAL，OFF中的一个。<code>root</code>日志器可以用<code>logging.level.root</code>来配置。例如在<code>application.properties</code>中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">logging.level.root=WARN</div><div class="line">logging.level.org.springframework.web=DEBUG</div><div class="line">logging.level.org.hibernate=ERROR</div></pre></td></tr></table></figure>
+<blockquote>
+<p>默认情况下Spring Boot重新映射Thymeleaf的<code>INFO</code>信息，为了它们能在<code>DEBUG</code>级别进行输出。这能帮助减少标准日志输出中的噪声。关于怎样在你自己的配置中使用重新映射的更多细节请看<code>LevelRemappingAppender</code>。</p>
+</blockquote>
+<h3 id="26-5-定制日志配置"><a href="#26-5-定制日志配置" class="headerlink" title="26.5 定制日志配置"></a>26.5 定制日志配置</h3><p>在类路径中通过包含恰当的库可以激活各种日志系统，在类路径的根目录中提供一个合适的配置文件可以对日志系统进行更进一步的定制，或者将配置文件放在Spring <code>Environment</code>的<code>logging.config</code>属性中指定的位置。</p>
+<p>你可以使用系统属性<code>org.springframework.boot.logging.LoggingSystem</code>来强制Spring Boot使用一个特定的日志系统。它的值应该是全限定类名的<code>LoggingSystem</code>实现。你也可以通过使用值<code>none</code>来完全禁用Spring Boot的日志配置。</p>
+<blockquote>
+<p>由于日志是在<code>ApplicationContext</code>创建之前初始化，因此不可能从Spring <code>@Configuration</code>文件中的<code>@PropertySources</code>来控制日志。系统属性和传统的Spring Boot外部配置文件可以工作的很好。</p>
+</blockquote>
+<p>根据你的日志系统，将会加载下面的文件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Logging System</th>
+<th style="text-align:left">Customization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Logback</td>
+<td style="text-align:left">logback-spring.xml, logback-spring.groovy, logback.xml or logback.groovy</td>
+</tr>
+<tr>
+<td style="text-align:left">Log4j2</td>
+<td style="text-align:left">log4j2-spring.xml or log4j2.xml</td>
+</tr>
+<tr>
+<td style="text-align:left">JDK (Java Util Logging)</td>
+<td style="text-align:left">logging.properties</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>我们建议你尽可能的使用<code>-spring</code>变种来进行日志配置（例如，<code>logback-spring.xml</code>而不是<code>logback.xml</code>）。如果你在使用标准的配置路径，Spring不能完全控制日志的初始化。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>在Java Java Util Logging中存在类加载问题，当从<code>executable jar</code>运行时会引起问题。我们建议你尽可能的避免它。</p>
+</blockquote>
+<p>为了帮助定制一些其它属性，从Spring <code>Environment</code>中转移到系统属性中：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Spring Environment</th>
+<th style="text-align:left">System Property</th>
+<th style="text-align:left">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">logging.exception-conversion-word</td>
+<td style="text-align:left">LOG_EXCEPTION_CONVERSION_WORD</td>
+<td style="text-align:left">当日志出现异常时会用到这个转换词。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.file</td>
+<td style="text-align:left">LOG_FILE</td>
+<td style="text-align:left">如果定义了，会在默认的日志配置中使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.path</td>
+<td style="text-align:left">LOG_PATH</td>
+<td style="text-align:left">如果定义了，会在默认的日志配置中使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.console</td>
+<td style="text-align:left">CONSOLE_LOG_PATTERN</td>
+<td style="text-align:left">用在控制台中的日志模式(stdout)。(只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.file</td>
+<td style="text-align:left">FILE_LOG_PATTERN</td>
+<td style="text-align:left">用在文件中的日志模式 (如果启用<code>LOG_FILE</code>)。(只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">logging.pattern.level</td>
+<td style="text-align:left">LOG_LEVEL_PATTERN</td>
+<td style="text-align:left">这种模式用来实施日志级别(默认<code>%5p</code>)。 (只支持默认的Logback设置。)</td>
+</tr>
+<tr>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">PID</td>
+<td style="text-align:left">当前的进程ID</td>
+</tr>
+</tbody>
+</table>
+<p>当转换配置文件时，所有的日志系统都支持查询系统属性。例如<code>spring-boot.jar</code>的默认配置。</p>
+<blockquote>
+<p>如果你在日志属性中想使用占位符，你应该试用Spring Boot的语法而不是底层框架的语法。尤其是，如果你在使用Logback，你应该使用<code>:</code>作为属性名和默认值之间的分隔符，而不是<code>:-</code>。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>你可以通过重写<code>LOG_LEVEL_PATTERN</code>（或Logback中的<code>logging.pattern.level</code>）来添加MDC和其它的专门内容来日志行中。例如，你可以使用<code>logging.pattern.level=user:%X{user} %5p</code>，默认的日志形式将包含MDC输入，如果它存在的话，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2015-09-30 12:30:04.031 user:juergen INFO 22174 --- [  nio-8080-exec-0] demo.Controller</div><div class="line">Handling authenticated request</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="26-6-Logback扩展"><a href="#26-6-Logback扩展" class="headerlink" title="26.6 Logback扩展"></a>26.6 Logback扩展</h3><p>Spring Boot包含许多Logback的扩展，这有助于进行更高级的配置。你可以在你的<code>logback-spring.xml</code>配置文件中使用这些扩展。</p>
+<blockquote>
+<p>你不能在标准的<code>logback.xml</code>配置文件中使用扩展，因为它加载的太早了。你需要使用<code>logback-spring.xml</code>或定义<code>logging.config</code>属性。</p>
+</blockquote>
+<h4 id="26-6-1-特定profile的配置"><a href="#26-6-1-特定profile的配置" class="headerlink" title="26.6.1 特定profile的配置"></a>26.6.1 特定profile的配置</h4><p><code>&lt;springProfile&gt;</code>标签允许你自由的包含或排除基于激活的Spring profiles的配置的一部分。在<code>&lt;configuration&gt;</code>元素的任何地方都支持Profile部分。使用<code>name</code>属性来指定哪一个profile接受配置。多个profiles可以用一个逗号分隔的列表来指定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;springProfile name=&quot;staging&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;staging&quot; profile is active --&gt;</div><div class="line">&lt;/springProfile&gt;</div><div class="line"></div><div class="line">&lt;springProfile name=&quot;dev, staging&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;dev&quot; or &quot;staging&quot; profiles are active --&gt;</div><div class="line">&lt;/springProfile&gt;</div><div class="line"></div><div class="line">&lt;springProfile name=&quot;!production&quot;&gt;</div><div class="line">    &lt;!-- configuration to be enabled when the &quot;production&quot; profile is not active --&gt;</div><div class="line">&lt;/springProfile&gt;</div></pre></td></tr></table></figure>
+<h4 id="26-6-2-Environment属性"><a href="#26-6-2-Environment属性" class="headerlink" title="26.6.2 Environment属性"></a>26.6.2 Environment属性</h4><p><code>&lt;springProperty&gt;</code>标签允许你在Logback使用从Spring <code>Environment</code>获得的属性。如果你想在你的Logback配置中访问<code>application.properties</code>文件中的属性，这是非常有用的。这个标签与Logback的标准<code>&lt;property&gt;</code>标签的作用方式类似，但不是为你指定的<code>source</code>属性（从<code>Environment</code>中）指定一个直接的<code>value</code>。如果你需要在某个地方而不是在<code>local</code>作用域中存储属性，你可以使用<code>scope</code>属性。如果你需要一个备用值以防属性没有在<code>Environment</code>中设置，你可以使用<code>defaultValue</code>属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;springProperty scope=&quot;context&quot; name=&quot;fluentHost&quot; source=&quot;myapp.fluentd.host&quot;</div><div class="line">        defaultValue=&quot;localhost&quot;/&gt;</div><div class="line">&lt;appender name=&quot;FLUENT&quot; class=&quot;ch.qos.logback.more.appenders.DataFluentAppender&quot;&gt;</div><div class="line">    &lt;remoteHost&gt;$&#123;fluentHost&#125;&lt;/remoteHost&gt;</div><div class="line">    ...</div><div class="line">&lt;/appender&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>RelaxedPropertyResolver</code>是用来访问<code>Environment</code>属性。如果在破折号符号中指定了<code>source</code>，则会尝试所有的不严格的变种（<code>myPropertyName</code>，<code>MY_PROPERTY_NAME</code>等）。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://ocs628urt.bkt.clouddn.com/weixin_pay_meitu_2.jpg" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://ocs628urt.bkt.clouddn.com/ali_pay_meitu_1.jpg" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/09/2017-01-09-Java的Class对象/" rel="next" title="Java的Class对象">
+                <i class="fa fa-chevron-left"></i> Java的Class对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中英文对照_Part IV_26/" rel="prev" title="Spring Boot 2.0.0参考手册_中英文对照_Part IV_26">
+                Spring Boot 2.0.0参考手册_中英文对照_Part IV_26 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">384</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#26-Logging"><span class="nav-number">1.</span> <span class="nav-text">26. Logging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#26-1-Log格式"><span class="nav-number">1.1.</span> <span class="nav-text">26.1 Log格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-2-控制台输出"><span class="nav-number">1.2.</span> <span class="nav-text">26.2 控制台输出</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#26-2-1-颜色编码输出"><span class="nav-number">1.2.1.</span> <span class="nav-text">26.2.1 颜色编码输出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-3-文件输出"><span class="nav-number">1.3.</span> <span class="nav-text">26.3 文件输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-4-日志级别"><span class="nav-number">1.4.</span> <span class="nav-text">26.4 日志级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-5-定制日志配置"><span class="nav-number">1.5.</span> <span class="nav-text">26.5 定制日志配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-6-Logback扩展"><span class="nav-number">1.6.</span> <span class="nav-text">26.6 Logback扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#26-6-1-特定profile的配置"><span class="nav-number">1.6.1.</span> <span class="nav-text">26.6.1 特定profile的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#26-6-2-Environment属性"><span class="nav-number">1.6.2.</span> <span class="nav-text">26.6.2 Environment属性</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/';
+        this.page.identifier = '2017/01/09/2017-01-09-Spring Boot 2.0.0参考手册_中文版_Part IV_26/';
+        this.page.title = 'Spring Boot 2.0.0参考手册_中文版_Part IV_26';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
