@@ -99,13 +99,13 @@
 <meta property="og:url" content="http://noahsnail.com/2017/09/18/2017-09-18-Improving Deep Neural Networks学习笔记(二)/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Improving Deep Neural Networks学习笔记(二)">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ewa_1.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/ewa_2.png">
-<meta property="og:updated_time" content="2017-09-21T14:32:45.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-75cc0ea5b8d1f696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4fddbc98bc90d3fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T03:17:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Improving Deep Neural Networks学习笔记(二)">
 <meta name="twitter:description" content="Improving Deep Neural Networks学习笔记(二)">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/ewa_1.png">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-75cc0ea5b8d1f696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -374,9 +374,9 @@
 <p>View $V_t$ as approximately averaging over $\frac {1} {1 - \beta}$.</p>
 <p>It’s called moving average in the statistics literature.</p>
 <p>$\beta = 0.9$：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/ewa_1.png" alt="Figure 1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-75cc0ea5b8d1f696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
 <p>$\beta = 0.9(red)$，$\beta = 0.98(green)$，$\beta = 0.5(yellow)$：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/ewa_2.png" alt="Figure 2"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4fddbc98bc90d3fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
 <h4 id="4-4-Understanding-exponentially-weighted-averages"><a href="#4-4-Understanding-exponentially-weighted-averages" class="headerlink" title="4.4 Understanding exponentially weighted averages"></a>4.4 Understanding exponentially weighted averages</h4><p>$\theta$ is the temperature of the day.</p>
 <p>$$v_{100} = 0.9v_{99} + 0.1 \theta_{100}$$$$v_{99} = 0.9v_{98} + 0.1 \theta_{99}$$$$…$$</p>
 <p>So $$v_{100} = 0.1 * \theta _{100} + 0.1 * 0.9 * \theta _{99} + … + 0.1 * 0.9^{i} * \theta _{100-i} + …$$</p>

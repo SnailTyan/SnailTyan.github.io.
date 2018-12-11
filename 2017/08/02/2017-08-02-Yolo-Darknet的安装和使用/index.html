@@ -99,14 +99,14 @@
 <meta property="og:url" content="http://noahsnail.com/2017/08/02/2017-08-02-Yolo-Darknet的安装和使用/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Yolo-Darknet的安装和使用">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/predictions.jpg">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/horse-predictions.jpg">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/thres-predictions.jpg">
-<meta property="og:updated_time" content="2017-08-03T03:10:09.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-334f55cbfcb54c6f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0a94e10f34494c28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2649da914e26403a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T03:26:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Yolo-Darknet的安装和使用">
 <meta name="twitter:description" content="Yolo-Darknet的安装和使用">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/predictions.jpg">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-334f55cbfcb54c6f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -369,17 +369,17 @@
 <li>使用预训练的模型进行目标检测</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg</div></pre></td></tr></table></figure>
-<p><img src="http://ocs628urt.bkt.clouddn.com/predictions.jpg" alt="Result"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-334f55cbfcb54c6f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Result"></p>
 <ul>
 <li>输入图像名称进行检测</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">$ ./darknet detect cfg/yolo.cfg yolo.weights</div><div class="line"># 输入 data/horses.jpg</div><div class="line"># 执行结果如下:</div><div class="line">layer     filters    size              input                output</div><div class="line">    0 conv     32  3 x 3 / 1   608 x 608 x   3   -&gt;   608 x 608 x  32</div><div class="line">    1 max          2 x 2 / 2   608 x 608 x  32   -&gt;   304 x 304 x  32</div><div class="line">    2 conv     64  3 x 3 / 1   304 x 304 x  32   -&gt;   304 x 304 x  64</div><div class="line">    3 max          2 x 2 / 2   304 x 304 x  64   -&gt;   152 x 152 x  64</div><div class="line">    4 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128</div><div class="line">    5 conv     64  1 x 1 / 1   152 x 152 x 128   -&gt;   152 x 152 x  64</div><div class="line">    6 conv    128  3 x 3 / 1   152 x 152 x  64   -&gt;   152 x 152 x 128</div><div class="line">    7 max          2 x 2 / 2   152 x 152 x 128   -&gt;    76 x  76 x 128</div><div class="line">    8 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256</div><div class="line">    9 conv    128  1 x 1 / 1    76 x  76 x 256   -&gt;    76 x  76 x 128</div><div class="line">   10 conv    256  3 x 3 / 1    76 x  76 x 128   -&gt;    76 x  76 x 256</div><div class="line">   11 max          2 x 2 / 2    76 x  76 x 256   -&gt;    38 x  38 x 256</div><div class="line">   12 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512</div><div class="line">   13 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256</div><div class="line">   14 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512</div><div class="line">   15 conv    256  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x 256</div><div class="line">   16 conv    512  3 x 3 / 1    38 x  38 x 256   -&gt;    38 x  38 x 512</div><div class="line">   17 max          2 x 2 / 2    38 x  38 x 512   -&gt;    19 x  19 x 512</div><div class="line">   18 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024</div><div class="line">   19 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512</div><div class="line">   20 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024</div><div class="line">   21 conv    512  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 512</div><div class="line">   22 conv   1024  3 x 3 / 1    19 x  19 x 512   -&gt;    19 x  19 x1024</div><div class="line">   23 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024</div><div class="line">   24 conv   1024  3 x 3 / 1    19 x  19 x1024   -&gt;    19 x  19 x1024</div><div class="line">   25 route  16</div><div class="line">   26 conv     64  1 x 1 / 1    38 x  38 x 512   -&gt;    38 x  38 x  64</div><div class="line">   27 reorg              / 2    38 x  38 x  64   -&gt;    19 x  19 x 256</div><div class="line">   28 route  27 24</div><div class="line">   29 conv   1024  3 x 3 / 1    19 x  19 x1280   -&gt;    19 x  19 x1024</div><div class="line">   30 conv    425  1 x 1 / 1    19 x  19 x1024   -&gt;    19 x  19 x 425</div><div class="line">   31 detection</div><div class="line">mask_scale: Using default &apos;1.000000&apos;</div><div class="line">Loading weights from yolo.weights...Done!</div><div class="line">Enter Image Path: data/horses.jpg</div><div class="line">data/horses.jpg: Predicted in 0.030211 seconds.</div><div class="line">horse: 46%</div><div class="line">horse: 59%</div><div class="line">horse: 91%</div><div class="line"> </div><div class="line">(predictions:31): Gtk-WARNING **: cannot open display:</div></pre></td></tr></table></figure>
-<p><img src="http://ocs628urt.bkt.clouddn.com/horse-predictions.jpg" alt="result"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0a94e10f34494c28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="result"></p>
 <ul>
 <li>设置检测阈值</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg -thresh 0.1</div></pre></td></tr></table></figure>
-<p><img src="http://ocs628urt.bkt.clouddn.com/thres-predictions.jpg" alt="result"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2649da914e26403a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="result"></p>
 <ul>
 <li>检测视频</li>
 </ul>

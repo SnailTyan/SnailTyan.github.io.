@@ -99,19 +99,19 @@
 <meta property="og:url" content="http://noahsnail.com/2017/08/07/2017-08-07-AlexNet论文总结/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="AlexNet论文总结">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Fig%202.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Figure%201.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/architecture.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/exp_1.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/exp_2.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Alex_2.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Alex_sup_2.png">
-<meta property="og:updated_time" content="2017-08-07T10:09:20.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-7a3ad2565c062e34.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-5afe305fc6de624b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4dc16441e09d297e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-c35f519db5eb56dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-8267a5d9db12ac4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-e64bfc4802ae5a0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-84d019238b5a8d59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-266ed210f92ab2aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T03:24:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AlexNet论文总结">
 <meta name="twitter:description" content="AlexNet论文总结">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-7a3ad2565c062e34.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -367,7 +367,7 @@
       
 
       
-        <p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
+        <p><img src="http://upload-images.jianshu.io/upload_images/3232548-7a3ad2565c062e34.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Deep Learning"></p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h3 id="Preconditions"><a href="#Preconditions" class="headerlink" title="Preconditions"></a>Preconditions</h3><ul>
 <li><p>ImageNet<br>Objects in realistic settings exhibit considerable variability, so to learn to recognize them it is necessary to use much larger training sets. <strong>ImageNet</strong> consists of over 15 million labeled high-resolution images in over 22,000 categories.</p>
 </li>
@@ -382,12 +382,12 @@
 <li>The size of our network made overfitting a significant problem, even with 1.2 million labeled training examples, so we used several effective techniques for preventing overfitting. </li>
 <li>Our final network contains five convolutional and three fully-connected layers, and this depth seems to be important: we found that removing any convolutional layer (each of which contains no more than 1% of the model’s parameters) resulted in inferior performance.</li>
 </ul>
-<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://ocs628urt.bkt.clouddn.com/Fig%202.png" alt="Figure"></p>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://upload-images.jianshu.io/upload_images/3232548-5afe305fc6de624b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure"></p>
 <p>The neural network, which has 60 million parameters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully-connected layers with a final 1000-way softmax. </p>
 <h3 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h3><p><strong>Motivation</strong>: We are not the first to consider alternatives to traditional neuron models in CNNs. </p>
 <p>The standard way to model a neuron’s output f as a function of its input x is with $f(x)=tanh(x)$ or $f(x)=(1+e_{−x})^{−1}$. In terms of training time with gradient descent, these <strong>saturating nonlinearities</strong> are much slower than the <strong>non-saturating nonlinearity</strong> $f(x)=max(0,x)$. Deep convolutional neural networks with ReLUs train several times faster than their equivalents with tanh units.</p>
 <p><strong>Note</strong>: Saturation of Sigmoid f(x) refers to the time when the output is almost zero or 1, where the gradient in the region is almost zero, causing the local gradient to disappear.</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Figure%201.png" alt="Figure"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4dc16441e09d297e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure"></p>
 <p>A four-layer convolutional neural network with ReLUs (solid line) reaches a 25% training error rate on CIFAR-10 six times faster than an equivalent network with tanh neurons (dashed line). </p>
 <h3 id="Training-on-Multiple-GPUs"><a href="#Training-on-Multiple-GPUs" class="headerlink" title="Training on Multiple GPUs"></a>Training on Multiple GPUs</h3><p>A single GTX 580 GPU has only 3GB of memory, which limits the maximum size of the networks that can be trained on it. It turns out that 1.2 million training examples are enough to train networks which are too big to fit on one GPU. Therefore we spread the net across two GPUs. The parallelization scheme that we employ essentially puts half of the kernels (or neurons) on each GPU, with one additional trick: <strong>the GPUs communicate only in certain layers</strong>.<br><strong>Result</strong>: This scheme reduces our <code>top-1</code> and <code>top-5</code> error rates by <code>1.7%</code> and <code>1.2%</code>, respectively, as compared with a net with half as many kernels in each convolutional layer trained on one GPU. The two-GPU net takes <strong>slightly less time</strong> to train than the one-GPU net.</p>
 <h3 id="Local-Response-Normalization"><a href="#Local-Response-Normalization" class="headerlink" title="Local Response Normalization"></a>Local Response Normalization</h3><p>Motivation: This sort of response normalization implements a form of <strong>lateral inhibition</strong> inspired by the type found in real neurons, creating competition for big activities amongst neuron outputs computed using different kernels.</p>
@@ -397,7 +397,7 @@
 <p><strong>Result</strong>: Response normalization reduces our <code>top-1</code> and <code>top-5</code> error rates by <code>1.4%</code> and <code>1.2%</code>, respectively.</p>
 <h3 id="Overlapping-Pooling"><a href="#Overlapping-Pooling" class="headerlink" title="Overlapping Pooling"></a>Overlapping Pooling</h3><p>A pooling layer can be thought of as consisting of a grid of pooling units spaced $s$ pixels apart, each summarizing a neighborhood of size $z × z$ centered at the location of the pooling unit. If we set $s = z$, we obtain traditional local pooling as commonly employed in CNNs. If we set $s &lt; z$, we obtain overlapping pooling. This is what we use throughout our network, with $s = 2$ and $z = 3$.</p>
 <p><strong>Result</strong>: This scheme reduces the <code>top-1</code> and <code>top-5</code> error rates by <code>0.4%</code> and <code>0.3%</code>, respectively. We generally observe during training that models with overlapping pooling find it slightly <strong>more difficult to overfit</strong>.</p>
-<h3 id="Overall-Architecture"><a href="#Overall-Architecture" class="headerlink" title="Overall Architecture"></a>Overall Architecture</h3><p><img src="http://ocs628urt.bkt.clouddn.com/architecture.png" alt="Architecture"></p>
+<h3 id="Overall-Architecture"><a href="#Overall-Architecture" class="headerlink" title="Overall Architecture"></a>Overall Architecture</h3><p><img src="http://upload-images.jianshu.io/upload_images/3232548-c35f519db5eb56dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Architecture"></p>
 <h1 id="Reduce-Overfitting"><a href="#Reduce-Overfitting" class="headerlink" title="Reduce Overfitting"></a>Reduce Overfitting</h1><h3 id="Data-Augmentation"><a href="#Data-Augmentation" class="headerlink" title="Data Augmentation"></a>Data Augmentation</h3><p>The first form of data augmentation consists of generating image translations and horizontal reflections.</p>
 <p>The second form of data augmentation consists of altering the intensities of the RGB channels in training images. Specifically, we perform PCA on the set of RGB pixel values throughout the ImageNet training set. To each training image, we add multiples of the found principal components, with magnitudes proportional to the corresponding eigenvalues times a random variable drawn from a Gaussian with mean zero and standard deviation 0.1. Therefore to each RGB image pixel $I_{xy} = [I^R_{xy} , I^G_{xy} , I^B_{xy} ]^T$ we add the following quantity: </p>
 <p>$$[p_1, p_2, p_3][\alpha_1\lambda_1, \alpha_2\lambda_2, \alpha_3\lambda_3]^T$$</p>
@@ -405,11 +405,11 @@
 <p><strong>Result</strong>: This scheme reduces the <code>top-1</code> error rate by over <code>1%</code>.</p>
 <h3 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h3><p><strong>Motivation</strong>: Combining the predictions of many different models is a very successful way to reduce test errors, but it appears to be too expensive for big neural networks that already take several days to train.</p>
 <p>There is, however, a very efficient version of model combination that only costs about a factor of two during training. The recently-introduced technique, called <strong>“dropout”</strong>, consists of setting to zero the output of each hidden neuron with probability 0.5. We use dropout in the first two fully-connected layers. Without dropout, our network exhibits substantial overfitting. Dropout roughly <strong>doubles</strong> the number of iterations required to converge.</p>
-<h1 id="Experimental-Results"><a href="#Experimental-Results" class="headerlink" title="Experimental Results"></a>Experimental Results</h1><p><img src="http://ocs628urt.bkt.clouddn.com/exp_1.png" alt="Table 1"></p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/exp_2.png" alt="Table 2"></p>
+<h1 id="Experimental-Results"><a href="#Experimental-Results" class="headerlink" title="Experimental Results"></a>Experimental Results</h1><p><img src="http://upload-images.jianshu.io/upload_images/3232548-8267a5d9db12ac4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-e64bfc4802ae5a0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks" target="_blank" rel="external">https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks</a></p>
-<h1 id="Supplement-material"><a href="#Supplement-material" class="headerlink" title="Supplement material"></a>Supplement material</h1><p><img src="http://ocs628urt.bkt.clouddn.com/Alex_2.png" alt="Fig 1"></p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Alex_sup_2.png" alt="Fig 2"></p>
+<h1 id="Supplement-material"><a href="#Supplement-material" class="headerlink" title="Supplement material"></a>Supplement material</h1><p><img src="http://upload-images.jianshu.io/upload_images/3232548-84d019238b5a8d59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Fig 1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-266ed210f92ab2aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Fig 2"></p>
 
       
     </div>

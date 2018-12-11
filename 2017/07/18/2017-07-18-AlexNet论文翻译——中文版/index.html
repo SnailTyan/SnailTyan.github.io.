@@ -99,18 +99,18 @@
 <meta property="og:url" content="http://noahsnail.com/2017/07/18/2017-07-18-AlexNet论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="AlexNet论文翻译——中文版">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Figure%201.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Fig%202.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Table%201.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Table%202.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Figure%203.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/Figure%204.png">
-<meta property="og:updated_time" content="2018-05-15T09:25:33.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-5f572d01bddcca22.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-a493a7e2928eb8e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-ef1e9f38134b7658.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-8892b458a335e5e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-1352cf7d4166d096.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-fd1a5e354b552735.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-dc0806354c7264ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T03:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AlexNet论文翻译——中文版">
 <meta name="twitter:description" content="AlexNet论文翻译——中文版">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-5f572d01bddcca22.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -366,9 +366,7 @@
       
 
       
-        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/we-need-to-go-deeper.jpg" alt="Deep Learning"></p>
-<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+        <p><img src="http://upload-images.jianshu.io/upload_images/3232548-5f572d01bddcca22.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Deep Learning"><br>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a>  |  <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a>  |  <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="ImageNet-Classification-with-Deep-Convolutional-Neural-Networks"><a href="#ImageNet-Classification-with-Deep-Convolutional-Neural-Networks" class="headerlink" title="ImageNet Classification with Deep Convolutional Neural Networks"></a>ImageNet Classification with Deep Convolutional Neural Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们训练了一个大型深度卷积神经网络来将<code>ImageNet LSVRC-2010</code>竞赛的120万高分辨率的图像分到1000不同的类别中。在测试数据上，我们得到了<code>top-1 37.5%, top-5 17.0%</code>的错误率，这个结果比目前的最好结果好很多。这个神经网络有6000万参数和650000个神经元，包含5个卷积层（某些卷积层后面带有池化层）和3个全连接层，最后是一个1000维的softmax。为了训练的更快，我们使用了非饱和神经元并对卷积操作进行了非常有效的GPU实现。为了减少全连接层的过拟合，我们采用了一个最近开发的名为<code>dropout</code>的正则化方法，结果证明是非常有效的。我们也使用这个模型的一个变种参加了<code>ILSVRC-2012</code>竞赛，赢得了冠军并且与第二名 <code>top-5 26.2%</code>的错误率相比，我们取得了<code>top-5 15.3%</code>的错误率。</p>
@@ -382,17 +380,17 @@
 <p>ImageNet包含各种分辨率的图像，而我们的系统要求不变的输入维度。因此，我们将图像进行下采样到固定的<code>256×256</code>分辨率。给定一个矩形图像，我们首先缩放图像短边长度为256，然后从结果图像中裁剪中心的<code>256×256</code>大小的图像块。除了在训练集上对像素减去平均活跃度外，我们不对图像做任何其它的预处理。因此我们在原始的RGB像素值（中心的）上训练我们的网络。</p>
 <h2 id="3-架构"><a href="#3-架构" class="headerlink" title="3 架构"></a>3 架构</h2><p>我们的网络架构概括为图2。它包含八个学习层--5个卷积层和3个全连接层。下面，我们将描述我们网络结构中的一些新奇的不寻常的特性。3.1-3.4小节按照我们对它们评估的重要性进行排序，最重要的最有先。</p>
 <h3 id="3-1-ReLU非线性"><a href="#3-1-ReLU非线性" class="headerlink" title="3.1 ReLU非线性"></a>3.1 ReLU非线性</h3><p>将神经元输出<code>f</code>建模为输入<code>x</code>的函数的标准方式是用<code>f(x) = tanh(x)</code>或<code>f(x) = (1 + e−x)−1</code>。考虑到梯度下降的训练时间，这些饱和的非线性比非饱和非线性<code>f(x) = max(0,x)</code>更慢。根据Nair和Hinton[20]的说法，我们将这种非线性神经元称为修正线性单元(ReLU)。采用ReLU的深度卷积神经网络训练时间比等价的<code>tanh</code>单元要快几倍。在图1中，对于一个特定的四层卷积网络，在CIFAR-10数据集上达到25%的训练误差所需要的迭代次数可以证实这一点。这幅图表明，如果我们采用传统的饱和神经元模型，我们将不能在如此大的神经网络上实验该工作。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Figure%201.png" alt="Figure 1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-a493a7e2928eb8e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
 <p>图1：使用ReLU的四层卷积神经网络在CIFAR-10数据集上达到25%的训练误差比使用tanh神经元的等价网络（虚线）快六倍。为了使训练尽可能快，每个网络的学习率是单独选择的。没有采用任何类型的正则化。影响的大小随着网络结构的变化而变化，这一点已得到证实，但使用ReLU的网络都比等价的饱和神经元快几倍。</p>
 <p>我们不是第一个考虑替代CNN中传统神经元模型的人。例如，Jarrett等人[11]声称非线性函数<code>f(x) = |tanh(x)|</code>与其对比度归一化一起，然后是局部均值池化，在Caltech-101数据集上工作的非常好。然而，在这个数据集上主要的关注点是防止过拟合，因此他们观测到的影响不同于我们使用ReLU拟合数据集时的加速能力。更快的学习对大型数据集上大型模型的性能有很大的影响。</p>
 <h3 id="3-2-多GPU训练"><a href="#3-2-多GPU训练" class="headerlink" title="3.2 多GPU训练"></a>3.2 多GPU训练</h3><p>单个GTX580 GPU只有3G内存，这限制了可以在GTX580上进行训练的网络最大尺寸。事实证明120万图像用来进行网络训练是足够的，但网络太大因此不能在单个GPU上进行训练。因此我们将网络分布在两个GPU上。目前的GPU非常适合跨GPU并行，因为它们可以直接互相读写内存，而不需要通过主机内存。我们采用的并行方案基本上每个GPU放置一半的核（或神经元），还有一个额外的技巧：只在某些特定的层上进行GPU通信。这意味着，例如，第3层的核会将第2层的所有核映射作为输入。然而，第4层的核只将位于相同GPU上的第3层的核映射作为输入。连接模式的选择是一个交叉验证问题，但这可以让我们准确地调整通信数量，直到它的计算量在可接受的范围内。</p>
 <p>除了我们的列不是独立的之外（看图2），最终的架构有点类似于Ciresan等人[5]采用的“columnar” CNN。与每个卷积层一半的核在单GPU上训练的网络相比，这个方案降分别低了我们的<code>top-1 1.7%</code>，<code>top-5 1.2%</code>的错误率。双GPU网络比单GPU网络稍微减少了训练时间。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Fig%202.png" alt="Figure 2"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ef1e9f38134b7658.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
 <p>图 2：我们CNN架构图解，明确描述了两个GPU之间的责任。在图的顶部，一个GPU运行在部分层上，而在图的底部，另一个GPU运行在部分层上。GPU只在特定的层进行通信。网络的输入是150,528维，网络剩下层的神经元数目分别是253,440–186,624–64,896–64,896–43,264–4096–4096–1000（8层）。</p>
 <h3 id="3-3-局部响应归一化"><a href="#3-3-局部响应归一化" class="headerlink" title="3.3 局部响应归一化"></a>3.3 局部响应归一化</h3><p>ReLU具有让人满意的特性，它不需要通过输入归一化来防止饱和。如果至少一些训练样本对ReLU产生了正输入，那么那个神经元上将发生学习。然而，我们仍然发现接下来的局部响应归一化有助于泛化。$a_{x,y}^i$表示神经元激活，通过在$(x, y)$位置应用核$i$，然后应用ReLU非线性来计算，响应归一化激活$b^i_{x,y}$通过下式给定：</p>
 <p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^i)^2 )^\beta$$</p>
 <p>求和运算在n个“毗邻的”核映射的同一位置上执行，N是本层的卷积核数目。核映射的顺序当然是任意的，在训练开始前确定。响应归一化的顺序实现了一种侧抑制形式，灵感来自于真实神经元中发现的类型，为使用不同核进行神经元输出计算的较大活动创造了竞争。常量k，n，α，β是超参数，它们的值通过验证集确定；我们设k=2，n=5，α=0.0001，β=0.75。我们在特定的层使用的ReLU非线性之后应用了这种归一化（请看3.5小节）。</p>
-<p>这个方案与Jarrett等人[11]的局部对比度归一化方案有一定的相似性，但我们更恰当的称其为“亮度归一化”，因此我们没有减去均值。响应归一化分别减少了<code>top-1 1.4%</code>，<code>top-5 1.2%</code>的错误率。我们也在CIFAR-10数据集上验证了这个方案的有效性：一个没有归一化的四层CNN取得了13%的错误率，而使用归一化取得了11%的错误率。</p>
+<p>这个方案与Jarrett等人[11]的局部对比度归一化方案有一定的相似性，但我们更恰当的称其为“亮度归一化”，因此我们没有减去均值。响应归一化分别减少了<code>top-1 1.4%</code>，<code>top-5 1.2%</code>的错误率。我们也在CIFAR-10数据集上验证了这个方案的有效性：一个乜嘢归一化的四层CNN取得了13%的错误率，而使用归一化取得了11%的错误率。</p>
 <h3 id="3-4-重叠池化"><a href="#3-4-重叠池化" class="headerlink" title="3.4 重叠池化"></a>3.4 重叠池化</h3><p>CNN中的池化层归纳了同一核映射上相邻组神经元的输出。习惯上，相邻池化单元归纳的区域是不重叠的（例如[17, 11, 4]）。更确切的说，池化层可看作由池化单元网格组成，网格间距为$s$个像素，每个网格归纳池化单元中心位置$z × z$大小的邻居。如果设置$s = z$，我们会得到通常在CNN中采用的传统局部池化。如果设置$s &lt; z$，我们会得到重叠池化。这就是我们网络中使用的方法，设置$s = 2$，$z = 3$。这个方案分别降低了<code>top-1 0.4%</code>，<code>top-5 0.3%</code>的错误率，与非重叠方案$s = 2，z = 2$相比，输出的维度是相等的。我们在训练过程中通常观察采用重叠池化的模型，发现它更难过拟合。</p>
 <h3 id="3-5-整体架构"><a href="#3-5-整体架构" class="headerlink" title="3.5 整体架构"></a>3.5 整体架构</h3><p>现在我们准备描述我们的CNN的整体架构。如图2所示，我们的网络包含8个带权重的层；前5层是卷积层，剩下的3层是全连接层。最后一层全连接层的输出是1000维softmax的输入，softmax会产生1000类标签的分布。我们的网络最大化多项逻辑回归的目标，这等价于最大化预测分布下训练样本正确标签的对数概率的均值。</p>
 <p>第2，4，5卷积层的核只与位于同一GPU上的前一层的核映射相连接（看图2）。第3卷积层的核与第2层的所有核映射相连。全连接层的神经元与前一层的所有神经元相连。第1，2卷积层之后是响应归一化层。3.4节描述的这种最大池化层在响应归一化层和第5卷积层之后。ReLU非线性应用在每个卷积层和全连接层的输出上。</p>
@@ -411,17 +409,17 @@
 <p>我们使用均值为0，标准差为0.01的高斯分布对每一层的权重进行初始化。我们在第2，4，5卷积层和全连接隐层将神经元偏置初始化为常量1。这个初始化通过为ReLU提供正输入加速了学习的早期阶段。我们在剩下的层将神经元偏置初始化为0。</p>
 <p>我们对所有的层使用相等的学习率，这个是在整个训练过程中我们手动调整得到的。当验证误差在当前的学习率下停止提供时，我们遵循启发式的方法将学习率除以10。学习率初始化为0.01，在训练停止之前降低三次。我们在120万图像的训练数据集上训练神经网络大约90个循环，在两个NVIDIA GTX 580 3GB GPU上花费了五到六天。</p>
 <h2 id="6-结果"><a href="#6-结果" class="headerlink" title="6 结果"></a>6 结果</h2><p>我们在ILSVRC-2010上的结果概括为表1。我们的神经网络取得了<code>top-1 37.5%</code>，<code>top-5 17.0%</code>的错误率。在ILSVRC-2010竞赛中最佳结果是<code>top-1 47.1%</code>，<code>top-5 28.2%</code>，使用的方法是对6个在不同特征上训练的稀疏编码模型生成的预测进行平均，从那时起已公布的最好结果是<code>top-1 45.7%</code>，<code>top-5 25.7%</code>，使用的方法是平均在Fisher向量（FV）上训练的两个分类器的预测结果，Fisher向量是通过两种密集采样特征计算得到的[24]。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Table%201.png" alt="表1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-8892b458a335e5e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="表1"></p>
 <p>表1：ILSVRC-2010测试集上的结果对比。斜体是其它人取得的最好结果。</p>
 <p>我们也用我们的模型参加了ILSVRC-2012竞赛并在表2中报告了我们的结果。由于ILSVRC-2012的测试集标签不可以公开得到，我们不能报告我们尝试的所有模型的测试错误率。在这段的其余部分，我们会使用验证误差率和测试误差率互换，因为在我们的实验中它们的差别不会超过0.1%（看图2）。本文中描述的CNN取得了<code>top-5 18.2%</code>的错误率。五个类似的CNN预测的平均误差率为16.4%。为了对ImageNet 2011秋季发布的整个数据集（1500万图像，22000个类别）进行分类，我们在最后的池化层之后有一个额外的第6卷积层，训练了一个CNN，然后在它上面进行“fine-tuning”，在ILSVRC-2012取得了16.6%的错误率。对在ImageNet 2011秋季发布的整个数据集上预训练的两个CNN和前面提到的五个CNN的预测进行平均得到了15.3%的错误率。第二名的最好竞赛输入取得了26.2%的错误率，他的方法是对FV上训练的一些分类器的预测结果进行平均，FV在不同类型密集采样特征计算得到的。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Table%202.png" alt="表2"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-1352cf7d4166d096.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="表2"></p>
 <p>表2：ILSVRC-2012验证集和测试集的误差对比。斜线部分是其它人取得的最好的结果。带星号的是“预训练的”对ImageNet 2011秋季数据集进行分类的模型。更多细节请看第六节。</p>
 <p>最后，我们也报告了我们在ImageNet 2009秋季数据集上的误差率，ImageNet 2009秋季数据集有10,184个类，890万图像。在这个数据集上我们按照惯例用一半的图像来训练，一半的图像来测试。由于没有建立测试集，我们的数据集分割有必要不同于以前作者的数据集分割，但这对结果没有明显的影响。我们在这个数据集上的的top-1和top-5错误率是67.4%和40.9%，使用的是上面描述的在最后的池化层之后有一个额外的第6卷积层网络。这个数据集上公开可获得的最好结果是78.1%和60.9%[19]。</p>
 <h3 id="6-1-定性评估"><a href="#6-1-定性评估" class="headerlink" title="6.1 定性评估"></a>6.1 定性评估</h3><p>图3显示了网络的两个数据连接层学习到的卷积核。网络学习到了大量的频率核、方向选择核，也学到了各种颜色点。注意两个GPU表现出的专业化，3.5小节中描述的受限连接的结果。GPU 1上的核主要是没有颜色的，而GPU 2上的核主要是针对颜色的。这种专业化在每次运行时都会发生，并且是与任何特别的随机权重初始化（以GPU的重新编号为模）无关的。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Figure%203.png" alt="Figure 3"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-fd1a5e354b552735.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
 <p>图3：第一卷积层在224×224×3的输入图像上学习到的大小为11×11×3的96个卷积核。上面的48个核是在GPU 1上学习到的而下面的48个卷积核是在GPU 2上学习到的。更多细节请看6.1小节。</p>
 <p>在图4的左边部分，我们通过在8张测试图像上计算它的top-5预测定性地评估了网络学习到的东西。注意即使是不在图像中心的目标也能被网络识别，例如左上角的小虫。大多数的top-5标签似乎是合理的。例如，对于美洲豹来说，只有其它类型的猫被认为是看似合理的标签。在某些案例（格栅，樱桃）中，网络在意的图片焦点真的很含糊。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/Figure%204.png" alt="Figure 4"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-dc0806354c7264ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
 <p>图4：（左）8张ILSVRC-2010测试图像和我们的模型认为最可能的5个标签。每张图像的下面是它的正确标签，正确标签的概率用红条表示（如果正确标签在top 5中）。（右）第一列是5张ILSVRC-2010测试图像。剩下的列展示了6张训练图像，这些图像在最后的隐藏层的特征向量与测试图像的特征向量有最小的欧氏距离。</p>
 <p>探索网络可视化知识的另一种方式是思考最后的4096维隐藏层在图像上得到的特征激活。如果两幅图像生成的特征激活向量之间有较小的欧式距离，我们可以认为神经网络的更高层特征认为它们是相似的。图4表明根据这个度量标准，测试集的5张图像和训练集的6张图像中的每一张都是最相似的。注意在像素级别，检索到的训练图像与第一列的查询图像在L2上通常是不接近的。例如，检索的狗和大象似乎有很多姿态。我们在补充材料中对更多的测试图像呈现了这种结果。</p>
 <p>通过两个4096维实值向量间的欧氏距离来计算相似性是效率低下的，但通过训练一个自动编码器将这些向量压缩为短二值编码可以使其变得高效。这应该会产生一种比将自动编码器应用到原始像素上[14]更好的图像检索方法，自动编码器应用到原始像素上的方法没有使用图像标签，因此会趋向于检索与要检索的图像具有相似边缘模式的图像，无论它们是否是语义上相似。</p>

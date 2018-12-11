@@ -99,13 +99,13 @@
 <meta property="og:url" content="http://noahsnail.com/2016/10/05/2016-10-05-Spring框架参考手册_中文版_3.5_5.0.0版本/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Bean作用域">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_singleton.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/spring_prototype.png">
-<meta property="og:updated_time" content="2016-10-07T14:05:49.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-b947a52c7f5a563d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-da8c61a3a754adf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T05:44:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring 5.0.0框架介绍_中文版_3.5">
 <meta name="twitter:description" content="Bean作用域">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/spring_singleton.png">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-b947a52c7f5a563d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -405,12 +405,12 @@
 </blockquote>
 <h4 id="3-5-1-单例作用域"><a href="#3-5-1-单例作用域" class="headerlink" title="3.5.1 单例作用域"></a>3.5.1 单例作用域</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单例bean只管理一个<em>共享</em>实例，id匹配bean定义的所有对beans的请求，Spring容器会返回一个特定的bean实例。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;换言之，当你定义一个bean定义时，它的作用域为单例，Spring IoC容器会根据bean定义创建一个确定的对象实例。这个单独的实例存储在单例beans的缓存中，接下来的对这个命名bean的所有请求和引用都会返回那个缓存的对象。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/spring_singleton.png" alt="image"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b947a52c7f5a563d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spring中的单例bean概念不同于《设计模式》书中定义的单例模式。设计模式中的单例是对对象的作用域进行硬编码，为的是每个类加载器只能创建一个特定类的实例。Spring单例作用域最好的描述是每个容器每个类。这意味着如果你在单个的Spring容器中为一个特定的类定义了一个bean，Spring只会根据bean定义创建一个类的实例。在Spring中单例作用域是默认的作用域。为了在XML定义一个单例bean，你可以像下面一样写，例如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.foo.DefaultAccountService"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- the following is equivalent, though redundant (singleton scope is the default) --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.foo.DefaultAccountService"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="3-5-2-原型作用域"><a href="#3-5-2-原型作用域" class="headerlink" title="3.5.2 原型作用域"></a>3.5.2 原型作用域</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非单例模式，bean部署采用原型作用域时，每次产生一个特定bean的请求时都会创建一个新的bean实例。也就是说，这个bean会注入到另一个bean中或你可以在容器中通过调用<code>getBean()</code>方法来请求它。通常，对于所有有状态的beans使用原型作用域，对于无状态的beans使用单例作用域。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的图阐述了Spring原型作用域。数据访问对象（DAO）通常是不会配置为原型的，因为一个典型的DAO不会有任何会话状态；对于作者来说很容易重用单例图的核心。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/spring_prototype.png" alt="image"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-da8c61a3a754adf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的例子在XML中定义一个原型bean：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.foo.DefaultAccountService"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与其它作用域相比，Spring不管理原型bean的完整生命周期：容器初始化、配置，另外组装原型对象，并把它传递给客户端，之后不再记录原型实例。因此，虽然不管什么作用域初始化生命周期回调函数都会在所有对象上调用，但是在原型作用域的情况下，不会调用配置的销毁生命周期回调函数。客户端代码必须清理原型作用域的对象并释放原型bean拥有的昂贵资源。为了使Spring容器释放原型bean拥有的资源，尝试使用定制的bean后处理程序，它拥有需要清理的bean的引用。</p>

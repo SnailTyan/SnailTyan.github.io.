@@ -99,12 +99,12 @@
 <meta property="og:url" content="http://noahsnail.com/2017/12/07/2017-12-07-Dilated Convolutions——扩张卷积/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Dilated Convolutions——扩张卷积">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/dilation-conv.png">
-<meta property="og:updated_time" content="2018-05-15T09:10:23.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-f8342b17bb77e4ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T02:50:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dilated Convolutions——扩张卷积">
 <meta name="twitter:description" content="Dilated Convolutions——扩张卷积">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/dilation-conv.png">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-f8342b17bb77e4ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -363,7 +363,7 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a>、</p>
 <h2 id="1-扩张卷积"><a href="#1-扩张卷积" class="headerlink" title="1. 扩张卷积"></a>1. 扩张卷积</h2><p>Dilated Convolutions，翻译为扩张卷积或空洞卷积。扩张卷积与普通的卷积相比，除了卷积核的大小以外，还有一个扩张率(dilation rate)参数，主要用来表示扩张的大小。扩张卷积与普通卷积的相同点在于，卷积核的大小是一样的，在神经网络中即参数数量不变，区别在于扩张卷积具有更大的感受野。感受野是卷积核在图像上看到的大小，例如$3 \times 3$卷积核的感受野大小为9。</p>
 <h2 id="2-示意图"><a href="#2-示意图" class="headerlink" title="2. 示意图"></a>2. 示意图</h2><p>下图是扩张卷积的示意图。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/dilation-conv.png" alt="Dilated Convolution"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-f8342b17bb77e4ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Dilated Convolution"></p>
 <p>(a) 普通卷积，1-dilated convolution，卷积核的感受野为$3 \times 3 = 9$。<br>(b) 扩张卷积，2-dilated convolution，卷积核的感受野为$7 \times 7 = 49$。<br>(c) 扩张卷积，4-dilated convolution，卷积核的感受野为$15 \times 15 = 225$。</p>
 <p>从上图中可以看出，卷积核的参数个数保持不变，感受野的大小随着“dilation rate”参数的增加呈指数增长。</p>
 <h2 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h2><p>扩展卷积在保持参数个数不变的情况下增大了卷积核的感受野，同时它可以保证输出的特征映射（feature map）的大小保持不变。一个扩张率为2的3×3卷积核，感受野与5×5的卷积核相同，但参数数量仅为9个，是5×5卷积参数数量的$36\%$。</p>

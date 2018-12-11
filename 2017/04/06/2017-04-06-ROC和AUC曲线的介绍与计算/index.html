@@ -99,15 +99,15 @@
 <meta property="og:url" content="http://noahsnail.com/2017/04/06/2017-04-06-ROC和AUC曲线的介绍与计算/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="ROC，AUC，Precision，Recall，F1的介绍与计算">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/roc.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/700px-ROC_space-2.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/roc_com.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/p-r.png">
-<meta property="og:updated_time" content="2018-07-10T01:41:29.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-43f68fa58c763969.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-1b85862c8fcdc558.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-88c004d71cda7372.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-9da4c69a37b639cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T03:30:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ROC，AUC，Precision，Recall，F1的介绍与计算">
 <meta name="twitter:description" content="ROC，AUC，Precision，Recall，F1的介绍与计算">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/roc.png">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-43f68fa58c763969.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -372,18 +372,17 @@
 <li>伪阴性（FN）：诊断为没有，实际却有病。</li>
 </ul>
 <p>其关系如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/roc.png" alt="TP、FP、TN、FN"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-43f68fa58c763969.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TP、FP、TN、FN"></p>
 <p>ROC空间将伪阳性率（FPR）定义为X轴，真阳性率（TPR）定义为Y轴。TPR：在所有实际为阳性的样本中，被正确地判断为阳性之比率，$TPR=\frac {TP} {TP+FN}$ 。FPR：在所有实际为阴性的样本中，被错误地判断为阳性之比率，$FPR=\frac {FP} {FP+TN}$。</p>
 <h3 id="1-2-Precision、Recall与F1"><a href="#1-2-Precision、Recall与F1" class="headerlink" title="1.2 Precision、Recall与F1"></a>1.2 Precision、Recall与F1</h3><p>对于二分类问题另一个常用的评价指标是精确率（precision）与召回率（recall）以及F1值。精确率表示在预测为阳性的样本中，真正有阳性的样本所占的比例。精确率的定义为$P=\frac {TP} {TP+FP}$。召回率表示所有真正呈阳性的样本中，预测为阳性所占的比例。召回率的定义为$R=\frac {TP} {TP+FN}$，F1值是精确率和召回率的调和均值，公式为$F1=\frac {2PR} {P+R}$。精确率和召回率都高时，F1值也会高。通常情况下，Precision与Recall是相互矛盾的。</p>
 <h2 id="2-曲线介绍"><a href="#2-曲线介绍" class="headerlink" title="2. 曲线介绍"></a>2. 曲线介绍</h2><h3 id="2-1-ROC曲线"><a href="#2-1-ROC曲线" class="headerlink" title="2.1 ROC曲线"></a>2.1 ROC曲线</h3><p>ROC曲线坐标系如下图所示，虚线为随机猜测的概率，即猜对跟猜错的概率是一样的。理想情况下，我们是希望FPR为0，没有一个假阳性，TPR为1，即全为真阳性，此时所有样本都被正确分类，点位于左上角(0,1)位置处，没有一个分错的数据，这是最完美的情况，实际情况中基本不可能。如果点位于虚线下方，例如C点，说明分类错误的多，分类正确的少，此时不是我们想要的。如果点位于虚线上方，例如$C \prime$点，说明分类错误的少，分类正确的多，此时是我们想要的，因此我们希望ROC曲线尽可能的靠近左上角。对于一个特定的分类器和测试数据集，只能得到一个分类结果，即ROC曲线坐标系中的一点，那么如何得到一条ROC曲线呢？分类问题中我们经常会得到某个样本是正样本的概率，根据概率值与阈值的比较来判断某个样本是否是正样本。在不同的阈值下可以得到不同的TPR和FPR值，即可以得到一系列的点，将它们在图中绘制出来，并依次连接起来就得到了ROC曲线，阈值取值越多，ROC曲线越平滑。</p>
 <p>AUC为ROC曲线下的面积，它的面积不会大于1，由于ROC曲线一般都处于直线y=x的上方，因此AUC的取值范围通常在(0.5，1)之间。由于ROC曲线不能很好的看出分类器模型的好坏，因此采用AUC值来进行分类器模型的评估与比较。通常AUC值越大，分类器性能越好。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/700px-ROC_space-2.png" alt="ROC曲线"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-1b85862c8fcdc558.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ROC曲线"></p>
 <p>在基本概念中我们提到了精确率、召回率以及F1值，既然有它们作为二分类的评价指标，为什么还要使用ROC和AUC呢？这是因为ROC曲线有个很好的特性：当测试集中的正负样本分布发生变化时，即正负样本数量相差较大时，ROC曲线仍能保持不变。实际数据集中经常会出现样本数量不平衡现象，并且测试数据中的正负样本的分布也可能随着时间发生变化。下图是两个分类器模型（算法）的ROC曲线比较图：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/roc_com.png" alt="ROC曲线比较"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-88c004d71cda7372.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ROC曲线比较"></p>
 <h3 id="2-2-P-R曲线"><a href="#2-2-P-R曲线" class="headerlink" title="2.2 P-R曲线"></a>2.2 P-R曲线</h3><p>在P-R曲线中，Recall为横坐标，Precision为纵坐标。在ROC曲线中曲线越凸向左上角约好，在P-R曲线中，曲线越凸向右上角越好。P-R曲线判断模型的好坏要根据具体情况具体分析，有的项目要求召回率较高、有的项目要求精确率较高。P-R曲线的绘制跟ROC曲线的绘制是一样的，在不同的阈值下得到不同的Precision、Recall，得到一系列的点，将它们在P-R图中绘制出来，并依次连接起来就得到了P-R图。两个分类器模型（算法）P-R曲线比较的一个例子如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/p-r.png" alt="P-R曲线比较"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-9da4c69a37b639cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="P-R曲线比较"></p>
 <h3 id="2-3-ROC与P-R对比"><a href="#2-3-ROC与P-R对比" class="headerlink" title="2.3 ROC与P-R对比"></a>2.3 ROC与P-R对比</h3><p>从公式计算中可以看出，ROC曲线中真阳性率TPR的计算公式与P-R曲线中的召回率Recall计算公式是一样的，即二者是同一个东西在不同环境下的不同叫法。当正负样本差距不大的情况下，ROC曲线和P-R的趋势是差不多的，但是当负样本很多的时候，ROC曲线效果依然较好，但是P-R曲线效果一般。</p>
-<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><p>待续。</p>
 
       
     </div>
@@ -598,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-ROC与AUC"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 ROC与AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Precision、Recall与F1"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Precision、Recall与F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-曲线介绍"><span class="nav-number">2.</span> <span class="nav-text">2. 曲线介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-ROC曲线"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-P-R曲线"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 P-R曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ROC与P-R对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 ROC与P-R对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Demo"><span class="nav-number">3.</span> <span class="nav-text">3. Demo</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-ROC与AUC"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 ROC与AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Precision、Recall与F1"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Precision、Recall与F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-曲线介绍"><span class="nav-number">2.</span> <span class="nav-text">2. 曲线介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-ROC曲线"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-P-R曲线"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 P-R曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-ROC与P-R对比"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 ROC与P-R对比</span></a></li></ol></li></ol></div>
             
 
           </div>
