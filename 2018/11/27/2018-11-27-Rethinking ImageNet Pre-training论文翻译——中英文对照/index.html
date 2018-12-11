@@ -1,0 +1,863 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Rethinking ImageNet Pre-training论文翻译——中英文对照">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rethinking ImageNet Pre-training论文翻译——中英文对照">
+<meta property="og:url" content="http://noahsnail.com/2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Rethinking ImageNet Pre-training论文翻译——中英文对照">
+<meta property="og:updated_time" content="2018-11-29T03:18:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rethinking ImageNet Pre-training论文翻译——中英文对照">
+<meta name="twitter:description" content="Rethinking ImageNet Pre-training论文翻译——中英文对照">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/"/>
+
+
+
+
+
+  <title>Rethinking ImageNet Pre-training论文翻译——中英文对照 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Rethinking ImageNet Pre-training论文翻译——中英文对照</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Rethinking ImageNet Pre-training论文翻译——中英文对照
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h1 id="Rethinking-ImageNet-Pre-training"><a href="#Rethinking-ImageNet-Pre-training" class="headerlink" title="Rethinking ImageNet Pre-training"></a>Rethinking ImageNet Pre-training</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We report competitive results on object detection and instance segmentation on the COCO dataset using standard models trained from random initialization. The results are no worse than their ImageNet pre-training counterparts even when using the hyper-parameters of the baseline system (Mask R-CNN) that were optimized for fine-tuning pre-trained models, with the sole exception of increasing the number of training iterations so the randomly initialized models may converge. Training from random initialization is surprisingly robust; our results hold even when: (i) using only $10\%$ of the training data, (ii) for deeper and wider models, and (iii) for multiple tasks and metrics. Experiments show that ImageNet pre-training speeds up convergence early in training, but does not necessarily provide regularization or improve final target task accuracy. To push the envelope we demonstrate 50.9 AP on COCO object detection without using any external data——a result on par with the top COCO 2017 competition results that used ImageNet pre-training. These observations challenge the conventional wisdom of ImageNet pre-training for dependent tasks and we expect these discoveries will encourage people to rethink the current de facto paradigm of “pre-training and fine-tuning” in computer vision.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>通过使用随机初始化训练的标准模型，在COCO数据集上，我们报告了目标检测和实例分割的具有竞争力的结果。即使使用基线系统的超参数（Mask R-CNN），这些超参数是为微调预训练模型优化过的，结果也不会比使用ImageNet进行预训练的对应模型差，唯一的例外是增加了训练迭代次数，以便随机初始化的模型可以收敛。随机初始化的训练非常强大;我们的结果即使在以下情况下仍然存在：（i）仅使用10美元\％$的培训数据，（ii）使用更深和更宽的模型，以及（iii）使用多个任务和指标。实验表明，ImageNet预训练可以在训练早期加快收敛速度​​，但不一定能提供正则化或提高最终目标任务的准确性。为了突破这一局面，我们在不使用任何外部数据的情况下展示了COCO物体检测的50.9 AP - 结果与使用ImageNet预训练的顶级COCO 2017竞赛结果相同。这些观察结果挑战了依赖任务的ImageNet预训练的传统智慧，我们期望这些发现将鼓励人们重新思考当前事实上的计算机视觉中的“预训练和微调”范式。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Deep convolutional neural networks [21, 23] revolutionized computer vision arguably due to the discovery that feature representations learned on a pre-training task can transfer useful information to target tasks [9, 6, 50]. In recent years, a well-established paradigm has been to pre-train models using large-scale data (e.g., ImageNet [39]) and then to fine-tune the models on target tasks that often have less training data. Pre-training has enabled state-of-the-art results on many tasks, including object detection [9, 8, 36], image segmentation [29, 13], and action recognition [42, 4].</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] P. Agrawal, R. Girshick, and J. Malik. Analyzing the performance of multilayer neural networks for object recognition. In ECCV, 2014. 2</p>
+<p>[2] J. L. Ba, J. R. Kiros, and G. E. Hinton. Layer normalization. arXiv:1607.06450, 2016. 3</p>
+<p>[3] Z. Cai and N. Vasconcelos. Cascade R-CNN: Delving into high quality object detection. In CVPR, 2018. 5</p>
+<p>[4] J.CarreiraandA.Zisserman.Quovadis,actionrecognition? a new model and the kinetics dataset. In CVPR, 2017. 1</p>
+<p>[5] C. Doersch, A. Gupta, and A. A. Efros. Unsupervised visual representation learning by context prediction. In ICCV, 2015. 8</p>
+<p>[6] J. Donahue, Y. Jia, O. Vinyals, J. Hoffman, N. Zhang, E. Tzeng, and T. Darrell. Decaf: A deep convolutional activation feature for generic visual recognition. In ICML, 2014. 1</p>
+<p>[7] M. Everingham, L. Van Gool, C. K. Williams, J. Winn, and A. Zisserman. The Pascal Visual Object Classes (VOC) Challenge. IJCV, 2010. 8</p>
+<p>[8] R. Girshick. Fast R-CNN. In ICCV, 2015. 1, 2, 3</p>
+<p>[9] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich fea- ture hierarchies for accurate object detection and semantic segmentation. In CVPR, 2014. 1, 2</p>
+<p>[10] R. Girshick, I. Radosavovic, G. Gkioxari, P. Dollar, and K. He. Detectron. <a href="https://github.com/facebookresearch/detectron" target="_blank" rel="external">https://github.com/facebookresearch/detectron</a>, 2018. 4, 6</p>
+<p>[11] X. Glorot and Y. Bengio. Understanding the difficulty of training deep feedforward neural networks. In AISTATS, 2010. 3</p>
+<p>[12] P. Goyal, P. Dollár, R. Girshick, P. Noordhuis, L. Wesolowski, A. Kyrola, A. Tulloch, Y. Jia, and K. He. Accurate, large minibatch SGD: Training ImageNet in 1 hour. arXiv:1706.02677, 2017. 4</p>
+<p>[13] K. He, G. Gkioxari, P. Dollár, and R. Girshick. Mask R- CNN. In ICCV, 2017. 1, 2, 4</p>
+<p>[14] K. He, G. Gkioxari, P. Dollár, and R. Girshick. Mask R- CNN. TPAMI, 2018. 2</p>
+<p>[15] K.He,X.Zhang,S.Ren,andJ.Sun.Spatialpyramidpooling in deep convolutional networks for visual recognition. In ECCV, 2014. 2</p>
+<p>[16] K. He, X. Zhang, S. Ren, and J. Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In ICCV, 2015. 3, 6</p>
+<p>[17] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In CVPR, 2016. 2, 3, 4</p>
+<p>[18] G.Huang,Z.Liu,L.vanderMaaten,andK.Q.Weinberger. Densely connected convolutional networks. In CVPR, 2017. 2</p>
+<p>[19] S. Ioffe. Batch renormalization: Towards reducing minibatch dependence in batch-normalized models. In NIPS, 2017. 3</p>
+<p>[20] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In ICML, 2015. 3</p>
+<p>[21] A. Krizhevsky, I. Sutskever, and G. Hinton. Imagenet clas- sification with deep convolutional neural networks. In NIPS, 2012. 1</p>
+<p>[22] H. Law and J. Deng. CornerNet: Detecting objects as paired keypoints. In ECCV, 2018. 2, 6</p>
+<p>[23] Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel. Backpropagation applied to handwritten zip code recognition. Neural computation, 1989. 1</p>
+<p>[24] C.-Y.Lee, S.Xie, P.Gallagher, Z. Zhang, and Z. Tu. Deeply-supervised nets. In AISTATS, 2015. 2</p>
+<p>[25] Z. Li, C. Peng, G. Yu, X. Zhang, Y. Deng, and J. Sun. DetNet: A backbone network for object detection. arXiv:1804.06215, 2018. 2</p>
+<p>[26] T.-Y. Lin, P. Dolla ́r, R. Girshick, K. He, B. Hariharan, and S. Belongie. Feature pyramid networks for object detection. In CVPR, 2017. 1, 2, 4</p>
+<p>[27] S. Liu, L. Qi, H. Qin, J. Shi, and J. Jia. Path aggregation network for instance segmentation. In CVPR, 2018. 3, 4</p>
+<p>[28] W. Liu, D. Anguelov, D. Erhan, C. Szegedy, S. Reed, C.-Y. Fu, and A. C. Berg. Ssd: Single shot multibox detector. In ECCV, 2016. 2</p>
+<p>[29] J. Long, E. Shelhamer, and T. Darrell. Fully convolutional networks for semantic segmentation. In CVPR, 2015. 1</p>
+<p>[30] D. Mahajan, R. Girshick, V. Ramanathan, K. He, M. Paluri, Y. Li, A. Bharambe, and L. van der Maaten. Exploring the limits of weakly supervised pretraining. In ECCV, 2018. 1, 2,8</p>
+<p>[31] O. Matan, C. J. Burges, Y. LeCun, and J. S. Denker. Multi-digit recognition using a space displacement neural network. In NIPS, 1992. 2</p>
+<p>[32] D. Pathak, R. Girshick, P. Dollár, T. Darrell, and B. Hariharan. Learning features by watching objects move. In CVPR, 2017. 8</p>
+<p>[33] D. Pathak, P. Krahenbuhl, J. Donahue, T. Darrell, and A. A. Efros. Context encoders: Feature learning by inpainting. In CVPR, 2016. 8</p>
+<p>[34] C. Peng, T. Xiao, Z. Li, Y. Jiang, X. Zhang, K. Jia, G. Yu, and J. Sun. MegDet: A large mini-batch object detector. In CVPR, 2018. 3, 4, 6</p>
+<p>[35] J. Redmon, S. Divvala, R. Girshick, and A. Farhadi. You only look once: Unified, real-time object detection. In CVPR, 2016. 2</p>
+<p>[36] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal net- works. In NIPS, 2015. 1, 2, 3</p>
+<p>[37] S. Ren, K. He, R. Girshick, and J. Sun. Faster R-CNN: Towards real-time object detection with region proposal net- works. TPAMI, 2017. 4, 6</p>
+<p>[38] H. A. Rowley, S. Baluja, and T. Kanade. Human face detection in visual scenes. In NIPS, 1996. 2</p>
+<p>[39] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, A. C. Berg, and L. Fei-Fei. ImageNet Large Scale Visual Recognition Challenge. IJCV, 2015. 1</p>
+<p>[40] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition, localization and detection using convolutional networks. In ICLR, 2014. 29</p>
+<p>[41] Z. Shen, Z. Liu, J. Li, Y.-G. Jiang, Y. Chen, and X. Xue. DSOD: Learning deeply supervised object detectors from scratch. In ICCV, 2017. 2, 6</p>
+<p>[42] K. Simonyan and A. Zisserman. Two-stream convolutional networks for action recognition in videos. In NIPS, 2014. 1</p>
+<p>[43] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In ICLR, 2015. 3, 6</p>
+<p>[44] C. Sun, A. Shrivastava, S. Singh, and A. Gupta. Revisiting unreasonable effectiveness of data in deep learning era. In ICCV, 2017. 1, 2, 8</p>
+<p>[45] C. Szegedy, A. Toshev, and D. Erhan. Deep neural networks for object detection. In NIPS, 2013. 2</p>
+<p>[46] D. Ulyanov, A. Vedaldi, and V. Lempitsky. Instance normalization: The missing ingredient for fast stylization. arXiv:1607.08022, 2016. 3</p>
+<p>[47] X. Wang and A. Gupta. Unsupervised learning of visual representations using videos. In ICCV, 2015. 8</p>
+<p>[48] Y. Wu and K. He. Group normalization. In ECCV, 2018. 1, 3, 4</p>
+<p>[49] S. Xie, R. Girshick, P. Dollár, Z. Tu, and K. He. Aggregated residual transformations for deep neural networks. In CVPR, 2017. 4, 6</p>
+<p>[50] M. D. Zeiler and R. Fergus. Visualizing and understanding convolutional neural networks. In ECCV, 2014. 1</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://upload-images.jianshu.io/upload_images/3232548-c734cc70d1192994.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://upload-images.jianshu.io/upload_images/3232548-6ce4d4a8218f5c92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中文版/" rel="next" title="Rethinking ImageNet Pre-training论文翻译——中文版">
+                <i class="fa fa-chevron-left"></i> Rethinking ImageNet Pre-training论文翻译——中文版
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">386</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Rethinking-ImageNet-Pre-training"><span class="nav-number">1.</span> <span class="nav-text">Rethinking ImageNet Pre-training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.3.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.4.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/';
+        this.page.identifier = '2018/11/27/2018-11-27-Rethinking ImageNet Pre-training论文翻译——中英文对照/';
+        this.page.title = 'Rethinking ImageNet Pre-training论文翻译——中英文对照';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
