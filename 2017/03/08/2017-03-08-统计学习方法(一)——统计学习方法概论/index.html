@@ -99,16 +99,16 @@
 <meta property="og:url" content="http://noahsnail.com/2017/03/08/2017-03-08-统计学习方法(一)——统计学习方法概论/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="统计学习方法(一)——统计学习方法概论">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/supervised-learning.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/relations.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/classity_problem.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/tagging.png">
-<meta property="og:image" content="http://ocs628urt.bkt.clouddn.com/regression.png">
-<meta property="og:updated_time" content="2017-04-07T08:21:38.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-89e998cacf9167bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4c0052c640d16bff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-5c01738c92d5e1bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2588323ce37b4808.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2fb88458f4fbf330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T10:10:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="统计学习方法(一)——统计学习方法概论">
 <meta name="twitter:description" content="统计学习方法(一)——统计学习方法概论">
-<meta name="twitter:image" content="http://ocs628urt.bkt.clouddn.com/supervised-learning.png">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-89e998cacf9167bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -396,7 +396,7 @@
 <p><strong>3.假设空间</strong></p>
 <p>监督学习的目的在于学习一个由输入到输出的映射，映射关系用模型表示。输入到输出的映射集合就是假设空间（hypothesis space）。简单学习的模型可以是概率模型或非概率模型。由条件概率分布<code>P(Y|X)</code>或决策函数<code>Y=f(X)</code>表示。对具体的输入进行输出预测时，写作<code>P(y|x)</code>或<code>y=f(x)</code>。</p>
 <h3 id="1-2-2-问题的形式化"><a href="#1-2-2-问题的形式化" class="headerlink" title="1.2.2 问题的形式化"></a>1.2.2 问题的形式化</h3><p>监督学习利用训练数据学习模型，再用模型对测试数据进行预测。学习过程中的训练数据往往是人工给出的，因此称为监督学习。监督学习分为学习和预测两个过程，如下图：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/supervised-learning.png" alt="监督学习"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-89e998cacf9167bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="监督学习"></p>
 <p>首先给定数据集$T={(x_1,y_1),(x_3,y_2),…,(x_N,y_N)}$，其中$(x_i,y_i)，i=1,2,…,N$，称为样本或样本点，$x_i \in X \subseteq R^n$是输入的观测值，称为输入或实例，$y_i \in Y$是输出的观测值，也称为输出。通过学习得到的模型表示为条件概率分布$P(Y|X)$和决策函数$Y=f(X)$，模型表示的是输入与输出之间的映射关系。</p>
 <p>预测过程中，对于测试数据中的输入$x_{N+1}$,由模型$y_{N+1}=argmax P(y_{N+1}|x_{N+1})$或$y_{N+1}=f(x_{N+1})$给出对应的输出$y_{N+1}$。</p>
 <h2 id="1-3-统计学习三要素"><a href="#1-3-统计学习三要素" class="headerlink" title="1.3 统计学习三要素"></a>1.3 统计学习三要素</h2><p>统计学习方法的三要素为模型、策略和算法，它们关系为：<code>统计学习方法 = 模型 + 策略 + 算法</code>。</p>
@@ -442,7 +442,7 @@
 <p>N和$N\prime$分别为训练数据集和测试数据集的样本容量。</p>
 <p>通常将学习方法对未知数据的预测能力称为泛化能力（generalization ability）。</p>
 <h3 id="1-4-2-过拟合和模型选择"><a href="#1-4-2-过拟合和模型选择" class="headerlink" title="1.4.2 过拟合和模型选择"></a>1.4.2 过拟合和模型选择</h3><p>过拟合是指学习时选择的模型包含参数过多，以至于模型对已知数据预测很好，而对未知数据预测很差的现象。模型选择旨在避免过拟合并提供模型的预测能力。模型选择时，不仅要考虑对已知数据的预测能力，而且还要考虑对未知数据的预测能力。下图展示了训练误差、测试误差与模型复杂度之间的关系。当模型复杂度增大时，训练误差会逐渐减少并趋向于0；而测试误差会先减少，达到最小值后又增大。当选择的模型复杂度过大时，过拟合现象就会发生。学习时要防止过拟合，进行最优的模型选择，即选择模型复杂度适当的模型，以使测试误差达到最小。</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/relations.png" alt="训练误差、测试误差与模型复杂度之间的关系"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4c0052c640d16bff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="训练误差、测试误差与模型复杂度之间的关系"></p>
 <h2 id="1-5-正则化与交叉验证"><a href="#1-5-正则化与交叉验证" class="headerlink" title="1.5 正则化与交叉验证"></a>1.5 正则化与交叉验证</h2><h3 id="1-5-1-正则化"><a href="#1-5-1-正则化" class="headerlink" title="1.5.1 正则化"></a>1.5.1 正则化</h3><p>模型选择的方法是正则化（regularization）。正则化是结构风险最小化策略的实现，是在经验风险上加上一个正则化项（regularizer）或惩罚项（penalty term）。正则化项一般是模型复杂度的单调递增函数，模型越复杂，正则化值就越大。正则化一般具有以下形式：</p>
 <p>$$^{min}_{f \in F } \frac {1} {N} \sum_{i=1}^{N} L(y_i,f(x_i)) + \lambda J(f)$$</p>
 <p>其中，第一项是经验风险，第二项是正则化项，$\lambda &gt;= 0$为调整两者之间关系的系数。</p>
@@ -470,14 +470,14 @@
 <p>判别方法由数据直接学习决策函数f(X)或者条件概率分布P(Y|X)作为预测的模型，即判别模型。判别方法关心的是对给定的输入X，应该预测什么样的输出Y。典型的判别模型包括：k近邻法、感知机、决策树、逻辑回归模型、最大熵模型、支持向量机、提升方法和条件随机场。</p>
 <p>在监督学习中，生成方法和判别方法各有优缺点，适合于不同条件下的学习问题。生成方法的特点：生成方法可以还原出联合概率分布P(X,Y)，而判别方法则不能；生成方法的收敛速度更快，当存在隐变量时，仍可以使用生成方法，此时判别方法不可用。判别方法的特点：判别方法直接学习的是条件概率P(Y|X)或决策函数f(X)，直接面对预测，往往学习的准确率更高；由于直接学习P(Y|X)或f(X)，可以对数据进行各种程度上的抽象、定义特征并使用特征，因此可以简化学习问题。</p>
 <h2 id="1-8-分类问题"><a href="#1-8-分类问题" class="headerlink" title="1.8 分类问题"></a>1.8 分类问题</h2><p>分类是监督学习的一个核心问题。在监督学习中，当输出变量Y取有限个离散值时，预测问题便称为分类问题。监督学习从数据中学习一个分类模型或分类决策函数，称为分类器（classifier）。分类器对新的输入进行输出的预测（prediction），称为分类（classification）。分类的类别为多个时，称为多分类问题。分类问题包括学习和分类两个过程。学习过程中，根据已知的训练数据集学习一个分类器，分类过程中，根据学习的分类器对新实例进行分类。分类问题如图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/classity_problem.png" alt="分类问题"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-5c01738c92d5e1bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分类问题"></p>
 <p>精确率的定义为$P=\frac {TP} {TP+FP}$，召回率的定义为$R=\frac {TP} {TP+FN}$，F1值是精确率和召回率的调和均值，公式为$F1=\frac {2PR} {P+R}$。精确率和召回率都高时，F1值也会高。</p>
 <h2 id="1-9-标注问题"><a href="#1-9-标注问题" class="headerlink" title="1.9 标注问题"></a>1.9 标注问题</h2><p>标注（tagging）也是一个监督学习问题，可以认为标注问题是分类问题的一个推广，标注问题的输入是一个观测序列，输出是一个标记序列或状态序列。标注问题的目标在于学习一个模型，使它能够对观测序列给出标记序列作为预测。标注问题分为学习和标记过程。学习系统基于训练数据集构建一个模型，表示为条件概率，标注系统按照学习到的条件概率分布模型，对新的输入观测序列找到相应的输出标记序列。标注问题如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/tagging.png" alt="标注问题"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2588323ce37b4808.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="标注问题"></p>
 <p>评价标注模型的指标与评价分类模型的指标一样，常用的有标注准确率、精确率和召回率。标注常用的统计学习方法有：隐马尔可夫模型、条件随机场。标注问题在信息抽取、自然语言处理等领域被广泛应用，是这些领域的基本问题。</p>
 <h2 id="1-10-回归问题"><a href="#1-10-回归问题" class="headerlink" title="1.10 回归问题"></a>1.10 回归问题</h2><p>回归（regression）是监督学习的另一个重要问题。回归用于预测输入变量（自变量）和输出变量（因变量）之间的关系，特别是当输入变量的值发生变化时，输出变量的值随之发生变化。回归模型正是表示从输入变量到输出变量之间的映射的函数。回归问题等价于函数拟合，选择一条函数曲线使其很好地拟合已知数据且很好的预测未知数据。</p>
 <p>回归问题分为学习和预测两个过程。学习系统基于训练数据构建一个模型，预测系统根据学习的模型确定相应的输出。回归问题如下图所示：</p>
-<p><img src="http://ocs628urt.bkt.clouddn.com/regression.png" alt="回归问题"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2fb88458f4fbf330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="回归问题"></p>
 <p>回归问题按照变量的个数分为一元回归和多元回归；按照输入变量和输出变量之间关系的类型即模型的类型，分为线性回归和非线性回归。回归学习最常用的损失函数是平方损失函数，此情况下回归问题可以用最小二乘法求解。</p>
 
       
@@ -636,7 +636,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">386</span>
+                <span class="site-state-item-count">611</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
