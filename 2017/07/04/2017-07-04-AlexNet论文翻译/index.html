@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-1ef30ba60b22b2a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0fc819b3648591d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0fc819b3648591d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-11T03:28:19.000Z">
+<meta property="og:updated_time" content="2019-03-13T00:45:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AlexNet论文翻译——中英文对照">
 <meta name="twitter:description" content="AlexNet论文翻译——中英文对照">
@@ -407,7 +407,7 @@
 <p>Figure 2: An illustration of the architecture of our CNN, explicitly showing the delineation of responsibilities between the two GPUs. One GPU runs the layer-parts at the top of the figure while the other runs the layer-parts at the bottom. The GPUs communicate only at certain layers. The network’s input is 150,528-dimensional, and the number of neurons in the network’s remaining layers is given by 253,440–186,624–64,896–64,896–43,264– 4096–4096–1000.</p>
 <p>图 2：我们CNN架构图解，明确描述了两个GPU之间的责任。在图的顶部，一个GPU运行在部分层上，而在图的底部，另一个GPU运行在部分层上。GPU只在特定的层进行通信。网络的输入是150,528维，网络剩下层的神经元数目分别是253,440–186,624–64,896–64,896–43,264–4096–4096–1000（8层）。</p>
 <h3 id="3-3-Local-Response-Normalization"><a href="#3-3-Local-Response-Normalization" class="headerlink" title="3.3 Local Response Normalization"></a>3.3 Local Response Normalization</h3><p>ReLUs have the desirable property that they do not require input normalization to prevent them from saturating. If at least some training examples produce a positive input to a ReLU, learning will happen in that neuron. However, we still find that the following local normalization scheme aids generalization. Denoting by $a_{x,y}^i$ the activity of a neuron computed by applying kernel $i$ at position $(x, y)$ and then applying the ReLU nonlinearity, the response-normalized activity $b^i_{x,y}$ is given by the expression</p>
-<p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^i)^2 )^\beta$$</p>
+<p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^j)^2 )^\beta$$</p>
 <p>where the sum runs over n “adjacent” kernel maps at the same spatial position, and N is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined before training begins. This sort of response normalization implements a form of lateral inhibition inspired by the type found in real neurons, creating competition for big activities amongst neuron outputs computed using different kernels. The constants k, n, α, and β are hyper-parameters whose values are determined using a validation set; we used k = 2, n = 5, α = 0.0001, and β = 0.75. We applied this normalization after applying the ReLU nonlinearity in certain layers (see Section 3.5).</p>
 <h3 id="3-3-局部响应归一化"><a href="#3-3-局部响应归一化" class="headerlink" title="3.3 局部响应归一化"></a>3.3 局部响应归一化</h3><p>ReLU具有让人满意的特性，它不需要通过输入归一化来防止饱和。如果至少一些训练样本对ReLU产生了正输入，那么那个神经元上将发生学习。然而，我们仍然发现接下来的局部响应归一化有助于泛化。$a_{x,y}^i$表示神经元激活，通过在$(x, y)$位置应用核$i$，然后应用ReLU非线性来计算，响应归一化激活$b^i_{x,y}$通过下式给定：</p>
 <p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^i)^2 )^\beta$$</p>

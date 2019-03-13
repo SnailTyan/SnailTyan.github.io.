@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-1352cf7d4166d096.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-fd1a5e354b552735.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-dc0806354c7264ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-11T03:24:08.000Z">
+<meta property="og:updated_time" content="2019-03-13T00:45:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AlexNet论文翻译——中文版">
 <meta name="twitter:description" content="AlexNet论文翻译——中文版">
@@ -387,7 +387,7 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-ef1e9f38134b7658.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
 <p>图 2：我们CNN架构图解，明确描述了两个GPU之间的责任。在图的顶部，一个GPU运行在部分层上，而在图的底部，另一个GPU运行在部分层上。GPU只在特定的层进行通信。网络的输入是150,528维，网络剩下层的神经元数目分别是253,440–186,624–64,896–64,896–43,264–4096–4096–1000（8层）。</p>
 <h3 id="3-3-局部响应归一化"><a href="#3-3-局部响应归一化" class="headerlink" title="3.3 局部响应归一化"></a>3.3 局部响应归一化</h3><p>ReLU具有让人满意的特性，它不需要通过输入归一化来防止饱和。如果至少一些训练样本对ReLU产生了正输入，那么那个神经元上将发生学习。然而，我们仍然发现接下来的局部响应归一化有助于泛化。$a_{x,y}^i$表示神经元激活，通过在$(x, y)$位置应用核$i$，然后应用ReLU非线性来计算，响应归一化激活$b^i_{x,y}$通过下式给定：</p>
-<p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^i)^2 )^\beta$$</p>
+<p>$$b^i_{x,y} = a_{x,y}^i / ( k + \alpha \sum _{j = max(0, i-n / 2)} ^{min(N-1, i+n / 2)} (a_{x,y}^j)^2 )^\beta$$</p>
 <p>求和运算在n个“毗邻的”核映射的同一位置上执行，N是本层的卷积核数目。核映射的顺序当然是任意的，在训练开始前确定。响应归一化的顺序实现了一种侧抑制形式，灵感来自于真实神经元中发现的类型，为使用不同核进行神经元输出计算的较大活动创造了竞争。常量k，n，α，β是超参数，它们的值通过验证集确定；我们设k=2，n=5，α=0.0001，β=0.75。我们在特定的层使用的ReLU非线性之后应用了这种归一化（请看3.5小节）。</p>
 <p>这个方案与Jarrett等人[11]的局部对比度归一化方案有一定的相似性，但我们更恰当的称其为“亮度归一化”，因此我们没有减去均值。响应归一化分别减少了<code>top-1 1.4%</code>，<code>top-5 1.2%</code>的错误率。我们也在CIFAR-10数据集上验证了这个方案的有效性：一个乜嘢归一化的四层CNN取得了13%的错误率，而使用归一化取得了11%的错误率。</p>
 <h3 id="3-4-重叠池化"><a href="#3-4-重叠池化" class="headerlink" title="3.4 重叠池化"></a>3.4 重叠池化</h3><p>CNN中的池化层归纳了同一核映射上相邻组神经元的输出。习惯上，相邻池化单元归纳的区域是不重叠的（例如[17, 11, 4]）。更确切的说，池化层可看作由池化单元网格组成，网格间距为$s$个像素，每个网格归纳池化单元中心位置$z × z$大小的邻居。如果设置$s = z$，我们会得到通常在CNN中采用的传统局部池化。如果设置$s &lt; z$，我们会得到重叠池化。这就是我们网络中使用的方法，设置$s = 2$，$z = 3$。这个方案分别降低了<code>top-1 0.4%</code>，<code>top-5 0.3%</code>的错误率，与非重叠方案$s = 2，z = 2$相比，输出的维度是相等的。我们在训练过程中通常观察采用重叠池化的模型，发现它更难过拟合。</p>
