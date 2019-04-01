@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://noahsnail.com/2017/12/11/2017-12-11-Single Shot MultiBox Detector论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Single Shot MultiBox Detector论文翻译——中文版">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-5d009d8361912301?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://farm8.staticflickr.com/7882/40545781493_1b37e975c0_b.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-58cd1c12f050b618?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0c8ad95dc579c05a?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-6f52f3aebfde3f5c?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -111,11 +111,11 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-72a8d65067e663bb?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-d685658030eedffe?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-01d302ec8e31de5d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-06T13:03:21.000Z">
+<meta property="og:updated_time" content="2019-04-01T03:13:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Single Shot MultiBox Detector论文翻译——中文版">
 <meta name="twitter:description" content="Single Shot MultiBox Detector论文翻译——中文版">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-5d009d8361912301?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://farm8.staticflickr.com/7882/40545781493_1b37e975c0_b.jpg">
 
 
 
@@ -394,7 +394,7 @@
 <h3 id="2-1-模型"><a href="#2-1-模型" class="headerlink" title="2.1 模型"></a>2.1 模型</h3><p>SSD方法基于前馈卷积网络，该网络产生固定大小的边界框集合，并对这些边界框中存在的目标类别实例进行评分，然后进行非极大值抑制步骤来产生最终的检测结果。早期的网络层基于用于高质量图像分类的标准架构（在任何分类层之前被截断），我们将其称为基础网络。然后，我们将辅助结构添加到网络中以产生具有以下关键特征的检测：</p>
 <p><strong>用于检测的多尺度特征映射</strong>。我们将卷积特征层添加到截取的基础网络的末端。这些层在尺寸上逐渐减小，并允许在多个尺度上对检测结果进行预测。用于预测检测的卷积模型对于每个特征层都是不同的（查阅Overfeat[4]和YOLO[5]在单尺度特征映射上的操作）。</p>
 <p><strong>用于检测的卷积预测器</strong>。每个添加的特征层（或者任选的来自基础网络的现有特征层）可以使用一组卷积滤波器产生固定的检测预测集合。这些在图2中的SSD网络架构的上部指出。对于具有$p$通道的大小为$m \times n$的特征层，潜在检测的预测参数的基本元素是$3 \times 3 \times p$的<em>小核</em>得到某个类别的分数，或者相对于默认框坐标的形状偏移。在应用卷积核的$m \times n$的每个位置，它会产生一个输出值。边界框偏移输出值是相对每个特征映射位置的相对默认框位置来度量的（查阅YOLO[5]的架构，该步骤使用中间全连接层而不是卷积滤波器）。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-5d009d8361912301?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
+<p><img src="https://farm8.staticflickr.com/7882/40545781493_1b37e975c0_b.jpg" alt="Figure 2"></p>
 <p>图2：两个单次检测模型的比较：SSD和YOLO[5]。我们的SSD模型在基础网络的末端添加了几个特征层，它预测了不同尺度和长宽比的默认边界框的偏移量及其相关的置信度。300×300输入尺寸的SSD在VOC2007 <code>test</code>上的准确度上明显优于448×448的YOLO的准确度，同时也提高了速度。</p>
 <p><strong>默认边界框和长宽比</strong>。对于网络顶部的多个特征映射，我们将一组默认边界框与每个特征映射单元相关联。默认边界框以卷积的方式平铺特征映射，以便每个边界框相对于其对应单元的位置是固定的。在每个特征映射单元中，我们预测单元中相对于默认边界框形状的偏移量，以及指出每个边界框中存在的每个类别实例的类别分数。具体而言，对于给定位置处的$k$个边界框中的每一个，我们计算$c$个类别分数和相对于原始默认边界框形状的$4$个偏移量。这导致在特征映射中的每个位置周围应用总共$(c+4)k$个滤波器，对于$m\times n$的特征映射取得$(c+4)kmn$个输出。有关默认边界框的说明，请参见图1。我们的默认边界框与Faster R-CNN[2]中使用的<em>锚边界框</em>相似，但是我们将它们应用到不同分辨率的几个特征映射上。在几个特征映射中允许不同的默认边界框形状让我们有效地离散可能的输出框形状的空间。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3232548-58cd1c12f050b618?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
