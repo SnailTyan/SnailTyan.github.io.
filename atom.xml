@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2019-03-20T05:22:34.000Z</updated>
+  <updated>2019-05-09T07:18:09.000Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,164 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux登录信息查询</title>
+    <link href="http://noahsnail.com/2019/05/09/2019-05-09-Linux%E7%99%BB%E5%BD%95%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2/"/>
+    <id>http://noahsnail.com/2019/05/09/2019-05-09-Linux登录信息查询/</id>
+    <published>2019-05-09T03:34:26.000Z</published>
+    <updated>2019-05-09T07:18:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Linux登录日志的存储"><a href="#1-Linux登录日志的存储" class="headerlink" title="1. Linux登录日志的存储"></a>1. Linux登录日志的存储</h2><p>在Linux系统中，登录日志主要存储在三个文件中，<code>/var/log/wtmp</code>，<code>/var/run/utmp</code>，<code>/var/log/lastlog</code>。常用的查询命令有<code>w</code>，<code>who</code>，<code>last</code>，<code>users</code>，<code>lastlog</code>等。</p>
+<h2 id="2-w命令"><a href="#2-w命令" class="headerlink" title="2. w命令"></a>2. w命令</h2><ul>
+<li><code>w</code>命令可用于显示当前登录系统的用户信息。</li>
+<li>执行这项指令可查询目前登录系统的用户有哪些人，以及正在执行的程序。</li>
+<li>单独执行<code>w</code>指令会显示所有的用户，也可以指定用户名称，仅显示某位用户的相关信息。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ w</div><div class="line">19:30  up 48 days,  3:05, 2 users, load averages: 2.11 2.11 2.14</div><div class="line">USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT</div><div class="line">root     pts/2    192.168.0.1      Wed14    0.00s  0.08s  0.00s w</div><div class="line">root     pts/16   192.168.0.1      Wed11    5:20   0.08s  0.08s -bash</div></pre></td></tr></table></figure>
+<p><code>w</code>命令显示的对应信息如下：</p>
+<p>当前时间，系统启动到现在的时间，登录用户的数目，系统在最近1秒、5秒和15秒的平均负载。</p>
+<p>USER: 登录帐号<br>TTY : 终端名称<br>FROM: 远程主机名<br>LOGIN@: 登录时间<br>IDLE: 空闲时间<br>JCPU: 该TTY终端连接的所有进程的占用时间<br>PCPU: 当前进程(即w项中显示的)的占用时间<br>WHAT: 当前正在运行进程的命令行</p>
+<h2 id="3-who命令"><a href="#3-who命令" class="headerlink" title="3. who命令"></a>3. who命令</h2><p><code>who</code>命令用于显示系统中有哪些登录用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ who</div><div class="line">root   pts/2        2019-05-08 19:14 (192.168.0.1)</div><div class="line">root   pts/16       2019-05-08 18:39 (192.168.0.1)</div></pre></td></tr></table></figure>
+<p><code>who</code>命令显示的对应信息如下：</p>
+<p>登录帐号，终端名称，日期和时间，用户登录IP地址。</p>
+<p><code>who am i</code>用来查看当前登陆者的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ who am i</div><div class="line">root   pts/2        2019-05-08 19:14 (192.168.0.1)</div></pre></td></tr></table></figure>
+<h2 id="4-last命令"><a href="#4-last命令" class="headerlink" title="4. last命令"></a>4. last命令</h2><p><code>last</code>命令用于显示用户最近登录信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ last -n 3</div><div class="line">root   pts/21       192.168.0.1    Thu May  9 12:01 - 19:00  (00:00)</div><div class="line">root   pts/6        192.168.0.1    Wed May  8 18:30   still logged in</div><div class="line">root   pts/2        192.168.0.1    Wed May  8 18:14   still logged in</div><div class="line"></div><div class="line">wtmp begins Sun Dec 30 19:10:00 2018</div></pre></td></tr></table></figure>
+<p><code>last</code>命令显示的对应信息如下：</p>
+<p>用户名称，终端名称，远程主机名，日志活动发生时间，括号中的数字表示连接持续了多少小时和分钟。</p>
+<h2 id="5-users命令"><a href="#5-users命令" class="headerlink" title="5. users命令"></a>5. users命令</h2><p><code>users</code>命令用于显示当前登录系统的所有用户列表。每个用户名对应一个登录会话。如果一个用户有不止一个登录会话，则用户名将显示相同的次数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ users</div><div class="line">root root</div></pre></td></tr></table></figure>
+<h2 id="6-lastlog命令"><a href="#6-lastlog命令" class="headerlink" title="6. lastlog命令"></a>6. lastlog命令</h2><p><code>lastlog</code>命令用于显示系统中所有用户最近一次的登录信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ lastlog</div><div class="line">Username         Port     From             Latest</div><div class="line">root             pts/6    192.168.0.1      Sun Apr 28 18:38:20 +0800 2019</div><div class="line">daemon                                     **Never logged in**</div><div class="line">bin                                        **Never logged in**</div><div class="line">sys                                        **Never logged in**</div><div class="line">sync                                       **Never logged in**</div><div class="line">games                                      **Never logged in**</div><div class="line">man                                        **Never logged in**</div><div class="line">lp                                         **Never logged in**</div><div class="line">mail                                       **Never logged in**</div><div class="line">news                                       **Never logged in**</div><div class="line">uucp                                       **Never logged in**</div><div class="line">proxy                                      **Never logged in**</div><div class="line">www-data                                   **Never logged in**</div><div class="line">backup                                     **Never logged in**</div><div class="line">list                                       **Never logged in**</div><div class="line">irc                                        **Never logged in**</div><div class="line">gnats                                      **Never logged in**</div><div class="line">nobody                                     **Never logged in**</div><div class="line">systemd-timesync                           **Never logged in**</div><div class="line">systemd-network                            **Never logged in**</div><div class="line">systemd-resolve                            **Never logged in**</div><div class="line">systemd-bus-proxy                           **Never logged in**</div><div class="line">_apt                                       **Never logged in**</div><div class="line">sshd                                       **Never logged in**</div></pre></td></tr></table></figure>
+<h2 id="7-ac命令"><a href="#7-ac命令" class="headerlink" title="7. ac命令"></a>7. ac命令</h2><p><code>ac</code>命令计算所有用户总的连接时间，默认单位是小时，基于<code>/var/log/wtmp</code>文件统计。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root@0b6987cc587f /workspace $ ac</div><div class="line">total     4595.16</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="http://www.runoob.com/linux/linux-comm-w.html" target="_blank" rel="external">http://www.runoob.com/linux/linux-comm-w.html</a></li>
+<li><a href="http://www.runoob.com/linux/linux-comm-who.html" target="_blank" rel="external">http://www.runoob.com/linux/linux-comm-who.html</a></li>
+<li><a href="https://linux.cn/article-2437-1.html" target="_blank" rel="external">https://linux.cn/article-2437-1.html</a></li>
+<li><a href="http://www.runoob.com/linux/linux-comm-last.html" target="_blank" rel="external">http://www.runoob.com/linux/linux-comm-last.html</a></li>
+<li><a href="http://man.linuxde.net/users" target="_blank" rel="external">http://man.linuxde.net/users</a></li>
+<li><a href="http://man.linuxde.net/lastlog" target="_blank" rel="external">http://man.linuxde.net/lastlog</a></li>
+<li><a href="https://cnbin.github.io/blog/2015/06/26/linux-ac-ming-ling/" target="_blank" rel="external">https://cnbin.github.io/blog/2015/06/26/linux-ac-ming-ling/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux登录信息查询
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 139. Word Break</title>
+    <link href="http://noahsnail.com/2019/05/06/2019-05-06-Leetcode-139--Word-Break/"/>
+    <id>http://noahsnail.com/2019/05/06/2019-05-06-Leetcode-139--Word-Break/</id>
+    <published>2019-05-06T03:15:37.000Z</published>
+    <updated>2019-05-13T07:00:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://i.loli.net/2019/05/06/5ccfa5fc5a3e8.png" alt="Word Break"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordDict)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(s.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; flags(s.size(), <span class="number">-1</span>);</div><div class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; dict(wordDict.begin(), wordDict.end());</div><div class="line">        <span class="keyword">return</span> split(s, dict, flags, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">split</span><span class="params">(<span class="built_in">string</span>&amp; s, <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt;&amp; dict, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; flags, <span class="keyword">int</span> start)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(start == s.size()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(flags[start] != <span class="number">-1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> flags[start];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start + <span class="number">1</span>; i &lt;= s.size(); i++) &#123;</div><div class="line">            <span class="built_in">string</span> temp = s.substr(start, i - start);</div><div class="line">            <span class="keyword">if</span>(dict.find(temp) != dict.end() &amp;&amp; split(s, dict, flags, i)) &#123;</div><div class="line">                flags[start] = <span class="number">1</span>;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        flags[start] = <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordDict)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(s.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; dict(wordDict.begin(), wordDict.end());</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; flag(s.size() + <span class="number">1</span>, <span class="literal">false</span>);</div><div class="line">        flag[<span class="number">0</span>] = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= s.size(); i++) &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</div><div class="line">                <span class="keyword">if</span>(flag[j] &amp;&amp; dict.find(s.substr(j, i - j)) != dict.end()) &#123;</div><div class="line">                    flag[i] = <span class="literal">true</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> flag[s.size()];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 3</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordDict)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(s.size() == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; dict(wordDict.begin(), wordDict.end());</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; flag(s.size() + <span class="number">1</span>, <span class="literal">false</span>);</div><div class="line">        flag[<span class="number">0</span>] = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= s.size(); i++) &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</div><div class="line">                <span class="keyword">if</span>(flag[j] &amp;&amp; dict.find(s.substr(j, i - j)) != dict.end()) &#123;</div><div class="line">                    flag[i] = <span class="literal">true</span>;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> flag[s.size()];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/word-break/" target="_blank" rel="external">https://leetcode.com/problems/word-break/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 139. Word Break
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python中list的切片操作</title>
+    <link href="http://noahsnail.com/2019/04/29/2019-04-29-Python%E4%B8%ADlist%E7%9A%84%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C/"/>
+    <id>http://noahsnail.com/2019/04/29/2019-04-29-Python中list的切片操作/</id>
+    <published>2019-04-29T06:02:46.000Z</published>
+    <updated>2019-04-29T06:52:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-list的切片操作"><a href="#1-list的切片操作" class="headerlink" title="1. list的切片操作"></a>1. list的切片操作</h2><p>Python中可以对list使用索引来进行切片操作，其语法(Python3)如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">a[:]           # a copy of the whole array</div><div class="line">a[start:]      # items start through the rest of the array</div><div class="line">a[:stop]       # items from the beginning through stop-1</div><div class="line">a[start:stop]  # items start through stop-1</div><div class="line"></div><div class="line">a[start:stop:step] # start through not past stop, by step</div><div class="line"></div><div class="line">a[-1]    # last item in the array</div><div class="line">a[-2:]   # last two items in the array</div><div class="line">a[:-2]   # everything except the last two items</div><div class="line"></div><div class="line"></div><div class="line">a[::-1]    # all items in the array, reversed</div><div class="line">a[1::-1]   # the first two items, reversed</div><div class="line">a[:-3:-1]  # the last two items, reversed</div><div class="line">a[-3::-1]  # everything except the last two items, reversed</div></pre></td></tr></table></figure>
+<p>测试结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 从0开始索引列表，索引值为整数</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = list(range(<span class="number">10</span>))  <span class="comment"># 定义列表a</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a</div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[:]  <span class="comment"># 复制列表</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">0</span>:]  <span class="comment"># 从索引为0的列表元素开始迭代列表至列表结束</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">1</span>:]  <span class="comment"># 从索引为1的列表元素开始迭代列表至列表结束</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[:<span class="number">9</span>]  <span class="comment"># 从索引为0的列表元素开始迭代列表至索引为8的列表元素，不包含索引为9的列表元素</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">3</span>:<span class="number">5</span>] <span class="comment"># 从索引为3的列表元素开始迭代列表至索引为4的列表元素，不包含索引为5的列表元素</span></div><div class="line">[<span class="number">3</span>, <span class="number">4</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[::<span class="number">1</span>] <span class="comment"># 从索引为0的列表元素开始索引列表，每次迭代索引值加1，直至列表结束</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[::<span class="number">2</span>] <span class="comment"># 从索引为0的列表元素开始索引列表，每次迭代索引值加2，直至列表结束</span></div><div class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">3</span>:<span class="number">9</span>:<span class="number">2</span>] <span class="comment"># 从索引为3的列表元素开始索引列表，每次迭代索引值加2，直至索引为8的列表元素，不包含索引为9的列表元素</span></div><div class="line">[<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</div><div class="line"></div><div class="line"><span class="comment"># 当索引值为负数时</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">-1</span>] <span class="comment"># 列表的最后一个元素</span></div><div class="line"><span class="number">9</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">-2</span>:] <span class="comment"># 从列表的倒数第二个元素直至列表结束，即从索引值为-2的元素直至列表结束</span></div><div class="line">[<span class="number">8</span>, <span class="number">9</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[:<span class="number">-1</span>] <span class="comment"># 从列表的第一个元素直至列表的倒数第二个元素结束，不包含最后一个列表元素</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[:<span class="number">-2</span>] <span class="comment"># 从列表的第一个元素直至列表的倒数第三个元素结束，不包含最后两个个列表元素</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 当step为负值时，表示逆向索引列表</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[::<span class="number">-1</span>] <span class="comment"># 反转列表，从列表最后一个元素到列表的第一个元素</span></div><div class="line">[<span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">1</span>::<span class="number">-1</span>] <span class="comment"># 从索引值为1的列表元素开始，逆向索引直列表开头</span></div><div class="line">[<span class="number">1</span>, <span class="number">0</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[<span class="number">-3</span>::<span class="number">-1</span>] <span class="comment"># 从索引值为-3的列表元素开始，逆向索引直列表开头</span></div><div class="line">[<span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>a[:<span class="number">-3</span>:<span class="number">-1</span>] <span class="comment"># 从索引值为-1，逆向索引直索引为-2的元素结束，不包含索引为-3的元素</span></div><div class="line">[<span class="number">9</span>, <span class="number">8</span>]</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://stackoverflow.com/questions/509211/understanding-slice-notation" target="_blank" rel="external">https://stackoverflow.com/questions/509211/understanding-slice-notation</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Python中list的切片操作
+    
+    </summary>
+    
+      <category term="Python" scheme="http://noahsnail.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://noahsnail.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>理解PyTorch的contiguous()</title>
+    <link href="http://noahsnail.com/2019/04/29/2019-04-29-%E7%90%86%E8%A7%A3PyTorch%E7%9A%84contiguous()/"/>
+    <id>http://noahsnail.com/2019/04/29/2019-04-29-理解PyTorch的contiguous()/</id>
+    <published>2019-04-29T02:33:32.000Z</published>
+    <updated>2019-04-29T02:49:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; [简书](<a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">http://www.jianshu.com/users/7731e83f3a4e/latest_articles</a></p>
+<h2 id="1-PyTorch中的Tensor操作"><a href="#1-PyTorch中的Tensor操作" class="headerlink" title="1. PyTorch中的Tensor操作"></a>1. PyTorch中的Tensor操作</h2><p>在PyTorch中，有一些对Tensor的操作不会真正改变Tensor的内容，改变的仅仅是Tensor中字节位置的索引。这些操作有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">narrow(), view(), expand(), transpose()</div></pre></td></tr></table></figure>
+<p>例如执行<code>view</code>操作之后，不会开辟新的内存空间来存放处理之后的数据，实际上新数据与原始数据共享同一块内存。</p>
+<p>而在调用<code>contiguous()</code>之后，PyTorch会开辟一块新的内存空间存放变换之后的数据，并会真正改变Tensor的内容，按照变换之后的顺序存放数据。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://stackoverflow.com/questions/48915810/pytorch-contiguous" target="_blank" rel="external">https://stackoverflow.com/questions/48915810/pytorch-contiguous</a></li>
+<li><a href="https://www.zhihu.com/question/60321866" target="_blank" rel="external">https://www.zhihu.com/question/60321866</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      理解PyTorch的contiguous()
+    
+    </summary>
+    
+      <category term="PyTorch" scheme="http://noahsnail.com/categories/PyTorch/"/>
+    
+    
+      <category term="PyTorch" scheme="http://noahsnail.com/tags/PyTorch/"/>
+    
+  </entry>
   
   <entry>
     <title>理解Python中super</title>
@@ -73,30 +231,26 @@
   </entry>
   
   <entry>
-    <title>Leetcode 414. Third Maximum Number</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-414--Third-Maximum-Number/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-414--Third-Maximum-Number/</id>
+    <title>Leetcode 98. Validate Binary Search Tree</title>
+    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-98--Validate-Binary-Search-Tree/"/>
+    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-98--Validate-Binary-Search-Tree/</id>
     <published>2018-12-12T05:23:49.000Z</published>
     <updated>2018-12-12T05:38:49.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-e7cac3d516af810a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Third Maximum Number"></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-302f74a4dbd1b837.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Validate Binary Search Tree"></p>
 <h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>Version 1</li>
+<li>Recurrent</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">thirdMax</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> <span class="keyword">long</span> first = LLONG_MIN;</div><div class="line">        <span class="keyword">long</span> <span class="keyword">long</span> second = LLONG_MIN;</div><div class="line">        <span class="keyword">long</span> <span class="keyword">long</span> third = LLONG_MIN;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++) &#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] &lt;= third || nums[i] == first || nums[i] == second) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[i] &gt; first) &#123;</div><div class="line">                third = second;</div><div class="line">                second = first;</div><div class="line">                first = nums[i];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[i] &gt; second) &#123;</div><div class="line">                third = second;</div><div class="line">                second = nums[i];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                third = nums[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(third == LLONG_MIN) &#123;</div><div class="line">            <span class="keyword">return</span> first;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> third;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">thirdMax</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; values(nums.begin(), nums.end());</div><div class="line">        <span class="keyword">if</span>(values.size() &lt; <span class="number">3</span>) &#123;</div><div class="line">            <span class="keyword">return</span> *values.rbegin();</div><div class="line">        &#125;</div><div class="line">        values.erase(--values.end());</div><div class="line">        values.erase(--values.end());</div><div class="line">        <span class="keyword">return</span> *(--values.end());</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> validate(root, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validate</span><span class="params">(TreeNode* root, TreeNode* max, TreeNode* min)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>((min &amp;&amp; root-&gt;val &lt;= min-&gt;val) || (max &amp;&amp; root-&gt;val &gt;= max-&gt;val)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> validate(root-&gt;left, root, min) &amp;&amp; validate(root-&gt;right, max, root);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/third-maximum-number/description/" target="_blank" rel="external">https://leetcode.com/problems/third-maximum-number/description/</a></li>
+<li><a href="https://leetcode.com/problems/validate-binary-search-tree/description/" target="_blank" rel="external">https://leetcode.com/problems/validate-binary-search-tree/description/</a></li>
 </ol>
 ]]></content>
     
     <summary type="html">
     
-      Leetcode 414. Third Maximum Number
+      Leetcode 98. Validate Binary Search Tree
     
     </summary>
     
@@ -529,118 +683,6 @@
     <summary type="html">
     
       Leetcode 84. Largest Rectangle in Histogram
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 83. Remove Duplicates from Sorted List</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-83--Remove-Duplicates-from-Sorted-List/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-83--Remove-Duplicates-from-Sorted-List/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-770598a96b6d080b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Remove Duplicates from Sorted List"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * struct ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode *next;</div><div class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">deleteDuplicates</span><span class="params">(ListNode* head)</span> </span>&#123;</div><div class="line">        ListNode* current = head;</div><div class="line">        <span class="keyword">while</span>(current) &#123;</div><div class="line">            <span class="keyword">if</span>(current-&gt;next &amp;&amp; current-&gt;val == current-&gt;next-&gt;val) &#123;</div><div class="line">                current-&gt;next = current-&gt;next-&gt;next;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                current = current-&gt;next;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> head;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/" target="_blank" rel="external">https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 83. Remove Duplicates from Sorted List
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 82. Remove Duplicates from Sorted List II</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-82--Remove-Duplicates-from-Sorted-List-II/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-82--Remove-Duplicates-from-Sorted-List-II/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-5ecce195113cca0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Remove Duplicates from Sorted List II"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * struct ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode *next;</div><div class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">deleteDuplicates</span><span class="params">(ListNode* head)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!head) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</div><div class="line">        &#125;</div><div class="line">        ListNode* new_head = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode* prev = new_head;</div><div class="line">        prev-&gt;next = head;</div><div class="line">        ListNode* current = head;</div><div class="line">        <span class="keyword">while</span>(current) &#123;</div><div class="line">            <span class="keyword">while</span>(current-&gt;next &amp;&amp; current-&gt;val == current-&gt;next-&gt;val) &#123;</div><div class="line">                current = current-&gt;next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(prev-&gt;next == current) &#123;</div><div class="line">                prev = prev-&gt;next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                prev-&gt;next = current-&gt;next;</div><div class="line">            &#125;</div><div class="line">            current = current-&gt;next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> new_head-&gt;next;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/" target="_blank" rel="external">https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 82. Remove Duplicates from Sorted List II
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 817. Linked List Components</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-817--Linked-List-Components/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-817--Linked-List-Components/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-a6d50c6eba37591e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Linked List Components"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * struct ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode *next;</div><div class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numComponents</span><span class="params">(ListNode* head, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; G)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> values[<span class="number">10000</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> value : G) &#123;</div><div class="line">            values[value] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        ListNode* current = head;</div><div class="line">        ListNode* pre = head;</div><div class="line">        count = values[current-&gt;val]?<span class="number">1</span>:<span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(current) &#123;</div><div class="line">            <span class="keyword">if</span>(values[current-&gt;val] &amp;&amp; !values[pre-&gt;val]) &#123;</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            pre = current;</div><div class="line">            current = current-&gt;next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/linked-list-components/description/" target="_blank" rel="external">https://leetcode.com/problems/linked-list-components/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 817. Linked List Components
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 81. Search in Rotated Sorted Array II</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-81--Search-in-Rotated-Sorted-Array-II/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-81--Search-in-Rotated-Sorted-Array-II/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-6e8f5126b020ea89.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Search in Rotated Sorted Array II"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> size = nums.size();</div><div class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> right = size - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(left &lt;= right) &#123;</div><div class="line">            <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(nums[mid] == target) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[left] == nums[mid]) &#123;</div><div class="line">                left++;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[left] &lt; nums[mid]) &#123;</div><div class="line">                <span class="keyword">if</span>(target &gt;= nums[left] &amp;&amp; target &lt;= nums[mid]) &#123;</div><div class="line">                    right = mid - <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    left = mid + <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span>(target &gt;= nums[mid] &amp;&amp; target &lt;= nums[right]) &#123;</div><div class="line">                    left = mid + <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    right = mid - <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/" target="_blank" rel="external">https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 81. Search in Rotated Sorted Array II
     
     </summary>
     
