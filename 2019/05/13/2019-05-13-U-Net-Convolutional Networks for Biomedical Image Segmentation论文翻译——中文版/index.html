@@ -98,10 +98,14 @@
 <meta property="og:url" content="http://noahsnail.com/2019/05/13/2019-05-13-U-Net-Convolutional Networks for Biomedical Image Segmentation论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="U-Net - Convolutional Networks for Biomedical Image Segmentation论文翻译——中文版">
-<meta property="og:updated_time" content="2019-05-13T07:58:46.000Z">
+<meta property="og:image" content="https://i.loli.net/2019/05/15/5cdbd198243fa74325.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/15/5cdbd68de246d25163.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/15/5cdbdb9fd656556641.png">
+<meta property="og:updated_time" content="2019-05-15T09:40:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="U-Net - Convolutional Networks for Biomedical Image Segmentation论文翻译——中文版">
 <meta name="twitter:description" content="U-Net - Convolutional Networks for Biomedical Image Segmentation论文翻译——中文版">
+<meta name="twitter:image" content="https://i.loli.net/2019/05/15/5cdbd198243fa74325.png">
 
 
 
@@ -360,7 +364,52 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
-<h1 id="U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><a href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation" class="headerlink" title="U-Net: Convolutional Networks for Biomedical Image Segmentation"></a>U-Net: Convolutional Networks for Biomedical Image Segmentation</h1>
+<h1 id="U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><a href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation" class="headerlink" title="U-Net: Convolutional Networks for Biomedical Image Segmentation"></a>U-Net: Convolutional Networks for Biomedical Image Segmentation</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>许多人都赞同深度网络的成功训练需要大量标注的训练样本。在本文中，我们提出了一种网络及训练策略，它依赖于大量使用数据增强，以便更有效地使用获得的标注样本。这个架构包括捕获上下文的收缩路径和能够精确定位的对称扩展路径。我们证明了这种网络可以从非常少的图像进行端到端训练，并且优于之前的ISBI赛挑战赛的最好方法（滑动窗口卷积网络），ISBI赛挑战赛主要是在电子显微镜堆叠中进行神经元结构分割。使用在透射光显微镜图像（相位衬度和DIC）上训练的相同网络，我们在这些类别中大幅度地赢得了2015年ISBI细胞追踪挑战赛。而且，网络速度很快。在最新的GPU上，分割一张512x512的图像不到一秒钟。网络的完整实现（基于Caffe）和预训练网络可在<a href="http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net" target="_blank" rel="external">http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net</a>上获得。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h2><p>在过去两年，深度卷积网络在许多视觉识别任务中的表现都优于当前的最新技术，例如[7,3]。虽然卷积网络已经存在了很长时间[8]，但由于可用训练集的大小和所考虑网络的规模，它们的成功受到了限制。Krizhevsky等人[7]的突破是通过大型网络在ImageNet数据集上的监督训练实现的，其中大型网络有8个网络层和数百万参数，ImageNet数据集包含百万张训练图像。从那时起，即使更大更深的网络也已经得到了训练[12]。</p>
+<p>卷积网络的典型用途是分类任务，其中图像输出是单个的类别标签。然而，在许多视觉任务中，尤其是在生物医学图像处理中，期望的输出应该包括位置，即类别标签应该分配给每个像素。此外，生物医学任务中通常无法获得数千张训练图像。因此，Ciresan等人[1]在滑动窗口设置中训练网络，通过提供像素周围局部区域（patch）作为输入来预测每个像素的类别标签。首先，这个网络可以定位。其次，局部块方面的训练数据远大于训练图像的数量。由此产生的网络大幅度地赢得了ISBI 2012EM分割挑战赛。</p>
+<p>显然，Ciresan等人[1]的策略有两个缺点。首先，它非常慢，因为必须为每个图像块单独运行网络，并且由于图像块重叠而存在大量冗余。其次，定位准确性与上下文的使用之间存在着权衡。较大的图像块需要更多的最大池化层，从而降低了定位精度，而较小的图像块则允许网络只能看到很少的上下文。许多最近的方法[11，4]提出了一种分类器输出，其考虑了来自多个层的特征。同时具有良好的定位和上下文的使用是可能的。</p>
+<p>在本文中，我们构建了一个更优雅的架构，即所谓的“全卷积网络”[9]。我们对这种架构进行了修改和扩展，使得它只需很少的训练图像就可以取得更精确的分割; 参见图1。[9]中的主要思想是通过连续层补充通常的收缩网络，其中的池化运算符由上采样运算符替换。因此，这些层增加了输出的分辨率。为了进行定位，来自收缩路径的高分辨率特征与上采样输出相结合。然后，后续卷积层可以基于该信息学习组装更精确的输出。</p>
+<p><img src="https://i.loli.net/2019/05/15/5cdbd198243fa74325.png" alt="Figure 1"></p>
+<p>图1. U-net架构（最低分辨率为32x32像素的示例）。每个蓝色框对应于一张多通道特征映射。通道数在框的顶部。<code>x-y</code>尺寸提供在框的左下边。白框表示复制的特征映射。箭头表示不同的操作。</p>
+<p>我们架构中的一个重要修改是在上采样部分中我们还有大量的特征通道，这些通道允许网络将上下文信息传播到具有更高分辨率的层。因此，扩展路径或多或少地与收缩路径对称，并产生U形结构。网络没有任何全连接层，并且仅使用每个卷积的有效部分，即分割映射仅包含在输入图像中可获得完整上下文的像素。该策略允许通过重叠图像区策略无缝分割任意大小的图像（参见图2）。为了预测图像边界区域中的像素，通过镜像输入图像来外推缺失的上下文。这种图像块策略对于将网络应用于大的图像非常重要，否则分辨率将受到GPU内存的限制。</p>
+<p><img src="https://i.loli.net/2019/05/15/5cdbd68de246d25163.png" alt="Figure 2"></p>
+<p>图2. 重叠图像块策略可以无缝分割任意大小的图像（EM堆叠中的神经元结构分割）。分割的预测在黄色区域，要求蓝色区域的图像数据作为输入。缺失的输入数据通过镜像外推。</p>
+<p>对于我们的任务，可用的训练数据非常少，我们通过对可用的训练图像应用弹性变形来使用更多的数据增强。这允许网络学习这种变形的不变性，而不需要在标注图像语料库中看到这些变形。 这在生物医学分割中尤其重要，因为变形曾经是组织中最常见的变化，并且可以有效地模拟真实的变形。Dosovitskiy等人[2]在无监督特征学习的领域内已经证明了数据增强在学习不变性中的价值。</p>
+<p>许多细胞分割任务中的另一个挑战是分离同类的接触目标，见图3。为此，我们建议使用加权损失，其中接触单元之间的分离背景标签在损失函数中获得较大的权重。</p>
+<p><img src="https://i.loli.net/2019/05/15/5cdbdb9fd656556641.png" alt="Figure 3"></p>
+<p>图3. 用DIC（差异干涉对比）显微镜记录玻璃上的HeLa细胞。（a）原始图像。（b）覆盖的实际分割。不同的颜色表示不同的HeLa细胞实例。（c）生成分割掩码（白色：前景，黑色：背景）。（d）以像素损失权重的映射来迫使网络学习边界像素。</p>
+<p>由此产生的网络适用于各种生物医学分割问题。在本文中，我们展示了EM堆叠中神经元结构的分割结果（从ISBI 2012开始的持续竞赛），其中我们的表现优于Ciresan等人[1]的网络。此外，我们展示了2015 ISBI细胞追踪挑战赛光学显微镜图像中的细胞分割结果。我们在两个最具挑战性的2D透射光数据集上以巨大的优势赢得了比赛。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p>Ciresan, D.C., Gambardella, L.M., Giusti, A., Schmidhuber, J.: Deep neural networks segment neuronal membranes in electron microscopy images. In: NIPS. pp. 2852–2860 (2012)</p>
+</li>
+<li><p>Dosovitskiy, A., Springenberg, J.T., Riedmiller, M., Brox, T.: Discriminative unsupervised feature learning with convolutional neural networks. In: NIPS (2014)</p>
+</li>
+<li><p>Girshick, R., Donahue, J., Darrell, T., Malik, J.: Rich feature hierarchies for accurate object detection and semantic segmentation. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2014)</p>
+</li>
+<li><p>Hariharan, B., Arbelez, P., Girshick, R., Malik, J.: Hypercolumns for object segmentation and fine-grained localization (2014), arXiv:1411.5752 [cs.CV]</p>
+</li>
+<li><p>He, K., Zhang, X., Ren, S., Sun, J.: Delving deep into rectifiers: Surpassing human-level performance on imagenet classification (2015), arXiv:1502.01852 [cs.CV]</p>
+</li>
+<li><p>Jia, Y., Shelhamer, E., Donahue, J., Karayev, S., Long, J., Girshick, R., Guadarrama, S., Darrell, T.: Ca↵e: Convolutional architecture for fast feature embedding (2014), arXiv:1408.5093 [cs.CV]</p>
+</li>
+<li><p>Krizhevsky, A., Sutskever, I., Hinton, G.E.: Imagenet classification with deep convolutional neural networks. In: NIPS. pp. 1106–1114 (2012)</p>
+</li>
+<li><p>LeCun, Y., Boser, B., Denker, J.S., Henderson, D., Howard, R.E., Hubbard, W., Jackel, L.D.: Backpropagation applied to handwritten zip code recognition. Neural Computation 1(4), 541–551 (1989)</p>
+</li>
+<li><p>Long, J., Shelhamer, E., Darrell, T.: Fully convolutional networks for semantic segmentation (2014), arXiv:1411.4038 [cs.CV]</p>
+</li>
+<li><p>Maska, M., (…), de Solorzano, C.O.: A benchmark for comparison of cell tracking algorithms. Bioinformatics 30, 1609–1617 (2014)</p>
+</li>
+<li><p>Seyedhosseini, M., Sajjadi, M., Tasdizen, T.: Image segmentation with cascaded hierarchical models and logistic disjunctive normal networks. In: Computer Vision (ICCV), 2013 IEEE International Conference on. pp. 2168–2175 (2013)</p>
+</li>
+<li><p>Simonyan, K., Zisserman, A.: Very deep convolutional networks for large-scale image recognition (2014), arXiv:1409.1556 [cs.CV]</p>
+</li>
+<li><p>WWW: Web page of the cell tracking challenge, <a href="http://www.codesolorzano.com/celltrackingchallenge/Cell_Tracking_Challenge/Welcome.html" target="_blank" rel="external">http://www.codesolorzano.com/celltrackingchallenge/Cell_Tracking_Challenge/Welcome.html</a></p>
+</li>
+<li><p>WWW: Web page of the em segmentation challenge, <a href="http://brainiac2.mit.edu/isbi_challenge/" target="_blank" rel="external">http://brainiac2.mit.edu/isbi_challenge/</a></p>
+</li>
+</ol>
+
       
     </div>
 
@@ -432,6 +481,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/2019-05-14-C++源文件到可执行程序/" rel="prev" title="C++源文件到可执行程序">
+                C++源文件到可执行程序 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -513,7 +566,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">616</span>
+                <span class="site-state-item-count">618</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -570,7 +623,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.3.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
             
 
           </div>
