@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://i.loli.net/2019/05/15/5cdbd198243fa74325.png">
 <meta property="og:image" content="https://i.loli.net/2019/05/15/5cdbd68de246d25163.png">
 <meta property="og:image" content="https://i.loli.net/2019/05/15/5cdbdb9fd656556641.png">
-<meta property="og:updated_time" content="2019-05-15T09:40:30.000Z">
+<meta property="og:updated_time" content="2019-05-23T03:36:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="U-Net - Convolutional Networks for Biomedical Image Segmentation论文翻译——中文版">
 <meta name="twitter:description" content="U-Net - Convolutional Networks for Biomedical Image Segmentation论文翻译——中文版">
@@ -379,6 +379,9 @@
 <p><img src="https://i.loli.net/2019/05/15/5cdbdb9fd656556641.png" alt="Figure 3"></p>
 <p>图3. 用DIC（差异干涉对比）显微镜记录玻璃上的HeLa细胞。（a）原始图像。（b）覆盖的实际分割。不同的颜色表示不同的HeLa细胞实例。（c）生成分割掩码（白色：前景，黑色：背景）。（d）以像素损失权重的映射来迫使网络学习边界像素。</p>
 <p>由此产生的网络适用于各种生物医学分割问题。在本文中，我们展示了EM堆叠中神经元结构的分割结果（从ISBI 2012开始的持续竞赛），其中我们的表现优于Ciresan等人[1]的网络。此外，我们展示了2015 ISBI细胞追踪挑战赛光学显微镜图像中的细胞分割结果。我们在两个最具挑战性的2D透射光数据集上以巨大的优势赢得了比赛。</p>
+<h2 id="2-网络架构"><a href="#2-网络架构" class="headerlink" title="2 网络架构"></a>2 网络架构</h2><p>网络架构如图1所示。它由一个收缩路径（左侧）和一个扩展路径（右侧）组成。收缩路径遵循卷积网络的典型架构。它包括重复使用两个3x3卷积（无填充卷积），每个卷积后跟一个线性修正单元（ReLU）和一个2x2最大池化操作，步长为2的下采样。在每个下采样步骤中，我们将特征通道的数量加倍。扩展路径中的每一步都包括特征映射的上采样，然后进行2x2卷积（“向上卷积”），将特征通道数量减半，与来自收缩路径的相应裁剪特征映射串联，然后是两个3x3卷积，每个卷积后面接ReLU。由于每一次卷积都会丢失边界像素，因此裁剪是必要的。在最后一层，使用1x1卷积将每个64分量特征向量映射到所需数量的类别上。网络总共有23个卷积层。</p>
+<p>为了允许输出分割映射的无缝平铺（参见图2），选择输入的图像块大小非常重要，这样所有的2x2最大池化操作都可以应用在具有偶数x和偶数y大小的层上。</p>
+<h2 id="3-训练"><a href="#3-训练" class="headerlink" title="3 训练"></a>3 训练</h2><p>使用输入图像及其相应的分割映射来训练带有随机梯度下降的网络，网络是采用Caffe[6]实现的。由于无填充卷积，输出图像比输入少恒定的边界宽度。为了最小化开销并最大限度地利用GPU内存，我们倾向于在大批量数据大小的情况下使用大的输入图像块，从而将批量数据大小减少到单张图像。因此，我们使用高动量（0.99），使得大量先前看到的训练样本确定当前优化步骤中的更新。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><p>Ciresan, D.C., Gambardella, L.M., Giusti, A., Schmidhuber, J.: Deep neural networks segment neuronal membranes in electron microscopy images. In: NIPS. pp. 2852–2860 (2012)</p>
 </li>
@@ -566,7 +569,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">618</span>
+                <span class="site-state-item-count">619</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -623,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.3.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#U-Net-Convolutional-Networks-for-Biomedical-Image-Segmentation"><span class="nav-number">1.</span> <span class="nav-text">U-Net: Convolutional Networks for Biomedical Image Segmentation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-网络架构"><span class="nav-number">1.3.</span> <span class="nav-text">2 网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-训练"><span class="nav-number">1.4.</span> <span class="nav-text">3 训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.5.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
             
 
           </div>
