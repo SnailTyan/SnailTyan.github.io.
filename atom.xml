@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2019-05-28T07:01:15.000Z</updated>
+  <updated>2019-11-05T07:54:49.000Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,236 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SinGAN - Learning a Generative Model from a Single Natural Image论文翻译——中文版</title>
+    <link href="http://noahsnail.com/2019/11/04/2019-11-04-SinGAN%20-%20Learning%20a%20Generative%20Model%20from%20a%20Single%20Natural%20Image%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%89%88/"/>
+    <id>http://noahsnail.com/2019/11/04/2019-11-04-SinGAN - Learning a Generative Model from a Single Natural Image论文翻译——中文版/</id>
+    <published>2019-11-04T02:44:02.000Z</published>
+    <updated>2019-11-05T07:54:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了SinGAN，一种可以从单张自然图像中学习到的无条件生成模型。我们的模型通过训练可以捕获图像中图像块的内部分布，然后能够生成高质量、多样性的样本，这些样本带有与训练图像相同的视觉内容。SinGAN包含一个全卷积GAN金字塔，每个GAN负责学习不同尺度图像的图像块分布。这可以生成具有任意大小和长宽比的新样本，这些样本具有显著的可变性，同时又保留了训练图像的整体结构和精细纹理。与之前的单图像GAN方案相比，我们的方法不局限于纹理图像，而且非条件的（即它从噪声中生成样本）。用户研究证明，生成的样本通常被混淆为真实图像。我们在各种图像处理任务中说明了SinGAN的实用性。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>生成对抗网络（GAN）[19]在建模视觉数据的高维分布方面取得了巨大飞跃。尤其是在特定类别数据集上（例如，面孔[33]，卧室[47]）训练的非条件GAN，在生成真实、高质量样本方面取得了显著的成功。然而，捕获具有多个对象类别（例如ImageNet[12]）的高度多样化数据集分布，仍然是一项重大挑战，并且通常需要另一个输入信号[6]来调整生成或针对特定任务训练模型（例如super-resolution[30]，inpainting[41]，retargeting[45]）。</p>
+<p>我们利用GAN进入了一个新的领域——从单张自然图像学习的非条件生成。具体而言，我们证明了单张自然图像中图像块的内部统计通常可以携带足够的信息来学习一个强大的生成模型。我们的新单张图像生成模型SinGAN，可以让我们处理包含复杂结构和纹理的一般自然图像，而不需要依赖同类别图像数据集的存在。这是通过全卷积轻量级的GAN金字塔实现的，每个GAN负责捕获不同尺度的图像块分布。训练之后，SinGAN可以生成各种高质量的图像样本（任意尺寸），这些样本在语义上与训练图像类似，但包含新的对象配置和结构（图1）。</p>
+<p><img src="https://i.loli.net/2019/11/05/GKriP9ez4Q3HLfc.png" alt="Figure 1"></p>
+<p>图1：从单张训练图像学习到的图像生成。我们提出了SinGAN——一种新的在单张自然图像上训练的非条件生成模型。我们的模型在多个尺度上学习图像的图像块统计，使用专用的多尺度对抗训练方案；它可以用来生成新的真实图像样本，这些样本在保留原始图像块分布的同时创造了新的对象配置和结构。</p>
+<p>长期以来，建模单张自然图像中图像块的内在分布被看做是许多计算机视觉任务中的有力先验。经典示例包括去噪[65]，去模糊[39]，超分辨率[18]，除雾[2，15]和图像编辑[37，21，9，11，50]。在这些工作中，最密切相关的是[48]，其中定义并优化了双向图像块相似性度量，用来确保处理后的图像块与原始图像块相同。受这些工作的激励，这里我们证明了SinGAN可以用在一个简单统一的学习框架内来解决一系列图像处理任务，包括图像的绘制，编辑，协调，超分辨率和从单张图像生成动画。在所有这些任务中，我们的模型都生成了高质量的结果，并保留了训练图像的内在图像块统计（图2和我们的项目网页）。所有的任务都可以通过同一个生成网络实现，而无需任何额外信息或除了原始训练图像外的进一步训练。</p>
+<p><img src="https://i.loli.net/2019/11/05/CzBDYoIU6Pm8dWO.png" alt="Figure 2"></p>
+<p>图2：图像处理。SinGAN可用于各种图像处理任务，包括：将绘画（剪贴画）转换为真实照片，重新排列和编辑图像中的对象，将新对象协调为图像，图像超分辨率以及从单张图像输入创建动画。在所有这些情况下，我们的模型仅观察训练图像（第一行），并且对于所有应用以相同的方式进行训练，而无需进行架构更改或进一步调整（请参见第4节）。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      SinGAN - Learning a Generative Model from a Single Natural Image论文翻译——中文版
+    
+    </summary>
+    
+      <category term="深度学习" scheme="http://noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SinGAN - Learning a Generative Model from a Single Natural Image论文翻译——中英文对照</title>
+    <link href="http://noahsnail.com/2019/11/04/2019-11-04-SinGAN%20-%20Learning%20a%20Generative%20Model%20from%20a%20Single%20Natural%20Image%E8%AE%BA%E6%96%87%E7%BF%BB%E8%AF%91%E2%80%94%E2%80%94%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7/"/>
+    <id>http://noahsnail.com/2019/11/04/2019-11-04-SinGAN - Learning a Generative Model from a Single Natural Image论文翻译——中英文对照/</id>
+    <published>2019-11-04T02:43:09.000Z</published>
+    <updated>2019-11-06T03:14:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h1 id="SinGAN-Learning-a-Generative-Model-from-a-Single-Natural-Image"><a href="#SinGAN-Learning-a-Generative-Model-from-a-Single-Natural-Image" class="headerlink" title="SinGAN: Learning a Generative Model from a Single Natural Image"></a>SinGAN: Learning a Generative Model from a Single Natural Image</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We introduce SinGAN, an unconditional generative model that can be learned from a single natural image. Our model is trained to capture the internal distribution of patches within the image, and is then able to generate high quality, diverse samples that carry the same visual content as the image. SinGAN contains a pyramid of fully convolutional GANs, each responsible for learning the patch distribution at a different scale of the image. This allows generating new samples of arbitrary size and aspect ratio, that have significant variability, yet maintain both the global structure and the fine textures of the training image. In contrast to previous single image GAN schemes, our approach is not limited to texture images, and is not conditional (i.e. it generates samples from noise). User studies confirm that the generated samples are commonly confused to be real images. We illustrate the utility of SinGAN in a wide range of image manipulation tasks.</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了SinGAN，一种可以从单张自然图像中学习到的无条件生成模型。我们的模型通过训练可以捕获图像中图像块的内部分布，然后能够生成高质量、多样性的样本，这些样本带有与训练图像相同的视觉内容。SinGAN包含一个全卷积GAN金字塔，每个GAN负责学习不同尺度图像的图像块分布。这可以生成具有任意大小和长宽比的新样本，这些样本具有显著的可变性，同时又保留了训练图像的整体结构和精细纹理。与之前的单图像GAN方案相比，我们的方法不局限于纹理图像，而且非条件的（即它从噪声中生成样本）。用户研究证明，生成的样本通常被混淆为真实图像。我们在各种图像处理任务中说明了SinGAN的实用性。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Generative Adversarial Nets (GANs) [19] have made a dramatic leap in modeling high dimensional distributions of visual data. In particular, unconditional GANs have shown remarkable success in generating realistic, high quality samples when trained on class specific datasets (e.g., faces [33], bedrooms[47]). However, capturing the distribution of highly diverse datasets with multiple object classes (e.g. ImageNet [12]), is still considered a major challenge and often requires conditioning the generation on another input signal [6] or training the model for a specific task (e.g. super-resolution [30], inpainting [41], retargeting [45]).</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>生成对抗网络（GAN）[19]在建模视觉数据的高维分布方面取得了巨大飞跃。尤其是在特定类别数据集上（例如，面孔[33]，卧室[47]）训练的非条件GAN，在生成真实、高质量样本方面取得了显著的成功。然而，捕获具有多个对象类别（例如ImageNet[12]）的高度多样化数据集分布，仍然是一项重大挑战，并且通常需要另一个输入信号[6]来调整生成或针对特定任务训练模型（例如super-resolution[30]，inpainting[41]，retargeting[45]）。</p>
+<p>Here, we take the use of GANs into a new realm – unconditional generation learned from a single natural image. Specifically, we show that the internal statistics of patches within a single natural image typically carry enough information for learning a powerful generative model. SinGAN, our new single image generative model, allows us to deal with general natural images that contain complex structures and textures, without the need to rely on the existence of a database of images from the same class. This is achieved by a pyramid of fully convolutional light-weight GANs, each is responsible for capturing the distribution of patches at a different scale. Once trained, SinGAN can produce diverse high quality image samples (of arbitrary dimensions), which semantically resemble the training image, yet contain new object configurations and structures(Fig. 1).</p>
+<p><img src="https://i.loli.net/2019/11/05/GKriP9ez4Q3HLfc.png" alt="Figure 1"></p>
+<p>Figure 1: Image generation learned from a single training image. We propose SinGAN–a new unconditional generative model trained on a single natural image. Our model learns the image’s patch statistics across multiple scales, using a dedicated multi-scale adversarial training scheme; it can then be used to generate new realistic image samples that preserve the original patch distribution while creating new object configurations and structures.</p>
+<p>我们利用GAN进入了一个新的领域——从单张自然图像学习的非条件生成。具体而言，我们证明了单张自然图像中图像块的内部统计通常可以携带足够的信息来学习一个强大的生成模型。我们的新单张图像生成模型SinGAN，可以让我们处理包含复杂结构和纹理的一般自然图像，而不需要依赖同类别图像数据集的存在。这是通过全卷积轻量级的GAN金字塔实现的，每个GAN负责捕获不同尺度的图像块分布。训练之后，SinGAN可以生成各种高质量的图像样本（任意尺寸），这些样本在语义上与训练图像类似，但包含新的对象配置和结构（图1）。</p>
+<p><img src="https://i.loli.net/2019/11/05/GKriP9ez4Q3HLfc.png" alt="Figure 1"></p>
+<p>图1：从单张训练图像学习到的图像生成。我们提出了SinGAN——一种新的在单张自然图像上训练的非条件生成模型。我们的模型在多个尺度上学习图像的图像块统计，使用专用的多尺度对抗训练方案；它可以用来生成新的真实图像样本，这些样本在保留原始图像块分布的同时创造了新的对象配置和结构。</p>
+<p>Modeling the internal distribution of patches within a single natural image has been long recognized as a powerful prior in many computer vision tasks [64]. Classical examples include denoising [65], deblurring [39], super resolution [18], dehazing [2, 15], and image editing [37, 21, 9, 11, 50]. The most closley related work in this context is [48], where a bidirectional patch similarity measure is defined and optimized to guarantee that the patches of an image after manipulation are the same as the original ones. Motivated by these works, here we show how SinGAN can be used within a simple unified learning framework to solve a variety of image manipulation tasks, including paint-to-image, editing, harmonization, superresolution, and animation from a single image. In all these cases, our model produces high quality results that preserve the internal patch statistics of the training image (see Fig. 2 and our project webpage). All tasks are achieved with the same generative network, without any additional information or further training beyond the original training image.</p>
+<p><img src="https://i.loli.net/2019/11/05/CzBDYoIU6Pm8dWO.png" alt="Figure 2"></p>
+<p>Figure 2: Image manipulation. SinGAN can be used in various image manipulation tasks, including: transforming a paint (clipart) into a realistic photo, rearranging and editing objects in the image, harmonizing a new object into an image, image super-resolution and creating an animation from a single input. In all these cases, our model observes only the training image (first row) and is trained in the same manner for all applications, with no architectural changes or further tuning (see Sec. 4).</p>
+<p>长期以来，建模单张自然图像中图像块的内在分布被看做是许多计算机视觉任务中的有力先验。经典示例包括去噪[65]，去模糊[39]，超分辨率[18]，除雾[2，15]和图像编辑[37，21，9，11，50]。在这些工作中，最密切相关的是[48]，其中定义并优化了双向图像块相似性度量，用来确保处理后的图像块与原始图像块相同。受这些工作的激励，这里我们证明了SinGAN可以用在一个简单统一的学习框架内来解决一系列图像处理任务，包括图像的绘制，编辑，协调，超分辨率和从单张图像生成动画。在所有这些任务中，我们的模型都生成了高质量的结果，并保留了训练图像的内在图像块统计（图2和我们的项目网页）。所有的任务都可以通过同一个生成网络实现，而无需任何额外信息或除了原始训练图像外的进一步训练。</p>
+<p><img src="https://i.loli.net/2019/11/05/CzBDYoIU6Pm8dWO.png" alt="Figure 2"></p>
+<p>图2：图像处理。SinGAN可用于各种图像处理任务，包括：将绘画（剪贴画）转换为真实照片，重新排列和编辑图像中的对象，将新对象协调为图像，图像超分辨率以及从单张图像输入创建动画。在所有这些情况下，我们的模型仅观察训练图像（第一行），并且对于所有应用以相同的方式进行训练，而无需进行架构更改或进一步调整（请参见第4节）。</p>
+<h3 id="1-1-Related-Work"><a href="#1-1-Related-Work" class="headerlink" title="1.1. Related Work"></a>1.1. Related Work</h3><p><strong>Single image deep models</strong> Several recent works proposed to “overfit” a deep model to a single training example [51, 60, 46, 7, 1]. However, these methods are designed for specific tasks (e.g., super resolution [46], texture expansion [60]). Shocher et al. [44, 45] were the first to introduce an internal GAN based model for a single natural image, and illustrated it in the context of retargeting. However, their generation is conditioned on an input image (i.e., mapping images to images) and is not used to draw random samples. In contrast, our framework is purely generative (i.e. maps noise to image samples), and thus suits many different image manipulation tasks. Unconditional single image GANs have been explored only in the context of texture generation [3, 27, 31]. These models do not generate meaningful samples when trained on non-texture images (Fig. 3). Our method, on the other hand, is not restricted to texture and can handle general natural images (e.g., Fig. 1).</p>
+<h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1. 相关工作"></a>1.1. 相关工作</h3><p><strong>单图像深度模型</strong>最近的一些工作提出将深度模型“过拟合”单个训练样本[51，60，46，7，1]。然而，这些方法是为特定的任务（例如，超分辨率[46]，纹理扩展[60]）设计的。Shocher等[44，45]是第一个为单张自然图像引入以GAN为基础的内部模型的，</p>
+<p>最近的一些工作提出将深度模型“过度拟合”为单个训练示例[51、60、46、7、1]。 但是，这些方法是为特定任务设计的。 Shocher等。 [44，45]是第一个为单个自然图像引入基于GAN的内部模型的，并在重新定位的情况下进行了说明。 但是，它们的生成取决于输入图像（即，将图像映射到图像），并且不用于绘制随机样本。 相反，我们的框架是纯粹生成的（即将噪声映射到图像样本），因此适合许多不同的图像处理任务。 仅在纹理生成的背景下研究了无条件的单图像GAN [3，27，31]。 当在非纹理图像上训练时，这些模型不会生成有意义的样本（图3）。 另一方面，我们的方法不限于纹理，并且可以处理一般的自然图像（例如，图1）。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] Yuki M Asano, Christian Rupprecht, and Andrea Vedaldi. Surprising effectiveness of few-image unsupervised feature learning. arXiv preprint arXiv:1904.13132, 2019. 2</p>
+<p>[2] Yuval Bahat and Michal Irani. Blind dehazing using internal patch recurrence. In 2016 IEEE International Conference on Computational Photography (ICCP), pages 1–9. IEEE, 2016. 1</p>
+<p>[3] Urs Bergmann, Nikolay Jetchev, and Roland Vollgraf. Learning texture manifolds with the periodic spatial GAN. arXiv preprint arXiv:1705.06566, 2017. 2, 4</p>
+<p>[4] Yochai Blau, Roey Mechrez, Radu Timofte, Tomer Michaeli, and Lihi Zelnik-Manor. The 2018 pirm challenge on perceptual image super-resolution. In European Conference on Computer Vision Workshops, pages 334–355. Springer, 2018. 8</p>
+<p>[5] Yochai Blau and Tomer Michaeli. The perception-distortion tradeoff. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 6228–6237, 2018. 8</p>
+<p>[6] Andrew Brock, Jeff Donahue, and Karen Simonyan. Large scale GAN training for high fidelity natural image synthesis. arXiv preprint arXiv:1809.11096, 2018. 1</p>
+<p>[7] Caroline Chan, Shiry Ginosar, Tinghui Zhou, and Alexei A Efros. Everybody dance now. arXiv preprint arXiv:1808.07371, 2018. 2</p>
+<p>[8] Wengling Chen and James Hays. Sketchygan: towards diverse and realistic sketch to image synthesis. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 9416–9425, 2018. 2</p>
+<p>[9] Taeg Sang Cho, Moshe Butman, Shai Avidan, and William T Freeman. The patch transform and its applications to image editing. In 2008 IEEE Conference on Computer Vision and Pattern Recognition, pages 1–8. IEEE, 2008. 1</p>
+<p>[10] Tali Dekel, Chuang Gan, Dilip Krishnan, Ce Liu, and William T Freeman. Sparse, smart contours to represent and edit images. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 3511–3520, 2018. 2</p>
+<p>[11] Tali Dekel, Tomer Michaeli, Michal Irani, and William T Freeman. Revealing and modifying non-local variations in a single image. ACM Transactions on Graphics (TOG), 34(6):227, 2015. 1</p>
+<p>[12] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei. ImageNet: A Large-Scale Hierarchical Image Database. In CVPR09, 2009. 1</p>
+<p>[13] Emily L Denton, Soumith Chintala, Rob Fergus, et al. Deep generative image models using a laplacian pyramid of adversarial networks. In Advances in neural information processing systems, pages 1486–1494, 2015. 3</p>
+<p>[14] Bradley Efron. Bootstrap methods: another look at the jackknife. In Breakthroughs in statistics, pages 569–593. Springer, 1992. 6</p>
+<p>[15] Gilad Freedman and Raanan Fattal. Image and video upscaling from local self-examples. ACM Transactions on Graphics (TOG), 30(2):12, 2011. 1</p>
+<p>[16] Leon Gatys, Alexander S Ecker, and Matthias Bethge. Texture synthesis using convolutional neural networks. In Advances in neural information processing systems, pages 262–270, 2015. 2</p>
+<p>[17] Leon A Gatys, Alexander S Ecker, and Matthias Bethge. Image style transfer using convolutional neural networks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 2414–2423, 2016. 7, 8</p>
+<p>[18] Daniel Glasner, Shai Bagon, and Michal Irani. Superresolution from a single image. In 2009 IEEE 12th International Conference on Computer Vision (ICCV), pages 349–356. IEEE, 2009. 1, 7</p>
+<p>[19] Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems, pages 2672–2680, 2014. 1</p>
+<p>[20] Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron C Courville. Improved training of wasserstein GANs. In Advances in Neural Information Processing Systems, pages 5767–5777, 2017. 4</p>
+<p>[21] Kaiming He and Jian Sun. Statistics of patch offsets for image completion. In European Conference on Computer Vision, pages 16–29. Springer, 2012. 1</p>
+<p>[22] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 770–778, 2016. 4</p>
+<p>[23] Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. GANs trained by a two time-scale update rule converge to a local nash equilibrium. In Advances in Neural Information Processing Systems, pages 6626–6637, 2017. 5, 6</p>
+<p>[24] Xun Huang, Yixuan Li, Omid Poursaeed, John Hopcroft, and Serge Belongie. Stacked generative adversarial networks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 5077–5086, 2017. 3</p>
+<p>[25] Sergey Ioffe and Christian Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015. 4</p>
+<p>[26] Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, and Alexei A Efros. Image-to-image translation with conditional adversarial networks. arXiv preprint, 2017. 3, 4, 5</p>
+<p>[27] Nikolay Jetchev, Urs Bergmann, and Roland Vollgraf. Texture synthesis with spatial generative adversarial networks. Workshop on Adversarial Training, NIPS, 2016. 2, 4</p>
+<p>[28] Tero Karras, Timo Aila, Samuli Laine, and Jaakko Lehtinen. Progressive growing of GANs for improved quality, stability, and variation. arXiv preprint arXiv:1710.10196, 2017. 3</p>
+<p>[29] Tero Karras, Samuli Laine, and Timo Aila. A style-based generator architecture for generative adversarial networks. arXiv preprint arXiv:1812.04948, 2018. 3</p>
+<p>[30] Christian Ledig, Lucas Theis, Ferenc Huszar, Jose Caballero, Andrew Cunningham, Alejandro Acosta, Andrew Aitken, Alykhan Tejani, Johannes Totz, Zehan Wang, et al. Photorealistic single image super-resolution using a generative adversarial network. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 4681–4690, 2017. 1, 7, 8</p>
+<p>[31] Chuan Li and Michael Wand. Precomputed real-time texture synthesis with markovian generative adversarial networks. In European Conference on Computer Vision, pages 702–716. Springer, 2016. 2, 3, 4</p>
+<p>[32] Bee Lim, Sanghyun Son, Heewon Kim, Seungjun Nah, and Kyoung Mu Lee. Enhanced deep residual networks for single image super-resolution. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops, pages 136–144, 2017. 7</p>
+<p>[33] Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep learning face attributes in the wild. In Proceedings of the IEEE International Conference on Computer Vision, pages 3730–3738, 2015. 1</p>
+<p>[34] Fujun Luan, Sylvain Paris, Eli Shechtman, and Kavita Bala. Deep painterly harmonization. arXiv preprint arXiv:1804.03189, 2018. 8</p>
+<p>[35] David Martin, Charless Fowlkes, Doron Tal, and Jitendra Malik. A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics. In null, page 416. IEEE, 2001. 4, 8</p>
+<p>[36] Michael Mathieu, Camille Couprie, and Yann LeCun. Deep multi-scale video prediction beyond mean square error. arXiv preprint arXiv:1511.05440, 2015. 4</p>
+<p>[37] Roey Mechrez, Eli Shechtman, and Lihi Zelnik-Manor. Saliency driven image manipulation. In 2018 IEEE Winter Conference on Applications of Computer Vision (WACV), pages 1368–1376. IEEE, 2018. 1</p>
+<p>[38] Roey Mechrez, Itamar Talmi, and Lihi Zelnik-Manor. The contextual loss for image transformation with non-aligned data. In Proceedings of the European Conference on Computer Vision (ECCV), pages 768–783, 2018. 7, 8</p>
+<p>[39] Tomer Michaeli and Michal Irani. Blind deblurring using internal patch recurrence. In European Conference on Computer Vision, pages 783–798. Springer, 2014. 1</p>
+<p>[40] Anish Mittal, Rajiv Soundararajan, and Alan C Bovik. Making a completely blind image quality analyzer. IEEE Signal Processing Letters, 20(3):209–212, 2013. 7, 8</p>
+<p>[41] Deepak Pathak, Philipp Krahenbuhl, Jeff Donahue, Trevor Darrell, and Alexei A Efros. Context encoders: Feature learning by inpainting. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 2536–2544, 2016. 1</p>
+<p>[42] Guim Perarnau, Joost van de Weijer, Bogdan Raducanu, and Jose M Alvarez. Invertible conditional GANs for image editing. arXiv preprint arXiv:1611.06355, 2016. 2</p>
+<p>[43] Patsorn Sangkloy, Jingwan Lu, Chen Fang, Fisher Yu, and James Hays. Scribbler: Controlling deep image synthesis with sketch and color. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 5400–5409, 2017. 2</p>
+<p>[44] Assaf Shocher, Shai Bagon, Phillip Isola, and Michal Irani. Ingan: Capturing and remapping the “DNA” of a natural image. arXiv preprint arXiv: arXiv:1812.00231, 2018. 2</p>
+<p>[45] Assaf Shocher, Shai Bagon, Phillip Isola, and Michal Irani. InGAN: Capturing and Remapping the “DNA” of a Natural Image. International Conference on Computer Vision (ICCV), 2019. 1, 2</p>
+<p>[46] Assaf Shocher, Nadav Cohen, and Michal Irani. Zero-Shot Super-Resolution using Deep Internal Learning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 3118–3126, 2018. 2, 7</p>
+<p>[47] Nathan Silberman, Derek Hoiem, Pushmeet Kohli, and Rob Fergus. Indoor segmentation and support inference from rgbd images. In European Conference on Computer Vision, pages 746–760. Springer, 2012. 1</p>
+<p>[48] Denis Simakov, Yaron Caspi, Eli Shechtman, and Michal Irani. Summarizing visual data using bidirectional similarity. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1–8. IEEE, 2008. 1</p>
+<p>[49] Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich. Going deeper with convolutions. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 1–9, 2015. 6</p>
+<p>[50] Tal Tlusty, Tomer Michaeli, Tali Dekel, and Lihi ZelnikManor. Modifying non-local variations across multiple views. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 6276–6285, 2018. 1</p>
+<p>[51] Dmitry Ulyanov, Andrea Vedaldi, and Victor Lempitsky. Deep image prior. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2018. 2, 7</p>
+<p>[52] Ting-Chun Wang, Ming-Yu Liu, Jun-Yan Zhu, Andrew Tao, Jan Kautz, and Bryan Catanzaro. High-resolution image synthesis and semantic manipulation with conditional GANs. arXiv preprint arXiv:1711.11585, 2017. 2, 3</p>
+<p>[53] Xiaolong Wang and Abhinav Gupta. Generative image modeling using style and structure adversarial networks. 2016. 2</p>
+<p>[54] Wenqi Xian, Patsorn Sangkloy, Varun Agrawal, Amit Raj, Jingwan Lu, Chen Fang, Fisher Yu, and James Hays. Texturegan: Controlling deep image synthesis with texture patches. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018. 2</p>
+<p>[55] Xuemiao Xu, Liang Wan, Xiaopei Liu, Tien-Tsin Wong, Liansheng Wang, and Chi-Sing Leung. Animating animal motion from still. ACM Transactions on Graphics (TOG), 27(5):117, 2008. 8</p>
+<p>[56] Jiahui Yu, Zhe Lin, Jimei Yang, Xiaohui Shen, Xin Lu, and Thomas S Huang. Generative image inpainting with contextual attention. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 5505–5514, 2018. 2</p>
+<p>[57] Kai Zhang, Wangmeng Zuo, Yunjin Chen, Deyu Meng, and Lei Zhang. Beyond a gaussian denoiser: Residual learning of deep cnn for image denoising. IEEE Transactions on Image Processing, 26(7):3142–3155, 2017. 4</p>
+<p>[58] Richard Zhang, Phillip Isola, and Alexei A Efros. Colorful image colorization. In European conference on computer vision, pages 649–666. Springer, 2016. 5</p>
+<p>[59] Bolei Zhou, Agata Lapedriza, Jianxiong Xiao, Antonio Torralba, and Aude Oliva. Learning deep features for scene recognition using places database. In Advances in neural information processing systems, pages 487–495, 2014. 4, 6</p>
+<p>[60] Yang Zhou, Zhen Zhu, Xiang Bai, Dani Lischinski, Daniel Cohen-Or, and Hui Huang. Non-stationary texture synthesis by adversarial expansion. arXiv preprint arXiv:1805.04487, 2018. 2<br>[61] Jun-Yan Zhu, Philipp Krahenbuhl, Eli Shechtman, and Alexei A Efros. Generative visual manipulation on the natural image manifold. In European Conference on Computer Vision (ECCV), pages 597–613. Springer, 2016. 2</p>
+<p>[62] Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A Efros. Unpaired image-to-image translation using cycleconsistent adversarial networks. In IEEE International Conference on Computer Vision, 2017. 2, 4</p>
+<p>[63] Jun-Yan Zhu, Richard Zhang, Deepak Pathak, Trevor Darrell, Alexei A Efros, Oliver Wang, and Eli Shechtman. Toward multimodal image-to-image translation. In Advances in Neural Information Processing Systems, pages 465–476, 2017. 4</p>
+<p>[64] Maria Zontak and Michal Irani. Internal statistics of a single natural image. In CVPR 2011, pages 977–984. IEEE, 2011. 1</p>
+<p>[65] Maria Zontak, Inbar Mosseri, and Michal Irani. Separating signal from noise using patch recurrence across scales. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 1195–1202, 2013. 1</p>
+]]></content>
+    
+    <summary type="html">
+    
+      SinGAN - Learning a Generative Model from a Single Natural Image论文翻译——中英文对照
+    
+    </summary>
+    
+      <category term="深度学习" scheme="http://noahsnail.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://noahsnail.com/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux删除重复文件</title>
+    <link href="http://noahsnail.com/2019/10/28/2019-10-28-Linux%E5%88%A0%E9%99%A4%E9%87%8D%E5%A4%8D%E6%96%87%E4%BB%B6/"/>
+    <id>http://noahsnail.com/2019/10/28/2019-10-28-Linux删除重复文件/</id>
+    <published>2019-10-28T01:44:53.000Z</published>
+    <updated>2019-10-28T02:01:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>在Linux系统处理数据时，经常会遇到删除重复文件的问题。例如，在进行图片分类任务时，希望删除训练数据中的重复图片。在Linux系统中，存在一个<code>fdupes</code>命令可以查找并删除重复文件。</p>
+<h2 id="2-Fdupes介绍"><a href="#2-Fdupes介绍" class="headerlink" title="2. Fdupes介绍"></a>2. Fdupes介绍</h2><p>Fdupes是Adrian Lopez用C语言编写的Linux实用程序，它能够在给定的目录和子目录集中找到重复文件，Fdupes通过比较文件的MD5签名然后进行字节比较来识别重复文件。其比较顺序为：</p>
+<p>大小比较 &gt; 部分MD5签名比较 &gt; 完整MD5签名比较 &gt; 字节比较</p>
+<h2 id="3-安装fdupes"><a href="#3-安装fdupes" class="headerlink" title="3. 安装fdupes"></a>3. 安装fdupes</h2><p>以CentOS系统为例，<code>fdupes</code>的安装命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y fdupes</div></pre></td></tr></table></figure>
+<h2 id="4-fdupes的使用"><a href="#4-fdupes的使用" class="headerlink" title="4. fdupes的使用"></a>4. fdupes的使用</h2><p>删除重复文件，并且不需要询问用户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fdupes -dN [folder_name]</div></pre></td></tr></table></figure>
+<p>其中，<code>-d</code>参数表示保留一个文件，并删除其它重复文件，<code>-N</code>与<code>-d</code>一起使用，表示保留第一个重复文件并删除其它重复文件，不需要提示用户。</p>
+<p>使用说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">$ fdupes -h</div><div class="line">Usage: fdupes [options] DIRECTORY...</div><div class="line"></div><div class="line"> -r --recurse           for every directory given follow subdirectories</div><div class="line">                        encountered within</div><div class="line"> -R --recurse:          for each directory given after this option follow</div><div class="line">                        subdirectories encountered within (note the &apos;:&apos; at</div><div class="line">                        the end of the option, manpage for more details)</div><div class="line"> -s --symlinks          follow symlinks</div><div class="line"> -H --hardlinks         normally, when two or more files point to the same</div><div class="line">                        disk area they are treated as non-duplicates; this</div><div class="line">                        option will change this behavior</div><div class="line"> -n --noempty           exclude zero-length files from consideration</div><div class="line"> -A --nohidden          exclude hidden files from consideration</div><div class="line"> -f --omitfirst         omit the first file in each set of matches</div><div class="line"> -1 --sameline          list each set of matches on a single line</div><div class="line"> -S --size              show size of duplicate files</div><div class="line"> -m --summarize         summarize dupe information</div><div class="line"> -q --quiet             hide progress indicator</div><div class="line"> -d --delete            prompt user for files to preserve and delete all</div><div class="line">                        others; important: under particular circumstances,</div><div class="line">                        data may be lost when using this option together</div><div class="line">                        with -s or --symlinks, or when specifying a</div><div class="line">                        particular directory more than once; refer to the</div><div class="line">                        fdupes documentation for additional information</div><div class="line"> -N --noprompt          together with --delete, preserve the first file in</div><div class="line">                        each set of duplicates and delete the rest without</div><div class="line">                        prompting the user</div><div class="line"> -I --immediate         delete duplicates as they are encountered, without</div><div class="line">                        grouping into sets; implies --noprompt</div><div class="line"> -p --permissions       don&apos;t consider files with different owner/group or</div><div class="line">                        permission bits as duplicates</div><div class="line"> -o --order=BY          select sort order for output and deleting; by file</div><div class="line">                        modification time (BY=&apos;time&apos;; default), status</div><div class="line">                        change time (BY=&apos;ctime&apos;), or filename (BY=&apos;name&apos;)</div><div class="line"> -i --reverse           reverse order while sorting</div><div class="line"> -v --version           display fdupes version</div><div class="line"> -h --help              display this help message</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://www.tecmint.com/fdupes-find-and-delete-duplicate-files-in-linux/" target="_blank" rel="external">https://www.tecmint.com/fdupes-find-and-delete-duplicate-files-in-linux/</a></li>
+<li><a href="https://www.howtoing.com/fdupes-find-and-delete-duplicate-files-in-linux" target="_blank" rel="external">https://www.howtoing.com/fdupes-find-and-delete-duplicate-files-in-linux</a></li>
+<li><a href="http://www.runoob.com/linux/linux-comm-who.html" target="_blank" rel="external">http://www.runoob.com/linux/linux-comm-who.html</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux删除重复文件
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://noahsnail.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux的set命令</title>
+    <link href="http://noahsnail.com/2019/07/24/2019-07-24-Linux%E7%9A%84set%E5%91%BD%E4%BB%A4/"/>
+    <id>http://noahsnail.com/2019/07/24/2019-07-24-Linux的set命令/</id>
+    <published>2019-07-24T01:23:32.000Z</published>
+    <updated>2019-07-24T05:06:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-set命令介绍"><a href="#1-set命令介绍" class="headerlink" title="1. set命令介绍"></a>1. set命令介绍</h2><p><code>set</code>命令主要用来设置shell，在编写shell脚本时，使用<code>set</code>命令能设置shell的执行方式，根据需求不同，采用的参数设置也不同。<code>set</code>命令也用来显示系统中已存在的shell变量以及设置新的shell变量。</p>
+<h2 id="2-set命令的常用参数及作用"><a href="#2-set命令的常用参数及作用" class="headerlink" title="2. set命令的常用参数及作用"></a>2. set命令的常用参数及作用</h2><ul>
+<li>set</li>
+</ul>
+<p>不带参数的<code>set</code>命令用来显示环境变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">root@3500f62fe5ae:/workspace<span class="comment"># set</span></div><div class="line">BASH=/bin/bash</div><div class="line">BASHOPTS=checkwinsize:cmdhist:complete_fullquote:expand_aliases:extquote:force_fignore:histappend:hostcomplete:interactive_comments:progcomp:promptvars:sourcepath</div><div class="line">BASH_ALIASES=()</div><div class="line">BASH_ARGC=()</div><div class="line">BASH_ARGV=()</div><div class="line">BASH_CMDS=()</div><div class="line">BASH_LINENO=()</div><div class="line">BASH_SOURCE=()</div><div class="line">BASH_VERSINFO=([0]=<span class="string">"4"</span> [1]=<span class="string">"3"</span> [2]=<span class="string">"48"</span> [3]=<span class="string">"1"</span> [4]=<span class="string">"release"</span> [5]=<span class="string">"x86_64-pc-linux-gnu"</span>)</div><div class="line">BASH_VERSION=<span class="string">'4.3.48(1)-release'</span></div><div class="line">COLUMNS=236</div><div class="line">CUDA_HOME=/usr/<span class="built_in">local</span>/cuda</div><div class="line">CUDA_PKG_VERSION=10-0=10.0.130-1</div><div class="line">CUDA_VERSION=10.0.130</div><div class="line">CUDNN_VERSION=7.6.0.64</div><div class="line">...</div></pre></td></tr></table></figure>
+<ul>
+<li>set -e</li>
+</ul>
+<p><code>-e</code>参数表示只要shell脚本中发生错误，即命令返回值不等于0，则停止执行并退出shell。<code>set -e</code>在shell脚本中经常使用。默认情况下，shell脚本碰到错误会报错，但会继续执行后面的命令。</p>
+<p><code>test.sh</code>脚本内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"><span class="built_in">set</span> <span class="_">-e</span></div><div class="line"></div><div class="line">hello</div><div class="line"><span class="built_in">echo</span> <span class="string">"Hello set"</span></div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root@3500f62fe5ae:/workspace<span class="comment"># sh test.sh</span></div><div class="line">test.sh: 4: test.sh: hello: not found</div></pre></td></tr></table></figure>
+<p>注：<code>set +e</code>表示关闭-e选项，<code>set -e</code>表示重新打开-e选项。</p>
+<ul>
+<li>set -u</li>
+</ul>
+<p><code>-u</code>参数表示shell脚本执行时如果遇到不存在的变量会报错并停止执行。默认不加<code>-u</code>参数的情况下，shell脚本遇到不存在的变量不会报错，会继续执行。</p>
+<p><code>test.sh</code>脚本内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$test</span></div><div class="line"></div><div class="line"><span class="built_in">set</span> -u</div><div class="line"><span class="built_in">echo</span> <span class="variable">$hello</span></div></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">root@3500f62fe5ae:/workspace<span class="comment"># sh test.sh</span></div><div class="line"></div><div class="line">test.sh: 5: test.sh: hello: parameter not <span class="built_in">set</span></div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2017/11/bash-set.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2017/11/bash-set.html</a></li>
+<li><a href="http://www.runoob.com/linux/linux-comm-set.html" target="_blank" rel="external">http://www.runoob.com/linux/linux-comm-set.html</a></li>
+<li><a href="http://man.linuxde.net/set" target="_blank" rel="external">http://man.linuxde.net/set</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Linux的set命令
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://noahsnail.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://noahsnail.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Python调用C</title>
@@ -630,23 +860,86 @@
   </entry>
   
   <entry>
-    <title>Leetcode 31. Next Permutation</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-31--Next-Permutation/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-31--Next-Permutation/</id>
+    <title>Leetcode 102. Binary Tree Level Order Traversal</title>
+    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-102--Binary-Tree-Level-Order-Traversal/"/>
+    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-102--Binary-Tree-Level-Order-Traversal/</id>
     <published>2018-12-12T05:23:49.000Z</published>
     <updated>2018-12-12T05:38:49.000Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-5a3abde7bb036f11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Next Permutation"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> index = <span class="number">-1</span>;</div><div class="line">        <span class="keyword">int</span> min = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = nums.size() - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] &gt; nums[i - <span class="number">1</span>] ) &#123;</div><div class="line">                index = i - <span class="number">1</span>;</div><div class="line">                min = i;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(index == <span class="number">-1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> reverse(nums.begin(), nums.end());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = index + <span class="number">1</span>; i &lt; nums.size(); i++) &#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] &gt; nums[index] &amp;&amp; nums[i] &lt; nums[min]) &#123;</div><div class="line">                min = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        swap(nums[index], nums[min]);</div><div class="line">        sort(nums.begin() + index + <span class="number">1</span>, nums.end());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>&amp; a, <span class="keyword">int</span>&amp; b)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = a;</div><div class="line">        a = b;</div><div class="line">        b = temp;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-1dd63d72179621d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Binary Tree Level Order Traversal"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</div><div class="line">        q.push(root);</div><div class="line">        traverseLevel(q, result);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">traverseLevel</span><span class="params">(<span class="built_in">queue</span>&lt;TreeNode*&gt;&amp; q, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; result)</span> </span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; values;</div><div class="line">        <span class="keyword">int</span> size = q.size();</div><div class="line">        <span class="keyword">while</span>(size) &#123;</div><div class="line">            TreeNode* current = q.front();</div><div class="line">            q.pop();</div><div class="line">            <span class="keyword">if</span>(current) &#123;</div><div class="line">                values.push_back(current-&gt;val);</div><div class="line">                <span class="keyword">if</span>(current-&gt;left) &#123;</div><div class="line">                    q.push(current-&gt;left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(current-&gt;right) &#123;</div><div class="line">                    q.push(current-&gt;right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            size--;</div><div class="line">        &#125;</div><div class="line">        result.push_back(values);</div><div class="line">        <span class="keyword">if</span>(!q.empty()) &#123;</div><div class="line">            traverseLevel(q, result);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q1;</div><div class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q2;</div><div class="line">        q1.push(root);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; values;</div><div class="line">        <span class="keyword">while</span>(!q1.empty()) &#123;</div><div class="line">            TreeNode* current = q1.front();</div><div class="line">            q1.pop();</div><div class="line">            <span class="keyword">if</span>(current) &#123;</div><div class="line">                values.push_back(current-&gt;val);</div><div class="line">                <span class="keyword">if</span>(current-&gt;left) &#123;</div><div class="line">                    q2.push(current-&gt;left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(current-&gt;right) &#123;</div><div class="line">                    q2.push(current-&gt;right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(q1.empty()) &#123;</div><div class="line">                result.push_back(values);</div><div class="line">                values.clear();</div><div class="line">                q1 = q2;</div><div class="line">                q2 = &#123;&#125;;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/next-permutation/description/" target="_blank" rel="external">https://leetcode.com/problems/next-permutation/description/</a></li>
+<li><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/description/" target="_blank" rel="external">https://leetcode.com/problems/binary-tree-level-order-traversal/description/</a></li>
 </ol>
 ]]></content>
     
     <summary type="html">
     
-      Leetcode 31. Next Permutation
+      Leetcode 102. Binary Tree Level Order Traversal
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 103. Binary Tree Zigzag Level Order Traversal</title>
+    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-103--Binary-Tree-Zigzag-Level-Order-Traversal/"/>
+    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-103--Binary-Tree-Zigzag-Level-Order-Traversal/</id>
+    <published>2018-12-12T05:23:49.000Z</published>
+    <updated>2018-12-12T05:38:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-50df28a92349172e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Binary Tree Zigzag Level Order Traversal"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; zigzagLevelOrder(TreeNode* root) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        zigzagTraverse(result, root, <span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; result.size(); i++) &#123;</div><div class="line">            <span class="keyword">if</span>(i % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">                reverse(result[i].begin(), result[i].end());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">zigzagTraverse</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; result, TreeNode* root, <span class="keyword">int</span> depth)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        depth++;</div><div class="line">        <span class="keyword">if</span>(depth &gt; result.size()) &#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; values;</div><div class="line">            result.emplace_back(values);</div><div class="line">        &#125;</div><div class="line">        result[depth - <span class="number">1</span>].push_back(root-&gt;val);</div><div class="line">        zigzagTraverse(result, root-&gt;left, depth);</div><div class="line">        zigzagTraverse(result, root-&gt;right, depth);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/" target="_blank" rel="external">https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 103. Binary Tree Zigzag Level Order Traversal
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 313. Super Ugly Number</title>
+    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-313--Super-Ugly-Number/"/>
+    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-313--Super-Ugly-Number/</id>
+    <published>2018-12-12T05:23:49.000Z</published>
+    <updated>2018-12-12T05:38:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-b485097ceda59980.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Super Ugly Number"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">nthSuperUglyNumber</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; primes)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> k = primes.size();</div><div class="line">        <span class="keyword">int</span> index[k] = &#123;<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">int</span> result[n] = &#123;<span class="number">0</span>&#125;;</div><div class="line">        result[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">            result[i] = getMinValue(index, primes, result);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result[n - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMinValue</span><span class="params">(<span class="keyword">int</span> index[], <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; primes, <span class="keyword">int</span> result[])</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> min = INT_MAX;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; primes.size(); i++) &#123;</div><div class="line">            <span class="keyword">int</span> value = result[index[i]] * primes[i];</div><div class="line">            <span class="keyword">if</span>(value &lt; min) &#123;</div><div class="line">                min = value;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">        updateIndex(index, primes, result, min);</div><div class="line">        <span class="keyword">return</span> min;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateIndex</span><span class="params">(<span class="keyword">int</span> index[], <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; primes, <span class="keyword">int</span> result[], <span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; primes.size(); i++) &#123;</div><div class="line">            <span class="keyword">if</span>(value == result[index[i]] * primes[i]) &#123;</div><div class="line">                index[i]++;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/super-ugly-number/description/" target="_blank" rel="external">https://leetcode.com/problems/super-ugly-number/description/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 313. Super Ugly Number
     
     </summary>
     
@@ -678,41 +971,6 @@
     <summary type="html">
     
       Leetcode 100. Same Tree
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 101. Symmetric Tree</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-101--Symmetric-Tree/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-101--Symmetric-Tree/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-fc873a6d82ec7d81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Symmetric Tree"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>Recursive</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> isMirror(root-&gt;left, root-&gt;right);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMirror</span><span class="params">(TreeNode* left, TreeNode* right)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(left == <span class="literal">NULL</span> &amp;&amp; right == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(left == <span class="literal">NULL</span> || right == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> left-&gt;val == right-&gt;val &amp;&amp; isMirror(left-&gt;left, right-&gt;right) &amp;&amp; isMirror(left-&gt;right, right-&gt;left);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>Iterative<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">NULL</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; nodes;</div><div class="line">        nodes.push(root);</div><div class="line">        nodes.push(root);</div><div class="line">        <span class="keyword">while</span>(!nodes.empty()) &#123;</div><div class="line">            TreeNode* left = nodes.front();</div><div class="line">            nodes.pop();</div><div class="line">            TreeNode* right = nodes.front();</div><div class="line">            nodes.pop();</div><div class="line">            <span class="keyword">if</span>(left == <span class="literal">NULL</span> &amp;&amp; right == <span class="literal">NULL</span>) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(left == <span class="literal">NULL</span> || right == <span class="literal">NULL</span>) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(left-&gt;val == right-&gt;val) &#123;</div><div class="line">                nodes.push(left-&gt;left);</div><div class="line">                nodes.push(right-&gt;right);</div><div class="line">                nodes.push(left-&gt;right);</div><div class="line">                nodes.push(right-&gt;left);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/symmetric-tree/description/" target="_blank" rel="external">https://leetcode.com/problems/symmetric-tree/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 101. Symmetric Tree
     
     </summary>
     
@@ -764,170 +1022,6 @@
     <summary type="html">
     
       Leetcode 98. Validate Binary Search Tree
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 96. Unique Binary Search Trees</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-96--Unique-Binary-Search-Trees/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-96--Unique-Binary-Search-Trees/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-22a02bb2659c41b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Unique Binary Search Trees"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>参考<br><a href="https://leetcode.com/problems/unique-binary-search-trees/discuss/31666/DP-Solution-in-6-lines-with-explanation.-F(i-n" target="_blank" rel="external">DP Solution in 6 lines with explanation. F(i, n) = G(i-1) * G(n-i)</a>-G(i-1)-*-G(n-i)?page=2)</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> total[n + <span class="number">1</span>];</div><div class="line">        total[<span class="number">0</span>] = total[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</div><div class="line">            total[i] = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++) &#123;</div><div class="line">                total[i] += total[j - <span class="number">1</span>] * total[i - j];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> total[n];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/unique-binary-search-trees/description/" target="_blank" rel="external">https://leetcode.com/problems/unique-binary-search-trees/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 96. Unique Binary Search Trees
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 92. Reverse Linked List II</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-92--Reverse-Linked-List-II/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-92--Reverse-Linked-List-II/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-f4e06f7f5d634709.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Reverse Linked List II"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for singly-linked list.</div><div class="line"> * struct ListNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     ListNode *next;</div><div class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(m == n) &#123;</div><div class="line">            <span class="keyword">return</span> head;</div><div class="line">        &#125;</div><div class="line">        ListNode* start = <span class="literal">nullptr</span>;</div><div class="line">        ListNode* end = <span class="literal">nullptr</span>;</div><div class="line">        ListNode* left = <span class="literal">nullptr</span>;</div><div class="line">        ListNode* right = <span class="literal">nullptr</span>;</div><div class="line"></div><div class="line">        ListNode* pre = <span class="literal">nullptr</span>;</div><div class="line">        ListNode* current = head;</div><div class="line">        ListNode* next = <span class="literal">nullptr</span>;</div><div class="line">        <span class="keyword">int</span> diff = n - m + <span class="number">1</span>;</div><div class="line">        m--;</div><div class="line">        <span class="keyword">while</span>(m) &#123;</div><div class="line">            pre = current;</div><div class="line">            current = current-&gt;next;</div><div class="line">            m--;</div><div class="line">        &#125;</div><div class="line">        start = pre;</div><div class="line">        right = current;</div><div class="line">        <span class="keyword">while</span>(diff) &#123;</div><div class="line">            next = current-&gt;next;</div><div class="line">            current-&gt;next = pre;</div><div class="line">            pre = current;</div><div class="line">            current = next;</div><div class="line">            diff--;</div><div class="line">        &#125;</div><div class="line">        left = pre;</div><div class="line">        end = current;</div><div class="line">        right-&gt;next = end;</div><div class="line">        <span class="keyword">if</span>(start) &#123;</div><div class="line">            start-&gt;next = left;</div><div class="line">            <span class="keyword">return</span> head;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> left;</div><div class="line">        &#125; </div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/reverse-linked-list-ii/description/" target="_blank" rel="external">https://leetcode.com/problems/reverse-linked-list-ii/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 92. Reverse Linked List II
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 9. Palindrome Number</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-9--Palindrome-Number/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-9--Palindrome-Number/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-ea245db403bb5f2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Palindrome Number"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> m = x;</div><div class="line">        <span class="keyword">int</span> y = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(m) &#123;</div><div class="line">            y = y * <span class="number">10</span> + m % <span class="number">10</span>;</div><div class="line">            m /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> x == y;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span> || (x != <span class="number">0</span> &amp;&amp; x % <span class="number">10</span> == <span class="number">0</span>)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> m = x;</div><div class="line">        <span class="keyword">int</span> y = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(m) &#123;</div><div class="line">            y = y * <span class="number">10</span> + m % <span class="number">10</span>;</div><div class="line">            m /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> x == y;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/palindrome-number/description/" target="_blank" rel="external">https://leetcode.com/problems/palindrome-number/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 9. Palindrome Number
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 897. Increasing Order Search Tree</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-897--Increasing-Order-Search-Tree/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-897--Increasing-Order-Search-Tree/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-c0be25bc8091620f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Increasing Order Search Tree"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">TreeNode* <span class="title">increasingBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">vector</span>&lt;TreeNode*&gt; nodes;</div><div class="line">        inorder(root, nodes);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nodes.size() - <span class="number">1</span>; i++) &#123;</div><div class="line">            nodes[i]-&gt;right = nodes[i + <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> nodes[<span class="number">0</span>];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">inorder</span><span class="params">(TreeNode* root, <span class="built_in">vector</span>&lt;TreeNode*&gt;&amp; nodes)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        inorder(root-&gt;left, nodes);</div><div class="line">        root-&gt;left = <span class="literal">nullptr</span>;</div><div class="line">        nodes.push_back(root);</div><div class="line">        inorder(root-&gt;right, nodes);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * struct TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode *left;</div><div class="line"> *     TreeNode *right;</div><div class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</div><div class="line"> * &#125;;</div><div class="line"> */</div><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">TreeNode* <span class="title">increasingBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        TreeNode* head = <span class="keyword">new</span> TreeNode(<span class="number">0</span>);</div><div class="line">        TreeNode* current = head;</div><div class="line">        inorder(root, current);</div><div class="line">        <span class="keyword">return</span> head-&gt;right;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">inorder</span><span class="params">(TreeNode* root, TreeNode* current)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!root) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        inorder(root-&gt;left);</div><div class="line">        root-&gt;left = <span class="literal">nullptr</span>;</div><div class="line">        current-&gt;right = root;</div><div class="line">        current = root;</div><div class="line">        inorder(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/increasing-order-search-tree/description/" target="_blank" rel="external">https://leetcode.com/problems/increasing-order-search-tree/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 897. Increasing Order Search Tree
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 89. Gray Code</title>
-    <link href="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-89--Gray-Code/"/>
-    <id>http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-89--Gray-Code/</id>
-    <published>2018-12-12T05:23:49.000Z</published>
-    <updated>2018-12-12T05:38:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-099396be7dad2d3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Gray Code"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; grayCode(<span class="keyword">int</span> n) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">        <span class="built_in">bitset</span>&lt;32&gt; code;</div><div class="line">        traverse(result, code, n - <span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">traverse</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; result, <span class="built_in">bitset</span>&lt;<span class="number">32</span>&gt;&amp; code, <span class="keyword">int</span> pos)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(pos &lt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">int</span> value = code.to_ulong();</div><div class="line">            result.push_back(value);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        traverse(result, code, pos - <span class="number">1</span>);</div><div class="line">        code.flip(pos);</div><div class="line">        traverse(result, code, pos - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; grayCode(<span class="keyword">int</span> n) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">        <span class="keyword">int</span> code = <span class="number">0</span>;</div><div class="line">        traverse(result, code, n - <span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">traverse</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; result, <span class="keyword">int</span>&amp; code, <span class="keyword">int</span> pos)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(pos &lt; <span class="number">0</span>) &#123;</div><div class="line">            result.push_back(code);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        traverse(result, code, pos - <span class="number">1</span>);</div><div class="line">        code ^= (<span class="number">1</span> &lt;&lt; pos);</div><div class="line">        traverse(result, code, pos - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/gray-code/description/" target="_blank" rel="external">https://leetcode.com/problems/gray-code/description/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 89. Gray Code
     
     </summary>
     
