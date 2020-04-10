@@ -1,0 +1,962 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
+<meta property="og:url" content="http://noahsnail.com/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
+<meta property="og:image" content="https://i.loli.net/2020/04/03/DWxeEfFhoLZ5TNX.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png">
+<meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png">
+<meta property="og:updated_time" content="2020-04-10T05:12:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
+<meta name="twitter:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/03/DWxeEfFhoLZ5TNX.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/"/>
+
+
+
+
+
+  <title>Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
+<p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
+<h1 id="Photo-Realistic-Single-Image-Super-Resolution-Using-a-Generative-Adversarial-Network"><a href="#Photo-Realistic-Single-Image-Super-Resolution-Using-a-Generative-Adversarial-Network" class="headerlink" title="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network"></a>Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>尽管使用更快更深的卷积神经网络在单图像超分辨率的准确性和速度方面取得了突破，但仍有一个主要问题尚未解决：当使用大的上采样系数进行超分辨率时，我们怎样来恢复更精细的纹理细节。基于优化的超分辨率方法的行为主要由目标函数的选择来决定。最近的工作主要专注于最小化均方重构误差。由此得出的评估结果具有很高的峰值信噪比，但它们通常缺乏高频细节，并且在感知上是不令人满意的，在某种意义上，它们在较高分辨率上没有满足期望的保真度。在本文中，我们提出了SRGAN，一种用于图像超分辨率(SR)的生成对抗网络(GAN)。据我们所知，这是第一个对于4倍上采样系数，能推断逼真自然图像的框架。为此，我们提出了一种感知损失函数，其由对抗损失和内容损失组成。对抗损失使用判别器网络将我们的解推向自然图像流形，判别器网络经过训练用以区分超分辨率图像和原始的逼真图像。此外，我们使用由感知相似性而不是像素空间相似性引起的内容损失。在公开的基准数据集上，我们的深度残差网络能从过度下采样图像中恢复出逼真的纹理。广泛的平均主观得分(MOS)测试显示，使用SRGAN可以显著提高感知质量。与任何最新方法获得的MOS得分相比，使用SRGAN获得的MOS得分更接近于原始高分辨率图像的MOS得分。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>从低分辨率(LR)图像来估计其对应高分辨率(HR)图像的高挑战性任务被称作超分辨率(SR)。SR在计算机视觉研究领域受到了广泛的关注并有大量应用[62, 70, 42]。</p>
+<p>欠定SR问题的不适定特性对于大的上采样系数尤其显著，重建的SR图像中通常缺少纹理细节。有监督SR算法的优化目标通常是最小化恢复的HR图像和真实图像之间的均方误差(MSE)。最小化MSE即最大化峰值信噪比(PSNR)是方便的，这是用来评估和比较SR算法的常用方法[60]。然而，MSE(和PSNR)捕获感知相对差异(例如高级纹理细节)的能力是非常有限的，因为它们是基于像素级图像差异[59, 57, 25]定义的。这在图2中进行了说明，其中最高的PSNR不一定能反映出感知上更好的SR结果。超分辨率图像和原始图像之间的感知差异意味着恢复图像不如Ferwerda[15]中定义的逼真。</p>
+<p><img src="https://i.loli.net/2020/04/03/DWxeEfFhoLZ5TNX.png" alt="Figure 2"></p>
+<p>图2：从左到右：双三次插值，优化MSE的深度残差网络，优化人感知更敏感损失的深度残差生成对抗网络，原始HR图像。对应的PSNR和SSIM显示在括号中。[4倍上采样]</p>
+<p>在这项工作中我们提出了一种超分辨率生成对抗网络(SRGAN)，为此我们采用了具有跳跃连接的深度残差网络并舍弃了作为唯一优化目标的MSE。不同于以前的工作，我们定义了一种新的使用VGG网络[48, 32, 4]高级特征映射与判别器结合的感知损失，判别器会鼓励感知上更难与HR参考图像区分的解。图1中展示了一张示例逼真图像，其使用4倍上采样系数进行超分辨率。</p>
+<p><img src="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png" alt="Figure 1"></p>
+<p>图1：超分辨率图像(左)是最难与原始图像(右)区分的. [4倍上采样]</p>
+<h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1. 相关工作"></a>1.1. 相关工作</h3><h4 id="1-1-1-图像超分辨率"><a href="#1-1-1-图像超分辨率" class="headerlink" title="1.1.1 图像超分辨率"></a>1.1.1 图像超分辨率</h4><p>最近的图像SR综述文章，包括Nasrollahi和Moeslund[42]或Yang等[60]。这里，我们将专注于单图像超分辨率(SISR)，不会进一步讨论从多张图像恢复HR图像的方法[3, 14]。</p>
+<p>基于预测的方法是解决SISR的首批方法之一。虽然这些滤波方法可能非常快，例如线性，双三次或Lanczos[13]滤波，但它们简化了SISR问题，通常会产生纹理过于平滑的解。特别关注边缘保留的方法已经被提出[1, 38]。</p>
+<p>更强大的方法旨在在低分辨率图像和高分辨率图像之间建立一个复杂映射，并且通常依赖于训练数据。许多基于样本对的方法依赖于LR训练图像块，其对应的HR图像块是已知的。早期的工作由Freeman等[17, 16]提出。与SR相关的方法起源于压缩感知[61, 11, 68]。在Glasner等[20]中作者利用图像内跨尺度图像块冗余来推动SR。Huang等[30]也采用了这种自相似范式，通过进一步允许小的变换和形状变化扩展了自字典。Gu等[24]提出了一种卷积稀疏编码方法通过处理整张图像而不是重叠图像块提高了一致性。</p>
+<p>为了重建逼真的纹理细节同时避免边缘伪影，Tai等[51]将基于梯度轮廓先验[49]的边缘导向SR算法和基于学习的细节合成的优势相结合。张等[69]提出了一种多尺度字典来捕获不同尺度下相似图像块的冗余性。为了对地标图像进行超分辨率，Yue等[66]从网上采集了具有相似内容的相关HR图像，并提出了用于对齐的结构感知匹配标准。</p>
+<p>邻域嵌入方法通过在低维流形中查找相似的LR训练图像块并结合它们对应的用于重建的HR图像块对LR图像块进行上采样[53, 54]。在Kim和Kwon[34]中，作者强调了邻域方法过拟合的趋势，并使用核岭回归构建了样本对的更通用映射。回归问题也可以通过高斯过程回归[26]，树[45]或随机森林[46]来解决。戴等[5]学习了大量特定图像块的回归器，并在测试中选择最合适的回归器。</p>
+<p>最近基于卷积神经网络(CNN)的SR算法已经展现出了出色的性能。在Wang等[58]中，作者基于学习的迭代收缩和阈值算法(LISTA)将稀疏表示先验编码到他们的前馈神经架构中[22]。Dong等[8, 9]使用双三次插值对输入图像进行上采样，并端到端地训练了一个三层的全卷积网络，取得了最佳的SR性能。之后的研究表明网络可以直接学习到上采样滤波器，并可以在准确性和速度方面进一步提高性能[10, 47, 56]。借助深度循环神经网络(DRCN)，Kim等[33]提出了一种高性能架构，在考虑长期像素依赖的同时保持了较少的模型参数数量。与本文特别相关的是约翰逊等[32]和Bruna等[4]的工作，其依赖于更接近于感知相似的损失函数来恢复视觉上更具说服力的HR图像。</p>
+<h4 id="1-1-2-卷积神经网络的设计"><a href="#1-1-2-卷积神经网络的设计" class="headerlink" title="1.1.2 卷积神经网络的设计"></a>1.1.2 卷积神经网络的设计</h4><p>随着Krizhevsky等[36]工作取得成功的同时，专门设计的CNN架构设置了许多计算机视觉问题的最新技术。</p>
+<p>研究表明，更深的网络架构更难训练，但具有大幅提高网络准确性的潜力，因为其允许建模非常复杂的映射[48, 50]。为了有效训练这些更深的网络架构，批归一化[31]通常用来抵消内部协变量转移。对于SISR，更深的网络架构已经表现出了性能提高，例如，Kim等[33]构建了一个循环CNN并介绍了最新的结果。缓解深度CNN训练的另一种强大设计选择是最近介绍的残差块[28]和跳跃连接[29, 33]概念。跳跃连接减轻了建模恒等映射的网络架构，本质上恒等映射是不重要的，然而对于卷积核表示而言，这可能是有意义的。</p>
+<p>SISR的背景下，研究表明学习上采样滤波器对于准确性和速度是有益的[10, 47, 56]。这是一种对Dong等[9]的改进，其中在将图片输入到CNN之前，采用双三次插值对LR观测进行上采样。</p>
+<h4 id="1-1-3-损失函数"><a href="#1-1-3-损失函数" class="headerlink" title="1.1.3 损失函数"></a>1.1.3 损失函数</h4><p>逐像素的损失函数(例如MSE)在努力处理恢复损失的高频细节(例如纹理)中的内在不确定性：最小化MSE鼓励寻找合理解的逐像素平均，这通常是过平滑的，因此会得到较差的感知质量[41, 32, 12, 4]。图2中以相应的PSNR为例说明了不同感知质量的重建。我们在图3中说明了最小化MSE的问题，其中对多个具有高级纹理细节的潜在解进行平均从而创建一个平滑的重建。</p>
+<p><img src="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png" alt="Figure 3"></p>
+<p>图3：自然图像流形图像块(红)，由MSE获得的超分辨率图像块(蓝)以及由GAN获得的超分辨率图像块(橙)。由于像素空间中可能解的逐像素平均，基于MSE的解似乎更平滑，而GAN将重建推向自然图像流形，产生了感知上更具说服力的解。</p>
+<p>在Mathieu等[41]和Denton等[6]中，作者通过采用图像生成应用生成对抗网络(GANs)来解决这个问题。Yu和Porikli[65]通过判别器损失增大了逐像素的MSE损失来训练网络，这个网络使用较大的上采样系数(8×)·对人脸图像进行超分辨率。在Radford等[43]中GAN也用来进行无监督表示学习。Li和Wand[37]的风格转换以及Yeh等[63]的图像修复都描述了使用GAN学习一个流形到另一个流形映射的想法。Bruna等[4]在VGG19[48]特征空间以及散射网络中都最小化了方差。</p>
+<p>Dosovitskiy和Brox使用基于神经网络特征空间中计算的欧式距离损失函数与对抗训练相结合。结果表明，提出的损失能够生成视觉上更好的图像并且可以用来解决解码非线性特征表示的不适定逆问题。与这个工作类似，Johnson等[32]和Bruna等[4]提出使用从预训练VGG网络中提取的特征来代替低级逐像素误差度量。具体来说，作者基于VGG19[48]网络提取的特征映射之间的欧式距离来构建损失函数。在超分辨率和艺术风格转换[18, 19]方面，都获得了感知上更具说服力的结果。最近，Li和Wand[37]还研究了在像素或VGG特征空间中对比和混合图像块的效果。</p>
+<h3 id="1-2-贡献"><a href="#1-2-贡献" class="headerlink" title="1.2. 贡献"></a>1.2. 贡献</h3><p>GAN提供了一种强大的框架，其可以生成看起来真实、具有高感知质量的自然图像。GAN过程鼓励重建朝向有很大可能包含逼真图像的搜索空间区域，因此更接近图3中所示的自然图像流形。</p>
+<p>本文中我们描述了第一个很深的ResNet[28, 29]架构，使用GAN概念形成了逼真SISR的感知损失函数。我们的主要贡献如下：</p>
+<p>• 我们在大的上采用系数下(4×)为图像SR设置了最新的技术水平，并用PSNR、结构相似性(SSIM)以及MSE进行了度量，使用了为MSE优化的16块深度ResNet(SRResNet)。</p>
+<p>• 我们提出了SRGAN，一种为新感知损失优化的基于GAN的网络。这里我们将基于MSE的内容损失替换为在VGG网络特征映射上计算的损失，其对于像素空间[37]的变化更具有不变性。</p>
+<p>• 我们通过在三个公开基准数据集的图像上进行大量的平均主观得分(MOS)测试，确认了SRGAN是最新的技术，在使用较大的上采用系数(4×)进行逼真SR图像评估上具有很大优势。</p>
+<p>我们将在第二节中描述网络架构和感知损失。第三节中提供在公开基准数据集上的定量评估和视觉插图。本文在第4节中进行了讨论，并在第5节中作了总结。</p>
+<h2 id="2-方法"><a href="#2-方法" class="headerlink" title="2. 方法"></a>2. 方法</h2><p>SISR的目标是根据低分辨率输入图像$I^{LR}$来估计高分辨率、超分辨率图像$I^{SR}$。这里$I^{HR}$是高分辨率图像，$I^{LR}$是其对应的低分辨率版本。高分辨率图像仅在训练中可获得。训练中，$I^{LR}$可以通过对$I^{HR}$应用高斯滤波，然后执行下采样系数为$r$的下采样操作得到。对于有$C$个颜色通道的图像，我们分别用大小为$W × H × C$的实值张量描述$I^{LR}$，用大小为$rW × rH × C$的实值张量描述$I^{HR}$、$I^{SR}$。</p>
+<p>我们的最终目标是训练一个生成函数$G$，用来估算给定LR输入图像的对应HR图像。为此，我们训练了一个生成网络，参数为$\theta _G$的前馈CNN$G_{\theta_G}$。其中$\theta_G = {W_{1:L} ; b_{1:L} }$表示一个$L$层深度网络的权重和偏置，可以通过优化SR特定损失函数$l^{SR}$获得。对于训练图像$I^{HR}_n$， $n = 1, …, N_n$，及其对应的$I^{LR}_n$，$n = 1, …, N_n$，求解：</p>
+<p>$$\hat\theta_G=\mathop{argmin}\limits_{\theta_G}\frac{1}{N}\sum^{N}_{n=1}l^{SR}(G_{\theta_G}(I^{LR}_n),I^{HR}_n)  \tag{1}$$</p>
+<p>在这项工作中，我们将专门设计一个感知损失$l^{SR}$作为几种损失分量的加权组合，这些损失分量对恢复的SR图像的不同要求特性进行建模。单个损失函数在2.2节中有更详细的描述。</p>
+<h3 id="2-1-对抗网络架构"><a href="#2-1-对抗网络架构" class="headerlink" title="2.1. 对抗网络架构"></a>2.1. 对抗网络架构</h3><p>按照Goodfellow等[21]，我们进一步定义了一个判别器网络$D_{\theta_D}$，我们对其与$G_{\theta_G}$进行交替优化来解决对抗最小-最大问题：</p>
+<p>$$\mathop{min}\limits_{\theta_G}\mathop{max}\limits_{\theta_D}\mathbb{E}_{I^{HR}\sim p_{train}(I^{HR})}[logD_{\theta_D}(I^{HR})] + \mathbb{E}_{I^{LR}\sim p_{G}(I^{LR})}[log(1-D_{\theta_D}(G_{\theta_G}(I^{LR})))] \tag{2}$$</p>
+<p>这个公式的总体思想是，它允许训练生成模型$G$，生成模型目的是欺骗具有辨别能力的判别器$D$，判别器被训练用来区分超分辨图像与真实图像。通过这种方法，我们的生成器可以学习创建与真实图像高度相似的解，因此很难被$D$分类。这鼓励了位于自然图像子空间，流形中的感知上更优的解。这与通过最小化逐像素的误差测量(例如MSE)获得的SR解形成鲜明的对比。</p>
+<p>如图4所示，我们的深度生成器网络$G$的中心是$B$个含有恒等设计的残差块。受Johnson等[32]启发，我们采用了Gross和Wilber[23]提出的块设计。具体来说，我们使用了两个卷积层，其核大小为3×3，具有64层特征映射，其后是批归一化层[31]，使用ParametricReLU[27]作为激活函数。如Shi等[47]的提议，我们使用两个训练好的子像素卷积层来增加输入图像的分辨率。</p>
+<p><img src="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.png" alt="Figure 4"></p>
+<p>图4：生成器网络和判别器网络的架构，每个卷积层表明了对应的卷积核大小(k)，特征映射数量(n)和步长(s)。</p>
+<p>为了从生成的SR样本中区分出真实的HR图像，我们训练了一个判别器网络。架构如图4所示。我们遵循Radford等[43]总结的架构指南，使用LeakyReLU激活(α=0.2)，在整个网络中避免使用最大池化。训练的判别器网络用来解决等式2中的最大化问题。它包含8个卷积层，其中3×3滤波器核的数量逐渐增加，与VGG网络一样[48]，从64个滤波器核增加到512个，增加了2倍。在每次特征数量加倍时，步长卷积用来降低图像分辨率。生成的512个特征映射之后是两个稠密层，最后的sigmoid激活用来获得样本分类的概率。</p>
+<h3 id="2-2-感知损失函数"><a href="#2-2-感知损失函数" class="headerlink" title="2.2. 感知损失函数"></a>2.2. 感知损失函数</h3><p>感知损失函数$l^{SR}$的定义对于我们的生成器网络性能非常关键。虽然$l^{SR}$通常是基于MSE[9, 47]建模的，但我们在Johnson等[32]和Bruna等[4]的基础上进行了改进，设计了一个损失函数用来评估在感知相关特性方面的解。我们将感知损失构建为内容损失$l^{SR}_X$和对抗损失的加权和：</p>
+<p>$$l^{SR}=\underbrace{\underbrace{l^{SR}_X}_{content\ loss} + \underbrace{10^{-3}l^{SR}_{Gen}}_{adversarial\ loss}}_{perceptual\ loss(for\ VGG\ based\ content\ loss)} \tag{3}$$</p>
+<p>接下来我们描述内容损失$l^{SR}_X$和对抗损失$l^{SR}_{Gen}$的可能选择。</p>
+<h4 id="2-2-1-内容损失"><a href="#2-2-1-内容损失" class="headerlink" title="2.2.1 内容损失"></a>2.2.1 内容损失</h4><p>逐像素的MSE损失计算如下：</p>
+<p>$$l^{SR}_{MSE}=\frac {1} {r^2WH} \sum^{rW}_{x=1} \sum^{rH}_{y=1}(I^{HR}_{x,y} - G_{\theta_G}(I^{LR})_{x,y})^2 \tag{4}$$</p>
+<p>对于图像SR，这是应用最广泛的优化目标，许多最新技术都依赖该目标[9, 47]。然而，虽然取得了特别高的PSNR，但MSE优化问题的解通常缺少高频内容，这会导致具有过于平滑纹理的解在感知上不令人满意（对比图2）。</p>
+<p>在基于Gatys等[18]，Bruna等[4]和Johnson等[32]想法的基础上，我们构建并使用了更接近于感知相似性的损失函数，而不是依赖于逐像素损失。我们在Simonyan和Zisserman[48]中描述的预训练19层VGG网络的ReLU激活层的基础上定义了VGG损失。在给定的的VGG19网络中，我们用$\phi_{i,j}$指代在第i层池化层之前的第j层卷积(激活之后)获得的特征映射。我们使用重建图像$G_{\theta_G}(I^{LR})$的特征表示和参照图像$I^{HR}$之间的欧式距离来定义VGG损失：</p>
+<p>$$l^{SR}_{VGG/i,j}=\frac {1} {W_{i,j}H_{i,j}}\sum^{W_{i,j}}_{x=1}\sum^{H_{i,j}}_{y=1}(\phi_{i,j}(I^{HR})_{x,y}-\phi_{i,j}(G_{\theta_G}(I^{HR}))_{x,y})^2 \tag{5}$$</p>
+<p>这里$W_{i,j}$和$H_{i,j}$描述了VGG网络中各个特征映射的维度。</p>
+<h4 id="2-2-2-对抗损失"><a href="#2-2-2-对抗损失" class="headerlink" title="2.2.2 对抗损失"></a>2.2.2 对抗损失</h4><p>除了目前为止描述的内容损失之外，我们也将GAN的生成组件添加到了感知损失中。通过设法欺骗判别器网络，这鼓励我们的网络支持位于自然图像流行上的解。基于判别器$D_{\theta_D}(G_{\theta_G}(I^{LR}))$在所有训练样本上的概率，生成损失$l^{SR}_{Gen}$定义为：</p>
+<p>$$l^{SR}_{Gen}=\sum^N_{n=1}-logD_{\theta_D}(G_{\theta_G}(I^{LR})) \tag{6}$$</p>
+<p>这里，$D_{\theta_D}(G_{\theta_G}(I^{LR}))$是重建图像$G_{\theta_G}(I^{LR})$为自然HR图像的概率。为了得到更好的梯度行为，我们对$-logD_{\theta_D}(G_{\theta_G}(I^{LR}))$进行最小化，而不是$log[1-logD_{\theta_D}(G_{\theta_G}(I^{LR}))]$ [21]。</p>
+<h2 id="3-实验"><a href="#3-实验" class="headerlink" title="3. 实验"></a>3. 实验</h2><h3 id="3-1-数据和相似性度量"><a href="#3-1-数据和相似性度量" class="headerlink" title="3.1. 数据和相似性度量"></a>3.1. 数据和相似性度量</h3><p>我们在三个广泛使用的基准数据集Set5[2]，Set14[68]和BSD300的测试集BSD100[40]上进行实验。所有实验都在低分辨率和高分辨率图像之间以4倍的尺度因子执行。图像像素对应减少16倍。为了公平比较，所有报告的PSNR[dB]和SSIM[57]度量使用daala软件包，在中心裁剪的图像的y通道上进行计算，图像每个边界移除了4个像素宽的图像条。参考方法包括最近邻居，双三次，SRCNN[8]和SelfExSR[30]的超分辨图像是从Huang等[30]和Kim等的DRCN[33]的在线补充材料中获得的 。SRResNet(损失：$l^{SR}_{MSE}$和$l^{SR}_{VGG/2.2}$)和SRGAN变体得到的结果可在线获得。统计测试以成对的双侧威尔科克森符号秩检验和显著性检验进行，显著性水平为$p&lt;0.05$。</p>
+<p>读者可能还对GitHub上独立开发的基于GAN的解决方案感兴趣。然而，它只能提供一组有限人脸图像上的实验结果，这是一个更受限且更轻松的任务。</p>
+<h3 id="3-2-训练细节和参数"><a href="#3-2-训练细节和参数" class="headerlink" title="3.2. 训练细节和参数"></a>3.2. 训练细节和参数</h3><p>我们使用NVIDIA Tesla M40 GPU训练所有的网络，训练数据来自<strong>ImageNet</strong>数据集[44]中随机采样的35万张图像。这些图片不同于测试图片。我们使用双三次核对HR图像(BGR, $C=3$)进行下采样得到LR图像，下采样系数为$r=4$。对于每一份小批量数据，我们对不同的训练图像裁剪16个随机的96×96的HR子图像。注意我们可以对任意大小的图像应用生成器模型，因为它是全卷积的。我们使用Adam[35]，$\beta_{1}=0.9$来进行优化。SRResNet网络使用$10^{−4}$的学习率进行训练，更新迭代次数$10^6$。在训练实际的GAN时，为了避免不必要的局部最优值，我们采用预训练的基于MSE的SRResNet网络对生成器进行初始化。所有的SRGAN变种都以$10^{−4}$的学习率训练$10^5$次迭代，然后以$10^{−5}$的学习率再训练$10^5$次迭代。我们交替更新生成器和判别器网络，这等价于Goodfellow等[21]的$k=1$。我们的生成器网络有16个恒等($B=16$)残差块。测试期间，为了获得确定性地只依赖输入的输出，我们关闭了批归一化更新。我们的实现基于Theano[52]和Lasagne[7]。</p>
+<h3 id="3-3-平均主观得分-MOS-测试"><a href="#3-3-平均主观得分-MOS-测试" class="headerlink" title="3.3. 平均主观得分(MOS)测试"></a>3.3. 平均主观得分(MOS)测试</h3><p>为了量化不同方法重建感知上令人信服的图像的能力，我们进行了MOS测试。具体来说，我们让26个评分员使用整数分1(质量差)到5(质量极好)对超分辨率图像进行打分。评分员对Set5，Set14和BSD100数据集上的每一张图像的12个版本进行了评分：最近邻(NN)，双三次，SRCNN[8]，SelfExSR[30]，DRCN[33]，ESPCN[47]，SRResNet-MSE，$SRResNet-VGG22^<em>$ ($</em>$没有在BSD100上评分)，$SRGAN-MSE^<em>$，$SRGAN-VGG22^</em>$，SRGAN-VGG54和原始HR图像。因此每一个评分员对随机呈现的1128个实例（19张图像的12个版本加上100张图像的9个版本）进行了评估。评分员对BSD300训练集的20张图像的NN（得分1）和HR（5）版本上进行了校准。在初步研究中，通过两次添加方法图像到更大的测试集中，我们评估了26个评分员在BSD100的10张图像子集上的校准程序和重测信度。我们发现了良好的可靠性，在相同图像的评分之间没有显著差异。评分员非常一致地将NN插值测试图像评分为1，原始HR图像评分为5（参加图5）。</p>
+<p><img src="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png" alt="Figure 5"></p>
+<p>图5：<strong>BSD100</strong>上MOS得分的颜色编码分布。每一种方法使用2600个样本(100张图片×26个评估者)评估。均值显示为红色标记，bin以值$i$为中心(4倍上采样)。</p>
+<p>进行的MOS测试的实验结果总结在表1，表2和图5中。</p>
+<p>表1：SRResNet不同损失函数的性能和对抗网络在Set5和Set14上的基准数据。MOS得分明显比其它损失在对应类别上更高($p&lt;0.05$)。[4×上采样]</p>
+<p><img src="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png" alt="Table 1"></p>
+<p>表2：NN，双三次，SRCNN[8]，SelfExSR[30]，DRCN[33]，ESPCN[47]，SRResNet，SRGAN-VGG54和原始HR在基准数据上的比较. 最高的度量(PSNR[dB]，SSIM，MOS)以粗体显示。[4×上采样]</p>
+<p><img src="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png" alt="Table 2"></p>
+<h3 id="3-4-内容损失研究"><a href="#3-4-内容损失研究" class="headerlink" title="3.4. 内容损失研究"></a>3.4. 内容损失研究</h3><p>对于基于GAN的网络，我们研究了感知损失中不同内容损失选择的影响。具体来说，对于下面的内容损失$l^{SR}_X$，我们研究了$l^{SR}=l^{SR}_X+10^{-3}l^{SR}_{Gen}$：</p>
+<p>• SRGAN-MSE：$l^{SR}_{MSE}$，以标准MSE作为内容损失来研究对抗网络。</p>
+<p>• SRGAN-VGG22：具有$\phi_{2,2}$的$l^{SR}_{VGG/2.2}$，表示更底层特征[67]的特征映射上定义的损失。</p>
+<p>• SRGAN-VGG54：具有$\phi_{5,4}$的$l^{SR}_{VGG/5.4}$，来自较深网络层的更高层特征的特征映射上定义的损失，更可能集中在图像内容上[67, 64, 39]。在下文中，我们将此网络称为SRGAN。</p>
+<p>对于两个损失$l^{SR}_{MSE}$(SRResNet-MSE)和$l^{SR}_{VGG/2.2}$(SRResNet-VGG22)，我们也对没有对抗组件的生成器网络性能进行了评估。我们将SRResNet-MSE称为SRResNet。在表1中总结了定量结果，图6中提供了直观的示例。即使结合对抗损失，MSE仍然提供了具有最高PSNR值的解，与视觉感知更敏感的损失组件取得的结果相比，其在感知上更平滑，更不令人信服。这是由基于MSE的内容损失和对抗损失之间的竞争引起的。我们进一步将少量基于SRGAN-MSE的重构中观测到的那些较小的重构结果，归因于那些相互竞争的目标。关于Set5上的MOS得分，我们不能确定一个对于SRResNet或SRGAN明显最好的损失函数。但是，考虑到Set14上的MOS得分，SRGAN-VGG54显著优于其它SRGAN和SRResNet变种。我们观察到一种趋势，与$\phi_{2,2}$相比，使用更高层的VGG特征映射$\phi_{5,4}$得到了更好的纹理细节，参见图6。</p>
+<p><img src="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png" alt="Figure 6"></p>
+<p>图6：SRResNet（左：a，b），SRGAN-MSE（左中：c，d），SRGAN-VGG2.2（中：e，f）和SRGAN-VGG54（右中：g，h）的重建结果以及相应的参考HR图像（右：i，j）。 [4倍上采样]</p>
+<h3 id="3-5-最终网络的性能"><a href="#3-5-最终网络的性能" class="headerlink" title="3.5. 最终网络的性能"></a>3.5. 最终网络的性能</h3><p>我们比较了SRResNet、SRGAN、NN、双三次插值和四种最新方法的性能。定量结果总结在表2中，证实了SRResNet(考虑PSNR/SSIM)在三个基准数据集上确立了最新的技术水平。请注意，我们使用了一个公开可获得的框架进行评估，（参加3.1节），因此报告的值可能会与原始论文中报告的值略有不同。</p>
+<p>我们进一步获得了BSD100数据集上SRGAN和所有其他方法的MOS评分。表2中展示的结果证实了SRGAN大幅度优于所有的参考方法，并为逼真图像SR确立了最新的技术水平。除了SRCNN和SelfExSR之外，BSD100上的MOS得分差异（参加表2）是非常显著的。所有收集的MOS得分分布总结在图5中。</p>
+<h2 id="4-讨论和未来工作"><a href="#4-讨论和未来工作" class="headerlink" title="4. 讨论和未来工作"></a>4. 讨论和未来工作</h2><p>我们使用MOS测试证实了SRGAN优秀的感知性能。我们进一步表明，对于人类视觉系统[55]，标准的定量度量，例如PSNR和SSIM，不能捕获并准确评估的图像质量。这项工作的重点是超分辨率的感知质量而不是计算效率。与Shi等[47]相反，提出的模型未针对实时视频SR进行优化。然而，网络架构的初步试验表明，更窄的网络有可能在质量性能降低的情况下提供非常有效的替代方案。与Dong等[9]相反，我们发现更深的网络架构是有益的。我们推测ResNet设计对更深网络的性能有实质性影响。我们发现更深的网络(B&gt;16)可以进一步提升SRResNet的性能，但是以更长的训练和测试时间为代价。我们发现由于高频伪影的出现，更深网络的SRGAN变种越来越难训练。</p>
+<p>当针对SR问题的逼真解决方案时，内容损失的选择是非常重要的，如图6所示。在这项工作中，我们发现$l^{SR}_{VGG/5.4}$取得了感知上最令人信服的结果，这归因于更深的网络层可能表示远离像素空间的更加抽象[67, 64, 39]特征。我们推测这些深层的特征映射单纯的注重内容而剩下的对抗损失注重纹理细节，这是没有对抗损失的超分辨率图像和逼真图像之间的主要差异。我们也注意到理想的损失函数取决于应用。例如，虚幻的更精细的细节可能不适合医疗引用或监控。感知上令人信服的文本或结构化场景[30]重建是具有挑战性的，是未来工作的一部分。内容损失函数的开发描述了图像空间内容，但对像素空间变化的不变性将进一步改善逼真的图像SR结果。</p>
+<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们描述了一个深度残差网络SRResNet，当广泛使用PSNR度量进行评估时，其在公共基准数据集上树立了最新的技术水平。我们强调了以PSNR为中心的超分辨率的一些限制，引入了SRGAN，其通过训练GAN增加了具有对抗损失的内容损失函数。使用广泛的MOS测试，我们证实了对于大的上采用系数(4×)，SRGAN重构比最新的参考方法得到的重构更逼真。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] J. Allebach and P. W. Wong. Edge-directed interpolation. In Proceedings of International Conference on Image Processing, volume 3, pages 707–710, 1996.</p>
+<p>[2] M. Bevilacqua, A. Roumy, C. Guillemot, and M. L. Alberi-Morel. Low-complexity single-image super-resolution based on nonnegative neighbor embedding. BMVC, 2012.</p>
+<p>[3] S. Borman and R. L. Stevenson. Super-Resolution from Image Sequences - A Review. Midwest Symposium on Circuits and Systems, pages 374–378, 1998.</p>
+<p>[4] J. Bruna, P. Sprechmann, and Y. LeCun. Super-resolution with deep convolutional sufficient statistics. In International Conference on Learning Representations (ICLR), 2016.</p>
+<p>[5] D. Dai, R. Timofte, and L. Van Gool. Jointly optimized regressors for image super-resolution. In Computer Graphics Forum, volume 34, pages 95–104, 2015.</p>
+<p>[6] E. Denton, S. Chintala, A. Szlam, and R. Fergus. Deep generative image models using a laplacian pyramid of adversarial networks. In Advances in Neural Information Processing Systems (NIPS), pages 1486–1494, 2015.</p>
+<p>[7] S. Dieleman, J. Schluter, C. Raffel, E. Olson, S. K. Snderby, ¨D. Nouri, D. Maturana, M. Thoma, E. Battenberg, J. Kelly, J. D. Fauw, M. Heilman, diogo149, B. McFee, H. Weideman, takacsg84, peterderivaz, Jon, instagibbs, D. K. Rasul, CongLiu, Britefury, and J. Degrave. Lasagne: First release., 2015.</p>
+<p>[8] C. Dong, C. C. Loy, K. He, and X. Tang. Learning a deep convolutional network for image super-resolution. In European Conference on Computer Vision (ECCV), pages 184–199. Springer, 2014.</p>
+<p>[9] C. Dong, C. C. Loy, K. He, and X. Tang. Image super-resolution using deep convolutional networks. IEEE Transactions on Pattern Analysis and Machine Intelligence, 38(2):295–307, 2016.</p>
+<p>[10] C. Dong, C. C. Loy, and X. Tang. Accelerating the super-resolution convolutional neural network. In European Conference on Computer Vision (ECCV), pages 391–407. Springer, 2016.</p>
+<p>[11] W. Dong, L. Zhang, G. Shi, and X. Wu. Image deblurring and superresolution by adaptive sparse domain selection and adaptive regularization. IEEE Transactions on Image Processing, 20(7):1838–1857, 2011.</p>
+<p>[12] A. Dosovitskiy and T. Brox. Generating images with perceptual similarity metrics based on deep networks. In Advances in Neural Information Processing Systems (NIPS), pages 658–666, 2016.</p>
+<p>[13] C. E. Duchon. Lanczos Filtering in One and Two Dimensions. In Journal of Applied Meteorology, volume 18, pages 1016–1022. 1979.</p>
+<p>[14] S. Farsiu, M. D. Robinson, M. Elad, and P. Milanfar. Fast and robust multiframe super resolution. IEEE Transactions on Image Processing, 13(10):1327–1344, 2004.</p>
+<p>[15] J. A. Ferwerda. Three varieties of realism in computer graphics. In Electronic Imaging, pages 290–297. International Society for Optics and Photonics, 2003.</p>
+<p>[16] W. T. Freeman, T. R. Jones, and E. C. Pasztor. Example-based superresolution. IEEE Computer Graphics and Applications, 22(2):56–65, 2002.</p>
+<p>[17] W. T. Freeman, E. C. Pasztor, and O. T. Carmichael. Learning lowlevel vision. International Journal of Computer Vision, 40(1):25–47,<br>2000.</p>
+<p>[18] L. A. Gatys, A. S. Ecker, and M. Bethge. Texture synthesis using convolutional neural networks. In Advances in Neural Information Processing Systems (NIPS), pages 262–270, 2015.</p>
+<p>[19] L. A. Gatys, A. S. Ecker, and M. Bethge. Image Style Transfer Using Convolutional Neural Networks. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 2414–2423, 2016.</p>
+<p>[20] D. Glasner, S. Bagon, and M. Irani. Super-resolution from a single image. In IEEE International Conference on Computer Vision (ICCV), pages 349–356, 2009.</p>
+<p>[21] I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio. Generative adversarial nets. In Advances in Neural Information Processing Systems (NIPS), pages 2672–2680, 2014.</p>
+<p>[22] K. Gregor and Y. LeCun. Learning fast approximations of sparse coding. In Proceedings of the 27th International Conference on Machine Learning (ICML-10), pages 399–406, 2010.</p>
+<p>[23] S. Gross and M. Wilber. Training and investigating residual nets, online at <a href="http://torch.ch/blog/2016/02/04/resnets" target="_blank" rel="external">http://torch.ch/blog/2016/02/04/resnets</a>. html. 2016.</p>
+<p>[24] S. Gu, W. Zuo, Q. Xie, D. Meng, X. Feng, and L. Zhang. Convolutional sparse coding for image super-resolution. In IEEE International Conference on Computer Vision (ICCV), pages 1823–1831. 2015.</p>
+<p>[25] P. Gupta, P. Srivastava, S. Bhardwaj, and V. Bhateja. A modified psnr metric based on hvs for quality assessment of color images. In IEEE International Conference on Communication and Industrial Application (ICCIA), pages 1–4, 2011.</p>
+<p>[26] H. He and W.-C. Siu. Single image super-resolution using gaussian process regression. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 449–456, 2011.</p>
+<p>[27] K. He, X. Zhang, S. Ren, and J. Sun. Delving deep into rectifiers: Surpassing human-level performance on imagenet classification. In IEEE International Conference on Computer Vision (ICCV), pages 1026–1034, 2015.</p>
+<p>[28] K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 770–778, 2016.</p>
+<p>[29] K. He, X. Zhang, S. Ren, and J. Sun. Identity mappings in deep residual networks. In European Conference on Computer Vision (ECCV), pages 630–645. Springer, 2016.</p>
+<p>[30] J. B. Huang, A. Singh, and N. Ahuja. Single image super-resolution from transformed self-exemplars. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 5197–5206, 2015.</p>
+<p>[31] S. Ioffe and C. Szegedy. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In Proceedings of The 32nd International Conference on Machine Learning (ICML), pages 448–456, 2015.</p>
+<p>[32] J. Johnson, A. Alahi, and F. Li. Perceptual losses for real-time style transfer and super-resolution. In European Conference on Computer Vision (ECCV), pages 694–711. Springer, 2016.</p>
+<p>[33] J. Kim, J. K. Lee, and K. M. Lee. Deeply-recursive convolutional network for image super-resolution. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.</p>
+<p>[34] K. I. Kim and Y. Kwon. Single-image super-resolution using sparse regression and natural image prior. IEEE Transactions on Pattern Analysis and Machine Intelligence, 32(6):1127–1133, 2010.</p>
+<p>[35] D. Kingma and J. Ba. Adam: A method for stochastic optimization. In International Conference on Learning Representations (ICLR), 2015.</p>
+<p>[36] A. Krizhevsky, I. Sutskever, and G. E. Hinton. Imagenet classification with deep convolutional neural networks. In Advances in Neural Information Processing Systems (NIPS), pages 1097–1105, 2012.</p>
+<p>[37] C. Li and M. Wand. Combining Markov Random Fields and Convolutional Neural Networks for Image Synthesis. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 2479–2486, 2016.</p>
+<p>[38] X. Li and M. T. Orchard. New edge-directed interpolation. IEEE Transactions on Image Processing, 10(10):1521–1527, 2001.</p>
+<p>[39] A. Mahendran and A. Vedaldi. Visualizing deep convolutional neural networks using natural pre-images. International Journal of Computer Vision, pages 1–23, 2016.</p>
+<p>[40] D. Martin, C. Fowlkes, D. Tal, and J. Malik. A database of human segmented natural images and its application to evaluating segmentation algorithms and measuring ecological statistics. In IEEE International Conference on Computer Vision (ICCV), volume 2, pages 416–423, 2001.</p>
+<p>[41] M. Mathieu, C. Couprie, and Y. LeCun. Deep multi-scale video prediction beyond mean square error. In International Conference on Learning Representations (ICLR), 2016.</p>
+<p>[42] K. Nasrollahi and T. B. Moeslund. Super-resolution: A comprehensive survey. In Machine Vision and Applications, volume 25, pages 1423–1468. 2014.</p>
+<p>[43] A. Radford, L. Metz, and S. Chintala. Unsupervised representation learning with deep convolutional generative adversarial networks. In International Conference on Learning Representations (ICLR), 2016.</p>
+<p>[44] O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, et al. Imagenet large scale visual recognition challenge. International Journal of Computer Vision, pages 1–42, 2014.</p>
+<p>[45] J. Salvador and E. Perez-Pellitero. Naive bayes super-resolution ´forest. In IEEE International Conference on Computer Vision (ICCV), pages 325–333. 2015.</p>
+<p>[46] S. Schulter, C. Leistner, and H. Bischof. Fast and accurate image upscaling with super-resolution forests. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 3791–3799, 2015.</p>
+<p>[47] W. Shi, J. Caballero, F. Huszar, J. Totz, A. P. Aitken, R. Bishop, D. Rueckert, and Z. Wang. Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional Neural Network. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1874–1883, 2016.</p>
+<p>[48] K. Simonyan and A. Zisserman. Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations (ICLR), 2015.</p>
+<p>[49] J. Sun, J. Sun, Z. Xu, and H.-Y. Shum. Image super-resolution using gradient profile prior. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1–8, 2008.</p>
+<p>[50] C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich. Going deeper with convolutions. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1–9, 2015.</p>
+<p>[51] Y.-W. Tai, S. Liu, M. S. Brown, and S. Lin. Super Resolution using Edge Prior and Single Image Detail Synthesis. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 2400–2407, 2010.</p>
+<p>[52] Theano Development Team. Theano: A Python framework for fast computation of mathematical expressions. arXiv preprint arXiv:1605.02688, 2016.</p>
+<p>[53] R. Timofte, V. De, and L. Van Gool. Anchored neighborhood regression for fast example-based super-resolution. In IEEE International Conference on Computer Vision (ICCV), pages 1920–1927, 2013.</p>
+<p>[54] R. Timofte, V. De Smet, and L. Van Gool. A+: Adjusted anchored neighborhood regression for fast super-resolution. In Asian Conference on Computer Vision (ACCV), pages 111–126. Springer, 2014.</p>
+<p>[55] G. Toderici, D. Vincent, N. Johnston, S. J. Hwang, D. Minnen, J. Shor, and M. Covell. Full Resolution Image Compression with Recurrent Neural Networks. arXiv preprint arXiv:1608.05148, 2016.</p>
+<p>[56] Y. Wang, L. Wang, H. Wang, and P. Li. End-to-End Image SuperResolution via Deep and Shallow Convolutional Networks. arXiv preprint arXiv:1607.07680, 2016.</p>
+<p>[57] Z. Wang, A. C. Bovik, H. R. Sheikh, and E. P. Simoncelli. Image quality assessment: From error visibility to structural similarity. IEEE Transactions on Image Processing, 13(4):600–612, 2004.</p>
+<p>[58] Z. Wang, D. Liu, J. Yang, W. Han, and T. Huang. Deep networks for image super-resolution with sparse prior. In IEEE International Conference on Computer Vision (ICCV), pages 370–378, 2015.</p>
+<p>[59] Z. Wang, E. P. Simoncelli, and A. C. Bovik. Multi-scale structural imilarity for image quality assessment. In IEEE Asilomar Conference on Signals, Systems and Computers, volume 2, pages 9–13, 2003.</p>
+<p>[60] C.-Y. Yang, C. Ma, and M.-H. Yang. Single-image super-resolution: A benchmark. In European Conference on Computer Vision (ECCV), pages 372–386. Springer, 2014.</p>
+<p>[61] J. Yang, J. Wright, T. Huang, and Y. Ma. Image super-resolution as sparse representation of raw image patches. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1–8, 2008.</p>
+<p>[62] Q. Yang, R. Yang, J. Davis, and D. Nister. Spatial-depth super resolution for range images. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1–8, 2007.</p>
+<p>[63] R. Yeh, C. Chen, T. Y. Lim, M. Hasegawa-Johnson, and M. N. Do. Semantic Image Inpainting with Perceptual and Contextual Losses. arXiv preprint arXiv:1607.07539, 2016.</p>
+<p>[64] J. Yosinski, J. Clune, A. Nguyen, T. Fuchs, and H. Lipson. Understanding Neural Networks Through Deep Visualization. In International Conference on Machine Learning - Deep Learning Workshop 2015, page 12, 2015.</p>
+<p>[65] X. Yu and F. Porikli. Ultra-resolving face images by discriminative generative networks. In European Conference on Computer Vision (ECCV), pages 318–333. 2016.</p>
+<p>[66] H. Yue, X. Sun, J. Yang, and F. Wu. Landmark image superresolution by retrieving web images. IEEE Transactions on Image Processing, 22(12):4865–4878, 2013.</p>
+<p>[67] M. D. Zeiler and R. Fergus. Visualizing and understanding convolutional networks. In European Conference on Computer Vision (ECCV), pages 818–833. Springer, 2014.</p>
+<p>[68] R. Zeyde, M. Elad, and M. Protter. On single image scale-up using sparse-representations. In Curves and Surfaces, pages 711–730. Springer, 2012.</p>
+<p>[69] K. Zhang, X. Gao, D. Tao, and X. Li. Multi-scale dictionary for single image super-resolution. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 1114–1121, 2012.</p>
+<p>[70] W. Zou and P. C. Yuen. Very Low Resolution Face Recognition in Parallel Environment . IEEE Transactions on Image Processing, 21:327–340, 2012.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照/" rel="next" title="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
+                <i class="fa fa-chevron-left"></i> Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">625</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Photo-Realistic-Single-Image-Super-Resolution-Using-a-Generative-Adversarial-Network"><span class="nav-number">1.</span> <span class="nav-text">Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.2.</span> <span class="nav-text">1. 引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-相关工作"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1. 相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-图像超分辨率"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">1.1.1 图像超分辨率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-卷积神经网络的设计"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">1.1.2 卷积神经网络的设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-3-损失函数"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">1.1.3 损失函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-贡献"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2. 贡献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-方法"><span class="nav-number">1.3.</span> <span class="nav-text">2. 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-对抗网络架构"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1. 对抗网络架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-感知损失函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2. 感知损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-内容损失"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">2.2.1 内容损失</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-对抗损失"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">2.2.2 对抗损失</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实验"><span class="nav-number">1.4.</span> <span class="nav-text">3. 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-数据和相似性度量"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1. 数据和相似性度量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-训练细节和参数"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2. 训练细节和参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-平均主观得分-MOS-测试"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3. 平均主观得分(MOS)测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-内容损失研究"><span class="nav-number">1.4.4.</span> <span class="nav-text">3.4. 内容损失研究</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-最终网络的性能"><span class="nav-number">1.4.5.</span> <span class="nav-text">3.5. 最终网络的性能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-讨论和未来工作"><span class="nav-number">1.5.</span> <span class="nav-text">4. 讨论和未来工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结论"><span class="nav-number">1.6.</span> <span class="nav-text">5. 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.7.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/';
+        this.page.identifier = '2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版/';
+        this.page.title = 'Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
