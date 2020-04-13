@@ -106,7 +106,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png">
-<meta property="og:updated_time" content="2020-04-13T02:19:25.000Z">
+<meta property="og:updated_time" content="2020-04-13T07:26:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
 <meta name="twitter:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中文版">
@@ -423,7 +423,7 @@
 <h2 id="3-实验"><a href="#3-实验" class="headerlink" title="3. 实验"></a>3. 实验</h2><h3 id="3-1-数据和相似性度量"><a href="#3-1-数据和相似性度量" class="headerlink" title="3.1. 数据和相似性度量"></a>3.1. 数据和相似性度量</h3><p>我们在三个广泛使用的基准数据集Set5[2]，Set14[68]和BSD300的测试集BSD100[40]上进行实验。所有实验都在低分辨率和高分辨率图像之间以4倍的尺度因子执行。图像像素对应减少16倍。为了公平比较，所有报告的PSNR[dB]和SSIM[57]度量使用daala软件包，在中心裁剪的图像的y通道上进行计算，图像每个边界移除了4个像素宽的图像条。参考方法包括最近邻居，双三次，SRCNN[8]和SelfExSR[30]的超分辨图像是从Huang等[30]和Kim等的DRCN[33]的在线补充材料中获得的 。SRResNet(损失：$l^{SR}_{MSE}$和$l^{SR}_{VGG/2.2}$)和SRGAN变体得到的结果可在线获得。统计测试以成对的双侧威尔科克森符号秩检验和显著性检验进行，显著性水平为$p&lt;0.05$。</p>
 <p>读者可能还对GitHub上独立开发的基于GAN的解决方案感兴趣。然而，它只能提供一组有限人脸图像上的实验结果，这是一个更受限且更轻松的任务。</p>
 <h3 id="3-2-训练细节和参数"><a href="#3-2-训练细节和参数" class="headerlink" title="3.2. 训练细节和参数"></a>3.2. 训练细节和参数</h3><p>我们使用NVIDIA Tesla M40 GPU训练所有的网络，训练数据来自<strong>ImageNet</strong>数据集[44]中随机采样的35万张图像。这些图片不同于测试图片。我们使用双三次核对HR图像(BGR, $C=3$)进行下采样得到LR图像，下采样系数为$r=4$。对于每一份小批量数据，我们对不同的训练图像裁剪16个随机的96×96的HR子图像。注意我们可以对任意大小的图像应用生成器模型，因为它是全卷积的。我们使用Adam[35]，$\beta_{1}=0.9$来进行优化。SRResNet网络使用$10^{−4}$的学习率进行训练，更新迭代次数$10^6$。在训练实际的GAN时，为了避免不必要的局部最优值，我们采用预训练的基于MSE的SRResNet网络对生成器进行初始化。所有的SRGAN变种都以$10^{−4}$的学习率训练$10^5$次迭代，然后以$10^{−5}$的学习率再训练$10^5$次迭代。我们交替更新生成器和判别器网络，这等价于Goodfellow等[21]的$k=1$。我们的生成器网络有16个恒等($B=16$)残差块。测试期间，为了获得确定性地只依赖输入的输出，我们关闭了批归一化更新。我们的实现基于Theano[52]和Lasagne[7]。</p>
-<h3 id="3-3-平均主观得分-MOS-测试"><a href="#3-3-平均主观得分-MOS-测试" class="headerlink" title="3.3. 平均主观得分(MOS)测试"></a>3.3. 平均主观得分(MOS)测试</h3><p>为了量化不同方法重建感知上令人信服的图像的能力，我们进行了MOS测试。具体来说，我们让26个评分员使用整数分1(质量差)到5(质量极好)对超分辨率图像进行打分。评分员对Set5，Set14和BSD100数据集上的每一张图像的12个版本进行了评分：最近邻(NN)，双三次，SRCNN[8]，SelfExSR[30]，DRCN[33]，ESPCN[47]，SRResNet-MSE，$SRResNet-VGG22^<em>$ ($</em>$没有在BSD100上评分)，$SRGAN-MSE^<em>$，$SRGAN-VGG22^</em>$，SRGAN-VGG54和原始HR图像。因此每一个评分员对随机呈现的1128个实例（19张图像的12个版本加上100张图像的9个版本）进行了评估。评分员对BSD300训练集的20张图像的NN（得分1）和HR（5）版本上进行了校准。在初步研究中，通过两次添加方法图像到更大的测试集中，我们评估了26个评分员在BSD100的10张图像子集上的校准程序和重测信度。我们发现了良好的可靠性，在相同图像的评分之间没有显著差异。评分员非常一致地将NN插值测试图像评分为1，原始HR图像评分为5（参加图5）。</p>
+<h3 id="3-3-平均主观得分-MOS-测试"><a href="#3-3-平均主观得分-MOS-测试" class="headerlink" title="3.3. 平均主观得分(MOS)测试"></a>3.3. 平均主观得分(MOS)测试</h3><p>为了量化不同方法重建感知上令人信服的图像的能力，我们进行了MOS测试。具体来说，我们让26个评分员使用整数分1(质量差)到5(质量极好)对超分辨率图像进行打分。评分员对Set5，Set14和BSD100数据集上的每一张图像的12个版本进行了评分：最近邻(NN)，双三次，SRCNN[8]，SelfExSR[30]，DRCN[33]，ESPCN[47]，SRResNet-MSE，$SRResNet-VGG22^*$ ($*$没有在BSD100上评分)，$SRGAN-MSE^*$，$SRGAN-VGG22^*$，SRGAN-VGG54和原始HR图像。因此每一个评分员对随机呈现的1128个实例（19张图像的12个版本加上100张图像的9个版本）进行了评估。评分员对BSD300训练集的20张图像的NN（得分1）和HR（5）版本上进行了校准。在初步研究中，通过两次添加方法图像到更大的测试集中，我们评估了26个评分员在BSD100的10张图像子集上的校准程序和重测信度。我们发现了良好的可靠性，在相同图像的评分之间没有显著差异。评分员非常一致地将NN插值测试图像评分为1，原始HR图像评分为5（参加图5）。</p>
 <p><img src="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png" alt="Figure 5"></p>
 <p>图5：<strong>BSD100</strong>上MOS得分的颜色编码分布。每一种方法使用2600个样本(100张图片×26个评估者)评估。均值显示为红色标记，bin以值$i$为中心(4倍上采样)。</p>
 <p>进行的MOS测试的实验结果总结在表1，表2和图5中。</p>
