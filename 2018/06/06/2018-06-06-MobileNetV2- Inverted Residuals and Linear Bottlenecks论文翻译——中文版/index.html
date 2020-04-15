@@ -98,21 +98,21 @@
 <meta property="og:url" content="http://noahsnail.com/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-95ed2cf057e44b0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-d6617f4ac1167d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-04f2dcd1a1cea319.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-7c24424dcf9e2997.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-411f1873403d0fca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-e54b02e9564b2f01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-85996725f1f95a1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-f9daccb9ae7d1cc9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-a62e21b1f981dbb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-51a75c72154fa734.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-07-03T10:15:24.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-95ed2cf057e44b0a.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-d6617f4ac1167d47.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-04f2dcd1a1cea319.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-7c24424dcf9e2997.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-411f1873403d0fca.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-e54b02e9564b2f01.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-85996725f1f95a1b.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-f9daccb9ae7d1cc9.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-a62e21b1f981dbb8.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-51a75c72154fa734.png">
+<meta property="og:updated_time" content="2020-04-15T08:47:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
 <meta name="twitter:description" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-95ed2cf057e44b0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-95ed2cf057e44b0a.png">
 
 
 
@@ -393,18 +393,18 @@
 <p>这两个深刻见解为我们提供了优化现有神经架构的经验提示：假设感兴趣流形是低维的，我们可以通过将线性瓶颈层插入到卷积模块中来捕获这一点。实验证据表明，使用线性层是至关重要的，因为它可以防止非线性破坏太多的信息。在第6节中，我们通过经验证明，在瓶颈中使用非线性层确实会使性能降低几个百分点，进一步证实了我们的假设。我们注意到[29]报告了非线性得到帮助的类似报告，其中非线性已从传统残差块的输入中移除，并导致CIFAR数据集的性能得到了改善。</p>
 <p>对于本文的其余部分，我们将利用瓶颈卷积。我们将把输入瓶颈的大小与内部大小之间的比例作为扩展比。</p>
 <h3 id="3-3-倒置残差"><a href="#3-3-倒置残差" class="headerlink" title="3.3. 倒置残差"></a>3.3. 倒置残差</h3><p>瓶颈块与残差块类似，其中每个块包含一个输入，然后是几个瓶颈，然后是扩展[8]。然而，受直觉的启发，瓶颈实际上包含所有必要的信息，而扩展层只是伴随张量非线性变换的实现细节，我们直接在瓶颈之间使用快捷连接。图3提供了设计差异的示意图。插入快捷连接的动机与经典的残差连接类似：我们想要提高梯度在乘法层之间传播的能力。但是，倒置设计的内存效率要高得多（详见第5节），而且在我们的实验中效果稍好。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-95ed2cf057e44b0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-95ed2cf057e44b0a.png" alt="Figure 3"></p>
 <p>图3：残差块[8，30]和倒置残差之间的差异。对角阴影线层不使用非线性。我们用每个块的厚度来表明其相对数量的通道。注意经典残差是如何将通道数量较多的层连接起来的，而倒置残差则是连接瓶颈。最好通过颜色看。</p>
 <p><strong>瓶颈卷积的运行时间和参数计数</strong>基本实现结构如表1所示。对于大小为$h\times w$的块，扩展因子为$t$，内核大小为$k$，具有$d’$维输入通道和$d’’$维输出通道，所需的乘法加法总数为$h \cdot w \cdot d’ \cdot t(d’ + k^2 + d’’)$。与（1）相比，这个表达式有一个额外项，因为实际上我们有一个额外的1×1卷积，但是我们的网络性质使我们能够利用更小的输入和输出维度。在表3中，我们比较了MobileNetV1，MobileNetV2和ShuffleNet之间每种分辨率所需的尺寸。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-d6617f4ac1167d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-d6617f4ac1167d47.png" alt="Table 1"></p>
 <p>表1：瓶颈残差块从$k$转换为$k’$个通道，步长为$s$，扩展系数为$t$。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-04f2dcd1a1cea319.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-04f2dcd1a1cea319.png" alt="Table 3"></p>
 <p>表3：不同架构中需要在每个空间分辨率上实现的最大通道数/内存（以Kb为单位）。我们假设激活使用16位浮点数。对于ShuffleNet，我们使用与MobileNetV1和MobileNetV2的性能相匹配的$2x，g = 3 $。对于MobileNetV2和ShuffleNet的第一层，我们可以采用第5节中描述的技巧来降低内存需求。尽管ShuffleNet在其它地方使用了瓶颈，但由于存在非瓶颈张量之间的快捷连接，因此非瓶颈张量仍然需要实现。</p>
 <h3 id="3-4-信息流解释"><a href="#3-4-信息流解释" class="headerlink" title="3.4. 信息流解释"></a>3.4. 信息流解释</h3><p>我们架构的一个有趣特性是它在构建块（瓶颈层）的输入/输出域与层转换之间提供了自然分离——这是一种将输入转换为输出的非线性函数。前者可以看作是网络在每一层的容量，而后者则是表现力。与常规和可分离的传统卷积块相比，其中表现力和容量都缠结在一起并且是输出层深度的函数。</p>
 <p>特别是在我们的实例中，当内层深度为0时，由于快捷连接，基础卷积是恒等函数。当扩展比率小于1时，这是一个经典的残差卷积块[8，30]。但是，就我们的目的而言，我们表明扩大比率大于1是最有用的。</p>
 <p>这种解释使我们能够独立于其容量研究网络的表现力，并且我们认为需要进一步探索这种分离，以便更好地理解网络性质。</p>
 <h2 id="4-模型架构"><a href="#4-模型架构" class="headerlink" title="4. 模型架构"></a>4. 模型架构</h2><p>现在我们详细描述我们的架构。正如前一节所讨论的那样，基本构件块是一个瓶颈深度可分离的残差卷积。该模块的详细结构如表1所示。MobileNetV2的架构包含具有32个滤波器的初始全卷积层，接着是表2中描述的19个残差瓶颈层。我们使用ReLU6作为非线性，因为用于低精度计算时它的鲁棒性[27]。我们总是使用现代网络中的标准核尺寸3×3，并在训练期间利用丢弃和批归一化。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-7c24424dcf9e2997.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-7c24424dcf9e2997.png" alt="Table 2"></p>
 <p>表2：MobileNetV2：每行描述一个或多个相同（模步长）层的序列，重复$n$次。同一序列中的所有图层具有相同数量的$c$个输出通道。每个序列的第一层有一个步长$s$，所有其他的都使用长$1$。所有空间卷积使用3×3的核。扩展系数$t$总是应用于输入尺寸，如表1所述。</p>
 <p>除第一层外，我们在整个网络中使用恒定的扩展率。在我们的实验中，我们发现5到10之间的扩展速率导致几乎相同的性能曲线，较小的网络以较小的扩展速率更好，而较大的网络在较大扩展速率时具有稍微更好的性能。</p>
 <p>对于我们所有的主要实验，我们使用扩展因子$6$来应用于输入张量的大小。例如，对于瓶颈层采用$64$通道的输入张量并产生具有$128$通道的张量，中间扩展层则具有$64·6 =384$个通道。</p>
@@ -418,24 +418,24 @@
 <p>我们注意到，使用$t$路分割计算$F(X)$所需的乘加运算符的数目是独立于$t$的，但在现有实现中，我们发现由于增加的缓存未命中，用几个较小的矩阵乘法替换一个矩阵乘法会很损坏运行时的性能 。我们发现这种方法最有用，$t$是$2$和$5$之间的一个小常数。它显著降低了内存需求，但仍然可以利用深度学习框架提供的高度优化的矩阵乘法和卷积算子来获得的大部分效率。如果特殊的框架级优化可能导致进一步的运行时改进，这个方法还有待观察。</p>
 <h2 id="6-实验"><a href="#6-实验" class="headerlink" title="6. 实验"></a>6. 实验</h2><h3 id="6-1-ImageNet分类"><a href="#6-1-ImageNet分类" class="headerlink" title="6.1. ImageNet分类"></a>6.1. ImageNet分类</h3><p><strong>训练设置</strong>我们使用TensorFlow[31]训练我们的模型。我们使用标准的RMSPropOptimizer，将衰减和动量都设置为0.9。我们在每层之后使用批标准化，并将标准权重衰减设置为0.00004。遵循MobileNetV1 [27]的设置，我们使用初始学习率为0.045，学习率的衰减比率为每个迭代周期衰减0.98。我们使用16个GPU异步，批大小为96。</p>
 <p><strong>结果</strong>我们将我们的网络与MobileNetV1，ShuffleNet和NASNet-A模型进行了比较。表4列出了一些选定模型的统计数据，完整的性能图如图5所示。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-411f1873403d0fca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-411f1873403d0fca.png" alt="Table 4"></p>
 <p>表4：比较不同网络在ImageNet上的性能。正如ops的常见做法一样，我们计算Multiply-Adds的总数。在最后一列中，我们报告了Google Pixel 1手机上的一个大型核心（使用TF-Lite）的运行时间，以毫秒（ms）为单位。我们不报告ShuffleNet的数字，因为高效的群组卷积和混排尚未支持。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-e54b02e9564b2f01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-e54b02e9564b2f01.png" alt="Figure 5"></p>
 <p>图5：MobileNetV2与MobileNetV1，ShuffleNet，NAS的性能曲线。对于我们的网络，我们对所有分辨率使用乘数0.35，0.5，0.75，1.0，对于分辨率为224，我们使用乘数1.4。</p>
 <h3 id="6-2-目标检测"><a href="#6-2-目标检测" class="headerlink" title="6.2. 目标检测"></a>6.2. 目标检测</h3><p>我们评估和比较了MobileNetV2和MobileNetV1的性能，MobileNetV1使用COCO数据集[2]上Single Shot Detector（SSD）[34]的修改版本作为目标检测的特征提取器[33]。我们还将YOLOv2[35]和原始SSD（以VGG-16[6]为基础网络）作为基准进行比较。由于我们专注于移动/实时模型，因此我们不会比较Faster-RCNN[36]和RFCN[37]等其它架构的性能。</p>
 <p><strong>SSDLite</strong> 在本文中，我们将介绍常规SSD的移动友好型变种。我们在SSD预测层中用可分离卷积（深度方向后接$1\times 1$投影）替换所有常规卷积。这种设计符合MobileNets的整体设计，并且在计算上效率更高。我们称之为修改版本的SSDLite。与常规SSD相比，SSDLite显著降低了参数计数和计算成本，如表5所示。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-85996725f1f95a1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-85996725f1f95a1b.png" alt="Table 5"></p>
 <p>表5：使用MobileNetV2配置的SSD和SSDLite之间的大小和计算成本以及对80个类进行预测的比较。</p>
 <p>对于MobileNetV1，我们按照[33]中的设置进行。对于MobileNetV2，SSDLite的第一层被附加到层15的扩展（输出步长为16）。SSDLite层的第二层和其余层连接在最后一层的顶部（输出步长为32）。此设置与MobileNetV1一致，因为所有层都附加到相同输出步长的特征图上。</p>
 <p>MobileNet模型都经过了开源TensorFlow目标检测API的训练和评估[38]。 两个模型的输入分辨率为$320 \times 320$。我们进行了基准测试并比较了mAP（COCO挑战度量标准），参数数量和Multiply-Adds数量。结果如表6所示。MobileNetV2 SSDLite不仅是最高效的模型，而且也是三者中最准确的模型。值得注意的是，MobileNetV2 SSDLite效率高20倍，模型要小10倍，但仍优于COCO数据集上的YOLOv2。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-f9daccb9ae7d1cc9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 6"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-f9daccb9ae7d1cc9.png" alt="Table 6"></p>
 <p>表6：MobileNetV2+SSDLite和其他实时检测器在COCO数据集目标检测任务中的性能比较。MobileNetV2+SSDLite以更少的参数和更小的计算复杂性实现了具有竞争力的精度。所有模型都在<code>trainval35k</code>上进行训练，并在<code>test-dev</code>上进行评估。SSD/YOLOv2的数字来自于[35]。使用内部版本的TF-Lite引擎，报告了在Google Pixel 1手机的大型核心上的运行时间。</p>
 <h3 id="6-3-语义分割"><a href="#6-3-语义分割" class="headerlink" title="6.3. 语义分割"></a>6.3. 语义分割</h3><p>在本节中，我们使用MobileNetV1和MobileNetV2模型作为特征提取器与DeepLabv3[39]在移动语义分割任务上进行比较。DeepLabv3采用了空洞卷积[40,41,42]，这是一种显式控制计算特征映射分辨率的强大工具，并构建了五个平行头部，包括（a）包含三个具有不同空洞率的$3 \times 3$卷积的Atrous Spatial Pyramid Pooling模块(ASPP)[43]，（b）$1 \times 1$卷积头部，以及（c）图像级特征[44]。我们用输出步长来表示输入图像空间分辨率与最终输出分辨率的比值，该分辨率通过适当地应用空洞卷积来控制。对于语义分割，我们通常使用输出$stride = 16$或$8$来获取更密集的特征映射。我们在PASCAL VOC 2012数据集[3]上进行了实验，使用[45]中的额外标注图像和评估指标mIOU。</p>
 <p>为了构建移动模型，我们尝试了三种设计变体：（1）不同的特征提取器，（2）简化DeepLabv3头部以加快计算速度，以及（3）提高性能的不同推断策略。我们的结果总结在表7中。我们已经观察到：（a）包括多尺度输入和添加左右翻转图像的推断策略显著增加了MAdds，因此不适合于在设备上应用，（b）使用输出步长16比使用输出步长8更有效率，（c）MobileNetV1已经是一个强大的特征提取器，并且只需要比ResNet-101少约4.9-5.7倍的MAdd[8]（例如，mIOU：78.56与82.70和MAdds：941.9B vs 4870.6B），（d）在MobileNetV2的倒数第二个特征映射的顶部构建DeepLabv3头部比在原始的最后一个特征映射上更高效，因为倒数第二个特征映射包含320个通道而不是1280个通道，这样我们就可以达到类似的性能，但是要比MobileNetV1的通道少2.5倍，（e）DeepLabv3头部的计算成本很高，移除ASPP模块会显著减少MAdd并且只会稍微降低性能。在表7末尾，我们鉴定了一个设备上的潜在候选应用（粗体），该应用可以达到$75.32\%$mIOU并且只需要2.75B MAdds。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-a62e21b1f981dbb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 7"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-a62e21b1f981dbb8.png" alt="Table 7"></p>
 <p>表7：PASCAL VOC 2012验证集上的MobileNet+DeepLabv3推断策略。MNet V2*：用于DeepLabv3头部的倒数第二个特征映射，其中包括（1）Atrous Spatial Pyramid Pooling（ASPP）模块和（2）$1\times 1$卷积以及图像池化功能。OS：控制分割映射输出分辨率的输出步长。MF：测试期间多尺度和左右翻转输入。所有的模型都在COCO上进行预训练。设备上的潜在候选应用以粗体显示。PASCAL图像的尺寸为$ 512 \ times 512 $，而空洞卷积使得我们可以在不增加参数数量的情况下控制输出特征分辨率。</p>
 <h3 id="6-4-消融研究"><a href="#6-4-消融研究" class="headerlink" title="6.4. 消融研究"></a>6.4. 消融研究</h3><p><strong>倒置残差连接</strong>。残差连接的重要性已被广泛研究[8，30，46]。本文报告的新结果是连接瓶颈的快捷连接性能优于连接扩展层的的快捷连接（请参见图6b以供比较）。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-51a75c72154fa734.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 6"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3232548-51a75c72154fa734.png" alt="Figure 6"></p>
 <p>图6：非线性和各种快捷（残差）连接的影响。</p>
 <p><strong>线性瓶颈</strong>的重要性。线性瓶颈模型的严格来说比非线性模型要弱一些，因为激活总是可以在线性状态下进行，并对偏差和缩放进行适当的修改。然而，我们在图6a中展示的实验表明，线性瓶颈改善了性能，为非线性破坏低维空间中的信息提供了支持。</p>
 <h2 id="7-总结及将来工作"><a href="#7-总结及将来工作" class="headerlink" title="7. 总结及将来工作"></a>7. 总结及将来工作</h2><p>我们描述了一个非常简单的网络架构，使我们能够构建一系列高效的移动模型。我们的基本构建单元具有多种特性，使其特别适用于移动应用。它允许非常有效的内存推断，并依赖利用所有神经框架中的标准操作。</p>
