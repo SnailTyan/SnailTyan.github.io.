@@ -95,7 +95,7 @@
 <meta name="description" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
-<meta property="og:url" content="http://noahsnail.com/2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/index.html">
+<meta property="og:url" content="http://noahsnail.com/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/DaM7jtNb8nqv1m6.png">
@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/04/15/4RLQolMvGJBCe3j.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/xCKTuBtIov831LW.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/uqpTrfCnovtMwml.png">
-<meta property="og:updated_time" content="2020-04-15T09:20:00.000Z">
+<meta property="og:updated_time" content="2020-04-15T09:41:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
 <meta name="twitter:description" content="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版">
@@ -140,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://noahsnail.com/2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/"/>
+  <link rel="canonical" href="http://noahsnail.com/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/"/>
 
 
 
@@ -294,7 +294,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tyan">
@@ -332,9 +332,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/#comments" itemprop="discussionUrl">
+                <a href="/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -368,7 +368,7 @@
       
 
       
-        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a> </p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="MobileNetV2-Inverted-Residuals-and-Linear-Bottlenecks"><a href="#MobileNetV2-Inverted-Residuals-and-Linear-Bottlenecks" class="headerlink" title="MobileNetV2: Inverted Residuals and Linear Bottlenecks"></a>MobileNetV2: Inverted Residuals and Linear Bottlenecks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在本文中，我们描述了一种新的移动架构MobileNetV2，该架构提高了移动模型在多个任务和多个基准数据集上以及在不同模型尺寸范围内的最佳性能。我们还描述了在我们称之为SSDLite的新框架中将这些移动模型应用于目标检测的有效方法。此外，我们还演示了如何通过DeepLabv3的简化形式，我们称之为Mobile DeepLabv3来构建移动语义分割模型。</p>
@@ -553,8 +553,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/13/2020-04-13-ESRGAN - Enhanced Super-Resolution Generative Adversarial Networks论文翻译——中英文对照/" rel="next" title="ESRGAN - Enhanced Super-Resolution Generative Adversarial Networks论文翻译——中英文对照">
-                <i class="fa fa-chevron-left"></i> ESRGAN - Enhanced Super-Resolution Generative Adversarial Networks论文翻译——中英文对照
+              <a href="/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中英文对照/" rel="next" title="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中英文对照">
+                <i class="fa fa-chevron-left"></i> MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中英文对照
               </a>
             
           </div>
@@ -563,8 +563,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中英文对照/" rel="prev" title="MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中英文对照">
-                MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中英文对照 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/27/2018-06-27-Caffe与NVIDIA Docker不兼容的问题/" rel="prev" title="Caffe与NVIDIA Docker不兼容的问题">
+                Caffe与NVIDIA Docker不兼容的问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -855,8 +855,8 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'http://noahsnail.com/2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/';
-        this.page.identifier = '2020/04/15/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/';
+        this.page.url = 'http://noahsnail.com/2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/';
+        this.page.identifier = '2018/06/06/2018-06-06-MobileNetV2- Inverted Residuals and Linear Bottlenecks论文翻译——中文版/';
         this.page.title = 'MobileNetV2——Inverted Residuals and Linear Bottlenecks论文翻译——中文版';
       };
       var d = document, s = d.createElement('script');
