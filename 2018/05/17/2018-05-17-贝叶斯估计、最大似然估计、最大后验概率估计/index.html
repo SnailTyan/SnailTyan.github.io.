@@ -98,17 +98,17 @@
 <meta property="og:url" content="http://noahsnail.com/2018/05/17/2018-05-17-贝叶斯估计、最大似然估计、最大后验概率估计/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="贝叶斯估计、最大似然估计、最大后验概率估计">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-aa0d1d09dec1ab6d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-c785fe210be37ef5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-258e98a5b817b74d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-3ab13f8b079cc3cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-3956d07a43ac0e57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-85c4b2ac27fbe731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-06-01T02:06:21.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/blog/Bayes_Theorem.jpg">
+<meta property="og:image" content="http://noahsnail.com/images/blog/MLE.png">
+<meta property="og:image" content="http://noahsnail.com/images/blog/Gaussian.png">
+<meta property="og:image" content="http://noahsnail.com/images/blog/MAP.png">
+<meta property="og:image" content="http://noahsnail.com/images/blog/Beta_3_3.png">
+<meta property="og:image" content="http://noahsnail.com/images/blog/Beta_9_7.png">
+<meta property="og:updated_time" content="2020-04-16T07:05:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝叶斯估计、最大似然估计、最大后验概率估计">
 <meta name="twitter:description" content="贝叶斯估计、最大似然估计、最大后验概率估计">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-aa0d1d09dec1ab6d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/blog/Bayes_Theorem.jpg">
 
 
 
@@ -364,7 +364,7 @@
       
 
       
-        <p><img src="https://upload-images.jianshu.io/upload_images/3232548-aa0d1d09dec1ab6d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Bayes&#39; Theorem"></p>
+        <p><img src="http://noahsnail.com/images/blog/Bayes_Theorem.jpg" alt="Bayes&#39; Theorem"> </p>
 <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>贝叶斯估计、最大似然估计(MLE)、最大后验概率估计(MAP)这几个概念在机器学习和深度学习中经常碰到，读文章的时候还感觉挺明白，但独立思考时经常会傻傻分不清楚(😭)，因此希望通过本文对其进行总结。</p>
 <hr>
@@ -426,7 +426,7 @@
 <h2 id="3-问题定义"><a href="#3-问题定义" class="headerlink" title="3. 问题定义"></a>3. 问题定义</h2><p>以抛硬币为例，假设我们有一枚硬币，现在要估计其正面朝上的概率$\theta$。为了对$\theta$进行估计，我们进行了10次实验（独立同分布，i.i.d.），这组实验记为$X=x_1，x_2，\ldots，x_{10}$，其中正面朝上的次数为6次，反面朝上的次数为4次，结果为$(1,0,1,1,0,0,0,1,1,1)$。</p>
 <h2 id="4-最大似然估计-MLE"><a href="#4-最大似然估计-MLE" class="headerlink" title="4. 最大似然估计(MLE)"></a>4. 最大似然估计(MLE)</h2><p>最大似然估计，英文为Maximum Likelihood Estimation，简写为MLE，也叫极大似然估计，是用来估计概率模型参数的一种方法。最大似然估计的思想是使得观测数据（样本）发生概率最大的参数就是最好的参数。</p>
 <p>对一个独立同分布的样本集来说，总体的似然就是每个样本似然的乘积。针对抛硬币的问题，似然函数可写作：$$L(X;\theta)=\prod_{i=0}^nP(x_i|\theta)=\theta^6(1-\theta)^4$$根据最大似然估计，使$L(X;\theta)$取得最大值的$\theta$即为估计结果，令$L(X;\theta)\prime =0$可得$\hat{\theta}=0.6$。似然函数图如下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-c785fe210be37ef5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MLE"></p>
+<p><img src="http://noahsnail.com/images/blog/MLE.png" alt="MLE"></p>
 <p>由于总体的似然就是每个样本似然的乘积，为了求解方便，我们通常会将似然函数转成对数似然函数，然后再求解。可以转成对数似然函数的主要原因是对数函数并不影响函数的凹凸性。因此上式可变为：$$lnL(X;\theta)=ln\prod_{i=0}^nP(x_i|\theta)=\sum_{i=0}^nln(P(x_i|\theta))=6ln(\theta)+4ln(1-\theta)$$令$ln(L(X;\theta)\prime) =0$可得$\hat{\theta}=0.6$。</p>
 <p><strong>正态分布的最大似然估计</strong></p>
 <p>假设样本服从正态分布$N\sim(\mu,\sigma^2)$，则其似然函数为$$L(\mu,\sigma^2)=\prod_{i=0}^n \frac {1} {\sqrt{2\pi} \sigma}e^{-\frac {(x_i-\mu)^2} {2\sigma^2}}$$对其取对数得：$$lnL(\mu,\sigma^2)=-\frac {n} {2}ln(2\pi) - \frac {n} {2} ln(\sigma^2) - \frac {1} {2\sigma^2} \sum_{i=0}^n(x_i-\mu)^2$$<br>分别对$\mu，\sigma^2$求偏导，并令偏导数为0，得：$$\begin{cases}<br>\frac {\partial lnL(\mu,\sigma^2)} {\partial \mu}= \frac {1} {\sigma^2} \sum_{i=0}^n(x_i-\mu) =0\\<br>\frac {\partial lnL(\mu,\sigma^2)} {\partial \sigma^2}= -\frac {n} {2\sigma^2} + \frac {1} {2\sigma^4}\sum_{i=0}^n(x_i-\mu)^2 =0<br>\end{cases}$$</p>
@@ -443,15 +443,15 @@
 <h2 id="5-最大后验概率估计-MAP"><a href="#5-最大后验概率估计-MAP" class="headerlink" title="5. 最大后验概率估计(MAP)"></a>5. 最大后验概率估计(MAP)</h2><p>最大后验概率估计，英文为Maximum A Posteriori Estimation，简写为MAP。回到抛硬币的问题，最大似然估计认为使似然函数$P(X|\theta)$最大的参数$\theta$即为最好的$\theta$，此时最大似然估计是将$\theta$看作固定的值，只是其值未知；最大后验概率分布认为$\theta$是一个随机变量，即$\theta$具有某种概率分布，称为先验分布，求解时除了要考虑似然函数$P(X|\theta)$之外，还要考虑$\theta$的先验分布$P(\theta)$，因此其认为使$P(X|\theta)P(\theta)$取最大值的$\theta$就是最好的$\theta$。此时要最大化的函数变为$P(X|\theta)P(\theta)$，由于$X$的先验分布$P(X)$是固定的（可通过分析数据获得，其实我们也不关心$X$的分布，我们关心的是$\theta$），因此最大化函数可变为$\frac {P(X|\theta)P(\theta)} {P(X)}$，根据贝叶斯法则，要最大化的函数$\frac {P(X|\theta)P(\theta)} {P(X)}=P(\theta|X)$，因此要最大化的函数是$P(\theta|X)$，而$P(\theta|X)$是$\theta$的后验概率。最大后验概率估计可以看作是正则化的最大似然估计，当然机器学习或深度学习中的正则项通常是加法，而在最大后验概率估计中采用的是乘法，$P(\theta)$是正则项。在最大似然估计中，由于认为$\theta$是固定的，因此$P(\theta)=1$。</p>
 <p>最大后验概率估计的公式表示：$$\mathop{argmax}_{\theta}P(\theta|X)=\mathop{argmax}_{\theta}\frac {P(X|\theta)P(\theta)} {P(X)}\propto \mathop{argmax}_{\theta}P(X|\theta)P(\theta)$$</p>
 <p>在抛硬币的例子中，通常认为$\theta=0.5$的可能性最大，因此我们用均值为$0.5$，方差为$0.1$的高斯分布来描述$\theta$的先验分布，当然也可以使用其它的分布来描述$\theta$的先验分布。$\theta$的先验分布为：$$\frac {1} {\sqrt{2\pi}\sigma}e^{-\frac {(\theta-\mu)^2} {2\sigma^2}} = \frac {1} {10\sqrt{2\pi}}e^{-50(\theta-0.5)^2}$$先验分布的函数图如下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-258e98a5b817b74d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Gaussian"></p>
+<p><img src="http://noahsnail.com/images/blog/Gaussian.png" alt="Gaussian"></p>
 <p>在最大似然估计中，已知似然函数为$P(X|\theta)=\theta^6(1-\theta)^4$，因此：$$P(X|\theta)P(\theta)=\theta^6\times (1-\theta)^4\times \frac {1} {10\sqrt{2\pi}}\times e^{-50(\theta-0.5)^2}$$转换为对数函数：$$ln(P(X|\theta)P(\theta))=ln(\theta^6\times (1-\theta)^4 \times \frac {1} {10\sqrt{2\pi}}\times e^{-50(\theta-0.5)^2})=6ln(\theta)+4ln(1-\theta)+ln(\frac {1} {10\sqrt{2\pi}})-50(\theta-0.5)^2$$</p>
 <p>令$ln(P(X|\theta)P(\theta))\prime=0$，可得：$$100\theta^3-150\theta^2+40\theta+6=0$$由于$0\le\theta\le1$，解得：$\hat{\theta}\approx0.529$。$P(X|\theta)P(\theta)$的函数图像如下，基本符合$\theta$的估计值$\hat{\theta}$：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-3ab13f8b079cc3cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MAP"></p>
+<p><img src="http://noahsnail.com/images/blog/MAP.png" alt="MAP"></p>
 <p>如果我们用均值为$0.6$，方差为$0.1$的高斯分布来描述$\theta$的先验分布，则$\hat{\theta}=0.6$。由此可见，在最大后验概率估计中，$\theta$的估计值与$\theta$的先验分布有很大的关系。这也说明一个合理的先验概率假设是非常重要的。如果先验分布假设错误，则会导致估计的参数值偏离实际的参数值。</p>
 <p><strong>先验分布为Beta分布</strong></p>
 <p>如果用$\alpha=3,\beta=3$的Beta分布来描述$\theta$的先验分布，则$$P(X|\theta)P(\theta)=\theta^6\times (1-\theta)^4\times \frac {1} {B(\alpha,\beta)}\times \theta^{\alpha-1}(1-\theta)^{\beta-1}$$令$P(X|\theta)P(\theta)\prime=0$求解可得：$$\hat{\theta}=\frac {\alpha+5} {\alpha + \beta +8}=\frac {8} {3 + 3 +8}\approx 0.57$$</p>
 <p>$Beta(3,3)$的概率密度图像如下图：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-3956d07a43ac0e57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Beta(3,3)"></p>
+<p><img src="http://noahsnail.com/images/blog/Beta_3_3.png" alt="Beta(3,3)"></p>
 <p>最大后验概率估计的求解步骤：</p>
 <ul>
 <li>确定参数的先验分布以及似然函数</li>
@@ -466,7 +466,7 @@
 <p>在连续型随机变量中，由于$P(X)=\int_{\Theta}P(X|\theta)P(\theta)d\theta$，因此贝叶斯公式变为：$$P(\theta|X)=\frac {P(X|\theta)P(\theta)} {\int_{\Theta}P(X|\theta)P(\theta)d\theta}$$</p>
 <p>从上面的公式中可以看出，贝叶斯估计的求解非常复杂，因此选择合适的先验分布就非常重要。一般来说，计算积分$\int_{\theta}P(X|\theta)P(\theta)d\theta$是不可能的。对于这个抛硬币的例子来说，如果使用共轭先验分布，就可以更好的解决这个问题。二项分布参数的共轭先验是Beta分布，由于$\theta$的似然函数服从二项分布，因此在贝叶斯估计中，假设$\theta$的先验分布服从$P(\theta)\sim Beta(\alpha, \beta)$，Beta分布的概率密度公式为：$$f(x;\alpha,\beta)=\frac {1} {B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}$$因此，贝叶斯公式可写作：$$\begin{aligned} P(\theta|X)&amp;=\frac {P(X|\theta)P(\theta)} {\int_{\Theta}P(X|\theta)P(\theta)d\theta} \\ &amp;=\frac {\theta^6(1-\theta)^4 \frac {\theta^{\alpha-1}(1-\theta)^{\beta-1}} {B(\alpha,\beta)} } {\int_{\Theta}\theta^6(1-\theta)^4 \frac {\theta^{\alpha-1}(1-\theta)^{\beta-1}} {B(\alpha,\beta)}d\theta} \\&amp;=\frac {\theta^{\alpha+6-1}(1-\theta)^{\beta+4-1}} {\int_{\Theta}\theta^{\alpha+6-1}(1-\theta)^{\beta+4-1}d\theta} \\<br>&amp;=\frac {\theta^{\alpha+6-1}(1-\theta)^{\beta+4-1}} {B(\alpha+6-1,\beta+4-1)} \\<br>&amp;=Beta(\theta|\alpha+6-1,\beta+4-1) \\&amp;=Beta(\theta|\alpha+6,\beta+4)\end{aligned}$$从上面的公式可以看出，$P(\theta|X) \sim Beta(\theta|\alpha+6,\beta+4)$。其中$B$函数，也称$Beta$函数，是一个标准化常量，用来使整个概率的积分为1。$Beta(\theta|\alpha+6,\beta+4)$就是贝叶斯估计的结果。</p>
 <p>如果使用贝叶斯估计得到的$\theta$分布存在一个有限均值，则可以用后验分布的期望作为$\theta$的估计值。假设$\alpha=3,\beta=3$，在这种情况下，先验分布会在$0.5$处取得最大值，则$P(\theta|X) \sim Beta(\theta|9,7)$，$Beta(\theta|9,7)$的曲线如下图：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-85c4b2ac27fbe731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Beta(9,7)"></p>
+<p><img src="http://noahsnail.com/images/blog/Beta_9_7.png" alt="Beta(9,7)"></p>
 <p>从上图可以看出，在$\alpha=3,\beta=3$的情况下，$\theta$的估计值$\hat{\theta}$应该在$0.6$附近。根据Beta分布的数学期望公式$E(\theta)=\frac {\alpha} {\alpha+\beta}$可得：$$\hat{\theta}=\int_{\Theta} \theta P(\theta|X)d\theta=E(\theta)=\frac {\alpha} {\alpha+\beta}=\frac {9} {9+7}=0.5625$$</p>
 <p><strong>注：</strong>二项分布参数的共轭先验是Beta分布，多项式分布参数的共轭先验是Dirichlet分布，指数分布参数的共轭先验是Gamma分布，⾼斯分布均值的共轭先验是另⼀个⾼斯分布，泊松分布的共轭先验是Gamma分布。</p>
 <p>贝叶斯估计要解决的不是如何估计参数，而是用来估计新测量数据出现的概率，对于新出现的数据$\tilde{x}$：</p>
