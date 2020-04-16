@@ -108,10 +108,10 @@
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_3.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_4.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_5.png">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://noahsnail.com/images/rfcn/Depth.png">
+<meta property="og:image" content="http://noahsnail.com/images/rfcn/Region_Proposal.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_6.png">
-<meta property="og:updated_time" content="2018-01-22T08:48:00.000Z">
+<meta property="og:updated_time" content="2020-04-16T01:54:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R-FCN论文翻译——中文版">
 <meta name="twitter:description" content="R-FCN论文翻译——中文版">
@@ -431,10 +431,10 @@
 <p><img src="http://noahsnail.com/images/rfcn/Table_5.png" alt="Table 5"></p>
 <p><strong>关于深度的影响</strong></p>
 <p>下表显示了使用不同深度的ResNets的R-FCN结果[9]。当深度从50增加到101时，我们的检测精度增加了，但是深度达到了152。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Depth"></p>
+<p><img src="http://noahsnail.com/images/rfcn/Depth.png" alt="Depth"></p>
 <p><strong>关于区域提议的影响</strong></p>
 <p>R-FCN可以很容易地应用于其它的区域提议方法，如选择性搜索（SS）[27]和边缘框（EB）[28]。下表显示了使用不同提议的结果（使用ResNet-101）。R-FCN使用SS或EB运行，竞争性地展示了我们方法的泛化性。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Region Proposals"></p>
+<p><img src="http://noahsnail.com/images/rfcn/Region_Proposal.png" alt="Region Proposals"></p>
 <h3 id="4-2-MS-COCO上的实验"><a href="#4-2-MS-COCO上的实验" class="headerlink" title="4.2 MS COCO上的实验"></a>4.2 MS COCO上的实验</h3><p>接下来，我们评估MS COCO数据集[13]中的80个目标类别。我们的实验包括8万张训练集，4万张验证集和2万张测试开发集。我们将9万次迭代的学习率设为0.001，接下来的3万次迭代的学习率设为0.0001，有效的最小批数据大小为8。我们将交替训练[18]从4步扩展到5步（即在RPN训练步骤后停止），当共享特征时略微提高了在该数据集上的准确性；我们还报告了两步训练足以达到相当好的准确性，但不共享这些特征。</p>
 <p>结果如表6所示。我们单尺度训练的R-FCN基准模型的验证结果为$48.9\%/27.6\%$。这与Faster R-CNN的基准模型相当（$48.4\%/27.2\%$），但我们的测试速度是Faster R-CNN的2.5倍。值得注意的是，我们的方法在小尺寸的目标上表现更好（由[13]定义）。我们的多尺度训练（但是仍是单一尺度测试）的R-FCN在验证集上的结果为$49.1\%/27.8\%$，在测试开发集上的结果是$51.5\%/29.2\%$。考虑到COCO广泛的目标尺度，按照[9]我们进一步评估多尺度的测试变种，并使用{200，400，600，800，1000}的测试尺度。mAP是$53.2\%/31.5\%$。这个结果在MS COCO 2015比赛中接近第一名的成绩（Faster R-CNN+++和ResNet-101，$55.7\%/34.9\%$）。尽管如此，我们的方法更简单，并没有添加[9]中所使用的多样功能例如上下文或迭代边界框回归，并且在训练和测试中都更快。</p>
 <p>表6：使用ResNet-101在MS COCO数据集上比较。COCO式的AP在IoU∈[0.5，0.95]处评估。AP@0.5是PASCAL式的AP，在IoU=0.5处评估。</p>

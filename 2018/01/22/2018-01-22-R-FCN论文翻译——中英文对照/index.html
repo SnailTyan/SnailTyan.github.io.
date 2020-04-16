@@ -118,13 +118,13 @@
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_5.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_4.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_5.png">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://noahsnail.com/images/rfcn/Depth.png">
+<meta property="og:image" content="http://noahsnail.com/images/rfcn/Depth.png">
+<meta property="og:image" content="http://noahsnail.com/images/rfcn/Region_Proposal.png">
+<meta property="og:image" content="http://noahsnail.com/images/rfcn/Region_Proposal.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_6.png">
 <meta property="og:image" content="http://noahsnail.com/images/rfcn/Table_6.png">
-<meta property="og:updated_time" content="2018-01-22T08:48:00.000Z">
+<meta property="og:updated_time" content="2020-04-16T01:55:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R-FCN论文翻译——中英文对照">
 <meta name="twitter:description" content="R-FCN论文翻译——中英文对照">
@@ -501,16 +501,16 @@
 <p><img src="http://noahsnail.com/images/rfcn/Table_5.png" alt="Table 5"></p>
 <p><strong>On the Impact of Depth</strong></p>
 <p>The following table shows the R-FCN results using ResNets of different depth [9]. Our detection accuracy increases when the depth is increased from 50 to 101, but gets saturated with a depth of 152.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Depth"></p>
+<p><img src="http://noahsnail.com/images/rfcn/Depth.png" alt="Depth"></p>
 <p><strong>关于深度的影响</strong></p>
 <p>下表显示了使用不同深度的ResNets的R-FCN结果[9]。当深度从50增加到101时，我们的检测精度增加了，但是深度达到了152。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-4cd78e7eccdab7a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Depth"></p>
+<p><img src="http://noahsnail.com/images/rfcn/Depth.png" alt="Depth"></p>
 <p><strong>On the Impact of Region Proposals</strong></p>
 <p>R-FCN can be easily applied with other region proposal methods, such as Selective Search (SS) [27] and Edge Boxes (EB) [28]. The following table shows the results (using ResNet-101) with different proposals. R-FCN performs competitively using SS or EB, showing the generality of our method.</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Region Proposals"></p>
+<p><img src="http://noahsnail.com/images/rfcn/Region_Proposal.png" alt="Region Proposals"></p>
 <p><strong>关于区域提议的影响</strong></p>
 <p>R-FCN可以很容易地应用于其它的区域提议方法，如选择性搜索（SS）[27]和边缘框（EB）[28]。下表显示了使用不同提议的结果（使用ResNet-101）。R-FCN使用SS或EB运行，竞争性地展示了我们方法的泛化性。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-0cf820328fd6b483.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Region Proposals"></p>
+<p><img src="http://noahsnail.com/images/rfcn/Region_Proposal.png" alt="Region Proposals"></p>
 <h3 id="4-2-Experiments-on-MS-COCO"><a href="#4-2-Experiments-on-MS-COCO" class="headerlink" title="4.2 Experiments on MS COCO"></a>4.2 Experiments on MS COCO</h3><p>Next we evaluate on the MS COCO dataset [13] that has 80 object categories. Our experiments involve the 80k train set, 40k val set, and 20k test-dev set. We set the learning rate as 0.001 for 90k iterations and 0.0001 for next 30k iterations, with an effective mini-batch size of 8. We extend the alternating training [18] from 4-step to 5-step (i.e., stopping after one more RPN training step), which slightly improves accuracy on this dataset when the features are shared; we also report that 2-step training is sufficient to achieve comparably good accuracy but the features are not shared.</p>
 <h3 id="4-2-MS-COCO上的实验"><a href="#4-2-MS-COCO上的实验" class="headerlink" title="4.2 MS COCO上的实验"></a>4.2 MS COCO上的实验</h3><p>接下来，我们评估MS COCO数据集[13]中的80个目标类别。我们的实验包括8万张训练集，4万张验证集和2万张测试开发集。我们将9万次迭代的学习率设为0.001，接下来的3万次迭代的学习率设为0.0001，有效的最小批数据大小为8。我们将交替训练[18]从4步扩展到5步（即在RPN训练步骤后停止），当共享特征时略微提高了在该数据集上的准确性；我们还报告了两步训练足以达到相当好的准确性，但不共享这些特征。</p>
 <p>The results are in Table 6. Our single-scale trained R-FCN baseline has a val result of $48.9\%/27.6\%$. This is comparable to the Faster R-CNN baseline ($48.4\%/27.2\%$), but ours is 2.5× faster testing. It is noteworthy that our method performs better on objects of small sizes (defined by [13]). Our multi-scale trained (yet single-scale tested) R-FCN has a result of $49.1\%/27.8\%$ on the val set and $51.5\%/29.2\%$ on the test-dev set. Considering COCO’s wide range of object scales, we further evaluate a multi-scale testing variant following [9], and use testing scales of {200,400,600,800,1000}. The mAP is $53.2\%/31.5\%$. This result is close to the 1st-place result (Faster R-CNN +++ with ResNet-101, $55.7\%/34.9\%$) in the MS COCO 2015 competition. Nevertheless, our method is simpler and adds no bells and whistles such as context or iterative box regression that were used by [9], and is faster for both training and testing.</p>
