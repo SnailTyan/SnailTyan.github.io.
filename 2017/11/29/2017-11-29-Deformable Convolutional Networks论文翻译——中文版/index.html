@@ -98,23 +98,23 @@
 <meta property="og:url" content="http://noahsnail.com/2017/11/29/2017-11-29-Deformable Convolutional Networks论文翻译——中文版/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Deformable Convolutional Networks论文翻译——中文版">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-d6ae067dde424f46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-6109c845ac06c68f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-96e387026c5828f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-da30711b8ff6e37e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-184c869eea8db918.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-3b26d75ea54abdd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-b3beeb5f7ffbc309.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-7eb99f4c658748df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-7f9d39dddb73c00d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-ff198e46ef46e941.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-060f289f36faafec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-2bcd7cac6cd89606.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-06T13:06:47.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_1.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_2.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_3.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_4.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Table_1.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_5.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_6.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Table_2.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Figure_7.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Table_3.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Table_4.png">
+<meta property="og:image" content="http://noahsnail.com/images/dcn/Table_5.png">
+<meta property="og:updated_time" content="2017-11-29T08:45:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deformable Convolutional Networks论文翻译——中文版">
 <meta name="twitter:description" content="Deformable Convolutional Networks论文翻译——中文版">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-d6ae067dde424f46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/dcn/Figure_1.png">
 
 
 
@@ -379,7 +379,7 @@
 <p>最近，卷积神经网络（CNNs）[35]在图像分类[31]，语义分割[41]和目标检测[16]等视觉识别任务中取得了显著的成功。不过，他们仍然有上述两个缺点。它们对几何变换建模的能力主要来自大量的数据增强，大的模型容量以及一些简单的手工设计模块（例如，对小的平移具有不变性的最大池化[1]）。</p>
 <p>简而言之，CNN本质上局限于建模大型，未知的转换。该限制源于CNN模块的固定几何结构：卷积单元在固定位置对输入特征图进行采样；池化层以一个固定的比例降低空间分辨率；一个RoI（感兴趣区域）池化层把RoI分成固定的空间组块等等。缺乏处理几何变换的内部机制。这会导致明显的问题。举一个例子，同一CNN层中所有激活单元的感受野大小是相同的。对于在空间位置上编码语义的高级CNN层来说，这是不可取的。由于不同的位置可能对应不同尺度或形变的目标，所以对于具有精细定位的视觉识别来说，例如使用全卷积网络的语义分割[41]，尺度或感受野大小的自适应确定是理想的情况。又如，尽管最近目标检测已经取得了显著而迅速的进展[16,52,15,47,46,40,7]，但所有方法仍然依赖于基于特征提取的粗糙边界框。这显然是次优的，特别是对于非刚性目标。</p>
 <p>在这项工作中，我们引入了两个新的模块，大大提高了CNN建模几何变换的能力。首先是<em>可变形卷积</em>。它将2D偏移添加到标准卷积中的常规网格采样位置上。它可以使采样网格自由形变。如图1所示。偏移量通过附加的卷积层从前面的特征图中学习。因此，变形以局部的，密集的和自适应的方式受到输入特征的限制。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-d6ae067dde424f46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 1"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_1.png" alt="Figure 1"></p>
 <p>图1：3×3标准卷积和可变形卷积中采样位置的示意图。（a）标准卷积的定期采样网格（绿点）。（b）变形的采样位置（深蓝色点）和可变形卷积中增大的偏移量（浅蓝色箭头）。（c）（d）是（b）的特例，表明可变形卷积泛化到了各种尺度（各向异性）、长宽比和旋转的变换。</p>
 <p>第二个是<em>可变形的RoI池化</em>。它为前面的RoI池化的常规bin分区中的每个bin位置添加一个偏移量[15,7]。类似地，从前面的特征映射和RoI中学习偏移量，使得具有不同形状的目标能够自适应的进行部件定位。</p>
 <p>两个模块都轻量的。它们为偏移学习增加了少量的参数和计算。他们可以很容易地取代深层CNN中简单的对应部分，并且可以很容易地通过标准的反向传播进行端对端的训练。所得到的CNN被称为<em>可变形卷积网络</em>，或<em>可变形ConvNets</em>。</p>
@@ -390,16 +390,16 @@
 <p>在可变形卷积中，规则的网格$\mathcal{R}$通过偏移$\lbrace \Delta \mathbf{p}_n|n=1,…,N\rbrace$增大，其中$N=|\mathcal{R}|$。方程(1)变为$$\mathbf{y}(\mathbf{p}_0)=\sum_{\mathbf{p}_n\in\mathcal{R}}\mathbf{w}(\mathbf{p}_n)\cdot \mathbf{x}(\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n).\tag{2}$$</p>
 <p>现在，采样是在不规则且有偏移的位置$\mathbf{p}_n + \Delta \mathbf{p}_n$上。由于偏移$\Delta \mathbf{p}_n$通常是小数，方程(2)可以通过双线性插值实现$$\mathbf{x}(\mathbf{p})=\sum_\mathbf{q} G(\mathbf{q},\mathbf{p})\cdot \mathbf{x}(\mathbf{q}), \tag{3} $$其中$\mathbf{p}$表示任意（小数）位置(公式(2)中$\mathbf{p}=\mathbf{p}_0+\mathbf{p}_n+\Delta \mathbf{p}_n$)，$\mathbf{q}$枚举了特征映射$\mathbf{x}$中所有整体空间位置，$G(\cdot,\cdot)$是双线性插值的核。注意$G$是二维的。它被分为两个一维核$$ G(\mathbf{q},\mathbf{p})=g(q_x,p_x)\cdot g(q_y,p_y), \tag{4}$$其中$g(a,b)=max(0,1-|a-b|)$。方程(3)可以快速计算因为$G(\mathbf{q},\mathbf{p})$仅对于一些$\mathbf{q}$是非零的。</p>
 <p>如图2所示，通过在相同的输入特征映射上应用卷积层来获得偏移。卷积核具有与当前卷积层相同的空间分辨率和扩张（例如，在图2中也具有扩张为1的$3\times 3$）。输出偏移域与输入特征映射具有相同的空间分辨率。通道维度$2N$对应于$N$个2D偏移量。在训练过程中，同时学习用于生成输出特征的卷积核和偏移量。为了学习偏移量，梯度通过方程(3)和(4)中的双线性运算进行反向传播。详见附录A。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-6109c845ac06c68f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 2"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_2.png" alt="Figure 2"></p>
 <p>图2：3×3可变形卷积的说明。</p>
 <h3 id="2-2-可变形RoI池化"><a href="#2-2-可变形RoI池化" class="headerlink" title="2.2. 可变形RoI池化"></a>2.2. 可变形RoI池化</h3><p>在所有基于区域提出的目标检测方法中都使用了RoI池化[16,15,47,7]。它将任意大小的输入矩形区域转换为固定大小的特征。</p>
 <p><strong>RoI池化[15]。</strong>给定输入特征映射$\mathbf{x}$、RoI的大小$w\times h$和左上角$\mathbf{p}_0$，RoI池化将ROI分到$k\times k$（$k$是一个自由参数）个组块(bin)中，并输出$k\times k$的特征映射$\mathbf{y}$。对于第$(i,j)$个组块($0\le i,j &lt; k$)，我们有$$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p})/n_{ij},\tag{5}$$其中$n_{ij}$是组块中的像素数量。第$(i,j)$个组块的跨度为$\lfloor i \frac{w}{k} \rfloor \le p_x &lt; \lceil (i+1)\frac{w}{k}\rceil$和$\lfloor j \frac{h}{k}\rfloor \le p_y &lt; \lceil (j+1)\frac{h}{k} \rceil$。</p>
 <p>类似于方程（2），在可变形RoI池化中，将偏移${\Delta \mathbf{p}_{ij}|0\le i,j &lt; k}$加到空间组块的位置上。方程（5）变为$$\mathbf{y}(i,j)=\sum_{\mathbf{p}\in bin(i,j)} \mathbf{x}(\mathbf{p}_0+\mathbf{p}+\Delta \mathbf{p}_{ij})/n_{ij}. \tag{6}$$通常，$\Delta \mathbf{p}_{ij}$是小数。方程（6）通过双线性插值方程（3）和（4）来实现。</p>
 <p>图3说明了如何获得偏移量。首先，RoI池化(方程(5))生成池化后的特征映射。从特征映射中，一个fc层产生<em>归一化</em>偏移量$\Delta \widehat{\mathbf{p}}_{ij}$，然后通过与RoI的宽和高进行逐元素的相乘将其转换为方程(6)中的偏移量$\Delta \mathbf{p}_{ij}$，如：$\Delta \mathbf{p}_{ij} = \gamma \cdot \Delta \widehat{\mathbf{p}}_{ij} \circ (w, h)$。这里$\gamma$是一个预定义的标量来调节偏移的大小。它经验地设定为$\gamma=0.1$。为了使偏移学习对RoI大小具有不变性，偏移归一化是必要的。fc层是通过反向传播学习，详见附录A。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-96e387026c5828f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 3"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_3.png" alt="Figure 3"></p>
 <p>图3：阐述3×3的可变形RoI池化。</p>
 <p><strong>位置敏感（PS）的RoI池化[7]。</strong>它是全卷积的，不同于RoI池化。通过一个卷积层，所有的输入特征映射首先被转换为每个目标类的$k^2$个<em>分数映射</em>（对于$C$个目标类，总共$C+1$个），如图4的底部分支所示。不需要区分类，这样的分数映射被表示为$\lbrace \mathbf{x}_{i,j}\rbrace$，其中$(i,j)$枚举所有的组块。池化是在这些分数映射上进行的。第$(i,j)$个组块的输出值是通过对分数映射$\mathbf{x}_{i,j}$对应的组块求和得到的。简而言之，与方程（5）中RoI池化的区别在于，通用特征映射$\mathbf{x}$被特定的位置敏感的分数映射$\mathbf{x}_{i,j}$所取代。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-da30711b8ff6e37e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 4"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_4.png" alt="Figure 4"></p>
 <p>图4：阐述3×3的可变形PS RoI池化。</p>
 <p>在可变形PS RoI池化中，方程（6）中唯一的变化是$\mathbf{x}$也被修改为$\mathbf{x}_{i,j}$。但是，偏移学习是不同的。它遵循[7]中的“全卷积”精神，如图4所示。在顶部分支中，一个卷积层生成完整空间分辨率的偏移量字段。对于每个RoI（也对于每个类），在这些字段上应用PS RoI池化以获得<em>归一化</em>偏移量$\Delta \widehat{\mathbf{p}}_{ij}$，然后以上面可变形RoI池化中描述的相同方式将其转换为实数偏移量$\Delta \mathbf{p}_{ij}$。</p>
 <h3 id="2-3-可变形卷积网络"><a href="#2-3-可变形卷积网络" class="headerlink" title="2.3. 可变形卷积网络"></a>2.3. 可变形卷积网络</h3><p>可变形卷积和RoI池化模块都具有与普通版本相同的输入和输出。因此，它们可以很容易地取代现有CNN中的普通版本。在训练中，这些添加的用于偏移学习的conv和fc层的权重被初始化为零。它们的学习率设置为现有层学习速率的$\beta$倍（默认$\beta=1$，Faster R-CNN中的fc层为$\beta=0.01$）。它们通过方程（3）和方程（4）中双线性插值运算的反向传播进行训练。由此产生的CNN称为<em>可变形ConvNets</em>。</p>
@@ -408,7 +408,7 @@
 <p>最初的Inception-ResNet是为图像识别而设计的。它有一个特征不对齐的问题，对于密集的预测任务是有问题的。它被修改来解决对齐问题[20]。修改后的版本被称为“Aligned-Inception-ResNet”，详见附录B.</p>
 <p>两种模型都由几个卷积块组成，平均池化和用于ImageNet分类的1000类全连接层。平均池化和全连接层被移除。最后加入随机初始化的1×1卷积，以将通道维数减少到1024。与通常的做法[4,7]一样，最后一个卷积块的有效步长从32个像素减少到16个像素，以增加特征映射的分辨率。具体来说，在最后一个块的开始，步长从2变为1（ResNet-101和Aligned-Inception-ResNet的“conv5”）。为了进行补偿，将该块（核大小&gt;1）中的所有卷积滤波器的扩张从1改变为2。</p>
 <p>可选地，<em>可变形卷积</em>应用于最后的几个卷积层（核大小&gt;1）。我们尝试了不同数量的这样的层，发现3是不同任务的一个很好的权衡，如表1所示。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-184c869eea8db918.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 1"></p>
+<p><img src="http://noahsnail.com/images/dcn/Table_1.png" alt="Table 1"></p>
 <p>表1：在ResNet-101特征提取网络中的最后1个，2个，3个和6个卷积层上（3×3滤波器）应用可变形卷积的结果。对于<em>class-aware RPN，Faster R-CNN和R-FCN</em>，我们报告了在VOC 2007测试集上的结果。</p>
 <p><strong>分割和检测网络。</strong>根据上述特征提取网络的输出特征映射构建特定任务的网络。</p>
 <p>在下面，$C$表示目标类别的数量。</p>
@@ -419,14 +419,14 @@
 <p><em>R-FCN</em>[7]是另一种最先进的检测器。它的每个RoI计算成本可以忽略不计。我们遵循原来的实现。可选地，其RoI池化层可以改变为<em>可变形的位置敏感的RoI池化</em>。</p>
 <h2 id="3-理解可变形卷积网络"><a href="#3-理解可变形卷积网络" class="headerlink" title="3. 理解可变形卷积网络"></a>3. 理解可变形卷积网络</h2><p>这项工作以用额外的偏移量在卷积和RoI池中增加空间采样位置，并从目标任务中学习偏移量的想法为基础。</p>
 <p>当可变形卷积叠加时，复合变形的影响是深远的。这在图5中举例说明。标准卷积中的感受野和采样位置在顶部特征映射上是固定的（左）。它们在可变形卷积中（右）根据目标的尺寸和形状进行自适应调整。图6中显示了更多的例子。表2提供了这种自适应变形的量化证据。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-3b26d75ea54abdd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 5"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_5.png" alt="Figure 5"></p>
 <p>图5：标准卷积（a）中的固定感受野和可变形卷积（b）中的自适应感受野的图示，使用两层。顶部：顶部特征映射上的两个激活单元，在两个不同尺度和形状的目标上。激活来自3×3滤波器。中间：前一个特征映射上3×3滤波器的采样位置。另外两个激活单元突出显示。底部：前一个特征映射上两个3×3滤波器级别的采样位置。突出显示两组位置，对应于上面突出显示的单元。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b3beeb5f7ffbc309.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 6"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_6.png" alt="Figure 6"></p>
 <p>图6：每个图像三元组在三级3×3可变形滤波器（参见图5作为参考）中显示了三个激活单元（绿色点）分别在背景（左）、小目标（中）和大目标（右）上的采样位置（每张图像中的$9^3 = 729$个红色点）。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-7eb99f4c658748df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 2"></p>
+<p><img src="http://noahsnail.com/images/dcn/Table_2.png" alt="Table 2"></p>
 <p>表2：可变形卷积滤波器在三个卷积层和四个类别上的有效扩张值的统计。与在COCO[39]中类似，我们根据边界框区域将目标平均分为三类。小：面积&lt;$96^2$个像素；中等：$96^2$&lt;面积&lt;$224^2$； 大：面积&gt;$224^2$。</p>
 <p>可变形RoI池化的效果是类似的，如图7所示。标准RoI池化中网格结构的规律不再成立。相反，部分偏离RoI组块并移动到附近的目标前景区域。定位能力得到增强，特别是对于非刚性物体。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-7f9d39dddb73c00d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Figure 7"></p>
+<p><img src="http://noahsnail.com/images/dcn/Figure_7.png" alt="Figure 7"></p>
 <p>图7：R-FCN[7]中可变形（正敏感）RoI池化的偏移部分的示意图和输入RoI（黄色）的3x3个组块（红色）。请注意部件如何偏移以覆盖非刚性物体。</p>
 <h3 id="3-1-相关工作的背景"><a href="#3-1-相关工作的背景" class="headerlink" title="3.1. 相关工作的背景"></a>3.1. 相关工作的背景</h3><p>我们的工作与以前的工作在不同的方面有联系。我们详细讨论联系和差异。</p>
 <p><strong>空间变换网络（STN）</strong>[26]。这是在深度学习框架下从数据中学习空间变换的第一个工作。<em>它通过全局参数变换扭曲特征映射，例如仿射变换</em>。这种扭曲是昂贵的，学习变换参数是困难的。STN在小规模图像分类问题上取得了成功。反STN方法[37]通过有效的变换参数传播来代替昂贵的特征扭曲。</p>
@@ -438,7 +438,7 @@
 <p>这一发现表明，即使是深层CNN的顶层单元也可能没有足够大的感受野。这部分解释了为什么空洞卷积[23]被广泛用于视觉任务（见下文）。它表明了自适应感受野学习的必要。</p>
 <p><strong>空洞卷积</strong>[23]。它将正常滤波器的步长增加到大于1，并保持稀疏采样位置的原始权重。这增加了感受野的大小，并保持了相同的参数和计算复杂性。它已被广泛用于语义分割[41,5,54]（在[54]中也称扩张卷积），目标检测[7]和图像分类[55]。</p>
 <p>可变形卷积是空洞卷积的推广，如图1（c）所示。表3给出了大量的与空洞卷积的比较。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-ff198e46ef46e941.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 3"></p>
+<p><img src="http://noahsnail.com/images/dcn/Table_3.png" alt="Table 3"></p>
 <p>表3：我们的可变形模块与空洞卷积的评估，使用ResNet-101。</p>
 <p><strong>可变形部件模型（DPM）</strong>[11]。可变形RoI池化与DPM类似，因为两种方法都可以学习目标部件的空间变形，以最大化分类得分。由于不考虑部件之间的空间关系，所以可变形RoI池化更简单。</p>
 <p>DPM是一个浅层模型，其建模变形能力有限。虽然其推理算法可以通过将距离变换视为一个特殊的池化操作转换为CNN[17]，但是它的训练不是端到端的，而是涉及启发式选择，例如选择组件和部件尺寸。相比之下，可变形ConvNets是深层的并进行端到端的训练。当多个可变形模块堆叠时，建模变形的能力变得更强。</p>
@@ -466,10 +466,10 @@
 <p>默认的ResNet-101模型在最后的3个3×3卷积层使用扩张为的2空洞卷积（见2.3节）。我们进一步尝试了扩张值4，6和8，并在表3中报告了结果。它表明：1）当使用较大的扩张值时，所有任务的准确度都会增加，表明默认网络的感受野太小；<em> 2）</em>对于不同的任务，最佳扩张值是不同的，例如，6用于DeepLab，4用于Faster R-CNN；<em> 3）</em>可变形卷积具有最好的精度。*这些观察结果证明了滤波器变形的自适应学习是有效和必要的。</p>
 <p><strong>可变形RoI池化</strong>。它适用于Faster R-CNN和R-FCN。如表3所示，单独使用它已经产生了显著的性能收益，特别是在严格的mAP@0.7度量标准下。当同时使用可变形卷积和RoI池化时，会获得显著准确性改进。</p>
 <p><strong>模型复杂性和运行时间</strong>。表4报告了所提出的可变形ConvNets及其普通版本的模型复杂度和运行时间。可变形ConvNets仅增加了很小的模型参数和计算量。这表明显著的性能改进来自于建模几何变换的能力，而不是增加模型参数。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-060f289f36faafec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 4"></p>
+<p><img src="http://noahsnail.com/images/dcn/Table_4.png" alt="Table 4"></p>
 <p>表4：使用ResNet-101的可变形ConvNets和对应普通版本的模型复杂性和运行时比较。最后一列中的整体运行时间包括图像大小调整，网络前馈传播和后处理（例如，用于目标检测的NMS）。运行时间计算是在一台配备了Intel E5-2650 v2 CPU和Nvidia K40 GPU的工作站上。</p>
 <h3 id="4-3-COCO的目标检测"><a href="#4-3-COCO的目标检测" class="headerlink" title="4.3. COCO的目标检测"></a>4.3. COCO的目标检测</h3><p>在表5中，我们在COCO test-dev数据集上对用于目标检测的可变形ConvNets和普通ConvNets进行了广泛的比较。我们首先使用ResNet-101模型进行实验。class-aware RPN，Faster CNN和R-FCN的可变形版本分别获得了$25.8\%$，$33.1\%$和$34.5\%$的mAP@[0.5：0.95]分数，分别比它们对应的普通ConvNets相对高了$11\%$，$13\%$和$12\%$。通过在Faster R-CNN和R-FCN中用Aligned-Inception-ResNet取代ResNet-101，由于更强大的特征表示，它们的普通ConvNet基线都得到了提高。而可变形ConvNets带来的有效性能收益也是成立的。通过在多个图像尺度上（图像较短边在[480,576,688,864,1200,1400]内）的进一步测试，并执行迭代边界框平均[14]，对于R-FCN的可变形版本，mAP@[0.5：0.95]分数增加到了37.5％。请注意，可变形ConvNets的性能增益是对这些附加功能的补充。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-2bcd7cac6cd89606.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Table 5"></p>
+<p><img src="http://noahsnail.com/images/dcn/Table_5.png" alt="Table 5"></p>
 <p>表5：可变形ConvNets和普通ConvNets在COCO test-dev数据集上的目标检测结果。在表中M表示多尺度测试，B表示迭代边界框平均值。</p>
 <h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>本文提出了可变形ConvNets，它是一个简单，高效，深度，端到端的建模密集空间变换的解决方案。我们首次证明了在CNN中学习高级视觉任务（如目标检测和语义分割）中的密集空间变换是可行和有效的。</p>
 <h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>Aligned-Inception-ResNet模型由Kaiming He，Xiangyu Zhang，Shaoqing Ren和Jian Sun在未发表的工作中进行了研究和训练。</p>
