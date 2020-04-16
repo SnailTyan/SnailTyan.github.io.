@@ -98,15 +98,15 @@
 <meta property="og:url" content="http://noahsnail.com/2017/12/13/2017-12-13-非极大值抑制(Non-Maximum Suppression)/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="非极大值抑制(Non-Maximum Suppression)">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-b3b5aa8390bb212f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-19edad593b2f2b1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-3cc9d6e6625c6f75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3232548-70dc4033a44ef2a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-15T09:05:21.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/non-maximum-suppression/Object_Detection.png">
+<meta property="og:image" content="http://noahsnail.com/images/non-maximum-suppression/threshold_=_0.6.png">
+<meta property="og:image" content="http://noahsnail.com/images/non-maximum-suppression/threshold_=_0.5.png">
+<meta property="og:image" content="http://noahsnail.com/images/non-maximum-suppression/threshold_=_0.4.png">
+<meta property="og:updated_time" content="2017-12-13T05:19:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="非极大值抑制(Non-Maximum Suppression)">
 <meta name="twitter:description" content="非极大值抑制(Non-Maximum Suppression)">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3232548-b3b5aa8390bb212f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/non-maximum-suppression/Object_Detection.png">
 
 
 
@@ -365,7 +365,7 @@
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-什么是非极大值抑制"><a href="#1-什么是非极大值抑制" class="headerlink" title="1. 什么是非极大值抑制"></a>1. 什么是非极大值抑制</h2><p>非极大值抑制，简称为NMS算法，英文为Non-Maximum Suppression。其思想是搜素局部最大值，抑制极大值。NMS算法在不同应用中的具体实现不太一样，但思想是一样的。非极大值抑制，在计算机视觉任务中得到了广泛的应用，例如边缘检测、人脸检测、目标检测（DPM，YOLO，SSD，Faster R-CNN）等。</p>
 <h2 id="2-为什么要用非极大值抑制"><a href="#2-为什么要用非极大值抑制" class="headerlink" title="2. 为什么要用非极大值抑制"></a>2. 为什么要用非极大值抑制</h2><p>以目标检测为例：目标检测的过程中在同一目标的位置上会产生大量的候选框，这些候选框相互之间可能会有重叠，此时我们需要利用非极大值抑制找到最佳的目标边界框，消除冗余的边界框。Demo如下图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-b3b5aa8390bb212f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Object Detection"></p>
+<p><img src="http://noahsnail.com/images/non-maximum-suppression/Object_Detection.png" alt="Object Detection"></p>
 <p>左图是人脸检测的候选框结果，每个边界框有一个置信度得分(confidence score)，如果不使用非极大值抑制，就会有多个候选框出现。右图是使用非极大值抑制之后的结果，符合我们人脸检测的预期结果。</p>
 <h2 id="3-如何使用非极大值抑制"><a href="#3-如何使用非极大值抑制" class="headerlink" title="3. 如何使用非极大值抑制"></a>3. 如何使用非极大值抑制</h2><p><strong>前提：</strong>目标边界框列表及其对应的置信度得分列表，设定阈值，阈值用来删除重叠较大的边界框。<br><strong>IoU</strong>：intersection-over-union，即两个边界框的交集部分除以它们的并集。</p>
 <p>非极大值抑制的流程如下：</p>
@@ -390,15 +390,15 @@
 <ul>
 <li>阈值为0.6</li>
 </ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-19edad593b2f2b1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="threshold = 0.6"></p>
+<p><img src="http://noahsnail.com/images/non-maximum-suppression/threshold_=_0.6.png" alt="threshold = 0.6"></p>
 <ul>
 <li>阈值为0.5</li>
 </ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-3cc9d6e6625c6f75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="threshold = 0.5"></p>
+<p><img src="http://noahsnail.com/images/non-maximum-suppression/threshold_=_0.5.png" alt="threshold = 0.5"></p>
 <ul>
 <li>阈值为0.4</li>
 </ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/3232548-70dc4033a44ef2a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="threshold = 0.4"></p>
+<p><img src="http://noahsnail.com/images/non-maximum-suppression/threshold_=_0.4.png" alt="threshold = 0.4"></p>
 <h2 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4. 参考资料"></a>4. 参考资料</h2><ol>
 <li><p><a href="https://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/" target="_blank" rel="external">https://www.pyimagesearch.com/2014/11/17/non-maximum-suppression-object-detection-python/</a></p>
 </li>
