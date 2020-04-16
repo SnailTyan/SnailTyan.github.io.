@@ -98,12 +98,12 @@
 <meta property="og:url" content="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-643--Maximum-Average-Subarray-I/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Leetcode 643. Maximum Average Subarray I">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-d245f796a709840a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-12T05:38:49.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/leetcode/Maximum_Average_Subarray_I.jpeg">
+<meta property="og:updated_time" content="2018-12-12T05:38:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 643. Maximum Average Subarray I">
 <meta name="twitter:description" content="Leetcode 643. Maximum Average Subarray I">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-d245f796a709840a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/leetcode/Maximum_Average_Subarray_I.jpeg">
 
 
 
@@ -360,7 +360,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-d245f796a709840a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Maximum Average Subarray I"></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Maximum_Average_Subarray_I.jpeg" alt="Maximum Average Subarray I"></p>
 <h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMaxAverage</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="keyword">double</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">double</span> mean = <span class="number">0</span>;</div><div class="line">        <span class="keyword">double</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</div><div class="line">            sum += nums[i];</div><div class="line">            mean = sum / k;</div><div class="line">            max = sum;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = k; i &lt; nums.size(); i++) &#123;</div><div class="line">            sum = sum - nums[i - k] + nums[i];</div><div class="line">            <span class="keyword">if</span>(sum &gt; max) &#123;</div><div class="line">                max = sum;</div><div class="line">                mean = sum / k;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mean;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://leetcode.com/problems/maximum-average-subarray-i/description/" target="_blank" rel="external">https://leetcode.com/problems/maximum-average-subarray-i/description/</a></li>

@@ -98,12 +98,12 @@
 <meta property="og:url" content="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-852--Peak-Index-in-a-Mountain-Array/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Leetcode 852. Peak Index in a Mountain Array">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-3514a3c789bb2d22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-12T05:38:49.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/leetcode/Peak_Index_in_a_Mountain_Array.jpeg">
+<meta property="og:updated_time" content="2018-12-12T05:38:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 852. Peak Index in a Mountain Array">
 <meta name="twitter:description" content="Leetcode 852. Peak Index in a Mountain Array">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-3514a3c789bb2d22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/leetcode/Peak_Index_in_a_Mountain_Array.jpeg">
 
 
 
@@ -360,7 +360,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-3514a3c789bb2d22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Peak Index in a Mountain Array"></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Peak_Index_in_a_Mountain_Array.jpeg" alt="Peak Index in a Mountain Array"></p>
 <h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">peakIndexInMountainArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; A)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> right = A.size() - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(left &lt; right) &#123;</div><div class="line">            <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(A[mid] &gt; A[mid + <span class="number">1</span>]) &#123;</div><div class="line">                right = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                left = mid + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> left;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://leetcode.com/problems/peak-index-in-a-mountain-array/description/" target="_blank" rel="external">https://leetcode.com/problems/peak-index-in-a-mountain-array/description/</a></li>

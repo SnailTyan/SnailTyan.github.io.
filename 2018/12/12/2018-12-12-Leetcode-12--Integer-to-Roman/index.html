@@ -98,13 +98,13 @@
 <meta property="og:url" content="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-12--Integer-to-Roman/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Leetcode 12. Integer to Roman">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-f3fafe555c0d1e91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-6fc36828cf14f758.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-12T05:38:49.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/leetcode/Integer_to_Roman.jpeg">
+<meta property="og:image" content="http://noahsnail.com/images/leetcode/Integer_to_Roman.jpeg">
+<meta property="og:updated_time" content="2018-12-12T05:38:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 12. Integer to Roman">
 <meta name="twitter:description" content="Leetcode 12. Integer to Roman">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-f3fafe555c0d1e91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/leetcode/Integer_to_Roman.jpeg">
 
 
 
@@ -361,8 +361,8 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-f3fafe555c0d1e91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Integer to Roman"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3232548-6fc36828cf14f758.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Integer to Roman"></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Integer_to_Roman.jpeg" alt="Integer to Roman"></p>
+<p><img src="http://noahsnail.com/images/leetcode/Integer_to_Roman.jpeg" alt="Integer to Roman"></p>
 <h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">intToRoman</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">        <span class="keyword">const</span> <span class="keyword">int</span> TEN = <span class="number">10</span>;</div><div class="line">        <span class="keyword">const</span> <span class="keyword">int</span> HUNDRED = <span class="number">100</span>;</div><div class="line">        <span class="keyword">const</span> <span class="keyword">int</span> THOUSAND = <span class="number">1000</span>;</div><div class="line">        <span class="built_in">string</span> M[] = &#123;<span class="string">""</span>, <span class="string">"M"</span>, <span class="string">"MM"</span>, <span class="string">"MMM"</span>&#125;;</div><div class="line">        <span class="built_in">string</span> C[] = &#123;<span class="string">""</span>, <span class="string">"C"</span>, <span class="string">"CC"</span>, <span class="string">"CCC"</span>, <span class="string">"CD"</span>, <span class="string">"D"</span>, <span class="string">"DC"</span>, <span class="string">"DCC"</span>, <span class="string">"DCCC"</span>, <span class="string">"CM"</span>&#125;;</div><div class="line">        <span class="built_in">string</span> X[] = &#123;<span class="string">""</span>, <span class="string">"X"</span>, <span class="string">"XX"</span>, <span class="string">"XXX"</span>, <span class="string">"XL"</span>, <span class="string">"L"</span>, <span class="string">"LX"</span>, <span class="string">"LXX"</span>, <span class="string">"LXXX"</span>, <span class="string">"XC"</span>&#125;;</div><div class="line">        <span class="built_in">string</span> I[] = &#123;<span class="string">""</span>, <span class="string">"I"</span>, <span class="string">"II"</span>, <span class="string">"III"</span>, <span class="string">"IV"</span>, <span class="string">"V"</span>, <span class="string">"VI"</span>, <span class="string">"VII"</span>, <span class="string">"VIII"</span>, <span class="string">"IX"</span>&#125;;</div><div class="line">        <span class="keyword">return</span> M[num/THOUSAND] + C[(num%THOUSAND)/HUNDRED]+ X[(num%HUNDRED)/TEN] + I[num%TEN];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://leetcode.com/problems/integer-to-roman/description/" target="_blank" rel="external">https://leetcode.com/problems/integer-to-roman/description/</a></li>

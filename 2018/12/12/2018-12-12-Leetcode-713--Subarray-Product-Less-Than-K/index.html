@@ -98,12 +98,12 @@
 <meta property="og:url" content="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-713--Subarray-Product-Less-Than-K/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Leetcode 713. Subarray Product Less Than K">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-a925350c8f07f02b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-12T05:38:49.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/leetcode/Subarray_Product_Less_Than_K.jpeg">
+<meta property="og:updated_time" content="2018-12-12T05:38:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 713. Subarray Product Less Than K">
 <meta name="twitter:description" content="Leetcode 713. Subarray Product Less Than K">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-a925350c8f07f02b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/leetcode/Subarray_Product_Less_Than_K.jpeg">
 
 
 
@@ -360,7 +360,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-a925350c8f07f02b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Subarray Product Less Than K"></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Subarray_Product_Less_Than_K.jpeg" alt="Subarray Product Less Than K"></p>
 <h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSubarrayProductLessThanK</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(k &lt;= <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125; </div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> product = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(j &lt; nums.size()) &#123;</div><div class="line">            product *= nums[j];</div><div class="line">            <span class="keyword">while</span>(product &gt;= k) &#123;</div><div class="line">                product /= nums[i];</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">            count += j - i + <span class="number">1</span>;</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://leetcode.com/problems/subarray-product-less-than-k/description/" target="_blank" rel="external">https://leetcode.com/problems/subarray-product-less-than-k/description/</a></li>

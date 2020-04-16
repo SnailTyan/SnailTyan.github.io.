@@ -98,12 +98,12 @@
 <meta property="og:url" content="http://noahsnail.com/2018/12/12/2018-12-12-Leetcode-58--Length-of-Last-Word/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Leetcode 58. Length of Last Word">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3232548-6df8c4df276a3696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-12T05:38:49.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/leetcode/Length_of_Last_Word.jpeg">
+<meta property="og:updated_time" content="2018-12-12T05:38:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 58. Length of Last Word">
 <meta name="twitter:description" content="Leetcode 58. Length of Last Word">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3232548-6df8c4df276a3696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://noahsnail.com/images/leetcode/Length_of_Last_Word.jpeg">
 
 
 
@@ -360,7 +360,7 @@
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="https://upload-images.jianshu.io/upload_images/3232548-6df8c4df276a3696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Length of Last Word"></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Length_of_Last_Word.jpeg" alt="Length of Last Word"></p>
 <h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLastWord</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> length = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> index = s.find_last_not_of(<span class="string">" "</span>);</div><div class="line">        <span class="keyword">if</span>(index == <span class="number">-1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> length;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(index &gt;= <span class="number">0</span> &amp;&amp; s[index--] != <span class="string">' '</span>) &#123;</div><div class="line">            length++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> length;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://leetcode.com/problems/length-of-last-word/description/" target="_blank" rel="external">https://leetcode.com/problems/length-of-last-word/description/</a></li>
