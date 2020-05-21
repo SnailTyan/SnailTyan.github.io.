@@ -98,27 +98,27 @@
 <meta property="og:url" content="http://noahsnail.com/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
-<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.png">
-<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png">
-<meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png">
-<meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png">
-<meta property="og:updated_time" content="2020-04-13T07:24:07.000Z">
+<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg">
+<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.jpeg">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.jpeg">
+<meta property="og:updated_time" content="2020-05-21T07:32:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
 <meta name="twitter:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
-<meta name="twitter:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.png">
+<meta name="twitter:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg">
 
 
 
@@ -382,16 +382,16 @@
 <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>The highly challenging task of estimating a highresolution (HR) image from its low-resolution (LR) counterpart is referred to as super-resolution (SR). SR received substantial attention from within the computer vision research community and has a wide range of applications [62, 70, 42].</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>从低分辨率(LR)图像来估计其对应高分辨率(HR)图像的高挑战性任务被称作超分辨率(SR)。SR在计算机视觉研究领域受到了广泛的关注并有大量应用[62, 70, 42]。</p>
 <p>The ill-posed nature of the underdetermined SR problem is particularly pronounced for high upscaling factors, for which texture detail in the reconstructed SR images is typically absent. The optimization target of supervised SR algorithms is commonly the minimization of the mean squared error (MSE) between the recovered HR image and the ground truth. This is convenient as minimizing MSE also maximizes the peak signal-to-noise ratio (PSNR), which is a common measure used to evaluate and compare SR algorithms [60]. However, the ability of MSE (and PSNR) to capture perceptually relevant differences, such as high texture detail, is very limited as they are defined based on pixel-wise image differences [59, 57, 25]. This is illustrated in Figure 2, where highest PSNR does not necessarily reflect the perceptually better SR result. The perceptual difference between the super-resolved and original image means that the recovered image is not photo-realistic as defined by Ferwerda [15].</p>
-<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.png" alt="Figure 2"></p>
+<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg" alt="Figure 2"></p>
 <p>Figure 2: From left to right: bicubic interpolation, deep residual network optimized for MSE, deep residual generative adversarial network optimized for a loss more sensitive to human perception, original HR image. Corresponding PSNR and SSIM are shown in brackets. [4× upscaling]</p>
 <p>欠定SR问题的不适定特性对于大的上采样系数尤其显著，重建的SR图像中通常缺少纹理细节。有监督SR算法的优化目标通常是最小化恢复的HR图像和真实图像之间的均方误差(MSE)。最小化MSE即最大化峰值信噪比(PSNR)是方便的，这是用来评估和比较SR算法的常用方法[60]。然而，MSE(和PSNR)捕获感知相对差异(例如高级纹理细节)的能力是非常有限的，因为它们是基于像素级图像差异[59, 57, 25]定义的。这在图2中进行了说明，其中最高的PSNR不一定能反映出感知上更好的SR结果。超分辨率图像和原始图像之间的感知差异意味着恢复图像不如Ferwerda[15]中定义的逼真。</p>
-<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.png" alt="Figure 2"></p>
+<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg" alt="Figure 2"></p>
 <p>图2：从左到右：双三次插值，优化MSE的深度残差网络，优化人感知更敏感损失的深度残差生成对抗网络，原始HR图像。对应的PSNR和SSIM显示在括号中。[4倍上采样]</p>
 <p>In this work we propose a super-resolution generative adversarial network (SRGAN) for which we employ a deep residual network (ResNet) with skip-connection and diverge from MSE as the sole optimization target. Different from previous works, we define a novel perceptual loss using high-level feature maps of the VGG network [48, 32, 4] combined with a discriminator that encourages solutions perceptually hard to distinguish from the HR reference images. An example photo-realistic image that was super-resolved with a 4× upscaling factor is shown in Figure 1.</p>
-<p><img src="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png" alt="Figure 1"></p>
+<p><img src="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.jpeg" alt="Figure 1"></p>
 <p>Figure 1: Super-resolved image (left) is almost indistinguishable from original (right). [4× upscaling]</p>
 <p>在这项工作中我们提出了一种超分辨率生成对抗网络(SRGAN)，为此我们采用了具有跳跃连接的深度残差网络并舍弃了作为唯一优化目标的MSE。不同于以前的工作，我们定义了一种新的使用VGG网络[48, 32, 4]高级特征映射与判别器结合的感知损失，判别器会鼓励感知上更难与HR参考图像区分的解。图1中展示了一张示例逼真图像，其使用4倍上采样系数进行超分辨率。</p>
-<p><img src="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png" alt="Figure 1"></p>
+<p><img src="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.jpeg" alt="Figure 1"></p>
 <p>图1：超分辨率图像(左)是最难与原始图像(右)区分的. [4倍上采样]</p>
 <h3 id="1-1-Related-work"><a href="#1-1-Related-work" class="headerlink" title="1.1. Related work"></a>1.1. Related work</h3><h4 id="1-1-1-Image-super-resolution"><a href="#1-1-1-Image-super-resolution" class="headerlink" title="1.1.1 Image super-resolution"></a>1.1.1 Image super-resolution</h4><p>Recent overview articles on image SR include Nasrollahi and Moeslund [42] or Yang et al. [60]. Here we will focus on single image super-resolution (SISR) and will not further discuss approaches that recover HR images from multiple images [3, 14].</p>
 <h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1. 相关工作"></a>1.1. 相关工作</h3><h4 id="1-1-1-图像超分辨率"><a href="#1-1-1-图像超分辨率" class="headerlink" title="1.1.1 图像超分辨率"></a>1.1.1 图像超分辨率</h4><p>最近的图像SR综述文章，包括Nasrollahi和Moeslund[42]或Yang等[60]。这里，我们将专注于单图像超分辨率(SISR)，不会进一步讨论从多张图像恢复HR图像的方法[3, 14]。</p>
@@ -412,10 +412,10 @@
 <p>In the context of SISR it was also shown that learning upscaling filters is beneficial in terms of accuracy and speed [10, 47, 56]. This is an improvement over Dong et al. [9] where bicubic interpolation is employed to upscale the LR observation before feeding the image to the CNN.</p>
 <p>SISR的背景下，研究表明学习上采样滤波器对于准确性和速度是有益的[10, 47, 56]。这是一种对Dong等[9]的改进，其中在将图片输入到CNN之前，采用双三次插值对LR观测进行上采样。</p>
 <h4 id="1-1-3-Loss-functions"><a href="#1-1-3-Loss-functions" class="headerlink" title="1.1.3 Loss functions"></a>1.1.3 Loss functions</h4><p>Pixel-wise loss functions such as MSE struggle to handle the uncertainty inherent in recovering lost high-frequency details such as texture: minimizing MSE encourages finding pixel-wise averages of plausible solutions which are typically overly-smooth and thus have poor perceptual quality [41, 32, 12, 4]. Reconstructions of varying perceptual quality are exemplified with corresponding PSNR in Figure 2. We illustrate the problem of minimizing MSE in Figure 3 where multiple potential solutions with high texture details are averaged to create a smooth reconstruction.</p>
-<p><img src="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png" alt="Figure 3"></p>
+<p><img src="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.jpeg" alt="Figure 3"></p>
 <p>Figure 3: Illustration of patches from the natural image manifold (red) and super-resolved patches obtained with MSE (blue) and GAN (orange). The MSE-based solution appears overly smooth due to the pixel-wise average of possible solutions in the pixel space, while GAN drives the reconstruction towards the natural image manifold producing perceptually more convincing solutions.</p>
 <h4 id="1-1-3-损失函数"><a href="#1-1-3-损失函数" class="headerlink" title="1.1.3 损失函数"></a>1.1.3 损失函数</h4><p>逐像素的损失函数(例如MSE)在努力处理恢复损失的高频细节(例如纹理)中的内在不确定性：最小化MSE鼓励寻找合理解的逐像素平均，这通常是过平滑的，因此会得到较差的感知质量[41, 32, 12, 4]。图2中以相应的PSNR为例说明了不同感知质量的重建。我们在图3中说明了最小化MSE的问题，其中对多个具有高级纹理细节的潜在解进行平均从而创建一个平滑的重建。</p>
-<p><img src="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png" alt="Figure 3"></p>
+<p><img src="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.jpeg" alt="Figure 3"></p>
 <p>图3：自然图像流形图像块(红)，由MSE获得的超分辨率图像块(蓝)以及由GAN获得的超分辨率图像块(橙)。由于像素空间中可能解的逐像素平均，基于MSE的解似乎更平滑，而GAN将重建推向自然图像流形，产生了感知上更具说服力的解。</p>
 <p>In Mathieu et al. [41] and Denton et al. [6] the authors tackled this problem by employing generative adversarial networks (GANs) [21] for the application of image generation. Yu and Porikli [65] augment pixel-wise MSE loss with a discriminator loss to train a network that super-resolves face images with large upscaling factors (8×). GANs were also used for unsupervised representation learning in Radford et al. [43]. The idea of using GANs to learn a mapping from one manifold to another is described by Li and Wand [37] for style transfer and Yeh et al. [63] for inpainting. Bruna et al. [4] minimize the squared error in the feature spaces of VGG19 [48] and scattering networks.</p>
 <p>在Mathieu等[41]和Denton等[6]中，作者通过采用图像生成应用生成对抗网络(GANs)来解决这个问题。Yu和Porikli[65]通过判别器损失增大了逐像素的MSE损失来训练网络，这个网络使用较大的上采样系数(8×)·对人脸图像进行超分辨率。在Radford等[43]中GAN也用来进行无监督表示学习。Li和Wand[37]的风格转换以及Yeh等[63]的图像修复都描述了使用GAN学习一个流形到另一个流形映射的想法。Bruna等[4]在VGG19[48]特征空间以及散射网络中都最小化了方差。</p>
@@ -428,9 +428,9 @@
 <p>• We propose SRGAN which is a GAN-based network optimized for a new perceptual loss. Here we replace the MSE-based content loss with a loss calculated on feature maps of the VGG network [48], which are more invariant to changes in pixel space [37].</p>
 <p>• We confirm with an extensive mean opinion score (MOS) test on images from three public benchmark datasets that SRGAN is the new state of the art, by a large margin, for the estimation of photo-realistic SR images with high upscaling factors (4×).</p>
 <p>本文中我们描述了第一个很深的ResNet[28, 29]架构，使用GAN概念形成了逼真SISR的感知损失函数。我们的主要贡献如下：</p>
-<p>• 我们在大的上采用系数下(4×)为图像SR设置了最新的技术水平，并用PSNR、结构相似性(SSIM)以及MSE进行了度量，使用了为MSE优化的16块深度ResNet(SRResNet)。</p>
+<p>• 我们在大的上采样系数下(4×)为图像SR设置了最新的技术水平，并用PSNR、结构相似性(SSIM)以及MSE进行了度量，使用了为MSE优化的16块深度ResNet(SRResNet)。</p>
 <p>• 我们提出了SRGAN，一种为新感知损失优化的基于GAN的网络。这里我们将基于MSE的内容损失替换为在VGG网络特征映射上计算的损失，其对于像素空间[37]的变化更具有不变性。</p>
-<p>• 我们通过在三个公开基准数据集的图像上进行大量的平均主观得分(MOS)测试，确认了SRGAN是最新的技术，在使用较大的上采用系数(4×)进行逼真SR图像评估上具有很大优势。</p>
+<p>• 我们通过在三个公开基准数据集的图像上进行大量的平均主观得分(MOS)测试，确认了SRGAN是最新的技术，在使用较大的上采样系数(4×)进行逼真SR图像评估上具有很大优势。</p>
 <p>We describe the network architecture and the perceptual loss in Section 2. A quantitative evaluation on public benchmark datasets as well as visual illustrations are provided in Section 3. The paper concludes with a discussion in Section 4 and concluding remarks in Section 5.</p>
 <p>我们将在第二节中描述网络架构和感知损失。第三节中提供在公开基准数据集上的定量评估和视觉插图。本文在第4节中进行了讨论，并在第5节中作了总结。</p>
 <h2 id="2-Method"><a href="#2-Method" class="headerlink" title="2. Method"></a>2. Method</h2><p>In SISR the aim is to estimate a high-resolution, super-resolved image $I^{SR}$ from a low-resolution input image $I^{LR}$. Here $I^{LR}$ is the low-resolution version of its high-resolution counterpart $I^{HR}$. The high-resolution images are only available during training. In training, $I^{LR}$ is obtained by applying a Gaussian filter to $I^{HR}$ followed by a downsampling operation with downsampling factor $r$. For an image with $C$ color channels, we describe $I^{LR}$ by a real-valued tensor of size W × H × C and $I^{HR}$, $I^{SR}$ by $rW × rH × C$ respectively.</p>
@@ -448,10 +448,10 @@
 <p>$$\mathop{min}\limits_{\theta_G}\mathop{max}\limits_{\theta_D}\mathbb{E}_{I^{HR}\sim p_{train}(I^{HR})}[logD_{\theta_D}(I^{HR})] + \mathbb{E}_{I^{LR}\sim p_{G}(I^{LR})}[log(1-D_{\theta_D}(G_{\theta_G}(I^{LR})))] \tag{2}$$</p>
 <p>这个公式的总体思想是，它允许训练生成模型$G$，生成模型目的是欺骗具有辨别能力的判别器$D$，判别器被训练用来区分超分辨图像与真实图像。通过这种方法，我们的生成器可以学习创建与真实图像高度相似的解，因此很难被$D$分类。这鼓励了位于自然图像子空间，流形中的感知上更优的解。这与通过最小化逐像素的误差测量(例如MSE)获得的SR解形成鲜明的对比。</p>
 <p>At the core of our very deep generator network $G$, which is illustrated in Figure 4 are $B$ residual blocks with identical layout. Inspired by Johnson et al. [32] we employ the block layout proposed by Gross and Wilber [23]. Specifically, we use two convolutional layers with small 3×3 kernels and 64 feature maps followed by batch-normalization layers [31] and ParametricReLU [27] as the activation function. We increase the resolution of the input image with two trained sub-pixel convolution layers as proposed by Shi et al. [47].</p>
-<p><img src="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.png" alt="Figure 4"></p>
+<p><img src="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.jpeg" alt="Figure 4"></p>
 <p>Figure 4: Architecture of Generator and Discriminator Network with corresponding kernel size (k), number of feature maps (n) and stride (s) indicated for each convolutional layer.</p>
 <p>如图4所示，我们的深度生成器网络$G$的中心是$B$个含有恒等设计的残差块。受Johnson等[32]启发，我们采用了Gross和Wilber[23]提出的块设计。具体来说，我们使用了两个卷积层，其核大小为3×3，具有64层特征映射，其后是批归一化层[31]，使用ParametricReLU[27]作为激活函数。如Shi等[47]的提议，我们使用两个训练好的子像素卷积层来增加输入图像的分辨率。</p>
-<p><img src="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.png" alt="Figure 4"></p>
+<p><img src="https://i.loli.net/2020/03/06/qo1Rgdac8mfeuzl.jpeg" alt="Figure 4"></p>
 <p>图4：生成器网络和判别器网络的架构，每个卷积层表明了对应的卷积核大小(k)，特征映射数量(n)和步长(s)。</p>
 <p>To discriminate real HR images from generated SR samples we train a discriminator network. The architecture is shown in Figure 4. We follow the architectural guidelines summarized by Radford et al. [43] and use LeakyReLU activation (α = 0.2) and avoid max-pooling throughout the network. The discriminator network is trained to solve the maximization problem in Equation 2. It contains eight convolutional layers with an increasing number of 3 × 3 filter kernels, increasing by a factor of 2 from 64 to 512 kernels as in the VGG network [48]. Strided convolutions are used to reduce the image resolution each time the number of features is doubled. The resulting 512 feature maps are followed by two dense layers and a final sigmoid activation function to obtain a probability for sample classification.</p>
 <p>为了从生成的SR样本中区分出真实的HR图像，我们训练了一个判别器网络。架构如图4所示。我们遵循Radford等[43]总结的架构指南，使用LeakyReLU激活(α=0.2)，在整个网络中避免使用最大池化。训练的判别器网络用来解决等式2中的最大化问题。它包含8个卷积层，其中3×3滤波器核的数量逐渐增加，与VGG网络一样[48]，从64个滤波器核增加到512个，增加了2倍。在每次特征数量加倍时，步长卷积用来降低图像分辨率。生成的512个特征映射之后是两个稠密层，最后的sigmoid激活用来获得样本分类的概率。</p>
@@ -486,21 +486,21 @@
 <h3 id="3-2-Training-details-and-parameters"><a href="#3-2-Training-details-and-parameters" class="headerlink" title="3.2. Training details and parameters"></a>3.2. Training details and parameters</h3><p>We trained all networks on a NVIDIA Tesla M40 GPU using a random sample of 350 thousand images from the <strong>ImageNet</strong> database [44]. These images are distinct from the testing images. We obtained the LR images by downsampling the HR images (BGR, $C=3$) using bicubic kernel with downsampling factor $r=4$. For each mini-batch we crop 16 random 96 × 96 HR sub images of distinct training images. Note that we can apply the generator model to images of arbitrary size as it is fully convolutional. For optimization we use Adam [35] with $\beta_{1}=0.9$. The SRResNet networks were trained with a learning rate of $10^{−4}$ and $10^6$ update iterations. We employed the trained MSE-based SRResNet network as initialization for the generator when training the actual GAN to avoid undesired local optima. All SRGAN variants were trained with $10^5$ update iterations at a learning rate of $10^{−4}$ and another $10^5$ iterations at a lower rate of $10^{−5}$. We alternate updates to the generator and discriminator network, which is equivalent to $k=1$ as used in Goodfellow et al. [21]. Our generator network has 16 identical ($B=16$) residual blocks. During test time we turn batch-normalization update off to obtain an output that deterministically depends only on the input [31]. Our implementation is based on Theano [52] and Lasagne [7].</p>
 <h3 id="3-2-训练细节和参数"><a href="#3-2-训练细节和参数" class="headerlink" title="3.2. 训练细节和参数"></a>3.2. 训练细节和参数</h3><p>我们使用NVIDIA Tesla M40 GPU训练所有的网络，训练数据来自<strong>ImageNet</strong>数据集[44]中随机采样的35万张图像。这些图片不同于测试图片。我们使用双三次核对HR图像(BGR, $C=3$)进行下采样得到LR图像，下采样系数为$r=4$。对于每一份小批量数据，我们对不同的训练图像裁剪16个随机的96×96的HR子图像。注意我们可以对任意大小的图像应用生成器模型，因为它是全卷积的。我们使用Adam[35]，$\beta_{1}=0.9$来进行优化。SRResNet网络使用$10^{−4}$的学习率进行训练，更新迭代次数$10^6$。在训练实际的GAN时，为了避免不必要的局部最优值，我们采用预训练的基于MSE的SRResNet网络对生成器进行初始化。所有的SRGAN变种都以$10^{−4}$的学习率训练$10^5$次迭代，然后以$10^{−5}$的学习率再训练$10^5$次迭代。我们交替更新生成器和判别器网络，这等价于Goodfellow等[21]的$k=1$。我们的生成器网络有16个恒等($B=16$)残差块。测试期间，为了获得确定性地只依赖输入的输出，我们关闭了批归一化更新。我们的实现基于Theano[52]和Lasagne[7]。</p>
 <h3 id="3-3-Mean-opinion-score-MOS-testing"><a href="#3-3-Mean-opinion-score-MOS-testing" class="headerlink" title="3.3. Mean opinion score (MOS) testing"></a>3.3. Mean opinion score (MOS) testing</h3><p>We have performed a MOS test to quantify the ability of different approaches to reconstruct perceptually convincing images. Specifically, we asked 26 raters to assign an integral score from 1 (bad quality) to 5 (excellent quality) to the super-resolved images. The raters rated 12 versions of each image on Set5, Set14 and BSD100: nearest neighbor (NN), bicubic, SRCNN [8], SelfExSR [30], DRCN [33], ESPCN [47], SRResNet-MSE, $SRResNet-VGG22^*$ ($*$ not rated on BSD100), $SRGAN-MSE^*$, $SRGAN-VGG22^*$, SRGAN-VGG54 and the original HR image. Each rater thus rated 1128 instances (12 versions of 19 images plus 9 versions of 100 images) that were presented in a randomized fashion. The raters were calibrated on the NN (score 1) and HR (5) versions of 20 images from the BSD300 training set. In a pilot study we assessed the calibration procedure and the test-retest reliability of 26 raters on a subset of 10 images from BSD100 by adding a method’s images twice to a larger test set. We found good reliability and no significant differences between the ratings of the identical images. Raters very consistently rated NN interpolated test images as 1 and the original HR images as 5 (c.f. Figure 5).</p>
-<p><img src="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png" alt="Figure 5"></p>
+<p><img src="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.jpeg" alt="Figure 5"></p>
 <p>Figure 5: Color-coded distribution of MOS scores on <strong>BSD100</strong>. For each method 2600 samples (100 images × 26 raters) were assessed. Mean shown as red marker, where the bins are centered around value $i$. [4× upscaling]</p>
 <h3 id="3-3-平均主观得分-MOS-测试"><a href="#3-3-平均主观得分-MOS-测试" class="headerlink" title="3.3. 平均主观得分(MOS)测试"></a>3.3. 平均主观得分(MOS)测试</h3><p>为了量化不同方法重建感知上令人信服的图像的能力，我们进行了MOS测试。具体来说，我们让26个评分员使用整数分1(质量差)到5(质量极好)对超分辨率图像进行打分。评分员对Set5，Set14和BSD100数据集上的每一张图像的12个版本进行了评分：最近邻(NN)，双三次，SRCNN[8]，SelfExSR[30]，DRCN[33]，ESPCN[47]，SRResNet-MSE，$SRResNet-VGG22^*$ ($*$没有在BSD100上评分)，$SRGAN-MSE^*$，$SRGAN-VGG22^*$，SRGAN-VGG54和原始HR图像。因此每一个评分员对随机呈现的1128个实例（19张图像的12个版本加上100张图像的9个版本）进行了评估。评分员对BSD300训练集的20张图像的NN（得分1）和HR（5）版本上进行了校准。在初步研究中，通过两次添加方法图像到更大的测试集中，我们评估了26个评分员在BSD100的10张图像子集上的校准程序和重测信度。我们发现了良好的可靠性，在相同图像的评分之间没有显著差异。评分员非常一致地将NN插值测试图像评分为1，原始HR图像评分为5（参加图5）。</p>
-<p><img src="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.png" alt="Figure 5"></p>
+<p><img src="https://i.loli.net/2020/03/13/kxJ1thYLfnVSQy3.jpeg" alt="Figure 5"></p>
 <p>图5：<strong>BSD100</strong>上MOS得分的颜色编码分布。每一种方法使用2600个样本(100张图片×26个评估者)评估。均值显示为红色标记，bin以值$i$为中心(4倍上采样)。</p>
 <p>The experimental results of the conducted MOS tests are summarized in Table 1, Table 2 and Figure 5.</p>
 <p>Table 1: Performance of different loss functions for SRResNet and the adversarial networks on Set5 and Set14 benchmark data. MOS score significantly higher ($p&lt;0.05$) than with other losses in that category. [4× upscaling]</p>
-<p><img src="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png" alt="Table 1"></p>
+<p><img src="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.jpeg" alt="Table 1"></p>
 <p>Table 2: Comparison of NN, bicubic, SRCNN [8], SelfExSR [30], DRCN [33], ESPCN [47], SRResNet, SRGAN-VGG54 and the original HR on benchmark data. Highest measures (PSNR [dB], SSIM, MOS) in bold. [4× upscaling]</p>
-<p><img src="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png" alt="Table 2"></p>
+<p><img src="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.jpeg" alt="Table 2"></p>
 <p>进行的MOS测试的实验结果总结在表1，表2和图5中。</p>
 <p>表1：SRResNet不同损失函数的性能和对抗网络在Set5和Set14上的基准数据。MOS得分明显比其它损失在对应类别上更高($p&lt;0.05$)。[4×上采样]</p>
-<p><img src="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.png" alt="Table 1"></p>
+<p><img src="https://i.loli.net/2020/03/30/SzHnxkJYQBTwZtb.jpeg" alt="Table 1"></p>
 <p>表2：NN，双三次，SRCNN[8]，SelfExSR[30]，DRCN[33]，ESPCN[47]，SRResNet，SRGAN-VGG54和原始HR在基准数据上的比较. 最高的度量(PSNR[dB]，SSIM，MOS)以粗体显示。[4×上采样]</p>
-<p><img src="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png" alt="Table 2"></p>
+<p><img src="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.jpeg" alt="Table 2"></p>
 <h3 id="3-4-Investigation-of-content-loss"><a href="#3-4-Investigation-of-content-loss" class="headerlink" title="3.4. Investigation of content loss"></a>3.4. Investigation of content loss</h3><p>We investigated the effect of different content loss choices in the perceptual loss for the GAN-based networks. Specifically we investigate $l^{SR}=l^{SR}_X+10^{-3}l^{SR}_{Gen}$ for the following content losses $l^{SR}_X$:</p>
 <p>• SRGAN-MSE: $l^{SR}_{MSE}$, to investigate the adversarial network with the standard MSE as content loss.</p>
 <p>• SRGAN-VGG22: $l^{SR}_{VGG/2.2}$ with $\phi_{2,2}$, a loss defined on feature maps representing lower-level features [67]. </p>
@@ -510,10 +510,10 @@
 <p>• SRGAN-VGG22：具有$\phi_{2,2}$的$l^{SR}_{VGG/2.2}$，表示更底层特征[67]的特征映射上定义的损失。</p>
 <p>• SRGAN-VGG54：具有$\phi_{5,4}$的$l^{SR}_{VGG/5.4}$，来自较深网络层的更高层特征的特征映射上定义的损失，更可能集中在图像内容上[67, 64, 39]。在下文中，我们将此网络称为SRGAN。</p>
 <p>We also evaluate the performance of the generator network without adversarial component for the two losses $l^{SR}_{MSE}$ (SRResNet-MSE) and $l^{SR}_{VGG/2.2}$ (SRResNet-VGG22). We refer to SRResNet-MSE as SRResNet. Quantitative results are summarized in Table 1 and visual examples provided in Figure 6. Even combined with the adversarial loss, MSE provides solutions with the highest PSNR values that are, however, perceptually rather smooth and less convincing than results achieved with a loss component more sensitive to visual perception. This is caused by competition between the MSE-based content loss and the adversarial loss. We further attribute minor reconstruction artifacts, which we observed in a minority of SRGAN-MSE-based reconstructions, to those competing objectives. We could not determine a significantly best loss function for SRResNet or SRGAN with respect to MOS score on Set5. However, SRGAN-VGG54 significantly outperformed other SRGAN and SRResNet variants on Set14 in terms of MOS. We observed a trend that using the higher level VGG feature maps $\phi_{5,4}$ yields better texture detail when compared to $\phi_{2,2}$ (c.f. Figure 6).</p>
-<p><img src="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png" alt="Figure 6"></p>
+<p><img src="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.jpeg" alt="Figure 6"></p>
 <p>Figure 6: SRResNet (left: a,b), SRGAN-MSE (middle left: c,d), SRGAN-VGG2.2 (middle: e,f) and SRGAN-VGG54 (middle right: g,h) reconstruction results and corresponding reference HR image (right: i,j). [4× upscaling]</p>
 <p>对于两个损失$l^{SR}_{MSE}$(SRResNet-MSE)和$l^{SR}_{VGG/2.2}$(SRResNet-VGG22)，我们也对没有对抗组件的生成器网络性能进行了评估。我们将SRResNet-MSE称为SRResNet。在表1中总结了定量结果，图6中提供了直观的示例。即使结合对抗损失，MSE仍然提供了具有最高PSNR值的解，与视觉感知更敏感的损失组件取得的结果相比，其在感知上更平滑，更不令人信服。这是由基于MSE的内容损失和对抗损失之间的竞争引起的。我们进一步将少量基于SRGAN-MSE的重构中观测到的那些较小的重构结果，归因于那些相互竞争的目标。关于Set5上的MOS得分，我们不能确定一个对于SRResNet或SRGAN明显最好的损失函数。但是，考虑到Set14上的MOS得分，SRGAN-VGG54显著优于其它SRGAN和SRResNet变种。我们观察到一种趋势，与$\phi_{2,2}$相比，使用更高层的VGG特征映射$\phi_{5,4}$得到了更好的纹理细节，参见图6。</p>
-<p><img src="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png" alt="Figure 6"></p>
+<p><img src="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.jpeg" alt="Figure 6"></p>
 <p>图6：SRResNet（左：a，b），SRGAN-MSE（左中：c，d），SRGAN-VGG2.2（中：e，f）和SRGAN-VGG54（右中：g，h）的重建结果以及相应的参考HR图像（右：i，j）。 [4倍上采样]</p>
 <h3 id="3-5-Performance-of-the-final-networks"><a href="#3-5-Performance-of-the-final-networks" class="headerlink" title="3.5. Performance of the final networks"></a>3.5. Performance of the final networks</h3><p>We compare the performance of SRResNet and SRGAN to NN, bicubic interpolation, and four state-of-the-art methods. Quantitative results are summarized in Table 2 and confirm that SRResNet (in terms of PSNR/SSIM) sets a new state of the art on three benchmark datasets. Please note that we used a publicly available framework for evaluation (c.f. Section 3.1), reported values might thus slightly deviate from those reported in the original papers.</p>
 <h3 id="3-5-最终网络的性能"><a href="#3-5-最终网络的性能" class="headerlink" title="3.5. 最终网络的性能"></a>3.5. 最终网络的性能</h3><p>我们比较了SRResNet、SRGAN、NN、双三次插值和四种最新方法的性能。定量结果总结在表2中，证实了SRResNet(考虑PSNR/SSIM)在三个基准数据集上确立了最新的技术水平。请注意，我们使用了一个公开可获得的框架进行评估，（参加3.1节），因此报告的值可能会与原始论文中报告的值略有不同。</p>
@@ -524,7 +524,7 @@
 <p>Of particular importance when aiming for photo-realistic solutions to the SR problem is the choice of the content loss as illustrated in Figure 6. In this work, we found $l^{SR}_{VGG/5.4}$ to yield the perceptually most convincing results, which we attribute to the potential of deeper network layers to represent features of higher abstraction [67, 64, 39] away from pixel space. We speculate that feature maps of these deeper layers focus purely on the content while leaving the adversarial loss focusing on texture details which are the main difference between the super-resolved images without the adversarial loss and photo-realistic images. We also note that the ideal loss function depends on the application. For example, approaches that hallucinate finer detail might be less suited for medical applications or surveillance. The perceptually convincing reconstruction of text or structured scenes [30] is challenging and part of future work. The development of content loss functions that describe image spatial content, but more invariant to changes in pixel space will further improve photo-realistic image SR results.</p>
 <p>当针对SR问题的逼真解决方案时，内容损失的选择是非常重要的，如图6所示。在这项工作中，我们发现$l^{SR}_{VGG/5.4}$取得了感知上最令人信服的结果，这归因于更深的网络层可能表示远离像素空间的更加抽象[67, 64, 39]特征。我们推测这些深层的特征映射单纯的注重内容而剩下的对抗损失注重纹理细节，这是没有对抗损失的超分辨率图像和逼真图像之间的主要差异。我们也注意到理想的损失函数取决于应用。例如，虚幻的更精细的细节可能不适合医疗引用或监控。感知上令人信服的文本或结构化场景[30]重建是具有挑战性的，是未来工作的一部分。内容损失函数的开发描述了图像空间内容，但对像素空间变化的不变性将进一步改善逼真的图像SR结果。</p>
 <h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5. Conclusion"></a>5. Conclusion</h2><p>We have described a deep residual network SRResNet that sets a new state of the art on public benchmark datasets when evaluated with the widely used PSNR measure. We have highlighted some limitations of this PSNR-focused image super-resolution and introduced SRGAN, which augments the content loss function with an adversarial loss by training a GAN. Using extensive MOS testing, we have confirmed that SRGAN reconstructions for large upscaling factors (4×) are, by a considerable margin, more photo-realistic than reconstructions obtained with state-of-the-art reference methods.</p>
-<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们描述了一个深度残差网络SRResNet，当广泛使用PSNR度量进行评估时，其在公共基准数据集上树立了最新的技术水平。我们强调了以PSNR为中心的超分辨率的一些限制，引入了SRGAN，其通过训练GAN增加了具有对抗损失的内容损失函数。使用广泛的MOS测试，我们证实了对于大的上采用系数(4×)，SRGAN重构比最新的参考方法得到的重构更逼真。</p>
+<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>我们描述了一个深度残差网络SRResNet，当广泛使用PSNR度量进行评估时，其在公共基准数据集上树立了最新的技术水平。我们强调了以PSNR为中心的超分辨率的一些限制，引入了SRGAN，其通过训练GAN增加了具有对抗损失的内容损失函数。使用广泛的MOS测试，我们证实了对于大的上采样系数(4×)，SRGAN重构比最新的参考方法得到的重构更逼真。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] J. Allebach and P. W. Wong. Edge-directed interpolation. In Proceedings of International Conference on Image Processing, volume 3, pages 707–710, 1996.</p>
 <p>[2] M. Bevilacqua, A. Roumy, C. Guillemot, and M. L. Alberi-Morel. Low-complexity single-image super-resolution based on nonnegative neighbor embedding. BMVC, 2012.</p>
 <p>[3] S. Borman and R. L. Stevenson. Super-Resolution from Image Sequences - A Review. Midwest Symposium on Circuits and Systems, pages 374–378, 1998.</p>
