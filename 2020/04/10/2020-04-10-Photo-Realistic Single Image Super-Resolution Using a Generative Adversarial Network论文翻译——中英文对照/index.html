@@ -98,8 +98,8 @@
 <meta property="og:url" content="http://noahsnail.com/2020/04/10/2020-04-10-Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照/index.html">
 <meta property="og:site_name" content="SnailTyan">
 <meta property="og:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
-<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.png">
-<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.png">
+<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg">
+<meta property="og:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg">
 <meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/05/BG4NUtpQm8rPsgi.png">
@@ -114,11 +114,11 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/30/r2lFX3pA8Pb5zG4.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/h84ImQlWtJ2arjg.png">
-<meta property="og:updated_time" content="2020-05-21T08:11:14.000Z">
+<meta property="og:updated_time" content="2020-05-21T08:18:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
 <meta name="twitter:description" content="Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network论文翻译——中英文对照">
-<meta name="twitter:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.png">
+<meta name="twitter:image" content="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg">
 
 
 
@@ -382,10 +382,10 @@
 <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>The highly challenging task of estimating a highresolution (HR) image from its low-resolution (LR) counterpart is referred to as super-resolution (SR). SR received substantial attention from within the computer vision research community and has a wide range of applications [62, 70, 42].</p>
 <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>从低分辨率(LR)图像来估计其对应高分辨率(HR)图像的高挑战性任务被称作超分辨率(SR)。SR在计算机视觉研究领域受到了广泛的关注并有大量应用[62, 70, 42]。</p>
 <p>The ill-posed nature of the underdetermined SR problem is particularly pronounced for high upscaling factors, for which texture detail in the reconstructed SR images is typically absent. The optimization target of supervised SR algorithms is commonly the minimization of the mean squared error (MSE) between the recovered HR image and the ground truth. This is convenient as minimizing MSE also maximizes the peak signal-to-noise ratio (PSNR), which is a common measure used to evaluate and compare SR algorithms [60]. However, the ability of MSE (and PSNR) to capture perceptually relevant differences, such as high texture detail, is very limited as they are defined based on pixel-wise image differences [59, 57, 25]. This is illustrated in Figure 2, where highest PSNR does not necessarily reflect the perceptually better SR result. The perceptual difference between the super-resolved and original image means that the recovered image is not photo-realistic as defined by Ferwerda [15].</p>
-<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.png" alt="Figure 2"></p>
+<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg" alt="Figure 2"></p>
 <p>Figure 2: From left to right: bicubic interpolation, deep residual network optimized for MSE, deep residual generative adversarial network optimized for a loss more sensitive to human perception, original HR image. Corresponding PSNR and SSIM are shown in brackets. [4× upscaling]</p>
 <p>欠定SR问题的不适定特性对于大的上采样系数尤其显著，重建的SR图像中通常缺少纹理细节。有监督SR算法的优化目标通常是最小化恢复的HR图像和真实图像之间的均方误差(MSE)。最小化MSE即最大化峰值信噪比(PSNR)是方便的，这是用来评估和比较SR算法的常用方法[60]。然而，MSE(和PSNR)捕获感知相对差异(例如高级纹理细节)的能力是非常有限的，因为它们是基于像素级图像差异[59, 57, 25]定义的。这在图2中进行了说明，其中最高的PSNR不一定能反映出感知上更好的SR结果。超分辨率图像和原始图像之间的感知差异意味着恢复图像不如Ferwerda[15]中定义的逼真。</p>
-<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.png" alt="Figure 2"></p>
+<p><img src="http://noahsnail.com/images/srgan/srgan_figure_2.jpeg" alt="Figure 2"></p>
 <p>图2：从左到右：双三次插值，优化MSE的深度残差网络，优化人感知更敏感损失的深度残差生成对抗网络，原始HR图像。对应的PSNR和SSIM显示在括号中。[4倍上采样]</p>
 <p>In this work we propose a super-resolution generative adversarial network (SRGAN) for which we employ a deep residual network (ResNet) with skip-connection and diverge from MSE as the sole optimization target. Different from previous works, we define a novel perceptual loss using high-level feature maps of the VGG network [48, 32, 4] combined with a discriminator that encourages solutions perceptually hard to distinguish from the HR reference images. An example photo-realistic image that was super-resolved with a 4× upscaling factor is shown in Figure 1.</p>
 <p><img src="https://i.loli.net/2020/03/04/bmJQEHiYFfIgwhC.png" alt="Figure 1"></p>
