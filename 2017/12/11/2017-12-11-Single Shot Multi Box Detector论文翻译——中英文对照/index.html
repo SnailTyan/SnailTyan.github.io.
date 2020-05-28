@@ -76,7 +76,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Tyan" />
+  <meta name="keywords" content="Deep Learning," />
 
 
 
@@ -92,18 +92,12 @@
 
 
 
-<meta name="description" content="文章作者：Tyan博客：noahsnail.com &amp;nbsp;|&amp;nbsp; CSDN &amp;nbsp;|&amp;nbsp; 简书
-声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！
-翻译论文汇总：https://github.com/SnailTyan/deep-learning-papers-translation
-SSD: Single Shot MultiBox DetectorAbs">
+<meta name="description" content="Single Shot MultiBox Detector论文翻译——中英文对照">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SnailTyan">
+<meta property="og:title" content="Single Shot MultiBox Detector论文翻译——中英文对照">
 <meta property="og:url" content="http://noahsnail.com/2017/12/11/2017-12-11-Single Shot Multi Box Detector论文翻译——中英文对照/index.html">
 <meta property="og:site_name" content="SnailTyan">
-<meta property="og:description" content="文章作者：Tyan博客：noahsnail.com &amp;nbsp;|&amp;nbsp; CSDN &amp;nbsp;|&amp;nbsp; 简书
-声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！
-翻译论文汇总：https://github.com/SnailTyan/deep-learning-papers-translation
-SSD: Single Shot MultiBox DetectorAbs">
+<meta property="og:description" content="Single Shot MultiBox Detector论文翻译——中英文对照">
 <meta property="og:image" content="https://farm8.staticflickr.com/7882/40545781493_1b37e975c0_b.jpg">
 <meta property="og:image" content="https://farm8.staticflickr.com/7882/40545781493_1b37e975c0_b.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/fLelyr2Sxb95tph.png">
@@ -130,13 +124,10 @@ SSD: Single Shot MultiBox DetectorAbs">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/w6KDki1L72AlyYQ.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/W94dkebECfH3OhM.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/15/W94dkebECfH3OhM.png">
-<meta property="og:updated_time" content="2020-04-15T03:14:25.000Z">
+<meta property="og:updated_time" content="2020-05-28T02:10:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SnailTyan">
-<meta name="twitter:description" content="文章作者：Tyan博客：noahsnail.com &amp;nbsp;|&amp;nbsp; CSDN &amp;nbsp;|&amp;nbsp; 简书
-声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！
-翻译论文汇总：https://github.com/SnailTyan/deep-learning-papers-translation
-SSD: Single Shot MultiBox DetectorAbs">
+<meta name="twitter:title" content="Single Shot MultiBox Detector论文翻译——中英文对照">
+<meta name="twitter:description" content="Single Shot MultiBox Detector论文翻译——中英文对照">
 <meta name="twitter:image" content="https://farm8.staticflickr.com/7882/40545781493_1b37e975c0_b.jpg">
 
 
@@ -171,7 +162,7 @@ SSD: Single Shot MultiBox DetectorAbs">
 
 
 
-  <title> | SnailTyan</title>
+  <title>Single Shot MultiBox Detector论文翻译——中英文对照 | SnailTyan</title>
   
 
 
@@ -336,7 +327,7 @@ SSD: Single Shot MultiBox DetectorAbs">
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Single Shot MultiBox Detector论文翻译——中英文对照</h1>
         
 
         <div class="post-meta">
@@ -378,6 +369,10 @@ SSD: Single Shot MultiBox DetectorAbs">
           
 
           
+              <div class="post-description">
+                  Single Shot MultiBox Detector论文翻译——中英文对照
+              </div>
+          
 
         </div>
       </header>
@@ -390,6 +385,7 @@ SSD: Single Shot MultiBox DetectorAbs">
 
       
         <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p><strong>声明：作者翻译论文仅为学习，如有侵权请联系作者删除博文，谢谢！</strong></p>
 <p>翻译论文汇总：<a href="https://github.com/SnailTyan/deep-learning-papers-translation" target="_blank" rel="external">https://github.com/SnailTyan/deep-learning-papers-translation</a></p>
 <h1 id="SSD-Single-Shot-MultiBox-Detector"><a href="#SSD-Single-Shot-MultiBox-Detector" class="headerlink" title="SSD: Single Shot MultiBox Detector"></a>SSD: Single Shot MultiBox Detector</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>We present a method for detecting objects in images using a single deep neural network. Our approach, named SSD, discretizes the output space of bounding boxes into a set of default boxes over different aspect ratios and scales per feature map location. At prediction time, the network generates scores for the presence of each object category in each default box and produces adjustments to the box to better match the object shape. Additionally, the network combines predictions from multiple feature maps with different resolutions to naturally handle objects of various sizes. SSD is simple relative to methods that require object proposals because it completely eliminates proposal generation and subsequent pixel or feature resampling stages and encapsulates all computation in a single network. This makes SSD easy to train and straightforward to integrate into systems that require a detection component. Experimental results on the PASCAL VOC, COCO, and ILSVRC datasets confirm that SSD has competitive accuracy to methods that utilize an additional object proposal step and is much faster, while providing a unified framework for both training and inference. For 300 × 300 input, SSD achieves 74.3% mAP on VOC2007 test at 59 FPS on a Nvidia Titan X and for 512 × 512 input, SSD achieves $76.9\%$ mAP, outperforming a comparable state-of-the-art Faster R-CNN model. Compared to other single stage methods, SSD has much better accuracy even with a smaller input image size. Code is available at: <a href="https://github.com/weiliu89/caffe/tree/ssd" target="_blank" rel="external">https://github.com/weiliu89/caffe/tree/ssd</a>.</p>
@@ -664,6 +660,12 @@ SSD: Single Shot MultiBox DetectorAbs">
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
       
 
       
@@ -978,7 +980,7 @@ SSD: Single Shot MultiBox DetectorAbs">
       var disqus_config = function () {
         this.page.url = 'http://noahsnail.com/2017/12/11/2017-12-11-Single Shot Multi Box Detector论文翻译——中英文对照/';
         this.page.identifier = '2017/12/11/2017-12-11-Single Shot Multi Box Detector论文翻译——中英文对照/';
-        this.page.title = '';
+        this.page.title = 'Single Shot MultiBox Detector论文翻译——中英文对照';
       };
       var d = document, s = d.createElement('script');
       s.src = 'https://snailtyan.disqus.com/embed.js';
