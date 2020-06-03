@@ -131,7 +131,7 @@
 <meta property="og:image" content="http://noahsnail.com/images/resnet/Table_8.jpeg">
 <meta property="og:image" content="http://noahsnail.com/images/resnet/Table_7.jpeg">
 <meta property="og:image" content="http://noahsnail.com/images/resnet/Table_8.jpeg">
-<meta property="og:updated_time" content="2017-07-31T09:37:00.000Z">
+<meta property="og:updated_time" content="2020-06-03T08:59:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ResNet论文翻译——中英文对照">
 <meta name="twitter:description" content="ResNet论文翻译——中英文对照">
@@ -443,18 +443,18 @@
 <p><img src="http://noahsnail.com/images/resnet/Figure_7.jpeg" alt="Figure 7"></p>
 <p>图7。层响应在CIFAR-10上的标准差（std）。这些响应是每个3×3层的输出，在BN之后非线性之前。上面：以原始顺序显示层。下面：响应按降序排列。</p>
 <h3 id="3-2-Identity-Mapping-by-Shortcuts"><a href="#3-2-Identity-Mapping-by-Shortcuts" class="headerlink" title="3.2. Identity Mapping by Shortcuts"></a>3.2. Identity Mapping by Shortcuts</h3><p>We adopt residual learning to every few stacked layers. A building block is shown in Fig. 2. Formally, in this paper we consider a building block defined as:</p>
-<p>$$y = F(x, {W_i}) + x$$ (1)</p>
+<p>$$y = F(x, {W_i}) + x  \tag{1}$$</p>
 <p>Here $x$ and $y$ are the input and output vectors of the layers considered. The function $F(x, {W_i})$ represents the residual mapping to be learned. For the example in Fig. 2 that has two layers, $F = W_2 \sigma(W_1x)$ in which $\sigma$ denotes ReLU [29] and the biases are omitted for simplifying notations. The operation $F + x$ is performed by a shortcut connection and element-wise addition. We adopt the second nonlinearity after the addition (i.e., $\sigma(y)$, see Fig. 2).</p>
 <h3 id="3-2-快捷恒等映射"><a href="#3-2-快捷恒等映射" class="headerlink" title="3.2. 快捷恒等映射"></a>3.2. 快捷恒等映射</h3><p>我们每隔几个堆叠层采用残差学习。构建块如图2所示。在本文中我们考虑构建块正式定义为：</p>
-<p>$$y = F(x, {W_i}) + x$$ (1)</p>
+<p>$$y = F(x, {W_i}) + x  \tag{1}$$</p>
 <p>$x$和$y$是考虑的层的输入和输出向量。函数$F(x, {W_i})$表示要学习的残差映射。图2中的例子有两层，$F = W_2 \sigma(W_1x)$中$\sigma$表示ReLU[29]，为了简化写法忽略偏置项。$F + x$操作通过快捷连接和各个元素相加来执行。在相加之后我们采纳了第二种非线性（即$\sigma(y)$，看图2）。</p>
 <p>The shortcut connections in Eqn.(1) introduce neither extra parameter nor computation complexity. This is not only attractive in practice but also important in our comparisons between plain and residual networks. We can fairly compare plain/residual networks that simultaneously have the same number of parameters, depth, width, and computational cost (except for the negligible element-wise addition).</p>
 <p>方程(1)中的快捷连接既没有引入外部参数又没有增加计算复杂度。这不仅在实践中有吸引力，而且在简单网络和残差网络的比较中也很重要。我们可以公平地比较同时具有相同数量的参数，相同深度，宽度和计算成本的简单/残差网络（除了不可忽略的元素加法之外）。</p>
 <p>The dimensions of $x$ and $F$ must be equal in Eqn.(1). If this is not the case (e.g., when changing the input/output channels), we can perform a linear projection $W_s$ by the shortcut connections to match the dimensions:</p>
-<p>$$y = F(x, {W_i }) + W_sx.$$ (2)</p>
+<p>$$y = F(x, {W_i }) + W_sx. \tag{2}$$</p>
 <p>We can also use a square matrix $W_s$ in Eqn.(1). But we will show by experiments that the identity mapping is sufficient for addressing the degradation problem and is economical, and thus $W_s$ is only used when matching dimensions.</p>
 <p>方程(1)中$x$和$F$的维度必须是相等的。如果不是这种情况（例如，当更改输入/输出通道时），我们可以通过快捷连接执行线性投影$W_s$来匹配维度：</p>
-<p>$$y = F(x, {W_i }) + W_sx.$$ (2)</p>
+<p>$$y = F(x, {W_i }) + W_sx. \tag{2}$$</p>
 <p>我们也可以使用方程(1)中的方阵$W_s$。但是我们将通过实验表明，恒等映射足以解决退化问题，并且是合算的，因此$W_s$仅在匹配维度时使用。</p>
 <p>The form of the residual function $F$ is flexible. Experiments in this paper involve a function $F$ that has two or three layers (Fig. 5), while more layers are possible. But if $F$ has only a single layer, Eqn.(1) is similar to a linear layer: $y = W_1x + x$, for which we have not observed advantages.</p>
 <p><img src="http://noahsnail.com/images/resnet/Figure_5.jpeg" alt="Figure 5"></p>
@@ -470,7 +470,7 @@
 <p><img src="http://noahsnail.com/images/resnet/Figure_3.jpeg" alt="Figure 3"></p>
 <p>Figure 3. Example network architectures for ImageNet. Left: the VGG-19 model [40] (19.6 billion FLOPs) as a reference. Middle: a plain network with 34 parameter layers (3.6 billion FLOPs). Right: a residual network with 34 parameter layers (3.6 billion FLOPs). The dotted shortcuts increase dimensions. Table 1 shows more details and other variants.</p>
 <p><img src="http://noahsnail.com/images/resnet/Table_1.jpeg" alt="Table 1"></p>
-<p>Table 1. Architectures for ImageNet. Building blocks are shown in brackets (see also Fig. 5), with the numbers of blocks stacked. Down-<br>sampling is performed by conv3_1, conv4_1, and conv5_1 with a stride of 2.</p>
+<p>Table 1. Architectures for ImageNet. Building blocks are shown in brackets (see also Fig. 5), with the numbers of blocks stacked. Down-sampling is performed by conv3_1, conv4_1, and conv5_1 with a stride of 2.</p>
 <p><strong>简单网络</strong>。 我们简单网络的基准（图3，中间）主要受到VGG网络[40]（图3，左图）的哲学启发。卷积层主要有3×3的滤波器，并遵循两个简单的设计规则：（i）对于相同的输出特征图尺寸，层具有相同数量的滤波器；（ii）如果特征图尺寸减半，则滤波器数量加倍，以便保持每层的时间复杂度。我们通过步长为2的卷积层直接执行下采样。网络以全局平均池化层和具有softmax的1000维全连接层结束。图3（中间）的加权层总数为34。</p>
 <p><img src="http://noahsnail.com/images/resnet/Figure_3.jpeg" alt="Figure 3"></p>
 <p>图3。ImageNet的网络架构例子。左：作为参考的VGG-19模型<a href="196亿FLOPs">40</a>。中：具有34个参数层的简单网络（36亿FLOPs）。右：具有34个参数层的残差网络（36亿FLOPs）。带点的快捷连接增加了维度。表1显示了更多细节和其它变种。</p>
