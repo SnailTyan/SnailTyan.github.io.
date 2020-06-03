@@ -1,0 +1,838 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Pytorch中的list(), dict(), [], {}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中的list(), dict(), [], {}">
+<meta property="og:url" content="http://noahsnail.com/2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Pytorch中的list(), dict(), [], {}">
+<meta property="og:updated_time" content="2020-06-03T07:41:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python中的list(), dict(), [], {}">
+<meta name="twitter:description" content="Pytorch中的list(), dict(), [], {}">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/"/>
+
+
+
+
+
+  <title>Python中的list(), dict(), [], {} | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python中的list(), dict(), [], {}</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Pytorch中的list(), dict(), [], {}
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="0-测试环境"><a href="#0-测试环境" class="headerlink" title="0. 测试环境"></a>0. 测试环境</h2><p>Python 3.6.9</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>在Python中，<code>list</code>，<code>dict</code>作为Python的基础数据结构，经常会用到，其定义形式通常有下面两种：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a = []</div><div class="line">b = list()</div><div class="line"></div><div class="line">c = &#123;&#125;</div><div class="line">d = dict()</div></pre></td></tr></table></figure>
+<p>二者有什么区别呢？</p>
+<h2 id="2-list-vs-，dict-vs"><a href="#2-list-vs-，dict-vs" class="headerlink" title="2. list() vs []，dict() vs {}"></a>2. <code>list()</code> vs <code>[]</code>，<code>dict()</code> vs <code>{}</code></h2><ul>
+<li>运行时间</li>
+</ul>
+<p>首先比较一下二者的运行时间，<code>timeit</code>模块主要用来测量Python小段代码的执行时间，默认执行100万次。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> timeit <span class="keyword">import</span> timeit</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>timeit(<span class="string">'[]'</span>)</div><div class="line"><span class="number">0.05389202758669853</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>timeit(<span class="string">'list()'</span>)</div><div class="line"><span class="number">0.1250211838632822</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>timeit(<span class="string">'&#123;&#125;'</span>)</div><div class="line"><span class="number">0.06583642773330212</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>timeit(<span class="string">'dict()'</span>)</div><div class="line"><span class="number">0.1366278938949108</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(&#123;&#125;)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">dict</span>'&gt;</span></div></pre></td></tr></table></figure>
+<p>从时间上来看，明显<code>[]</code>与<code>{}</code>的定义形式更快。</p>
+<ul>
+<li>数据类型转换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>a = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b = [a]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c = list(a)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>b</div><div class="line">[(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>c</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="string">'abc'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x = [s]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y = list(s)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>x</div><div class="line">[<span class="string">'abc'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y</div><div class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</div></pre></td></tr></table></figure>
+<p>从上面的代码可以看出，<code>list()</code>除了可以定义之外，还可以对将其它数据类型转换为<code>list</code>，而<code>[]</code>则没有数据类型转换的功能。</p>
+<h2 id="3-为什么-比list-更快"><a href="#3-为什么-比list-更快" class="headerlink" title="3. 为什么[]比list()更快"></a>3. 为什么<code>[]</code>比<code>list()</code>更快</h2><p>dis库是Python自带的一个库，可以用来分析字节码，而字节码是CPython解释器的实现细节。<code>[]</code>，<code>list()</code>的字节码对比如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> dis</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dis.dis(<span class="keyword">lambda</span> : [])</div><div class="line">  <span class="number">1</span>           <span class="number">0</span> BUILD_LIST               <span class="number">0</span></div><div class="line">              <span class="number">2</span> RETURN_VALUE</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dis.dis(<span class="keyword">lambda</span> : list())</div><div class="line">  <span class="number">1</span>           <span class="number">0</span> LOAD_GLOBAL              <span class="number">0</span> (list)</div><div class="line">              <span class="number">2</span> CALL_FUNCTION            <span class="number">0</span></div><div class="line">              <span class="number">4</span> RETURN_VALUE</div></pre></td></tr></table></figure>
+<p>从上面的代码可以看出，<code>list()</code>有符号查找和函数调用的开销，因此其速度更慢。</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><code>[]</code>，<code>{}</code>定义数据类型速度更快，<code>list()</code>，<code>dict()</code>除了能定义数据类型之外，还可以对数据进行类型转换。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://stackoverflow.com/questions/5790860/and-vs-list-and-dict-which-is-better" target="_blank" rel="external">https://stackoverflow.com/questions/5790860/and-vs-list-and-dict-which-is-better</a></p>
+</li>
+<li><p><a href="https://www.quora.com/In-Python-any-difference-between-using-and-list-or-between-and-dict" target="_blank" rel="external">https://www.quora.com/In-Python-any-difference-between-using-and-list-or-between-and-dict</a></p>
+</li>
+<li><p><a href="https://docs.python.org/zh-cn/3/library/timeit.html" target="_blank" rel="external">https://docs.python.org/zh-cn/3/library/timeit.html</a></p>
+</li>
+<li><p><a href="https://docs.python.org/zh-cn/3/library/dis.html" target="_blank" rel="external">https://docs.python.org/zh-cn/3/library/dis.html</a></p>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/30216000/why-is-faster-than-list" target="_blank" rel="external">https://stackoverflow.com/questions/30216000/why-is-faster-than-list</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/29/2020-05-29-Pytorch中requires_grad_(), detach(), torch.no_grad()的区别/" rel="next" title="Pytorch中requires_grad_(), detach(), torch.no_grad()的区别">
+                <i class="fa fa-chevron-left"></i> Pytorch中requires_grad_(), detach(), torch.no_grad()的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">627</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-测试环境"><span class="nav-number">1.</span> <span class="nav-text">0. 测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">2.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-list-vs-，dict-vs"><span class="nav-number">3.</span> <span class="nav-text">2. list() vs []，dict() vs {}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-为什么-比list-更快"><span class="nav-number">4.</span> <span class="nav-text">3. 为什么[]比list()更快</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">5.</span> <span class="nav-text">4. 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/';
+        this.page.identifier = '2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/';
+        this.page.title = 'Python中的list(), dict(), [], {}';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
