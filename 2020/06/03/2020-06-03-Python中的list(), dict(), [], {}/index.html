@@ -92,16 +92,16 @@
 
 
 
-<meta name="description" content="Pytorch中的list(), dict(), [], {}">
+<meta name="description" content="Python中的list(), dict(), [], {}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python中的list(), dict(), [], {}">
 <meta property="og:url" content="http://noahsnail.com/2020/06/03/2020-06-03-Python中的list(), dict(), [], {}/index.html">
 <meta property="og:site_name" content="SnailTyan">
-<meta property="og:description" content="Pytorch中的list(), dict(), [], {}">
-<meta property="og:updated_time" content="2020-06-03T07:41:41.000Z">
+<meta property="og:description" content="Python中的list(), dict(), [], {}">
+<meta property="og:updated_time" content="2020-06-03T09:17:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中的list(), dict(), [], {}">
-<meta name="twitter:description" content="Pytorch中的list(), dict(), [], {}">
+<meta name="twitter:description" content="Python中的list(), dict(), [], {}">
 
 
 
@@ -343,7 +343,7 @@
 
           
               <div class="post-description">
-                  Pytorch中的list(), dict(), [], {}
+                  Python中的list(), dict(), [], {}
               </div>
           
 
@@ -377,18 +377,11 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> dis</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dis.dis(<span class="keyword">lambda</span> : [])</div><div class="line">  <span class="number">1</span>           <span class="number">0</span> BUILD_LIST               <span class="number">0</span></div><div class="line">              <span class="number">2</span> RETURN_VALUE</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dis.dis(<span class="keyword">lambda</span> : list())</div><div class="line">  <span class="number">1</span>           <span class="number">0</span> LOAD_GLOBAL              <span class="number">0</span> (list)</div><div class="line">              <span class="number">2</span> CALL_FUNCTION            <span class="number">0</span></div><div class="line">              <span class="number">4</span> RETURN_VALUE</div></pre></td></tr></table></figure>
 <p>从上面的代码可以看出，<code>list()</code>有符号查找和函数调用的开销，因此其速度更慢。</p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><code>[]</code>，<code>{}</code>定义数据类型速度更快，<code>list()</code>，<code>dict()</code>除了能定义数据类型之外，还可以对数据进行类型转换。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://stackoverflow.com/questions/5790860/and-vs-list-and-dict-which-is-better" target="_blank" rel="external">https://stackoverflow.com/questions/5790860/and-vs-list-and-dict-which-is-better</a></p>
-</li>
-<li><p><a href="https://www.quora.com/In-Python-any-difference-between-using-and-list-or-between-and-dict" target="_blank" rel="external">https://www.quora.com/In-Python-any-difference-between-using-and-list-or-between-and-dict</a></p>
-</li>
-<li><p><a href="https://docs.python.org/zh-cn/3/library/timeit.html" target="_blank" rel="external">https://docs.python.org/zh-cn/3/library/timeit.html</a></p>
-</li>
-<li><p><a href="https://docs.python.org/zh-cn/3/library/dis.html" target="_blank" rel="external">https://docs.python.org/zh-cn/3/library/dis.html</a></p>
-</li>
-<li><p><a href="https://stackoverflow.com/questions/30216000/why-is-faster-than-list" target="_blank" rel="external">https://stackoverflow.com/questions/30216000/why-is-faster-than-list</a></p>
-</li>
-</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>1.<a href="https://stackoverflow.com/questions/5790860/and-vs-list-and-dict-which-is-better" target="_blank" rel="external">https://stackoverflow.com/questions/5790860/and-vs-list-and-dict-which-is-better</a></p>
+<p>2.<a href="https://www.quora.com/In-Python-any-difference-between-using-and-list-or-between-and-dict" target="_blank" rel="external">https://www.quora.com/In-Python-any-difference-between-using-and-list-or-between-and-dict</a></p>
+<p>3.<a href="https://docs.python.org/zh-cn/3/library/timeit.html" target="_blank" rel="external">https://docs.python.org/zh-cn/3/library/timeit.html</a></p>
+<p>4.<a href="https://docs.python.org/zh-cn/3/library/dis.html" target="_blank" rel="external">https://docs.python.org/zh-cn/3/library/dis.html</a></p>
+<p>5.<a href="https://stackoverflow.com/questions/30216000/why-is-faster-than-list" target="_blank" rel="external">https://stackoverflow.com/questions/30216000/why-is-faster-than-list</a></p>
 
       
     </div>
