@@ -1,0 +1,846 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="softmax与交叉熵损失">
+<meta name="keywords">
+<meta property="og:type" content="website">
+<meta property="og:title" content="softmax与交叉熵损失">
+<meta property="og:url" content="http://noahsnail.com/2020-07-01-softmax介绍.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="softmax与交叉熵损失">
+<meta property="og:image" content="http://noahsnail.com/images/softmax/softmax.png">
+<meta property="og:updated_time" content="2020-11-02T07:11:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="softmax与交叉熵损失">
+<meta name="twitter:description" content="softmax与交叉熵损失">
+<meta name="twitter:image" content="http://noahsnail.com/images/softmax/softmax.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2020-07-01-softmax介绍.html"/>
+
+
+
+
+
+  <title>softmax与交叉熵损失 | SnailTyan</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2020-07-01-softmax介绍.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">softmax与交叉熵损失</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020-07-01-softmax介绍.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020-07-01-softmax介绍.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  softmax与交叉熵损失
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="0-测试环境"><a href="#0-测试环境" class="headerlink" title="0. 测试环境"></a>0. 测试环境</h2><p>Python 3.6.9, PyTorch 1.5.0, Numpy 1.16.6</p>
+<h2 id="1-Softmax函数"><a href="#1-Softmax函数" class="headerlink" title="1. Softmax函数"></a>1. Softmax函数</h2><h3 id="1-1-数学中的Softmax函数"><a href="#1-1-数学中的Softmax函数" class="headerlink" title="1.1 数学中的Softmax函数"></a>1.1 数学中的Softmax函数</h3><p>在数学上，尤其是在概率论和相关领域中，Softmax函数，也被称作归一化指数函数，是逻辑函数(Sigmoid函数)的一种推广。在机器学习和深度学习中，Softmax函数的应用非常广泛，常见于分类问题中。</p>
+<p>Softmax函数能将一个含任意实数的$K$维向量$\mathbf {z}$“压缩”到另一个$K$维实向量$\sigma(\mathbf {z})$中，使得向量中每一个元素都在$(0,1)$之间，并且所有元素的和为1。Softmax函数的定义如下：$${\sigma (\mathbf {z})}_{j}={\frac {e^{z_j}} {\sum ^{K}_{k=1} e^{z_k}}} \tag{1}$$其中$j=1, …, K.$。假设$K=3$，向量$\mathbf {z}=[z_1, z_2, z_3]=[1, 2, 3]$，则：<br>$$\begin{array}{l}\<br>{\sigma (\mathbf {z})}_{1}={\frac {e^{1}} {e^1 + e^2 + e^3}}=\frac {2.72} {30.19}=0.09 \\<br>{\sigma (\mathbf {z})}_{2}={\frac {e^{2}} {e^1 + e^2 + e^3}}=\frac {7.39} {30.19}=0.24 \\<br>{\sigma (\mathbf {z})}_{3}={\frac {e^{3}} {e^1 + e^2 + e^3}}=\frac {20.09} {30.19}=0.67<br>\end{array}$$</p>
+<p>上面的计算过程对应的代码实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> math</div><div class="line">z = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div><div class="line">z_exp = [math.exp(val) <span class="keyword">for</span> val <span class="keyword">in</span> z]</div><div class="line">print(z_exp)</div><div class="line"><span class="comment"># [2.718281828459045, 7.38905609893065, 20.085536923187668]</span></div><div class="line">z_exp_sum = sum(z_exp)</div><div class="line">print(z_exp_sum)</div><div class="line"><span class="comment"># 30.19287485057736</span></div><div class="line">softmax = [round(val / z_exp_sum, <span class="number">2</span>) <span class="keyword">for</span> val <span class="keyword">in</span> z_exp]</div><div class="line">print(softmax)</div><div class="line"><span class="comment"># [0.09, 0.24, 0.67]</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">z = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">print(np.round(np.exp(z) / sum(np.exp(z)), <span class="number">2</span>))</div><div class="line"><span class="comment"># [0.09 0.24 0.67]</span></div></pre></td></tr></table></figure>
+<h3 id="1-2-神经网络中的Softmax"><a href="#1-2-神经网络中的Softmax" class="headerlink" title="1.2 神经网络中的Softmax"></a>1.2 神经网络中的Softmax</h3><p>由于Softmax函数可以将分类输出标准化成各个分类的概率分布，且概率和为1。因此在多分类问题中，通常使用Softmax对神经网络的输出结果进行处理。</p>
+<p>在卷积神经网络分类中，最后两层通常是全连接层，因此这里用简单的全连接神经网络来模拟网络的最后两层。如下图：</p>
+<p><img src="http://noahsnail.com/images/softmax/softmax.png" alt="Softmax"></p>
+<p>假设问题为一个三分类问题，将图像分为猫、狗、车三类，输入向量$\mathbf{x}=[x_1, x_2, x_3]^T=[1, 2, 3]^T$，$\mathbf{x}$真实标签为车，其标签向量为$\mathbf{y}=[y_1,y_2,y_3]^T=[0, 0, 1]^T$，参数矩阵$$\mathbf{W}=\left [ \begin{array} {l}w_{11} &amp; w_{12} &amp; w_{13} \\ w_{21} &amp; w_{22} &amp; w_{23} \\ w_{31} &amp; w_{32} &amp; w_{33}\end{array}  \right ]=\left [ \begin{array} {l}0.1 &amp; 0.2 &amp; 0.3 \\ 0.4 &amp; 0.5 &amp; 0.6 \\ 0.7 &amp; 0.8 &amp; 0.9\end{array}  \right ]$$</p>
+<p>输出$$\mathbf{a}=\mathbf{Wx}=\left[\begin{array}{l}w_{11}x_1 + w_{12}x_2 + w_{13}x_3 \\ w_{21}x_1 + w_{22}x_2 + w_{23}x_3 \\ w_{31}x_1 + w_{32}x_2 + w_{33}x_3 \end{array}\right]=\left [\begin{array}{l}a_1 \\ a_2 \\ a_3\end{array}\right]=[1.4, 3.2, 5.0]^T$$</p>
+<p>对$\mathbf{a}$进行Softmax函数处理后，可得$\mathbf{x}$分类之后的概率输出$$\mathbf{p}=\left [\begin{array}{l} \frac {e^{a_{1}}} {e^{a_{1}} + e^{a_{2}} + e^{a_{3}}} \\ \frac {e^{a_{2}}} {e^{a_{1}} + e^{a_{2}} + e^{a_{3}}} \\ \frac {e^{a_{3}}} {e^{a_{1}} + e^{a_{2}} + e^{a_{3}}} \end{array}\right]=\left [\begin{array}{l}p_1 \\ p_2 \\ p_3\end{array}\right]=[0.02, 0.14, 0.84]^T$$</p>
+<p>最终结果如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>*</th>
+<th>猫</th>
+<th>狗</th>
+<th>车</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>y(ground truth)</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>p(prediction)</td>
+<td>0.02</td>
+<td>0.14</td>
+<td>0.84</td>
+</tr>
+</tbody>
+</table>
+<p>这里的Softmax公式为：</p>
+<h2 id="2-交叉熵损失"><a href="#2-交叉熵损失" class="headerlink" title="2. 交叉熵损失"></a>2. 交叉熵损失</h2><h3 id="2-1-交叉熵-cross-entropy"><a href="#2-1-交叉熵-cross-entropy" class="headerlink" title="2.1 交叉熵(cross-entropy)"></a>2.1 交叉熵(cross-entropy)</h3><p>对于离散分布$p,q$，其交叉熵的定义如下：$$H(p,q)=-\sum ^n_{i=1} p(x_i)\,\log q(x_i) \tag{2}$$</p>
+<p>交叉熵来自于信息论中的相对熵(relative entropy)，相对熵在概率学和统计学上称为KL散度(Kullback-Leibler divergence)，用来度量两个概率分布$p$和$q$的差别。公式如下：$$\begin {array} {l} D_{KL}(p||q)&amp;=\sum ^n_{i=1} p(x_i)log\left(\frac {p(x_i)} {q(x_i)}\right)\\&amp;= \sum ^n_{i=1} p(x_i)log(p(x_i)) - \sum ^n_{i=1} p(x_i)log(q(x_i))\\&amp;=-H(p)+ H(p, q)\end{array}$$</p>
+<p>$H(p)$为分布$p$的信息熵，其定义为：$$H(p) = -\sum ^n_{i=1} p(x_i)log(p(x_i))$$</p>
+<p>从相对熵的公式上可以看出，其由两部分组成，前一部分为离散分布$p$的信息熵，后一部分为离散分布$p,q$的交叉熵。在图像分类问题中，$p$对应图像的实际分类，其熵是固定的，即KL散度中的$H(p)$不变，因此只需要关注交叉熵即可。</p>
+<h3 id="2-2-交叉熵损失函数"><a href="#2-2-交叉熵损失函数" class="headerlink" title="2.2 交叉熵损失函数"></a>2.2 交叉熵损失函数</h3><p>由于交叉熵可以度量预测分类和真实分类之间的相似度，因此深度学习中的图像分类经常会用到交叉熵损失函数，其来自交叉熵公式，损失$\mathbf{L}$对应$H(p,q)$，交叉熵的$p(x)$是真实图片类别的概率分布$\mathbf{y}$，即标签向量。$q(x)$是预测图片类别的概率分布，即softmax函数输出的类别概率$\mathbf{p}$。因此单张图片交叉熵损失函数为：$$L=-\sum ^K_{i=1}y_ilog(p_i)\tag{3}$$</p>
+<p>$K$是类别数量。$n$张图片的交叉熵损失和为：$$L_{total}=\sum ^{n}_{i=1}L_i \tag{4}$$</p>
+<p>在多类别分类问题中（不同于多标签分类），由于图像的实际类别只有一个，因此标签向量为<code>one-hot</code>向量，因此单张图像的交叉熵损失函数会变为：$$L=-y_jlog(p_j)\tag{5}$$</p>
+<p>这里的$j$是图像的实际类别，其对应的<code>one-hot</code>向量的第$j$个元素为1，其它为0。代入1.2中的数据到公式3中，由于$y=[0, 0, 1]^T$，因此$\mathbf{x}$交叉熵损失变为：$$\begin {array} {l} L&amp;=-\sum ^K_{i=1}y_ilog(p_i)\\&amp;=-y_1log(p_1)-y_2log(p_2)-y_3log(p_3)\\&amp;=-0*log(0.02) - 0*log(0.14) - 1*log(0.84)\\&amp;=-log(0.84)\\&amp;=0.17 \end {array}$$</p>
+<p>这里以$e$为底。</p>
+<h3 id="2-3-反向传播"><a href="#2-3-反向传播" class="headerlink" title="2.3 反向传播"></a>2.3 反向传播</h3><p>对公式3求偏导：$$\frac {\partial L} {\partial p_{i}} = - \frac {y_i} {p_i}$$</p>
+<p>$$\frac {\partial L} {\partial w_{11}} = \frac {\partial L} {\partial p_{1}} \cdot \frac {\partial p_{1}} {\partial a_{1}} \cdot \frac {\partial a_{1}} {\partial w_{11}}$$</p>
+<p>$$\frac {\partial L} {\partial p_{1}} = -frac{y_1} {p_1}$$</p>
+<h2 id="3-Softmax实现"><a href="#3-Softmax实现" class="headerlink" title="3. Softmax实现"></a>3. Softmax实现</h2><h2 id="4-Softmax应用"><a href="#4-Softmax应用" class="headerlink" title="4. Softmax应用"></a>4. Softmax应用</h2><h3 id="4-1-图像分类"><a href="#4-1-图像分类" class="headerlink" title="4.1 图像分类"></a>4.1 图像分类</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/tsyccnh/article/details/79163834" target="_blank" rel="external">https://blog.csdn.net/tsyccnh/article/details/79163834</a></p>
+</li>
+<li><p><a href="https://zh.wikipedia.org/wiki/%E4%BA%A4%E5%8F%89%E7%86%B5" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E4%BA%A4%E5%8F%89%E7%86%B5</a></p>
+</li>
+<li><p><a href="https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E7%9B%B8%E5%AF%B9%E7%86%B5</a></p>
+</li>
+<li><p><a href="https://www.zhihu.com/question/294679135" target="_blank" rel="external">https://www.zhihu.com/question/294679135</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/" rel="tag"># </a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">632</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-测试环境"><span class="nav-number">1.</span> <span class="nav-text">0. 测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Softmax函数"><span class="nav-number">2.</span> <span class="nav-text">1. Softmax函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-数学中的Softmax函数"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 数学中的Softmax函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-神经网络中的Softmax"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 神经网络中的Softmax</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-交叉熵损失"><span class="nav-number">3.</span> <span class="nav-text">2. 交叉熵损失</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-交叉熵-cross-entropy"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 交叉熵(cross-entropy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-交叉熵损失函数"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 交叉熵损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-反向传播"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Softmax实现"><span class="nav-number">4.</span> <span class="nav-text">3. Softmax实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Softmax应用"><span class="nav-number">5.</span> <span class="nav-text">4. Softmax应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-图像分类"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 图像分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2020-07-01-softmax介绍.html';
+        this.page.identifier = '2020-07-01-softmax介绍.html';
+        this.page.title = 'softmax与交叉熵损失';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
