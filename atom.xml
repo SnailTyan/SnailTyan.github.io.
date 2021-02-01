@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2021-02-01T07:00:44.087Z</updated>
+  <updated>2021-02-01T10:02:47.287Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>452. Minimum Number of Arrows to Burst Balloons</title>
+    <link href="http://noahsnail.com/2021/02/01/2021-02-01-452-Minimum-Number-of-Arrows-to-Burst-Balloons/"/>
+    <id>http://noahsnail.com/2021/02/01/2021-02-01-452-Minimum-Number-of-Arrows-to-Burst-Balloons/</id>
+    <published>2021-02-01T09:58:10.569Z</published>
+    <updated>2021-02-01T10:02:47.287Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Minimum_Number_of_Arrows_to_Burst Balloons.png" alt="Minimum Number of Arrows to Burst Balloons"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMinArrowShots</span><span class="params">(self, points)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(points) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        points.sort(key=<span class="keyword">lambda</span> p: p[<span class="number">0</span>])</div><div class="line">        total = <span class="number">1</span></div><div class="line">        overlap = points[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> point <span class="keyword">in</span> points:</div><div class="line">            <span class="keyword">if</span> overlap[<span class="number">1</span>] &lt; point[<span class="number">0</span>]:</div><div class="line">                total += <span class="number">1</span></div><div class="line">                overlap = point</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                overlap[<span class="number">0</span>] = point[<span class="number">0</span>]</div><div class="line">                overlap[<span class="number">1</span>] = min(overlap[<span class="number">1</span>], point[<span class="number">1</span>])</div><div class="line"></div><div class="line">        <span class="keyword">return</span> total</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMinArrowShots</span><span class="params">(self, points)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(points) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        points.sort(key=<span class="keyword">lambda</span> p: p[<span class="number">1</span>])</div><div class="line">        total = <span class="number">1</span></div><div class="line">        overlap = points[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> point <span class="keyword">in</span> points:</div><div class="line">            <span class="keyword">if</span> overlap[<span class="number">1</span>] &lt; point[<span class="number">0</span>]:</div><div class="line">                total += <span class="number">1</span></div><div class="line">                overlap = point</div><div class="line"></div><div class="line">        <span class="keyword">return</span> total</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/" target="_blank" rel="external">https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      452. Minimum Number of Arrows to Burst Balloons
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode 179. Largest Number</title>
@@ -1693,67 +1728,6 @@
     
     
       <category term="Python" scheme="http://noahsnail.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>卷积神经网络中卷积运算的前向传播与反向传播推导</title>
-    <link href="http://noahsnail.com/2019/05/21/2019-05-21-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E6%8E%A8%E5%AF%BC/"/>
-    <id>http://noahsnail.com/2019/05/21/2019-05-21-卷积神经网络中的前向传播与反向传播推导/</id>
-    <published>2019-05-21T07:22:56.000Z</published>
-    <updated>2019-05-21T10:07:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; [简书](<a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">http://www.jianshu.com/users/7731e83f3a4e/latest_articles</a></p>
-<h2 id="0-必备基础知识"><a href="#0-必备基础知识" class="headerlink" title="0. 必备基础知识"></a>0. 必备基础知识</h2><ul>
-<li><p>卷积以及卷积的运算过程</p>
-</li>
-<li><p>微分相关知识，包括求偏导及链式法则</p>
-</li>
-</ul>
-<h2 id="1-卷积运算的前向传播"><a href="#1-卷积运算的前向传播" class="headerlink" title="1. 卷积运算的前向传播"></a>1. 卷积运算的前向传播</h2><p>数学符号定义：</p>
-<p>输入：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3ac602662d57192.png" height="150" width="300" alt="Input"></p>
-<p>卷积核：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3ad4205d3476167.png" alt="Filter"></p>
-<p>输出：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3aed9a5c9071482.png" alt="Output"></p>
-<p>卷积运算：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3af11b3ece18152.png" alt="Convolution"></p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3b144a817112712.png" alt="Convolution"></p>
-<p>定义损失函数，将损失函数定义为输出的和，这样方便反向传播计算的演示：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3b372458cb80571.png" alt="Loss Function"></p>
-<p>从<code>X -&gt; Y -&gt; L</code>的过程是卷积运算的前向传播过程，为了简化这个过程，这里忽略了偏置项<code>b</code>以及卷积之后的激活函数。</p>
-<h2 id="2-卷积运算的反向传播"><a href="#2-卷积运算的反向传播" class="headerlink" title="2. 卷积运算的反向传播"></a>2. 卷积运算的反向传播</h2><ul>
-<li>计算损失函数<code>L</code>对输出<code>Y</code>的梯度</li>
-</ul>
-<p><img src="https://i.loli.net/2019/05/21/5ce3b615700b843254.png" alt="Derivation"></p>
-<ul>
-<li>计算输入<code>X</code>的梯度</li>
-</ul>
-<p><img src="https://i.loli.net/2019/05/21/5ce3c06b1ee5f25969.png" height="150" width="400" alt="Derivation"></p>
-<p>计算其中每一项的梯度：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3c0b14ad7c70260.png" height="600" width="600" alt="Chain Rule"></p>
-<ul>
-<li>计算卷积核<code>W</code>的梯度</li>
-</ul>
-<p><img src="https://i.loli.net/2019/05/21/5ce3ca45f1d0114908.png" alt="Derivation"></p>
-<p>计算其中每一项的梯度：</p>
-<p><img src="https://i.loli.net/2019/05/21/5ce3cb1d9fee066058.png" alt="Chain Rule"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://plantsandbuildings.github.io/machine-learning/misc/math/2018/04/28/a-ground-up-c++-convnet-that-scores-0.973-on-the-kaggle-digit-recognizer-challenge.html" target="_blank" rel="external">https://plantsandbuildings.github.io/machine-learning/misc/math/2018/04/28/a-ground-up-c++-convnet-that-scores-0.973-on-the-kaggle-digit-recognizer-challenge.html</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      C++源文件到可执行程序
-    
-    </summary>
-    
-      <category term="数学之美" scheme="http://noahsnail.com/categories/%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://noahsnail.com/tags/Deep-Learning/"/>
     
   </entry>
   
