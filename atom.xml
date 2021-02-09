@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2021-02-08T07:27:15.170Z</updated>
+  <updated>2021-02-09T08:50:17.757Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,154 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode 350. Intersection of Two Arrays II</title>
+    <link href="http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-350-Intersection-of-Two-Arrays-II/"/>
+    <id>http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-350-Intersection-of-Two-Arrays-II/</id>
+    <published>2021-02-09T05:33:22.936Z</published>
+    <updated>2021-02-09T08:50:17.757Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Intersection_of_Two_Arrays_II.png" alt="Intersection of Two Arrays II"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">intersect</span><span class="params">(self, nums1, nums2)</span>:</span></div><div class="line">        nums1.sort()</div><div class="line">        nums2.sort()</div><div class="line">        m = len(nums1)</div><div class="line">        n = len(nums2)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = <span class="number">0</span></div><div class="line">        result = []</div><div class="line">        <span class="keyword">while</span> i &lt; m <span class="keyword">and</span> j &lt; n:</div><div class="line">            <span class="keyword">if</span> nums1[i] &lt; nums2[j]:</div><div class="line">                i += <span class="number">1</span></div><div class="line">            <span class="keyword">elif</span> nums1[i] &gt; nums2[j]:</div><div class="line">                j += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                result.append(nums1[i])</div><div class="line">                i += <span class="number">1</span></div><div class="line">                j += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">intersect</span><span class="params">(self, nums1, nums2)</span>:</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        result = []</div><div class="line"></div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> nums1:</div><div class="line">            stat[x] = stat.get(x, <span class="number">0</span>) + <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> nums2:</div><div class="line">            <span class="keyword">if</span> x <span class="keyword">in</span> stat <span class="keyword">and</span> stat[x] &gt; <span class="number">0</span>:</div><div class="line">                result.append(x)</div><div class="line">                stat[x] -= <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">intersect</span><span class="params">(self, nums1, nums2)</span>:</span></div><div class="line">        result = []</div><div class="line">        nums2.sort()</div><div class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums1:</div><div class="line">            index = binarySearch(nums2, num)</div><div class="line">            <span class="keyword">if</span> index <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">                result.append(num)</div><div class="line">                nums2.pop(index)</div><div class="line">        <span class="keyword">return</span> result</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">binarySearch</span><span class="params">(nums, target)</span>:</span></div><div class="line">    left = <span class="number">0</span></div><div class="line">    right = len(nums) - <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> left &lt;= right:</div><div class="line">        middle = (left + right) // <span class="number">2</span></div><div class="line">        <span class="keyword">if</span> nums[middle] == target:</div><div class="line">            <span class="keyword">return</span> middle</div><div class="line">        <span class="keyword">elif</span> nums[middle] &gt; target:</div><div class="line">            right = middle - <span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            left = middle + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">None</span></div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/intersection-of-two-arrays-ii/" target="_blank" rel="external">https://leetcode.com/problems/intersection-of-two-arrays-ii/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 350. Intersection of Two Arrays II
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 349. Intersection of Two Arrays</title>
+    <link href="http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-349-Intersection-of-Two-Arrays/"/>
+    <id>http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-349-Intersection-of-Two-Arrays/</id>
+    <published>2021-02-09T03:40:38.451Z</published>
+    <updated>2021-02-09T03:51:09.174Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Intersection_of_Two_Arrays.png" alt="Intersection of Two Arrays"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">intersection</span><span class="params">(self, nums1, nums2)</span>:</span></div><div class="line">        result = set()</div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> nums1:</div><div class="line">            <span class="keyword">if</span> x <span class="keyword">in</span> nums2:</div><div class="line">                result.add(x)</div><div class="line">        <span class="keyword">return</span> list(result)</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">intersection</span><span class="params">(self, nums1, nums2)</span>:</span></div><div class="line">        result = set()</div><div class="line">        stat = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> nums1:</div><div class="line">            stat[x] = x</div><div class="line"></div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> nums2:</div><div class="line">            <span class="keyword">if</span> x <span class="keyword">in</span> stat:</div><div class="line">                result.add(x)</div><div class="line"></div><div class="line">        <span class="keyword">return</span> list(result)</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">intersection</span><span class="params">(self, nums1, nums2)</span>:</span></div><div class="line">        <span class="keyword">return</span> list(set(nums1) &amp; set(nums2))</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/intersection-of-two-arrays/" target="_blank" rel="external">https://leetcode.com/problems/intersection-of-two-arrays/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 349. Intersection of Two Arrays
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1481. Least Number of Unique Integers after K Removals</title>
+    <link href="http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-1481-Least-Number-of-Unique-Integers-after-K-Removals/"/>
+    <id>http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-1481-Least-Number-of-Unique-Integers-after-K-Removals/</id>
+    <published>2021-02-09T01:34:26.955Z</published>
+    <updated>2021-02-09T03:40:42.759Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Least_Number_of_Unique_Integers_after_K_Removals.png" alt="Least Number of Unique Integers after K Removals"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findLeastNumOfUniqueInts</span><span class="params">(self, arr, k)</span>:</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> arr:</div><div class="line">            stat[num] = stat.get(num, <span class="number">0</span>) + <span class="number">1</span></div><div class="line">        result = sorted(stat.items(), key=<span class="keyword">lambda</span> item: item[<span class="number">1</span>])</div><div class="line">        <span class="keyword">while</span> k &gt; <span class="number">0</span>:</div><div class="line">            k = k - result[<span class="number">0</span>][<span class="number">1</span>]</div><div class="line">            <span class="keyword">if</span> k &gt;= <span class="number">0</span>:</div><div class="line">                result.pop(<span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> len(result)</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findLeastNumOfUniqueInts</span><span class="params">(self, arr, k)</span>:</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> arr:</div><div class="line">            stat[num] = stat.get(num, <span class="number">0</span>) + <span class="number">1</span></div><div class="line">        result = sorted(stat.items(), key=<span class="keyword">lambda</span> item: item[<span class="number">1</span>])</div><div class="line">        index = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> k &gt; <span class="number">0</span>:</div><div class="line">            k = k - result[index][<span class="number">1</span>]</div><div class="line">            <span class="keyword">if</span> k &gt;= <span class="number">0</span>:</div><div class="line">                index += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> len(result) - index</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findLeastNumOfUniqueInts</span><span class="params">(self, arr, k)</span>:</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> arr:</div><div class="line">            stat[num] = stat.get(num, <span class="number">0</span>) + <span class="number">1</span></div><div class="line">        result = sorted(arr, key=<span class="keyword">lambda</span> num: (stat[num], num))</div><div class="line">        <span class="keyword">return</span> len(set(result[k:]))</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/" target="_blank" rel="external">https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1481. Least Number of Unique Integers after K Removals
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 368. Largest Divisible Subset</title>
+    <link href="http://noahsnail.com/2021/02/08/2021-02-08-Leetcode-368-Largest-Divisible-Subset/"/>
+    <id>http://noahsnail.com/2021/02/08/2021-02-08-Leetcode-368-Largest-Divisible-Subset/</id>
+    <published>2021-02-08T09:43:33.715Z</published>
+    <updated>2021-02-08T09:52:21.905Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Largest_Divisible_Subset.png" alt="Largest Divisible Subset"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestDivisibleSubset</span><span class="params">(self, nums)</span>:</span></div><div class="line">        nums.sort()</div><div class="line">        length = len(nums)</div><div class="line">        dp = [<span class="number">1</span>] * length</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, length):</div><div class="line">                <span class="keyword">if</span> nums[j] % nums[i] == <span class="number">0</span>:</div><div class="line">                    dp[j] = max(dp[j], dp[i] + <span class="number">1</span>)</div><div class="line"></div><div class="line">        max_index = dp.index(max(dp))</div><div class="line">        result = [nums[max_index]]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(max_index - <span class="number">1</span>, <span class="number">-1</span> , <span class="number">-1</span>):</div><div class="line">            <span class="keyword">if</span> nums[max_index] % nums[i] == <span class="number">0</span> <span class="keyword">and</span> dp[i] == dp[max_index] - len(result) <span class="keyword">and</span> result[<span class="number">-1</span>] % nums[i] == <span class="number">0</span>:</div><div class="line">                result.append(nums[i])</div><div class="line"></div><div class="line">        result.reverse()</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/largest-divisible-subset/" target="_blank" rel="external">https://leetcode.com/problems/largest-divisible-subset/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 368. Largest Divisible Subset
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode 1232. Check If It Is a Straight Line</title>
@@ -575,158 +723,6 @@
     
     
       <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 452. Minimum Number of Arrows to Burst Balloons</title>
-    <link href="http://noahsnail.com/2021/02/01/2021-02-01-Leetcode-452-Minimum-Number-of-Arrows-to-Burst-Balloons/"/>
-    <id>http://noahsnail.com/2021/02/01/2021-02-01-Leetcode-452-Minimum-Number-of-Arrows-to-Burst-Balloons/</id>
-    <published>2021-02-01T09:58:10.569Z</published>
-    <updated>2021-02-01T10:06:51.185Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Minimum_Number_of_Arrows_to_Burst Balloons.png" alt="Minimum Number of Arrows to Burst Balloons"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMinArrowShots</span><span class="params">(self, points)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(points) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        points.sort(key=<span class="keyword">lambda</span> p: p[<span class="number">0</span>])</div><div class="line">        total = <span class="number">1</span></div><div class="line">        overlap = points[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> point <span class="keyword">in</span> points:</div><div class="line">            <span class="keyword">if</span> overlap[<span class="number">1</span>] &lt; point[<span class="number">0</span>]:</div><div class="line">                total += <span class="number">1</span></div><div class="line">                overlap = point</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                overlap[<span class="number">0</span>] = point[<span class="number">0</span>]</div><div class="line">                overlap[<span class="number">1</span>] = min(overlap[<span class="number">1</span>], point[<span class="number">1</span>])</div><div class="line"></div><div class="line">        <span class="keyword">return</span> total</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMinArrowShots</span><span class="params">(self, points)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(points) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        points.sort(key=<span class="keyword">lambda</span> p: p[<span class="number">1</span>])</div><div class="line">        total = <span class="number">1</span></div><div class="line">        overlap = points[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> point <span class="keyword">in</span> points:</div><div class="line">            <span class="keyword">if</span> overlap[<span class="number">1</span>] &lt; point[<span class="number">0</span>]:</div><div class="line">                total += <span class="number">1</span></div><div class="line">                overlap = point</div><div class="line"></div><div class="line">        <span class="keyword">return</span> total</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/" target="_blank" rel="external">https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 452. Minimum Number of Arrows to Burst Balloons
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 179. Largest Number</title>
-    <link href="http://noahsnail.com/2021/02/01/2021-02-01-Leetcode-179-Largest-Number/"/>
-    <id>http://noahsnail.com/2021/02/01/2021-02-01-Leetcode-179-Largest-Number/</id>
-    <published>2021-02-01T06:32:47.783Z</published>
-    <updated>2021-02-01T10:06:23.548Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Largest_Number.png" alt="Largest Number"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p>解析：这道题的关键在于想到需要编写一个比较函数来比较两个数字的“大小”，即两个数字排列的先后顺序。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> functools</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestNumber</span><span class="params">(self, nums)</span>:</span></div><div class="line">        nums_str = [str(num) <span class="keyword">for</span> num <span class="keyword">in</span> nums]</div><div class="line">        nums_str = sorted(nums_str, key=functools.cmp_to_key(self.compare), reverse=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">        result = <span class="string">''</span>.join(nums_str)</div><div class="line">        <span class="keyword">if</span> result[<span class="number">0</span>] == <span class="string">'0'</span>:</div><div class="line">            <span class="keyword">return</span> <span class="string">'0'</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> result</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(self, x, y)</span>:</span></div><div class="line">        s1 = x + y</div><div class="line">        s2 = y + x</div><div class="line"></div><div class="line">        <span class="keyword">if</span> s1 &gt; s2:</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> s1 &lt; s2:</div><div class="line">            <span class="keyword">return</span> <span class="number">-1</span></div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> functools</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestNumber</span><span class="params">(self, nums)</span>:</span></div><div class="line">        nums_str = list(map(str, nums))</div><div class="line">        cmp = <span class="keyword">lambda</span> x, y: <span class="number">1</span> <span class="keyword">if</span> x + y &gt; y + x <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">if</span> x + y &lt; y + x <span class="keyword">else</span> <span class="number">0</span></div><div class="line">        nums_str = sorted(nums_str, key=functools.cmp_to_key(cmp), reverse=<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">return</span> str(int(<span class="string">''</span>.join(nums_str)))</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/largest-number/" target="_blank" rel="external">https://leetcode.com/problems/largest-number/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 179. Largest Number
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>vim移除自动添加的换行符</title>
-    <link href="http://noahsnail.com/2020/12/18/2020-12-18-vim%E7%A7%BB%E9%99%A4%E8%87%AA%E5%8A%A8%E6%B7%BB%E5%8A%A0%E7%9A%84%E6%8D%A2%E8%A1%8C%E7%AC%A6/"/>
-    <id>http://noahsnail.com/2020/12/18/2020-12-18-vim移除自动添加的换行符/</id>
-    <published>2020-12-18T06:22:18.270Z</published>
-    <updated>2020-12-18T09:27:58.184Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>在使用vim编辑文件时，默认情况下，vim会在文件末尾自动添加换行符(<code>endofline</code>)。如果需要移除文件末尾自动添加的换行符，就需要对文件重新编辑设置一下。</p>
-<h2 id="2-移除换行符"><a href="#2-移除换行符" class="headerlink" title="2. 移除换行符"></a>2. 移除换行符</h2><p>使用vim编辑<code>test.txt</code>，文件内容为<code>abc</code>，保存。测试如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 统计文件行数</div><div class="line">root@ec18cf9b6d75:/workspace# wc -l test.txt</div><div class="line">1 test.txt</div><div class="line"></div><div class="line"># 统计文件字符数</div><div class="line">root@ec18cf9b6d75:/workspace# wc -m test.txt</div><div class="line">4 test.txt</div></pre></td></tr></table></figure>
-<p>移除文件的自动换行符的vim命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">:set binary</div><div class="line">:set noendofline</div><div class="line">:wq</div><div class="line"></div><div class="line"># or</div><div class="line"></div><div class="line">:set bin noeol</div></pre></td></tr></table></figure>
-<p>重新进行测试：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root@ec18cf9b6d75:/workspace# wc -l test.txt</div><div class="line">0 test.txt</div><div class="line">root@ec18cf9b6d75:/workspace# wc -m test.txt</div><div class="line">3 test.txt</div></pre></td></tr></table></figure>
-<h2 id="3-测试结果解析"><a href="#3-测试结果解析" class="headerlink" title="3. 测试结果解析"></a>3. 测试结果解析</h2><p><code>wc -m</code>命令在统计文件的字符个数时会统计换行符，因此文件有换行符时字符统计数量为4，没有时为3。</p>
-<p><code>wc -l</code>命令统计文件的行数时是统计换行符的个数，因此文件有换行符时行数统计数量为1，没有时为0。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://stackoverflow.com/questions/23488655/how-does-the-wc-c-in-linux-work" target="_blank" rel="external">https://stackoverflow.com/questions/23488655/how-does-the-wc-c-in-linux-work</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      vim移除自动添加的换行符
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://noahsnail.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PyTorch中的model.zero_grad() vs optimizer.zero_grad()</title>
-    <link href="http://noahsnail.com/2020/09/29/2020-09-29-PyTorch%E4%B8%AD%E7%9A%84Model.zero_grad()%20vs%20optimizer.zero_grad()/"/>
-    <id>http://noahsnail.com/2020/09/29/2020-09-29-PyTorch中的Model.zero_grad() vs optimizer.zero_grad()/</id>
-    <published>2020-09-29T02:16:38.000Z</published>
-    <updated>2020-09-29T03:30:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>在PyTorch中，对模型参数的梯度置0时通常使用两种方式：<code>model.zero_grad()</code>和<code>optimizer.zero_grad()</code>。二者在训练代码都很常见，那么二者的区别在哪里呢？</p>
-<h2 id="2-model-zero-grad"><a href="#2-model-zero-grad" class="headerlink" title="2. model.zero_grad()"></a>2. model.zero_grad()</h2><p><code>model.zero_grad()</code>的作用是将所有模型参数的梯度置为0。其源码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> p <span class="keyword">in</span> self.parameters():</div><div class="line">    <span class="keyword">if</span> p.grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">        p.grad.detach_()</div><div class="line">        p.grad.zero_()</div></pre></td></tr></table></figure>
-<h2 id="3-optimizer-zero-grad"><a href="#3-optimizer-zero-grad" class="headerlink" title="3. optimizer.zero_grad()"></a>3. optimizer.zero_grad()</h2><p><code>optimizer.zero_grad()</code>的作用是清除所有优化的<code>torch.Tensor</code>的梯度。其源码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> group <span class="keyword">in</span> self.param_groups:</div><div class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> group[<span class="string">'params'</span>]:</div><div class="line">        <span class="keyword">if</span> p.grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">            p.grad.detach_()</div><div class="line">            p.grad.zero_()</div></pre></td></tr></table></figure>
-<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><ul>
-<li><p>当使用<code>optimizer = optim.Optimizer(net.parameters())</code>设置优化器时，此时优化器中的<code>param_groups</code>等于模型中的<code>parameters()</code>，此时，二者是等效的，从二者的源码中也可以看出来。</p>
-</li>
-<li><p>当多个模型使用同一个优化器时，二者是不同的，此时需要根据实际情况选择梯度的清除方式。</p>
-</li>
-<li><p>当一个模型使用多个优化器时，二者是不同的，此时需要根据实际情况选择梯度的清除方式。</p>
-</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://discuss.pytorch.org/t/model-zero-grad-or-optimizer-zero-grad/28426" target="_blank" rel="external">https://discuss.pytorch.org/t/model-zero-grad-or-optimizer-zero-grad/28426</a></p>
-</li>
-<li><p><a href="https://discuss.pytorch.org/t/whats-the-difference-between-optimizer-zero-grad-vs-nn-module-zero-grad/59233" target="_blank" rel="external">https://discuss.pytorch.org/t/whats-the-difference-between-optimizer-zero-grad-vs-nn-module-zero-grad/59233</a></p>
-</li>
-<li><p><a href="https://discuss.pytorch.org/t/zero-grad-optimizer-or-net/1887" target="_blank" rel="external">https://discuss.pytorch.org/t/zero-grad-optimizer-or-net/1887</a></p>
-</li>
-<li><p><a href="https://pytorch.org/docs/stable/optim.html" target="_blank" rel="external">https://pytorch.org/docs/stable/optim.html</a></p>
-</li>
-<li><p><a href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" target="_blank" rel="external">https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module</a></p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      PyTorch中的model.zero_grad() vs optimizer.zero_grad()
-    
-    </summary>
-    
-      <category term="Deep Learning" scheme="http://noahsnail.com/categories/Deep-Learning/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://noahsnail.com/tags/Deep-Learning/"/>
     
   </entry>
   
