@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2021-02-09T09:30:51.397Z</updated>
+  <updated>2021-02-09T10:20:16.722Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-1002-Find-Common-Characters/"/>
     <id>http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-1002-Find-Common-Characters/</id>
     <published>2021-02-09T09:29:03.261Z</published>
-    <updated>2021-02-09T09:30:51.397Z</updated>
+    <updated>2021-02-09T10:20:16.722Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Find_Common_Characters.png" alt="Find Common Characters"></p>
@@ -31,11 +31,7 @@
 <ul>
 <li>Version 2</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<ul>
-<li>Version 3</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">commonChars</span><span class="params">(self, A)</span>:</span></div><div class="line">        n = len(A)</div><div class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        result = list(A[<span class="number">0</span>])</div><div class="line">        B = [list(A[i]) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n)]</div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> A[<span class="number">0</span>]:</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">1</span>):</div><div class="line">                <span class="keyword">if</span> ch <span class="keyword">not</span> <span class="keyword">in</span> B[i]:</div><div class="line">                    result.remove(ch)</div><div class="line">                    <span class="keyword">break</span></div><div class="line">                B[i].remove(ch)</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://leetcode.com/problems/find-common-characters/" target="_blank" rel="external">https://leetcode.com/problems/find-common-characters/</a></li>
 </ol>
@@ -59,7 +55,7 @@
     <link href="http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-350-Intersection-of-Two-Arrays-II/"/>
     <id>http://noahsnail.com/2021/02/09/2021-02-09-Leetcode-350-Intersection-of-Two-Arrays-II/</id>
     <published>2021-02-09T05:33:22.936Z</published>
-    <updated>2021-02-09T08:50:17.757Z</updated>
+    <updated>2021-02-09T09:18:50.341Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Intersection_of_Two_Arrays_II.png" alt="Intersection of Two Arrays II"></p>
@@ -447,7 +443,7 @@
     <link href="http://noahsnail.com/2021/02/05/2021-02-05-Leetcode-34-Find-First-and-Last-Position-of-Element-in-Sorted-Array/"/>
     <id>http://noahsnail.com/2021/02/05/2021-02-05-Leetcode-34-Find-First-and-Last-Position-of-Element-in-Sorted-Array/</id>
     <published>2021-02-05T01:25:54.247Z</published>
-    <updated>2021-02-05T03:07:36.616Z</updated>
+    <updated>2021-02-05T06:29:51.535Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Find_First_and_Last_Position_of_Element_in_Sorted_Array.png" alt="Find First and Last Position of Element in Sorted Array"></p>
@@ -627,7 +623,7 @@
     <link href="http://noahsnail.com/2021/02/03/2021-02-03-Leetcode-228-Summary-Ranges/"/>
     <id>http://noahsnail.com/2021/02/03/2021-02-03-Leetcode-228-Summary-Ranges/</id>
     <published>2021-02-03T06:52:53.399Z</published>
-    <updated>2021-02-03T07:03:29.209Z</updated>
+    <updated>2021-02-03T07:14:02.128Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Summary_Ranges.png" alt="Maximum Swap"></p>
