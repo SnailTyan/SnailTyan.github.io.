@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2021-08-11T07:50:34.662Z</updated>
+  <updated>2021-08-18T08:19:37.715Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,338 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode 1964. Find the Longest Valid Obstacle Course at Each Position</title>
+    <link href="http://noahsnail.com/2021/08/18/2021-08-18-Leetcode-1964-Find-the-Longest-Valid-Obstacle-Course-at-Each-Position/"/>
+    <id>http://noahsnail.com/2021/08/18/2021-08-18-Leetcode-1964-Find-the-Longest-Valid-Obstacle-Course-at-Each-Position/</id>
+    <published>2021-08-18T08:06:07.284Z</published>
+    <updated>2021-08-18T08:19:37.715Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Find_the_Longest_Valid_Obstacle_Course_at_Each_Position.png" alt="Find the Longest Valid Obstacle Course at Each Position"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，这道题跟Leetcode 300很像，可以构造一个最长非递减子序列，使用<code>order</code>作为有序序列保持最长非递减子序列长度，当新元素大于或等于有序序列的最后一个元素时，此时增加新元素到有序序列中，否则，则将新元素插入到当前序列中，替换比其大的元素，保证左侧元素都比它小，此时长度不变，<code>order</code>中相同序列位置上始终保留较小的元素，这样利于插入新元素。插入新元素时，结果就是序列长度，更新元素时，长度为索引位值加<code>1</code>。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestObstacleCourseAtEachPosition</span><span class="params">(self, obstacles: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(obstacles)</div><div class="line">        order = []</div><div class="line">        result = []</div><div class="line">        <span class="keyword">for</span> i, obstacle <span class="keyword">in</span> enumerate(obstacles):</div><div class="line">            <span class="keyword">if</span> len(order) == <span class="number">0</span> <span class="keyword">or</span> order[<span class="number">-1</span>] &lt;= obstacle:</div><div class="line">                order.append(obstacle)</div><div class="line">                result.append(len(order))</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                index = bisect.bisect_right(order, obstacle)</div><div class="line">                order[index] = obstacle</div><div class="line">                result.append(index+<span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/find-the-longest-valid-obstacle-course-at-each-position/" target="_blank" rel="external">https://leetcode.com/problems/find-the-longest-valid-obstacle-course-at-each-position/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1964. Find the Longest Valid Obstacle Course at Each Position
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 289. Game of Life</title>
+    <link href="http://noahsnail.com/2021/08/18/2021-08-18-Leetcode-289-Game-of-Life/"/>
+    <id>http://noahsnail.com/2021/08/18/2021-08-18-Leetcode-289-Game-of-Life/</id>
+    <published>2021-08-18T06:32:15.527Z</published>
+    <updated>2021-08-18T08:05:17.969Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Game_of_Life.png" alt="Game of Life"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，遍历所有细胞，统计其周围八个细胞的存活个数，根据规则判断当前细胞状态是否需要改变，如果需要，将其位置及要更新的状态保存到数组中，遍历数组，更新<code>board</code>即可。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gameOfLife</span><span class="params">(self, board: List[List[int]])</span> -&gt; <span class="keyword">None</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Do not return anything, modify board in-place instead.</div><div class="line">        """</div><div class="line">        m = len(board)</div><div class="line">        n = len(board[<span class="number">0</span>])</div><div class="line">        cells = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</div><div class="line">                count = <span class="number">0</span></div><div class="line">                <span class="keyword">if</span> i &gt; <span class="number">0</span>:</div><div class="line">                    count += board[i<span class="number">-1</span>][j]</div><div class="line">                    <span class="keyword">if</span> j &gt; <span class="number">0</span>:</div><div class="line">                        count += board[i<span class="number">-1</span>][j<span class="number">-1</span>]</div><div class="line">                    <span class="keyword">if</span> j &lt; n - <span class="number">1</span>:</div><div class="line">                        count += board[i<span class="number">-1</span>][j+<span class="number">1</span>]</div><div class="line">                <span class="keyword">if</span> i &lt; m - <span class="number">1</span>:</div><div class="line">                    count += board[i+<span class="number">1</span>][j]</div><div class="line">                    <span class="keyword">if</span> j &gt; <span class="number">0</span>:</div><div class="line">                        count += board[i+<span class="number">1</span>][j<span class="number">-1</span>]</div><div class="line">                    <span class="keyword">if</span> j &lt; n - <span class="number">1</span>:</div><div class="line">                        count += board[i+<span class="number">1</span>][j+<span class="number">1</span>]</div><div class="line">                <span class="keyword">if</span> j &gt; <span class="number">0</span>:</div><div class="line">                    count += board[i][j<span class="number">-1</span>]</div><div class="line">                <span class="keyword">if</span> j &lt; n - <span class="number">1</span>:</div><div class="line">                    count += board[i][j+<span class="number">1</span>]</div><div class="line">                <span class="keyword">if</span> board[i][j] == <span class="number">1</span> <span class="keyword">and</span> (count &lt; <span class="number">2</span> <span class="keyword">or</span> count &gt; <span class="number">3</span>):</div><div class="line">                    cells.append((i, j, <span class="number">0</span>))</div><div class="line">                <span class="keyword">if</span> count == <span class="number">3</span> <span class="keyword">and</span> board[i][j] == <span class="number">0</span>:</div><div class="line">                    cells.append((i, j, <span class="number">1</span>))</div><div class="line">        <span class="keyword">for</span> x, y, state <span class="keyword">in</span> cells:</div><div class="line">            board[x][y] = state</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/game-of-life/" target="_blank" rel="external">https://leetcode.com/problems/game-of-life/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 289. Game of Life
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1861. Rotating the Box</title>
+    <link href="http://noahsnail.com/2021/08/17/2021-08-17-Leetcode-1861-Rotating-the-Box/"/>
+    <id>http://noahsnail.com/2021/08/17/2021-08-17-Leetcode-1861-Rotating-the-Box/</id>
+    <published>2021-08-17T09:10:43.718Z</published>
+    <updated>2021-08-17T09:26:48.332Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Rotating_the_Box.png" alt="Rotating the Box"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先遍历每一行，将对应的石头移到空白位置，然后再进行行列的90度翻转。遍历每一行时，应该从右向左，寻找每一个石头，即首先应该移动最右边的石头，<code>k</code>用来表示空白位置的索引，<code>k = -1</code>时表示不存在空白位置，当碰到空白位置时，如果此时空白位置<code>k = -1</code>，则将当前位置的索引赋给<code>k</code>，<code>k != -1</code>时，此时右边存在空白位置，因此不更新<code>k</code>，当碰到障碍物时，此时不存在空白位置，因此<code>k=-1</code>，当碰到石头时，如果<code>k = -1</code>，即不存在空白位置，则不移动石头，否则，应该将石头和空白位置进行互换，同时，空白位置向左移动一位，石头和空白位置可以互换，说明它们之间不存在障碍物，也不存在其它石头，因此<code>k -= 1</code>。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rotateTheBox</span><span class="params">(self, box: List[List[str]])</span> -&gt; List[List[str]]:</span></div><div class="line">        m = len(box)</div><div class="line">        n = len(box[<span class="number">0</span>])</div><div class="line">        result = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</div><div class="line">            k = <span class="number">-1</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">                <span class="keyword">if</span> box[i][j] == <span class="string">'.'</span>:</div><div class="line">                    <span class="keyword">if</span> k == <span class="number">-1</span>:</div><div class="line">                        k = j</div><div class="line">                <span class="keyword">elif</span> box[i][j] == <span class="string">'*'</span>:</div><div class="line">                    k = <span class="number">-1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">if</span> k &gt; <span class="number">-1</span>:</div><div class="line">                        box[i][j], box[i][k] = box[i][k], box[i][j]</div><div class="line">                        k -= <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            row = []</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(m<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">                row.append(box[j][i])</div><div class="line">            result.append(row)</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/rotating-the-box/" target="_blank" rel="external">https://leetcode.com/problems/rotating-the-box/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1861. Rotating the Box
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 905. Sort Array By Parity</title>
+    <link href="http://noahsnail.com/2021/08/17/2021-08-17-Leetcode-905-Sort-Array-By-Parity/"/>
+    <id>http://noahsnail.com/2021/08/17/2021-08-17-Leetcode-905-Sort-Array-By-Parity/</id>
+    <published>2021-08-17T03:14:31.896Z</published>
+    <updated>2021-08-17T03:16:10.331Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Sort_Array_By_Parity.png" alt="Sort Array By Parity"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用前后双指针，每次左边的奇数都跟右边的偶数对换位置。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortArrayByParity</span><span class="params">(self, nums: List[int])</span> -&gt; List[int]:</span></div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = len(nums) - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt; j:</div><div class="line">            <span class="keyword">while</span> i &lt; len(nums) <span class="keyword">and</span> nums[i] % <span class="number">2</span> == <span class="number">0</span>:</div><div class="line">                i += <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> j &gt; <span class="number">-1</span> <span class="keyword">and</span> nums[j] % <span class="number">2</span> == <span class="number">1</span>:</div><div class="line">                j -= <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> i &lt; j:</div><div class="line">                nums[i], nums[j] = nums[j], nums[i]</div><div class="line">        <span class="keyword">return</span> nums</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/sort-array-by-parity/" target="_blank" rel="external">https://leetcode.com/problems/sort-array-by-parity/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 905. Sort Array By Parity
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1914. Cyclically Rotating a Grid</title>
+    <link href="http://noahsnail.com/2021/08/17/2021-08-17-Leetcode-1914-Cyclically-Rotating-a-Grid/"/>
+    <id>http://noahsnail.com/2021/08/17/2021-08-17-Leetcode-1914-Cyclically-Rotating-a-Grid/</id>
+    <published>2021-08-17T02:59:14.108Z</published>
+    <updated>2021-08-17T03:13:35.504Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Cyclically_Rotating_a_Grid.png" alt="Cyclically Rotating a Grid"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先根据规律求出每一层的索引，然后按逆时针顺序保存到数组中，则<code>k</code>次循环后当前索引的位置<code>index</code>在列表中的位置为<code>(index+k) % len(circle)</code>，因此将当前索引位置的值赋给目标索引位置即可。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rotateGrid</span><span class="params">(self, grid: List[List[int]], k: int)</span> -&gt; List[List[int]]:</span></div><div class="line">        m = len(grid)</div><div class="line">        n = len(grid[<span class="number">0</span>])</div><div class="line">        result = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> range(m)]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(min(m // <span class="number">2</span>, n // <span class="number">2</span>)):</div><div class="line">            circle = []</div><div class="line">            <span class="comment"># Left column</span></div><div class="line">            circle += [(j, i) <span class="keyword">for</span> j <span class="keyword">in</span> range(i, m-i)]</div><div class="line">            <span class="comment"># Bottom row</span></div><div class="line">            circle += [(m<span class="number">-1</span>-i, j) <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, n-i)]</div><div class="line">            <span class="comment"># Right column</span></div><div class="line">            circle += [(j, n<span class="number">-1</span>-i) <span class="keyword">for</span> j <span class="keyword">in</span> range(m<span class="number">-2</span>-i, i<span class="number">-1</span>, <span class="number">-1</span>)]</div><div class="line">            <span class="comment"># Top row</span></div><div class="line">            circle += [(i, j) <span class="keyword">for</span> j <span class="keyword">in</span> range(n<span class="number">-2</span>-i, i, <span class="number">-1</span>)]</div><div class="line">            <span class="keyword">for</span> index, (x, y) <span class="keyword">in</span> enumerate(circle):</div><div class="line">                target_x, target_y = circle[(index+k) % len(circle)]</div><div class="line">                result[target_x][target_y] = grid[x][y]</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/cyclically-rotating-a-grid/" target="_blank" rel="external">https://leetcode.com/problems/cyclically-rotating-a-grid/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1914. Cyclically Rotating a Grid
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1881. Maximum Value after Insertion</title>
+    <link href="http://noahsnail.com/2021/08/16/2021-08-16-Leetcode-1881-Maximum-Value-after-Insertion/"/>
+    <id>http://noahsnail.com/2021/08/16/2021-08-16-Leetcode-1881-Maximum-Value-after-Insertion/</id>
+    <published>2021-08-16T06:23:06.346Z</published>
+    <updated>2021-08-16T06:31:19.983Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Maximum_Value_after_Insertion.png" alt="Maximum Value after Insertion"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，如果<code>n</code>是正数，则<code>x</code>应该位于从左向右找第一个比其小的数字所在的位置，如果是负数，<code>x</code>应该位于从左往右找第一个比其大的数字所在的位置。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxValue</span><span class="params">(self, n: str, x: int)</span> -&gt; str:</span></div><div class="line">        result = <span class="string">''</span></div><div class="line">        <span class="keyword">if</span> n[<span class="number">0</span>] == <span class="string">'-'</span>:</div><div class="line">            i = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> i &lt; len(n) <span class="keyword">and</span> n[i] &lt;= str(x):</div><div class="line">                i += <span class="number">1</span></div><div class="line">            result = n[:i] + str(x) + n[i:]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            i = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> i &lt; len(n) <span class="keyword">and</span> n[i] &gt;= str(x):</div><div class="line">                i += <span class="number">1</span></div><div class="line">            result = n[:i] + str(x) + n[i:]</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/maximum-value-after-insertion/" target="_blank" rel="external">https://leetcode.com/problems/maximum-value-after-insertion/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1881. Maximum Value after Insertion
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 977. Squares of a Sorted Array</title>
+    <link href="http://noahsnail.com/2021/08/13/2021-08-13-Leetcode-977-Squares-of-a-Sorted-Array/"/>
+    <id>http://noahsnail.com/2021/08/13/2021-08-13-Leetcode-977-Squares-of-a-Sorted-Array/</id>
+    <published>2021-08-13T05:43:31.300Z</published>
+    <updated>2021-08-13T09:21:04.643Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Squares_of_a_Sorted_Array.png" alt="Squares of a Sorted Array"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，采用双指针，先计算平方和，再比较大小，较大的更新到结果数组中。Version 2先比较二者绝对值大小，再将平方更新到结果中。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortedSquares</span><span class="params">(self, nums: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(nums)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = n - <span class="number">1</span></div><div class="line">        result = [<span class="number">0</span>] * n</div><div class="line">        index = n - <span class="number">1</span></div><div class="line">        x = nums[i] ** <span class="number">2</span></div><div class="line">        y = nums[j] ** <span class="number">2</span></div><div class="line">        <span class="keyword">while</span> i &lt;= j:    </div><div class="line">            <span class="keyword">if</span> x &lt;= y:</div><div class="line">                result[index] = y</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                j -= <span class="number">1</span></div><div class="line">                y = nums[j] ** <span class="number">2</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                result[index] = x</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                i += <span class="number">1</span></div><div class="line">                x = nums[i] ** <span class="number">2</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortedSquares</span><span class="params">(self, nums: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(nums)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = n - <span class="number">1</span></div><div class="line">        result = [<span class="number">0</span>] * n</div><div class="line">        index = n - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt;= j: </div><div class="line">            x = nums[i]</div><div class="line">            y = nums[j]</div><div class="line">            <span class="keyword">if</span> abs(x) &lt;= abs(y):</div><div class="line">                result[index] = y * y</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                j -= <span class="number">1</span></div><div class="line">                y = nums[j]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                result[index] = x * x</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                i += <span class="number">1</span></div><div class="line">                x = nums[i]</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/squares-of-a-sorted-array/" target="_blank" rel="external">https://leetcode.com/problems/squares-of-a-sorted-array/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 977. Squares of a Sorted Array
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1961. Check If String Is a Prefix of Array</title>
+    <link href="http://noahsnail.com/2021/08/12/2021-08-12-Leetcode-1961-Check-If-String-Is-a-Prefix-of-Array/"/>
+    <id>http://noahsnail.com/2021/08/12/2021-08-12-Leetcode-1961-Check-If-String-Is-a-Prefix-of-Array/</id>
+    <published>2021-08-12T09:08:08.849Z</published>
+    <updated>2021-08-13T02:03:19.991Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Check_If_String_Is_a_Prefix_of_Array.png" alt="Check If String Is a Prefix of Array"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，遍历数组中的字符串，同时遍历<code>s</code>，如果数组中的字符不等于对应位置的字符，直接返回<code>False</code>，当<code>s</code>遍历结束时，判断数组中当前位置的字符串是否遍历完成，如果数组遍历结束，判断字符串<code>s</code>是否遍历完成。Version 2直接按单词比较。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPrefixString</span><span class="params">(self, s: str, words: List[str])</span> -&gt; bool:</span></div><div class="line">        n = len(s)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(word)):</div><div class="line">                <span class="keyword">if</span> s[i] == word[j]:</div><div class="line">                    i += <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">                <span class="keyword">if</span> i == n:</div><div class="line">                    <span class="keyword">return</span> j == len(word) - <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> i == n</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPrefixString</span><span class="params">(self, s: str, words: List[str])</span> -&gt; bool:</span></div><div class="line">        n = len(s)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">            m = len(word)</div><div class="line">            <span class="keyword">if</span> s[i:i+m] == word:</div><div class="line">                i += m</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">            <span class="keyword">if</span> i == n:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> i == n</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/check-if-string-is-a-prefix-of-array/" target="_blank" rel="external">https://leetcode.com/problems/check-if-string-is-a-prefix-of-array/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1961. Check If String Is a Prefix of Array
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1647. Minimum Deletions to Make Character Frequencies Unique</title>
+    <link href="http://noahsnail.com/2021/08/12/2021-08-12-Leetcode-1647-Minimum-Deletions-to-Make-Character-Frequencies-Unique/"/>
+    <id>http://noahsnail.com/2021/08/12/2021-08-12-Leetcode-1647-Minimum-Deletions-to-Make-Character-Frequencies-Unique/</id>
+    <published>2021-08-12T02:30:05.322Z</published>
+    <updated>2021-08-12T09:13:10.663Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Minimum_Deletions_to_Make_Character_Frequencies_Unique.png" alt="Minimum Deletions to Make Character Frequencies Unique"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先用字典统计每个英文字符出现的频率，然后对频率进行由大到小排序，由大到小排列是因为频率最高的是可以出现的最大次数，使用<code>count</code>表示删除的字符数量，使用<code>pre</code>来表示为了不重复，当前字符删除一部分后的出现次数，初始值为<code>pre = frequencies[0]</code>，比较当前频率与前一个字符频率的大小，如果二者相等，为了不重复，当前频率要减<code>1</code>，即删除一个字符，因此<code>count+=1</code>，同时当前字符的频率减<code>1</code>，如果当前字符频率小于前一个字符的频率，则不需要删除字符，字符频率<code>pre</code>进行更新，如果当前字符频率大于前一个字符的频率，为了不重复，则当前字符要删除<code>frequencies[i] - pre + 1</code>个字符，同时更新<code>pre</code>，如果<code>pre=1</code>，即前一字符的频率已经为<code>1</code>，则后面的字符要全删除，相等和大于的情况可以合并到一起。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minDeletions</span><span class="params">(self, s: str)</span> -&gt; int:</span></div><div class="line">        stat = collections.defaultdict(int)</div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</div><div class="line">            stat[ch] += <span class="number">1</span></div><div class="line">        frequencies = sorted(stat.values(), reverse=<span class="keyword">True</span>)</div><div class="line">        count = <span class="number">0</span></div><div class="line">        pre = frequencies[<span class="number">0</span>]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(frequencies)):</div><div class="line">            <span class="keyword">if</span> pre == <span class="number">1</span>:</div><div class="line">                count += frequencies[i]</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> frequencies[i] &gt;= pre:</div><div class="line">                count += frequencies[i] - pre + <span class="number">1</span></div><div class="line">                pre -= <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                pre = frequencies[i]</div><div class="line">        <span class="keyword">return</span> count</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/" target="_blank" rel="external">https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1647. Minimum Deletions to Make Character Frequencies Unique
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 43. Multiply Strings</title>
+    <link href="http://noahsnail.com/2021/08/11/2021-08-11-Leetcode-43-Multiply-Strings/"/>
+    <id>http://noahsnail.com/2021/08/11/2021-08-11-Leetcode-43-Multiply-Strings/</id>
+    <published>2021-08-11T08:21:20.975Z</published>
+    <updated>2021-08-12T01:21:42.495Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Multiply_Strings.png" alt="Multiply Strings"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，直接按照学习的乘法计算方式来求解，先计算第二个数的每一位（从个位开始）乘以第一个数，再将得出的结果加到一起。Version 2采用另一种方式实现。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(self, num1: str, num2: str)</span> -&gt; str:</span></div><div class="line">        <span class="keyword">if</span> num1 == <span class="string">'0'</span> <span class="keyword">or</span> num2 == <span class="string">'0'</span>:</div><div class="line">            <span class="keyword">return</span> <span class="string">'0'</span></div><div class="line">        result = []</div><div class="line">        carry = <span class="number">0</span></div><div class="line">        num1 = list(map(int, num1))</div><div class="line">        num2 = list(map(int, num2))</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(num2) <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">            <span class="keyword">if</span> num2[i] == <span class="number">0</span>:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            temp = self.mul(num1, num2[i], len(num2) - i - <span class="number">1</span>)</div><div class="line">            result = self.add(result, temp)</div><div class="line">        p = [str(num) <span class="keyword">for</span> num <span class="keyword">in</span> result]</div><div class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(p)[::<span class="number">-1</span>]</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mul</span><span class="params">(self, num1, b, index)</span>:</span></div><div class="line">        result = []</div><div class="line">        carry = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> a <span class="keyword">in</span> reversed(num1):</div><div class="line">            product = a * b + carry</div><div class="line">            result.append(product % <span class="number">10</span>)</div><div class="line">            carry = product // <span class="number">10</span></div><div class="line">        <span class="keyword">if</span> carry &gt; <span class="number">0</span>:</div><div class="line">            result.append(carry)</div><div class="line">        <span class="keyword">return</span> [<span class="number">0</span>] * index + result</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(self, a, b)</span>:</span></div><div class="line">        carry = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(b)):</div><div class="line">            <span class="keyword">if</span> i &lt; len(a):</div><div class="line">                x = a[i]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                x = <span class="number">0</span></div><div class="line">            y = b[i]</div><div class="line">            sum = x + y + carry</div><div class="line">            b[i] = sum % <span class="number">10</span></div><div class="line">            carry = sum // <span class="number">10</span></div><div class="line">        <span class="keyword">if</span> carry &gt; <span class="number">0</span>:</div><div class="line">            b.append(carry)</div><div class="line">        <span class="keyword">return</span> b</div></pre></td></tr></table></figure>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(self, num1: str, num2: str)</span> -&gt; str:</span></div><div class="line">        <span class="keyword">if</span> num1 == <span class="string">'0'</span> <span class="keyword">or</span> num2 == <span class="string">'0'</span>:</div><div class="line">            <span class="keyword">return</span> <span class="string">'0'</span></div><div class="line">        num1 = list(map(int, num1))</div><div class="line">        num2 = list(map(int, num2))</div><div class="line">        m = len(num1)</div><div class="line">        n = len(num2)</div><div class="line">        result = [<span class="number">0</span>] * (m + n)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">                product = num1[i] * num2[j]</div><div class="line">                sum = product + result[i+j+<span class="number">1</span>]</div><div class="line">                result[i+j+<span class="number">1</span>] = sum % <span class="number">10</span></div><div class="line">                result[i+j] += sum // <span class="number">10</span></div><div class="line">        result = list(map(str, result))</div><div class="line">        result = <span class="string">''</span>.join(result).lstrip(<span class="string">'0'</span>)</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/multiply-strings/" target="_blank" rel="external">https://leetcode.com/problems/multiply-strings//</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 43. Multiply Strings
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode 1779. Find Nearest Point That Has the Same X or Y Coordinate</title>
@@ -333,338 +665,6 @@
     <summary type="html">
     
       Leetcode 1905. Count Sub Islands
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1299. Replace Elements with Greatest Element on Right Side</title>
-    <link href="http://noahsnail.com/2021/08/10/2021-08-10-Leetcode-1299-Replace-Elements-with-Greatest-Element-on-Right-Side/"/>
-    <id>http://noahsnail.com/2021/08/10/2021-08-10-Leetcode-1299-Replace-Elements-with-Greatest-Element-on-Right-Side/</id>
-    <published>2021-08-10T06:13:33.714Z</published>
-    <updated>2021-08-10T06:30:31.476Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Replace_Elements_with_Greatest_Element_on_Right_Side.png" alt="Replace Elements with Greatest Element on Right Side"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先排序获取索引，从最大值所在的索引开始遍历，只要是其左侧没有更新过的值都更新，使用<code>left</code>来确定范围，<code>left</code>始终是已更新数据的最右侧，其是下一次遍历的左边界。Version 2从倒数第二个元素开始向前遍历，<code>maximum</code>用来保存右侧最大值，每次遍历先更新当前索引结果位置的数值为<code>maximum</code>，然后更新<code>maximum</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">replaceElements</span><span class="params">(self, arr: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(arr)</div><div class="line">        result = [<span class="number">-1</span>] * n</div><div class="line">        indexes = sorted(range(n), key=<span class="keyword">lambda</span> i: arr[i], reverse=<span class="keyword">True</span>)</div><div class="line">        left = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            index = indexes[i]</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(left, index):</div><div class="line">                result[j] = arr[index]</div><div class="line">            left = max(left, index)</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">replaceElements</span><span class="params">(self, arr: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(arr)</div><div class="line">        result = [<span class="number">-1</span>] * n</div><div class="line">        maximum = arr[<span class="number">-1</span>]</div><div class="line">        i = n - <span class="number">2</span></div><div class="line">        <span class="keyword">while</span> i &gt; <span class="number">-1</span>:</div><div class="line">            result[i] = maximum</div><div class="line">            maximum = max(maximum, arr[i])</div><div class="line">            i -= <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/replace-elements-with-greatest-element-on-right-side/" target="_blank" rel="external">https://leetcode.com/problems/replace-elements-with-greatest-element-on-right-side/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1299. Replace Elements with Greatest Element on Right Side
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1340. Jump Game V</title>
-    <link href="http://noahsnail.com/2021/08/10/2021-08-10-Leetcode-1340-Jump-Game-V/"/>
-    <id>http://noahsnail.com/2021/08/10/2021-08-10-Leetcode-1340-Jump-Game-V/</id>
-    <published>2021-08-10T05:23:16.436Z</published>
-    <updated>2021-08-10T05:55:05.963Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Jump_Game_V.png" alt="Jump Game V"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，采用深度优先搜索，使用<code>visited</code>记录遍历过的索引及对应的跳跃次数，如果当前索引遍历过，直接返回对应的跳跃次数，分别遍历其左右两侧，取左右两侧最大的跳跃次数，返回最大跳跃次数加上当前元素的跳跃次数<code>1</code>。Version 2对数组先排序，获得排序后的索引，然后从最小值的索引开始寻找左右两侧最大跳跃次数，这样每个数左右两侧比其小的数的跳跃次数都已计算出来，所有元素的初始默认跳跃次数为<code>1</code>，依次更新<code>dp[current]</code>，最后返回最大跳跃次数。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxJumps</span><span class="params">(self, arr: List[int], d: int)</span> -&gt; int:</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        n = len(arr)</div><div class="line">        visited = &#123;&#125;</div><div class="line">        nums = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            nums = max(nums, self.dfs(arr, i, visited, d))</div><div class="line">        <span class="keyword">return</span> nums</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self, arr, current, visited, d)</span>:</span></div><div class="line">        <span class="keyword">if</span> current <span class="keyword">in</span> visited:</div><div class="line">            <span class="keyword">return</span> visited[current]</div><div class="line">        n = len(arr)</div><div class="line">        count = <span class="number">0</span></div><div class="line">        i = current - <span class="number">1</span></div><div class="line">        thres = max(<span class="number">-1</span>, current - d - <span class="number">1</span>)</div><div class="line">        <span class="keyword">while</span> i &gt; thres <span class="keyword">and</span> arr[i] &lt; arr[current]:</div><div class="line">            temp = self.dfs(arr, i, visited, d)</div><div class="line">            visited[i] = temp</div><div class="line">            count = max(count, temp)</div><div class="line">            i -= <span class="number">1</span></div><div class="line">        i = current + <span class="number">1</span></div><div class="line">        thres = min(n, current + d + <span class="number">1</span>)</div><div class="line">        <span class="keyword">while</span> i &lt;  thres <span class="keyword">and</span> arr[i] &lt; arr[current]:</div><div class="line">            temp = self.dfs(arr, i, visited, d)</div><div class="line">            visited[i] = temp</div><div class="line">            count = max(count, temp)</div><div class="line">            i += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> count + <span class="number">1</span></div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxJumps</span><span class="params">(self, arr: List[int], d: int)</span> -&gt; int:</span></div><div class="line">        indexes = sorted(range(len(arr)), key=<span class="keyword">lambda</span> i: arr[i])</div><div class="line">        n = len(arr)</div><div class="line">        dp = [<span class="number">1</span>] * n</div><div class="line">        nums = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> current <span class="keyword">in</span> indexes:</div><div class="line">            i = current - <span class="number">1</span></div><div class="line">            thres = max(<span class="number">-1</span>, current - d - <span class="number">1</span>)</div><div class="line">            count = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> i &gt; thres <span class="keyword">and</span> arr[i] &lt; arr[current]:</div><div class="line">                count = max(count, dp[i])</div><div class="line">                i -= <span class="number">1</span></div><div class="line">            i = current + <span class="number">1</span></div><div class="line">            thres = min(n, current + d + <span class="number">1</span>)</div><div class="line">            <span class="keyword">while</span> i &lt; thres <span class="keyword">and</span> arr[i] &lt; arr[current]:</div><div class="line">                count = max(count, dp[i])</div><div class="line">                i += <span class="number">1</span></div><div class="line">            dp[current] += count</div><div class="line">            nums = max(nums, dp[current])</div><div class="line">        <span class="keyword">return</span> nums</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/jump-game-v/" target="_blank" rel="external">https://leetcode.com/problems/jump-game-v/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1340. Jump Game V
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1345. Jump Game IV</title>
-    <link href="http://noahsnail.com/2021/08/09/2021-08-09-Leetcode-1345-Jump-Game-IV/"/>
-    <id>http://noahsnail.com/2021/08/09/2021-08-09-Leetcode-1345-Jump-Game-IV/</id>
-    <published>2021-08-09T08:01:30.392Z</published>
-    <updated>2021-08-09T08:31:54.309Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Jump_Game_IV.png" alt="Jump Game IV"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先用字典保存数值相同的元素的索引，然后使用广度优先遍历，初始值为<code>(0, 0)</code>，分别表示索引位置为0以及跳跃次数<code>1</code>，遍历当前索引的左边元素、右边元素、以及值相同元素的索引，保存索引位置及跳跃次数，使用<code>visited</code>保存访问过的索引，相同数值的索引访问之后要将字典<code>mapping</code>中保持的索引序列也重置。Version 2代码稍微简洁一些。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minJumps</span><span class="params">(self, arr: List[int])</span> -&gt; int:</span></div><div class="line">        visited = &#123;&#125;</div><div class="line">        mapping = collections.defaultdict(list)</div><div class="line">        <span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(arr):</div><div class="line">            mapping[value] += [index]</div><div class="line">        queue = collections.deque()</div><div class="line">        queue.append((<span class="number">0</span>, <span class="number">0</span>))</div><div class="line">        thres = len(arr) - <span class="number">1</span></div><div class="line">        visited[<span class="number">0</span>] = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> queue:</div><div class="line">            index, steps = queue.popleft()</div><div class="line">            <span class="keyword">if</span> index == thres:</div><div class="line">                <span class="keyword">return</span> steps</div><div class="line">            steps += <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> index &gt; <span class="number">0</span> <span class="keyword">and</span> index<span class="number">-1</span> <span class="keyword">not</span> <span class="keyword">in</span> visited:</div><div class="line">                visited[index<span class="number">-1</span>] = index - <span class="number">1</span></div><div class="line">                queue.append((index<span class="number">-1</span>, steps))</div><div class="line">            <span class="keyword">if</span> index &lt; thres <span class="keyword">and</span> index+<span class="number">1</span> <span class="keyword">not</span> <span class="keyword">in</span> visited:</div><div class="line">                queue.append((index+<span class="number">1</span>, steps))</div><div class="line">                visited[index+<span class="number">1</span>] = index + <span class="number">1</span></div><div class="line">                <span class="keyword">if</span> index + <span class="number">1</span> == thres:</div><div class="line">                    <span class="keyword">return</span> steps</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> mapping[arr[index]]:</div><div class="line">                <span class="keyword">if</span> i == thres:</div><div class="line">                    <span class="keyword">return</span> steps</div><div class="line">                <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> visited:</div><div class="line">                    queue.append((i, steps))</div><div class="line">                    visited[i] = i</div><div class="line">            mapping[arr[index]] = []</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minJumps</span><span class="params">(self, arr: List[int])</span> -&gt; int:</span></div><div class="line">        <span class="keyword">if</span> len(arr) == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        visited = &#123;&#125;</div><div class="line">        mapping = collections.defaultdict(list)</div><div class="line">        <span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(arr):</div><div class="line">            mapping[value] += [index]</div><div class="line">        queue = collections.deque()</div><div class="line">        queue.append((<span class="number">0</span>, <span class="number">0</span>))</div><div class="line">        thres = len(arr) - <span class="number">1</span></div><div class="line">        visited[<span class="number">0</span>] = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> queue:</div><div class="line">            index, steps = queue.popleft()</div><div class="line">            steps += <span class="number">1</span></div><div class="line">            temp = set([index<span class="number">-1</span>, index + <span class="number">1</span>] + mapping[arr[index]])</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> temp:</div><div class="line">                <span class="keyword">if</span> i == thres:</div><div class="line">                    <span class="keyword">return</span> steps</div><div class="line">                <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> visited <span class="keyword">and</span> i &gt; <span class="number">-1</span> <span class="keyword">and</span> i &lt; len(arr):</div><div class="line">                    queue.append((i, steps))</div><div class="line">                    visited[i] = i</div><div class="line">            mapping[arr[index]] = []</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/jump-game-iv/" target="_blank" rel="external">https://leetcode.com/problems/jump-game-iv/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1345. Jump Game IV
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1871. Jump Game VII</title>
-    <link href="http://noahsnail.com/2021/08/09/2021-08-09-Leetcode-1871-Jump-Game-VII/"/>
-    <id>http://noahsnail.com/2021/08/09/2021-08-09-Leetcode-1871-Jump-Game-VII/</id>
-    <published>2021-08-09T02:58:33.916Z</published>
-    <updated>2021-08-09T06:05:41.642Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Jump_Game_VII.png" alt="Jump Game VII"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用队列来保存可进行下一次检索的候选索引，从第<code>0</code>的位置开始检索，根据<code>minJump</code>和<code>maxJump</code>确定检索范围，如果当前字符为<code>0</code>，则将索引添加到队列中，如果恰好是最后一个位置，返回<code>True</code>。下一次的检索范围不能直接从<code>index+minJump</code>开始，因为有可能会造成重复检索，因此取<code>max(index+minJump, end)</code>，<code>end</code>为上一次检索的最后位置，这样检索的时间复杂度为<code>O(n)</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">canReach</span><span class="params">(self, s: str, minJump: int, maxJump: int)</span> -&gt; bool:</span></div><div class="line">        queue = collections.deque()</div><div class="line">        queue.append(<span class="number">0</span>)</div><div class="line">        end = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> queue:</div><div class="line">            index = queue.popleft()</div><div class="line">            start = max(index+minJump, end)</div><div class="line">            end = min(index+maxJump+<span class="number">1</span>, len(s))</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(start, end):</div><div class="line">                <span class="keyword">if</span> s[i] == <span class="string">'0'</span>:</div><div class="line">                    <span class="keyword">if</span> i == len(s) - <span class="number">1</span>:</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">                    queue.append(i)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/jump-game-vii/" target="_blank" rel="external">https://leetcode.com/problems/jump-game-vii/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1871. Jump Game VII
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1306. Jump Game III</title>
-    <link href="http://noahsnail.com/2021/08/09/2021-08-09-Leetcode-1306-Jump-Game-III/"/>
-    <id>http://noahsnail.com/2021/08/09/2021-08-09-Leetcode-1306-Jump-Game-III/</id>
-    <published>2021-08-09T01:42:13.608Z</published>
-    <updated>2021-08-09T02:51:52.788Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Jump_Game_III.png" alt="Jump Game III"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用广度优先搜索，其实是个二叉树遍历问题，使用字典记录搜索过的索引，每次根据当前值计算下一次搜索的左右索引，如果在数组范围内且没被搜索过，则将其记录到队列中，依次搜索，如果当前值为<code>0</code>，返回<code>True</code>，如果队列为空时都没找到，则返回<code>False</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">canReach</span><span class="params">(self, arr: List[int], start: int)</span> -&gt; bool:</span></div><div class="line">        n = len(arr)</div><div class="line">        queue = collections.deque()</div><div class="line">        queue.append(start)</div><div class="line">        records = &#123;&#125;</div><div class="line">        <span class="keyword">while</span> queue:</div><div class="line">            index = queue.popleft()</div><div class="line">            value = arr[index]</div><div class="line">            <span class="keyword">if</span> value == <span class="number">0</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">            records[index] = value</div><div class="line">            left = index - value</div><div class="line">            right = index + value</div><div class="line">            <span class="keyword">if</span> left &gt; <span class="number">-1</span> <span class="keyword">and</span> left <span class="keyword">not</span> <span class="keyword">in</span> records:</div><div class="line">                queue.append(left)</div><div class="line">            <span class="keyword">if</span> right &lt; n <span class="keyword">and</span> right <span class="keyword">not</span> <span class="keyword">in</span> records:</div><div class="line">                queue.append(right)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/jump-game-iii/" target="_blank" rel="external">https://leetcode.com/problems/jump-game-iii/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1306. Jump Game III
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 934. Shortest Bridge</title>
-    <link href="http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-934-Shortest-Bridge/"/>
-    <id>http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-934-Shortest-Bridge/</id>
-    <published>2021-08-06T09:36:31.410Z</published>
-    <updated>2021-08-09T00:46:38.829Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Shortest_Bridge.png" alt="Shortest Bridge"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先找到矩阵中第一个<code>1</code>作为起点，然后使用广度优先搜索找到所有相邻的<code>1</code>，即第一个岛，并将所有岛的坐标及更改的<code>0</code>计数保存到队列中，初始计数为<code>0</code>，搜索第一个岛的同时，将各个点对应的值设为<code>2</code>，防止重复搜索。从第一个岛的所有点开始，重新使用广度优先搜索，如果搜索的点值为<code>0</code>，将值设为<code>2</code>，表示已经搜索过，同时将点的坐标及计数保存，计数要加<code>1</code>，如果搜索的点为<code>1</code>，说明找到了第二个岛，返回反转的<code>0</code>的计数。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">shortestBridge</span><span class="params">(self, grid: List[List[int]])</span> -&gt; int:</span></div><div class="line">        n = len(grid)</div><div class="line">        queue = collections.deque()</div><div class="line">        queue2 = collections.deque()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            flag = <span class="keyword">False</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</div><div class="line">                <span class="keyword">if</span> grid[i][j] == <span class="number">1</span>:</div><div class="line">                    grid[i][j] = <span class="number">2</span></div><div class="line">                    queue.append((i, j))</div><div class="line">                    flag = <span class="keyword">True</span></div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> flag:</div><div class="line">                <span class="keyword">break</span></div><div class="line">        <span class="keyword">while</span> queue:</div><div class="line">            x, y = queue.popleft()</div><div class="line">            queue2.append((x, y, <span class="number">0</span>))</div><div class="line">            <span class="keyword">if</span> x &gt; <span class="number">0</span> <span class="keyword">and</span> grid[x<span class="number">-1</span>][y] == <span class="number">1</span>:</div><div class="line">                grid[x<span class="number">-1</span>][y] = <span class="number">2</span></div><div class="line">                queue.append((x<span class="number">-1</span>, y))</div><div class="line">            <span class="keyword">if</span> y &gt; <span class="number">0</span> <span class="keyword">and</span> grid[x][y<span class="number">-1</span>] == <span class="number">1</span>:</div><div class="line">                grid[x][y<span class="number">-1</span>] = <span class="number">2</span></div><div class="line">                queue.append((x, y<span class="number">-1</span>))</div><div class="line">            <span class="keyword">if</span> x &lt; n<span class="number">-1</span> <span class="keyword">and</span> grid[x+<span class="number">1</span>][y] == <span class="number">1</span>:</div><div class="line">                grid[x+<span class="number">1</span>][y] = <span class="number">2</span></div><div class="line">                queue.append((x+<span class="number">1</span>, y))</div><div class="line">            <span class="keyword">if</span> y &lt; n<span class="number">-1</span> <span class="keyword">and</span> grid[x][y+<span class="number">1</span>] == <span class="number">1</span>:</div><div class="line">                grid[x][y+<span class="number">1</span>] = <span class="number">2</span></div><div class="line">                queue.append((x, y+<span class="number">1</span>))</div><div class="line">        <span class="keyword">while</span> queue2:</div><div class="line">            x, y, count = queue2.popleft()</div><div class="line">            <span class="keyword">if</span> x &gt; <span class="number">0</span>:</div><div class="line">                <span class="keyword">if</span> grid[x<span class="number">-1</span>][y] == <span class="number">0</span>:</div><div class="line">                    grid[x<span class="number">-1</span>][y] = <span class="number">2</span></div><div class="line">                    queue2.append((x<span class="number">-1</span>, y, count + <span class="number">1</span>))</div><div class="line">                <span class="keyword">elif</span> grid[x<span class="number">-1</span>][y] == <span class="number">1</span>:</div><div class="line">                    <span class="keyword">return</span> count</div><div class="line">            <span class="keyword">if</span> y &gt; <span class="number">0</span>:</div><div class="line">                <span class="keyword">if</span> grid[x][y<span class="number">-1</span>] == <span class="number">0</span>:</div><div class="line">                    grid[x][y<span class="number">-1</span>] = <span class="number">2</span></div><div class="line">                    queue2.append((x, y<span class="number">-1</span>, count + <span class="number">1</span>))</div><div class="line">                <span class="keyword">elif</span> grid[x][y<span class="number">-1</span>] == <span class="number">1</span>:</div><div class="line">                    <span class="keyword">return</span> count</div><div class="line">            <span class="keyword">if</span> x &lt; n<span class="number">-1</span>:</div><div class="line">                <span class="keyword">if</span> grid[x+<span class="number">1</span>][y] == <span class="number">0</span>:</div><div class="line">                    grid[x+<span class="number">1</span>][y] = <span class="number">2</span></div><div class="line">                    queue2.append((x+<span class="number">1</span>, y, count + <span class="number">1</span>))</div><div class="line">                <span class="keyword">elif</span> grid[x+<span class="number">1</span>][y] == <span class="number">1</span>:</div><div class="line">                    <span class="keyword">return</span> count</div><div class="line">            <span class="keyword">if</span> y &lt; n<span class="number">-1</span>:</div><div class="line">                <span class="keyword">if</span> grid[x][y+<span class="number">1</span>] == <span class="number">0</span>:</div><div class="line">                    grid[x][y+<span class="number">1</span>] = <span class="number">2</span></div><div class="line">                    queue2.append((x, y+<span class="number">1</span>, count + <span class="number">1</span>))</div><div class="line">                <span class="keyword">elif</span> grid[x][y+<span class="number">1</span>] == <span class="number">1</span>:</div><div class="line">                    <span class="keyword">return</span> count</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/shortest-bridge/" target="_blank" rel="external">https://leetcode.com/problems/shortest-bridge/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 934. Shortest Bridge
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 724. Find Pivot Index</title>
-    <link href="http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-724-Find-Pivot-Index/"/>
-    <id>http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-724-Find-Pivot-Index/</id>
-    <published>2021-08-06T07:45:05.998Z</published>
-    <updated>2021-08-06T07:48:51.748Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Find_Pivot_Index.png" alt="Find Pivot Index"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先将数组分为左右两边，左边为<code>0</code>，右边是数组总和，遍历数组，左边加上当前位置的前一个数，右边减去当前位置的数，如果左右相等，返回当前索引，这样优先找到的是满足条件的最左边的索引，最后没找到，返回<code>-1</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pivotIndex</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></div><div class="line">        left = <span class="number">0</span></div><div class="line">        right = sum(nums)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</div><div class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span>:</div><div class="line">                left += nums[i<span class="number">-1</span>]</div><div class="line">            right -= nums[i]</div><div class="line">            <span class="keyword">if</span> left == right:</div><div class="line">                <span class="keyword">return</span> i</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/find-pivot-index/" target="_blank" rel="external">https://leetcode.com/problems/find-pivot-index/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 724. Find Pivot Index
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1590. Make Sum Divisible by P</title>
-    <link href="http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-1590-Make-Sum-Divisible-by-P/"/>
-    <id>http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-1590-Make-Sum-Divisible-by-P/</id>
-    <published>2021-08-06T06:44:42.298Z</published>
-    <updated>2021-08-06T07:00:48.770Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Make_Sum_Divisible_by_P.png" alt="Make Sum Divisible by P"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用前缀和来解决，先对整个数组求和，总和与<code>p</code>的余数设为<code>k</code>，如果<code>k==0</code>，则直接返回<code>0</code>即可。否则，将遍历数组，求前缀和，前缀和与<code>p</code>的余数设为<code>remainder</code>，题目需要移除的部分是两个前缀和相减后的部分，其与<code>p</code>的余数应为<code>k</code>，即<code>(remainder - temp) % p == k</code>，<code>temp</code>是需要寻找的余数，由于<code>remainder - temp</code>为负数时，公式变为<code>p + remainder - temp = k</code>，通过公式变换，可以得到<code>temp = p + remainder - k</code>，由于<code>remainder - temp</code>大于<code>0</code>时不需要加上<code>p</code>，因此公式变为<code>temp = (remainder + p - k) % p</code>。字典中保持的是余数及对应的位置索引，由于余数相同时索引位置更新，因此字典中保存的永远余数相同时是最大的位置索引，这样可以保证满足条件时要移除的元素数量最少。注意，假设第一个数的余数就等于<code>k</code>，此时数组中没有要寻找的余数<code>temp=0</code>的位置，因此<code>stat[0]=-1</code>，这样计算的长度才不会错。初始长度设为数组长度，如果没找到满足条件的子数组，则长度不更新，此时将长度设为<code>-1</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minSubarray</span><span class="params">(self, nums: List[int], p: int)</span> -&gt; int:</span></div><div class="line">        k = sum(nums) % p</div><div class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        total = <span class="number">0</span></div><div class="line">        stat = collections.defaultdict(int)</div><div class="line">        stat[<span class="number">0</span>] = <span class="number">-1</span></div><div class="line">        length = len(nums)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</div><div class="line">            total += nums[i]</div><div class="line">            remainder = total % p</div><div class="line">            temp = (remainder + p - k) % p</div><div class="line">            <span class="keyword">if</span> temp <span class="keyword">in</span> stat:</div><div class="line">                length = min(length, i - stat[temp])</div><div class="line">            stat[remainder] = i</div><div class="line">        <span class="keyword">if</span> length == len(nums):</div><div class="line">            length = <span class="number">-1</span></div><div class="line">        <span class="keyword">return</span> length</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/make-sum-divisible-by-p/" target="_blank" rel="external">https://leetcode.com/problems/make-sum-divisible-by-p/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1590. Make Sum Divisible by P
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 523. Continuous Subarray Sum</title>
-    <link href="http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-523-Continuous-Subarray-Sum/"/>
-    <id>http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-523-Continuous-Subarray-Sum/</id>
-    <published>2021-08-06T06:20:08.241Z</published>
-    <updated>2021-08-06T06:26:30.020Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Continuous_Subarray_Sum.png" alt="Continuous Subarray Sum"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用前缀和来解决，遍历数组，求前缀和，求前缀和与<code>k</code>的余数，余数在字典中存在时，则意味着当前前缀和减去之前的前缀和等于<code>k</code>的倍数，此时计算两个前缀和的长度差，如果大于等于<code>2</code>，则返回<code>True</code>，如果余数不存在，则将余数保存在字典中并记录其索引位置。由于余数相同时不会更新索引，因此，字典中前缀和余数相同时，保存的是最靠前的位置。注意，假设第一个数就等于<code>k</code>的倍数，此时数组中没有余数<code>0</code>的位置，因此<code>stat[0]=-1</code>，这样计算的长度才不会错。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkSubarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; bool:</span></div><div class="line">        n = len(nums)</div><div class="line">        total = <span class="number">0</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        stat[<span class="number">0</span>] = <span class="number">-1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            total += nums[i]</div><div class="line">            remainder = total % k</div><div class="line">            <span class="keyword">if</span> remainder <span class="keyword">in</span> stat:</div><div class="line">                length = i - stat[remainder]</div><div class="line">                <span class="keyword">if</span> length &gt; <span class="number">1</span>:</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                stat[remainder] = i</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/continuous-subarray-sum/" target="_blank" rel="external">https://leetcode.com/problems/continuous-subarray-sum/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 523. Continuous Subarray Sum
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 560. Subarray Sum Equals K</title>
-    <link href="http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-560-Subarray-Sum-Equals-K/"/>
-    <id>http://noahsnail.com/2021/08/06/2021-08-06-Leetcode-560-Subarray-Sum-Equals-K/</id>
-    <published>2021-08-06T05:55:34.697Z</published>
-    <updated>2021-08-06T07:43:58.222Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Subarray_Sum_Equals_K.png" alt="Subarray Sum Equals K"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用前缀和来解决，遍历数组，求前缀和，统计前缀和的次数并保存到字典中，当碰到差值在字典中存在时，则意味着当前数组减去之前的前缀和数组等于<code>k</code>，将次数加到<code>count</code>中，更新前缀和的次数。注意，假设第一个数就等于<code>k</code>，此时数组中没有差值<code>0</code>的次数，因此<code>stat[0]=1</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">subarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></div><div class="line">        n = len(nums)</div><div class="line">        total = <span class="number">0</span></div><div class="line">        count  = <span class="number">0</span></div><div class="line">        stat = collections.defaultdict(int)</div><div class="line">        stat[<span class="number">0</span>] = <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            total += nums[i]</div><div class="line">            count += stat[total - k]</div><div class="line">            stat[total] += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> count</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" rel="external">https://leetcode.com/problems/subarray-sum-equals-k/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 560. Subarray Sum Equals K
     
     </summary>
     
