@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2021-08-27T06:44:24.962Z</updated>
+  <updated>2021-08-27T06:58:03.067Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode 567. Permutation in String</title>
+    <link href="http://noahsnail.com/2021/08/27/2021-08-27-Leetcode-567-Permutation-in-String/"/>
+    <id>http://noahsnail.com/2021/08/27/2021-08-27-Leetcode-567-Permutation-in-String/</id>
+    <published>2021-08-27T06:56:30.160Z</published>
+    <updated>2021-08-27T06:58:03.067Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Permutation_in_String.png" alt="Permutation in String"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，此题与leetcode 438非常类似，思路是一样的。判断<code>s2</code>是否包含<code>s1</code>的变换，可以采用字典的方法，即每个字母的个数及类型相等。先统计字符串<code>s1</code>的字母个数并记录其长度在<code>stat</code>中，遍历字符串<code>s2</code>，如果字母在<code>stat</code>中，则将其记录到字典<code>subs</code>中，否则重置<code>subs</code>，当<code>subs[&#39;length&#39;] = stat[&#39;length&#39;]</code>时，比较二者是否相等，如果相等，直接返回<code>True</code>，否则，字符串继续遍历，为保证<code>subs</code>长度与<code>stat</code>长度一致，此时，<code>subs</code>中移除<code>s2[index - n + 1]</code>字符，同时长度减<code>1</code>。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkInclusion</span><span class="params">(self, s1: str, s2: str)</span> -&gt; bool:</span></div><div class="line">        n = len(s1)</div><div class="line">        stat = collections.Counter(s1)</div><div class="line">        stat[<span class="string">'length'</span>] = n</div><div class="line">        subs = collections.defaultdict(int)</div><div class="line">        <span class="keyword">for</span> index, ch <span class="keyword">in</span> enumerate(s2):</div><div class="line">            <span class="keyword">if</span> ch <span class="keyword">in</span> stat:</div><div class="line">                subs[ch] += <span class="number">1</span></div><div class="line">                subs[<span class="string">'length'</span>] += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                subs = collections.defaultdict(int)</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> subs[<span class="string">'length'</span>] == stat[<span class="string">'length'</span>]:</div><div class="line">                <span class="keyword">if</span> stat == subs:</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">                subs[s2[index - n + <span class="number">1</span>]] -= <span class="number">1</span></div><div class="line">                subs[<span class="string">'length'</span>] -= <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/permutation-in-string/" target="_blank" rel="external">https://leetcode.com/problems/permutation-in-string/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 567. Permutation in String
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode 438. Find All Anagrams in a String</title>
@@ -356,6 +388,38 @@
   </entry>
   
   <entry>
+    <title>Leetcode 519. Random Flip Matrix</title>
+    <link href="http://noahsnail.com/2021/08/20/2021-08-20-Leetcode-519-Random-Flip-Matrix/"/>
+    <id>http://noahsnail.com/2021/08/20/2021-08-20-Leetcode-519-Random-Flip-Matrix/</id>
+    <published>2021-08-20T02:30:17.720Z</published>
+    <updated>2021-08-27T07:02:34.579Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Random_Flip_Matrix.png" alt="Random Flip Matrix"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用单一数字作为矩阵的坐标索引，利用字典来保存访问过的矩阵索引，如果随机得到的索引在字典中存在，则继续进行随机索引，直至找到一个未访问过的索引，如果所有索引都访问过，则返回空坐标。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, m: int, n: int)</span>:</span></div><div class="line">        self.m = m</div><div class="line">        self.n = n</div><div class="line">        self.coordinates = m * n</div><div class="line">        self.visited = &#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flip</span><span class="params">(self)</span> -&gt; List[int]:</span></div><div class="line">        <span class="keyword">if</span> len(self.visited) == self.coordinates:</div><div class="line">            <span class="keyword">return</span> []</div><div class="line">        index = random.randrange(self.coordinates)</div><div class="line">        <span class="keyword">while</span> index <span class="keyword">in</span> self.visited:</div><div class="line">            index = random.randrange(self.coordinates)</div><div class="line">        self.visited[index] = <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> [index // self.n, index % self.n]</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset</span><span class="params">(self)</span> -&gt; <span class="keyword">None</span>:</span></div><div class="line">        self.visited = &#123;&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># Your Solution object will be instantiated and called as such:</span></div><div class="line"><span class="comment"># obj = Solution(m, n)</span></div><div class="line"><span class="comment"># param_1 = obj.flip()</span></div><div class="line"><span class="comment"># obj.reset()</span></div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/random-flip-matrix/" target="_blank" rel="external">https://leetcode.com/problems/random-flip-matrix/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 519. Random Flip Matrix
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Leetcode 1658. Minimum Operations to Reduce X to Zero</title>
     <link href="http://noahsnail.com/2021/08/19/2021-08-19-Leetcode-1658-Minimum-Operations-to-Reduce-X-to-Zero/"/>
     <id>http://noahsnail.com/2021/08/19/2021-08-19-Leetcode-1658-Minimum-Operations-to-Reduce-X-to-Zero/</id>
@@ -613,78 +677,6 @@
     <summary type="html">
     
       Leetcode 1881. Maximum Value after Insertion
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 977. Squares of a Sorted Array</title>
-    <link href="http://noahsnail.com/2021/08/13/2021-08-13-Leetcode-977-Squares-of-a-Sorted-Array/"/>
-    <id>http://noahsnail.com/2021/08/13/2021-08-13-Leetcode-977-Squares-of-a-Sorted-Array/</id>
-    <published>2021-08-13T05:43:31.300Z</published>
-    <updated>2021-08-13T09:21:04.643Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Squares_of_a_Sorted_Array.png" alt="Squares of a Sorted Array"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，采用双指针，先计算平方和，再比较大小，较大的更新到结果数组中。Version 2先比较二者绝对值大小，再将平方更新到结果中。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortedSquares</span><span class="params">(self, nums: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(nums)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = n - <span class="number">1</span></div><div class="line">        result = [<span class="number">0</span>] * n</div><div class="line">        index = n - <span class="number">1</span></div><div class="line">        x = nums[i] ** <span class="number">2</span></div><div class="line">        y = nums[j] ** <span class="number">2</span></div><div class="line">        <span class="keyword">while</span> i &lt;= j:    </div><div class="line">            <span class="keyword">if</span> x &lt;= y:</div><div class="line">                result[index] = y</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                j -= <span class="number">1</span></div><div class="line">                y = nums[j] ** <span class="number">2</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                result[index] = x</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                i += <span class="number">1</span></div><div class="line">                x = nums[i] ** <span class="number">2</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortedSquares</span><span class="params">(self, nums: List[int])</span> -&gt; List[int]:</span></div><div class="line">        n = len(nums)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = n - <span class="number">1</span></div><div class="line">        result = [<span class="number">0</span>] * n</div><div class="line">        index = n - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt;= j: </div><div class="line">            x = nums[i]</div><div class="line">            y = nums[j]</div><div class="line">            <span class="keyword">if</span> abs(x) &lt;= abs(y):</div><div class="line">                result[index] = y * y</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                j -= <span class="number">1</span></div><div class="line">                y = nums[j]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                result[index] = x * x</div><div class="line">                index -= <span class="number">1</span></div><div class="line">                i += <span class="number">1</span></div><div class="line">                x = nums[i]</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/squares-of-a-sorted-array/" target="_blank" rel="external">https://leetcode.com/problems/squares-of-a-sorted-array/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 977. Squares of a Sorted Array
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1961. Check If String Is a Prefix of Array</title>
-    <link href="http://noahsnail.com/2021/08/12/2021-08-12-Leetcode-1961-Check-If-String-Is-a-Prefix-of-Array/"/>
-    <id>http://noahsnail.com/2021/08/12/2021-08-12-Leetcode-1961-Check-If-String-Is-a-Prefix-of-Array/</id>
-    <published>2021-08-12T09:08:08.849Z</published>
-    <updated>2021-08-13T02:03:19.991Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Check_If_String_Is_a_Prefix_of_Array.png" alt="Check If String Is a Prefix of Array"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，遍历数组中的字符串，同时遍历<code>s</code>，如果数组中的字符不等于对应位置的字符，直接返回<code>False</code>，当<code>s</code>遍历结束时，判断数组中当前位置的字符串是否遍历完成，如果数组遍历结束，判断字符串<code>s</code>是否遍历完成。Version 2直接按单词比较。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPrefixString</span><span class="params">(self, s: str, words: List[str])</span> -&gt; bool:</span></div><div class="line">        n = len(s)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(word)):</div><div class="line">                <span class="keyword">if</span> s[i] == word[j]:</div><div class="line">                    i += <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">                <span class="keyword">if</span> i == n:</div><div class="line">                    <span class="keyword">return</span> j == len(word) - <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> i == n</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPrefixString</span><span class="params">(self, s: str, words: List[str])</span> -&gt; bool:</span></div><div class="line">        n = len(s)</div><div class="line">        i = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">            m = len(word)</div><div class="line">            <span class="keyword">if</span> s[i:i+m] == word:</div><div class="line">                i += m</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">            <span class="keyword">if</span> i == n:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> i == n</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/check-if-string-is-a-prefix-of-array/" target="_blank" rel="external">https://leetcode.com/problems/check-if-string-is-a-prefix-of-array/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1961. Check If String Is a Prefix of Array
     
     </summary>
     
