@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2022-05-07T06:37:40.666Z</updated>
+  <updated>2022-06-09T09:27:38.564Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,214 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>即时配送的订单分配策略：从建模和优化-笔记</title>
+    <link href="http://noahsnail.com/2022/06/07/2022-06-07-%E5%8D%B3%E6%97%B6%E9%85%8D%E9%80%81%E7%9A%84%E8%AE%A2%E5%8D%95%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5-%E4%BB%8E%E5%BB%BA%E6%A8%A1%E5%92%8C%E4%BC%98%E5%8C%96-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/</id>
+    <published>2022-06-07T07:13:09.856Z</published>
+    <updated>2022-06-09T09:27:38.564Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>外卖平台中，配送时效、准时率作为履约环节的重要指标，是外卖平台的核心竞争力之一。要提升用户的配送时效和准时率，最直接的方法是配备较多的配送员，扩大运力规模，然而这也意味着配送成本会很高。怎么在配送体验和配送成本之间取得最佳的平衡，是即时配送平台生存的根基和关键所在。在用户满意度持续提升的同时，降低配送成本、提高骑手满意度、驱动配送系统的自动化和智能化，是外卖配送团队要解决的难题。</p>
+<p>Note:<br>招募更多的配送员，配送成本很高，应该想办法减少成本，即用更少的骑手配送更多的订单。</p>
+<h2 id="2-即时配送智能调度系统"><a href="#2-即时配送智能调度系统" class="headerlink" title="2. 即时配送智能调度系统"></a>2. 即时配送智能调度系统</h2><p><strong>措施</strong></p>
+<ol>
+<li>首先通过优化设定配送费以及预计送达时间来调整订单结构；</li>
+<li>在接收订单之后，考虑骑手位置、在途订单情况、骑手能力、商家出餐、交付难度、天气、地理路况、未来单量等因素，在正确的时间将订单分配给最合适的骑手，并在骑手执行过程中随时预判订单超时情况并动态触发改派操作，实现订单和骑手的动态最优匹配；</li>
+<li>系统派单后，为骑手提示该商家的预计出餐时间和合理的配送线路，并通过语音方式和骑手实现高效交互；</li>
+<li>在骑手送完订单后，系统根据订单需求预测和运力分布情况，告知骑手不同商圈的运力需求情况，实现闲时的运力调度。</li>
+</ol>
+<p><strong>结果</strong><br>通过上述技术和模式的引入，持续改善了用户体验和配送成本：</p>
+<ol>
+<li>订单的平均配送时长从2015年的41分钟，下降到32分钟，进一步缩短至28分钟；</li>
+<li>另一方面，在骑手薪资稳步提升的前提下，单均配送成本也有了20%以上的缩减。</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>缩短配送时间，如果配送时间本来就很短，可以考虑稍微牺牲配送时间，提高其它指标</li>
+<li>降低配送成本，在保证订单完成率的情况下减少配送骑手，骑手多单配送并行，减少每单配送成本</li>
+</ul>
+<h2 id="3-订单分配问题"><a href="#3-订单分配问题" class="headerlink" title="3. 订单分配问题"></a>3. 订单分配问题</h2><h3 id="3-1-订单分配的发展"><a href="#3-1-订单分配的发展" class="headerlink" title="3.1 订单分配的发展"></a>3.1 订单分配的发展</h3><p>外卖订单的分配问题一般可建模为带有若干复杂约束的DVRP（Dynamic Vehicle Routing Problem）问题。这类问题一般可表述为：有一定数量的骑手，每名骑手身上有若干订单正在配送过程中，在过去一段时间（如1分钟）内产生了一批新订单，已知骑手的行驶速度、任意两点间的行驶距离、每个订单的出餐时间和交付时间（骑手到达用户所在地之后将订单交付至用户所需的时间），那么如何将这批新订单在正确的时间分配至正确的骑手，使得用户体验得到保证的同时，骑手的配送效率最高。</p>
+<p>订单和服务提供方的匹配问题是一个非常关键的问题。在外卖行业发展初期主要依赖骑手抢单模式和人工派单模式。</p>
+<ul>
+<li>抢单模式<br>抢单模式的优势是开发难度低，服务提供者（如司机、骑手）的自由度较高，可以按照自身的需要进行抢单，但其缺点也很明显：骑手/司机只考虑自身的场景需求，做出一个局部近优的选择，然而由于每个骑手掌握的信息有限又只从自身利益出发来决策，导致配送整体效率低下，从用户端来看，还存在大量订单无人抢或者抢了之后造成服务质量无法保证（因为部分骑手无法准确预判自己的配送服务能力）的场景，用户体验比较差。</li>
+<li>人工派单模式<br>人工派单的方式，从订单分配的结果上来看，<strong>一般优于抢单模式</strong>。在订单量、骑手数相对比较少的情形下，有经验的调度员可以根据订单的属性特点、骑手的能力、骑手已接单情况、环境因素等，在骑手中逐个比对，根据若干经验规则挑选一个比较合适的骑手来配送。一般而言，人工调度一个订单往往至少需要半分钟左右的时间才能完成。然而，随着外卖订单规模的日益增长，在热门商圈（方圆3公里左右）的高峰时段，1分钟的时间内可能会有50单以上，在这种情况下，要求人工调度员每1-2秒钟做出一次合理的调度决策，显然是不可能的。另一方面，由于即时配送过程的复杂性，要做出合理的匹配决策，要求调度员对配送范围内各商家的出餐速度、各用户地址的配送难度（例如有的写字楼午高峰要等很长时间的电梯）、各骑手自身的配送工具/熟悉的商家和用户范围/工作习惯等等要有非常深入的了解，在此基础上具备统筹优化能力，考虑未来进单量、减少空驶等因素，做出全局近优的选择，这对人工调度员而言，又是一项极其艰巨的任务。</li>
+</ul>
+<p>系统派单具备如下优势：</p>
+<ul>
+<li>系统可以在全局层面上掌握和配送有关的骑手、商家、用户、订单等各类信息，在此基础上，可以做出全局较优的方案，从而提升配送效率和配送体验，减少配送成本； </li>
+<li>显著减轻人工调度员的工作，从而降低人工成本，人工调度员只需要在一些意外场景（如配送员出现紧急情况无法继续配送等）发生的时候进行干预即可。</li>
+</ul>
+<p>Note:<br>派单模式与抢单模式并存，派单一般优于抢单</p>
+<h3 id="3-2-即时配送大数据平台"><a href="#3-2-即时配送大数据平台" class="headerlink" title="3.2 即时配送大数据平台"></a>3.2 即时配送大数据平台</h3><p>美团外卖每天产生巨量的订单配送日志、行驶轨迹数据。通过对配送大数据进行分析、挖掘，会得到每个用户、楼宇、商家、骑手、地理区域的个性化信息，以及有关各地理区块骑行路径的有效数据，那么订单智能分配系统的目标就是基于大数据平台，根据订单的配送需求、地理环境以及每名骑手的个性化特点，实现订单与骑手的高效动态最优匹配，从而为每个用户和商家提供最佳的配送服务，并降低配送成本。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-238de0c6.png" alt="订单分配系统"></p>
+<p>即时配送大数据平台实现对骑手轨迹数据、配送业务数据、特征数据、指标数据的全面管理和监控，并通过模型平台、特征平台支持相关算法策略的快速迭代和优化。</p>
+<ul>
+<li><strong>机器学习模块</strong>负责从数据中寻求规律和知识，例如对商家的出餐时间、到用户所在楼宇上下楼的时间、未来的订单、骑行速度、红绿灯耗时、骑行导航路径等因素进行准确预估，为调度决策提供准确的基础信息；</li>
+<li><strong>运筹优化模块</strong>则在即时配送大数据平台以及机器学习的预测数据基础上，采用最优化理论、强化学习等优化策略进行计算，做出全局最优的分配决策，并和骑手高效互动，处理执行过程中的问题，实现动态最优化。</li>
+</ul>
+<h3 id="3-3-订单分配问题建模"><a href="#3-3-订单分配问题建模" class="headerlink" title="3.3 订单分配问题建模"></a>3.3 订单分配问题建模</h3><p>准确建模是实际决策优化项目的第一步，也是最关键的一步。准确建模，包括两个方面的问题：</p>
+<ul>
+<li>正确理解了实际业务场景的优化问题，并且通过某种形式化语言进行了准确描述；</li>
+<li>建立的模型中，涉及的各类参数和数据，能够准确得获取。</li>
+</ul>
+<p>在上述两个前提下，采用相应的高效优化算法求解模型所得到的最优解，就是符合实际场景需求的最优决策方案。第一个问题，一般是通过业务调研、分析并结合建模工具来得到；而解决第二个问题，则更多地需要依赖数据分析、机器学习、数据挖掘技术结合领域知识，对模型进行精确的量化表达。</p>
+<p>一个决策优化问题的数学模型，一般包括三个要素：</p>
+<ul>
+<li>决策变量，决策变量说明了希望算法来帮助做哪些决策</li>
+<li>优化目标，优化目标则是指通过调整决策变量，使得哪些指标得到优化</li>
+<li>约束条件，约束条件则是在优化决策的过程中所考虑的各类限制性因素</li>
+</ul>
+<p>即时配送场景下的订单分配问题，符号定义：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-019f9815.png" alt="符号定义"></p>
+<p>在即时配送调度场景下，决策变量包括各个订单需要分配的骑手，以及骑手的建议行驶路线：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-c9a81df3.png" alt="决策变量"></p>
+<p>优化目标一般包括希望用户的单均配送时长尽量短、骑手付出的劳动尽量少、超时率尽量低等。可表述为：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d418f611.png" alt="优化目标"></p>
+<p>实际场景下的订单分配问题，设置目标函数是一个较为复杂的问题。</p>
+<ol>
+<li>该优化问题是多目标的，且各个目标在不同时段、不同环境下会有差别。</li>
+<li>缺乏有助于量化优化目标的数据。针对该难题，首先通过深入调研业务痛点和目标，在此基础上，采用机理和数据相结合的办法，由人工设定目标函数的结构，通过仿真系统和实际数据去设定目标函数的参数，来确定最终采用的目标函数形态。</li>
+</ol>
+<p>即时配送调度问题的约束条件类型：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-a47cd4c2.png" alt="约束条件类型"></p>
+<p>除了以上约束外，有时还需要考虑部分订单只能由具备某些特点的骑手来配送、载具的容量限制等。</p>
+<p>Note:<br>载具容量限制，订单类型要求订单只能单独配送，不能与其它订单混合在一起。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d2ce29cb.png" alt="建模"></p>
+<p>以上只是针对给定的一批订单进行匹配决策的优化问题在建模时所需考虑的部分因素。在外卖配送场景中，希望的不是单次决策的最优，而是策略在一段时间应用后的累积收益最大。不追求某一个订单的指派是最优的，而是希望一天下来，所有的订单指派结果整体上是全局最优的。在进行决策的时候，既需要考虑已确定的订单，还需要考虑未来的尚未确定的订单。运筹优化领域中的马尔可夫决策过程描述的就是这样的一类在不确定、信息不完备环境下的序贯决策优化问题。</p>
+<p>Note:<br>最简单的方法是贪心，追求当前订单最优指派，实现简单，但可能不是全局最优的。追求全局最优复杂，不一定比局部最优好，只有全局最优明显优于局部最优时，才值得上。</p>
+<p>即时配送订单分配场景下的数据包括两类：</p>
+<ul>
+<li>直接通过业务系统采集可获取的数据，例如订单数据、骑手负载数据、骑手状态数据等。</li>
+<li>无法直接采集得到，需要预测或统计才能获取的数据，如商户出餐时间、用户驻留时间（骑手到达用户处将订单交付给用户的时间）、骑手配送能力等。</li>
+</ul>
+<p>第一类数据的获取一般由业务系统、骑手端App直接给出，其精度通过提升工程质量或操作规范可有效保证；而第二类数据的获取是即时配送调度的关键难点之一。</p>
+<p>在订单的配送过程中，骑手在商家、用户处的取餐和交付时间会占到整个订单配送时长的一半以上。商家出餐时间的长短，跟品类、时段、天气等因素都有关，而交付时间更为复杂，用户在几楼，是否处于午高峰时段，有没有电梯等等，都会影响骑手交付订单给用户的时间。为解决这些问题，利用机器学习工具，利用历史的骑手到店、等餐、取餐的数据，并充分考虑天气等外部因素的影响，建立全面反映出餐能力的预测模型，并通过实时维度的特征进行修正，可以得到准确的出餐/交付时间估计。</p>
+<p>Note:<br>骑手在路上的时间比较简单，也比较好估计，就是距离/骑手速度。但等餐、取餐时间，用户交付时间涉及的因素比较多，也比较杂。例如商户的订单积压情况，用户的楼层、电梯情况等。这也是将配送时间分成多段预测的原因之一。整体预测可能偏差较大，分成几部分，其中一部分的时间可以更准确的预测。</p>
+<p>优化算法的作用则是在构建的解空间里找到最优的策略。配送调度问题属于典型的NP-Hard优化问题，解空间巨大。如何设计好的优化算法，从庞大的解空间中搜索得到一个满意解是一个很大的挑战，即时配送对于优化算法的另一个要求是高实时性。</p>
+<p>针对此难题，采用了两个关键思路。一是问题特征分析。针对配送调度的场景，这个问题可以被分解为两个层次：骑手路径优化和订单分配方案的优化。骑手路径优化问题要解决的问题是：在新订单分配至骑手后，确定骑手的最佳配送线路；而订单分配优化问题要解决的问题是：把一批订单分配至相应的骑手，使得关注的指标（如配送时长、准时率、骑手的行驶距离等）达到最优。这两个问题的关系是：通过订单分配优化算法进行初始的订单分配，然后通过骑手路径优化算法获取各骑手的最佳行驶路线，进而，订单分配优化算法根据骑手路径优化结果调整分配方案。这两个层次不断反复迭代，最终获得比较满意的解。第二个思路是跨学科结合。订单分配问题在业内有两类方法，第一类方法是把订单分配问题转换成图论中的二分图匹配问题来解决。这种做法是一个不错的近似方案，优点是实现简单计算速度快，但它的缺点是会损失一部分满意解。第二类方法是直接采用个性化的算法进行订单分配方案的优化，优点是不损失获得满意解的可能性，但实际做起来难度较大。结合领域知识、优化算法、机器学习策略以及相关图论算法，基于分解协调思想，设计了骑手路径优化算法和订单分配优化算法。进一步，利用强化学习的思想，引入了离线学习和在线优化相结合的机制，离线学习得到策略模型，在线通过策略迭代，不断寻求更优解。通过不断地改进算法，在耗时下降的同时，算法的优化效果提升50%以上。为了有效降低算法运行时间，对优化算法进行并行化，并利用并行计算集群进行快速处理。</p>
+<p>Note:<br>批量分配算法，二分图匹配问题，简单速度快，第2种需要集群。</p>
+<p>即时配送过程的一个突出特点是线下的突发因素多、影响大，突发事件造成的一个恶劣结果是，虽然在指派订单的时刻，所指派的骑手是合理的，然而过了一段时间之后，由于骑手、订单等状态发生了变化，会变得不够合理。现有方法主要通过人工来完成，即：配送站长/调度员在配送信息系统里，查看各个骑手的位置、手中订单的状态及商户/用户的位置/期望送达时间等信息，同时接听骑手的电话改派请求，在此基础上，分析哪些订单应该改派，以及应该改派给哪位骑手，并执行操作。</p>
+<p>Note:<br>突发事件需要人工介入(2017年)。</p>
+<p>针对即时配送的不确定性特点，提出了两点创新：一是延迟调度策略，即在某些场景订单可以不被指派出去，在不影响订单超时的情况下，延迟做出决策；二是系统自动改派策略，即订单即便已经派给了骑手，后台的智能算法仍然会实时评估各个骑手的位置、订单情况，并帮助骑手进行分析，判断是否存在超时风险。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-7612e7e6.png" alt="随机性应对"></p>
+<p>针对即时配送场景，建立了相应的仿真模型，开发了配送仿真系统。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-2d610033.png" alt="仿真系统"></p>
+<p>Note:<br>算法需要在仿真系统上进行测试，调整。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2017/10/11/o2o-intelligent-distribution.html" target="_blank" rel="external">即时配送的订单分配策略：从建模和优化</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      即时配送的订单分配策略：从建模和优化-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>美团智能配送系统的运筹优化实战-笔记</title>
+    <link href="http://noahsnail.com/2022/06/07/2022-06-07-%E7%BE%8E%E5%9B%A2%E6%99%BA%E8%83%BD%E9%85%8D%E9%80%81%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E7%AD%B9%E4%BC%98%E5%8C%96%E5%AE%9E%E6%88%98-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/</id>
+    <published>2022-06-07T01:29:46.250Z</published>
+    <updated>2022-06-09T09:27:39.916Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-美团智能配送系统架构"><a href="#1-美团智能配送系统架构" class="headerlink" title="1. 美团智能配送系统架构"></a>1. 美团智能配送系统架构</h2><p>美团配送业务场景复杂，单量规模大。在大规模的业务场景下，配送智能化就变得非常重要，而智能配送的核心就是做资源的优化配置。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png" alt="资源优化配置"></p>
+<p>外卖配送既有线上的业务，也有线下的复杂运营。配送连接订单需求和运力供给。为了达到需求和供给的平衡，不仅要在线下运营商家、运营骑手，还要在线上将这些需求和运力供给做合理的配置，其目的是提高整体的效率。只有将配送效率最大化，才能带来良好的顾客体验，实现较低的配送成本。资源优化配置的过程，实际上是有分层的。在美团的理解中，可以分为三层：</p>
+<ol>
+<li>基础层是结构优化，它直接决定了配送系统效率的上限。这种基础结构的优化，周期比较长，频率比较低，包括配送网络规划、运力结构规划等等。</li>
+<li>中间层是市场调节，相对来说是中短期的，主要通过定价或者营销手段，使供需达到一个相对理想的平衡状态。</li>
+<li>再上层是实时匹配，通过调度做实时的资源最优匹配。 实时匹配的频率是最高的，决策的周期也最短。</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>基础层：例如调整运力，周期较长，频率较低，运力调整需要考虑的因素较多</li>
+<li>中间层：动态定价，营销活动等，可以提前预估一定时间范围内的单量和运力，提前进行运力调度或动态定价</li>
+<li>更高层：骑手的实时调度、实时订单分配</li>
+</ul>
+<p><img src="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png" alt="智能配送系统架构"></p>
+<p>如上图所示，右边三个子系统分别对应这三层体系，最底层是规划系统，中间层是定价系统，最上层是调度系统。运筹优化是调度系统、定价系统、规划系统的核心技术。</p>
+<p>Note:</p>
+<ul>
+<li>机器学习系统：例如ETA预估</li>
+<li>调度系统：根据订单进行骑手的分配</li>
+<li>LBS系统：路径规划</li>
+<li>定价系统：根据时间、天气、运力情况进行动态定价</li>
+<li>规划系统：可以使用行政区域划分，在此基础上再进行调整</li>
+</ul>
+<h2 id="2-实战业务项目"><a href="#2-实战业务项目" class="headerlink" title="2. 实战业务项目"></a>2. 实战业务项目</h2><h3 id="2-1-智能区域规划"><a href="#2-1-智能区域规划" class="headerlink" title="2.1 智能区域规划"></a>2.1 智能区域规划</h3><p><img src="http://noahsnail.com/images/meituan/meituan-357307a272f9223942b98515c2934ea7462635.png" alt="配送网络基本概念"></p>
+<p>配送连接的是商家、顾客、骑手三方，配送网络决定了这三方的连接关系。当用户打开App，查看哪些商家可以点餐，这由<strong>商家配送范围</strong>决定，每个商家的配送范围不一样。用户在美团点外卖，为他服务的骑手是谁呢？又是怎么确定的呢？这些是由<strong>配送区域边界</strong>来决定的，配送区域边界指的是一些商家集合所对应的范围。</p>
+<p>Note:</p>
+<ul>
+<li>商家：商家配送范围</li>
+<li>骑手：配送区域边界</li>
+</ul>
+<p>在传统物流中，影响末端配送效率最关键的点，是配送员对他所负责区域的熟悉程度。越熟悉，配送效率就会越高。即时配送场景也类似，每个骑手需要尽量固定地去熟悉一片商家或者配送区域。对于管理而言，站点的管理范围也比较明确。如果有新商家上线，也很容易确定由哪个配送站来提供服务。所以，这个问题有很多运营管理的诉求在其中。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-08860973ff368a440b77ddbd16d07eb5994870.png" alt="区域规划影响配送效率"></p>
+<p>区域规划项目要解决的问题：1.配送区域里的商家不聚合；2.区域奇形怪状，空驶严重；3.站点的大小不合理。什么是好的区域规划方案？基于统计分析的优化目标设定。</p>
+<p>优化的三要素是：目标、约束、决策变量。</p>
+<ol>
+<li>首先要确定优化目标。区域规划影响的主要是骑手的顺路性、空驶率，也就是骑手平均为每一单付出的路程成本。所以，将问题的业务目标定为优化骑手的单均行驶距离。基于现有的大量区域和站点积累的数据，做大量的统计分析后，可以定义出这样几个指标：商家聚合度、订单的聚合度、订单重心和商家重心的偏离程度。数据分析结果说明，这几个指标和单均行驶距离的相关性很强。经过这一层的建模转化，问题明确为优化这三个指标。</li>
+<li>梳理业务约束。区域单量有上限和下限；区域之间不能有重合，不能有商家归多个区域负责；所有的AOI(area of interest)不能有遗漏，都要被某个区域覆盖到，不能出现商家没有站点的服务；区域边界必须沿路网。</li>
+</ol>
+<p>在目标和约束条件确定了之后，整体技术方案分成三部分：</p>
+<ol>
+<li>首先，根据三个目标函数，确定商家最优集合。</li>
+<li>配送团队和美团地图团队进行合作。先利用路网信息，把城市切成若干互不重叠的多边形，然后根据计算几何，将一批商家对应的多边形拼成完整的区域边界。</li>
+<li>最后，用美团自主研发的配送仿真系统进行仿真评测。</li>
+</ol>
+<p>在区域规划过程中，人工介入还是非常必要的。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-c0b3063d64e2d96176ad35dfe6bd3e03819986.png" alt="落地应用"></p>
+<h3 id="2-2-智能骑手排班"><a href="#2-2-智能骑手排班" class="headerlink" title="2.2 智能骑手排班"></a>2.2 智能骑手排班</h3><p><img src="http://noahsnail.com/images/meituan/meituan-e5f5eff5a89854c0bbf6c67ea3873140188458.png" alt="外卖订单"></p>
+<p>外卖配送场景的订单“峰谷效应”非常明显。上图是一个实际的进单曲线。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d1992cc627da30c9647319e10296a3c7106485.png" alt="排班方案选型"></p>
+<p>配送团队最终选用的是按组排班的方式，把所有骑手分成几组，规定每个组的开工时段。然后大家可以按组轮岗，每个人的每个班次都会轮到。算法要有自己的优化目标，为了解决这个问题，首先要做设计决策变量，把时间做了离散化，以半小时为粒度。对于一天来讲，只有48个时间单元，决策空间大幅缩减。然后，目标定为运力需求满足订单量的时间单元最多。在建模层面，标准化和通用的模型才是最优选。美团把人数做了归一化，算法分配每个班次的骑手比例，但不分人数。在算法决策的时候，不决策人数、只决策比例，这样也可以把单量进行归一化。每个时间单元的进单量除以每天峰值时间单元的单量，也变成了0~1之间的数字。如果某个时间单元内人数比例大于单量比例，叫作运力得到满足。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-9b22391d9f14336717e2f4a032ae0114152458.png" alt="决策变量及目标设计"></p>
+<p>算法核心思想：基于约束条件，根据启发式算法构造初始方案，再用局部搜索迭代优化。</p>
+<h3 id="2-3-骑手路径规划"><a href="#2-3-骑手路径规划" class="headerlink" title="2.3 骑手路径规划"></a>2.3 骑手路径规划</h3><p>骑手的路径规划问题，不是简单的路线规划，一个骑手身上有很多配送任务，这些配送任务存在各种约束，怎样选择最优配送顺序去完成所有任务，这是一个NP难问题。当有5个订单、10个任务点的时候，就存在11万多条可能的顺序。系统派单、系统改派，都依赖路径规划算法。在骑手端，给每个骑手推荐任务执行顺序。路径规划算法核心的诉求是优化效果必须是稳定的好。不能这次的优化结果好，下次就不好。另外，运行时间一定要短。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-c65652c6f08d6c73770e9de9288a348b154474.png" alt="核心设计思想"></p>
+<p>求解路径规划这类问题经历过的阶段：起初，采用类似遗传算法的迭代搜索算法，但是随着业务的单量变大，发现算法耗时太慢，根本不可接受。然后，改为大规模邻域搜索算法，但算法依然有很强的随机性，因为没有随机性在就没办法得到比较好的解。而这种基于随机迭代的搜索策略，带来很强的不确定性，在问题规模大的场景会出现非常多的Bad Case。另外，迭代搜索耗时太长了。在这个项目中，基本可以确定这样的技术路线。首先，只能做启发式定向搜索，不能在算法中加随机扰动。不能允许同样的输入在不同运行时刻给出不一样的优化结果。然后，不能用普通迭代搜索，必须把这个问题结构特性挖掘出来，做基于知识的定制化搜索。</p>
+<p>美团认为，最重要的是看待这个问题的视角。这里的路径规划问题，对应的经典问题模型，是开环TSP问题，或是开环VRP的变种么？可以是，也可以不是。美团做了一个有意思的建模转换，把它看作流水线调度问题：每个订单可以认为是job；一个订单的两个任务取餐和送餐，可以认为是一个job的operation。任意两个任务点之间的通行时间，可以认为是序列相关的准备时间。每一单承诺的送达时间，包括预订单和即时单，可以映射到流水线调度问题中的提前和拖期惩罚上。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-325594bc4c7e9dde88c0c05ac8723ac2138345.png" alt="问题建模转换"></p>
+<p>美团把一个经典的基于问题特征的启发式算法做了适当适配和改进，得到了非常好的效果。相比于之前的算法，耗时下降70%，优化效果不错。</p>
+<h3 id="2-4-订单智能调度"><a href="#2-4-订单智能调度" class="headerlink" title="2.4 订单智能调度"></a>2.4 订单智能调度</h3><p>配送调度场景，可以用数学语言描述。它不仅是一个业务问题，更是一个标准的组合优化问题，并且是一个马尔可夫决策过程。并非对于某个时刻的一批订单做最优分配就足够，还需要考虑整个时间窗维度，每一次指派对后面的影响。要考虑长周期的优化，而不是一个静态优化问题。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-30e6df539239ed15cb77f5e67fec4d69454401.png" alt="调度问题的数学描述"></p>
+<p>这个问题的挑战：</p>
+<ol>
+<li>性能要求极高，要做到万单对万人的秒级求解。</li>
+<li>动态性。作为一个MDP问题，需要考虑动态优化场景，这涉及大量的预估环节。目前的思路，是通过其它的建模转换手段进行解决。</li>
+<li>配送业务的随机因素多。比如商家的出餐时间，也许是很长时间内都无法解决的随机性。就连历史每一个已完成订单，商家出餐时间的真值都很难获得。商家出餐时刻不确定，这个随机因素永远存在，并且非常制约配送效率的提升。另外，在顾客位置交付的时间也不确定。写字楼工作日的午高峰，上电梯、下电梯的时间，很难准确进行预估。对于骑手来说，平台没法规定每个骑手的任务执行顺序。骑手在配送过程中可以自由发挥，所以骑手执行顺序的不确定性也一直存在。</li>
+</ol>
+<p><img src="http://noahsnail.com/images/meituan/meituan-e89cfca4ff8c3881050a9016298a5542134543.png" alt="问题挑战"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2020/02/20/meituan-delivery-operations-research.html" target="_blank" rel="external">美团智能配送系统的运筹优化实战</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      美团智能配送系统的运筹优化实战
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode 1528. Shuffle String</title>
@@ -630,74 +838,6 @@
     <summary type="html">
     
       Leetcode 957. Prison Cells After N Days
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1030. Matrix Cells in Distance Order</title>
-    <link href="http://noahsnail.com/2021/08/23/2021-08-23-Leetcode-1030-Matrix-Cells-in-Distance-Order/"/>
-    <id>http://noahsnail.com/2021/08/23/2021-08-23-Leetcode-1030-Matrix-Cells-in-Distance-Order/</id>
-    <published>2021-08-23T08:14:49.653Z</published>
-    <updated>2021-08-23T08:29:31.133Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Matrix_Cells_in_Distance_Order.png" alt="Matrix Cells in Distance Order"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，直接根据距离进行排序。Version 使用广度优先搜索。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">allCellsDistOrder</span><span class="params">(self, rows: int, cols: int, rCenter: int, cCenter: int)</span> -&gt; List[List[int]]:</span></div><div class="line">        coordinates = [[i, j] <span class="keyword">for</span> i <span class="keyword">in</span> range(rows) <span class="keyword">for</span> j <span class="keyword">in</span> range(cols)]</div><div class="line">        coordinates.sort(key=<span class="keyword">lambda</span> x: abs(x[<span class="number">0</span>] - rCenter) + abs(x[<span class="number">1</span>] - cCenter))</div><div class="line">        <span class="keyword">return</span> coordinates</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">allCellsDistOrder</span><span class="params">(self, rows: int, cols: int, rCenter: int, cCenter: int)</span> -&gt; List[List[int]]:</span></div><div class="line">        matrix = [[<span class="number">0</span>] * cols <span class="keyword">for</span> i <span class="keyword">in</span> range(rows)]</div><div class="line">        queue = collections.deque()</div><div class="line">        queue.append((rCenter, cCenter))</div><div class="line">        matrix[rCenter][cCenter] = <span class="number">1</span></div><div class="line">        coordinates = []</div><div class="line">        <span class="keyword">while</span> queue:</div><div class="line">            x, y = queue.popleft()</div><div class="line">            coordinates.append([x, y])</div><div class="line">            matrix[x][y] = <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> x &gt; <span class="number">0</span> <span class="keyword">and</span> matrix[x<span class="number">-1</span>][y] == <span class="number">0</span>:</div><div class="line">                matrix[x<span class="number">-1</span>][y] = <span class="number">1</span></div><div class="line">                queue.append((x<span class="number">-1</span>, y))             </div><div class="line">            <span class="keyword">if</span> x &lt; rows - <span class="number">1</span> <span class="keyword">and</span> matrix[x+<span class="number">1</span>][y] == <span class="number">0</span>:</div><div class="line">                matrix[x+<span class="number">1</span>][y] = <span class="number">1</span></div><div class="line">                queue.append((x+<span class="number">1</span>, y))   </div><div class="line">            <span class="keyword">if</span> y &gt; <span class="number">0</span> <span class="keyword">and</span> matrix[x][y<span class="number">-1</span>] == <span class="number">0</span>:</div><div class="line">                matrix[x][y<span class="number">-1</span>] = <span class="number">1</span></div><div class="line">                queue.append((x, y<span class="number">-1</span>))             </div><div class="line">            <span class="keyword">if</span> y &lt; cols - <span class="number">1</span> <span class="keyword">and</span> matrix[x][y+<span class="number">1</span>] == <span class="number">0</span>:</div><div class="line">                matrix[x][y+<span class="number">1</span>] = <span class="number">1</span></div><div class="line">                queue.append((x, y+<span class="number">1</span>))   </div><div class="line">        <span class="keyword">return</span> coordinates</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/matrix-cells-in-distance-order/" target="_blank" rel="external">https://leetcode.com/problems/matrix-cells-in-distance-order/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1030. Matrix Cells in Distance Order
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 1304. Find N Unique Integers Sum up to Zero</title>
-    <link href="http://noahsnail.com/2021/08/20/2021-08-20-Leetcode-1304-Find-N-Unique-Integers-Sum-up-to-Zero/"/>
-    <id>http://noahsnail.com/2021/08/20/2021-08-20-Leetcode-1304-Find-N-Unique-Integers-Sum-up-to-Zero/</id>
-    <published>2021-08-20T09:45:34.190Z</published>
-    <updated>2021-08-20T09:46:11.956Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Find_N_Unique_Integers_Sum_up_to_Zero.png" alt="Find N Unique Integers Sum up to Zero"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，为了实现和为<code>0</code>，因此添加元素时成对添加<code>+i, -i</code>，如果<code>n</code>为奇数，再加上<code>0</code>即可。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sumZero</span><span class="params">(self, n: int)</span> -&gt; List[int]:</span></div><div class="line">        result = []</div><div class="line">        <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</div><div class="line">            result.append(<span class="number">0</span>)</div><div class="line">        x = n // <span class="number">2</span> + <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, x):</div><div class="line">            result.append(i)</div><div class="line">            result.append(-i)</div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/find-n-unique-integers-sum-up-to-zero/" target="_blank" rel="external">https://leetcode.com/problems/find-n-unique-integers-sum-up-to-zero/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 1304. Find N Unique Integers Sum up to Zero
     
     </summary>
     

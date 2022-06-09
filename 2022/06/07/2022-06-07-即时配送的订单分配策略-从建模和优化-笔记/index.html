@@ -1,0 +1,906 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="外卖," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="即时配送的订单分配策略：从建模和优化-笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="即时配送的订单分配策略：从建模和优化-笔记">
+<meta property="og:url" content="http://noahsnail.com/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="即时配送的订单分配策略：从建模和优化-笔记">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-238de0c6.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-019f9815.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-c9a81df3.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-d418f611.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-a47cd4c2.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-d2ce29cb.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-7612e7e6.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-2d610033.png">
+<meta property="og:updated_time" content="2022-06-09T09:27:38.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="即时配送的订单分配策略：从建模和优化-笔记">
+<meta name="twitter:description" content="即时配送的订单分配策略：从建模和优化-笔记">
+<meta name="twitter:image" content="http://noahsnail.com/images/meituan/meituan-238de0c6.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/"/>
+
+
+
+
+
+  <title>即时配送的订单分配策略：从建模和优化-笔记 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">即时配送的订单分配策略：从建模和优化-笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  即时配送的订单分配策略：从建模和优化-笔记
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>外卖平台中，配送时效、准时率作为履约环节的重要指标，是外卖平台的核心竞争力之一。要提升用户的配送时效和准时率，最直接的方法是配备较多的配送员，扩大运力规模，然而这也意味着配送成本会很高。怎么在配送体验和配送成本之间取得最佳的平衡，是即时配送平台生存的根基和关键所在。在用户满意度持续提升的同时，降低配送成本、提高骑手满意度、驱动配送系统的自动化和智能化，是外卖配送团队要解决的难题。</p>
+<p>Note:<br>招募更多的配送员，配送成本很高，应该想办法减少成本，即用更少的骑手配送更多的订单。</p>
+<h2 id="2-即时配送智能调度系统"><a href="#2-即时配送智能调度系统" class="headerlink" title="2. 即时配送智能调度系统"></a>2. 即时配送智能调度系统</h2><p><strong>措施</strong></p>
+<ol>
+<li>首先通过优化设定配送费以及预计送达时间来调整订单结构；</li>
+<li>在接收订单之后，考虑骑手位置、在途订单情况、骑手能力、商家出餐、交付难度、天气、地理路况、未来单量等因素，在正确的时间将订单分配给最合适的骑手，并在骑手执行过程中随时预判订单超时情况并动态触发改派操作，实现订单和骑手的动态最优匹配；</li>
+<li>系统派单后，为骑手提示该商家的预计出餐时间和合理的配送线路，并通过语音方式和骑手实现高效交互；</li>
+<li>在骑手送完订单后，系统根据订单需求预测和运力分布情况，告知骑手不同商圈的运力需求情况，实现闲时的运力调度。</li>
+</ol>
+<p><strong>结果</strong><br>通过上述技术和模式的引入，持续改善了用户体验和配送成本：</p>
+<ol>
+<li>订单的平均配送时长从2015年的41分钟，下降到32分钟，进一步缩短至28分钟；</li>
+<li>另一方面，在骑手薪资稳步提升的前提下，单均配送成本也有了20%以上的缩减。</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>缩短配送时间，如果配送时间本来就很短，可以考虑稍微牺牲配送时间，提高其它指标</li>
+<li>降低配送成本，在保证订单完成率的情况下减少配送骑手，骑手多单配送并行，减少每单配送成本</li>
+</ul>
+<h2 id="3-订单分配问题"><a href="#3-订单分配问题" class="headerlink" title="3. 订单分配问题"></a>3. 订单分配问题</h2><h3 id="3-1-订单分配的发展"><a href="#3-1-订单分配的发展" class="headerlink" title="3.1 订单分配的发展"></a>3.1 订单分配的发展</h3><p>外卖订单的分配问题一般可建模为带有若干复杂约束的DVRP（Dynamic Vehicle Routing Problem）问题。这类问题一般可表述为：有一定数量的骑手，每名骑手身上有若干订单正在配送过程中，在过去一段时间（如1分钟）内产生了一批新订单，已知骑手的行驶速度、任意两点间的行驶距离、每个订单的出餐时间和交付时间（骑手到达用户所在地之后将订单交付至用户所需的时间），那么如何将这批新订单在正确的时间分配至正确的骑手，使得用户体验得到保证的同时，骑手的配送效率最高。</p>
+<p>订单和服务提供方的匹配问题是一个非常关键的问题。在外卖行业发展初期主要依赖骑手抢单模式和人工派单模式。</p>
+<ul>
+<li>抢单模式<br>抢单模式的优势是开发难度低，服务提供者（如司机、骑手）的自由度较高，可以按照自身的需要进行抢单，但其缺点也很明显：骑手/司机只考虑自身的场景需求，做出一个局部近优的选择，然而由于每个骑手掌握的信息有限又只从自身利益出发来决策，导致配送整体效率低下，从用户端来看，还存在大量订单无人抢或者抢了之后造成服务质量无法保证（因为部分骑手无法准确预判自己的配送服务能力）的场景，用户体验比较差。</li>
+<li>人工派单模式<br>人工派单的方式，从订单分配的结果上来看，<strong>一般优于抢单模式</strong>。在订单量、骑手数相对比较少的情形下，有经验的调度员可以根据订单的属性特点、骑手的能力、骑手已接单情况、环境因素等，在骑手中逐个比对，根据若干经验规则挑选一个比较合适的骑手来配送。一般而言，人工调度一个订单往往至少需要半分钟左右的时间才能完成。然而，随着外卖订单规模的日益增长，在热门商圈（方圆3公里左右）的高峰时段，1分钟的时间内可能会有50单以上，在这种情况下，要求人工调度员每1-2秒钟做出一次合理的调度决策，显然是不可能的。另一方面，由于即时配送过程的复杂性，要做出合理的匹配决策，要求调度员对配送范围内各商家的出餐速度、各用户地址的配送难度（例如有的写字楼午高峰要等很长时间的电梯）、各骑手自身的配送工具/熟悉的商家和用户范围/工作习惯等等要有非常深入的了解，在此基础上具备统筹优化能力，考虑未来进单量、减少空驶等因素，做出全局近优的选择，这对人工调度员而言，又是一项极其艰巨的任务。</li>
+</ul>
+<p>系统派单具备如下优势：</p>
+<ul>
+<li>系统可以在全局层面上掌握和配送有关的骑手、商家、用户、订单等各类信息，在此基础上，可以做出全局较优的方案，从而提升配送效率和配送体验，减少配送成本； </li>
+<li>显著减轻人工调度员的工作，从而降低人工成本，人工调度员只需要在一些意外场景（如配送员出现紧急情况无法继续配送等）发生的时候进行干预即可。</li>
+</ul>
+<p>Note:<br>派单模式与抢单模式并存，派单一般优于抢单</p>
+<h3 id="3-2-即时配送大数据平台"><a href="#3-2-即时配送大数据平台" class="headerlink" title="3.2 即时配送大数据平台"></a>3.2 即时配送大数据平台</h3><p>美团外卖每天产生巨量的订单配送日志、行驶轨迹数据。通过对配送大数据进行分析、挖掘，会得到每个用户、楼宇、商家、骑手、地理区域的个性化信息，以及有关各地理区块骑行路径的有效数据，那么订单智能分配系统的目标就是基于大数据平台，根据订单的配送需求、地理环境以及每名骑手的个性化特点，实现订单与骑手的高效动态最优匹配，从而为每个用户和商家提供最佳的配送服务，并降低配送成本。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-238de0c6.png" alt="订单分配系统"></p>
+<p>即时配送大数据平台实现对骑手轨迹数据、配送业务数据、特征数据、指标数据的全面管理和监控，并通过模型平台、特征平台支持相关算法策略的快速迭代和优化。</p>
+<ul>
+<li><strong>机器学习模块</strong>负责从数据中寻求规律和知识，例如对商家的出餐时间、到用户所在楼宇上下楼的时间、未来的订单、骑行速度、红绿灯耗时、骑行导航路径等因素进行准确预估，为调度决策提供准确的基础信息；</li>
+<li><strong>运筹优化模块</strong>则在即时配送大数据平台以及机器学习的预测数据基础上，采用最优化理论、强化学习等优化策略进行计算，做出全局最优的分配决策，并和骑手高效互动，处理执行过程中的问题，实现动态最优化。</li>
+</ul>
+<h3 id="3-3-订单分配问题建模"><a href="#3-3-订单分配问题建模" class="headerlink" title="3.3 订单分配问题建模"></a>3.3 订单分配问题建模</h3><p>准确建模是实际决策优化项目的第一步，也是最关键的一步。准确建模，包括两个方面的问题：</p>
+<ul>
+<li>正确理解了实际业务场景的优化问题，并且通过某种形式化语言进行了准确描述；</li>
+<li>建立的模型中，涉及的各类参数和数据，能够准确得获取。</li>
+</ul>
+<p>在上述两个前提下，采用相应的高效优化算法求解模型所得到的最优解，就是符合实际场景需求的最优决策方案。第一个问题，一般是通过业务调研、分析并结合建模工具来得到；而解决第二个问题，则更多地需要依赖数据分析、机器学习、数据挖掘技术结合领域知识，对模型进行精确的量化表达。</p>
+<p>一个决策优化问题的数学模型，一般包括三个要素：</p>
+<ul>
+<li>决策变量，决策变量说明了希望算法来帮助做哪些决策</li>
+<li>优化目标，优化目标则是指通过调整决策变量，使得哪些指标得到优化</li>
+<li>约束条件，约束条件则是在优化决策的过程中所考虑的各类限制性因素</li>
+</ul>
+<p>即时配送场景下的订单分配问题，符号定义：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-019f9815.png" alt="符号定义"></p>
+<p>在即时配送调度场景下，决策变量包括各个订单需要分配的骑手，以及骑手的建议行驶路线：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-c9a81df3.png" alt="决策变量"></p>
+<p>优化目标一般包括希望用户的单均配送时长尽量短、骑手付出的劳动尽量少、超时率尽量低等。可表述为：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d418f611.png" alt="优化目标"></p>
+<p>实际场景下的订单分配问题，设置目标函数是一个较为复杂的问题。</p>
+<ol>
+<li>该优化问题是多目标的，且各个目标在不同时段、不同环境下会有差别。</li>
+<li>缺乏有助于量化优化目标的数据。针对该难题，首先通过深入调研业务痛点和目标，在此基础上，采用机理和数据相结合的办法，由人工设定目标函数的结构，通过仿真系统和实际数据去设定目标函数的参数，来确定最终采用的目标函数形态。</li>
+</ol>
+<p>即时配送调度问题的约束条件类型：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-a47cd4c2.png" alt="约束条件类型"></p>
+<p>除了以上约束外，有时还需要考虑部分订单只能由具备某些特点的骑手来配送、载具的容量限制等。</p>
+<p>Note:<br>载具容量限制，订单类型要求订单只能单独配送，不能与其它订单混合在一起。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d2ce29cb.png" alt="建模"></p>
+<p>以上只是针对给定的一批订单进行匹配决策的优化问题在建模时所需考虑的部分因素。在外卖配送场景中，希望的不是单次决策的最优，而是策略在一段时间应用后的累积收益最大。不追求某一个订单的指派是最优的，而是希望一天下来，所有的订单指派结果整体上是全局最优的。在进行决策的时候，既需要考虑已确定的订单，还需要考虑未来的尚未确定的订单。运筹优化领域中的马尔可夫决策过程描述的就是这样的一类在不确定、信息不完备环境下的序贯决策优化问题。</p>
+<p>Note:<br>最简单的方法是贪心，追求当前订单最优指派，实现简单，但可能不是全局最优的。追求全局最优复杂，不一定比局部最优好，只有全局最优明显优于局部最优时，才值得上。</p>
+<p>即时配送订单分配场景下的数据包括两类：</p>
+<ul>
+<li>直接通过业务系统采集可获取的数据，例如订单数据、骑手负载数据、骑手状态数据等。</li>
+<li>无法直接采集得到，需要预测或统计才能获取的数据，如商户出餐时间、用户驻留时间（骑手到达用户处将订单交付给用户的时间）、骑手配送能力等。</li>
+</ul>
+<p>第一类数据的获取一般由业务系统、骑手端App直接给出，其精度通过提升工程质量或操作规范可有效保证；而第二类数据的获取是即时配送调度的关键难点之一。</p>
+<p>在订单的配送过程中，骑手在商家、用户处的取餐和交付时间会占到整个订单配送时长的一半以上。商家出餐时间的长短，跟品类、时段、天气等因素都有关，而交付时间更为复杂，用户在几楼，是否处于午高峰时段，有没有电梯等等，都会影响骑手交付订单给用户的时间。为解决这些问题，利用机器学习工具，利用历史的骑手到店、等餐、取餐的数据，并充分考虑天气等外部因素的影响，建立全面反映出餐能力的预测模型，并通过实时维度的特征进行修正，可以得到准确的出餐/交付时间估计。</p>
+<p>Note:<br>骑手在路上的时间比较简单，也比较好估计，就是距离/骑手速度。但等餐、取餐时间，用户交付时间涉及的因素比较多，也比较杂。例如商户的订单积压情况，用户的楼层、电梯情况等。这也是将配送时间分成多段预测的原因之一。整体预测可能偏差较大，分成几部分，其中一部分的时间可以更准确的预测。</p>
+<p>优化算法的作用则是在构建的解空间里找到最优的策略。配送调度问题属于典型的NP-Hard优化问题，解空间巨大。如何设计好的优化算法，从庞大的解空间中搜索得到一个满意解是一个很大的挑战，即时配送对于优化算法的另一个要求是高实时性。</p>
+<p>针对此难题，采用了两个关键思路。一是问题特征分析。针对配送调度的场景，这个问题可以被分解为两个层次：骑手路径优化和订单分配方案的优化。骑手路径优化问题要解决的问题是：在新订单分配至骑手后，确定骑手的最佳配送线路；而订单分配优化问题要解决的问题是：把一批订单分配至相应的骑手，使得关注的指标（如配送时长、准时率、骑手的行驶距离等）达到最优。这两个问题的关系是：通过订单分配优化算法进行初始的订单分配，然后通过骑手路径优化算法获取各骑手的最佳行驶路线，进而，订单分配优化算法根据骑手路径优化结果调整分配方案。这两个层次不断反复迭代，最终获得比较满意的解。第二个思路是跨学科结合。订单分配问题在业内有两类方法，第一类方法是把订单分配问题转换成图论中的二分图匹配问题来解决。这种做法是一个不错的近似方案，优点是实现简单计算速度快，但它的缺点是会损失一部分满意解。第二类方法是直接采用个性化的算法进行订单分配方案的优化，优点是不损失获得满意解的可能性，但实际做起来难度较大。结合领域知识、优化算法、机器学习策略以及相关图论算法，基于分解协调思想，设计了骑手路径优化算法和订单分配优化算法。进一步，利用强化学习的思想，引入了离线学习和在线优化相结合的机制，离线学习得到策略模型，在线通过策略迭代，不断寻求更优解。通过不断地改进算法，在耗时下降的同时，算法的优化效果提升50%以上。为了有效降低算法运行时间，对优化算法进行并行化，并利用并行计算集群进行快速处理。</p>
+<p>Note:<br>批量分配算法，二分图匹配问题，简单速度快，第2种需要集群。</p>
+<p>即时配送过程的一个突出特点是线下的突发因素多、影响大，突发事件造成的一个恶劣结果是，虽然在指派订单的时刻，所指派的骑手是合理的，然而过了一段时间之后，由于骑手、订单等状态发生了变化，会变得不够合理。现有方法主要通过人工来完成，即：配送站长/调度员在配送信息系统里，查看各个骑手的位置、手中订单的状态及商户/用户的位置/期望送达时间等信息，同时接听骑手的电话改派请求，在此基础上，分析哪些订单应该改派，以及应该改派给哪位骑手，并执行操作。</p>
+<p>Note:<br>突发事件需要人工介入(2017年)。</p>
+<p>针对即时配送的不确定性特点，提出了两点创新：一是延迟调度策略，即在某些场景订单可以不被指派出去，在不影响订单超时的情况下，延迟做出决策；二是系统自动改派策略，即订单即便已经派给了骑手，后台的智能算法仍然会实时评估各个骑手的位置、订单情况，并帮助骑手进行分析，判断是否存在超时风险。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-7612e7e6.png" alt="随机性应对"></p>
+<p>针对即时配送场景，建立了相应的仿真模型，开发了配送仿真系统。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-2d610033.png" alt="仿真系统"></p>
+<p>Note:<br>算法需要在仿真系统上进行测试，调整。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2017/10/11/o2o-intelligent-distribution.html" target="_blank" rel="external">即时配送的订单分配策略：从建模和优化</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/外卖/" rel="tag"># 外卖</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/" rel="next" title="美团智能配送系统的运筹优化实战-笔记">
+                <i class="fa fa-chevron-left"></i> 美团智能配送系统的运筹优化实战-笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tyan" />
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">822</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-即时配送智能调度系统"><span class="nav-number">2.</span> <span class="nav-text">2. 即时配送智能调度系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-订单分配问题"><span class="nav-number">3.</span> <span class="nav-text">3. 订单分配问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-订单分配的发展"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 订单分配的发展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-即时配送大数据平台"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 即时配送大数据平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-订单分配问题建模"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 订单分配问题建模</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/';
+        this.page.identifier = '2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/';
+        this.page.title = '即时配送的订单分配策略：从建模和优化-笔记';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
