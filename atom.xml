@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2022-06-09T09:27:38.564Z</updated>
+  <updated>2022-06-10T08:57:32.397Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,262 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习在美团配送系统的实践：用技术还原真实世界-笔记</title>
+    <link href="http://noahsnail.com/2022/06/10/2022-06-10-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E9%85%8D%E9%80%81%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E8%B7%B5%EF%BC%9A%E7%94%A8%E6%8A%80%E6%9C%AF%E8%BF%98%E5%8E%9F%E7%9C%9F%E5%AE%9E%E4%B8%96%E7%95%8C-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/</id>
+    <published>2022-06-10T03:07:30.813Z</published>
+    <updated>2022-06-10T08:57:32.397Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-美团“超脑”配送系统的由来"><a href="#1-美团“超脑”配送系统的由来" class="headerlink" title="1. 美团“超脑”配送系统的由来"></a>1. 美团“超脑”配送系统的由来</h2><p>美团内部把配送的AI系统，简称为“超脑”配送系统。</p>
+<h2 id="2-即时配送在全球快速发展"><a href="#2-即时配送在全球快速发展" class="headerlink" title="2. 即时配送在全球快速发展"></a>2. 即时配送在全球快速发展</h2><p>以外卖为依托，即时配送业务在全球范围内掀起了一波快速发展的浪潮，两个问题：</p>
+<ul>
+<li>“懒”是人类的天性。平价、方便、快捷的服务是人类的普遍需求，尤其是在“吃”这个事情上，外卖成为了一种高频的刚需。</li>
+<li>外卖的商业模式完全可行。以美团外卖为例，2018年上半年整体收入160亿，同步增长90%。根据Uber公布的数据，Uber Eats在2018第一季度占整体营业的13%。</li>
+</ul>
+<h2 id="3-即时配送的业务模型"><a href="#3-即时配送的业务模型" class="headerlink" title="3. 即时配送的业务模型"></a>3. 即时配送的业务模型</h2><p>即时配送，是一种配送时长1小时以内，平均配送时长约30分钟的快速配送业务。如此快速的配送时效，将传统的线上电商交易与线下物流配送（传统划分比较明确的两条业务）整合为统一整体，形成了用户、商户、骑手和平台互相交错的四元关系。</p>
+<p>以外卖搜索和排序为例，在下午时段，在用户搜索和推荐中可以看到更多的商家，因为此时运力充分，可以提供更远距离的配送服务，不仅能更好满足用户的需求，提高商家的单量，而且能够增加骑手的收入。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-a1f21309.png" alt="业务模型"></p>
+<p>即时配送的核心指标是效率、成本、体验，这三者也形成了即时配送的商业模型。简单来说可以分为以下几步：</p>
+<p>首先配送效率提升，让骑手在单位时间内配送更多订单，产生更多价值。然后配送成本下降，更高的效率，一方面让骑手收入增加，一方面也让订单平均成本下降。然后用户体验提升，低成本能够让用户（商户）以更低的价格享受更好的配送服务，从而保证更好的用户体验。进一步提升效率并形成循环，更好的用户体验，让更多用户（商户）聚集过来，提升规模和密度，进一步提升配送效率。</p>
+<h2 id="4-美团“超脑”配送系统"><a href="#4-美团“超脑”配送系统" class="headerlink" title="4. 美团“超脑”配送系统"></a>4. 美团“超脑”配送系统</h2><p><img src="http://noahsnail.com/images/meituan/meituan-b550a85f.png" alt="美团“超脑”配送系统"></p>
+<p>美团“超脑”配送系统，包含以下几个方面：</p>
+<ul>
+<li>大数据处理和计算能力<ul>
+<li>算法数据和计算平台：包括实时特征计算、离线数据处理、机器学习平台等。</li>
+</ul>
+</li>
+<li>建立对世界深度感知<ul>
+<li>LBS系统：提供正确位置（用户/商户/骑手）以及两点之间正确的骑行导航。</li>
+<li>多传感器：提供室内定位以、精细化场景刻画、骑手运动状态识别</li>
+</ul>
+</li>
+<li>正确理解和准确预测<ul>
+<li>时间预估：提供所有配送环节时间的准确预估</li>
+<li>其他预估：销量预估、运力预估等</li>
+</ul>
+</li>
+<li>完成复杂决策<ul>
+<li>调度系统：多人多点实时调度系统，完成派单决策：谁来送？怎么送？</li>
+<li>定价系统：实时动态定价系统，完成定价决策：用户收多少钱？给骑手多少钱？</li>
+<li>规划系统：配送网络规划系统，完成规划决策：站点如何划分？运力如何运营？</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-机器学习技术挑战"><a href="#5-机器学习技术挑战" class="headerlink" title="5. 机器学习技术挑战"></a>5. 机器学习技术挑战</h2><p>如何构建一个在真实物理世界运行的AI系统，是最大的挑战。具体到机器学习方向而言，挑战包括以下几个方面：</p>
+<ul>
+<li>精度足够高、粒度足够细<ul>
+<li>时间要求：一方面是周期性变化，比如早午晚，工作假日，季节变化；一方面是分钟级的精细度，比如一个商圈单量和运力的实时变化。</li>
+<li>空间要求：一方面是不同商圈独有特性，比如CBD区域；一方面是要实现楼栋和楼层的精度，比如1楼和20楼，就是完全不同的配送难度。</li>
+<li>鲁棒性要求：处理各种不确定的能力，比如天气变化、交通变化等等。</li>
+</ul>
+</li>
+<li>线下数据质量的巨大挑战<ul>
+<li>大噪音：比如GPS定位漂移，尤其是在高楼附近，更不要说在室内GPS基本不可用。</li>
+<li>不完备：比如商家后厨数据、堂食数据、其他平台数据，都极难获得。</li>
+<li>高复杂：配送场景多样而且不稳定，随着时间、天气、路况等在不断变化。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-配送系统的核心参数ETA"><a href="#6-配送系统的核心参数ETA" class="headerlink" title="6. 配送系统的核心参数ETA"></a>6. 配送系统的核心参数ETA</h2><p>ETA（Estimated Time of Arrival，时间送达预估）是配送系统中非常重要参数，与用户体验、配送成本有直接关系，而且会直接影响调度系统和定价系统的最终决策。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-424a9243.png" alt="ETA"></p>
+<p>通过机器学习方法，将外卖配送几乎所有环节都进行了精准预估预测。</p>
+<p>Note:<br>ETA关联了调度系统与定价系统，对所有时间环节都进行预测。</p>
+<h2 id="7-精准到楼宇和楼层的预估：交付时长"><a href="#7-精准到楼宇和楼层的预估：交付时长" class="headerlink" title="7. 精准到楼宇和楼层的预估：交付时长"></a>7. 精准到楼宇和楼层的预估：交付时长</h2><p>交付时长是指骑手到达用户后，将外卖交付到用户手中并离开的时间，实际是需要考虑三维空间内计算（上楼-下楼）。交付时间精准预估，有两点重要的意义，首先是客观的衡量配送难度，给骑手合理补贴；其次，考虑对骑手身上后续订单的影响，防止调度不合理，导致其他订单超时。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-a6de9e20.png" alt="交付时长"></p>
+<p>交付时长的目标是，做到楼宇和楼层的精准颗粒度，具体可以拆解为以下几步：</p>
+<ol>
+<li>地址的精准解析（精确到楼宇/单元/楼层）<ul>
+<li>地址精度需要在5级之上（4级：街道，5级：楼宇），国内拥有这个级别精细化数据的公司屈指可数。</li>
+<li>数据的安全级别很高，我们做了很多脱敏工作，做了各种数据保护与隔离，保证用户隐私和数据安全。</li>
+<li>地址信息的多种表达方式、各种变形，需要较强的NLU技术能力。</li>
+</ul>
+</li>
+<li>交付时长预估<ul>
+<li>通过骑手轨迹进行“入客-离客”识别，并进行大量数据清洗工作。</li>
+<li>统计各个粒度的交付时长，通过树形模型实现快速搜索各个粒度的数据。</li>
+<li>因为预估精度是楼宇和楼层，数据很稀疏，很难直接进行统计，需要通过各种数据平滑和回归预估，处理数据稀疏和平滑的问题。</li>
+</ul>
+</li>
+<li>下游业务应用<ul>
+<li>给调度和定价业务，提供楼宇+楼层维度的交付时长。从上图可以看到，在不同楼宇，不同楼层交付时长的区分度还是很明显的。</li>
+<li>尤其是楼层与交付时长并不是线性相关，还具体调研过骑手决策行为，发现骑手会考虑等电梯的时间，低楼层骑手倾向于走楼梯，高楼层则坐电梯。</li>
+</ul>
+</li>
+</ol>
+<p>Note:<br>交付时长是一个特别精细的工作，从美团的文章来看，交付时长非常重要，还有一篇单独的文章来介绍这个工作。</p>
+<h2 id="8-配送中最重要的数据之一：地图"><a href="#8-配送中最重要的数据之一：地图" class="headerlink" title="8. 配送中最重要的数据之一：地图"></a>8. 配送中最重要的数据之一：地图</h2><p><img src="http://noahsnail.com/images/meituan/meituan-38a8ad0d.png" alt="ETA"></p>
+<p>配送地图的目标可以概括为以下两点：</p>
+<ul>
+<li>正确的位置<ul>
+<li>实时部分：骑手实时位置。</li>
+<li>静态部分：用户和商户准确的地址和位置。</li>
+</ul>
+</li>
+<li>正确的导航<ul>
+<li>两点之间正确的距离和路线。</li>
+<li>突发情况的快速反应（封路、限行）。</li>
+</ul>
+</li>
+</ul>
+<p>在即时配送业务中，骑行地图的重要性非常之高，同时很多问题确实非常具有行业特色，通过驾车地图的技术无法很有效的解决。</p>
+<p>Note:<br>地图是一个非常庞大的业务，需要有充足的资源再考虑。</p>
+<h2 id="9-基于签到数据的位置校正：交付点"><a href="#9-基于签到数据的位置校正：交付点" class="headerlink" title="9. 基于签到数据的位置校正：交付点"></a>9. 基于签到数据的位置校正：交付点</h2><p>目前主要问题：用户位置信息有很多错误，比如：</p>
+<ul>
+<li>用户选择错误，在订单发送到配送系统的时候，需要做一次用户坐标纠正，引导骑手到达正确的位置。</li>
+<li>POI数据不精细，用户选择了比较粗的位置信息。现实中在一个小区里面，找到一个具体xx栋楼还是非常困难的。造成这种原因，一方面可能是用户选择不精细，还有一种可能，就是地图上没有具体楼栋的POI信息。</li>
+</ul>
+<p>在实际配送中，会要求骑手在完成交付后进行签到，这样就会积累大量的上报数据，对于后续进行精细化挖掘非常有帮助。这其中蕴含着极高的价值，具体来说有三方面：</p>
+<ul>
+<li>数据量大<ul>
+<li>每天几千万订单，几十亿的轨迹数据。</li>
+<li>可以充分覆盖每一个小区/楼栋/单元门。</li>
+</ul>
+</li>
+<li>维度多样<ul>
+<li>除了骑手签到和轨迹数据，我们还有大量的用户、商户和地图数据。</li>
+<li>多种数据维度可以交叉验证，有效避免数据的噪音，提高挖掘结果精度。</li>
+</ul>
+</li>
+<li>数据完备<ul>
+<li>在局部（用户和商户）数据足够稠密，置信度比较高。</li>
+</ul>
+</li>
+</ul>
+<p>Note:<br>要求骑手完成订单签到是一种非常棒的操作，可以收集完整的订单信息（订单完成时间），修正用户位置。</p>
+<h2 id="10-交付点挖掘的技术实战：挑战"><a href="#10-交付点挖掘的技术实战：挑战" class="headerlink" title="10. 交付点挖掘的技术实战：挑战"></a>10. 交付点挖掘的技术实战：挑战</h2><p>在数据挖掘实际过程中，整个挖掘过程，分为以下几个步骤：（1）基于地址分组；（2）数据去噪；（3）数据聚合；（4）置信度打分。其中主要技术挑战，主要在各种场景中保证数据挖掘质量和覆盖率，具体来说主要有三个挑战：</p>
+<ul>
+<li>数据去噪<ul>
+<li>数据噪音来源比较多样，包括GPS的漂移、骑手误操作、违规操作等各种。一方面是针对噪音原因进行特殊处理（比如一些作弊行为），另一方面要充分发挥数据密度和数据量的优势，在保证尽量去除Outlier后，依然保持可观的数据量。能够同时使用其他维度的数据进行验证，也是非常重要的，甚至可以说数据多样性和正交性，决定了我们能做事情的上限。</li>
+</ul>
+</li>
+<li>数据聚合<ul>
+<li>不同区域的楼宇密度完全不一样，具有极强的Local属性，使用常规聚类方法，比较难做到参数统一，需要找到一种不过分依赖样本集合大小，以及对去噪不敏感的聚类算法。</li>
+</ul>
+</li>
+<li>重名问题<ul>
+<li>这个属于POI融合的一个子问题，判断两个POI信息是否应该合并。这个在用户地址中比较常见，用户提供的地址信息一样，但实际是两个地方。这种情况下，我们的处理原则是一方面要求纠正后坐标更符合骑手签到情况，另一方面新坐标的签到数据要足够稠密。</li>
+</ul>
+</li>
+</ul>
+<p>交付点挖掘的技术实战：效果</p>
+<p>目前效果上看还是非常明显的。包括几个方面：</p>
+<ul>
+<li>骑手交付距离明显降低</li>
+<li>单元门级别的高精度位置</li>
+<li>目前的问题以及后续的优化点<br>如何提升其作为POI挖掘和发现手段的准确率？这里面有很多优化点，比如去重（交付点-位置信息的一一映射），POI信息补全和更新。<br>如何扩大数据渠道并做到信息整合？目前主要渠道还是骑手签到和轨迹数据，这个明显有更大的想象空间，毕竟每天在全国大街小巷，有几十万骑手在进行配送，除了前面（以及后面）提到的通过手机被动采集的数据，让骑手主动采集数据，也是不错的建设思路。只不过想要做好的话，需要建立一个相对闭环数据系统，包括上报、采集、清洗、加工、监控等等。</li>
+</ul>
+<p>Note:<br>这是一个很精细的工作，初期不太用考虑。</p>
+<h2 id="11-更精细化的配送场景识别：感知"><a href="#11-更精细化的配送场景识别：感知" class="headerlink" title="11. 更精细化的配送场景识别：感知"></a>11. 更精细化的配送场景识别：感知</h2><p>地图技术，只能解决在室外场景的位置和导航问题。但配送在商家侧（到店、取餐）和用户侧（到客、交付）两个场景中，其实是发生在室内环境。在室内的骑手位置是在哪里、在做什么以及用户和商家在做什么，如果了解这些，就能解决很多实际问题。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d31c38f3.png" alt="问题"></p>
+<p>“情景感知”具体方向：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-b067a0fc.png" alt="情景感知"></p>
+<p>情景感知的目标就是做到场景的精细刻画（上图的上半部分），包含两个方面工作：</p>
+<ol>
+<li>配送节点的精确刻画<br>在ETA预估中已经展示过一些，不过之前主要还是基于骑手上报数据，这显然无法做到很高精确，必须引入更客观的数据进行描述。目前，我们选择的是WIFI和蓝牙的地理围栏技术作为主要辅助。</li>
+<li>配送过程的精确刻画<br>骑手在配送过程中经常会切换方式，比如可能某个小区不让骑电动车，那骑手必须步行，再比如骑手在商家发生长时间驻留，那应该是发生了等餐的情况（用户侧同理）。目前，选择使用基于传感器的运动状态识别作为主要辅助。</li>
+</ol>
+<p>Note:<br>这是属于一个锦上添花的功能，初期不太用考虑。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2018/12/13/machine-learning-in-distribution-practice.html" target="_blank" rel="external">机器学习在美团配送系统的实践：用技术还原真实世界</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      机器学习在美团配送系统的实践：用技术还原真实世界-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>配送交付时间轻量级预估实践-笔记</title>
+    <link href="http://noahsnail.com/2022/06/09/2022-06-09-%E9%85%8D%E9%80%81%E4%BA%A4%E4%BB%98%E6%97%B6%E9%97%B4%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%A2%84%E4%BC%B0%E5%AE%9E%E8%B7%B5-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/09/2022-06-09-配送交付时间轻量级预估实践-笔记/</id>
+    <published>2022-06-09T09:33:52.596Z</published>
+    <updated>2022-06-10T06:24:02.248Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>在点外卖的过程中，骑手的交付时间，即骑手到达用户附近下车后多久能送到用户手中，是一个非常重要的环节。下图是一个订单在整个配送链路的时间构成，时间轴最右部分描述了交付环节在整个配送环节中的位置。交付时间衡量的是骑手送餐时的交付难度，包括从骑手到达用户楼宇附近，到将餐品交付到用户手中的整个时间。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-e6cd38a4838c0e8e9b65eaf30abcd36374072.png" alt="配送链路的时间构成"></p>
+<p>交付时间的衡量是非常有挑战的一件事，因为骑手在送餐交付到用户手中时会碰到不同的问题，例如：骑手一次送餐给楼宇内多个用户，骑手对于特定楼宇寻址特别困难，骑手在交付楼宇附近只能步行，老旧小区没有电梯，写字楼无法上楼，或者难以等到电梯等等。交付时间预估需要具备刻画交付难度的能力，在定价、调度等多个场景中被广泛使用。例如根据交付难度来确定是否调节骑手邮资，根据交付难度来确定是否调节配送运单的顺序，从而避免超时等等。总的来说，交付时间预估是配送业务基础服务的重要一环。</p>
+<p>Note:<br>预估订单交付难度，根据难度调节骑手工资，对交付难度预估模型的准确度有很高要求，因为直接涉及骑手的收入，也涉及到公司的运营成本。</p>
+<p>交付时间预估存在如下的困难：</p>
+<ul>
+<li>输入信息较少，且多为非数值型数据，目前能够被用来预估的仅有如下维度特征：交付地址、交付点的经纬度、区域、城市，适配常规机器学习模型需要重新整理且容易丢失信息。</li>
+<li>计算性能要求很高。由于是基础服务，会被大量的服务调用，要求很高的性能，其中包括数据处理及RPC的时间。且该标准为CPU环境下的性能要求，而非GPU下的性能要求。</li>
+</ul>
+<p>总结起来，交付时间预估的问题，在于需要使用轻量级的解决方案来处理多种数据形式的非数值型数据，并提取有效信息量，得到相对准确的结果。在相同效果的前提下，更倾向于性能更优的方案。</p>
+<p>Note:<br>时间预测要求性能高，更更倾向于性能更优的方案。</p>
+<p>交付时间预估迭代了三个版本，分别为基于地址结构的树模型、向量召回方案以及轻量级的End-to-End的深度学习网络。同时介绍了如何在性能和指标之间取舍，以及模型策略迭代的中间历程。</p>
+<h2 id="2-技术迭代路径"><a href="#2-技术迭代路径" class="headerlink" title="2. 技术迭代路径"></a>2. 技术迭代路径</h2><h3 id="2-1-树模型"><a href="#2-1-树模型" class="headerlink" title="2.1 树模型"></a>2.1 树模型</h3><p><strong>技术选型</strong><br>最早也是最容易被考虑到的是利用规则，核心思路是利用树结构衡量地址相似性，尽可能在相似的交付地址上积聚结构化数据，然后利用局部的回归策略，得到相对充裕的回归逻辑，而未能达到回归策略要求的则走兜底的策略。</p>
+<p>观察用户填写地址以及联系实际中地址的层级结构，不难发现，一个地址可以由四级结构组成：地址主干词（addr）、楼宇号（building）、单元号（unit）、楼层（floor）。其中的地址主干词在实际中可能对应于小区名或者学校名等地标名称。通过分析，实际交付时长与楼层高低呈正相关关系，且不同交付地址的交付时长随楼层增加的变化幅度也有所区别，所以可以使用线性回归模型拟合楼层信息和交付时长的关系，而地址主干词、楼宇号、单元号作为其层级索引。但用户填写的地址中并不一定包含完整的四级结构，就会存在一定比例的缺失，所以利用这样的层级结构构建成一棵树，然后充分利用上一层已知的信息进行预估。预测时，只需根据结点的分支找到对应的模型即可，如果缺失，使用上一层结构进行预测。对于没有达到训练模型要求数据量的地址，使用其所在的区域平均交付时长作为交付时长的预估结果，这部分也可以看作区域信息，作为树结构的根节点。</p>
+<p>Note:<br>从用户的角度来预估交付时间，聚类地址相似用户。</p>
+<p><strong>迭代路径</strong><br>整体的思路是基于离散特征训练树模型，在树的结点上基于楼层训练线性回归模型。树结点训练分裂规则：（1）数据量大于阈值；（2）分裂后MAE（平均绝对误差）的和小于分裂前。考虑到数据的时效性，采用加权线性回归增加近期数据的权重。</p>
+<h3 id="2-2-树模型-向量召回方案"><a href="#2-2-树模型-向量召回方案" class="headerlink" title="2.2 树模型+向量召回方案"></a>2.2 树模型+向量召回方案</h3><p><strong>技术选型</strong><br>向量召回作为主流的召回方案之一，被业界广泛使用，在使用LSH、PQ乘积量化等常用开源工具基础上，高维向量召回性能通常在毫秒量级。</p>
+<p>而从算法上考虑，树模型中NLP地址解析结果能够达到模型使用要求的仅为70%+，剩余20%+的地址无法通过训练得到的模型从而只能走降级策略。利用高维向量来表达语义相似性，即利用向量来表达地址相似性，从而用相似数据对应的模型来替代相似但未被召回数据，将地址主干词进行Embedding后，摆脱主干词完全匹配的低鲁棒性。</p>
+<p><strong>迭代路径</strong><br>整个技术路径较为清晰简单，即利用Word2Vec将charLevel字符进行Embedding，获得该地址的向量表示，并且融入GPS位置信息，设计相应兜底策略。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-aef4282e33391aa61343fd7d9ac0217691932.png" alt="向量召回方案决策路径"></p>
+<p><strong>最终效果</strong></p>
+<p>比较大地提升了整体策略的召回率，提升了12.20pp，对于未被上一版本树模型召回的地址，指标有了显著的提升，其中ME下降87.14s，MAE下降38.13s，1min绝对偏差率减小14.01pp，2min绝对偏差率减小18.45pp，3min绝对偏差率减小15.90pp。</p>
+<h3 id="2-3-End-to-End轻量化深度学习方案"><a href="#2-3-End-to-End轻量化深度学习方案" class="headerlink" title="2.3 End-to-End轻量化深度学习方案"></a>2.3 End-to-End轻量化深度学习方案</h3><p><strong>技术选型</strong><br>在树模型的基础上，迭代到向量召回方案，整个模型的召回率有了较大幅度的增长，但仍然不是100%。分析发现，召回率提升的障碍在于NLP对于地址解析的覆盖率。</p>
+<p>整个方案的出发点：<br>从模型复杂度考虑，同样仅仅使用地址信息的话，在提升模型VC维的基础上，使用其他的模型方案至少可以持平树模型的效果，如果在这基础上还能融入其他信息，那么对于原模型的基线，还能有进一步的提升。</p>
+<p>考虑到不仅仅需要使用地址数据，同时需要使用GPS数据、大量ID类的Embedding，对于各类非数值类型的处理灵活性考虑，采用深度学习的方案，来保证多源且多类型特征能在同一个优化体系下优化学习。</p>
+<p>工程上需要考虑的点：<br>交付模型作为基础模型，被广泛应用在路径构造、定价、ETA等各个业务中频繁调用，在树模型版本中，对于性能的要求为平均响应时间5ms，本方案需要考虑沿袭原业务的性能，不能显著增加计算耗时。</p>
+<p>交付模型的难点在于非数值型特征多，信息获取形式的多样化，当前的瓶颈并不在于模型的复杂度低。如果可以轻量地获取信息及融合，没必要对Fusion后的信息做较重的处理方案。</p>
+<p>所以整体的设计思路为：利用深度学习融合非数值型特征，在简单Fusion的基础上，直接得到输出结构，对于组件的选择，尽可能选用Flops较低的设计。该设计背后意图是，在充分使用原始输入信息，在尽可能避免信息损失的基础上，将非数值型的信息融入进去。并将信息充分融合，直接对接所需要的目标。而选用的融合组件结构尽可能保证高性能，且具备较高学习效率。这里分别针对地址选用了较为Robust的LSTM，针对GPS选用了自定义的双线性Embedding，兼顾性能和效果。</p>
+<p><strong>迭代路径</strong><br>开始采用端到端的深度学习模型，这里首先需要解决的是覆盖率问题，直接采用LSTM读取charLevel的地址数据，经过全连接层直接输出交付时间。作为第一版本的数据，该版本数据基本持平树模型效果，但对于树模型未召回的20%数据，有了较大的提升。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-9fc27066166a8db5993839f41d047f7529437.png" alt="地址信息输入charLevel模型"></p>
+<p>在采用charLevel的地址奏效后，开始采用加入用户地址GPS的信息，由于GPS为经纬度信息，非数值型数据，我们使用一种基于地理位置格点的双线性插值方法进行Embedding。该方案具备一定的扩展性，对不同的GPS均能合理得到Embedding向量，同时具备平滑特性，对于多对偏移较小的GPS点能够很好的进行支持。</p>
+<p>最终方案将地址Embedding后，以及GPS点的Embedding化后，加入下单时间、城市ID、区域ID等特征后，再进行特征融合及变换，得到交付模型的时间预估输出。整个模型是一个端到端的训练，所有参数均为Trainable。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-96448d5a15db4dbc21db912e99c2a235132817.png" alt="模型结构示意图"></p>
+<p>Note:<br>这个方案相对复杂很多，适合规模较大时使用，初期不太适合。</p>
+<p><strong>扩展组件</strong></p>
+<p>在证实End-to-End路径可行后，我们开始进行扩展组件建设，包括自定义损失函数、数据采样修正、全国模型统一等操作，得到一系列正向效果，并开发上线。</p>
+<p><strong>特征重要性分析</strong></p>
+<p>对于深度学习模型，我们有一系列特征重要性评估方案，这里采用依次进行Feature Permutation的方式，作为评估模型特征重要性的方式。</p>
+<p>本方案的特征重要性：用户地址&gt;GPS经纬度&gt;其它特征。</p>
+<p>注：在配送的其他案例中，商户GPS的经纬度重要性&gt;用户地址重要性&gt;用户GPS的经纬度重要性，不同学习目标下可能会有比较明显差别。</p>
+<p><strong>最终效果</strong></p>
+<p>End-to-End深度学习模型的最终效果较为显著：对于树模型及向量召回方案的最痛点，覆盖率得到彻底解决，覆盖率提升到100%。ME下降4.96s，MAE下降8.17s，1min绝对偏差率减小2.38pp，2min绝对偏差率减小5.08pp，3min绝对偏差率减小3.46pp。同时，对于之前树模型及向量召回方案未能覆盖到的运单，提升则更为明显。</p>
+<h2 id="3-模型相关分析"><a href="#3-模型相关分析" class="headerlink" title="3. 模型相关分析"></a>3. 模型相关分析</h2><p>主要是对向量召回方案及深度学习方案进行了相应的性能分析，以便在线下确认性能指标，最终保证上线后性能均达到要求。</p>
+<h3 id="3-1-向量召回性能"><a href="#3-1-向量召回性能" class="headerlink" title="3.1 向量召回性能"></a>3.1 向量召回性能</h3><p>最近邻搜索（Nearest Neighbor Search）指的是在高维度空间内找到与查询点最近点的问题。在数据样本小的时候，通过线性搜索就能满足需求，但随着数据量的增加，如达到上百万、上亿点时候，倾向于将数据结构化表示来更加精确地表达向量信息。</p>
+<p>此时近似最近邻搜索ANN（Approximate Nearest Neighbor）是一个可参考的技术，它能在近似召回一部分之后，再进行线性搜索，平衡效率和精度。目前大体上有以下3类主流方法：基于树的方法，如K-D树等；基于哈希的方法，例如LSH；基于矢量量化的方法，例如PQ乘积量化。在工业检索系统中，乘积量化是使用较多的一种索引方法。</p>
+<p>针对向量召回的工具，存在大量的开源实现，在技术选型的过程中，可以参照<a href="http://ann-benchmarks.com/" target="_blank" rel="external">ANN-Benchmarks</a>以及<a href="https://github.com/erikbern/ann-benchmarks/" target="_blank" rel="external">Erikbern/ANN-Benchmarks</a>中的性能评测结果。</p>
+<h3 id="3-2-序列模块性能"><a href="#3-2-序列模块性能" class="headerlink" title="3.2 序列模块性能"></a>3.2 序列模块性能</h3><p>为了评测深度学习交付模型的性能瓶颈，首先对整个模型进行Profile，其中整个计算大部分消耗在序列模块处理部分。需要对序列模块的计算性能进行OP算子的加速。</p>
+<h3 id="3-3-向量效果分析"><a href="#3-3-向量效果分析" class="headerlink" title="3.3 向量效果分析"></a>3.3 向量效果分析</h3><p>将向量召回与深度学习模型进行横向比较，二者中间过程均生成了高维向量。相较于向量召回，深度学习模型带来的提升主要来自于哪里？有监督的lstm学习到的Embedding向量与自监督的Word2Vec得到的向量在地址相似性计算中有多大差别，孰优孰劣？</p>
+<p><strong>首先，我们分析第一个问题，End-to-End模型提升主要来自哪里？</strong><br>经过测试可知，深度学习模型带来的提升主要来自对地址中冗余信息（相较于向量召回）的利用，其次是多个新特征的加入。另外，对比两个End-to-End模型的效果，地址附属信息中也包含着对匹配地址有用的信息。</p>
+<p><strong>针对第二个问题，有监督的End-to-End学习到的Embedding向量，与自监督的Word2Vec得到的向量在地址相似性计算中有多大差别，孰优孰劣？</strong><br>采用地址主干词代替完整地址，作为End-to-End模型的输入进行训练，其他信息均保持不变。使用地址主干词训练得到的Embedding向量，套用到向量召回方案中。</p>
+<p>从评估结果来看，对于不同的阈值，End-to-End的表现差异相对Word2Vec较小。相同阈值下，End-to-End召回率更高，但是效果不如Word2Vec。</p>
+<p>从相似计算结果看，End-to-End模型会把一些语义不相关但是交付时间相近的地址，映射到同一个向量空间，而Word2Vec则是学习一个更通用的文本向量表示。</p>
+<p>如果想要针对更为复杂的目标和引入更多信息，可以使用End-to-End框架；只是计算文本相似性，从实验结果看，Word2Vec更好一些。同时，通过查看Case也可以发现，End-to-End更关注结果相似性，从而召回一部分语义上完全不相关的向量。两个模型目标上的不同，从而导致了结果的差异。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2019/10/10/distribution-time-prediction-practice.html" target="_blank" rel="external">配送交付时间轻量级预估实践</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      配送交付时间轻量级预估实践-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
   
   <entry>
     <title>即时配送的订单分配策略：从建模和优化-笔记</title>
@@ -774,70 +1030,6 @@
     <summary type="html">
     
       Leetcode 845. Longest Mountain in Array
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 914. X of a Kind in a Deck of Cards</title>
-    <link href="http://noahsnail.com/2021/08/24/2021-08-24-Leetcode-914-X-of-a-Kind-in-a-Deck-of-Cards/"/>
-    <id>http://noahsnail.com/2021/08/24/2021-08-24-Leetcode-914-X-of-a-Kind-in-a-Deck-of-Cards/</id>
-    <published>2021-08-24T05:40:42.135Z</published>
-    <updated>2021-08-24T05:43:49.327Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/X_of_a_Kind_in_a_Deck_of_Cards.png" alt="X of a Kind in a Deck of Cards"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，统计元素个数，遍历所有可能的分割数量，下限为<code>2</code>，上限为最少的元素个数，如果满足条件，返回<code>True</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasGroupsSizeX</span><span class="params">(self, deck: List[int])</span> -&gt; bool:</span></div><div class="line">        stat = collections.Counter(deck)</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">2</span>, min(stat.values()) + <span class="number">1</span>):</div><div class="line">            flag = <span class="keyword">True</span></div><div class="line">            <span class="keyword">for</span> val <span class="keyword">in</span> stat.values():</div><div class="line">                <span class="keyword">if</span> val % j != <span class="number">0</span>:</div><div class="line">                    flag = <span class="keyword">False</span></div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> flag:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/" target="_blank" rel="external">https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 914. X of a Kind in a Deck of Cards
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 957. Prison Cells After N Days</title>
-    <link href="http://noahsnail.com/2021/08/23/2021-08-23-Leetcode-957-Prison-Cells-After-N-Days/"/>
-    <id>http://noahsnail.com/2021/08/23/2021-08-23-Leetcode-957-Prison-Cells-After-N-Days/</id>
-    <published>2021-08-23T09:43:11.242Z</published>
-    <updated>2021-08-23T09:53:37.698Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Prison_Cells_After_N_Days.png" alt="Prison Cells After N Days"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，根据变换规则可知，第一位和最后一位总是<code>0</code>，因此只有中间<code>6</code>位数在变，最大可能的变换周期为<code>2^6</code>。因此只要记录变换周期，因此周期中的所有状态就可得出变换结果，使用字典<code>stat</code>来判断每次变换是否与之前的重复，列表<code>state</code>记录状态变化，当出现重复状态时，计算变换的周期<code>peroid</code>，以及一个周期的状态变化，如果没出现周期，则直接返回变换后的结果，如果出现了，则返回计算后的状态。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">prisonAfterNDays</span><span class="params">(self, cells: List[int], n: int)</span> -&gt; List[int]:</span></div><div class="line">        stat = &#123;&#125;</div><div class="line">        state = []</div><div class="line">        temp = <span class="string">''</span>.join(list(map(str, cells)))</div><div class="line">        stat[temp] = <span class="number">0</span></div><div class="line">        count = <span class="number">0</span></div><div class="line">        pre = cells[:]</div><div class="line">        state.append(pre)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            count += <span class="number">1</span></div><div class="line">            cells[<span class="number">0</span>] = <span class="number">0</span></div><div class="line">            cells[<span class="number">7</span>] = <span class="number">0</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">7</span>):</div><div class="line">                <span class="keyword">if</span> (pre[j<span class="number">-1</span>] == <span class="number">1</span> <span class="keyword">and</span> pre[j+<span class="number">1</span>] == <span class="number">1</span>) <span class="keyword">or</span> (pre[j<span class="number">-1</span>] == <span class="number">0</span> <span class="keyword">and</span> pre[j+<span class="number">1</span>] == <span class="number">0</span>):</div><div class="line">                    cells[j] = <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    cells[j] = <span class="number">0</span></div><div class="line">            temp = <span class="string">''</span>.join(list(map(str, cells)))</div><div class="line">            <span class="keyword">if</span> temp <span class="keyword">not</span> <span class="keyword">in</span> stat:</div><div class="line">                stat[temp] = count</div><div class="line">                pre = cells[:]</div><div class="line">                state.append(pre)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                peroid = count - stat[temp]</div><div class="line">                state = state[stat[temp]:]</div><div class="line">                <span class="keyword">break</span></div><div class="line">        <span class="keyword">if</span> count == n:</div><div class="line">            <span class="keyword">return</span> cells</div><div class="line">        <span class="keyword">return</span> state[(n - count) % peroid]</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/prison-cells-after-n-days/" target="_blank" rel="external">https://leetcode.com/problems/prison-cells-after-n-days/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 957. Prison Cells After N Days
     
     </summary>
     
