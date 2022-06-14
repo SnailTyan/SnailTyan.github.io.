@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-dac1a248.png">
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-7e5bd36c.png">
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-d648422d.png">
-<meta property="og:updated_time" content="2022-06-14T09:43:06.001Z">
+<meta property="og:updated_time" content="2022-06-14T10:11:27.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="即时配送的ETA问题之亿级样本特征构造实践-笔记">
 <meta name="twitter:description" content="即时配送的ETA问题之亿级样本特征构造实践-笔记">
@@ -399,7 +399,7 @@
 <li>$X_i$：样本$i$的绝对误差=abs(实际送达时长-预估时长)。</li>
 <li>计算每个样本的误差的是否在N分钟内，并统计概率$P(X_i &lt;= N)$。</li>
 </ul>
-<p>判定订单预估是否准确的计算方法<br>$$<br>f(X_i)=\left {<br>\begin{aligned}<br>1&amp; (X_i&lt;=N) \\<br>0&amp; (X_i&gt;N)<br>\end{aligned}<br>\right.<br>$$<br>N分钟准确率计算方法<br>$$P(X_i&lt;=N)=\frac {\sum_{i=1}^{n}f(X_i)} {n}$$</p>
+<p>判定订单预估是否准确的计算方法<br>$$<br>f(X_i)=<br>\begin{cases}<br>1&amp; (X_i&lt;=N) \\<br>0&amp; (X_i&gt;N)<br>\end{cases}<br>$$<br>N分钟准确率计算方法<br>$$P(X_i&lt;=N)=\frac {\sum_{i=1}^{n}f(X_i)} {n}$$</p>
 <ol>
 <li>N分钟业务准时率：实际送达时长与预估时长的差值在N分钟内的概率。<br><strong>业务含义</strong> </li>
 </ol>
