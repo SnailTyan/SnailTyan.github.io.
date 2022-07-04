@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2022-07-04T02:51:58.222Z</updated>
+  <updated>2022-07-04T05:28:19.768Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于机器学习方法的POI品类推荐算法-笔记</title>
+    <link href="http://noahsnail.com/2022/07/04/2022-07-04-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84POI%E5%93%81%E7%B1%BB%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/"/>
+    <id>http://noahsnail.com/2022/07/04/2022-07-04-基于机器学习方法的POI品类推荐算法/</id>
+    <published>2022-07-04T03:06:38.733Z</published>
+    <updated>2022-07-04T05:28:19.768Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>在美团商家数据中心（MDC），有超过100w的已校准审核的POI数据（一般将商家标示为POI，POI基础信息包括：门店名称、品类、电话、地址、坐标等）。如何使用这些已校准的POI数据，挖掘出有价值的信息，本文进行了一些尝试：利用机器学习方法，自动标注缺失品类的POI数据。例如，门店名称为“好再来牛肉拉面馆”的POI将自动标注“小吃”品类。</p>
+<p>Note：将商家标示为POI，POI基础信息包括：门店名称、品类、电话、地址、坐标等。</p>
+<p>机器学习解决问题的一般过程：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-56b13f2f.png" alt="机器学习模型"></p>
+<p>本文将按照：1）特征表示；2）特征选择；3）基于Naive Bayes分类模型；4）分类预测，四个部分顺序展开。</p>
+<h2 id="2-特征表示"><a href="#2-特征表示" class="headerlink" title="2. 特征表示"></a>2. 特征表示</h2><p>需要先将实际问题转换成计算机可识别的形式。对于POI而言，反应出POI品类的一个重要特征是POI门店名称，那么问题转换成了根据POI门店名称判别POI品类。POI名称字段属于文本特征，传统的文本表示方法是基于向量空间模型(VSM模型)：</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2014/12/18/poi-category-recommendation-algorithm-based-on-machine-learning.html" target="_blank" rel="external">基于机器学习方法的POI品类推荐算法</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      基于机器学习方法的POI品类推荐算法-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
   
   <entry>
     <title>Managing Supply and Demand Balance Through Machine Learning-笔记</title>
@@ -1221,38 +1254,6 @@
     <summary type="html">
     
       Leetcode 438. Find All Anagrams in a String
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 540. Single Element in a Sorted Array</title>
-    <link href="http://noahsnail.com/2021/08/25/2021-08-25-Leetcode-540-Single-Element-in-a-Sorted-Array/"/>
-    <id>http://noahsnail.com/2021/08/25/2021-08-25-Leetcode-540-Single-Element-in-a-Sorted-Array/</id>
-    <published>2021-08-25T01:39:31.234Z</published>
-    <updated>2021-08-25T01:58:18.339Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Single_Element_in_a_Sorted_Array.png" alt="Single Element in a Sorted Array"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用类似于二分查找的方式寻找单个元素，首先计算中间位置的索引<code>mid</code>，如果<code>mid</code>为奇数，说明数组左半部分有偶数个元素(索引从<code>0</code>开始)，比较<code>nums[mid]</code>与其左边的元素<code>nums[mid-1]</code>，如果二者相等，则表明左半部分一定不存在单个元素，因此<code>left=mid+1</code>，如果二者不相等，则其一定等于右边的元素，此时<code>right=mid-1</code>；如果<code>mid</code>为偶数，明数组左半部分有寄数个元素，比较<code>nums[mid]</code>与其左边的元素<code>nums[mid-1]</code>，如果二者相等，则表明左半部分一定存在单个元素，此时<code>right=mid-2</code>，即移除两个相等元素，如果不相等，则比较<code>nums[mid]</code>与右边的元素nums[mid+1]，如果二者相等，则表明右半部分一定存在单个元素，此时<code>left = mid + 2</code>，如果两者都不满足，说明<code>nums[mid]</code>就是要找的单个元素。注意<code>left &lt; right</code>的边界条件，这样不会出现数组越界的情况，要充分利用索引的奇偶性以及数组存在单个元素时的奇偶性，始终保持下一部分要查找的子数组含有奇数个元素。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">singleNonDuplicate</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></div><div class="line">        n = len(nums)</div><div class="line">        left = <span class="number">0</span></div><div class="line">        right = n - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> left &lt; right:</div><div class="line">            mid = (left + right) // <span class="number">2</span></div><div class="line">            <span class="keyword">if</span> mid % <span class="number">2</span> == <span class="number">1</span>:</div><div class="line">                <span class="keyword">if</span> nums[mid] == nums[mid - <span class="number">1</span>]:</div><div class="line">                    left = mid + <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    right = mid - <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">if</span> nums[mid] == nums[mid - <span class="number">1</span>]:</div><div class="line">                    right = mid - <span class="number">2</span></div><div class="line">                <span class="keyword">elif</span> nums[mid] == nums[mid + <span class="number">1</span>]:</div><div class="line">                    left = mid + <span class="number">2</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">return</span> nums[mid]</div><div class="line">        <span class="keyword">return</span> nums[left]</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/single-element-in-a-sorted-array/" target="_blank" rel="external">https://leetcode.com/problems/single-element-in-a-sorted-array/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 540. Single Element in a Sorted Array
     
     </summary>
     
