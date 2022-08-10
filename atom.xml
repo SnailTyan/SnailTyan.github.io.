@@ -173,7 +173,7 @@
     <link href="http://noahsnail.com/2022/07/04/2022-07-04-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84POI%E5%93%81%E7%B1%BB%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/"/>
     <id>http://noahsnail.com/2022/07/04/2022-07-04-基于机器学习方法的POI品类推荐算法/</id>
     <published>2022-07-04T03:06:38.733Z</published>
-    <updated>2022-08-10T12:40:31.166Z</updated>
+    <updated>2022-08-10T12:57:08.661Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文为美团文章学习的笔记整理。</p>
@@ -202,9 +202,7 @@
 <p>整个系统的最原始信息熵为：</p>
 <p>$$H(Y)=-\sum_{i=1}^{2} p(y_{i}) \log p(y_{i})=-2 * \frac {1} {2} * \log \frac {1} {2} = 1$$</p>
 <p>分别计算每个特征的条件熵：</p>
-<!--
-$$H(D|A)=\-\sum\_{i=1}^{2}\sum\_{j=1}^{2}p(x,y)\log p(y|x)=0-0- \frac {1} {2} \log \frac {2} {3} - \frac {1} {4} \log \frac {1} {3} =0.69$$
--->
+<p>$$H(D|A)=- \sum_{i=1}^{2}\sum_{j=1}^{2}p(x,y)\log p(y|x)=0 - 0 - \frac {1} {2} \log \frac {2} {3} - \frac {1} {4} \log \frac {1} {3} =0.69$$</p>
 <p>利用整个系统的信息熵减去条件熵，得到每个特征的信息增益得分排名(“火锅”(1) &gt; “米粉”(0.31) &gt; “馆”(0)) ，按照得分由高到低挑选需要的特征词。</p>
 <p>本文采用IG特征选择方法，选择得分排名靠前的N个特征词（Top 30%）。抽取排名前20的特征词：[酒店, 宾馆, 火锅, 摄影, 眼镜, 美容, 咖啡, ktv, 造型, 汽车, 餐厅, 蛋糕, 儿童, 美发, 商务, 旅行社, 婚纱, 会所, 影城, 烤肉]。这些特征词明显与品类属性相关联具有较强相关性，将其称之为品类词。</p>
 <h3 id="3-2-基于领域知识的特征选择方法"><a href="#3-2-基于领域知识的特征选择方法" class="headerlink" title="3.2 基于领域知识的特征选择方法"></a>3.2 基于领域知识的特征选择方法</h3><p>基于规则的特征选择算法，利用领域知识选择特征。目前很少单独使用基于规则的特征选择算法，往往结合统计学习的特征选择算法，辅助挑选特征。</p>
