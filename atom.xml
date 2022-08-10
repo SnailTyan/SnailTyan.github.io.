@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://noahsnail.com/"/>
-  <updated>2022-07-04T05:28:19.768Z</updated>
+  <updated>2022-07-11T01:23:58.663Z</updated>
   <id>http://noahsnail.com/</id>
   
   <author>
@@ -16,11 +16,164 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Leetcode 1417. Reformat The String</title>
+    <link href="http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-1417-Reformat-The-String/"/>
+    <id>http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-1417-Reformat-The-String/</id>
+    <published>2022-07-08T06:03:00.880Z</published>
+    <updated>2022-07-11T01:23:58.663Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Reformat_The_String.png" alt="Reformat The String"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先分离数字和字母，如果二者数量差的绝对值大于<code>1</code>，则不可能形成字母数字字符串，否则，根据数量多少，按顺序依次连接字符数字数组即可。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reformat</span><span class="params">(self, s: str)</span> -&gt; str:</span></div><div class="line">        letters = []</div><div class="line">        digits = []</div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</div><div class="line">            <span class="keyword">if</span> ch.isalpha():</div><div class="line">                letters.append(ch)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                digits.append(ch)</div><div class="line"></div><div class="line">        diff = len(letters) - len(digits)</div><div class="line">        <span class="keyword">if</span> abs(diff) &gt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="string">''</span></div><div class="line">        <span class="keyword">elif</span> diff == <span class="number">0</span> <span class="keyword">or</span> diff == <span class="number">1</span>:</div><div class="line">            arr1 = letters</div><div class="line">            arr2 = digits</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            arr1 = digits</div><div class="line">            arr2 = letters</div><div class="line"></div><div class="line">        result = [<span class="number">0</span>] * len(s)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr1)):</div><div class="line">            result[i * <span class="number">2</span>] = arr1[i]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr2)):</div><div class="line">            result[i * <span class="number">2</span> + <span class="number">1</span>] = arr2[i]</div><div class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(result)</div></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，进一步优化。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reformat</span><span class="params">(self, s: str)</span> -&gt; str:</span></div><div class="line">        letters = <span class="number">0</span></div><div class="line">        digits = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</div><div class="line">            <span class="keyword">if</span> ch.isalpha():</div><div class="line">                letters += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                digits += <span class="number">1</span></div><div class="line"></div><div class="line">        diff = letters - digits</div><div class="line">        <span class="keyword">if</span> abs(diff) &gt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="string">''</span></div><div class="line">        <span class="keyword">elif</span> diff == <span class="number">0</span> <span class="keyword">or</span> diff == <span class="number">1</span>:</div><div class="line">            i = <span class="number">0</span></div><div class="line">            j = <span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            i = <span class="number">1</span></div><div class="line">            j = <span class="number">0</span></div><div class="line">        </div><div class="line">        result = [<span class="number">0</span>] * len(s)</div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</div><div class="line">            <span class="keyword">if</span> ch.isalpha():</div><div class="line">                result[i] = ch</div><div class="line">                i += <span class="number">2</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                result[j] = ch</div><div class="line">                j += <span class="number">2</span></div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(result)</div></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，使用双指针，分别从两端找起，如果碰到字母和数字不符合当前位置，则交换二者。</p>
+<ul>
+<li>Version 3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reformat</span><span class="params">(self, s: str)</span> -&gt; str:</span></div><div class="line">        letters = <span class="number">0</span></div><div class="line">        digits = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</div><div class="line">            <span class="keyword">if</span> ch.isalpha():</div><div class="line">                letters += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                digits += <span class="number">1</span></div><div class="line"></div><div class="line">        diff = letters - digits</div><div class="line">        <span class="keyword">if</span> abs(diff) &gt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="string">''</span></div><div class="line">        <span class="keyword">elif</span> diff == <span class="number">0</span> <span class="keyword">or</span> diff == <span class="number">1</span>:</div><div class="line">            i = <span class="number">0</span></div><div class="line">            j = len(s) - <span class="number">2</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            i = <span class="number">1</span></div><div class="line">            j = len(s) - <span class="number">1</span></div><div class="line">        </div><div class="line">        result = list(s)</div><div class="line"></div><div class="line">        <span class="keyword">while</span> i &lt; len(s) <span class="keyword">and</span> j &gt;=<span class="number">0</span>:</div><div class="line">            <span class="keyword">while</span> i &lt; len(s) <span class="keyword">and</span> result[i].isalpha():</div><div class="line">                i += <span class="number">2</span></div><div class="line">            <span class="keyword">while</span> j &gt;=<span class="number">0</span> <span class="keyword">and</span> result[j].isdigit():</div><div class="line">                j -= <span class="number">2</span></div><div class="line">            <span class="keyword">if</span> i &lt; len(s) <span class="keyword">and</span> j &gt;=<span class="number">0</span>:</div><div class="line">                result[i], result[j] = result[j], result[i]</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(result)</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/reformat-the-string/" target="_blank" rel="external">https://leetcode.com/problems/reformat-the-string/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1417. Reformat The String
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 93. Restore IP Addresses</title>
+    <link href="http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-93-Restore-IP-Addresses/"/>
+    <id>http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-93-Restore-IP-Addresses/</id>
+    <published>2022-07-08T01:09:40.708Z</published>
+    <updated>2022-07-13T05:35:40.412Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Restore_IP_Addresses.png" alt="Restore IP Addresses"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，容易想到的方案，枚举<code>.</code>所有可能的位置，然后对四个数字进行检查，如果都合法，则为合法的IP地址，也可以枚举数字。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">restoreIpAddresses</span><span class="params">(self, s: str)</span> -&gt; List[str]:</span></div><div class="line">        result = []</div><div class="line">        chars = list(s)</div><div class="line">        length = len(s)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, length):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, length):</div><div class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j+<span class="number">1</span>, length):</div><div class="line">                    num1 = <span class="string">''</span>.join(chars[:i])</div><div class="line">                    num2 = <span class="string">''</span>.join(chars[i:j])</div><div class="line">                    num3 = <span class="string">''</span>.join(chars[j:k])</div><div class="line">                    num4 = <span class="string">''</span>.join(chars[k:])</div><div class="line">    </div><div class="line">                    <span class="keyword">if</span> self.validify(num1) <span class="keyword">and</span> self.validify(num2) <span class="keyword">and</span> self.validify(num3) <span class="keyword">and</span> self.validify(num4):</div><div class="line">                        ip_address = num1 + <span class="string">'.'</span> + num2 + <span class="string">'.'</span> + num3 + <span class="string">'.'</span> + num4</div><div class="line">                        result.append(ip_address)</div><div class="line">        <span class="keyword">return</span> result</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validify</span><span class="params">(self, num)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(num) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">elif</span> len(num) &gt; <span class="number">1</span> <span class="keyword">and</span> num[<span class="number">0</span>] == <span class="string">'0'</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">elif</span> int(num) &gt; <span class="number">255</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，在Version 1的基础上进行剪枝，每轮循环的遍历数量可以再减少一些，当出现数字不合理时，则进行下一次循环。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">restoreIpAddresses</span><span class="params">(self, s: str)</span> -&gt; List[str]:</span></div><div class="line">        result = []</div><div class="line">        chars = list(s)</div><div class="line">        length = len(s)</div><div class="line"></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</div><div class="line">            num1 = <span class="string">''</span>.join(chars[:i])</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> self.validify(num1):</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, i+<span class="number">4</span>):</div><div class="line">                num2 = <span class="string">''</span>.join(chars[i:j])</div><div class="line">                <span class="keyword">if</span> <span class="keyword">not</span> self.validify(num2):</div><div class="line">                    <span class="keyword">continue</span></div><div class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j+<span class="number">1</span>, j+<span class="number">4</span>):</div><div class="line">                    num3 = <span class="string">''</span>.join(chars[j:k])</div><div class="line">                    num4 = <span class="string">''</span>.join(chars[k:])</div><div class="line">                    <span class="keyword">if</span> self.validify(num3) <span class="keyword">and</span> self.validify(num4):</div><div class="line">                        ip_address = num1 + <span class="string">'.'</span> + num2 + <span class="string">'.'</span> + num3 + <span class="string">'.'</span> + num4</div><div class="line">                        result.append(ip_address)</div><div class="line">        <span class="keyword">return</span> result</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validify</span><span class="params">(self, num)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(num) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">elif</span> len(num) &gt; <span class="number">1</span>:</div><div class="line">            <span class="keyword">if</span> num[<span class="number">0</span>] == <span class="string">'0'</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> int(num) &gt; <span class="number">255</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/restore-ip-addresses/" target="_blank" rel="external">https://leetcode.com/problems/restore-ip-addresses/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 93. Restore IP Addresses
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1103. Distribute Candies to People</title>
+    <link href="http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-1103-Distribute-Candies-to-People/"/>
+    <id>http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-1103-Distribute-Candies-to-People/</id>
+    <published>2022-07-07T09:38:22.964Z</published>
+    <updated>2022-07-08T00:37:08.190Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Distribute_Candies_to_People.png" alt="Distribute Candies to People"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，循环遍历即可，<code>current</code>为当前这次要分配的糖果数量，每次要分配的糖果数量加1，如果不够，则剩余糖果分配给最后一个。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candies: int, num_people: int)</span> -&gt; List[int]:</span></div><div class="line">        result = [<span class="number">0</span>] * num_people</div><div class="line">        index = <span class="number">0</span></div><div class="line">        current = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> candies &gt; <span class="number">0</span>:</div><div class="line">            current = min(current, candies)</div><div class="line">            result[index % num_people] += current</div><div class="line">            candies -= current</div><div class="line">            current += <span class="number">1</span></div><div class="line">            index += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，<code>index</code>可以用<code>current</code>替代。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candies: int, num_people: int)</span> -&gt; List[int]:</span></div><div class="line">        result = [<span class="number">0</span>] * num_people</div><div class="line">        current = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> candies &gt; <span class="number">0</span>:</div><div class="line">            result[(current - <span class="number">1</span>) % num_people] += min(current, candies)</div><div class="line">            candies -= current</div><div class="line">            current += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/distribute-candies-to-people/" target="_blank" rel="external">https://leetcode.com/problems/distribute-candies-to-people/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1103. Distribute Candies to People
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 575. Distribute Candies</title>
+    <link href="http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-575-Distribute-Candies/"/>
+    <id>http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-575-Distribute-Candies/</id>
+    <published>2022-07-07T09:27:42.035Z</published>
+    <updated>2022-07-07T09:36:26.912Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Distribute_Candies.png" alt="Distribute Candies"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用dict。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candyType: List[int])</span> -&gt; int:</span></div><div class="line">        candies = &#123;&#125;</div><div class="line">        <span class="keyword">for</span> candy <span class="keyword">in</span> candyType:</div><div class="line">            candies[candy]  = candies.get(candy, <span class="number">0</span>) + <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> min(len(candies), len(candyType) // <span class="number">2</span>)</div><div class="line">        <span class="comment"># return min(len(Counter(candyType)), len(candyType) // 2)</span></div></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，使用set。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candyType: List[int])</span> -&gt; int:</span></div><div class="line">        candies = set()</div><div class="line">        <span class="keyword">for</span> candy <span class="keyword">in</span> candyType:</div><div class="line">            candies.add(candy)</div><div class="line">        <span class="keyword">return</span> min(len(candies), len(candyType) // <span class="number">2</span>)</div><div class="line">        <span class="comment"># return min(len(set(candyType)), len(candyType) // 2)</span></div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/distribute-candies/" target="_blank" rel="external">https://leetcode.com/problems/distribute-candies/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 575. Distribute Candies
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于机器学习方法的POI品类推荐算法-笔记</title>
     <link href="http://noahsnail.com/2022/07/04/2022-07-04-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84POI%E5%93%81%E7%B1%BB%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/"/>
     <id>http://noahsnail.com/2022/07/04/2022-07-04-基于机器学习方法的POI品类推荐算法/</id>
     <published>2022-07-04T03:06:38.733Z</published>
-    <updated>2022-07-04T05:28:19.768Z</updated>
+    <updated>2022-07-11T01:24:09.140Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文为美团文章学习的笔记整理。</p>
@@ -30,7 +183,33 @@
 <p><img src="http://noahsnail.com/images/meituan/meituan-56b13f2f.png" alt="机器学习模型"></p>
 <p>本文将按照：1）特征表示；2）特征选择；3）基于Naive Bayes分类模型；4）分类预测，四个部分顺序展开。</p>
 <h2 id="2-特征表示"><a href="#2-特征表示" class="headerlink" title="2. 特征表示"></a>2. 特征表示</h2><p>需要先将实际问题转换成计算机可识别的形式。对于POI而言，反应出POI品类的一个重要特征是POI门店名称，那么问题转换成了根据POI门店名称判别POI品类。POI名称字段属于文本特征，传统的文本表示方法是基于向量空间模型(VSM模型)：</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<p><img src="http://noahsnail.com/images/meituan/meituan-523de841.png" alt="向量空间模型"></p>
+<p>空间向量模型需要一个“字典”，这个字典可以在样本中产生，也可以从外部导入。上图中的字典就是[好，宾馆，海底，拉面，冰雪, ……. ，馆]。对已校准的POI，先利用Lucene的中文分词工具SmartCn[2]对POI名称做预分词处理，提取特征词，作为原始粗糙字典集合。</p>
+<p>有了字典后便可以量化地表示出某个文本。先定义一个与字典长度相同的向量，向量中的每个位置对应字典中的相应位置的单词。然后遍历这个文本，对应文本中的出现某个单词，在向量中的对应位置，填入“某个值”（即特征词的权重，包括BOOL权重，词频权重，TFIDF权重）。考虑到一般的POI名称都属于短文本，本文采用BOOL权重。</p>
+<p>在产生粗糙字典集合时，还统计了校准POI中，每个品类(type_id)，以及特征词(term)在品类(type_id)出现的次数(文档频率)。分别写入到表category_frequency和term_category_frequency，表的部分结果如下:</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-22bda81f.png" alt="示例"></p>
+<p>分别记：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">A(i,j) = 特征词term(i) 在品类为type_id(j)出现的次数count</div><div class="line">T(j) = 品类为type_id(j)在样本集出现的次数   </div><div class="line">N = 已校准POI数据集的数量</div></pre></td></tr></table></figure>
+<p>Note: 先分词，提取特征词，构造字典，然后使用VSM模型(Vector Space Model)表示文本，生成字典时可以统计词频。</p>
+<h2 id="3-特征选择"><a href="#3-特征选择" class="headerlink" title="3. 特征选择"></a>3. 特征选择</h2><p>现在，得到了一个“预输入字典”：包括了所有已校准POI名称字段的特征词，这些特征词比如：“88”、“11”， “3”、“auyi”、“中心”、“中国”、“酒店”、“自助餐”、“拉面”等。直观感觉，“88”、“11”， “3”、“auyi”、“中国”这些词对判断品类并没有多大帮助，但“酒店”、“自助餐”、“拉面”对判断一个POI的品类却可能起到非常重要作用。</p>
+<p>如何挑选出有利于模型预测的特征呢？这就涉及到了特征选择。特征选择方法可以分成基于领域知识的规则方法和基于统计学习方法。本文使用统计机器学习方法，辅助规则方法的特征选择算法，挑选有利于判断POI品类的特征词。</p>
+<h3 id="3-1-基于统计学习的特征选择算法"><a href="#3-1-基于统计学习的特征选择算法" class="headerlink" title="3.1 基于统计学习的特征选择算法"></a>3.1 基于统计学习的特征选择算法</h3><p>基于统计学习的特征选择算法，大体可以分成两种：1.基于相关性度量(信息论相关) 2.特征空间表示(典型的如PCA)。</p>
+<p>文本特征经常采用的基于信息增益方法(IG)特征选择方法。某个特征的信息增益是指，已知该特征条件下，整个系统的信息量的前后变化。如果前后信息量变化越大，那么可以认为该特征起到的作用也就越大。 那么，如何定义信息量呢？一般采用熵的概念来衡量一个系统的信息量：$$[H(Y)=-\sum<em>{i=1}^{n}p(y</em>{i})\log p(y_{i})$$</p>
+<p>当已知该特征时，从数学的角度来说就是已知了该特征的分布，系统的信息量可以由条件熵来描述：$$H(Y|X)=\sum<em>{x}p(x)H(Y|X=x)=-\sum</em>{x}\sum_{y}p(x,y)\log p(y|x)$$</p>
+<p>该特征的信息增益定义为：$$IG(X)=H(Y)-H(Y|X)$$</p>
+<p>信息增益得分衡量了该特征的重要性。假设有四个样本，样本的特征词包括“火锅”、“米粉”、“馆”，采用信息增益判断不同特征对于决策影响:</p>
+<p>| 米粉(A) | 火锅(B) | 馆(C) | 品类(D) |<br>| 1 | 1 | 0 | 火锅 |<br>| 0 | 1 | 1 | 火锅 |<br>| 1 | 0 | 0 | 小吃 |<br>| 1 | 0 | 1 | 小吃 |</p>
+<p>整个系统的最原始信息熵为：$$H(Y)=-\sum<em>{i=1}^{2}p(y</em>{i})\log p(y_{i})=-2<em>\frac{1}{2}</em>\log \frac{1}{2} = 1$$</p>
+<p>分别计算每个特征的条件熵：$$H(D|A)=-\sum<em>{i=1}^{2}\sum</em>{j=1}^{2}p(x,y)\log p(y|x)=0-0- \frac{1}{2}\log \frac{2}{3} -\frac{1}{4}\log \frac{1}{3} =0.69$$</p>
+<p>利用整个系统的信息熵减去条件熵，得到每个特征的信息增益得分排名(“火锅”(1) &gt; “米粉”(0.31) &gt; “馆”(0)) ，按照得分由高到低挑选需要的特征词。</p>
+<p>本文采用IG特征选择方法，选择得分排名靠前的N个特征词（Top 30%）。抽取排名前20的特征词：[酒店, 宾馆, 火锅, 摄影, 眼镜, 美容, 咖啡, ktv, 造型, 汽车, 餐厅, 蛋糕, 儿童, 美发, 商务, 旅行社, 婚纱, 会所, 影城, 烤肉]。这些特征词明显与品类属性相关联具有较强相关性，将其称之为品类词。</p>
+<h3 id="3-2-基于领域知识的特征选择方法"><a href="#3-2-基于领域知识的特征选择方法" class="headerlink" title="3.2 基于领域知识的特征选择方法"></a>3.2 基于领域知识的特征选择方法</h3><p>基于规则的特征选择算法，利用领域知识选择特征。目前很少单独使用基于规则的特征选择算法，往往结合统计学习的特征选择算法，辅助挑选特征。</p>
+<p>本文需要解决的是POI名称字段短文本的自动分类问题，POI名称字段一般符合这样的规则，POI名称=名称核心词+品类词。名称核心词对于实际的品类预测作用不大，有时反而出现”过度学习“起到负面作用。例如”好利来牛肉拉面馆“，”好利来“是它的名称核心词，在用学习算法时学到的很有可能是一个”蛋糕“品类（”好利来“和”蛋糕“品类的关联性非常强，得到错误的预测结论）。</p>
+<p>本文使用该规则在挑选特征时做了一个trick：利用特征选择得到的特征词（绝大部分是品类词），对POI名称字段分词，丢弃前面部分（主要是名称核心词），保留剩余部分。这种trick从目前的评测结果看有5%左右准确率提升，缺点是会降低了算法覆盖度。</p>
+<p>Note: 利用领域知识集合统计学习来选择特征。</p>
+<h2 id="4-分类模型"><a href="#4-分类模型" class="headerlink" title="4. 分类模型"></a>4. 分类模型</h2><h3 id="4-1-建模"><a href="#4-1-建模" class="headerlink" title="4.1 建模"></a>4.1 建模</h3><p>完成了特征表示、特征选择后，下一步就是训练分类模型了。机器学习分类模型可以分成两种：1）生成式模型；2）判别式模型。可以简单认为，两者区别生成式模型直接对样本的联合概率分布进行建模：生成式模型的难点在于如何去估计类概率密度分布$p(x|y)$。本文采用的朴素贝叶斯模型，其”Naive”在对类概率密度函数简化上，它假设了条件独立：$$p(y|x)=\frac {p(y)p(x|y)} {p(x)} \sim p(x|y)$$</p>
+<p>根据对p(x|y)不同建模形式，Naive Bayes模型主要分成：Muti-variate Bernoulli Model（多项伯努利模型）和Multinomial event model（多项事件模型）。一次伯努利事件相当于一次投硬币事件（0，1两种可能），一次多项事件则相当于投色子（1到6多种可能）。结合传统的文本分类解释这两类模型：</p>
+<h4 id="4-1-1-多项伯努利模型"><a href="#4-1-1-多项伯努利模型" class="headerlink" title="4.1.1 多项伯努利模型"></a>4.1.1 多项伯努利模型</h4><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://tech.meituan.com/2014/12/18/poi-category-recommendation-algorithm-based-on-machine-learning.html" target="_blank" rel="external">基于机器学习方法的POI品类推荐算法</a></li>
 </ol>
 ]]></content>
@@ -1118,142 +1297,6 @@
     <summary type="html">
     
       Leetcode 459. Repeated Substring Pattern
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 392. Is Subsequence</title>
-    <link href="http://noahsnail.com/2021/08/30/2021-08-30-Leetcode-392-Is-Subsequence/"/>
-    <id>http://noahsnail.com/2021/08/30/2021-08-30-Leetcode-392-Is-Subsequence/</id>
-    <published>2021-08-30T05:17:27.507Z</published>
-    <updated>2021-08-30T05:35:03.698Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Is_Subsequence.png" alt="Is Subsequence"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，依次比较字符串<code>s</code>和<code>t</code>中的字符。Version 2，为Leetcode 792做铺垫，先将<code>t</code>中的字符以及对应的索引保存到字典中，相同字符对应的索引构成一个有序序列，然后依次<code>s</code>中的每个字符，在<code>t</code>中查找其对应的字符索引位置，如果字符在<code>t</code>中不存在，直接返回<code>False</code>，<code>pre</code>表示单词中前一个字符在<code>t</code>中的索引位置，每次查找使用二分查找，如果返回的序列索引位置等于序列的长度，即<code>pre</code>位置之后的<code>t</code>中没找到对应的当前字符，则返回<code>False</code>，否则，更新<code>pre</code>为当前字符在<code>t</code>中的索引位置。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSubsequence</span><span class="params">(self, s: str, t: str)</span> -&gt; bool:</span></div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> i &lt; len(s) <span class="keyword">and</span> j &lt; len(t):</div><div class="line">            <span class="keyword">if</span> s[i] == t[j]:</div><div class="line">                i += <span class="number">1</span></div><div class="line">                j += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                j += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> i == len(s):</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSubsequence</span><span class="params">(self, s: str, t: str)</span> -&gt; bool:</span></div><div class="line">        stat = collections.defaultdict(list)</div><div class="line">        <span class="keyword">for</span> i, ch <span class="keyword">in</span> enumerate(t):</div><div class="line">            stat[ch].append(i)</div><div class="line">        pre = <span class="number">-1</span></div><div class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</div><div class="line">            <span class="keyword">if</span> ch <span class="keyword">not</span> <span class="keyword">in</span> stat:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">            index = bisect.bisect(stat[ch], pre)</div><div class="line">            <span class="keyword">if</span> index == len(stat[ch]):</div><div class="line">                <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                pre = stat[ch][index]</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/is-subsequence/" target="_blank" rel="external">https://leetcode.com/problems/is-subsequence/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 392. Is Subsequence
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 792. Number of Matching Subsequences</title>
-    <link href="http://noahsnail.com/2021/08/30/2021-08-30-Leetcode-792-Number-of-Matching-Subsequences/"/>
-    <id>http://noahsnail.com/2021/08/30/2021-08-30-Leetcode-792-Number-of-Matching-Subsequences/</id>
-    <published>2021-08-30T01:43:28.916Z</published>
-    <updated>2021-08-30T05:23:05.506Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Number_of_Matching_Subsequences.png" alt="Number of Matching Subsequences"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，每个单词都与<code>s</code>进行遍历比较，超时。Version 2，先将<code>s</code>中的字符以及对应的索引保存到字典中，相同字符对应的索引构成一个有序序列，然后依次遍历每个单词的每个字符，在<code>s</code>中查找其对应的字符索引位置，如果字符在<code>s</code>中不存在，直接跳出循环，<code>pre</code>表示单词中前一个字符在<code>s</code>中的索引位置，每次查找使用二分查找，如果返回的序列索引位置等于序列的长度，即<code>pre</code>位置之后的<code>s</code>中没找到对应的当前字符，否则，更新<code>pre</code>为当前字符在<code>s</code>中的索引位置，<code>flag</code>表示是否满足条件，初始设为<code>True</code>，当不满足条件跳出循环时，设为<code>False</code>，每个单词根据<code>flag</code>的值来统计满足条件的单词个数。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numMatchingSubseq</span><span class="params">(self, s: str, words: List[str])</span> -&gt; int:</span></div><div class="line">        count = <span class="number">0</span></div><div class="line">        n = len(s)</div><div class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">            m = len(word)</div><div class="line">            <span class="keyword">if</span> m &gt; n:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            i = <span class="number">0</span></div><div class="line">            j = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> i &lt; n <span class="keyword">and</span> j &lt; m:</div><div class="line">                <span class="keyword">if</span> s[i] == word[j]:</div><div class="line">                    i += <span class="number">1</span></div><div class="line">                    j += <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    i += <span class="number">1</span></div><div class="line">                <span class="keyword">if</span> m - j - <span class="number">1</span> &gt; n - i - <span class="number">1</span>:</div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> j == m:</div><div class="line">                count += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> count</div></pre></td></tr></table></figure>
-<ul>
-<li>Version 2</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numMatchingSubseq</span><span class="params">(self, s: str, words: List[str])</span> -&gt; int:</span></div><div class="line">        count = <span class="number">0</span></div><div class="line">        stat = collections.defaultdict(list)</div><div class="line">        <span class="keyword">for</span> i, ch <span class="keyword">in</span> enumerate(s):</div><div class="line">            stat[ch].append(i)</div><div class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</div><div class="line">            flag = <span class="keyword">True</span></div><div class="line">            pre = <span class="number">-1</span></div><div class="line">            <span class="keyword">for</span> ch <span class="keyword">in</span> word:</div><div class="line">                <span class="keyword">if</span> ch <span class="keyword">not</span> <span class="keyword">in</span> stat:</div><div class="line">                    flag = <span class="keyword">False</span></div><div class="line">                    <span class="keyword">break</span></div><div class="line">                index = bisect.bisect(stat[ch], pre)</div><div class="line">                <span class="keyword">if</span> index == len(stat[ch]):</div><div class="line">                    flag = <span class="keyword">False</span></div><div class="line">                    <span class="keyword">break</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    pre = stat[ch][index]</div><div class="line">            <span class="keyword">if</span> flag:</div><div class="line">                count += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> count</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/number-of-matching-subsequences/" target="_blank" rel="external">https://leetcode.com/problems/number-of-matching-subsequences/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 792. Number of Matching Subsequences
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 567. Permutation in String</title>
-    <link href="http://noahsnail.com/2021/08/27/2021-08-27-Leetcode-567-Permutation-in-String/"/>
-    <id>http://noahsnail.com/2021/08/27/2021-08-27-Leetcode-567-Permutation-in-String/</id>
-    <published>2021-08-27T06:56:30.160Z</published>
-    <updated>2021-08-27T06:58:03.067Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Permutation_in_String.png" alt="Permutation in String"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，此题与leetcode 438非常类似，思路是一样的。判断<code>s2</code>是否包含<code>s1</code>的变换，可以采用字典的方法，即每个字母的个数及类型相等。先统计字符串<code>s1</code>的字母个数并记录其长度在<code>stat</code>中，遍历字符串<code>s2</code>，如果字母在<code>stat</code>中，则将其记录到字典<code>subs</code>中，否则重置<code>subs</code>，当<code>subs[&#39;length&#39;] = stat[&#39;length&#39;]</code>时，比较二者是否相等，如果相等，直接返回<code>True</code>，否则，字符串继续遍历，为保证<code>subs</code>长度与<code>stat</code>长度一致，此时，<code>subs</code>中移除<code>s2[index - n + 1]</code>字符，同时长度减<code>1</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkInclusion</span><span class="params">(self, s1: str, s2: str)</span> -&gt; bool:</span></div><div class="line">        n = len(s1)</div><div class="line">        stat = collections.Counter(s1)</div><div class="line">        stat[<span class="string">'length'</span>] = n</div><div class="line">        subs = collections.defaultdict(int)</div><div class="line">        <span class="keyword">for</span> index, ch <span class="keyword">in</span> enumerate(s2):</div><div class="line">            <span class="keyword">if</span> ch <span class="keyword">in</span> stat:</div><div class="line">                subs[ch] += <span class="number">1</span></div><div class="line">                subs[<span class="string">'length'</span>] += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                subs = collections.defaultdict(int)</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> subs[<span class="string">'length'</span>] == stat[<span class="string">'length'</span>]:</div><div class="line">                <span class="keyword">if</span> stat == subs:</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">                subs[s2[index - n + <span class="number">1</span>]] -= <span class="number">1</span></div><div class="line">                subs[<span class="string">'length'</span>] -= <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/permutation-in-string/" target="_blank" rel="external">https://leetcode.com/problems/permutation-in-string/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 567. Permutation in String
-    
-    </summary>
-    
-      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode 438. Find All Anagrams in a String</title>
-    <link href="http://noahsnail.com/2021/08/27/2021-08-27-Leetcode-438-Find-All-Anagrams-in-a-String/"/>
-    <id>http://noahsnail.com/2021/08/27/2021-08-27-Leetcode-438-Find-All-Anagrams-in-a-String/</id>
-    <published>2021-08-27T06:37:22.477Z</published>
-    <updated>2021-08-27T06:45:28.077Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
-<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Find_All_Anagrams_in_a_String.png" alt="Find All Anagrams in a String"></p>
-<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，判断两个字符串是否是Anagrams，可以采用字典的方法，即每个字母的个数及类型相等。先统计字符串<code>p</code>的字母个数并记录其长度在<code>stat</code>中，遍历字符串<code>s</code>，如果字母在<code>stat</code>中，则将其记录到字典<code>subs</code>中，否则重置<code>subs</code>，当<code>subs[&#39;length&#39;] = stat[&#39;length&#39;]</code>时，比较二者是否相等，如果相等，则记录索引<code>index - n + 1</code>到结果列表中，此时字符串继续遍历，为保证<code>subs</code>长度与<code>stat</code>长度一致，此时，<code>subs</code>中移除<code>s[index - n + 1]</code>字符，同时长度减<code>1</code>。</p>
-<ul>
-<li>Version 1</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findAnagrams</span><span class="params">(self, s: str, p: str)</span> -&gt; List[int]:</span></div><div class="line">        stat = collections.Counter(p)</div><div class="line">        n = len(p)</div><div class="line">        stat[<span class="string">'length'</span>] = n</div><div class="line">        result = []</div><div class="line">        subs = collections.defaultdict(int)</div><div class="line">        <span class="keyword">for</span> index, ch <span class="keyword">in</span> enumerate(s):</div><div class="line">            <span class="keyword">if</span> ch <span class="keyword">in</span> stat:</div><div class="line">                subs[ch] += <span class="number">1</span></div><div class="line">                subs[<span class="string">'length'</span>] += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                subs = collections.defaultdict(int)</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> subs[<span class="string">'length'</span>] == stat[<span class="string">'length'</span>]:</div><div class="line">                <span class="keyword">if</span> stat == subs:</div><div class="line">                    result.append(index - n + <span class="number">1</span>)</div><div class="line">                subs[s[index - n + <span class="number">1</span>]] -= <span class="number">1</span></div><div class="line">                subs[<span class="string">'length'</span>] -= <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a href="https://leetcode.com/problems/find-all-anagrams-in-a-string/" target="_blank" rel="external">https://leetcode.com/problems/find-all-anagrams-in-a-string/</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      Leetcode 438. Find All Anagrams in a String
     
     </summary>
     
