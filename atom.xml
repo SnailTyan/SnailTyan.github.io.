@@ -173,7 +173,7 @@
     <link href="http://noahsnail.com/2022/07/04/2022-07-04-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84POI%E5%93%81%E7%B1%BB%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/"/>
     <id>http://noahsnail.com/2022/07/04/2022-07-04-基于机器学习方法的POI品类推荐算法/</id>
     <published>2022-07-04T03:06:38.733Z</published>
-    <updated>2022-08-10T12:57:08.661Z</updated>
+    <updated>2022-08-11T00:54:56.804Z</updated>
     
     <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="external">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="external">简书</a></p>
 <p>本文为美团文章学习的笔记整理。</p>
@@ -195,7 +195,7 @@
 <p>如何挑选出有利于模型预测的特征呢？这就涉及到了特征选择。特征选择方法可以分成基于领域知识的规则方法和基于统计学习方法。本文使用统计机器学习方法，辅助规则方法的特征选择算法，挑选有利于判断POI品类的特征词。</p>
 <h3 id="3-1-基于统计学习的特征选择算法"><a href="#3-1-基于统计学习的特征选择算法" class="headerlink" title="3.1 基于统计学习的特征选择算法"></a>3.1 基于统计学习的特征选择算法</h3><p>基于统计学习的特征选择算法，大体可以分成两种：1.基于相关性度量(信息论相关) 2.特征空间表示(典型的如PCA)。</p>
 <p>文本特征经常采用的基于信息增益方法(IG)特征选择方法。某个特征的信息增益是指，已知该特征条件下，整个系统的信息量的前后变化。如果前后信息量变化越大，那么可以认为该特征起到的作用也就越大。 那么，如何定义信息量呢？一般采用熵的概念来衡量一个系统的信息量：$$H(Y)=-\sum_{i=1}^{n}p(y_{i})\log p(y_{i})$$</p>
-<p>当已知该特征时，从数学的角度来说就是已知了该特征的分布，系统的信息量可以由条件熵来描述：$$H(Y|X)=\sum<em>{x}p(x)H(Y|X=x)=-\sum</em>{x}\sum_{y}p(x,y)\log p(y|x)$$</p>
+<p>当已知该特征时，从数学的角度来说就是已知了该特征的分布，系统的信息量可以由条件熵来描述：$$H(Y|X)=\sum_{x}p(x)H(Y|X=x)=-\sum_{x}\sum_{y}p(x,y)\log p(y|x)$$</p>
 <p>该特征的信息增益定义为：$$IG(X)=H(Y)-H(Y|X)$$</p>
 <p>信息增益得分衡量了该特征的重要性。假设有四个样本，样本的特征词包括“火锅”、“米粉”、“馆”，采用信息增益判断不同特征对于决策影响:</p>
 <p>| 米粉(A) | 火锅(B) | 馆(C) | 品类(D) |<br>| 1 | 1 | 0 | 火锅 |<br>| 0 | 1 | 1 | 火锅 |<br>| 1 | 0 | 0 | 小吃 |<br>| 1 | 0 | 1 | 小吃 |</p>
