@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-56b13f2f.png">
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-523de841.png">
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-22bda81f.png">
-<meta property="og:updated_time" content="2022-08-11T00:54:56.804Z">
+<meta property="og:updated_time" content="2022-10-17T01:36:41.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于机器学习方法的POI品类推荐算法-笔记">
 <meta name="twitter:description" content="基于机器学习方法的POI品类推荐算法-笔记">
@@ -381,7 +381,7 @@
 <p>如何挑选出有利于模型预测的特征呢？这就涉及到了特征选择。特征选择方法可以分成基于领域知识的规则方法和基于统计学习方法。本文使用统计机器学习方法，辅助规则方法的特征选择算法，挑选有利于判断POI品类的特征词。</p>
 <h3 id="3-1-基于统计学习的特征选择算法"><a href="#3-1-基于统计学习的特征选择算法" class="headerlink" title="3.1 基于统计学习的特征选择算法"></a>3.1 基于统计学习的特征选择算法</h3><p>基于统计学习的特征选择算法，大体可以分成两种：1.基于相关性度量(信息论相关) 2.特征空间表示(典型的如PCA)。</p>
 <p>文本特征经常采用的基于信息增益方法(IG)特征选择方法。某个特征的信息增益是指，已知该特征条件下，整个系统的信息量的前后变化。如果前后信息量变化越大，那么可以认为该特征起到的作用也就越大。 那么，如何定义信息量呢？一般采用熵的概念来衡量一个系统的信息量：$$H(Y)=-\sum_{i=1}^{n}p(y_{i})\log p(y_{i})$$</p>
-<p>当已知该特征时，从数学的角度来说就是已知了该特征的分布，系统的信息量可以由条件熵来描述：$$H(Y|X)=\sum_{x}p(x)H(Y|X=x)=-\sum_{x}\sum_{y}p(x,y)\log p(y|x)$$</p>
+<p>当已知该特征时，从数学的角度来说就是已知了该特征的分布，系统的信息量可以由条件熵来描述：$$H(Y|X)=\sum_{x} p(x)H(Y|X=x)=- \sum_{x} \sum_{y} p(x,y)\log p(y|x)$$</p>
 <p>该特征的信息增益定义为：$$IG(X)=H(Y)-H(Y|X)$$</p>
 <p>信息增益得分衡量了该特征的重要性。假设有四个样本，样本的特征词包括“火锅”、“米粉”、“馆”，采用信息增益判断不同特征对于决策影响:</p>
 <p>| 米粉(A) | 火锅(B) | 馆(C) | 品类(D) |<br>| 1 | 1 | 0 | 火锅 |<br>| 0 | 1 | 1 | 火锅 |<br>| 1 | 0 | 0 | 小吃 |<br>| 1 | 0 | 1 | 小吃 |</p>
@@ -557,7 +557,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">832</span>
+                <span class="site-state-item-count">843</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
