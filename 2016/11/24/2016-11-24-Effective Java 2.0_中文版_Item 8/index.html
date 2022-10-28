@@ -1,0 +1,915 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Effective Java 2.0_中文版_Item 8">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 2.0_中文版_Item 8">
+<meta property="og:url" content="http://noahsnail.com/2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Effective Java 2.0_中文版_Item 8">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-11-24T14:45:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java 2.0_中文版_Item 8">
+<meta name="twitter:description" content="Effective Java 2.0_中文版_Item 8">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/">
+
+
+
+
+
+  <title>Effective Java 2.0_中文版_Item 8 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective Java 2.0_中文版_Item 8</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Effective Java 2.0_中文版_Item 8
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a>  |  <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a>  |  <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h1 id="CHAPTER3-所有对象的共通方法"><a href="#CHAPTER3-所有对象的共通方法" class="headerlink" title="CHAPTER3 所有对象的共通方法"></a>CHAPTER3 所有对象的共通方法</h1><p>虽然<code>Object</code>是一个具体的类，但设计它的主要目的是为了扩展。它的所有非<code>final</code>方法(<code>equals</code>，<code>hashCode</code>，<code>toString</code>，<code>clone</code>和<code>finalize</code>)都有明确的<em>通用约定</em>，因为设计它们的目的是为了重写。任何类都应该遵循通用约定重写这些方法；不这样做的话，依赖这些约定的其它类（例如<code>HashMap</code>和<code>HashSet</code>）将无法结合这个类正确运行。</p>
+<p>会告本章诉你什么时候，怎样重写这些非final的<code>Object</code>方法。本章会忽略<code>finalize</code>方法，因为它在Item 7中已经讨论过了。虽然不是一个<code>Object</code>方法，但是这章仍会讨论<code>Comparable.compareTo</code>，因为它有一个类似的特性。</p>
+<h2 id="Item-8：当重写equals时要遵循通用约定"><a href="#Item-8：当重写equals时要遵循通用约定" class="headerlink" title="Item 8：当重写equals时要遵循通用约定"></a>Item 8：当重写equals时要遵循通用约定</h2><p>重写<code>equals</code>方法看似简单，但许多方式都会导致错误，结果是非常可怕的。避免这些问题的最简单方式是不要重写<code>equals</code>方法，在这种情况下类的每个实例只等价于它本身。如果符合以下任何条件，这样做就是正确的：</p>
+<ul>
+<li><p><strong>类的每个实例本质上都是唯一的。</strong>对于表示活动实体而不是表示值的类确实如此，例如<code>Thread</code>。对于这些类，<code>Object</code>提供的<code>equals</code>实现具有完全正确的行为。</p>
+</li>
+<li><p><strong>不关心类是否提供“逻辑等价”的测试。</strong>例如，<code>java.util.Random</code>可以重写<code>equals</code>方法来检查两个<code>Random</code>实例是否会产生相同的随机数序列，但设计者认为客户不需要或者不想要这个功能。在这种情况下，从<code>Object</code>继承的<code>equals</code>实现就足够了。</p>
+</li>
+<li><p><strong>超类已经重写了<code>equals</code>，超类的行为对于子类是合适的。</strong>例如，大多数<code>Set</code>实现从<code>AbstractSet</code>继承了<code>equals</code>实现，<code>List</code>实现从<code>AbstractList</code>继承了<code>equals</code>实现，<code>Map</code>实现从<code>AbstractMap</code>继承了<code>equals</code>实现。</p>
+</li>
+<li><p><strong>类是私有的或包私有的，可以确定它的<code>equals</code>方法从不会被调用。</strong>可以说，在这些情况下<code>equals</code>方法应该重写，以防它被偶然调用：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(); <span class="comment">// Method is never called</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>什么时候重写<code>Object.equals</code>方法是合适的？如果类具有逻辑等的概念，不同于对象同一性，并且超类没有重写<code>equals</code>方法来实现要求的行为，这时候就需要重写<code>equals</code>方法。这种情况通常是对值类而言的。值类仅仅是表示值的类，例如<code>Integer</code>或<code>Date</code>。程序员用<code>equals</code>方法比较值对象的引用，期望找出它们是否是逻辑等价的，而不管它们是否是同一对象。重写<code>equals</code>方法不仅满足了程序员的期望；它也能使实例作为映射表的主键或者集合的元素，使它们表现出可预期的行为。</p>
+<p>有一种不需要重写<code>equals</code>方法的值类，它通过实例控制（Item 1）来确保每个值至多存在一个对象。枚举类型（Item 30）就是这种类。对于这种类而言，逻辑等价等同与对象同一性，<code>Object</code>的<code>equals</code>方法在功能上就如同逻辑等价方法。</p>
+<p>当你重写<code>equals</code>方法时，你必须遵循通用约定。下面是约定内容，从<code>Object</code>规范[JavaSE6]中拷贝的：</p>
+<p><code>equals</code>实现了一种等价关系。它是：</p>
+<ul>
+<li><p><em>自反性</em>：对于任何非空引用值<code>x</code>，<code>x.equals(x)</code>必须返回<code>true</code>。</p>
+</li>
+<li><p><em>对称性</em>：对于任何非空引用值<code>x</code>和<code>y</code>，<code>x.equals(y)</code>必须返回<code>true</code>当且仅当<code>y.equals(x)</code>返回<code>true</code>。</p>
+</li>
+<li><p><em>传递性</em>：对于任何非空引用值，<code>x</code>，<code>y</code>，<code>z</code>，如果<code>x.equals(y)</code>返回<code>true</code>并且<code>y.equals(z)</code>返回<code>true</code>，则<code>x.equals(z)</code>必须返回<code>true</code>。</p>
+</li>
+<li><p><em>一致性</em>：对于任何非空引用值<code>x</code>和<code>y</code>，<code>x.equals(y)</code>的多次调用一致返回<code>true</code>或一致返回<code>false</code>，假设对象进行<code>equals</code>比较时没有修改任何信息。</p>
+</li>
+<li><p>对于非空引用值<code>x</code>，<code>x.equals(null)</code>必须返回<code>false</code>。</p>
+</li>
+</ul>
+<p>除非你擅长数学，否则这可能看起来有点可怕，但不要忽视它！如果你违反了它，你可能会发现你的程序表现不正常或程序崩溃，并且很难确定失败的来源。用John Donne的话来说，没有类是孤立的。一个类的实例频繁传递给另一个类。许多类，包括所有的集合类，都依赖于传递给它们的对象遵循<code>equals</code>约定。</p>
+<p>现在你已经意识到了违反了<code>equals</code>约定的危险，让我们详细回顾一下这个约定。好消息是实际上这个约定并不复杂，尽管从表面上来看不是这样。一旦你理解了它，遵循它并不难。让我们依次检查这五个要求：</p>
+<p><strong>自反性</strong>——第一个要求仅仅是说一个对象必须等价于它本身。很难想象会无意的违反这个要求。如果你违反了它并将你的类实例添加到一个集合中，集合的<code>contains</code>方法可能会说这个集合中不包含你刚刚添加的实例。</p>
+<p><strong>对称性</strong>——第二个要求是说任何两个对象必须对它们是否相等达成一致。不像第一个要求，不难想象会无意的违反这个要求。例如，考虑下面的类，它实现了大小写敏感的字符串。字符串保存在<code>toString</code>中，但在比较时被忽略了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Broken - violates symmetry!</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseInsensitiveString</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String s;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CaseInsensitiveString</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="keyword">this</span>.s = s;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Broken - violates symmetry!</span></span><br><span class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> CaseInsensitiveString)</span><br><span class="line">         	<span class="keyword">return</span> s.equalsIgnoreCase(((CaseInsensitiveString) o).s);</span><br><span class="line">           	<span class="keyword">if</span> (o <span class="keyword">instanceof</span> String)  <span class="comment">// One-way interoperability!</span></span><br><span class="line">            	<span class="keyword">return</span> s.equalsIgnoreCase((String) o);</span><br><span class="line">           	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       	&#125;</span><br><span class="line">       	...  <span class="comment">// Remainder omitted</span></span><br><span class="line">   	&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类中，<code>equals</code>方法的意图很好，单纯的想要与普通的字符串进行互操作。假设我们有一个区分大小写的字符串和一个普通的字符串：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CaseInsensitiveString cis = <span class="keyword">new</span> CaseInsensitiveString(<span class="string">"Polish"</span>);</span><br><span class="line">String s = <span class="string">"polish"</span>;</span><br></pre></td></tr></table></figure>
+<p>正如预料的那样，<code>cis.equals(s)</code>返回<code>true</code>。问题是虽然<code>CaseInsensitiveString</code>中的<code>equals</code>知道普通的字符串，但是<code>String</code>中的<code>equals</code>方法不注意不区分大小写的字符串。因此<code>s.equals(cis)</code>返回<code>false</code>，这明显违反了对称性。假设你将一个不区分大小写的字符串放到一个集合中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;CaseInsensitiveString&gt; list = <span class="keyword">new</span> ArrayList&lt;CaseInsensitiveString&gt;();</span><br><span class="line">list.add(cis);</span><br></pre></td></tr></table></figure>
+<p>这时<code>list.contains(s)</code>会返回什么？谁知道呢？在Sun当前的实现中，它碰巧会返回<code>false</code>，但那仅是一种实现方案。在另一种实现中，它也可能很容易的返回<code>true</code>或抛出一个运行时异常。<strong>一旦你违反了<code>equals</code>约定，当面对你的对象时，你根本不指定其它的对象行为会怎样。</strong></p>
+<p>为了消除这个问题，只要从<code>equals</code>方法中移除与<code>String</code>进行交互的，考虑不周的尝试即可。一旦你这样做了，你可以重构这个方法给它一个返回即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Override</span> </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> o <span class="keyword">instanceof</span> CaseInsensitiveString &amp;&amp; ((CaseInsensitiveString) o).s.equalsIgnoreCase(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>传递性</strong>——<code>equals</code>约定的第三个要求是说如果一个对象等价于第二个对象，而第二个对象等价于第三个对象，则第一个对象等价于第三个对象。同样的，不难想象会无意中违反这个要求。考虑这样一种情况，子类添加一个新的值组件到它的超类中。换句话说，子类添加的信息会影响<code>equals</code>比较。以一个简单的不可变的二维整数点类作为开始：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> y;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Point</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.x = x;</span><br><span class="line">		<span class="keyword">this</span>.y = y; </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> Point))</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        Point p = (Point)o;</span><br><span class="line">        <span class="keyword">return</span> p.x == x &amp;&amp; p.y == y;</span><br><span class="line">	&#125;</span><br><span class="line">    ...  <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设你想扩展这个类，给点添加颜色的概念：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColorPoint</span> <span class="keyword">extends</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Color color;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ColorPoint</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, Color color)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(x, y);</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line">    ...  <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>equals</code>方法应该看起来是怎样的？如果一点也不修改，直接从<code>Point</code>继承<code>equals</code>方法，在进行<code>equals</code>比较时颜色信息会被忽略。虽然这没有违反<code>equals</code>约定，但很明显这是不可接受的。假设你写了一个<code>equals</code>方法，只有在它的参数是另一个有色点，且它们具有相同的位置和颜色时才返回<code>true</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Broken - violates symmetry!</span></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> ColorPoint))</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   	<span class="keyword">return</span> <span class="keyword">super</span>.equals(o) &amp;&amp; ((ColorPoint) o).color == color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法的问题在于：当你比较一个普通点和一个有色点或相反的情况时，你可能会得到不同的结果。前者的比较忽略了颜色，而后者总是返回<code>false</code>，因为参数类型不正确。为了使这个更具体一点，我们创建一个普通点和一个有色点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Point p = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">ColorPoint cp = <span class="keyword">new</span> ColorPoint(<span class="number">1</span>, <span class="number">2</span>, Color.RED);</span><br></pre></td></tr></table></figure>
+<p><code>p.equals(cp)</code>返回<code>true</code>，而<code>cp.equals(p)</code>返回<code>false</code>。你可能想让<code>ColorPoint.equals</code>进行比较混合比较时忽略颜色来修正这个问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Broken - violates transitivity!</span></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> Point))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   	<span class="comment">// If o is a normal Point, do a color-blind comparison</span></span><br><span class="line">    <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> ColorPoint))</span><br><span class="line">        <span class="keyword">return</span> o.equals(<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">// o is a ColorPoint; do a full comparison</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.equals(o) &amp;&amp; ((ColorPoint)o).color == color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法提供了对称性，但违反了传递性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ColorPoint p1 = <span class="keyword">new</span> ColorPoint(<span class="number">1</span>, <span class="number">2</span>, Color.RED);</span><br><span class="line">Point p2 = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">ColorPoint p3 = <span class="keyword">new</span> ColorPoint(<span class="number">1</span>, <span class="number">2</span>, Color.BLUE);</span><br></pre></td></tr></table></figure>
+<p>现在<code>p1.equals(p2)</code>和<code>p2.equals(p3)</code>返回<code>true</code>，而<code>p1.equals(p3)</code>返回<code>false</code>，很明显这违反了传递性。前两个比较忽略了颜色，而第三个比较考虑了颜色。</p>
+<p>因此解决方案是什么？事实证明：在面向对象语言中，等价关系问题是一个基本的问题。<strong>无法在扩展一个实例化的类并添加值组件的同时，还保留<code>equals</code>约定，</strong>除非你愿意放弃面向对象抽象的优势。</p>
+<p>你可能听说过你可以在<code>equals</code>方法中通过使用<code>getClass</code>测试代替<code>instanceof</code>测试，从而在扩展一个可实例化的类并添加值组件的同时，保留<code>equals</code>约定：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Broken - violates Liskov substitution principle (page 40)</span></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="keyword">null</span> || o.getClass() != getClass())</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    Point p = (Point) o;</span><br><span class="line">    <span class="keyword">return</span> p.x == x &amp;&amp; p.y == y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当且仅当它们具有相同的实现类时，上面的代码在比较对象时才会有效。虽然这不是很糟糕，但结果是不可接受的。</p>
+<p>假设我们想写一个方法来判断一个整数点是否在单位圆上。下面是一种写法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Initialize UnitCircle to contain all Points on the unit circle private static final Set&lt;Point&gt; unitCircle;</span></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    unitCircle = <span class="keyword">new</span> HashSet&lt;Point&gt;();</span><br><span class="line">    unitCircle.add(<span class="keyword">new</span> Point( <span class="number">1</span>,  <span class="number">0</span>));</span><br><span class="line">    unitCircle.add(<span class="keyword">new</span> Point( <span class="number">0</span>,  <span class="number">1</span>));</span><br><span class="line">    unitCircle.add(<span class="keyword">new</span> Point(-<span class="number">1</span>,  <span class="number">0</span>));</span><br><span class="line">    unitCircle.add(<span class="keyword">new</span> Point( <span class="number">0</span>, -<span class="number">1</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">onUnitCircle</span><span class="params">(Point p)</span> </span>&#123;</span><br><span class="line">   	<span class="keyword">return</span> unitCircle.contains(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然这可能不是实现这个功能的最快方式，但它确实有效。但假设你以某种不添加值组件的方式扩展了<code>Point</code>，例如通过它的构造函数来追踪创建了多少实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CounterPoint</span> <span class="keyword">extends</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger counter = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CounterPoint</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(x, y);</span><br><span class="line">        counter.incrementAndGet();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberCreated</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    	<span class="keyword">return</span> counter.get(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>里氏替换原则认为，一个类型的任何重要属性也适用于它的子类型，因此该类型编写的任何方法在它的子类型中也都应该工作良好[Liskov87]。但假设我们给<code>onUnitCircle</code>传递了一个<code>CounterPoint</code>实例。如果<code>Point</code>类使用了基于<code>getClass</code>的<code>equals</code>方法，<code>onUnitCircle</code>将会返回<code>false</code>，无论<code>CounterPoint</code>实例的<code>x</code>值和<code>y</code>值是多少。这是因为集合，例如<code>onUnitCircle</code>方法中的<code>HashSet</code>，使用<code>equals</code>方法来测试是否包含元素，没有<code>CounterPoint</code>实例等于<code>Point</code>。然而，如果你在<code>Point</code>上使用合适的基于<code>instanceof</code>的<code>equals</code>方法，当面对<code>CounterPoint</code>时，同样的<code>onUnitCircle</code>方法会工作的很好。</p>
+<p>尽管没有令人满意的方式来扩展一个可实例化的类并添加值组件，但有一个很好的解决方案。遵循Item 16 “Favor composition over inheritance”的建议，不再让<code>ColorPoint</code>继承<code>Point</code>，而是通过在<code>ColorPoint</code>中添加一个私有的<code>Point</code>字段和一个公有的视图方法（Item 5），此方法返回一个与有色点具有相同位置的普通点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Adds a value component without violating the equals contract</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColorPoint</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Point point;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Color color;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ColorPoint</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, Color color)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (color == <span class="keyword">null</span>)</span><br><span class="line">        	<span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        point = <span class="keyword">new</span> Point(x, y);</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment"> 	 * Returns the point-view of this color point.</span></span><br><span class="line"><span class="comment"> 	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Point <span class="title">asPoint</span><span class="params">()</span> </span>&#123; </span><br><span class="line">		<span class="keyword">return</span> point;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="meta">@Override</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> ColorPoint))</span><br><span class="line">        	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        ColorPoint cp = (ColorPoint) o;</span><br><span class="line">        <span class="keyword">return</span> cp.point.equals(point) &amp;&amp; cp.color.equals(color);</span><br><span class="line">	&#125;</span><br><span class="line">    ...  <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Java平台库中有一些类扩展了一个可实例化的类并添加了一个值组件。例如，<code>java.sql.Timestamp</code>扩展了<code>java.util.Date</code>并添加了一个<code>nanoseconds</code>字段。<code>Timestamp</code>的<code>equals</code>实现确实违反了对称性，如果<code>Timestamp</code>和<code>Date</code>用在同一个集合中或混杂在一起，会引起不稳定的行为。<code>Timestamp</code>类有一个免责声明，警告程序员不要混合日期和时间戳。虽然只要你将它们分开就不会有麻烦，但是没有任何东西阻止你混合它们，而且产生的错误很难调试。<code>Timestamp</code>类的这个行为是一个错误，不应该进行模仿。</p>
+<p>注意，你可以添加值组件到抽象类的子类而且不会违反<code>equals</code>约定。对于遵循Item 20 “Prefer class hierarchies to tagged classes”的建议而得到这种类层次来说，这是非常重要的。例如，你可以有一个没有值组件的抽象类<code>Shape</code>，子类<code>Circle</code>添加了<code>radius</code>字段，子类<code>Rectangle</code>添加了<code>length</code>和<code>width</code>字段。只要不能直接创建一个超类实例，上面的种种问题就不会发生。</p>
+<p><strong>一致性</strong>——<code>equals</code>约定的第四个要求是说如果两个对象相等，它们必须一致相等，除非其中一个（或二者）被修改了。换句话说，可变对象在不同的时间可以等于不同的对象而不可变对象不能。当你写了一个类，仔细想想它是否应该是不可变的(Item 15)。如果你推断它应该是不可变的，那么要确保你的<code>equals</code>方法满足这样的约束条件：相等的对象永远相等，不等的对象永远不等。</p>
+<p>无论一个类是否是不可变的，<strong>都不要写一个依赖于不可靠资源的<code>equals</code>方法</strong>。如果你违反了这个禁令，要满足一致性要求是非常困难的。例如，<code>java.net.URL</code>的<code>equals</code>方法依赖于对关联URL主机的IP地址的比较。将主机名转换成IP地址可能需要访问网络，随时间推移它不能保证取得相同的结果。这可能会导致<code>URL equals</code>方法违反<code>equals</code>约定并在实践中产生问题。（很遗憾，由于兼容性问题，这一行为不能被修改。）除了极少数例外，<code>equals</code>方法应该对常驻内存对象进行确定性计算。</p>
+<p>“<strong>非空性</strong>”——最后的要求由于没有名字我称之为“非空性”，这个要求是说所有的对象都不等于<code>null</code>。虽然很难想象调用<code>o.equals(null)</code>会偶然的返回<code>true</code>，但不难想象会意外抛出<code>NullPointerException</code>的情况。通用约定不允许出现这种情况。许多类的<code>equals</code>方法为了防止出现这种情况都进行对<code>null</code>的显式测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个测试是没必要的。为了平等测试其参数，为了调用它的访问器或访问其字段，<code>equals</code>方法首先必须将它的参数转换成合适的类型。在进行转换之前，<code>equals</code>方法必须使用<code>instanceof</code>操作符来检查它的参数是否是正确的类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> MyType))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    MyType mt = (MyType) o;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果缺少类型检查，<code>equals</code>方法传入了一个错误类型的参数，<code>equals</code>方法会抛出<code>ClassCastException</code>，这违反了<code>equals</code>约定。但当指定<code>instanceof</code>时，如果它的第一个操作数为<code>null</code>，无论它的第二个操作数是什么类型，它都会返回<code>false</code>[JLS, 15.20.2]。所以如果传入<code>null</code>类型检查将会返回<code>false</code>，因此你不必进行单独的<code>null</code>检查。</p>
+<p>将这些要求结合在一起，得出了下面的编写高质量<code>equals</code>方法的流程：</p>
+<ol>
+<li><p><strong>使用<code>==</code>操作符来检查参数是否是这个对象的一个引用，。</strong>如果是，返回<code>true</code>。这只是一个性能优化，如果比较的代价有可能很昂贵，这样做是值得的。</p>
+</li>
+<li><p><strong>使用<code>instanceof</code>操作符来检查参数类型是否正确。</strong>如果不正确，返回<code>false</code>。通常，正确的类型是指<code>equals</code>方法所在的那个类。有时候，它是这个类实现的一些接口。如果一个类实现了一个接口，这个接口提炼了<code>equals</code>约定来允许比较那些实现了这个接口类，那么就使用接口。集合接口例如<code>Set</code>，<code>List</code>，<code>Map</code>和<code>Map.Entry</code>都有这个属性。</p>
+</li>
+<li><p><strong>将参数转换成正确的类型。</strong>由于转换测试已经被<code>instanceof</code>在之前做了，因此它保证能成功。</p>
+</li>
+<li><p><strong>对于类中的每一个“有效”字段，检查参数的这个字段是否匹配这个对象的对应字段。</strong>如果所有的这些测试都成功了，返回<code>true</code>；否则返回<code>false</code>。如果第二步中的类型是一个接口，你必须通过接口方法访问参数的字段；如果类型是一个类，你可能要直接访问字段，依赖于它们的可访问性。</p>
+</li>
+</ol>
+<p>对于基本类型，如果不是<code>float</code>或<code>double</code>，使用<code>==</code>操作符进行比较；对于对象引用字段，递归地调用<code>equals</code>方法；对于<code>float</code>自动，使用<code>Float.compare</code>方法；对于<code>double</code>字段，使用<code>Double.compare</code>。<code>float</code>和<code>double</code>字段的特别对待是有必要的，因为存在<code>Float.NaN</code>，<code>-0.0f</code>和类似的<code>double</code>常量；更多细节请看<code>Float.equals</code>。对于数组字段，对每个元素应用这些指导。如果数组中的每个元素都是有意义的，你可以使用1.5版本中添加的<code>Arrays.equals</code>方法。</p>
+<p>某些对象引用字段可能合理的包含<code>null</code>。为了避免产生<code>NullPointerException</code>的可能性，使用下面的习惯用法来比较这些字段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(field == null ? o.field == null : field.equals(o.field))</span><br></pre></td></tr></table></figure>
+<p>如果<code>field</code>和<code>o.field</code>经常是等价的，使用下面的可替代方式可能会更快：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(field == o.field || (field != null &amp;&amp; field.equals(o.field)))</span><br></pre></td></tr></table></figure>
+<p>对于某些类而言，例如上面的<code>CaseInsensitiveString</code>，字段比较比简单的相等性检测更复杂。如果是这种情况，你可能想存储这个字段的标准形式，因此<code>equals</code>方法可以在这些标准形式上进行低开销的精确比较，而不是更高代码的非精确比较。这种技术最适合不可变类（Item 15）；如果对象可以改变，你必须保持最新的标准形式。</p>
+<p><code>equals</code>方法的性能可能会受到字段比较顺序的影响。为了最佳性能，你首先应该比较那些更可能不同，比较代价更小的字段，或者理想情况下二者兼具的字段。你不能比较那些不属于对象逻辑状态一部分的字段，例如同步操作中的<code>Lock</code>字段。你也不需要比较冗余的字段，它们能从“有意义字段”中计算出来，但这样做可能会改善<code>equals</code>方法的性能。如果冗余字段相当于整个对象的概要描述，比较这个字段，如果失败的话会节省你比较真正数据的开销。例如，假设你有一个<code>Polygon</code>类，并且你缓存这个区域。如果两个多边形有不同的面积，你就不需要比较它们的边和顶点。</p>
+<ol>
+<li>当你完成了<code>equals</code>方法的编写时，问你自己三个问题：它是否是对称的？是否是可传递的？是否是一致的？并且不要只问你自己；编写单元测试来检查是否拥有这些属性！如果没有这些属性，弄清楚为什么没有，对应的修改<code>equals</code>方法。当然你的<code>equals</code>方法也必须满足其它两个属性（自反性和“非空性”），但这两个属性通常会自动满足。</li>
+</ol>
+<p>根据上述规则构建的<code>equals</code>方法具体例子请看Item 9的PhoneNumber.equals`。下面是一些最后的警告：</p>
+<ul>
+<li><p><strong>当你重写<code>equals</code>时，总是重写<code>hashCode</code>方法(Item9)</strong>。</p>
+</li>
+<li><p><strong>不要将<code>equals</code>声明中的<code>Object</code>对象替换为其它对象。</strong>对于程序员来讲，写一个<code>equals</code>方法看起来像下面的一样是不常见的，并且花费了好几个小时都不明白它为什么不能正确工作：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(MyClass o)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正如本条目阐述的那样，<code>@Override</code>注解的一致使用会阻止你犯这个错误(Item 36)。这个<code>equals</code>方法不能编译并且错误信息会确切告诉你错误是什么。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(MyClass o)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/24/2016-11-24-Effective Java 2.0_中英文对照_Item 8/" rel="next" title="Effective Java 2.0_中英文对照_Item 8">
+                <i class="fa fa-chevron-left"></i> Effective Java 2.0_中英文对照_Item 8
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/25/2016-11-25-jQuery预绑定/" rel="prev" title="jQuery预绑定">
+                jQuery预绑定 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CHAPTER3-所有对象的共通方法"><span class="nav-number">1.</span> <span class="nav-text">CHAPTER3 所有对象的共通方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Item-8：当重写equals时要遵循通用约定"><span class="nav-number">1.1.</span> <span class="nav-text">Item 8：当重写equals时要遵循通用约定</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/';
+        this.page.identifier = '2016/11/24/2016-11-24-Effective Java 2.0_中文版_Item 8/';
+        this.page.title = 'Effective Java 2.0_中文版_Item 8';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

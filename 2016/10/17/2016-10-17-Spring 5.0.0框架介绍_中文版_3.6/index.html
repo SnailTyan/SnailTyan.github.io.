@@ -1,0 +1,981 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Spring 5.0.0框架介绍_中文版_3.6">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中文版_3.6">
+<meta property="og:url" content="http://noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring 5.0.0框架介绍_中文版_3.6">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-10-18T00:59:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中文版_3.6">
+<meta name="twitter:description" content="Spring 5.0.0框架介绍_中文版_3.6">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/">
+
+
+
+
+
+  <title>Spring 5.0.0框架介绍_中文版_3.6 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring 5.0.0框架介绍_中文版_3.6</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Spring 5.0.0框架介绍_中文版_3.6
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h3 id="3-6-定制bean特性"><a href="#3-6-定制bean特性" class="headerlink" title="3.6 定制bean特性"></a>3.6 定制bean特性</h3><h4 id="3-6-1-生命周期回调"><a href="#3-6-1-生命周期回调" class="headerlink" title="3.6.1 生命周期回调"></a>3.6.1 生命周期回调</h4><p>为了与容器中bean生命周期的管理进行交互，你可以实现Spring的<code>InitializingBean</code>和<code>DisposableBean</code>接口。当初始化beans时容器会调用<code>InitializingBean</code>中的<code>afterPropertiesSet()</code>方法，当销毁beans时容器会调用<code>DisposableBean</code>中的<code>destroy()</code>方法，在这两个方法中bean可以执行特定的行为。</p>
+<blockquote>
+<p>在现代Spring应用中，通常认为JSR-250的<code>@PostConstruct</code>和<code>@PreDestroy</code>注解是最佳实践接收生命周期回调函数的方法。使用这些注解意味着你的bean没有耦合Spring特定的接口。更多细节请看3.9.8小节，”@PostConstruct和@PreDestroy”。</p>
+<p>如果你不想使用JSR-250注解，但你仍要注意解耦，可以考虑使用对象定义元数据中的初始化方法和销毁方法。</p>
+</blockquote>
+<p>在Spring内部，Spring框架使用<code>BeanPostProcessor</code>实现来处理任何它能发现的回调接口并调用合适的方法。如果你需要定制Spring不能提供的开箱即用的功能或其它生命周期行为，你可以自己实现<code>BeanPostProcessor</code>。更多信息请看3.8小节，”容器扩展点”。</p>
+<p>除了初始化回调函数和销毁回调函数之外，Spring管理的对象也可以实现<code>Lifecycle</code>接口，这些对象可以参与容器自身生命周期驱动的启动和关闭过程。</p>
+<p>本节描述了生命周期回调接口。</p>
+<p><strong>初始化回调函数</strong></p>
+<p><code>org.springframework.beans.factory.InitializingBean</code>接口在容器设置了bean所有的必须属性之后，允许bean执行初始化工作。<code>InitializingBean</code>接口指定了一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</span><br></pre></td></tr></table></figure>
+<p>建议你不使用<code>InitializingBean</code>接口，因为它对代码与Spring进行了不必要的耦合。作为一种替代方法，你可以使用<code>@PostConstruct</code>注解或指定一个POPJO的初始化方法。在基于XML配置元数据的情况下，你可以使用<code>init-method</code>特性来指定方法的名称，方法是没有返回值和参数的。如果使用Java配置，你可以使用<code>@Bean</code>的<code>initMethod</code>特性，请看”接收生命周期回调函数”小节。例如，下面的代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span> <span class="attr">init-method</span>=<span class="string">"init"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some initialization work</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等价于：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnotherExampleBean</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some initialization work</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但没有与Spring代码耦合。</p>
+<p><strong>销毁回调函数</strong></p>
+<p>实现<code>org.springframework.beans.factory.DisposableBean</code>接口允许容器包含的bean销毁时调用回调函数。<code>DisposableBean</code>接口指定了一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</span><br></pre></td></tr></table></figure>
+<p>建议你不使用<code>DisposableBean</code>回调接口，因为它对代码与Spring进行了不必要的耦合。作为一种替代方法，你可以使用<code>@PreDestroy</code>注解或指定一个bean定义支持的通用方法。在基于XML配置元数据的情况下，你可以使用<code>&lt;bean/&gt;</code>的<code>destroy-method</code>特性。如果使用Java配置，你可以使用<code>@Bean</code>的<code>destroyMethod</code>特性，请看”接收生命周期回调”小节。例如，下面的定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span> <span class="attr">destroy-method</span>=<span class="string">"cleanup"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cleanup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some destruction work (like releasing pooled connections)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等价于：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleInitBean"</span> <span class="attr">class</span>=<span class="string">"examples.AnotherExampleBean"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnotherExampleBean</span> <span class="keyword">implements</span> <span class="title">DisposableBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some destruction work (like releasing pooled connections)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但没有与Spring代码耦合。</p>
+<p><strong>默认初始化和销毁方法</strong></p>
+<p>当你编写初始化回调函数和析构回调函数时，不要使用Spring特定的<code>InitializingBean</code>和<code>DisposableBean</code>回调接口，自己编写方法，方法名通常为<code>init()</code>，<code>initialize()</code>，<code>dispose()</code>等等。理想情况下，这种生命周期回调方法的名称在整个工程中是标准化的，以便所有开发人员使用同样的方法名称，保证一致性。</p>
+<p>你可以配置Spring容器查找每个bean的初始化方法和析构方法时的名字。这意味着，作为一个应用开发者，你可以编写应用程序类并使用名为<code>init()</code>的初始化回调方法，而不必在每个bean定义中配置<code>init-method=&quot;init&quot;</code>特性。当bean创建时，Spring Ioc容器调用这个方法（按照前面描述的标准生命周期回调约定）。这个功能也强制了初始化方法和析构方法命名规范的一致性。</p>
+<p>假设你的初始化回调方法名为<code>init()</code>，析构回调方法名为<code>destroy()</code>。你的类应该与下面例子中的类类似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultBlogService</span> <span class="keyword">implements</span> <span class="title">BlogService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> BlogDao blogDao;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBlogDao</span><span class="params">(BlogDao blogDao)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.blogDao = blogDao;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this is (unsurprisingly) the initialization callback method</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.blogDao == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"The [blogDao] property must be set."</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">default-init-method</span>=<span class="string">"init"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"blogService"</span> <span class="attr">class</span>=<span class="string">"com.foo.DefaultBlogService"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"blogDao"</span> <span class="attr">ref</span>=<span class="string">"blogDao"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>位于顶层<code>&lt;beans/&gt;</code>元素中的<code>default-init-method</code>特性，会让Spring IoC容器将beans中的名为<code>init</code>的方法识别为初始化回调方法。当一个bean创建和组装时，如果bean类有这样一个方法，它会在恰当的时间被调用。</p>
+<p>在bean被提供了所有依赖之后，Spring容器确保会立刻调用配置的初始化回调方法。因此初始化回调会在原生bean引用上调用，这意味着AOP拦截器等仍不能应用到bean中。首先要完整的创建目标bean，然后才会应用AOP代理（例如）等拦截器链。如果分别定义了目标bean和代理，你的代码甚至能绕过代理直接与原生的目标bean进行交互。将拦截器应用到初始化方法上可能会产生不一致性，因为这样做会使目标bean的生命周期与它的代理/拦截器相耦合，当你的代码与原生目标bean直接进行交互时，语义会变的很奇怪。</p>
+<p><strong>组合生命周期机制</strong></p>
+<p>从Spring 2.5开始，在控制bean的生命周期行为时，你有三中选择：InitializingBean<code>和</code>DisposableBean<code>回调接口；定制</code>init()<code>和</code>destroy()<code>方法；</code>@PostConstruct<code>和</code>@PreDestroy`注解。在控制一个给定bean时你可以组合这些机制。</p>
+<blockquote>
+<p>如果一个bean配置了多生命周期机制，每种机制配置了一个不同的方法名，那么每一个配置的方法会按照下面的顺序列表来执行。但是如果配置了相同的名字——例如，<code>init()</code>初始化方法——不止在一个生命周期机制中配置，那么这个方法只能执行一次，像之前所说的那样。</p>
+</blockquote>
+<p>同一个bean配置了多生命周期机制，并有不同的初始化方法，那么调用顺序如下：</p>
+<ul>
+<li><p>先调用有注解<code>@PostConstruct</code>的方法</p>
+</li>
+<li><p>然后调用<code>InitializingBean</code>回调接口定义的<code>afterPropertiesSet()</code>方法</p>
+</li>
+<li><p>最好调用定制配置的<code>init()</code>方法</p>
+</li>
+</ul>
+<p>Destroy methods are called in the same order:</p>
+<ul>
+<li><p>Methods annotated with <code>@PreDestroy</code></p>
+</li>
+<li><p><code>destroy()</code> as defined by the <code>DisposableBean</code> callback interface</p>
+</li>
+<li><p>A custom configured <code>destroy()</code> method</p>
+</li>
+</ul>
+<p>析构方法按同样的顺序调用：</p>
+<ul>
+<li><p>先调用有<code>@PreDestroy</code>注解的方法</p>
+</li>
+<li><p>再调用<code>DisposableBean</code>回调接口定义的<code>destroy()</code>方法</p>
+</li>
+<li><p>最好调用定制配置的<code>destroy()</code>方法</p>
+</li>
+</ul>
+<p><strong>启动和关闭回调</strong></p>
+<p><code>Lifecycle</code>接口定义了任何对象生命周期都需要的基本方法（例如启动和停止一些背景处理）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lifecycle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRunning</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>任何Spring管理的对象都可以实现那个接口。当<code>ApplicationContext</code>本身收到启动启动和关闭信号时，例如运行时关闭/再启动场景，它将级联调用所有的上下文定义的<code>Lifecycle</code>实现。它通过委托<code>LifecycleProcessor</code>来完成这个功能：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">LifecycleProcessor</span> <span class="keyword">extends</span> <span class="title">Lifecycle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onClose</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意<code>LifecycleProcessor</code>本身是<code>Lifecycle</code>接口的一个扩展。它也添加了两个其它的方法来响应上下文的再刷新和关闭的。</p>
+<blockquote>
+<p>注意正规的<code>org.springframework.context.Lifecycle</code>接口只是一个显式启动/关闭通知的协议，并不意味着在上下文刷新时自动启动。考虑实现<code>org.springframework.context.SmartLifecycle</code>接口来实现对指定bean自动启动的细粒度控制（包括启动时期）。请注意停止通知不能保证在销毁之前到来：在正式关闭时，所有的<code>Lifecycle</code> beans在通常的析构回调传播之前首先会收到停止通知；但是，在上下文使用期间进行热刷新或尝试取消再刷新，只会调用析构方法。</p>
+</blockquote>
+<p>启动和关闭的调用顺序是很重要的。如果任何两个对象间存在一个”depends-on”关系，那么依赖关系将在它的依赖之后开始，在它的依赖之前停止。然而有时直接的依赖关系是未知的。你可能只知道某个类型的对象应该在另一个类型的对象之前启动。在那种情况下，<code>SmartLifecycle</code>接口定义了另一种选择，也就是说<code>getPhase()</code>定义在它的父接口<code>Phased</code>中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Phased</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getPhase</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SmartLifecycle</span> <span class="keyword">extends</span> <span class="title">Lifecycle</span>, <span class="title">Phased</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isAutoStartup</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">(Runnable callback)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当开始时，最低相位的对象先启动，当停止时，最高相位的对象先停止。因此，实现了<code>SmartLifecycle</code>接口，<code>getPhase()</code>方法返回值为<code>Integer.MIN_VALUE</code>的对象将最先启动并最后停止。另一方面，相位值<code>Integer.MAX_VALUE</code>表明对象应该最后启动，最先停止（可能是因为它依赖其它运行的进程）。当考虑相位值时，知道任何没有实现<code>SmartLifecycle</code>接口的<code>Lifecycle</code>对象的默认值为0是很重要的。因此，任何负相位值表示对象应该在那么标准组件之前启动（在它们之后停止），反之为任何正相位值。</p>
+<p>正如你看到的，在<code>SmartLifecycle</code>中定义的停止方法接收一个回调函数。任何实现在关闭进程完成之后都必须调用回调的<code>run()</code>方法。当需要时这可以进行异步关闭，因为<code>LifecycleProcessor</code>接口、<code>DefaultLifecycleProcessor</code>接口的默认实现会等待每个阶段的对象组直到达到超时值，然后调用回调函数。默认每个阶段的超时值为30秒。你可以在上下文中通过定义名为”lifecycleProcessor”的bean来覆盖默认的生命周期处理器实例。如果你只想修改超时值，如下定义是足够的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"lifecycleProcessor"</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.support.DefaultLifecycleProcessor"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- timeout value in milliseconds --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"timeoutPerShutdownPhase"</span> <span class="attr">value</span>=<span class="string">"10000"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>像上面提到的那样，<code>LifecycleProcessor</code>接口为再刷新和上下文的关闭也定义了回调方法。后者会简单的驱动关闭进程就像显式的调用了<code>stop()</code>方法一样，但当上下文关闭时它才会发生。另一方面<code>refresh</code>回调能使<code>SmartLifecycle</code> beans的另一个功能可用。当上下文再刷新时（所有对象已经实例化并初始化），回调函数将被调用，那时默认的生命周期处理器将会检查每个<code>SmartLifecycle</code>对象的<code>isAutoStartup()</code>方法返回的布尔值。如果为<code>true</code>，对象将会在那时启动而不是等待上下文的显式调用或它自己的<code>start()</code>方法（不像上下文再刷新，对于一个标准的上下文实现上下启动不会自动发生）。”phase”值以及”depends-on”关系将决定启动顺序，像上面描述的一样。</p>
+<p><strong>在非web应用中妥善的关闭Spring IoC容器</strong></p>
+<blockquote>
+<p>这一节只应用于非web应用。Spring的基于web的<code>ApplicationContext</code>实现已经有代码来处理当相关的web应用关闭时，妥善关闭Spring IoC容器的问题。</p>
+</blockquote>
+<p>如果你在非web应用环境使用Spring的IoC容器；例如，在一个富桌面客户端环境中，你在JVM中注册一个关闭钩子。这样做确保了妥善的关闭，为了释放所有资源需要调用与单例beans相关的析构方法。当然，你仍然必须正确的配置和实现这些销毁回调函数。</p>
+<p>为了注册一个关闭钩子，你可以调用<code>ConfigurableApplicationContext</code>接口中声明的<code>registerShutdownHook()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.context.ConfigurableApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Boot</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">final</span> String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        ConfigurableApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(</span><br><span class="line">                <span class="keyword">new</span> String []&#123;<span class="string">"beans.xml"</span>&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// add a shutdown hook for the above context...</span></span><br><span class="line">        ctx.registerShutdownHook();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// app runs here...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// main method exits, hook is called prior to the app shutting down...</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-6-2-ApplicationContextAware和BeanNameAware"><a href="#3-6-2-ApplicationContextAware和BeanNameAware" class="headerlink" title="3.6.2 ApplicationContextAware和BeanNameAware"></a>3.6.2 ApplicationContextAware和BeanNameAware</h4><p>当<code>ApplicationContext</code>创建一个实现<code>org.springframework.context.ApplicationContextAware</code>接口的对象实例时，这个实例会提供一个<code>ApplicationContext</code>的引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplicationContextAware</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此beans可以以编程方式操纵创建它们的<code>ApplicationContext</code>，通过<code>ApplicationContext</code>接口，或通过将引用抛给这个接口的一个已知子类，例如<code>ConfigurableApplicationContext</code>，它暴露了额外的功能。一个方法是编程式检索其他的bean。有时这个能力是很有用的，但是通常你应该避免使用它，因为它耦合了代码和Spring，不能遵循控制反转的风格，在控制反转中协作者是作为属性提供给beans的。<code>ApplicationContext</code>的其它方法提供了对文件资源的访问，发布应用事件，访问<code>MessageSource</code>的功能。这些额外的特性将在3.15小节『ApplicationContext”的额外能力』中描述。</p>
+<p>从Spring 2.5起，自动装配是另一种可替代的获得<code>ApplicationContext</code>引用的方法。『传统的』<code>constructor</code>和<code>byType</code>自动装配模式（如3.4.5小节所述，『自动装配协作者』）可以分别为构造函数参数或setter方法参数提供<code>ApplicationContext</code>类型的依赖。更多的灵活性包括自动装配变量的能力和多参数方法，使用新的基于注解的自动装配特性。如果你这一做的话，<code>ApplicationContext</code>可以被自动装配到变量中，构造函数参数中或方法参数中，如果讨论的变量，构造函数或方法有<code>@Autowired</code>注解，那么可以期望它是<code>ApplicationContext</code>类型。更多信息请看3.9.2小节，<code>@autowired</code>。</p>
+<p>当<code>ApplicationContext</code>创建一个实现了<code>org.springframework.beans.factory.BeanNameAware</code>接口的类时，类中有相关的对象定义中定义的名称的引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface BeanNameAware &#123;</span><br><span class="line"></span><br><span class="line">    void setBeanName(String name) throws BeansException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在正常的bean属性填入之后，回调方法调用，但在初始化回调方法之前，例如<code>InitializingBean</code>的afterPropertiesSet或一个定制的初始化方法。</p>
+<h4 id="3-6-3-其它的Aware接口"><a href="#3-6-3-其它的Aware接口" class="headerlink" title="3.6.3 其它的Aware接口"></a>3.6.3 其它的Aware接口</h4><p>除了上面讨论的<code>ApplicationContextAware</code>和<code>BeanNameAware</code>之外，Spring给予了一系列<code>Aware</code>接口来允许beans向容器表明它们需要一个确定的基础结构依赖。最重要的<code>Aware</code>接口总结如下——作为一个通用规则，名字是依赖类型的一个很好暗示：</p>
+<p><strong>表3.4. Aware接口</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Injected Dependency</th>
+<th style="text-align:left">Explained in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ApplicationContextAware</td>
+<td style="text-align:left">声明<code>ApplicationContext</code></td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">ApplicationEventPublisherAware</td>
+<td style="text-align:left">封装事件发布的<code>ApplicationContext</code></td>
+<td style="text-align:left">Section 3.15, “Additional Capabilities of the ApplicationContext”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanClassLoaderAware</td>
+<td style="text-align:left">用来加载bean的类加载器</td>
+<td style="text-align:left">Section 3.3.2, “Instantiating beans”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanFactoryAware</td>
+<td style="text-align:left">声明<code>BeanFactory</code></td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">BeanNameAware</td>
+<td style="text-align:left">声明的bean的名字</td>
+<td style="text-align:left">Section 3.6.2, “ApplicationContextAware and BeanNameAware”</td>
+</tr>
+<tr>
+<td style="text-align:left">BootstrapContextAware</td>
+<td style="text-align:left">容器运行的资源自适应<code>BootstrapContext</code>. 通常只在JCA aware <code>ApplicationContexts</code>可获得</td>
+<td style="text-align:left">Chapter 28, JCA CCI</td>
+</tr>
+<tr>
+<td style="text-align:left">LoadTimeWeaverAware</td>
+<td style="text-align:left">加载时为处理类定义定义的weaver</td>
+<td style="text-align:left">Section 7.8.4, “Load-time weaving with AspectJ in the Spring Framework”</td>
+</tr>
+<tr>
+<td style="text-align:left">MessageSourceAware</td>
+<td style="text-align:left">解析消息配置策略 (支持参数化和国际化)</td>
+<td style="text-align:left">Section 3.15, “Additional Capabilities of the ApplicationContext”</td>
+</tr>
+<tr>
+<td style="text-align:left">NotificationPublisherAware</td>
+<td style="text-align:left">Spring JMX通知发布器</td>
+<td style="text-align:left">Section 27.7, “Notifications”</td>
+</tr>
+<tr>
+<td style="text-align:left">ResourceLoaderAware</td>
+<td style="text-align:left">为底层访问资源配置的加载器</td>
+<td style="text-align:left">Chapter 4, Resources</td>
+</tr>
+<tr>
+<td style="text-align:left">ServletConfigAware</td>
+<td style="text-align:left">容器运行的当前<code>ServletConfig</code>。 仅在web感知的Spring <code>ApplicationContext</code>中有效</td>
+<td style="text-align:left">Chapter 18, Web MVC framework</td>
+</tr>
+<tr>
+<td style="text-align:left">ServletContextAware</td>
+<td style="text-align:left">容器运行的当前<code>ServletContext</code>。 仅在web感知的Spring <code>ApplicationContext</code>中有效</td>
+<td style="text-align:left">Chapter 18, Web MVC framework</td>
+</tr>
+</tbody>
+</table>
+<p>注意这些接口的用法将你的代码与Spring进行了捆绑，不符合控制反转的风格。因此，它们是为那么需要以编程方式访问容器的基础结构beans推荐的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中英文对照_3.6/" rel="next" title="Spring 5.0.0框架介绍_中英文对照_3.6">
+                <i class="fa fa-chevron-left"></i> Spring 5.0.0框架介绍_中英文对照_3.6
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/20/2016-09-07-Spring框架中英文对照/" rel="prev" title="Spring 5.0.0框架介绍_中英文对照_持续更新">
+                Spring 5.0.0框架介绍_中英文对照_持续更新 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-定制bean特性"><span class="nav-number">1.</span> <span class="nav-text">3.6 定制bean特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-1-生命周期回调"><span class="nav-number">1.1.</span> <span class="nav-text">3.6.1 生命周期回调</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2-ApplicationContextAware和BeanNameAware"><span class="nav-number">1.2.</span> <span class="nav-text">3.6.2 ApplicationContextAware和BeanNameAware</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-3-其它的Aware接口"><span class="nav-number">1.3.</span> <span class="nav-text">3.6.3 其它的Aware接口</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/';
+        this.page.identifier = '2016/10/17/2016-10-17-Spring 5.0.0框架介绍_中文版_3.6/';
+        this.page.title = 'Spring 5.0.0框架介绍_中文版_3.6';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

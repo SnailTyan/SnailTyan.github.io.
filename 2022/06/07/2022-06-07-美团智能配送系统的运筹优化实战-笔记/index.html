@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="外卖,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="美团智能配送系统的运筹优化实战">
+<meta name="keywords" content="外卖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="美团智能配送系统的运筹优化实战-笔记">
+<meta property="og:url" content="http://noahsnail.com/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="美团智能配送系统的运筹优化实战">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-357307a272f9223942b98515c2934ea7462635.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-08860973ff368a440b77ddbd16d07eb5994870.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-c0b3063d64e2d96176ad35dfe6bd3e03819986.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-e5f5eff5a89854c0bbf6c67ea3873140188458.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-d1992cc627da30c9647319e10296a3c7106485.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-9b22391d9f14336717e2f4a032ae0114152458.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-c65652c6f08d6c73770e9de9288a348b154474.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-325594bc4c7e9dde88c0c05ac8723ac2138345.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-30e6df539239ed15cb77f5e67fec4d69454401.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-e89cfca4ff8c3881050a9016298a5542134543.png">
+<meta property="og:updated_time" content="2022-06-10T09:35:22.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="美团智能配送系统的运筹优化实战-笔记">
+<meta name="twitter:description" content="美团智能配送系统的运筹优化实战">
+<meta name="twitter:image" content="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/">
+
+
+
+
+
+  <title>美团智能配送系统的运筹优化实战-笔记 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">美团智能配送系统的运筹优化实战-笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  美团智能配送系统的运筹优化实战
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-美团智能配送系统架构"><a href="#1-美团智能配送系统架构" class="headerlink" title="1. 美团智能配送系统架构"></a>1. 美团智能配送系统架构</h2><p>美团配送业务场景复杂，单量规模大。在大规模的业务场景下，配送智能化就变得非常重要，而智能配送的核心就是做资源的优化配置。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png" alt="资源优化配置"></p>
+<p>外卖配送既有线上的业务，也有线下的复杂运营。配送连接订单需求和运力供给。为了达到需求和供给的平衡，不仅要在线下运营商家、运营骑手，还要在线上将这些需求和运力供给做合理的配置，其目的是提高整体的效率。只有将配送效率最大化，才能带来良好的顾客体验，实现较低的配送成本。资源优化配置的过程，实际上是有分层的。在美团的理解中，可以分为三层：</p>
+<ol>
+<li>基础层是结构优化，它直接决定了配送系统效率的上限。这种基础结构的优化，周期比较长，频率比较低，包括配送网络规划、运力结构规划等等。</li>
+<li>中间层是市场调节，相对来说是中短期的，主要通过定价或者营销手段，使供需达到一个相对理想的平衡状态。</li>
+<li>再上层是实时匹配，通过调度做实时的资源最优匹配。 实时匹配的频率是最高的，决策的周期也最短。</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>基础层：例如调整运力，周期较长，频率较低，运力调整需要考虑的因素较多</li>
+<li>中间层：动态定价，营销活动等，可以提前预估一定时间范围内的单量和运力，提前进行运力调度或动态定价</li>
+<li>更高层：骑手的实时调度、实时订单分配</li>
+</ul>
+<p><img src="http://noahsnail.com/images/meituan/meituan-4d342ea038cfd9edcb3a741f247057df199909.png" alt="智能配送系统架构"></p>
+<p>如上图所示，右边三个子系统分别对应这三层体系，最底层是规划系统，中间层是定价系统，最上层是调度系统。运筹优化是调度系统、定价系统、规划系统的核心技术。</p>
+<p>Note:</p>
+<ul>
+<li>机器学习系统：例如ETA预估</li>
+<li>调度系统：根据订单进行骑手的分配</li>
+<li>LBS系统：路径规划</li>
+<li>定价系统：根据时间、天气、运力情况进行动态定价</li>
+<li>规划系统：可以使用行政区域划分，在此基础上再进行调整</li>
+</ul>
+<h2 id="2-实战业务项目"><a href="#2-实战业务项目" class="headerlink" title="2. 实战业务项目"></a>2. 实战业务项目</h2><h3 id="2-1-智能区域规划"><a href="#2-1-智能区域规划" class="headerlink" title="2.1 智能区域规划"></a>2.1 智能区域规划</h3><p><img src="http://noahsnail.com/images/meituan/meituan-357307a272f9223942b98515c2934ea7462635.png" alt="配送网络基本概念"></p>
+<p>配送连接的是商家、顾客、骑手三方，配送网络决定了这三方的连接关系。当用户打开App，查看哪些商家可以点餐，这由<strong>商家配送范围</strong>决定，每个商家的配送范围不一样。用户在美团点外卖，为他服务的骑手是谁呢？又是怎么确定的呢？这些是由<strong>配送区域边界</strong>来决定的，配送区域边界指的是一些商家集合所对应的范围。</p>
+<p>Note:</p>
+<ul>
+<li>商家：商家配送范围</li>
+<li>骑手：配送区域边界</li>
+</ul>
+<p>在传统物流中，影响末端配送效率最关键的点，是配送员对他所负责区域的熟悉程度。越熟悉，配送效率就会越高。即时配送场景也类似，每个骑手需要尽量固定地去熟悉一片商家或者配送区域。对于管理而言，站点的管理范围也比较明确。如果有新商家上线，也很容易确定由哪个配送站来提供服务。所以，这个问题有很多运营管理的诉求在其中。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-08860973ff368a440b77ddbd16d07eb5994870.png" alt="区域规划影响配送效率"></p>
+<p>区域规划项目要解决的问题：1.配送区域里的商家不聚合；2.区域奇形怪状，空驶严重；3.站点的大小不合理。什么是好的区域规划方案？基于统计分析的优化目标设定。</p>
+<p>优化的三要素是：目标、约束、决策变量。</p>
+<ol>
+<li>首先要确定优化目标。区域规划影响的主要是骑手的顺路性、空驶率，也就是骑手平均为每一单付出的路程成本。所以，将问题的业务目标定为优化骑手的单均行驶距离。基于现有的大量区域和站点积累的数据，做大量的统计分析后，可以定义出这样几个指标：商家聚合度、订单的聚合度、订单重心和商家重心的偏离程度。数据分析结果说明，这几个指标和单均行驶距离的相关性很强。经过这一层的建模转化，问题明确为优化这三个指标。</li>
+<li>梳理业务约束。区域单量有上限和下限；区域之间不能有重合，不能有商家归多个区域负责；所有的AOI(area of interest)不能有遗漏，都要被某个区域覆盖到，不能出现商家没有站点的服务；区域边界必须沿路网。</li>
+</ol>
+<p>在目标和约束条件确定了之后，整体技术方案分成三部分：</p>
+<ol>
+<li>首先，根据三个目标函数，确定商家最优集合。</li>
+<li>配送团队和美团地图团队进行合作。先利用路网信息，把城市切成若干互不重叠的多边形，然后根据计算几何，将一批商家对应的多边形拼成完整的区域边界。</li>
+<li>最后，用美团自主研发的配送仿真系统进行仿真评测。</li>
+</ol>
+<p>在区域规划过程中，人工介入还是非常必要的。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-c0b3063d64e2d96176ad35dfe6bd3e03819986.png" alt="落地应用"></p>
+<h3 id="2-2-智能骑手排班"><a href="#2-2-智能骑手排班" class="headerlink" title="2.2 智能骑手排班"></a>2.2 智能骑手排班</h3><p><img src="http://noahsnail.com/images/meituan/meituan-e5f5eff5a89854c0bbf6c67ea3873140188458.png" alt="外卖订单"></p>
+<p>外卖配送场景的订单“峰谷效应”非常明显。上图是一个实际的进单曲线。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d1992cc627da30c9647319e10296a3c7106485.png" alt="排班方案选型"></p>
+<p>配送团队最终选用的是按组排班的方式，把所有骑手分成几组，规定每个组的开工时段。然后大家可以按组轮岗，每个人的每个班次都会轮到。算法要有自己的优化目标，为了解决这个问题，首先要做设计决策变量，把时间做了离散化，以半小时为粒度。对于一天来讲，只有48个时间单元，决策空间大幅缩减。然后，目标定为运力需求满足订单量的时间单元最多。在建模层面，标准化和通用的模型才是最优选。美团把人数做了归一化，算法分配每个班次的骑手比例，但不分人数。在算法决策的时候，不决策人数、只决策比例，这样也可以把单量进行归一化。每个时间单元的进单量除以每天峰值时间单元的单量，也变成了0~1之间的数字。如果某个时间单元内人数比例大于单量比例，叫作运力得到满足。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-9b22391d9f14336717e2f4a032ae0114152458.png" alt="决策变量及目标设计"></p>
+<p>算法核心思想：基于约束条件，根据启发式算法构造初始方案，再用局部搜索迭代优化。</p>
+<h3 id="2-3-骑手路径规划"><a href="#2-3-骑手路径规划" class="headerlink" title="2.3 骑手路径规划"></a>2.3 骑手路径规划</h3><p>骑手的路径规划问题，不是简单的路线规划，一个骑手身上有很多配送任务，这些配送任务存在各种约束，怎样选择最优配送顺序去完成所有任务，这是一个NP难问题。当有5个订单、10个任务点的时候，就存在11万多条可能的顺序。系统派单、系统改派，都依赖路径规划算法。在骑手端，给每个骑手推荐任务执行顺序。路径规划算法核心的诉求是优化效果必须是稳定的好。不能这次的优化结果好，下次就不好。另外，运行时间一定要短。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-c65652c6f08d6c73770e9de9288a348b154474.png" alt="核心设计思想"></p>
+<p>求解路径规划这类问题经历过的阶段：起初，采用类似遗传算法的迭代搜索算法，但是随着业务的单量变大，发现算法耗时太慢，根本不可接受。然后，改为大规模邻域搜索算法，但算法依然有很强的随机性，因为没有随机性在就没办法得到比较好的解。而这种基于随机迭代的搜索策略，带来很强的不确定性，在问题规模大的场景会出现非常多的Bad Case。另外，迭代搜索耗时太长了。在这个项目中，基本可以确定这样的技术路线。首先，只能做启发式定向搜索，不能在算法中加随机扰动。不能允许同样的输入在不同运行时刻给出不一样的优化结果。然后，不能用普通迭代搜索，必须把这个问题结构特性挖掘出来，做基于知识的定制化搜索。</p>
+<p>美团认为，最重要的是看待这个问题的视角。这里的路径规划问题，对应的经典问题模型，是开环TSP问题，或是开环VRP的变种么？可以是，也可以不是。美团做了一个有意思的建模转换，把它看作流水线调度问题：每个订单可以认为是job；一个订单的两个任务取餐和送餐，可以认为是一个job的operation。任意两个任务点之间的通行时间，可以认为是序列相关的准备时间。每一单承诺的送达时间，包括预订单和即时单，可以映射到流水线调度问题中的提前和拖期惩罚上。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-325594bc4c7e9dde88c0c05ac8723ac2138345.png" alt="问题建模转换"></p>
+<p>美团把一个经典的基于问题特征的启发式算法做了适当适配和改进，得到了非常好的效果。相比于之前的算法，耗时下降70%，优化效果不错。</p>
+<h3 id="2-4-订单智能调度"><a href="#2-4-订单智能调度" class="headerlink" title="2.4 订单智能调度"></a>2.4 订单智能调度</h3><p>配送调度场景，可以用数学语言描述。它不仅是一个业务问题，更是一个标准的组合优化问题，并且是一个马尔可夫决策过程。并非对于某个时刻的一批订单做最优分配就足够，还需要考虑整个时间窗维度，每一次指派对后面的影响。要考虑长周期的优化，而不是一个静态优化问题。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-30e6df539239ed15cb77f5e67fec4d69454401.png" alt="调度问题的数学描述"></p>
+<p>这个问题的挑战：</p>
+<ol>
+<li>性能要求极高，要做到万单对万人的秒级求解。</li>
+<li>动态性。作为一个MDP问题，需要考虑动态优化场景，这涉及大量的预估环节。目前的思路，是通过其它的建模转换手段进行解决。</li>
+<li>配送业务的随机因素多。比如商家的出餐时间，也许是很长时间内都无法解决的随机性。就连历史每一个已完成订单，商家出餐时间的真值都很难获得。商家出餐时刻不确定，这个随机因素永远存在，并且非常制约配送效率的提升。另外，在顾客位置交付的时间也不确定。写字楼工作日的午高峰，上电梯、下电梯的时间，很难准确进行预估。对于骑手来说，平台没法规定每个骑手的任务执行顺序。骑手在配送过程中可以自由发挥，所以骑手执行顺序的不确定性也一直存在。</li>
+</ol>
+<p><img src="http://noahsnail.com/images/meituan/meituan-e89cfca4ff8c3881050a9016298a5542134543.png" alt="问题挑战"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2020/02/20/meituan-delivery-operations-research.html" target="_blank" rel="noopener">美团智能配送系统的运筹优化实战</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/外卖/" rel="tag"># 外卖</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/05/07/2022-05-07-Leetcode-1528-Shuffle-String/" rel="next" title="Leetcode 1528. Shuffle String">
+                <i class="fa fa-chevron-left"></i> Leetcode 1528. Shuffle String
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/06/07/2022-06-07-即时配送的订单分配策略-从建模和优化-笔记/" rel="prev" title="即时配送的订单分配策略：从建模和优化-笔记">
+                即时配送的订单分配策略：从建模和优化-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-美团智能配送系统架构"><span class="nav-number">1.</span> <span class="nav-text">1. 美团智能配送系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-实战业务项目"><span class="nav-number">2.</span> <span class="nav-text">2. 实战业务项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-智能区域规划"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 智能区域规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-智能骑手排班"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 智能骑手排班</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-骑手路径规划"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 骑手路径规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-订单智能调度"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 订单智能调度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/';
+        this.page.identifier = '2022/06/07/2022-06-07-美团智能配送系统的运筹优化实战-笔记/';
+        this.page.title = '美团智能配送系统的运筹优化实战-笔记';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

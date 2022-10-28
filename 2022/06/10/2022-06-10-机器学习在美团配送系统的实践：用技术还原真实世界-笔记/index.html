@@ -1,0 +1,971 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="外卖,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="机器学习在美团配送系统的实践：用技术还原真实世界-笔记">
+<meta name="keywords" content="外卖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习在美团配送系统的实践：用技术还原真实世界-笔记">
+<meta property="og:url" content="http://noahsnail.com/2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="机器学习在美团配送系统的实践：用技术还原真实世界-笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-a1f21309.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-b550a85f.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-424a9243.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-a6de9e20.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-38a8ad0d.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-d31c38f3.png">
+<meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-b067a0fc.png">
+<meta property="og:updated_time" content="2022-06-10T08:57:32.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习在美团配送系统的实践：用技术还原真实世界-笔记">
+<meta name="twitter:description" content="机器学习在美团配送系统的实践：用技术还原真实世界-笔记">
+<meta name="twitter:image" content="http://noahsnail.com/images/meituan/meituan-a1f21309.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/">
+
+
+
+
+
+  <title>机器学习在美团配送系统的实践：用技术还原真实世界-笔记 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习在美团配送系统的实践：用技术还原真实世界-笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  机器学习在美团配送系统的实践：用技术还原真实世界-笔记
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-美团“超脑”配送系统的由来"><a href="#1-美团“超脑”配送系统的由来" class="headerlink" title="1. 美团“超脑”配送系统的由来"></a>1. 美团“超脑”配送系统的由来</h2><p>美团内部把配送的AI系统，简称为“超脑”配送系统。</p>
+<h2 id="2-即时配送在全球快速发展"><a href="#2-即时配送在全球快速发展" class="headerlink" title="2. 即时配送在全球快速发展"></a>2. 即时配送在全球快速发展</h2><p>以外卖为依托，即时配送业务在全球范围内掀起了一波快速发展的浪潮，两个问题：</p>
+<ul>
+<li>“懒”是人类的天性。平价、方便、快捷的服务是人类的普遍需求，尤其是在“吃”这个事情上，外卖成为了一种高频的刚需。</li>
+<li>外卖的商业模式完全可行。以美团外卖为例，2018年上半年整体收入160亿，同步增长90%。根据Uber公布的数据，Uber Eats在2018第一季度占整体营业的13%。</li>
+</ul>
+<h2 id="3-即时配送的业务模型"><a href="#3-即时配送的业务模型" class="headerlink" title="3. 即时配送的业务模型"></a>3. 即时配送的业务模型</h2><p>即时配送，是一种配送时长1小时以内，平均配送时长约30分钟的快速配送业务。如此快速的配送时效，将传统的线上电商交易与线下物流配送（传统划分比较明确的两条业务）整合为统一整体，形成了用户、商户、骑手和平台互相交错的四元关系。</p>
+<p>以外卖搜索和排序为例，在下午时段，在用户搜索和推荐中可以看到更多的商家，因为此时运力充分，可以提供更远距离的配送服务，不仅能更好满足用户的需求，提高商家的单量，而且能够增加骑手的收入。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-a1f21309.png" alt="业务模型"></p>
+<p>即时配送的核心指标是效率、成本、体验，这三者也形成了即时配送的商业模型。简单来说可以分为以下几步：</p>
+<p>首先配送效率提升，让骑手在单位时间内配送更多订单，产生更多价值。然后配送成本下降，更高的效率，一方面让骑手收入增加，一方面也让订单平均成本下降。然后用户体验提升，低成本能够让用户（商户）以更低的价格享受更好的配送服务，从而保证更好的用户体验。进一步提升效率并形成循环，更好的用户体验，让更多用户（商户）聚集过来，提升规模和密度，进一步提升配送效率。</p>
+<h2 id="4-美团“超脑”配送系统"><a href="#4-美团“超脑”配送系统" class="headerlink" title="4. 美团“超脑”配送系统"></a>4. 美团“超脑”配送系统</h2><p><img src="http://noahsnail.com/images/meituan/meituan-b550a85f.png" alt="美团“超脑”配送系统"></p>
+<p>美团“超脑”配送系统，包含以下几个方面：</p>
+<ul>
+<li>大数据处理和计算能力<ul>
+<li>算法数据和计算平台：包括实时特征计算、离线数据处理、机器学习平台等。</li>
+</ul>
+</li>
+<li>建立对世界深度感知<ul>
+<li>LBS系统：提供正确位置（用户/商户/骑手）以及两点之间正确的骑行导航。</li>
+<li>多传感器：提供室内定位以、精细化场景刻画、骑手运动状态识别</li>
+</ul>
+</li>
+<li>正确理解和准确预测<ul>
+<li>时间预估：提供所有配送环节时间的准确预估</li>
+<li>其他预估：销量预估、运力预估等</li>
+</ul>
+</li>
+<li>完成复杂决策<ul>
+<li>调度系统：多人多点实时调度系统，完成派单决策：谁来送？怎么送？</li>
+<li>定价系统：实时动态定价系统，完成定价决策：用户收多少钱？给骑手多少钱？</li>
+<li>规划系统：配送网络规划系统，完成规划决策：站点如何划分？运力如何运营？</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-机器学习技术挑战"><a href="#5-机器学习技术挑战" class="headerlink" title="5. 机器学习技术挑战"></a>5. 机器学习技术挑战</h2><p>如何构建一个在真实物理世界运行的AI系统，是最大的挑战。具体到机器学习方向而言，挑战包括以下几个方面：</p>
+<ul>
+<li>精度足够高、粒度足够细<ul>
+<li>时间要求：一方面是周期性变化，比如早午晚，工作假日，季节变化；一方面是分钟级的精细度，比如一个商圈单量和运力的实时变化。</li>
+<li>空间要求：一方面是不同商圈独有特性，比如CBD区域；一方面是要实现楼栋和楼层的精度，比如1楼和20楼，就是完全不同的配送难度。</li>
+<li>鲁棒性要求：处理各种不确定的能力，比如天气变化、交通变化等等。</li>
+</ul>
+</li>
+<li>线下数据质量的巨大挑战<ul>
+<li>大噪音：比如GPS定位漂移，尤其是在高楼附近，更不要说在室内GPS基本不可用。</li>
+<li>不完备：比如商家后厨数据、堂食数据、其他平台数据，都极难获得。</li>
+<li>高复杂：配送场景多样而且不稳定，随着时间、天气、路况等在不断变化。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-配送系统的核心参数ETA"><a href="#6-配送系统的核心参数ETA" class="headerlink" title="6. 配送系统的核心参数ETA"></a>6. 配送系统的核心参数ETA</h2><p>ETA（Estimated Time of Arrival，时间送达预估）是配送系统中非常重要参数，与用户体验、配送成本有直接关系，而且会直接影响调度系统和定价系统的最终决策。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-424a9243.png" alt="ETA"></p>
+<p>通过机器学习方法，将外卖配送几乎所有环节都进行了精准预估预测。</p>
+<p>Note:<br>ETA关联了调度系统与定价系统，对所有时间环节都进行预测。</p>
+<h2 id="7-精准到楼宇和楼层的预估：交付时长"><a href="#7-精准到楼宇和楼层的预估：交付时长" class="headerlink" title="7. 精准到楼宇和楼层的预估：交付时长"></a>7. 精准到楼宇和楼层的预估：交付时长</h2><p>交付时长是指骑手到达用户后，将外卖交付到用户手中并离开的时间，实际是需要考虑三维空间内计算（上楼-下楼）。交付时间精准预估，有两点重要的意义，首先是客观的衡量配送难度，给骑手合理补贴；其次，考虑对骑手身上后续订单的影响，防止调度不合理，导致其他订单超时。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-a6de9e20.png" alt="交付时长"></p>
+<p>交付时长的目标是，做到楼宇和楼层的精准颗粒度，具体可以拆解为以下几步：</p>
+<ol>
+<li>地址的精准解析（精确到楼宇/单元/楼层）<ul>
+<li>地址精度需要在5级之上（4级：街道，5级：楼宇），国内拥有这个级别精细化数据的公司屈指可数。</li>
+<li>数据的安全级别很高，我们做了很多脱敏工作，做了各种数据保护与隔离，保证用户隐私和数据安全。</li>
+<li>地址信息的多种表达方式、各种变形，需要较强的NLU技术能力。</li>
+</ul>
+</li>
+<li>交付时长预估<ul>
+<li>通过骑手轨迹进行“入客-离客”识别，并进行大量数据清洗工作。</li>
+<li>统计各个粒度的交付时长，通过树形模型实现快速搜索各个粒度的数据。</li>
+<li>因为预估精度是楼宇和楼层，数据很稀疏，很难直接进行统计，需要通过各种数据平滑和回归预估，处理数据稀疏和平滑的问题。</li>
+</ul>
+</li>
+<li>下游业务应用<ul>
+<li>给调度和定价业务，提供楼宇+楼层维度的交付时长。从上图可以看到，在不同楼宇，不同楼层交付时长的区分度还是很明显的。</li>
+<li>尤其是楼层与交付时长并不是线性相关，还具体调研过骑手决策行为，发现骑手会考虑等电梯的时间，低楼层骑手倾向于走楼梯，高楼层则坐电梯。</li>
+</ul>
+</li>
+</ol>
+<p>Note:<br>交付时长是一个特别精细的工作，从美团的文章来看，交付时长非常重要，还有一篇单独的文章来介绍这个工作。</p>
+<h2 id="8-配送中最重要的数据之一：地图"><a href="#8-配送中最重要的数据之一：地图" class="headerlink" title="8. 配送中最重要的数据之一：地图"></a>8. 配送中最重要的数据之一：地图</h2><p><img src="http://noahsnail.com/images/meituan/meituan-38a8ad0d.png" alt="ETA"></p>
+<p>配送地图的目标可以概括为以下两点：</p>
+<ul>
+<li>正确的位置<ul>
+<li>实时部分：骑手实时位置。</li>
+<li>静态部分：用户和商户准确的地址和位置。</li>
+</ul>
+</li>
+<li>正确的导航<ul>
+<li>两点之间正确的距离和路线。</li>
+<li>突发情况的快速反应（封路、限行）。</li>
+</ul>
+</li>
+</ul>
+<p>在即时配送业务中，骑行地图的重要性非常之高，同时很多问题确实非常具有行业特色，通过驾车地图的技术无法很有效的解决。</p>
+<p>Note:<br>地图是一个非常庞大的业务，需要有充足的资源再考虑。</p>
+<h2 id="9-基于签到数据的位置校正：交付点"><a href="#9-基于签到数据的位置校正：交付点" class="headerlink" title="9. 基于签到数据的位置校正：交付点"></a>9. 基于签到数据的位置校正：交付点</h2><p>目前主要问题：用户位置信息有很多错误，比如：</p>
+<ul>
+<li>用户选择错误，在订单发送到配送系统的时候，需要做一次用户坐标纠正，引导骑手到达正确的位置。</li>
+<li>POI数据不精细，用户选择了比较粗的位置信息。现实中在一个小区里面，找到一个具体xx栋楼还是非常困难的。造成这种原因，一方面可能是用户选择不精细，还有一种可能，就是地图上没有具体楼栋的POI信息。</li>
+</ul>
+<p>在实际配送中，会要求骑手在完成交付后进行签到，这样就会积累大量的上报数据，对于后续进行精细化挖掘非常有帮助。这其中蕴含着极高的价值，具体来说有三方面：</p>
+<ul>
+<li>数据量大<ul>
+<li>每天几千万订单，几十亿的轨迹数据。</li>
+<li>可以充分覆盖每一个小区/楼栋/单元门。</li>
+</ul>
+</li>
+<li>维度多样<ul>
+<li>除了骑手签到和轨迹数据，我们还有大量的用户、商户和地图数据。</li>
+<li>多种数据维度可以交叉验证，有效避免数据的噪音，提高挖掘结果精度。</li>
+</ul>
+</li>
+<li>数据完备<ul>
+<li>在局部（用户和商户）数据足够稠密，置信度比较高。</li>
+</ul>
+</li>
+</ul>
+<p>Note:<br>要求骑手完成订单签到是一种非常棒的操作，可以收集完整的订单信息（订单完成时间），修正用户位置。</p>
+<h2 id="10-交付点挖掘的技术实战：挑战"><a href="#10-交付点挖掘的技术实战：挑战" class="headerlink" title="10. 交付点挖掘的技术实战：挑战"></a>10. 交付点挖掘的技术实战：挑战</h2><p>在数据挖掘实际过程中，整个挖掘过程，分为以下几个步骤：（1）基于地址分组；（2）数据去噪；（3）数据聚合；（4）置信度打分。其中主要技术挑战，主要在各种场景中保证数据挖掘质量和覆盖率，具体来说主要有三个挑战：</p>
+<ul>
+<li>数据去噪<ul>
+<li>数据噪音来源比较多样，包括GPS的漂移、骑手误操作、违规操作等各种。一方面是针对噪音原因进行特殊处理（比如一些作弊行为），另一方面要充分发挥数据密度和数据量的优势，在保证尽量去除Outlier后，依然保持可观的数据量。能够同时使用其他维度的数据进行验证，也是非常重要的，甚至可以说数据多样性和正交性，决定了我们能做事情的上限。</li>
+</ul>
+</li>
+<li>数据聚合<ul>
+<li>不同区域的楼宇密度完全不一样，具有极强的Local属性，使用常规聚类方法，比较难做到参数统一，需要找到一种不过分依赖样本集合大小，以及对去噪不敏感的聚类算法。</li>
+</ul>
+</li>
+<li>重名问题<ul>
+<li>这个属于POI融合的一个子问题，判断两个POI信息是否应该合并。这个在用户地址中比较常见，用户提供的地址信息一样，但实际是两个地方。这种情况下，我们的处理原则是一方面要求纠正后坐标更符合骑手签到情况，另一方面新坐标的签到数据要足够稠密。</li>
+</ul>
+</li>
+</ul>
+<p>交付点挖掘的技术实战：效果</p>
+<p>目前效果上看还是非常明显的。包括几个方面：</p>
+<ul>
+<li>骑手交付距离明显降低</li>
+<li>单元门级别的高精度位置</li>
+<li>目前的问题以及后续的优化点<br>如何提升其作为POI挖掘和发现手段的准确率？这里面有很多优化点，比如去重（交付点-位置信息的一一映射），POI信息补全和更新。<br>如何扩大数据渠道并做到信息整合？目前主要渠道还是骑手签到和轨迹数据，这个明显有更大的想象空间，毕竟每天在全国大街小巷，有几十万骑手在进行配送，除了前面（以及后面）提到的通过手机被动采集的数据，让骑手主动采集数据，也是不错的建设思路。只不过想要做好的话，需要建立一个相对闭环数据系统，包括上报、采集、清洗、加工、监控等等。</li>
+</ul>
+<p>Note:<br>这是一个很精细的工作，初期不太用考虑。</p>
+<h2 id="11-更精细化的配送场景识别：感知"><a href="#11-更精细化的配送场景识别：感知" class="headerlink" title="11. 更精细化的配送场景识别：感知"></a>11. 更精细化的配送场景识别：感知</h2><p>地图技术，只能解决在室外场景的位置和导航问题。但配送在商家侧（到店、取餐）和用户侧（到客、交付）两个场景中，其实是发生在室内环境。在室内的骑手位置是在哪里、在做什么以及用户和商家在做什么，如果了解这些，就能解决很多实际问题。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-d31c38f3.png" alt="问题"></p>
+<p>“情景感知”具体方向：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-b067a0fc.png" alt="情景感知"></p>
+<p>情景感知的目标就是做到场景的精细刻画（上图的上半部分），包含两个方面工作：</p>
+<ol>
+<li>配送节点的精确刻画<br>在ETA预估中已经展示过一些，不过之前主要还是基于骑手上报数据，这显然无法做到很高精确，必须引入更客观的数据进行描述。目前，我们选择的是WIFI和蓝牙的地理围栏技术作为主要辅助。</li>
+<li>配送过程的精确刻画<br>骑手在配送过程中经常会切换方式，比如可能某个小区不让骑电动车，那骑手必须步行，再比如骑手在商家发生长时间驻留，那应该是发生了等餐的情况（用户侧同理）。目前，选择使用基于传感器的运动状态识别作为主要辅助。</li>
+</ol>
+<p>Note:<br>这是属于一个锦上添花的功能，初期不太用考虑。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2018/12/13/machine-learning-in-distribution-practice.html" target="_blank" rel="noopener">机器学习在美团配送系统的实践：用技术还原真实世界</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/外卖/" rel="tag"># 外卖</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/06/09/2022-06-09-配送交付时间轻量级预估实践-笔记/" rel="next" title="配送交付时间轻量级预估实践-笔记">
+                <i class="fa fa-chevron-left"></i> 配送交付时间轻量级预估实践-笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/06/13/2022-06-13-深度学习在美团配送ETA预估中的探索与实践-笔记/" rel="prev" title="深度学习在美团配送ETA预估中的探索与实践-笔记">
+                深度学习在美团配送ETA预估中的探索与实践-笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-美团“超脑”配送系统的由来"><span class="nav-number">1.</span> <span class="nav-text">1. 美团“超脑”配送系统的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-即时配送在全球快速发展"><span class="nav-number">2.</span> <span class="nav-text">2. 即时配送在全球快速发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-即时配送的业务模型"><span class="nav-number">3.</span> <span class="nav-text">3. 即时配送的业务模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-美团“超脑”配送系统"><span class="nav-number">4.</span> <span class="nav-text">4. 美团“超脑”配送系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-机器学习技术挑战"><span class="nav-number">5.</span> <span class="nav-text">5. 机器学习技术挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-配送系统的核心参数ETA"><span class="nav-number">6.</span> <span class="nav-text">6. 配送系统的核心参数ETA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-精准到楼宇和楼层的预估：交付时长"><span class="nav-number">7.</span> <span class="nav-text">7. 精准到楼宇和楼层的预估：交付时长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-配送中最重要的数据之一：地图"><span class="nav-number">8.</span> <span class="nav-text">8. 配送中最重要的数据之一：地图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-基于签到数据的位置校正：交付点"><span class="nav-number">9.</span> <span class="nav-text">9. 基于签到数据的位置校正：交付点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-交付点挖掘的技术实战：挑战"><span class="nav-number">10.</span> <span class="nav-text">10. 交付点挖掘的技术实战：挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-更精细化的配送场景识别：感知"><span class="nav-number">11.</span> <span class="nav-text">11. 更精细化的配送场景识别：感知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">12.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/';
+        this.page.identifier = '2022/06/10/2022-06-10-机器学习在美团配送系统的实践：用技术还原真实世界-笔记/';
+        this.page.title = '机器学习在美团配送系统的实践：用技术还原真实世界-笔记';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

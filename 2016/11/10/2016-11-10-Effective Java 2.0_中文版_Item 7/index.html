@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Effective Java 2.0_中文版_Item 7">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 2.0_中文版_Item 7">
+<meta property="og:url" content="http://noahsnail.com/2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Effective Java 2.0_中文版_Item 7">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-11-10T14:48:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java 2.0_中文版_Item 7">
+<meta name="twitter:description" content="Effective Java 2.0_中文版_Item 7">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/">
+
+
+
+
+
+  <title>Effective Java 2.0_中文版_Item 7 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective Java 2.0_中文版_Item 7</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Effective Java 2.0_中文版_Item 7
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a>  |  <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a>  |  <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="Item-7-避免使用finalizers（终结方法，Java模拟C-的析构函数）"><a href="#Item-7-避免使用finalizers（终结方法，Java模拟C-的析构函数）" class="headerlink" title="Item 7: 避免使用finalizers（终结方法，Java模拟C++的析构函数）"></a>Item 7: 避免使用finalizers（终结方法，Java模拟C++的析构函数）</h2><p><strong>终结方法通常是不可预测的，经常是危险的，一般来说是没必要的。</strong>使用它们会引起不稳定的行为，性能变低，可移植性问题等。终结方法有一些有效的使用，这个在本条目的后面会讲到，但根据经验，你应该避免使用终结方法。</p>
+<p>C++程序员被警告说不要去想像Java中模拟C++析构函数那样的终结方法。在C++中，析构函数是一种正常回收对象资源的方式，是构造函数的必要对应。在Java中，当对象不可访问时，垃圾回收器会回收对象的相关资源，不需要程序员进行专门的工作。C++析构函数也用来回收其它的非内存资源。在Java中，<code>try-finally</code>块用来完成这样的功能。</p>
+<p>终结方法的一个缺点是不能保证它们及时的执行[JLS，12.6]。从对象变得不可访问开始到它的终结方法被执行结束，这中间的时间可以任意长。这意味着你不应该在终结方法中做任何时间为关键的事情。例如，依赖终结方法来关闭文件是一个严重的错误，因为开放的文件描述符是一种有限的资源。如果许多文件都是打开状态，由于JVM执行终结方法时是迟缓的，因此程序可能失败，因为它不能再打开文件。</p>
+<p>尽快执行终结方法是垃圾回收算法的主要功能，在不同的JVM实现中变化很大。依赖终结方法执行及时性的程序同样变化很大。一个程序在测试它的JVM上运行非常完美，但在你最重要客户支持的JVM上它却糟糕地运行失败了，这是完全有可能的。</p>
+<p>迟缓终结不仅仅是一个理论问题。在很少的情况下，为一个类提供终结方法可能会随意地延迟它实例的回收。有个同事调试一个长期运行的GUI应用，程序莫名其妙的死掉了，抛出了<code>OutOfMemoryError</code>错误。分析表明在程序死亡时，应用中的终结方法队列中有成千上万的图形对象在等待被终结并回收。遗憾的是，终结方法线程的运行优先级要低于另一个应用线程，因此在另一个应用线程中的对象变得可以被终结时，它们不能被终结。语言规范不能保证哪一个线程来执行终结方法，因此没有轻便的方式来阻止这种问题的发生，除非避免使用终结方法。</p>
+<p>不仅语言规范不能保证终结方法及时的执行；而且也不能保证终结方法得到执行。这完全有可能，甚至有可能一个程序终止时，一些不能访问的对象的终结方法都没有执行。结论就是：你<strong>从不该依赖终结方法来更新重要的持续状态</strong>。例如，依赖一个终结方法来释放一个共享资源，例如数据库，的持续锁，很容易引起整个分布式系统当掉。</p>
+<p>不要被<code>System.gc</code>和<code>System.runFinalization</code>方法诱惑。它们可能会增加终结方法得到执行的几率，但它们不能保证它。能保证终结方法执行的唯一方法是<code>System.runFinalizersOnExit</code>以及它臭名昭著的孪生兄弟<code>Runtime.runFinalizersOnExit</code>。这些方法都有致命的缺陷并且已经被废弃了[ThreadStop]。</p>
+<p>以防你还不相信终结方法应该被避免，这儿有另一个情况值得思考：如果在终结方法执行期间抛出了一个无法捕获的异常，这个异常被忽略了，对象的终结方法终止了[JLS，12.6]。不能捕获的异常可能会使对象处于崩溃状态。如果另一个线程试图使用这样一个崩溃的对象，任何不确定性的行为都有可能发送。通常，一个未被捕获的异常会终止线程并打印栈轨迹，但如果它发生在一个终结方法中，将不会打印出警告。</p>
+<p>哦，还有一件事：使用终结方法会有严重的性能问题。在我的机器上，创建并销毁一个简单对象大约是5.6纳秒。添加一个终结方法会将这个时间增加到2400纳秒。换句话说，创建一个对象并用终结方法销毁对象比正常情况下大约慢了430倍。</p>
+<p>因此当一个类的对象封装的资源需要结束时，你应该用什么来代替一个类的终结方法？例如文件或线程？提供一个显式的结束方法，当类的实例不再需要时，要求类的客户端在每个实例上都调用这个方法。一个值得提及的细节是，实例必须跟踪它是否已经被终结：显式的终结方法必须记录在一个私有字段中，这个字段表明对象不再有效，如果其它方法再对象终结后调用对象，其它方法必须检查这个字段并抛出<code>IllegalStateException</code>。</p>
+<p>显式结束方法的典型例子是<code>InputStream</code>，<code>OutputStream</code>和<code>java.sql.Connection</code>的关闭方法。另一个例子是<code>java.util.Timer</code>的<code>cancel</code>方法，它会进行必要的状态检查并一起线程相关的<code>Timer</code>实例平稳的结束它自己。<code>java.awt</code>的例子包括<code>Graphics.dispose</code>和<code>Window.dispose</code>。这些方法经常被忽视，可以预料会引起可怕的性能后果。一个相关的方法是<code>Image.flush</code>，它会释放所有<code>Image</code>实例相关的资源，但会将实例保持在仍可用的状态，如果必要的时候重新分配资源。</p>
+<p>显式结束方法通过与<code>try-finally</code>结构结合来确保终结。在<code>finally</code>语句块的内部调用显式的结束方法来确保它得到执行，即使对象使用时抛出了一个异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// try-finally block guarantees execution of termination method</span></span><br><span class="line">   Foo foo = <span class="keyword">new</span> Foo(...);</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="comment">// Do what must be done with foo</span></span><br><span class="line">       ...</span><br><span class="line">   &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">       foo.terminate();  <span class="comment">// Explicit termination method</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>那终结方法有什么好处呢？有两种可能的合法应用。一个是作为『安全网』，以防对象拥有者忘记调用它的显式结束方法。但这不能保证终结方法得到及时的调用，当客户端调用显式结束方法失败时，在那种情况下（希望很少），后面释放资源总比不释放资源要好。但终结方法如果发现资源仍没有被释放，它应该输出一个警告，因为这意味着客户端代码存在一个BUG，它应该被修正。如果你正在考虑写这样一个安全网终结方法，要仔细思考这种额外的保护是否值得额外的代价。</p>
+<p>作为显式结束方法模式引用的四个例子（<code>FileInputStream</code>，<code>FileOutputStream</code>，<code>Timer</code>和<code>Connection</code>）都有终结方法作为安全网以防它们的结束方法没有被调用。遗憾的是这些终结方法不输出警告。这种警告通常在API发布后不能进行添加，因为它会损坏现有的客户端。</p>
+<p>终结方法的第二个合法使用是关于对象的本地对等体。本地对等体是一个本地对象，普通对象通过本地方法委托给本地对象。由于本地对等体不是一个正常的对象，当它的Java对等体回收时，垃圾回收器不知道并且不能回收它。假设本地对等体不拥有重要的资源，终结方法是执行这个任务的合适工具。如果本地对等体拥有必须及时终止的资源，这个类应该有一个显式的结束方法，如上所述。结束方法应该用来释放重要资源。结束方法可以是一个本地方法或它可以调用一个本地方法。</p>
+<p>很重要的一点就是要注意『终结方法链』是不能自动执行的。如果一个类（不是<code>Object</code>）有一个终结方法，一个子类覆写了它，子类终结方法必须手动调用父类终结方法。你应该<code>try</code>块内终止这个子类并在对应的<code>finally</code>块调用父类终结方法。这保证了父类终结方法得到了执行，即使子类终结方法抛出异常，反之亦然。下面是它的一个例子、注意这个例子使用了<code>Override</code>注解(<code>@Override</code>)，在release 1.5版本中添加。现在你可以忽略<code>Override</code>注解，或看Item 36弄明白它是什么意思：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Manual finalizer chaining</span></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ... <span class="comment">// Finalize subclass state</span></span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    	<span class="keyword">super</span>.finalize();</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Finalizer Guardian idiom</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">	<span class="comment">// Sole purpose of this object is to finalize outer Foo object</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object finalizerGuardian = <span class="keyword">new</span> Object() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        	... <span class="comment">// Finalize outer Foo object</span></span><br><span class="line">        &#125;</span><br><span class="line">	&#125;;</span><br><span class="line">    ...  <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意公有类<code>Foo</code>没有终结方法（除非它从<code>Object</code>继承一个无关紧要的），因此子类的终结方法是否调用<code>super.finalize</code>是不重要的。每一个含有终结方法的非终结公有类都应该考虑这个技术。</p>
+<p>总结：不要使用终结方法，除非是用作安全网或用来终止一个非重要的本地资源。在那些你使用终结方法的稀少实例中，记住调用<code>super.finalize</code>。如果你使用终结方法作为安全网，记住在终结方法中输出非法用法。最后，如果你需要将终结方法关联到一个公有的，非终结类，考虑使用终结方法守护者，即使子类终结方法调用<code>super.finalize</code>失败，也会进行终结。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/10/2016-11-10-Effective Java 2.0_中英文对照_Item 7/" rel="next" title="Effective Java 2.0_中英文对照_Item 7">
+                <i class="fa fa-chevron-left"></i> Effective Java 2.0_中英文对照_Item 7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/12/2016-11-12-ls命令介绍/" rel="prev" title="ls命令介绍">
+                ls命令介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Item-7-避免使用finalizers（终结方法，Java模拟C-的析构函数）"><span class="nav-number">1.</span> <span class="nav-text">Item 7: 避免使用finalizers（终结方法，Java模拟C++的析构函数）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/';
+        this.page.identifier = '2016/11/10/2016-11-10-Effective Java 2.0_中文版_Item 7/';
+        this.page.title = 'Effective Java 2.0_中文版_Item 7';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SnailTyan</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://noahsnail.com/"/>
+  <updated>2022-10-26T09:28:02.475Z</updated>
+  <id>http://noahsnail.com/</id>
+  
+  <author>
+    <name>Tyan</name>
+    <email>Tyan.Liu.Git@gmail.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode 1984. Minimum Difference Between Highest and Lowest of K Scores</title>
+    <link href="http://noahsnail.com/2022/10/26/2022-10-26-Leetcode-1984-Minimum-Difference-Between-Highest-and-Lowest-of-K-Scores/"/>
+    <id>http://noahsnail.com/2022/10/26/2022-10-26-Leetcode-1984-Minimum-Difference-Between-Highest-and-Lowest-of-K-Scores/</id>
+    <published>2022-10-26T09:07:41.344Z</published>
+    <updated>2022-10-26T09:28:02.475Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/1984_Minimum_Difference_Between_Highest_and_Lowest_of_K_Scores.png" alt="Minimum Difference Between Highest and Lowest of K Scores"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先对数组排序，K个数的最小差值一定出现在相邻的K个数中，每K个有序数，其最大的差值为两边的数字，依次遍历计算相邻K个数的差值，取最小值即可。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minimumDifference</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">        nums.sort()</span><br><span class="line">        diff = nums[k<span class="number">-1</span>] - nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums)-k+<span class="number">1</span>):</span><br><span class="line">            diff = min(diff, nums[i+k<span class="number">-1</span>] - nums[i])</span><br><span class="line">        <span class="keyword">return</span> diff</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/" target="_blank" rel="noopener">https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1984. Minimum Difference Between Highest and Lowest of K Scores
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 561. Array Partition</title>
+    <link href="http://noahsnail.com/2022/10/17/2022-10-17-Leetcode-561-Array-Partition/"/>
+    <id>http://noahsnail.com/2022/10/17/2022-10-17-Leetcode-561-Array-Partition/</id>
+    <published>2022-10-17T01:20:10.952Z</published>
+    <updated>2022-10-17T01:25:47.359Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/561_Array_Partition.png" alt="Array Partition"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先对数组排序，遍历数组，每两个数一组可以取得最大和，只统计第一个值。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">arrayPairSum</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        nums.sort()</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums), <span class="number">2</span>):</span><br><span class="line">            res += nums[i]</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/array-partition/" target="_blank" rel="noopener">https://leetcode.com/problems/array-partition/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 561. Array Partition
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 2144. Minimum Cost of Buying Candies With Discount</title>
+    <link href="http://noahsnail.com/2022/10/17/2022-10-17-Leetcode-2144-Minimum-Cost-of-Buying-Candies-With-Discount/"/>
+    <id>http://noahsnail.com/2022/10/17/2022-10-17-Leetcode-2144-Minimum-Cost-of-Buying-Candies-With-Discount/</id>
+    <published>2022-10-17T00:57:25.736Z</published>
+    <updated>2022-10-17T01:26:09.928Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/2144_Minimum_Cost_of_Buying_Candies_With_Discount.png" alt="Minimum Cost of Buying Candies With Discount"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先对数组排序，从大到小遍历，每三个数，只统计前两个的cost，不足三个，正常计算。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minimumCost</span><span class="params">(self, cost: List[int])</span> -&gt; int:</span></span><br><span class="line">        cost.sort()</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> cost:</span><br><span class="line">            value = cost.pop()</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> count % <span class="number">3</span> != <span class="number">0</span>:</span><br><span class="line">                res += value</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，先对数组排序，从大到小遍历，每三个数，只统计前两个的cost，不足三个，正常计算。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minimumCost</span><span class="params">(self, cost: List[int])</span> -&gt; int:</span></span><br><span class="line">        cost.sort(reverse=<span class="keyword">True</span>)</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        length = len(cost)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">            <span class="keyword">if</span> i % <span class="number">3</span> == <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res += cost[i]</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/" target="_blank" rel="noopener">https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 2144. Minimum Cost of Buying Candies With Discount
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1200. Minimum Absolute Difference</title>
+    <link href="http://noahsnail.com/2022/10/13/2022-10-13-Leetcode-1200-Minimum-Absolute-Difference/"/>
+    <id>http://noahsnail.com/2022/10/13/2022-10-13-Leetcode-1200-Minimum-Absolute-Difference/</id>
+    <published>2022-10-13T09:20:07.537Z</published>
+    <updated>2022-10-13T09:26:19.102Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/1200_Minimum_Absolute_Difference.png" alt="Minimum Absolute Difference"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先对数组排序，数字对的差值最小值一定出现在两个相邻的数字之间，遍历数组，依次计算两个相邻数字之间的差值，如果差值小于最小值，则将当前数字放入一个新的结果数组中，更新最小值，如果差值等于最小值，则将当前数字对放入到结果数组中，如果大于，则不进行任何操作。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minimumAbsDifference</span><span class="params">(self, arr: List[int])</span> -&gt; List[List[int]]:</span></span><br><span class="line">        arr.sort()</span><br><span class="line">        res = []</span><br><span class="line">        min_value = float(<span class="string">'inf'</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)<span class="number">-1</span>):</span><br><span class="line">            diff = arr[i+<span class="number">1</span>] - arr[i]</span><br><span class="line">            <span class="keyword">if</span> diff &lt; min_value:</span><br><span class="line">                min_value = arr[i+<span class="number">1</span>] - arr[i]</span><br><span class="line">                res = [[arr[i], arr[i+<span class="number">1</span>]]]</span><br><span class="line">            <span class="keyword">elif</span> diff == min_value:</span><br><span class="line">                res.append([arr[i], arr[i+<span class="number">1</span>]])</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/minimum-absolute-difference/" target="_blank" rel="noopener">https://leetcode.com/problems/minimum-absolute-difference/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1200. Minimum Absolute Difference
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 2399. Check Distances Between Same Letters</title>
+    <link href="http://noahsnail.com/2022/10/10/2022-10-10-Leetcode-2399-Check-Distances-Between-Same-Letters/"/>
+    <id>http://noahsnail.com/2022/10/10/2022-10-10-Leetcode-2399-Check-Distances-Between-Same-Letters/</id>
+    <published>2022-10-10T02:55:55.149Z</published>
+    <updated>2022-10-10T06:34:20.745Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/2399_Check_Distances_Between_Same_Letters.png" alt="Check Distances Between Same Letters"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，统计字符串中两个字符的距离，当统计到第二个字符计算出距离时，检查对应位置的<code>distance</code>是否与统计的一致。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkDistances</span><span class="params">(self, s: str, distance: List[int])</span> -&gt; bool:</span></span><br><span class="line">        stat = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i, ch <span class="keyword">in</span> enumerate(s):</span><br><span class="line">            <span class="keyword">if</span> ch <span class="keyword">not</span> <span class="keyword">in</span> stat:</span><br><span class="line">                stat[ch] = i</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stat[ch] =  i - stat[ch] - <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> stat[ch] != distance[ord(ch) - ord(<span class="string">'a'</span>)]:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/check-distances-between-same-letters/" target="_blank" rel="noopener">https://leetcode.com/problems/check-distances-between-same-letters/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 2399. Check Distances Between Same Letters
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 821. Shortest Distance to a Character</title>
+    <link href="http://noahsnail.com/2022/10/10/2022-10-10-Leetcode-821-Shortest-Distance-to-a-Character/"/>
+    <id>http://noahsnail.com/2022/10/10/2022-10-10-Leetcode-821-Shortest-Distance-to-a-Character/</id>
+    <published>2022-10-10T01:14:33.233Z</published>
+    <updated>2022-10-10T02:56:21.628Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/821_Shortest_Distance_to_a_Character.png" alt="Shortest Distance to a Character"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用<code>left</code>，<code>right</code>分别记录当前字符的左右<code>c</code>的位置，左边没有为<code>-1</code>，右边没有为<code>length</code>。先初始化<code>left</code>，<code>right</code>，循环计算时，如果当前位置索引大于<code>right</code>，则对<code>left</code>，<code>right</code>进行更新，更新之后计算距离即可。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">shortestToChar</span><span class="params">(self, s: str, c: str)</span> -&gt; List[int]:</span></span><br><span class="line">        length = len(s)</span><br><span class="line">        res = [<span class="number">0</span>] * length</span><br><span class="line">        left = <span class="number">-1</span></span><br><span class="line">        right = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> s[right] != c:</span><br><span class="line">            right += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">            <span class="keyword">if</span> right &lt; i:</span><br><span class="line">                left = right</span><br><span class="line">                right += <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> right &lt; length <span class="keyword">and</span> s[right] != c:</span><br><span class="line">                    right += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> left &lt; <span class="number">0</span>:</span><br><span class="line">                res[i] = right - i</span><br><span class="line">            <span class="keyword">elif</span> right &gt;= length:</span><br><span class="line">                res[i] = i - left</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res[i] = min(i - left, right - i)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，从左到右遍历数组，记录最左边字符<code>c</code>的位置，依次更新距离，从右往左遍历数组，记录最右边字符<code>c</code>的位置，依次更新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">shortestToChar</span><span class="params">(self, s: str, c: str)</span> -&gt; List[int]:</span></span><br><span class="line">        length = len(s)</span><br><span class="line">        res = [float(<span class="string">'inf'</span>)] * length</span><br><span class="line">        left = <span class="number">-1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">            <span class="keyword">if</span> s[i] == c:</span><br><span class="line">                left = i</span><br><span class="line">            <span class="keyword">if</span> left &gt; <span class="number">-1</span>:</span><br><span class="line">                res[i] = min(res[i], i - left)</span><br><span class="line">        right = length</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> s[i] == c:</span><br><span class="line">                right = i</span><br><span class="line">            <span class="keyword">if</span> right &lt; length:</span><br><span class="line">                res[i] = min(res[i], right - i)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/shortest-distance-to-a-character/" target="_blank" rel="noopener">https://leetcode.com/problems/shortest-distance-to-a-character/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 821. Shortest Distance to a Character
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 794. Valid Tic-Tac-Toe State</title>
+    <link href="http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-794-Valid-Tic-Tac-Toe-State/"/>
+    <id>http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-794-Valid-Tic-Tac-Toe-State/</id>
+    <published>2022-10-08T08:20:36.540Z</published>
+    <updated>2022-10-09T01:13:36.641Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/794_Valid_Tic-Tac-Toe_State.png" alt="Valid Tic-Tac-Toe State"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，判断游戏合不合法，主要分为下面几个方面：</p>
+<ol>
+<li>由于<code>X</code>先放，轮流放置，因此<code>X</code>的数量永远大于等于<code>O</code>的数量。</li>
+<li>由于是轮流放置，因此二者的数量差值最大为1。</li>
+<li>当<code>X</code>先结束游戏时，此时<code>X</code>的数量等于<code>O</code>的数量加1。</li>
+<li>当<code>O</code>先结束游戏时，此时<code>X</code>的数量等于<code>O</code>的数量。<br>根据上述条件依次判断即可。</li>
+</ol>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validTicTacToe</span><span class="params">(self, board: List[str])</span> -&gt; bool:</span></span><br><span class="line">        x_count = <span class="number">0</span></span><br><span class="line">        o_count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> board:</span><br><span class="line">            <span class="keyword">for</span> ch <span class="keyword">in</span> line:</span><br><span class="line">                <span class="keyword">if</span> ch == <span class="string">'X'</span>:</span><br><span class="line">                    x_count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> ch == <span class="string">'O'</span>:</span><br><span class="line">                    o_count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> o_count &gt; x_count <span class="keyword">or</span> x_count &gt; o_count + <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> x_count == o_count <span class="keyword">and</span> self.isGameOver(board, <span class="string">'X'</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> x_count == o_count + <span class="number">1</span> <span class="keyword">and</span> self.isGameOver(board, <span class="string">'O'</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isGameOver</span><span class="params">(self, board: List[str], ch: str)</span> -&gt; bool:</span></span><br><span class="line">        <span class="comment"># Check rows</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">if</span> board[i][<span class="number">0</span>] == ch <span class="keyword">and</span> board[i][<span class="number">0</span>] == board[i][<span class="number">1</span>] <span class="keyword">and</span> board[i][<span class="number">1</span>] == board[i][<span class="number">2</span>]:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Check columns</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">            <span class="keyword">if</span> board[<span class="number">0</span>][i] == ch <span class="keyword">and</span> board[<span class="number">0</span>][i] == board[<span class="number">1</span>][i] <span class="keyword">and</span> board[<span class="number">1</span>][i] == board[<span class="number">2</span>][i]:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Check diagonals</span></span><br><span class="line">        <span class="keyword">if</span> board[<span class="number">1</span>][<span class="number">1</span>] == ch <span class="keyword">and</span> ((board[<span class="number">0</span>][<span class="number">0</span>] == board[<span class="number">1</span>][<span class="number">1</span>] <span class="keyword">and</span> board[<span class="number">1</span>][<span class="number">1</span>] == board[<span class="number">2</span>][<span class="number">2</span>]) <span class="keyword">or</span></span><br><span class="line">            (board[<span class="number">0</span>][<span class="number">2</span>] == board[<span class="number">1</span>][<span class="number">1</span>] <span class="keyword">and</span> board[<span class="number">1</span>][<span class="number">1</span>] == board[<span class="number">2</span>][<span class="number">0</span>])):</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/valid-tic-tac-toe-state/" target="_blank" rel="noopener">https://leetcode.com/problems/valid-tic-tac-toe-state/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 794. Valid Tic-Tac-Toe State
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1598. Crawler Log Folder</title>
+    <link href="http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-1598-Crawler-Log-Folder/"/>
+    <id>http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-1598-Crawler-Log-Folder/</id>
+    <published>2022-10-08T07:19:39.816Z</published>
+    <updated>2022-10-09T01:12:59.597Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/1598_Crawler_Log_Folder.png" alt="Crawler Log Folder"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用数据结构栈，依次处理日志操作即可，最后栈中的元素数量即为当前在第几层子目录，因此返回根目录的次数为栈的长度。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minOperations</span><span class="params">(self, logs: List[str])</span> -&gt; int:</span></span><br><span class="line">        stack = []</span><br><span class="line">        <span class="keyword">for</span> log <span class="keyword">in</span> logs:</span><br><span class="line">            <span class="keyword">if</span> log == <span class="string">'./'</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">elif</span> log == <span class="string">'../'</span>:</span><br><span class="line">                <span class="keyword">if</span> stack:</span><br><span class="line">                    stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stack.append(log)</span><br><span class="line">        <span class="keyword">return</span> len(stack)</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，思想与1一样，直接计数即可。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minOperations</span><span class="params">(self, logs: List[str])</span> -&gt; int:</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> log <span class="keyword">in</span> logs:</span><br><span class="line">            <span class="keyword">if</span> log == <span class="string">'./'</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">elif</span> log == <span class="string">'../'</span>:</span><br><span class="line">                count = max(<span class="number">0</span>, count - <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> count</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/crawler-log-folder/" target="_blank" rel="noopener">https://leetcode.com/problems/crawler-log-folder/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1598. Crawler Log Folder
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 844. Backspace String Compare</title>
+    <link href="http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-844-Backspace-String-Compare/"/>
+    <id>http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-844-Backspace-String-Compare/</id>
+    <published>2022-10-08T07:00:02.391Z</published>
+    <updated>2022-10-09T01:12:56.747Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/844_Backspace_String_Compare.png" alt="Backspace String Compare"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用数据结构栈，可以解决这个问题，时间复杂度O(N)。字符每次入栈之前判断是否是星号，如果是，则栈顶元素出栈，继续下一个字符，否则入栈。这里直接变换的字符串。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backspaceCompare</span><span class="params">(self, s: str, t: str)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">return</span>  self.backspaceString(s) == self.backspaceString(t)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backspaceString</span><span class="params">(self, s: str)</span>:</span></span><br><span class="line">        res = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> ch == <span class="string">'#'</span>:</span><br><span class="line">                res = res[:<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res += ch</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/backspace-string-compare/" target="_blank" rel="noopener">https://leetcode.com/problems/backspace-string-compare/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 844. Backspace String Compare
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 2390. Removing Stars From a String</title>
+    <link href="http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-2390-Removing-Stars-From-a-String/"/>
+    <id>http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-2390-Removing-Stars-From-a-String/</id>
+    <published>2022-10-08T06:45:41.885Z</published>
+    <updated>2022-10-08T07:02:01.080Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Removing_Stars_From_a_String.png" alt="Removing Stars From a String"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用数据结构栈，可以解决这个问题，时间复杂度O(N)。字符每次入栈之前判断是否是星号，如果是，则栈顶元素出栈，继续下一个字符，否则入栈。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, s: str)</span> -&gt; str:</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> res <span class="keyword">and</span> ch == res[<span class="number">-1</span>]:</span><br><span class="line">                res.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(ch)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(res)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/removing-stars-from-a-string/" target="_blank" rel="noopener">https://leetcode.com/problems/removing-stars-from-a-string/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 2390. Removing Stars From a String
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1209. Remove All Adjacent Duplicates in String II</title>
+    <link href="http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-1209-Remove-All-Adjacent-Duplicates-in-String-II/"/>
+    <id>http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-1209-Remove-All-Adjacent-Duplicates-in-String-II/</id>
+    <published>2022-10-08T06:22:58.741Z</published>
+    <updated>2022-10-08T07:03:09.951Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Remove_All_Adjacent_Duplicates_in_String_II.png" alt="Remove All Adjacent Duplicates in String II"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用数据结构栈来解决这个问题，时间复杂度O(N)。字符每次入栈之前都与栈顶元素进行比较，如果不同，则入栈元组，元组元素为当前字符以及字符个数1，如果字符相同且栈顶相同字符个数不等于<code>k-1</code>，也入栈元组，元组元素为当前字符以及连续相同字符个数，值为栈顶字符的个数加1，否则，移除栈顶的<code>k-1</code>个字符。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, s: str, k: int)</span> -&gt; str:</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> res <span class="keyword">or</span> res[<span class="number">-1</span>][<span class="number">0</span>] != ch:</span><br><span class="line">                res.append((ch, <span class="number">1</span>))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> res[<span class="number">-1</span>][<span class="number">1</span>] == k <span class="number">-1</span>:</span><br><span class="line">                    <span class="keyword">del</span> res[-k+<span class="number">1</span>:]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    res.append((ch, res[<span class="number">-1</span>][<span class="number">1</span>] + <span class="number">1</span>))</span><br><span class="line">        res = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> res]</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(res)</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>另一种使用栈的方式，当前字符与栈顶字符相同时，只更新栈顶字符的个数。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, s: str, k: int)</span> -&gt; str:</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> res <span class="keyword">or</span> res[<span class="number">-1</span>][<span class="number">0</span>] != ch:</span><br><span class="line">                res.append([ch, <span class="number">1</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> res[<span class="number">-1</span>][<span class="number">1</span>] == k <span class="number">-1</span>:</span><br><span class="line">                    res.pop()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    res[<span class="number">-1</span>][<span class="number">1</span>] += <span class="number">1</span></span><br><span class="line">        res = [x[<span class="number">0</span>] * x[<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> res]</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(res)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/" target="_blank" rel="noopener">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1209. Remove All Adjacent Duplicates in String II
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1047. Remove All Adjacent Duplicates In String</title>
+    <link href="http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-1047-Remove-All-Adjacent-Duplicates-In-String/"/>
+    <id>http://noahsnail.com/2022/10/08/2022-10-08-Leetcode-1047-Remove-All-Adjacent-Duplicates-In-String/</id>
+    <published>2022-10-08T03:15:41.274Z</published>
+    <updated>2022-10-08T06:45:56.506Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Remove_All_Adjacent_Duplicates_In_String.png" alt="Remove All Adjacent Duplicates In String"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，最先想到的方法，使用数据结构栈，可以解决这个问题，时间复杂度O(N)。字符每次入栈之前都与栈顶元素进行比较，如果相同，则栈顶元素出栈，继续下一个字符，不同则入栈。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, s: str)</span> -&gt; str:</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> res <span class="keyword">and</span> ch == res[<span class="number">-1</span>]:</span><br><span class="line">                res.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(ch)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(res)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/" target="_blank" rel="noopener">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1047. Remove All Adjacent Duplicates In String
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1417. Reformat The String</title>
+    <link href="http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-1417-Reformat-The-String/"/>
+    <id>http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-1417-Reformat-The-String/</id>
+    <published>2022-07-08T06:03:00.880Z</published>
+    <updated>2022-07-11T01:23:58.664Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Reformat_The_String.png" alt="Reformat The String"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，先分离数字和字母，如果二者数量差的绝对值大于<code>1</code>，则不可能形成字母数字字符串，否则，根据数量多少，按顺序依次连接字符数字数组即可。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reformat</span><span class="params">(self, s: str)</span> -&gt; str:</span></span><br><span class="line">        letters = []</span><br><span class="line">        digits = []</span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> ch.isalpha():</span><br><span class="line">                letters.append(ch)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                digits.append(ch)</span><br><span class="line"></span><br><span class="line">        diff = len(letters) - len(digits)</span><br><span class="line">        <span class="keyword">if</span> abs(diff) &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        <span class="keyword">elif</span> diff == <span class="number">0</span> <span class="keyword">or</span> diff == <span class="number">1</span>:</span><br><span class="line">            arr1 = letters</span><br><span class="line">            arr2 = digits</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            arr1 = digits</span><br><span class="line">            arr2 = letters</span><br><span class="line"></span><br><span class="line">        result = [<span class="number">0</span>] * len(s)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr1)):</span><br><span class="line">            result[i * <span class="number">2</span>] = arr1[i]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr2)):</span><br><span class="line">            result[i * <span class="number">2</span> + <span class="number">1</span>] = arr2[i]</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(result)</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，进一步优化。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reformat</span><span class="params">(self, s: str)</span> -&gt; str:</span></span><br><span class="line">        letters = <span class="number">0</span></span><br><span class="line">        digits = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> ch.isalpha():</span><br><span class="line">                letters += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                digits += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        diff = letters - digits</span><br><span class="line">        <span class="keyword">if</span> abs(diff) &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        <span class="keyword">elif</span> diff == <span class="number">0</span> <span class="keyword">or</span> diff == <span class="number">1</span>:</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            j = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = <span class="number">1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        result = [<span class="number">0</span>] * len(s)</span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> ch.isalpha():</span><br><span class="line">                result[i] = ch</span><br><span class="line">                i += <span class="number">2</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result[j] = ch</span><br><span class="line">                j += <span class="number">2</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(result)</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，使用双指针，分别从两端找起，如果碰到字母和数字不符合当前位置，则交换二者。</p>
+<ul>
+<li>Version 3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reformat</span><span class="params">(self, s: str)</span> -&gt; str:</span></span><br><span class="line">        letters = <span class="number">0</span></span><br><span class="line">        digits = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> ch.isalpha():</span><br><span class="line">                letters += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                digits += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        diff = letters - digits</span><br><span class="line">        <span class="keyword">if</span> abs(diff) &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        <span class="keyword">elif</span> diff == <span class="number">0</span> <span class="keyword">or</span> diff == <span class="number">1</span>:</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            j = len(s) - <span class="number">2</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = <span class="number">1</span></span><br><span class="line">            j = len(s) - <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        result = list(s)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> i &lt; len(s) <span class="keyword">and</span> j &gt;=<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">while</span> i &lt; len(s) <span class="keyword">and</span> result[i].isalpha():</span><br><span class="line">                i += <span class="number">2</span></span><br><span class="line">            <span class="keyword">while</span> j &gt;=<span class="number">0</span> <span class="keyword">and</span> result[j].isdigit():</span><br><span class="line">                j -= <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> i &lt; len(s) <span class="keyword">and</span> j &gt;=<span class="number">0</span>:</span><br><span class="line">                result[i], result[j] = result[j], result[i]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(result)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/reformat-the-string/" target="_blank" rel="noopener">https://leetcode.com/problems/reformat-the-string/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1417. Reformat The String
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 93. Restore IP Addresses</title>
+    <link href="http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-93-Restore-IP-Addresses/"/>
+    <id>http://noahsnail.com/2022/07/08/2022-07-08-Leetcode-93-Restore-IP-Addresses/</id>
+    <published>2022-07-08T01:09:40.709Z</published>
+    <updated>2022-07-13T05:35:40.413Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Restore_IP_Addresses.png" alt="Restore IP Addresses"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，容易想到的方案，枚举<code>.</code>所有可能的位置，然后对四个数字进行检查，如果都合法，则为合法的IP地址，也可以枚举数字。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">restoreIpAddresses</span><span class="params">(self, s: str)</span> -&gt; List[str]:</span></span><br><span class="line">        result = []</span><br><span class="line">        chars = list(s)</span><br><span class="line">        length = len(s)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, length):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, length):</span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j+<span class="number">1</span>, length):</span><br><span class="line">                    num1 = <span class="string">''</span>.join(chars[:i])</span><br><span class="line">                    num2 = <span class="string">''</span>.join(chars[i:j])</span><br><span class="line">                    num3 = <span class="string">''</span>.join(chars[j:k])</span><br><span class="line">                    num4 = <span class="string">''</span>.join(chars[k:])</span><br><span class="line">    </span><br><span class="line">                    <span class="keyword">if</span> self.validify(num1) <span class="keyword">and</span> self.validify(num2) <span class="keyword">and</span> self.validify(num3) <span class="keyword">and</span> self.validify(num4):</span><br><span class="line">                        ip_address = num1 + <span class="string">'.'</span> + num2 + <span class="string">'.'</span> + num3 + <span class="string">'.'</span> + num4</span><br><span class="line">                        result.append(ip_address)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validify</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(num) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">elif</span> len(num) &gt; <span class="number">1</span> <span class="keyword">and</span> num[<span class="number">0</span>] == <span class="string">'0'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">elif</span> int(num) &gt; <span class="number">255</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，在Version 1的基础上进行剪枝，每轮循环的遍历数量可以再减少一些，当出现数字不合理时，则进行下一次循环。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">restoreIpAddresses</span><span class="params">(self, s: str)</span> -&gt; List[str]:</span></span><br><span class="line">        result = []</span><br><span class="line">        chars = list(s)</span><br><span class="line">        length = len(s)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">            num1 = <span class="string">''</span>.join(chars[:i])</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> self.validify(num1):</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, i+<span class="number">4</span>):</span><br><span class="line">                num2 = <span class="string">''</span>.join(chars[i:j])</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> self.validify(num2):</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j+<span class="number">1</span>, j+<span class="number">4</span>):</span><br><span class="line">                    num3 = <span class="string">''</span>.join(chars[j:k])</span><br><span class="line">                    num4 = <span class="string">''</span>.join(chars[k:])</span><br><span class="line">                    <span class="keyword">if</span> self.validify(num3) <span class="keyword">and</span> self.validify(num4):</span><br><span class="line">                        ip_address = num1 + <span class="string">'.'</span> + num2 + <span class="string">'.'</span> + num3 + <span class="string">'.'</span> + num4</span><br><span class="line">                        result.append(ip_address)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validify</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(num) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">elif</span> len(num) &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> num[<span class="number">0</span>] == <span class="string">'0'</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> int(num) &gt; <span class="number">255</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/restore-ip-addresses/" target="_blank" rel="noopener">https://leetcode.com/problems/restore-ip-addresses/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 93. Restore IP Addresses
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 1103. Distribute Candies to People</title>
+    <link href="http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-1103-Distribute-Candies-to-People/"/>
+    <id>http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-1103-Distribute-Candies-to-People/</id>
+    <published>2022-07-07T09:38:22.965Z</published>
+    <updated>2022-07-08T00:37:08.190Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Distribute_Candies_to_People.png" alt="Distribute Candies to People"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，循环遍历即可，<code>current</code>为当前这次要分配的糖果数量，每次要分配的糖果数量加1，如果不够，则剩余糖果分配给最后一个。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candies: int, num_people: int)</span> -&gt; List[int]:</span></span><br><span class="line">        result = [<span class="number">0</span>] * num_people</span><br><span class="line">        index = <span class="number">0</span></span><br><span class="line">        current = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> candies &gt; <span class="number">0</span>:</span><br><span class="line">            current = min(current, candies)</span><br><span class="line">            result[index % num_people] += current</span><br><span class="line">            candies -= current</span><br><span class="line">            current += <span class="number">1</span></span><br><span class="line">            index += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，<code>index</code>可以用<code>current</code>替代。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candies: int, num_people: int)</span> -&gt; List[int]:</span></span><br><span class="line">        result = [<span class="number">0</span>] * num_people</span><br><span class="line">        current = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> candies &gt; <span class="number">0</span>:</span><br><span class="line">            result[(current - <span class="number">1</span>) % num_people] += min(current, candies)</span><br><span class="line">            candies -= current</span><br><span class="line">            current += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/distribute-candies-to-people/" target="_blank" rel="noopener">https://leetcode.com/problems/distribute-candies-to-people/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 1103. Distribute Candies to People
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Leetcode 575. Distribute Candies</title>
+    <link href="http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-575-Distribute-Candies/"/>
+    <id>http://noahsnail.com/2022/07/07/2022-07-07-Leetcode-575-Distribute-Candies/</id>
+    <published>2022-07-07T09:27:42.035Z</published>
+    <updated>2022-07-07T09:36:26.912Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Description"><a href="#1-Description" class="headerlink" title="1. Description"></a>1. Description</h2><p><img src="http://noahsnail.com/images/leetcode/Distribute_Candies.png" alt="Distribute Candies"></p>
+<h2 id="2-Solution"><a href="#2-Solution" class="headerlink" title="2. Solution"></a>2. Solution</h2><p><strong>解析：</strong>Version 1，使用dict。</p>
+<ul>
+<li>Version 1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candyType: List[int])</span> -&gt; int:</span></span><br><span class="line">        candies = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> candy <span class="keyword">in</span> candyType:</span><br><span class="line">            candies[candy]  = candies.get(candy, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> min(len(candies), len(candyType) // <span class="number">2</span>)</span><br><span class="line">        <span class="comment"># return min(len(Counter(candyType)), len(candyType) // 2)</span></span><br></pre></td></tr></table></figure>
+<p><strong>解析：</strong>Version 2，使用set。</p>
+<ul>
+<li>Version 2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">distributeCandies</span><span class="params">(self, candyType: List[int])</span> -&gt; int:</span></span><br><span class="line">        candies = set()</span><br><span class="line">        <span class="keyword">for</span> candy <span class="keyword">in</span> candyType:</span><br><span class="line">            candies.add(candy)</span><br><span class="line">        <span class="keyword">return</span> min(len(candies), len(candyType) // <span class="number">2</span>)</span><br><span class="line">        <span class="comment"># return min(len(set(candyType)), len(candyType) // 2)</span></span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://leetcode.com/problems/distribute-candies/" target="_blank" rel="noopener">https://leetcode.com/problems/distribute-candies/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Leetcode 575. Distribute Candies
+    
+    </summary>
+    
+      <category term="基础算法" scheme="http://noahsnail.com/categories/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="http://noahsnail.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于机器学习方法的POI品类推荐算法-笔记</title>
+    <link href="http://noahsnail.com/2022/07/04/2022-07-04-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84POI%E5%93%81%E7%B1%BB%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95/"/>
+    <id>http://noahsnail.com/2022/07/04/2022-07-04-基于机器学习方法的POI品类推荐算法/</id>
+    <published>2022-07-04T03:06:38.733Z</published>
+    <updated>2022-10-28T05:12:43.806Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>在美团商家数据中心（MDC），有超过100w的已校准审核的POI数据（一般将商家标示为POI，POI基础信息包括：门店名称、品类、电话、地址、坐标等）。如何使用这些已校准的POI数据，挖掘出有价值的信息，本文进行了一些尝试：利用机器学习方法，自动标注缺失品类的POI数据。例如，门店名称为“好再来牛肉拉面馆”的POI将自动标注“小吃”品类。</p>
+<p>Note：将商家标示为POI，POI基础信息包括：门店名称、品类、电话、地址、坐标等。</p>
+<p>机器学习解决问题的一般过程：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-56b13f2f.png" alt="机器学习模型"></p>
+<p>本文将按照：1）特征表示；2）特征选择；3）基于Naive Bayes分类模型；4）分类预测，四个部分顺序展开。</p>
+<h2 id="2-特征表示"><a href="#2-特征表示" class="headerlink" title="2. 特征表示"></a>2. 特征表示</h2><p>需要先将实际问题转换成计算机可识别的形式。对于POI而言，反应出POI品类的一个重要特征是POI门店名称，那么问题转换成了根据POI门店名称判别POI品类。POI名称字段属于文本特征，传统的文本表示方法是基于向量空间模型(VSM模型)：</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-523de841.png" alt="向量空间模型"></p>
+<p>空间向量模型需要一个“字典”，这个字典可以在样本中产生，也可以从外部导入。上图中的字典就是[好，宾馆，海底，拉面，冰雪, ……. ，馆]。对已校准的POI，先利用Lucene的中文分词工具SmartCn[2]对POI名称做预分词处理，提取特征词，作为原始粗糙字典集合。</p>
+<p>有了字典后便可以量化地表示出某个文本。先定义一个与字典长度相同的向量，向量中的每个位置对应字典中的相应位置的单词。然后遍历这个文本，对应文本中的出现某个单词，在向量中的对应位置，填入“某个值”（即特征词的权重，包括BOOL权重，词频权重，TFIDF权重）。考虑到一般的POI名称都属于短文本，本文采用BOOL权重。</p>
+<p>在产生粗糙字典集合时，还统计了校准POI中，每个品类(type_id)，以及特征词(term)在品类(type_id)出现的次数(文档频率)。分别写入到表category_frequency和term_category_frequency，表的部分结果如下:</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-22bda81f.png" alt="示例"></p>
+<p>分别记：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A(i,j) = 特征词term(i) 在品类为type_id(j)出现的次数count</span><br><span class="line">T(j) = 品类为type_id(j)在样本集出现的次数   </span><br><span class="line">N = 已校准POI数据集的数量</span><br></pre></td></tr></table></figure>
+<p>Note: 先分词，提取特征词，构造字典，然后使用VSM模型(Vector Space Model)表示文本，生成字典时可以统计词频。</p>
+<h2 id="3-特征选择"><a href="#3-特征选择" class="headerlink" title="3. 特征选择"></a>3. 特征选择</h2><p>现在，得到了一个“预输入字典”：包括了所有已校准POI名称字段的特征词，这些特征词比如：“88”、“11”， “3”、“auyi”、“中心”、“中国”、“酒店”、“自助餐”、“拉面”等。直观感觉，“88”、“11”， “3”、“auyi”、“中国”这些词对判断品类并没有多大帮助，但“酒店”、“自助餐”、“拉面”对判断一个POI的品类却可能起到非常重要作用。</p>
+<p>如何挑选出有利于模型预测的特征呢？这就涉及到了特征选择。特征选择方法可以分成基于领域知识的规则方法和基于统计学习方法。本文使用统计机器学习方法，辅助规则方法的特征选择算法，挑选有利于判断POI品类的特征词。</p>
+<h3 id="3-1-基于统计学习的特征选择算法"><a href="#3-1-基于统计学习的特征选择算法" class="headerlink" title="3.1 基于统计学习的特征选择算法"></a>3.1 基于统计学习的特征选择算法</h3><p>基于统计学习的特征选择算法，大体可以分成两种：1.基于相关性度量(信息论相关) 2.特征空间表示(典型的如PCA)。</p>
+<p>文本特征经常采用的基于信息增益方法(IG)特征选择方法。某个特征的信息增益是指，已知该特征条件下，整个系统的信息量的前后变化。如果前后信息量变化越大，那么可以认为该特征起到的作用也就越大。 那么，如何定义信息量呢？一般采用熵的概念来衡量一个系统的信息量：$$H(Y)=-\sum_{i=1}^{n}p(y_{i})\log p(y_{i})$$</p>
+<p>当已知该特征时，从数学的角度来说就是已知了该特征的分布，系统的信息量可以由条件熵来描述：$$H(Y|X)=\sum_{x} p(x)H(Y|X=x)=- \sum_{x} \sum_{y} p(x,y)\log p(y|x)$$</p>
+<p>该特征的信息增益定义为：$$IG(X)=H(Y)-H(Y|X)$$</p>
+<p>信息增益得分衡量了该特征的重要性。假设有四个样本，样本的特征词包括“火锅”、“米粉”、“馆”，采用信息增益判断不同特征对于决策影响:</p>
+<p>| 米粉(A) | 火锅(B) | 馆(C) | 品类(D) |<br>| 1 | 1 | 0 | 火锅 |<br>| 0 | 1 | 1 | 火锅 |<br>| 1 | 0 | 0 | 小吃 |<br>| 1 | 0 | 1 | 小吃 |</p>
+<p>整个系统的最原始信息熵为：</p>
+<p>$$H(Y)=-\sum_{i=1}^{2} p(y_{i}) \log p(y_{i})=-2 * \frac {1} {2} * \log \frac {1} {2} = 1$$</p>
+<p>分别计算每个特征的条件熵：</p>
+<p>$$H(D|A)=- \sum_{i=1}^{2}\sum_{j=1}^{2}p(x,y)\log p(y|x)=0 - 0 - \frac {1} {2} \log \frac {2} {3} - \frac {1} {4} \log \frac {1} {3} =0.69$$</p>
+<p>利用整个系统的信息熵减去条件熵，得到每个特征的信息增益得分排名(“火锅”(1) &gt; “米粉”(0.31) &gt; “馆”(0)) ，按照得分由高到低挑选需要的特征词。</p>
+<p>本文采用IG特征选择方法，选择得分排名靠前的N个特征词（Top 30%）。抽取排名前20的特征词：[酒店, 宾馆, 火锅, 摄影, 眼镜, 美容, 咖啡, ktv, 造型, 汽车, 餐厅, 蛋糕, 儿童, 美发, 商务, 旅行社, 婚纱, 会所, 影城, 烤肉]。这些特征词明显与品类属性相关联具有较强相关性，将其称之为品类词。</p>
+<h3 id="3-2-基于领域知识的特征选择方法"><a href="#3-2-基于领域知识的特征选择方法" class="headerlink" title="3.2 基于领域知识的特征选择方法"></a>3.2 基于领域知识的特征选择方法</h3><p>基于规则的特征选择算法，利用领域知识选择特征。目前很少单独使用基于规则的特征选择算法，往往结合统计学习的特征选择算法，辅助挑选特征。</p>
+<p>本文需要解决的是POI名称字段短文本的自动分类问题，POI名称字段一般符合这样的规则，POI名称=名称核心词+品类词。名称核心词对于实际的品类预测作用不大，有时反而出现”过度学习“起到负面作用。例如”好利来牛肉拉面馆“，”好利来“是它的名称核心词，在用学习算法时学到的很有可能是一个”蛋糕“品类（”好利来“和”蛋糕“品类的关联性非常强，得到错误的预测结论）。</p>
+<p>本文使用该规则在挑选特征时做了一个trick：利用特征选择得到的特征词（绝大部分是品类词），对POI名称字段分词，丢弃前面部分（主要是名称核心词），保留剩余部分。这种trick从目前的评测结果看有5%左右准确率提升，缺点是会降低了算法覆盖度。</p>
+<p>Note: 利用领域知识集合统计学习来选择特征。</p>
+<h2 id="4-分类模型"><a href="#4-分类模型" class="headerlink" title="4. 分类模型"></a>4. 分类模型</h2><h3 id="4-1-建模"><a href="#4-1-建模" class="headerlink" title="4.1 建模"></a>4.1 建模</h3><p>完成了特征表示、特征选择后，下一步就是训练分类模型了。机器学习分类模型可以分成两种：1）生成式模型；2）判别式模型。可以简单认为，两者区别生成式模型直接对样本的联合概率分布进行建模：生成式模型的难点在于如何去估计类概率密度分布$p(x|y)$。本文采用的朴素贝叶斯模型，其”Naive”在对类概率密度函数简化上，它假设了条件独立：$$p(y|x)=\frac {p(y)p(x|y)} {p(x)} \sim p(x|y)$$</p>
+<p>根据对p(x|y)不同建模形式，Naive Bayes模型主要分成：Muti-variate Bernoulli Model（多项伯努利模型）和Multinomial event model（多项事件模型）。一次伯努利事件相当于一次投硬币事件（0，1两种可能），一次多项事件则相当于投色子（1到6多种可能）。结合传统的文本分类解释这两类模型。</p>
+<h4 id="4-1-1-多项伯努利模型"><a href="#4-1-1-多项伯努利模型" class="headerlink" title="4.1.1 多项伯努利模型"></a>4.1.1 多项伯努利模型</h4><p>已知类别的条件下，多项伯努利对应样本生X成过程：遍历字典中的每个单词$(t_{1},t_{2},…,t_{|V|})$，判断这个词是否在样本中出现。每次遍历都是一次伯努利实验，$|V|$次遍历：</p>
+<p>123</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2014/12/18/poi-category-recommendation-algorithm-based-on-machine-learning.html" target="_blank" rel="noopener">基于机器学习方法的POI品类推荐算法</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      基于机器学习方法的POI品类推荐算法-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Managing Supply and Demand Balance Through Machine Learning-笔记</title>
+    <link href="http://noahsnail.com/2022/06/17/2022-06-17-Managing%20Supply%20and%20Demand%20Balance%20Through%20Machine-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/17/2022-06-17-Managing Supply and Demand Balance Through Machine-笔记/</id>
+    <published>2022-06-17T03:20:38.892Z</published>
+    <updated>2022-07-04T02:51:58.222Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<p>本文为DoorDash文章学习的笔记整理。</p>
+<h1 id="Managing-Supply-and-Demand-Balance-Through-Machine-Learning"><a href="#Managing-Supply-and-Demand-Balance-Through-Machine-Learning" class="headerlink" title="Managing Supply and Demand Balance Through Machine Learning"></a>Managing Supply and Demand Balance Through Machine Learning</h1><p>At DoorDash, we want our service to be a daily convenience offering timely deliveries and consistent pricing. Achieving these objectives requires a good balance between the supply of Dashers (our term for delivery drivers) and the demand for orders.</p>
+<p>DoorDash希望服务能够提供及时交付和一致的定价。实现这些目标需要在Dashers（配送员）供应和订单需求之间取得良好的平衡。</p>
+<p>During periods of high demand we generally increase pay, providing an incentive to ensure enough Dashers are available for consumers to receive their orders as quickly as possible. We do not pass through this increased pay to consumers, who will pay the same fees no matter the time of day. </p>
+<p>在需求旺盛的时期，通常会增加配送费以确保有足够的Dasher可供消费者尽快收到他们的订单。DoorDash不会将这种增加的报酬转嫁给消费者，无论何时，消费者都会支付相同的费用。</p>
+<p>Note:<br>DoorDash在需求旺盛时会提高配送费用，且这种成本没有转嫁给消费者，这意味着配送成本变高，但有更好的用户体验。</p>
+<p>Given the complexity of offering Dashers peak demand pay, we built a new mobilization system that allocates incentives ahead of any anticipated supply and demand imbalance. When building this system, we focused on the following things:</p>
+<ul>
+<li>Defining our supply and demand measurement metrics and project objectives clearly</li>
+<li>Generating high-fidelity forecasts for supply and demand</li>
+<li>Setting up a new optimization process for incentive allocation under constraints</li>
+<li>Managing uncertainty </li>
+<li>Improving reliability and maintainability of the system</li>
+</ul>
+<p>考虑到给予Dashers高峰需求配送费的复杂性，DoorDash建立了一个新的调度系统，在任何预期的供需失衡之前分配奖励。在构建这个系统时，专注于以下几点：</p>
+<ul>
+<li>明确定义供需度量指标和项目目标</li>
+<li>生成高置信度的供需预测</li>
+<li>建立约束下激励分配的新优化流程</li>
+<li>管理不确定性</li>
+<li>提高系统的可靠性和可维护性</li>
+</ul>
+<h2 id="How-do-we-quantify-supply-and-demand-imbalance"><a href="#How-do-we-quantify-supply-and-demand-imbalance" class="headerlink" title="How do we quantify supply and demand imbalance?"></a>How do we quantify supply and demand imbalance?</h2><p>When outlining the problem of supply and demand imbalance, it is useful to adopt the context of all the affected parties:</p>
+<ul>
+<li>For consumers, a lack of Dasher availability during peak demand is more likely to lead to order lateness, longer delivery times, or inability to request a delivery and having to opt for pick up. </li>
+<li>For Dashers, a lack of orders leads to lower earnings and longer and more frequent shifts in order to hit personal goals.</li>
+<li>For merchants, an undersupply of Dashers leads to delayed deliveries, which typically results in cold food and a decreased reorder rate.</li>
+</ul>
+<p>在概述供需失衡问题时，采用所有受影响方的背景是有用的：</p>
+<ul>
+<li>对于消费者而言，在需求高峰期间，缺少可用Dasher更有可能导致订单延迟、更长的交付时间、或者无法请求配送并不得不选择(自己)取货。</li>
+<li>对于Dasher来说，订单不足会导致收入降低，并且为了实现个人目标而需要更长、更频繁的移动。</li>
+<li>对于商家来说，Dasher供应不足会导致延迟交付，这通常会导致食物变凉和复购率下降。</li>
+</ul>
+<p>With this context, it becomes clear that the ideal scenario would be to have a system that balances supply and demand at a delivery level instead of market level, but this is not realistic when choosing market-measurement metrics. Balancing at the delivery level means every order has a Dasher available at the most optimal time and every Dasher hits their pay-per hour target.</p>
+<p>在这种情况下，很明显，理想情况是有一个可以在配送层面而不是市场层面来平衡供需的系统，但这在选择市场度量指标时是不现实的。配送层面的平衡意味着每个订单在最佳时间都有一个可用的Dasher，并且每个Dasher都达到了他们的时薪目标。</p>
+<p>In contrast, market-level balance means there are relatively equal numbers of Dashers and orders in a market but there are not necessarily optimal conditions for each of these groups at the delivery level. In practice, the variance level for supply and demand driven by Dasher and consumer preferences and other changing conditions in the environment, such as traffic and weather, make it difficult to balance supply and demand at the delivery level. Hence, we focused on market-level metrics to define the state of each market, even though a delivery-level metric would have provided a more ideal outcome. </p>
+<p>相比之下，市场层面的平衡意味着市场中Dasher和订单的数量相对相等，但在交付层面上，这些组中的每一个都不一定存在最佳条件。在实践中，供需差异水平受Dasher和消费者偏好，以及环境中的其他变化条件（如交通和天气）驱动，使得很难在交付层面来平衡供需。因此，DoorDash专注于市场层面的指标来定义每个市场的状态，即使交付层面的指标会提供更理想的结果。</p>
+<p>Note:<br>从市场层面来度量供需，即Dashe数量和订单数量。</p>
+<p>For our primary supply and demand measurement metric, we looked at the number of hours required to make deliveries while keeping delivery durations low and Dasher busyness high. By focusing on hours, we can account for regional variation driven by traffic conditions, batching rates, and food preparation times. </p>
+<p>对于主要的供需度量指标，DoorDash查看了在保持交付持续时间短和Dasher繁忙程度高的情况下，交付所需的小时数。通过关注小时数，可以解释由交通状况、批配送率(多单同时进行)和食物准备时间引起的区域变化。</p>
+<p>To understand how this metric would work in practice let’s consider an example. Let’s imagine that it is Sunday at dinner time in New York City, and we estimate that 1,000 Dasher hours are needed to fulfill the expected demand. We might also estimate that unless we provide extra incentives, only 800 hours will likely be provided by Dashers organically. Without mobilization actions we would be undersupplied by about 200 hours.</p>
+<p>为了理解这个指标在实际中是如何工作的，考虑一个例子。假设现在是纽约市周日的晚餐时间，估计需要1000 Dasher小时才能满足预期需求。还可以估计，除非提供额外的激励措施，否则Dasher可能只会有组织地提供800小时。如果没有调动行为，将缺乏约200小时。</p>
+<p>We generally compute this metric where Dashers sign up to Dash and to time units that can span from hourly durations to daypart units like lunch and dinner. It is very important to not select an aggregation level that can lead to artificial demand and supply smoothing. For example, within a day we might be oversupplied at breakfast and undersupplied at dinner. Optimizing for a full day would lead to smoothing any imbalance and generate incorrect mobilization actions.</p>
+<p>通常在Dasher注册Dash时计算这个指标，时间单元可以从按小时的持续时间到午餐和晚餐等时段单元。不要选择可能导致人为需求和供应平滑的聚合级别，这一点非常重要。 例如，在一天之内，可能在早餐时供应过剩，而在晚餐时供应不足。优化一整天会导致平滑任何不平衡并产生不正确的调动行为。</p>
+<p>Note:<br>优化特定的时间段，按小时和时间段都可以，但不能优化一整天。</p>
+<p>Once we decide on the health metric and the unit at which we take actions, we proceed with balancing supply and demand through adjustments to supply. Our team generally adjusts the supply side of the market by offering incentives to increase Dasher mobilization when there is more demand. Through incentives, we provide Dashers a guarantee that they will earn a fixed amount of money on any delivery they accept in a specific region-time unit. We will describe in the following section how forecasting and optimization plays a role in that.</p>
+<p>一旦确定了运行指标和采取行动的时间单元，就会通过调整供应来平衡供需。当需求更多时，通常通过提供激励措施来调整市场的供给端，以增加Dasher的调动。通过激励措施，向Dasher保证，他们将在特定区域时间单元内在任何交付中赚取固定金额的钱。将在下一节中描述预测和优化如何在其中发挥作用。</p>
+<h2 id="How-do-we-forecast-supply-and-demand-at-a-localized-level"><a href="#How-do-we-forecast-supply-and-demand-at-a-localized-level" class="headerlink" title="How do we forecast supply and demand at a localized level?"></a>How do we forecast supply and demand at a localized level?</h2><p>Now that we have a metric to measure supply and demand levels, a unit of region/time to take actions, and actions we take to manage supply, we can determine our forecasting requirement details and how we forecast each market’s supply and demand conditions.</p>
+<p>现在有了度量供需水平的指标、采取行动的地区/时间单元以及为管理供给而采取的行动，可以确定预测需求细节以及如何预测每个市场的供需状况。</p>
+<h3 id="Defining-forecasting-requirements"><a href="#Defining-forecasting-requirements" class="headerlink" title="Defining forecasting requirements"></a>Defining forecasting requirements</h3><p>Given that the forecasts we generate are meant to be used in an automated system, both the algorithm we use for forecasting and the subsequent library ecosystem we would rely on can have a large impact on maintaining automation in the long run. We primarily reformulated the forecasting problem into a regression problem and used gradient boosting through the Microsoft-developed open source LightGBM framework. There are a couple of reasons behind this choice.</p>
+<p>由于生成的预测要用于自动化系统中，从长远来看，用于预测的算法和将依赖的后续库生态系统都可能对自动化系统的维护有很大影响。DoorDash主要将预测问题重新表述为回归问题，并通过微软开发的开源LightGBM框架使用梯度提升。这种选择背后有几个原因。</p>
+<h4 id="Support-for-multivariate-forecasting"><a href="#Support-for-multivariate-forecasting" class="headerlink" title="Support for multivariate forecasting"></a>Support for multivariate forecasting</h4><p>Many univariate forecasting approaches do not scale well when it comes to generating thousands of regional forecasts with low-level granularity. Our experience strongly supports the thesis that some of the best models are created through a process of rapid prototyping, so we looked for approaches where going from hypothesizing a model improvement to having the final result can be done quickly. LightGBM can be used to train and generate thousands of regional forecasts within a single training run, allowing us to very quickly iterate on model development. </p>
+<p>在碰到生成数千个低粒度区域预测时，许多单变量预测方法无法很好地扩展。一些最佳模型是通过快速原型制作过程创建的，DoorDash的经验强烈支持这个论点，因此寻找可以快速完成从假设模型改进到获得最终结果的方法。LightGBM可用于在一次训练运行中训练和生成数千个区域预测，使开发人员能够非常快速地迭代模型开发。</p>
+<h4 id="Support-for-extrapolation"><a href="#Support-for-extrapolation" class="headerlink" title="Support for extrapolation"></a>Support for extrapolation</h4><p>As DoorDash expands both nationally and internationally, we need our forecasting system to be able to generate some expectations for how our supply and demand growth would look in places where we don’t currently offer our services. For example, if we launch in a new city, we can still make reasonable projections regarding the supply and demand trajectory even with no historical data. Deep learning and traditional machine learning (ML)-based approaches work particularly well in this case, since latent information that helps with extrapolation can either be learned through embedding vectors or through good feature engineering. Information about population size, general traffic conditions, number of available merchants, climate, and geography can all be used to inform extrapolation.</p>
+<p>随着DoorDash在国内和国际上的扩张，DoorDash需要预测系统能够对目前不提供服务的地方的供需增长情况生成一些预期。例如，如果在一个新城市启动服务，即使没有历史数据，DoorDash仍然可以对供需发展轨迹做出合理的预测。在这种情况下，深度学习和基于传统机器学习(ML)的方法效果特别好，因为有助于推断的潜在信息可以通过嵌入向量或良好的特征工程来学习。有关人口规模、一般交通状况、可用商户数量、气候和地理的信息都可用于推断。</p>
+<h4 id="Support-for-counterfactuals"><a href="#Support-for-counterfactuals" class="headerlink" title="Support for counterfactuals"></a>Support for counterfactuals</h4><p>Forecasts are used to set an expectation of what will happen but they are also inevitably used to guide the decision-making process. For example, our stakeholders would ask us how conditions would change if we changed incentive levels in our supply forecast model so that we can understand how to make tradeoffs between supply and costs. These types of counterfactuals are very helpful not only in forecasting what we think will happen, but in also estimating the impact of actions we are going to take. In LightGBM, approximate counterfactuals can be generated by changing the inputs that go into the model at inference time.</p>
+<p>预测用于设定对将要发生什么的预期，但它们也不可避免地用于指导决策过程。例如，股东会问如果改变供应预测模型中的激励水平，情况会如何变化，以便了解如何在供应和成本之间进行权衡。这些类型的反事实不仅在预测会发生什么方面非常有帮助，而且在评估要采取的行动的影响方面也非常有帮助。在LightGBM中，可以通过在推断时更改进入模型的输入来生成近似反事实。</p>
+<h4 id="Small-dependency-footprint"><a href="#Small-dependency-footprint" class="headerlink" title="Small dependency footprint"></a>Small dependency footprint</h4><p>We wanted the forecasting system to have a minimal dependency footprint, meaning that we were not overly reliant on a host of third-party libraries. This requirement immediately removed a lot of the auto-forecasting approaches, where installing one library often meant installing 100-plus additional libraries, or approaches that provided unified toolkits and had a large number of transitive dependencies. A bloated footprint creates compatibility issues, upgrade challenges, and a large exposure area to security vulnerabilities. LightGBM has a very small dependency footprint, and it is relatively painless to perform upgrades. </p>
+<p>DoorDash希望预测系统具有极少的依赖资源，这意味着不会过度依赖大量第三方库。这一要求立刻移除了许多自动预测方法，安装一个库经常意味着安装 100多个额外的库，或者提供统一工具包并具有大量传递依赖项的方法。庞大的资源占用会导致兼容性问题、升级挑战以及安全漏洞的大面积暴露。LightGBM的依赖资源非常少，执行升级也相对轻松。</p>
+<h4 id="Thriving-community"><a href="#Thriving-community" class="headerlink" title="Thriving community"></a>Thriving community</h4><p>Lastly, we wanted to rely on an ecosystem with a thriving community and a strong core maintainer group. Maintaining an open source library is challenging. A library might be created by a graduate student or one to three core developers working within a company. Nonetheless, folks find new interests, new jobs, switch jobs, find new careers, or abandon careers. Keeping track of issues and bugs related to a library is often not a priority a few years or months down the line. This eventual lack of support then forces users to create internal forks in order to adopt the forecast tooling for their use cases or engage in a complete remodelling exercise. For these reasons, when selecting a tool, we looked at metrics like release cycles, number of stars, and community involvement to ensure there would be good community maintenance into the future. </p>
+<p>最后，DoorDash希望依靠一个拥有蓬勃发展的社区和强大的核心维护组的生态系统。维护一个开源库是一项挑战。一个库可能由研究生或公司内的一到三个核心开发人员创建。尽管如此，人们还是会找到新的兴趣、新的工作、换工作、寻找新的职业或放弃职业。跟踪与库相关的问题和错误通常不是几年或几个月后的优先事项。 这种最终缺乏支持会迫使用户创建内部分支，以便为其用例采用预测工具或进行完整的重构练习。出于这些原因，在选择工具时，DoorDash会查看发布周期、Star数和社区参与度等指标，以确保未来有良好的社区维护。</p>
+<h3 id="Forecasting-with-ML"><a href="#Forecasting-with-ML" class="headerlink" title="Forecasting with ML"></a>Forecasting with ML</h3><p>Forecasting in the context of a pure regression problem can have it’s challenges, one of which has to do with understanding the data generation process and the causality between the inputs and outputs. For example, Figure 1, below, shows how our incentives relate to the growth in the number of Dasher hours.</p>
+<p>在纯回归问题的背景下进行预测可能会遇到挑战，挑战之一与理解数据生成过程以及输入和输出之间的因果关系有关。例如，下面的图1显示了激励措施如何与Dasher工作小时数的增长相关联。</p>
+<p><img src="http://noahsnail.com/images/doordash/doordash_incentive.png" alt="Incentive"></p>
+<p>Figure 1: This data suggests that there is a non-linear relationship between incentives and mobilization, with higher incentives seeing an increase in Dasher hours and very high incentives related to a dramatic drop in hours. This counterintuitive relationship can often be a sign of either an omitted variable bias or simultaneous causality bias.</p>
+<p>图 1：该数据表明，激励和Dasher调动之间存在非线性关系，较高的激励会导致Dasher工作小时数增加，非常高的激励会导致工作小时数急剧下降。 这种违反直觉的关系通常可能是遗漏变量偏差或同时存在因果关系偏差的标志。</p>
+<p>If we blindly rely on the model to learn causality through correlations found in the data, we would’ve created a system that would mistakenly assume that providing very high incentive levels would lead to fewer Dashers on the road. A causal interpretation, where high growth incentives would lead to a decrease in mobilization would be nonsensical.</p>
+<p>如果盲目地依赖模型通过数据中的相关性来学习因果关系，就会创建一个系统，错误地认为提供非常高的激励水平会导致路上的Dasher数量更少。 高增长激励会导致调动减少的因果解释是荒谬的。</p>
+<p>It is more likely that the model is simply missing a confounding variable. For example, in periods associated with bad weather or holidays, Dashers want to spend time inside or with their families. We are more likely to see a decrease in availability during these times, triggering our supply and demand systems to offer higher incentives to keep the market balanced.</p>
+<p>这个模型更有可能只是缺少一个混合变量。例如，在涉及恶劣天气或假期的时候，Dasher希望呆在家里或与家人共度时光。在这些时间，更有可能看到可用Dasher数量下降，触发供需系统提供更高的激励措施以保持市场平衡。</p>
+<p>A model lacking knowledge of weather or holidays might learn that high incentives lead to fewer Dasher hours, when the causal relationship is simply missing a covariate link. This example illustrates why it becomes important to figure out a way to sometimes constrain relationships found in the data through domain knowledge, or to rely on experimental results to regularize some correlational relationships identified by the model and not blindly apply the algorithm to the available data.</p>
+<p>缺乏天气或假期知识的模型可能会学习到高激励会导致更少的Dasher小时数，而因果关系只是缺少协变量链接。这个例子说明了为什么有时通过领域知识找出一种方法来约束数据中发现的关系，或者依靠实验结果来规范模型识别的一些相关关系而不是盲目地将算法应用于可用数据变得很重要。</p>
+<p>A second challenge has to do with a common truism found in forecasting, which is that the unit of forecasting needs to match the context at which decisions are made. It can be tempting to forecast even more granularly, but that is generally a bad idea. This can be easily demonstrated through a simulation.</p>
+<p>第二个挑战与预测中的一个普遍真理有关，即预测单元需要与做出决策的环境相匹配。进行更精细的预测可能很诱人，但这通常是一个坏主意。通过仿真这可以很容易地证明。</p>
+<p>Consider the following three sub-regions describing daily demand by drawing samples, as shown in Figure 2, below, from a normal distribution with a mean of 100 and standard deviation of 25, giving us a coefficient of variation of 25%. When we aggregate these regions, we simply sum the expected mean to get an expected aggregate demand of 300. Nonetheless, the combined standard deviation is not equal with the sum of standard deviations but with the sum of the variances $\sqrt {3*25} = 43.3$, which gives us a coefficient of variation of the combined forecast of 14.4%. By simply aggregating random variables, we were able to reduce variance with respect to the mean by over 40%. </p>
+<p>考虑下面三个通过抽取样本来描述每日需求的子区域，如下面的图2所示，它们来自均值为100、标准差为25的正态分布，变异系数为25%。当聚合这些区域时，简单累加预期均值得到期望总需求300。然而，组合的标准差不等于标准差之和，而是等于方差之和$\sqrt {3*25} = 43.3$，组合预测的变异系数为14.4%。通过简单地聚合随机变量，能够将均值的方差减少40%以上。</p>
+<p>Although data aggregations can help with getting more accurate global forecasts, actions done on aggregated data can lead to inefficient mobilization. It is best to go for a solution where the unit of forecasting matches the unit of decision making.</p>
+<p>尽管数据聚合有助于获得更准确的全局预测，但对聚合数据采取的行动可能会导致动员效率低下。 最好选择预测单位与决策单位相匹配的解决方案。</p>
+<p><img src="http://noahsnail.com/images/doordash/doordash_time.png" alt="Time"></p>
+<p>Figure 2: The top panel shows demand for three subregions. The bottom panel simply represents the aggregate demand. The relative variance in the bottom panel is reduced by 40% by performing aggregation of random variables.</p>
+<p>图2：上部分显示了对三个子区域的需求。下部分仅表示总需求。通过执行随机变量的聚合，下部分的相对方差减少了40%。</p>
+<h2 id="Choosing-an-optimizer"><a href="#Choosing-an-optimizer" class="headerlink" title="Choosing an optimizer"></a>Choosing an optimizer</h2><p>One benefit of using ML algorithms is that they provide more accurate expectations of what will happen given the input data. Nonetheless, ML algorithms are often simply a building block in a larger system that consumes predictions and attempts to generate a set of optimal actions. Mixed-integer programming (MIP) or reinforcement learning (RL)-based solutions are great in building systems that focus on reward maximization under specific business constraints.</p>
+<p>使用ML算法的一个好处是，在给定输入数据的情况下，它们可以对会发生什么提供更准确地预期。尽管如此，ML算法通常只是更大系统中的一个构建块，系统使用预测并尝试生成一组最佳操作。在构建专注于特定业务约束下实现奖励最大化的系统时，基于混合整数规划(MIP)或强化学习(RL)的解决方案是非常好的。</p>
+<p>We decided to pursue a MIP approach given that it was easy to formalize, implement, and explain to stakeholders, and we have a lot of expertise in the domain. The optimizer has a custom objective function of minimizing undersupply with several constraints. The objective itself is very flexible and can be specified to favor either profitability or growth, depending on the business requirements. In the optimizer, we generally encoded a few global constraints:</p>
+<ul>
+<li>Never allocate more than one incentive in a particular region-time unit.</li>
+<li>Never exceed the maximum allowable budget set by our finance and operations partners.</li>
+</ul>
+<p>DoorDash决定采用MIP方法，因为它易于形式化、实现和向股东解释，而且在该领域有很多专业知识。优化器有一个定制的目标函数，可以在几个约束下最小化供给不足。目标本身非常灵活，可以根据业务需求指定为有利于盈利能力或增长。在优化器中，通常编码一些全局约束：</p>
+<ul>
+<li>切勿在特定区域时间单元分配多个奖励。</li>
+<li>切勿超过财务和运营合作伙伴的最大允许预算。</li>
+</ul>
+<p>Depending on requirements, we might also have different regional or country constraints, such as having different budgets, custom penalties, exclusion criteria for which units should not be included in the optimization, or incentive constraints that are guided by variability of the inputs.</p>
+<p>根据要求，可能还会有不同的区域或国家限制，例如不同的预算、定制惩罚、不应该包括在优化中的单元排除标准，或者由输入变化引导的激励限制。</p>
+<h3 id="Dealing-with-uncertainty"><a href="#Dealing-with-uncertainty" class="headerlink" title="Dealing with uncertainty"></a>Dealing with uncertainty</h3><p>Uncertainty in the inputs plays an important role in how the optimizer allocates incentives when resources are limited. To demonstrate, Figure 3, below, displays the distribution of the hypothesized supply and demand imbalance in two cities.</p>
+<p>在资源有限时，输入的不确定性在优化器如何分配激励中起着重要作用。为了证实这一点，下面的图3显示了两个城市假设的供需失衡分布。</p>
+<p><img src="http://noahsnail.com/images/doordash/doordash_supply_deman.png" alt="Supply Demand"></p>
+<p>Figure 3: In City A, we believe that we will be undersupplied and are also generally confident in our prediction. In City B, our mean prediction is that we will be slightly oversupplied, but we are less certain in our estimate and there is some likelihood of experiencing large undersupply.</p>
+<p>图3：在A市，DoorDash认为将供给不足，并且对其预测也普遍充满信心。在B市，平均预测是将略微供过于求，但对评估不太确定，并且有可能出现严重的供给不足。</p>
+<p>If the optimizer knows nothing about uncertainty, it ends up with two issues. First, it will lack understanding that supply and demand balance can go from a spectrum of extreme undersupply to extreme oversupply. If the optimizer is set up to optimize under some preset thresholds, it would miss the chance to optimize for City B because the mean of the distribution is above zero.</p>
+<p>如果优化器对不确定性一无所知，那么最终会出现两个问题。首先，它将缺乏对供需平衡可以从极端供应不足到极端供应过剩的认识。如果优化器设置为在某些预设阈值下进行优化，它将错过为城市B优化的机会，因为分布的均值高于零。</p>
+<p>The second issue is that it would end up over-allocating resources in places where our forecasts are uncertain. Our forecasts tend to be noisiest in the long tail of small regions that have few Dashers and few orders. Because the count of these regions is large and they exhibit high variance, if we don’t explicitly account for this uncertainty we are more likely to generate estimates that by chance will have high undersupply, and thus over-allocate incentives to places that exhibit high variance relative to places that have low variance.</p>
+<p>第二个问题是，它最终会在预测不确定的地方过度分配资源。在Dasher和订单很少的小区域的长尾，预测往往噪声最强。因为这些地区的数量很大并且它们表现出很大的方差，如果不明确考虑这种不确定性，更有可能产生偶然会严重供应不足的估计，会在表现出高方差的地区(相比于低方差地区)过度分配激励措施。</p>
+<p>To address the issue of variance, we generate expected estimates of hours gap from forecasts using a resampling process. By performing resampling, we essentially measure the impact of undersupply in the context of the likelihood of that happening. For example, in Figure 3, above, City B has only a 34% chance of being undersupplied. However, if that happens, we can more accurately estimate the impact of sizable changes in undersupply. Either of these approaches lead to a more optimal decision in incentive allocation instead of simply using mean estimates from upstream forecasting inputs.</p>
+<p>为了解决方差问题，使用重采样过程从预测中生成期望的小时差估计值。通过执行重采样，基本上度量了发生供应不足可能性的影响。例如，在上面的图3中，B市供应不足的可能性只有34%。但是，如果发生这种情况，可以更准确地评估在供应不足的地区发生重大变化的影响。这些方法中的任何一种都可以在激励分配中做出更优的决策，而不是简单地使用来自上游预测输入的平均估计。</p>
+<h2 id="Reliability-and-maintainability-improvements"><a href="#Reliability-and-maintainability-improvements" class="headerlink" title="Reliability and maintainability improvements"></a>Reliability and maintainability improvements</h2><p>DoorDash has grown tremendously in the last year. More than 70% of the people at DoorDash joined in the 2020-21 period. This generally brought a wave of new engineering, product, platform, and infrastructure-related projects to help with continued growth, expansion, and scalability. For example, we had dozens of internal projects that related to breaking down our monolith and adopting a more microservice oriented architecture. We had hundreds of small and large projects related to product improvements or new vertical launches. Many of these projects came with changes in our data models and in our data generation and collection processes. Unfortunately, ML models can be terribly unreliable when the ecosystem for how data gets produced and exposed is constantly shifting, so we needed to make some changes to enhance the reliability of our system.</p>
+<p>DoorDash在去年取得了巨大的增长。DoorDash超过70%的人在2020-21年期间加入。这通常会带来一波新的工程、产品、平台和基础设施相关项目，以帮助实现持续增长、扩张和可扩展性。例如，DoorDash有几十个内部项目，这些项目与打破单体架构并采用更加面向微服务的架构有关。DoorDash有数百个与产品改进或新的垂直发布相关的大小项目。其中许多项目伴随着数据模型、数据生成和收集过程的变化。不幸的是，当数据生成和数据暴露的生态系统不断变化时，ML模型可能非常不可靠，因此需要进行一些更改以增强系统的可靠性。</p>
+<h3 id="Decoupling-data-dependency-chains"><a href="#Decoupling-data-dependency-chains" class="headerlink" title="Decoupling data dependency chains"></a>Decoupling data dependency chains</h3><p>We could use many different data sources and encode hundreds of features to build a model that has high performance. Although that choice is very appealing and it does help with creating a model that performs better than one that has a simple data pipeline, in practice it creates a system that lacks reliability and generates a high surface area for feature drift, where the distribution of the inputs changes over time. Hence, when building our forecasting models, we went for simplicity and reliability first. This strategy also helped us move more quickly towards creating an end-to-end mobilization system.</p>
+<p>DoorDash可以使用许多不同的数据源并编码数百个特征来构建具有高性能的模型。尽管这种选择非常吸引人，而且它确实有助于创建一个性能比具有简单数据流程的模型更好的模型，但实际上它创建的系统缺乏可靠性并为特征漂移产生了高比表面，其中输入随时间变化。因此，在构建预测模型时，首先追求简单性和可靠性。这一策略还帮助DoorDash更快地创建了端到端的调动系统。</p>
+<p><img src="http://noahsnail.com/images/doordash/doordash_pipeline_comparison.png" alt="Pipeline"></p>
+<p>Figure 4: Models that have complex data pipelines generally can show their strength in the first weeks of deployment but rapidly deteriorate over time. Simple data pipelines are generally more robust and reduce maintenance and remodeling burden.</p>
+<p>图4：具有复杂数据流程的模型通常可以在部署的最初几周显示其优势，但随着时间的推移会迅速恶化。简单的数据流程通常更健壮，并减少维护和改造负担。</p>
+<p>To manage complexity and shifts in how data gets exposed, we did two things. First, we decoupled data pipelines from each other into separate business domains. Now, when someone is working on improving the signal for the inputs used in forecasting, they do not need to be overwhelmed by monolithic queries and data pipelines. Instead, a developer works on an isolated pipeline and only needs to ensure that aggregations are done on an appropriate entity.</p>
+<p>为了管理数据暴露方式的复杂性和变化，DoorDash做了两件事。首先，将数据流程彼此解耦为单独的业务域。现在，当有人致力于改进用于预测的输入信息时，他们不需要被庞大的查询和数据流程所淹没。相反，开发人员在隔离的流程上工作，只需要确保在合适的实体上完成聚合。</p>
+<p>The second thing we did was to remove intermediary data dependencies. We recognized that if our input signals come from ETL jobs with very long dependency chains in their directed acyclic graphs (DAGs), we would increase our surface areas for failures. Hence, we would aspire to rely on primary tables thoroughly vetted by our Business Intelligence team or a copy of production data sources for which the data generation is not hidden behind complex ETLs.</p>
+<p>第二件事是移除中间数据依赖。DoorDash认识到，如果输入信息来自ETL任务，ETL任务在有向无环图(DAG)中具有非常长的依赖链，将增加失败的比表面。因此，DoorDash希望依赖由商业智能团队彻底审查过的主表或产品数据源的副本，其数据生成不会隐藏在复杂的ETL后面。</p>
+<p><img src="http://noahsnail.com/images/doordash/doordash_etl_pipeline.png" alt="Time"></p>
+<p>Figure 5:  In this example, task E is the ML task with data transformations. If the source data for ML models comes from a long dependency chain in the ETL systems (A through D), there is a high risk of experiencing feature drift and data failures if any of the upstream dependencies fail.</p>
+<p>图5：在此示例中，任务E是具有数据转换的ML任务。如果ML模型的源数据来自ETL系统中的长依赖链(A到D)，那么如果任何上游依赖项失败，则存在发生特征漂移和数据故障的高风险。</p>
+<h3 id="Focus-on-experimentation"><a href="#Focus-on-experimentation" class="headerlink" title="Focus on experimentation"></a>Focus on experimentation</h3><p>One of the best ways to test if our system is maintainable is to simply check on the iteration speed with which we can push new changes and launch experiments without creating bugs or introducing regressions. At DoorDash, we perform many experiments to determine whether a feature is working as intended. This generally means that we put a lot more emphasis on measuring the software quality by how quickly we can extend and deliver on new functionality. Unsurprisingly, if experiments are challenging to launch and new features are difficult to test, we have failed in our goal. </p>
+<p>测试系统是否可维护的最好方法之一是简单地检查迭代速度，可以用它推动新的变化和启动实验，而不会产生错误或引入回退。在DoorDash，进行了许多实验来确定某个功能是否按预期工作。这通常意味着更加重视通过扩张和交付新功能的速度来衡量软件质量。不出所料，如果实验难以启动并且新功能难以测试，那么目标就失败了。</p>
+<p>Similarly, if a system stays unchanged over a long period of time (e.g., six months or more), it would also be an indication that something is wrong, because it means we created a system that is rigid and does not invite improvements, ideation, and experimentation. Continuous experimentation is a forcing function towards adopting better practices, such as relying on a CI/CD system for automation, setting up library dependency management, decoupling the code into business domains, and adding testing, alerting, and documentation.</p>
+<p>同样，如果一个系统在很长一段时间内(例如，六个月或更长时间)保持不变，这也表明出现了问题，因为这意味着创建了一个僵化的系统，不会引起改进、构思和实验。持续的实验是一个强制采用更好实践的功能，例如依靠CI/CD系统实现自动化，设置库依赖管理，将代码解耦到业务域，以及添加测试、警报和文档。</p>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p>Implementing this mobilization system let us more accurately allocate incentives to regional-time units that benefited most from the improved supply and demand balance. The system resulted in a better experience for our customers, as our metrics showed reductions in delivery times, cancelations, and extreme lateness. For Dashers, we were able to ensure that incentives are allocated in places where they are needed most. For merchants, we drove the overall order cancellations down. Moreover, due to improvements in forecasting accuracy, we were also able to more reliably hit budget expectations and observed less variability in spending decisions. Because of reliability improvements, we were able to get to a point where our experimentation velocity on the incentive mobilization system rapidly increased.</p>
+<p>实现这种调动系统能够更准确地将激励分配给从改善的供需平衡中受益最多的区域时间单位。该系统为客户带来了更好的体验，因为指标显示交付时间、取消订单和极端延迟都减少了。对于Dasher，能够确保将激励措施分配到最需要的地方。对于商家而言，降低了整体订单取消率。此外，由于预测准确性的提高，还能够更可靠地达到预算预期，并观察到支出决策的变动更小。由于可靠性的提高，能够达到激励调用系统的实验速度迅速提高的地步。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Problems that deal with optimizing a system under constraints benefit immensely from aligning on metrics that estimate the impact of actions at an appropriate level of aggregation. If forecasts are done daily, but optimization actions are taken sub-daily, decision making will likely be suboptimal.</p>
+<p>处理在约束条件下优化系统的问题极大地受益于在适当的聚合水平上调整估计行动影响的指标。如果每天进行预测，但次日采取优化措施，则决策可能次优的。</p>
+<p>Secondly, we generally recommend decoupling forecasting components from decision-making components. Most optimization systems work better if the inputs have stable statistical properties where the forecast predictions are unbiased estimates. For example, it can be tempting to start using an asymmetric loss function in forecasting to align with whether we care more about underpredicting or overpredicting the output. Although this approach is perfect for a variety of problems where the output of an ML model is immediately used to drive the decision, for problems where the ML predictions are simply another input into a broader optimization engine, it is best to generate unbiased predictions. Instead, it is better to let an optimization engine handle tradeoffs.</p>
+<p>其次，通常建议将预测组件与决策组件解耦。如果输入具有稳定的统计特性，其中预告预测是无偏估计，则大多数优化系统会工作地更好。例如，为了与更关心低估或高估输出保持一致，开始在预测中使用非对称损失函数可能是很诱人的。尽管这种方法非常适用于ML模型的输出立即用于驱动决策的各种问题，但对于ML预测只是更广泛优化引擎的另一个输入的问题，最好生成无偏预测。相反，最好让优化引擎处理权衡。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://doordash.engineering/2021/06/29/managing-supply-and-demand-balance-through-machine-learning/" target="_blank" rel="noopener">Managing Supply and Demand Balance Through Machine Learning</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      Managing Supply and Demand Balance Through Machine Learning-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>即时配送的ETA问题之亿级样本特征构造实践-笔记</title>
+    <link href="http://noahsnail.com/2022/06/13/2022-06-13-%E5%8D%B3%E6%97%B6%E9%85%8D%E9%80%81%E7%9A%84ETA%E9%97%AE%E9%A2%98%E4%B9%8B%E4%BA%BF%E7%BA%A7%E6%A0%B7%E6%9C%AC%E7%89%B9%E5%BE%81%E6%9E%84%E9%80%A0%E5%AE%9E%E8%B7%B5-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/13/2022-06-13-即时配送的ETA问题之亿级样本特征构造实践-笔记/</id>
+    <published>2022-06-13T08:16:31.872Z</published>
+    <updated>2022-06-14T10:11:27.452Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>ETA（Estimated time of Arrival，预计送达时间）是外卖配送场景中最重要的变量之一。 对ETA预估的准确度和合理度会对上亿外卖用户的订单体验造成深远影响，这关系到用户的后续行为和留存，是用户后续下单意愿的压舱石。ETA在配送业务架构中也具有重要地位，是配送运单实时调度系统的关键参数。对ETA的准确预估可以提升调度系统的效率，在有限的运力中做到对运单的合理分配。在保障用户体验的同时，对ETA的准确预估也可以帮助线下运营构建有效可行的配送考核指标，保障骑手的体验和收益。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-93353410.png" alt="ETA的业务价值"></p>
+<p>ETA在互联网行业中的运用取得了令人瞩目的进展，其中以外卖行业和打车行业最令人关注。ETA在外卖行业中的业务场景更为复杂，外卖行业涉及了三方——骑手、商家、用户，这使得问题的处理难度提升了一个量级。从业务的环节来看，外卖主要分为接单、到店、取餐、送达四个环节，是一个用户、骑手、商家来回交错的场景。这带来了更多的复杂性和不确定性，如骑手操作在各个环节中存在较多的不可控因素，商家可能出餐较慢，此外还有运力规划和天气因素的不确定性等，这就直接导致了外卖ETA采取了端到端（下单到接单）的预估方式，相比于拆分成四个环节单独预估具有更强的容错性。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-dac1a248.png" alt="ETA架构图"></p>
+<h2 id="2-相关技术"><a href="#2-相关技术" class="headerlink" title="2. 相关技术"></a>2. 相关技术</h2><p>ETA中比较常用的模型是以GBDT（Gradient Boost Decision Tree，梯度提升决策树）、RF（RandomForest，随机森林）和线性回归为主的回归预测模型。GBDT是利用DT Boosting的思路，通过梯度求解的方式追踪残差，最终达到利用弱分类器（回归器）构造强分类器（回归器）的目的。RF在DT Bagging的基础之上通过加入样本随机和特征随机的方式引入更多的随机性，解决了决策树泛化能力弱的问题。而线性回归作为线性模型，很容易并行化，处理上亿条训练样本不是问题。但线性模型学习能力有限，需要大量特征工程预先分析出有效的特征、特征组合，从而去间接增强线性回归的线性学习能力。</p>
+<p>在回归模型中，特征组合非常重要，但只依靠业务理解和人工经验不一定能带来效果提升，这导致在实际应用中存在特征匮乏的问题。所以如何发现、构造、组合有效特征，并弥补人工经验的不足，成了ETA中重要的一环。</p>
+<p>Facebook 2014年的文章介绍了通过GBDT解决LR的特征组合问题。GBDT思想对于发现多种有区分性的特征和组合特征具有天然优势，可以用来构造新的组合特征。在Facebook的文章中，会基于样本在GBDT中的输出节点索引位置构造0-1特征，实现特征的丰富化。新构造的0-1特征中，每一个特征对应样本在每棵树中可能的输出位置，它们代表着某些特征的某种逻辑组合。例如一棵树有n个叶子节点，当样本在第k个叶子节点输出时，则第k个特征输出1，其余n-1个特征输出0，如图所示。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-7e5bd36c.png" alt="GBDT(Gradient Boost Decision Tree)特征构造方法"></p>
+<p>至于构造新特征的规模，需要由具体业务规模而决定。当GBDT中树的数量较多或树深较深时，构造的特征规模也会大幅增加；当业务中所用的数据规模较小时，大规模的构造新特征会导致后续训练模型存在过拟合的可能。所以构造特征的规模需要足够合理。</p>
+<p>在ETA场景中，由于业务场景复杂，所以特征的丰富性决定了ETA最终效果的上限。在目前所拥有的特征中，在特征工程的基础阶段，依靠业务理解、人工分析和经验总结来构造特征。但从特征层面来看仍然存在欠缺，需要让特征更加丰富化，深度挖掘特征之间的潜在价值。</p>
+<h3 id="2-1-基础特征构建"><a href="#2-1-基础特征构建" class="headerlink" title="2.1 基础特征构建"></a>2.1 基础特征构建</h3><p>特征作为ETA中的重要部分，决定了ETA的上限。基于人工经验和业务理解构建不同的离线特征和在线特征。<br>(1) 离线特征<br>a. 商户画像：商户平均送达时长、到店时长、取餐时长、出餐状况、单量、种类偏好、客单价、平均配送距离。<br>b. 配送区域画像：区域运力平均水平、骑手规模、单量规模、平均配送距离。<br>(2) 在线特征<br>a. 商家实时特征：商家订单挤压状况、过去N分钟出单量、过去N分钟进单量。<br>b. 区域实时特征：在岗骑手实时规模、区域挤压（未取餐）单量、运力负载状况。<br>c. 订单特征：配送距离、价格、种类、时段。<br>d. 天气数据：温度、气压、降水量。</p>
+<p>其中区域实时特征和商家实时特征与配送运力息息相关，运力是决定配送时长和用户体验的重要因素。</p>
+<p>Note:<br>在线特征(实时)和离线特征。</p>
+<h3 id="2-2-GBDT模型训练和特征构造"><a href="#2-2-GBDT模型训练和特征构造" class="headerlink" title="2.2 GBDT模型训练和特征构造"></a>2.2 GBDT模型训练和特征构造</h3><p>利用基础特征，训练用于构造新特征的GBDT模型。在GBDT中，每次训练一个CART（Classification And Regression Trees）回归树，基于当前轮次CART树的损失函数的逆向梯度，拟合下一个CART树，直到满足要求为止。</p>
+<p>(1) 超参数选择<br>a. 首先为了节点分裂时质量和随机性，分裂时所使用的最大特征数目为$\sqrt n$。<br>b. GBDT迭代次数（树的数量）。树的数量决定了后续构造特征的规模，与学习速率相互对应。通常学习速率设置较小，但如果过小，会导致迭代次数大幅增加，使得新构造的特征规模过大。通过GridSearch+CrossValidation可以寻找到最合适的迭代次数+学习速率的超参组合。<br>c. GBDT树深度需要足够合理，通常在4~6较为合适。虽然增加树的数量和深度都可以增加新构造的特征规模。但树深度过大，会造成模型过拟合以及导致新构造特征过于稀疏。</p>
+<p>(2) 训练方案<br>将训练数据随机抽样50%，一分为二。前50%用于训练GBDT模型，后50%的数据在通过GBDT输出样本在每棵树中输出的叶子节点索引位置，并记录存储，用于后续的新特征的构造和编码，以及后续模型的训练。如样本x通过GBDT输出后得到的形式如下：$x -&gt; [25,20,22,….,30,28]$，列表中表示样本在GBDT每个树中输出的叶子节点索引位置。</p>
+<h3 id="2-3-OneHotEncoder（新特征热编码）"><a href="#2-3-OneHotEncoder（新特征热编码）" class="headerlink" title="2.3 OneHotEncoder（新特征热编码）"></a>2.3 OneHotEncoder（新特征热编码）</h3><p><img src="http://noahsnail.com/images/meituan/meituan-d648422d.png" alt="OneHotEncoder"></p>
+<p>由于样本经过GBDT输出后得到的$x -&gt; [25,20,22,….,30,28]$是一组新特征，但由于这组新特征是叶子节点的ID，其值不能直接表达任何信息，故不能直接用于ETA场景的预估。为了解决上述的问题，避免训练过程中无用信息对模型产生的负面影响，需要通过独热码（OneHotEncoder）的编码方式对新特征进行处理，将新特征转化为可用的0-1的特征。</p>
+<p>以图中的第一棵树和第二棵树为例，第一棵树共有三个叶子节点，样本会在三个叶子节点的其中之一输出。所以样本在该棵树有会有可能输出三个不同分类的值，需要由3个bit值来表达样本在该树中输出的含义。图中样本在第一棵树的第一个叶子节点输出，独热码表示为{100}；而第二棵树有四个叶子节点，且样本在第三个叶子节点输出，则表示为{0010}。将样本在每棵树的独热码拼接起来，表示为{1000010}，即通过两棵CART树构造了7个特征，构造特征的规模与GBDT中CART树的叶子节点规模直接相关。</p>
+<p>基于独热码编码新特征完成后，加上原来的基础特征，特征规模达到1000+以上，实现特征丰富化。</p>
+<p>Note:<br>丰富特征，使用了独热编码，编码的是GBDT的叶子节点，没太懂。</p>
+<h2 id="3-评估指标"><a href="#3-评估指标" class="headerlink" title="3. 评估指标"></a>3. 评估指标</h2><p>ETA与实际业务深度耦合，所以需要基于业务因素考虑更多的评估指标，以满足各端用户利益。</p>
+<ol>
+<li>N分钟准确率：订单实际送达时长与预估时长的绝对误差在N分钟内的概率。</li>
+</ol>
+<p><strong>业务含义</strong></p>
+<ul>
+<li>在N分钟准确率中，N的判定方法来源于绝对误差与用户满意度的关系曲线。通常绝对误差在一定范围内，用户满意度不会有明显波动。如果发现当误差大于K分钟时，用户满意度出现明显下滑，则可以将K做为N分钟准确率中N的取值依据。</li>
+<li>预估时长等同于平台提供给C端用户对送餐快慢的心理预期，如果N分钟准确率越高，证明预估时长愈发接近用户的心理预期，表示C端用户体验越好。</li>
+</ul>
+<p><strong>计算方法</strong></p>
+<ul>
+<li>$X_i$：样本$i$的绝对误差=abs(实际送达时长-预估时长)。</li>
+<li>计算每个样本的误差的是否在N分钟内，并统计概率$P(X_i &lt;= N)$。</li>
+</ul>
+<p>判定订单预估是否准确的计算方法<br>$$<br>f(X_i)=<br>\begin{cases}<br>1&amp; (X_i&lt;=N) \\<br>0&amp; (X_i&gt;N)<br>\end{cases}<br>$$<br>N分钟准确率计算方法<br>$$P(X_i&lt;=N)=\frac {\sum_{i=1}^{n}f(X_i)} {n}$$</p>
+<ol>
+<li>N分钟业务准时率：实际送达时长与预估时长的差值在N分钟内的概率。<br><strong>业务含义</strong> </li>
+</ol>
+<ul>
+<li>N分钟业务准时率中N的判定方法与N分钟准确率类似。 </li>
+<li>N分钟业务准时率是一种合理考核骑手以及保障骑手绩效收益的指标。ETA场景与其它回归场景相比，在预估准确的同时，预估合理性同样很重要。N分钟准确率虽然有效地量化C端用户体验指标，但无法衡量R端骑手体验。所以N分钟业务准时率是一个很好的补充指标。<br><strong>计算方法</strong> </li>
+<li>$X_i$，样本i的有偏差值=(实际送达时长-预估时长)。 </li>
+<li>若$X_i&lt;0$，表示骑手提前送达，等同于业务准时。 </li>
+<li>若$0&lt; X_i &lt;= N$，表示骑手在超时N分钟内送达，等同于业务准时；但如果$X_i &gt; N$，表示骑手超时N分钟以上送达，从指标层面看，该订单骑手配送业务超时。</li>
+<li>统计订单配送不超时的概率$P(X_i &lt;= N)$，计算方法与N分钟准确率类似。</li>
+</ul>
+<h2 id="4-实践效果对比"><a href="#4-实践效果对比" class="headerlink" title="4. 实践效果对比"></a>4. 实践效果对比</h2><p>在不增加任何额外特征的情况下，仅通过模型架构的变化进行优化。在对全量订单进行评估对比的同时，对一些高价值和午高峰期间的订单进行重点评估。</p>
+<ul>
+<li>高价值订单：高价值订单仅占全量订单的5%。这部分订单用户满意度较低、配送体验较差，属于长尾订单范畴，优化难度高于其它类型订单。 </li>
+<li>午高峰订单：午高峰运单业务占比高达40%。午高峰期间，商家存在堂食和外卖资源争抢问题，造成出餐时间不稳定，导致业务中存在更多不确定性，预估难度明显大于非高峰期。</li>
+</ul>
+<p>将GBDT构造特征+Ridge与老版本base model（GBDT）进行对比。从结果上来看，构造新特征后，可以对ETA预估带来更好的效果，其中在高价值订单中，骑手的N分钟业务准时率提升显著。具体结论如下：</p>
+<ul>
+<li>全量订单：平均偏差(MAE)减少了3.4%，误差率减少1.7个百分点，N分钟准确率提升2.2个百分点，N分钟业务准时率持平。</li>
+<li>高价值订单：平均偏差(MAE)减少了2.56%，误差率减少1个百分点，N分钟准确率提升1.6个百分点，N分钟业务准时率提升3.46个百分点。</li>
+<li>午高峰订单：平均偏差(MAE)减少了3.1%，误差率减少1.4个百分点，N分钟准确率提升1.7个百分点，N分钟业务准时率持平。</li>
+</ul>
+<p>从上述效果来看，GBDT构造特征可以给ETA场景带来更多的提升，在线上使用时，也需要在性能和构造特征的规模上做出取舍。考虑到骑手的主观能动性等因素，通常上线后，线上效果比线下试验效果要更加乐观。</p>
+<p>ETA作为是外卖配送场景中最重要变量之一，是一个复杂程度较高的机器学习问题，其特征的丰富性决定了ETA的上限。在业务特征相对匮乏的情况下，GBDT+OneHotEncoder可以实现特征的丰富化，深度挖掘出特征的潜在价值。实验结果显示，在特征丰富化的情况下，ETA的准确度明显提高。</p>
+<p>时序关系也是ETA场景的重要特征，尝试将该关系特征化加入到目前的模型和策略中，改善特征质量，提高ETA的预估能力上限。同时引入深度学习和增强学习，在提高上限的同时，用更好的模型去接近这个新的预估上限。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2017/11/24/gbdt.html" target="_blank" rel="noopener">即时配送的ETA问题之亿级样本特征构造实践</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      即时配送的ETA问题之亿级样本特征构造实践-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深度学习在美团配送ETA预估中的探索与实践-笔记</title>
+    <link href="http://noahsnail.com/2022/06/13/2022-06-13-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E9%85%8D%E9%80%81ETA%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://noahsnail.com/2022/06/13/2022-06-13-深度学习在美团配送ETA预估中的探索与实践-笔记/</id>
+    <published>2022-06-13T03:22:47.979Z</published>
+    <updated>2022-06-13T07:34:41.472Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<p>本文为美团文章学习的笔记整理。</p>
+<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>ETA（Estimated Time of Arrival，“预计送达时间”），即用户下单后，配送人员在多长时间内将外卖送达到用户手中。送达时间预测的结果，将会以”预计送达时间”的形式，展现在用户的客户端页面上，是配送系统中非常重要的参数，直接影响了用户的下单意愿、运力调度、骑手考核，进而影响用户和骑手体验，以及配送系统的整体效率。</p>
+<p>对于整个配送系统而言，ETA既是配送系统的入口和全局约束，又是系统的调节中枢。具体体现在：</p>
+<ul>
+<li>ETA在用户下单时刻就需要被展现，这个预估时长继而会贯穿整个订单生命周期，首先在用户侧给予准时性的承诺，接着被调度系统用作订单指派的依据及约束，而骑手则会参考ETA时间作为考核时间执行订单的配送。</li>
+<li>ETA作为系统的调节中枢，需要平衡用户-骑手-商家-配送效率。从用户的诉求出发，尽可能快和准时，从骑手的角度出发，ETA太短会增大其配送难度。从调度角度出发，太长或太短都会影响配送效率。而从商家角度出发，都希望订单被尽可能派发出去，因为这关系到商家的收入。</li>
+</ul>
+<p><img src="http://noahsnail.com/images/meituan/meituan-78c72ddb8941aba1298cc30221f1d696287706.png" alt="ETA在配送系统中的作用"></p>
+<p>外卖场景的ETA面临如下的挑战：</p>
+<ul>
+<li>外卖场景中ETA是对客户履约承诺的重要组成部分，无论是用户还是骑手，对于ETA准确性的要求非常高。</li>
+<li>由于外卖ETA承担着承诺履约的责任，因此是否能够按照ETA准时送达，也是外卖骑手考核的指标、配送系统整体的重要指标；承诺一旦给出，系统调度和骑手都要尽力保证准时送达。因此过短的ETA会给骑手带来困难，并降低调度合单能力、降低配送效率；过长的ETA又会很大程度影响用户体验。</li>
+<li>外卖场景中ETA包含更多环节，骑手全程完成履约过程，其中包括到达商家、商家出餐、等待取餐、路径规划、不同楼宇交付等较多的环节，且较高的合单率使得订单间的流程互相耦合，不确定性很大，做出合理的估计也有更高难度。</li>
+</ul>
+<p>下图是骑手履约全过程的时间轴，过程中涉及各种时长参数，可以看到有十几个节点，其中关键时长达到七个。对于ETA建模，不光是简单一个时间的预估，更需要的是全链路的时间预估，同时更需要兼顾”单量-运力-用户体验”之间的平衡。配送ETA的演变包括了数据、特征层面的持续改进，也包括了模型层面一路从LR-XGB-FM-DeepFM-自定义结构的演变。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-044ae6809b5aebe72a06dfffd78cb6d7288610.png" alt="ETA的探索与演变"></p>
+<p>Note:<br>ETA一旦展示给用户，就意味着对用户进行了承诺，影响范围是巨大的。系统调度和骑手，都要尽力保证准时送达。</p>
+<h2 id="2-业务流程迭代中的模型改进"><a href="#2-业务流程迭代中的模型改进" class="headerlink" title="2. 业务流程迭代中的模型改进"></a>2. 业务流程迭代中的模型改进</h2><h3 id="2-1-基础模型迭代及选择"><a href="#2-1-基础模型迭代及选择" class="headerlink" title="2.1 基础模型迭代及选择"></a>2.1 基础模型迭代及选择</h3><p>与大部分CTR模型的迭代路径相似，配送ETA模型的业务迭代经历了LR-&gt;树模型-&gt;Embedding-&gt;DeepFM-&gt;针对性结构修改的路径。特征层面也进行不断迭代和丰富。</p>
+<ul>
+<li>模型维度从最初考虑特征线性组合，到树模型做稠密特征的融合，到Embedding考虑ID类特征的融合，以及FM机制低秩分解后二阶特征组合，最终通过业务指标需求，对模型进行针对性调整。</li>
+<li>特征维度逐步丰富到地址特征/轨迹特征/区域特征/时间特征/时序特征/订单特征等维度。</li>
+</ul>
+<p>目前，版本模型在比较了Wide &amp;Deep、DeepFM、AFM等常用模型后，考虑到计算性能及效果，最终选择了DeepFM作为初步的Base模型。整个DeepFM模型特征Embedding化后，在FM（Factorization Machine）基础上，进一步加入deep部分，分别针对稀疏及稠密特征做针对性融合。FM部分通过隐变量内积方式考虑一阶及二阶的特征融合，DNN部分通过Feed-Forward学习高阶特征融合。模型训练过程中采取了Learning Decay/Clip Gradient/求解器选择/Dropout/激活函数选择等。</p>
+<p>Note:<br>ETA预测选择了DeepFM作为深度学习Base模型。</p>
+<h3 id="2-2-损失函数"><a href="#2-2-损失函数" class="headerlink" title="2.2 损失函数"></a>2.2 损失函数</h3><p>在ETA预估场景下，准时率及置信度是比较重要的业务指标。初步尝试将Square的损失函数换成Absolute的损失函数，从直观上更为切合MAE相比ME更为严苛的约束。在适当Learning Decay下，结果收敛且稳定。</p>
+<p>在迭代中考虑到相同的ETA承诺时间下，在前后N分钟限制下，预估偏短1min的用户、骑手体验明显差于预估偏长1分钟的体验。因此损失函数的设计需要考虑到偏短偏长的差异。适当降低偏长部分的损失，提高偏短部分的损失。进行多次调试设计后，最终确定以前后N分钟以及原点作为3个分段点。在原先absolute函数优化的基础上，在前段设计1.2倍斜率absolute函数，后段设计1.8倍斜率absolute函数，以便让结果整体往中心收敛，且更倾向于适度偏长预估，保障用户和骑手体验，对于ETA各项指标均有较大幅度提升。</p>
+<p>Note:<br>这个损失函数是为深度学习模型设计的，其它模型不一定适用，但考虑偏短偏长差异的思想可以借鉴。</p>
+<h3 id="2-3-业务规则融入模型"><a href="#2-3-业务规则融入模型" class="headerlink" title="2.3 业务规则融入模型"></a>2.3 业务规则融入模型</h3><p>目前的业务架构是“模型+规则”，在模型预估一个ETA值之后，针对特定业务场景，会有特定业务规则时间叠加以满足特定场景需求，例如在冬至时饺子品类的需求暴增，模型可能捕捉不到这样的异常点，因此需要规则对异常情况做时间保护。各项规则由业务指标多次迭代产生。在模型时间和规则时间分开优化后，即模型训练时并不能考虑到规则时间的影响，而规则时间在一年之中不同时间段，会产生不同的浮动，在经过一段时间重复迭代后，会加大割裂程度。</p>
+<p>Note:<br>业务架构：模型+规则，ETA与业务是紧密结合的，模型是一个初步的结果，不同的场景需要根据业务进行适当的调整。</p>
+<p>在尝试了不同方案后，最终将整体规则写入到了TF模型中，在TF模型内部调整整体规则参数。</p>
+<ul>
+<li>对于简单的(a<em>b+c)</em>d等规则，可以将规则逻辑直接用TF的OP算子来实现，比如当b、d为定值时，则a、c为可学习的参数。</li>
+<li>对于过于复杂的规则部分，则可以借助一定的模型结构，通过模型的拟合来代替，过多复杂OP算子嵌套并不容易同时优化。</li>
+</ul>
+<p>通过调节不同的拟合部分及参数，将多个规则完全在TF模型中实现。最终对业务指标具备很大提升效果，且通过对部分定值参数的更改，具备部分人工干涉模型、对骑手体验做兜底保障的能力。整体架构简化为多目标预估的架构，这里采用多任务架构中常用的Shared Parameters的结构，训练时按比例采取不同的交替训练策略。结构上从最下面的模型中间融合层出发，分别在TF内实现常规预测结构及多个规则时间结构，而其对应的Label则仍然从常规的历史值和规则时间值中来，这样考虑了以下几点：</p>
+<ul>
+<li>模型预估时，已充分考虑到规则对整体结果的影响（例如多个规则的叠加效应），作为整体一起考虑。</li>
+<li>规则时间作为辅助Label传入模型，对于模型收敛及Regularization，起到进一步作用。</li>
+<li>针对不同的目标预估，采取不同的Loss，方便进行针对性优化，进一步提升效果。</li>
+</ul>
+<p><img src="http://noahsnail.com/images/meituan/meituan-296608dfa70b7015c00cf60feddb799530899.png" alt="多目标补时结构"></p>
+<p>Note:<br>初期可以使用模型+规则，后期规则融合进深度模型，会有大的提升。</p>
+<h3 id="2-4-缺失值处理"><a href="#2-4-缺失值处理" class="headerlink" title="2.4 缺失值处理"></a>2.4 缺失值处理</h3><p>对于特征x进入TF模型，进行判断，如果是缺失值，则设置w1参数，如果不是缺失值则进入模型数值为w2 *x，这里将w1和w2作为可学习参数，同时放入网络进行训练。以此方法来代替均值/零值等作为缺失值的方法。</p>
+<p><img src="http://noahsnail.com/images/meituan/meituan-0f7731c215d6089660796e5a29f6c31310388.png" alt="缺失值处理"></p>
+<h2 id="3-长尾问题优化"><a href="#3-长尾问题优化" class="headerlink" title="3. 长尾问题优化"></a>3. 长尾问题优化</h2><h3 id="3-1-模型预估结果-长尾规则补时"><a href="#3-1-模型预估结果-长尾规则补时" class="headerlink" title="3.1 模型预估结果+长尾规则补时"></a>3.1 模型预估结果+长尾规则补时</h3><p>基础模型学习的是整体的统计分布，但对于一些长尾情形的学习并不充分，体现在长尾情形下预估时间偏短（由于骑手的考核时间参考ETA制定，ETA预估偏短会增大骑手的配送难度）。故将长尾拆解成两部分来分析：</p>
+<ul>
+<li>业务长尾，即整体样本分布造成的长尾。主要体现在距离、价格等维度。距离越远，价格越高，实际送达时间越长，但样本占比越少，模型在这一部分上的表现可能偏短。</li>
+<li>模型长尾，即由于模型自身对预估值的不确定性造成的长尾。模型学习的是整体的统计分布，但不是对每个样本的预估都有“信心”。实践中采用RF多棵决策树输出的标准差来衡量不确定性。RF模型生成的决策树是独立的，每棵树都可以看成是一个专家，多个专家共同打分，打分的标准差实际上就衡量了专家们的“分歧”程度（以及对预估的“信心”程度）。随着RF标准差的增加，模型的置信度和准时率均在下降。</li>
+</ul>
+<p>在上述拆解下，采用补时规则来解决长尾预估偏短的问题：长尾规则补时为 &lt;业务长尾因子 , 模型长尾因子&gt; 组合。其中业务长尾因子为距离、价格等业务因素，模型长尾因子为RF标准差。最终的ETA策略即为模型预估结果+长尾规则补时,较好的保证了长尾情况的骑手体验。</p>
+<p>Note:<br>在模型预估结果的基础上，加上长尾规则补时来解决长尾预测时间偏短问题。</p>
+<h2 id="4-工程开发实践"><a href="#4-工程开发实践" class="headerlink" title="4. 工程开发实践"></a>4. 工程开发实践</h2><h3 id="4-1-训练部分实践"><a href="#4-1-训练部分实践" class="headerlink" title="4.1 训练部分实践"></a>4.1 训练部分实践</h3><p><strong>整体训练流程</strong><br>对于线下训练，采取如下训练流程：<br>Spark原始数据整合 -&gt; Spark生成TFRecord -&gt; 数据并行训练 -&gt; TensorFlow Serving线下GPU评估 -&gt; CPU Inference线上预测</p>
+<p><strong>数据并行训练方式</strong><br>整个模型的训练在平台上进行，先后尝试分布式方案及单机多卡方案。线上模型生产采用单机多卡方案进行例行训练。</p>
+<p><strong>TF模型集成预处理</strong></p>
+<p>为了简化工程开发中的难度，在模型训练时，考虑将所有的预处理文件写入TF计算图之中，每次在线预测只要输入最原始的特征，不经过工程预处理，直接可得到结果。</p>
+<h3 id="4-2-TF模型线上预测"><a href="#4-2-TF模型线上预测" class="headerlink" title="4.2 TF模型线上预测"></a>4.2 TF模型线上预测</h3><p>略</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://tech.meituan.com/2019/02/21/meituan-delivery-eta-estimation-in-the-practice-of-deep-learning.html" target="_blank" rel="noopener">深度学习在美团配送ETA预估中的探索与实践</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      深度学习在美团配送ETA预估中的探索与实践-笔记
+    
+    </summary>
+    
+      <category term="外卖相关" scheme="http://noahsnail.com/categories/%E5%A4%96%E5%8D%96%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="外卖" scheme="http://noahsnail.com/tags/%E5%A4%96%E5%8D%96/"/>
+    
+  </entry>
+  
+</feed>

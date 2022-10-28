@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Spring Boot,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Spring Boot的应用启动与关闭">
+<meta name="keywords" content="Spring Boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot的应用启动与关闭">
+<meta property="og:url" content="http://noahsnail.com/2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring Boot的应用启动与关闭">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-04-26T06:02:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot的应用启动与关闭">
+<meta name="twitter:description" content="Spring Boot的应用启动与关闭">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/">
+
+
+
+
+
+  <title>Spring Boot的应用启动与关闭 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Boot的应用启动与关闭</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Spring Boot的应用启动与关闭
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：<a href="http://noahsnail.com">noahsnail.com</a> &nbsp;|&nbsp; <a href="http://blog.csdn.net/quincuntial" target="_blank" rel="noopener">CSDN</a> &nbsp;|&nbsp; <a href="http://www.jianshu.com/users/7731e83f3a4e/latest_articles" target="_blank" rel="noopener">简书</a></p>
+<h2 id="1-Spring-Boot应用打包"><a href="#1-Spring-Boot应用打包" class="headerlink" title="1. Spring Boot应用打包"></a>1. Spring Boot应用打包</h2><p>Spring Boot应用可以打成jar包，其中内嵌tomcat，因此可以直接启动使用。但是在Spring Boot应用启动之前，首先需要进行打包，本文讲述的是Maven工程的打包，打包需要的前提条件(pom.xml文件中的内容)是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&lt;build&gt;</span><br><span class="line">	&lt;plugins&gt;</span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;configuration&gt;</span><br><span class="line">				&lt;mainClass&gt;com.***.Application&lt;/mainClass&gt;</span><br><span class="line">			&lt;/configuration&gt;</span><br><span class="line">			&lt;executions&gt;</span><br><span class="line">				&lt;execution&gt;</span><br><span class="line">					&lt;goals&gt;</span><br><span class="line">						&lt;goal&gt;repackage&lt;/goal&gt;</span><br><span class="line">					&lt;/goals&gt;</span><br><span class="line">				&lt;/execution&gt;</span><br><span class="line">			&lt;/executions&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line">	&lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>打包命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package -Dmaven.test.skip=true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Demo</span><br><span class="line"></span><br><span class="line">$ mvn clean package -Dmaven.test.skip=true</span><br><span class="line">[INFO] Scanning for projects...</span><br><span class="line">[WARNING] </span><br><span class="line">[WARNING] Some problems were encountered while building the effective model for com.example:myproject:jar:0.0.1-SNAPSHOT</span><br><span class="line">[WARNING] &apos;build.plugins.plugin.version&apos; for org.springframework.boot:spring-boot-maven-plugin is missing. @ line 38, column 17</span><br><span class="line">[WARNING] </span><br><span class="line">[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.</span><br><span class="line">[WARNING] </span><br><span class="line">[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.</span><br><span class="line">[WARNING] </span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building myproject 0.0.1-SNAPSHOT</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ myproject ---</span><br><span class="line">[INFO] Deleting /Users/ltc/Spring Boot Demo/target</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ myproject ---</span><br><span class="line">[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!</span><br><span class="line">[INFO] Copying 1 resource</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ myproject ---</span><br><span class="line">[INFO] Changes detected - recompiling the module!</span><br><span class="line">[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!</span><br><span class="line">[INFO] Compiling 1 source file to /Users/ltc/Spring Boot Demo/target/classes</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ myproject ---</span><br><span class="line">[INFO] Not copying test resources</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ myproject ---</span><br><span class="line">[INFO] Not compiling test sources</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ myproject ---</span><br><span class="line">[INFO] Tests are skipped.</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ myproject ---</span><br><span class="line">[INFO] Building jar: /Users/ltc/Spring Boot Demo/target/myproject-0.0.1-SNAPSHOT.jar</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- spring-boot-maven-plugin:1.5.0.RC1:repackage (default) @ myproject ---</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 1.861 s</span><br><span class="line">[INFO] Finished at: 2017-01-13T15:31:32+08:00</span><br><span class="line">[INFO] Final Memory: 26M/308M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>或在eclipse中运行<code>run -&gt; Maven build...</code>，在Goals中填写<code>clean package -Dmaven.test.skip=true</code>，运行，打包完成。</p>
+<h2 id="2-Spring-Boot应用启动"><a href="#2-Spring-Boot应用启动" class="headerlink" title="2. Spring Boot应用启动"></a>2. Spring Boot应用启动</h2><p>Spring Boot的启动命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">java -jar application.jar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Demo</span><br><span class="line"></span><br><span class="line">$ java -jar target/myproject-0.0.1-SNAPSHOT.jar </span><br><span class="line"></span><br><span class="line">  .   ____          _            __ _ _</span><br><span class="line"> /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</span><br><span class="line">( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</span><br><span class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</span><br><span class="line">  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</span><br><span class="line"> =========|_|==============|___/=/_/_/_/</span><br><span class="line"> :: Spring Boot ::        (v1.4.3.RELEASE)</span><br><span class="line"></span><br><span class="line">2017-01-13 15:31:36.911  INFO 62119 --- [           main] com.test.Example                         : Starting Example on local with PID 62119 (/Users/ltc/Spring Boot Demo/target/myproject-0.0.1-SNAPSHOT.jar started by liutianchi in /Users/ltc/Spring Boot Demo)</span><br><span class="line">2017-01-13 15:31:36.916  INFO 62119 --- [           main] com.test.Example                         : No active profile set, falling back to default profiles: default</span><br><span class="line">2017-01-13 15:31:36.981  INFO 62119 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@b1a58a3: startup date [Fri Jan 13 15:31:36 CST 2017]; root of context hierarchy</span><br><span class="line">2017-01-13 15:31:38.602  INFO 62119 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)</span><br><span class="line">2017-01-13 15:31:38.615  INFO 62119 --- [           main] o.apache.catalina.core.StandardService   : Starting service Tomcat</span><br><span class="line">2017-01-13 15:31:38.616  INFO 62119 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.6</span><br><span class="line">2017-01-13 15:31:38.718  INFO 62119 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</span><br><span class="line">2017-01-13 15:31:38.718  INFO 62119 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1740 ms</span><br><span class="line">2017-01-13 15:31:38.927  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;metricsFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;characterEncodingFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;httpPutFormContentFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;requestContextFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;webRequestLoggingFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:38.932  INFO 62119 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;applicationContextIdFilter&apos; to: [/*]</span><br><span class="line">2017-01-13 15:31:39.217  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@b1a58a3: startup date [Fri Jan 13 15:31:36 CST 2017]; root of context hierarchy</span><br><span class="line">2017-01-13 15:31:39.310  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/]&#125;&quot; onto java.lang.String com.test.Example.home()</span><br><span class="line">2017-01-13 15:31:39.313  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error]&#125;&quot; onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)</span><br><span class="line">2017-01-13 15:31:39.313  INFO 62119 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error],produces=[text/html]&#125;&quot; onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)</span><br><span class="line">2017-01-13 15:31:39.338  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</span><br><span class="line">2017-01-13 15:31:39.338  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</span><br><span class="line">2017-01-13 15:31:39.378  INFO 62119 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</span><br><span class="line">2017-01-13 15:31:39.665  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/metrics/&#123;name:.*&#125;],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.MetricsMvcEndpoint.value(java.lang.String)</span><br><span class="line">2017-01-13 15:31:39.665  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/metrics || /manage/metrics.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.666  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/mappings || /manage/mappings.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.667  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/trace || /manage/trace.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.667  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/info || /manage/info.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.668  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/configprops || /manage/configprops.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.669  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/heapdump || /manage/heapdump.json],methods=[GET],produces=[application/octet-stream]&#125;&quot; onto public void org.springframework.boot.actuate.endpoint.mvc.HeapdumpMvcEndpoint.invoke(boolean,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.io.IOException,javax.servlet.ServletException</span><br><span class="line">2017-01-13 15:31:39.669  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/autoconfig || /manage/autoconfig.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.673  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/env/&#123;name:.*&#125;],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EnvironmentMvcEndpoint.value(java.lang.String)</span><br><span class="line">2017-01-13 15:31:39.673  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/env || /manage/env.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.674  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/health || /manage/health.json],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.HealthMvcEndpoint.invoke(java.security.Principal)</span><br><span class="line">2017-01-13 15:31:39.675  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/dump || /manage/dump.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.677  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/shutdown || /manage/shutdown.json],methods=[POST]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.ShutdownMvcEndpoint.invoke()</span><br><span class="line">2017-01-13 15:31:39.678  INFO 62119 --- [           main] o.s.b.a.e.mvc.EndpointHandlerMapping     : Mapped &quot;&#123;[/manage/beans || /manage/beans.json],methods=[GET],produces=[application/json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()</span><br><span class="line">2017-01-13 15:31:39.799  INFO 62119 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup</span><br><span class="line">2017-01-13 15:31:39.809  INFO 62119 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0</span><br><span class="line">2017-01-13 15:31:39.944  INFO 62119 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)</span><br><span class="line">2017-01-13 15:31:39.949  INFO 62119 --- [           main] com.test.Example                         : Started Example in 4.292 seconds (JVM running for 4.726)</span><br></pre></td></tr></table></figure>
+<h2 id="3-Spring-Boot应用关闭"><a href="#3-Spring-Boot应用关闭" class="headerlink" title="3. Spring Boot应用关闭"></a>3. Spring Boot应用关闭</h2><p>Spring Boot应用关闭的前提条件是<code>POM.xml</code>添加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p><code>application.properties</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#启用shutdown</span><br><span class="line">endpoints.shutdown.enabled=true</span><br><span class="line">#禁用密码验证</span><br><span class="line">endpoints.shutdown.sensitive=false</span><br></pre></td></tr></table></figure>
+<p>关闭命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST host:port/shutdown</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Demo</span><br><span class="line"></span><br><span class="line">$ curl -X POST http://localhost:8080/shutdown</span><br><span class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ curl -X POST http://localhost:8080/manage/shutdown</span><br><span class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要配置路径，需要在<code>application.properties</code>中添加<code>management.context-path=/manage</code>，则关闭命令变为<code>curl -X POST host:port/manage/shutdown</code>。</p>
+<h2 id="4-安全验证"><a href="#4-安全验证" class="headerlink" title="4. 安全验证"></a>4. 安全验证</h2><p>如果在关闭时需要安全验证，则在<code>pom.xml</code>文件中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p><code>application.properties</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#开启shutdown的安全验证</span><br><span class="line">endpoints.shutdown.sensitive=true</span><br><span class="line"></span><br><span class="line">#验证用户名</span><br><span class="line">security.user.name=admin</span><br><span class="line"></span><br><span class="line">#验证密码</span><br><span class="line">security.user.password=admin</span><br><span class="line">#角色</span><br><span class="line">management.security.role=SUPERUSER</span><br><span class="line"></span><br><span class="line"># 指定端口</span><br><span class="line">management.port=8081</span><br><span class="line"></span><br><span class="line"># 指定地址</span><br><span class="line">management.address=127.0.0.1</span><br></pre></td></tr></table></figure>
+<p>关闭命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -u admin:admin -X POST http://127.0.0.1:8081/manage/shutdown</span><br><span class="line"></span><br><span class="line"># Demo</span><br><span class="line"></span><br><span class="line">$ curl -u admin:admin -X POST http://127.0.0.1:8081/manage/shutdown</span><br><span class="line">&#123;&quot;message&quot;:&quot;Shutting down, bye...&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/11/2017-01-11-Linux sed编辑器/" rel="next" title="Linux sed编辑器">
+                <i class="fa fa-chevron-left"></i> Linux sed编辑器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/13/2017-01-13-Mysql碰到的一些命令与错误/" rel="prev" title="Mysql碰到的一些命令与错误">
+                Mysql碰到的一些命令与错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Spring-Boot应用打包"><span class="nav-number">1.</span> <span class="nav-text">1. Spring Boot应用打包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Boot应用启动"><span class="nav-number">2.</span> <span class="nav-text">2. Spring Boot应用启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Spring-Boot应用关闭"><span class="nav-number">3.</span> <span class="nav-text">3. Spring Boot应用关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-安全验证"><span class="nav-number">4.</span> <span class="nav-text">4. 安全验证</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/';
+        this.page.identifier = '2017/01/13/2017-01-13-Spring Boot的应用启动与关闭/';
+        this.page.title = 'Spring Boot的应用启动与关闭';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

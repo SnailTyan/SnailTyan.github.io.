@@ -1,0 +1,929 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Spring,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Spring IoC容器管理一个或多个beans。这些beans由提供给容器的配置元数据生成，例如，XML形式的``定义。">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 5.0.0框架介绍_中文版_3.3">
+<meta property="og:url" content="http://noahsnail.com/2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/index.html">
+<meta property="og:site_name" content="SnailTyan">
+<meta property="og:description" content="Spring IoC容器管理一个或多个beans。这些beans由提供给容器的配置元数据生成，例如，XML形式的``定义。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-10-07T13:54:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 5.0.0框架介绍_中文版_3.3">
+<meta name="twitter:description" content="Spring IoC容器管理一个或多个beans。这些beans由提供给容器的配置元数据生成，例如，XML形式的``定义。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://noahsnail.com/2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/">
+
+
+
+
+
+  <title>Spring 5.0.0框架介绍_中文版_3.3 | SnailTyan</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83591315-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SnailTyan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://noahsnail.com/2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tyan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SnailTyan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring 5.0.0框架介绍_中文版_3.3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Spring IoC容器管理一个或多个beans。这些beans由提供给容器的配置元数据生成，例如，XML形式的`<bean>`定义。
+              </bean></div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章作者：Tyan<br>博客：[noahsnail.com](<a href="http://noahsnail.com">http://noahsnail.com</a></p>
+<h3 id="3-3-Bean概述"><a href="#3-3-Bean概述" class="headerlink" title="3.3 Bean概述"></a>3.3 Bean概述</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spring IoC容器管理一个或多个beans。这些beans由提供给容器的配置元数据生成，例如，XML形式的<code>&lt;bean/&gt;</code>定义。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在容器本身内部，这些bean定义被表示成<code>BeanDefinition</code>对象，含有以下元数据：</p>
+<ul>
+<li>包限定的类名：通常是被定义的bean的实现类。</li>
+<li>bean行为配置元素，规定了bean在容器中的行为（作用范围、生命周期回调函数）等等。</li>
+<li>bean工作需要的引用的其它bean，这些引用也被称为协作者或依赖。</li>
+<li>其它的配置在新创建的对象中设置，例如，bean中使用的连接数量控制着一个连接池，或连接池的大小限制。</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元数据转化为一系列的属性，这些属性构成了每个bean的定义。</p>
+<p><strong>表3.1. bean定义</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Property</th>
+<th style="text-align:left">Explained in…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">class</td>
+<td style="text-align:left">Section 3.3.2, “Instantiating beans”</td>
+</tr>
+<tr>
+<td style="text-align:left">name</td>
+<td style="text-align:left">Section 3.3.1, “Naming beans”</td>
+</tr>
+<tr>
+<td style="text-align:left">scope</td>
+<td style="text-align:left">Section 3.5, “Bean scopes”</td>
+</tr>
+<tr>
+<td style="text-align:left">constructor arguments</td>
+<td style="text-align:left">Section 3.4.1, “Dependency Injection”</td>
+</tr>
+<tr>
+<td style="text-align:left">properties</td>
+<td style="text-align:left">Section 3.4.1, “Dependency Injection”</td>
+</tr>
+<tr>
+<td style="text-align:left">autowiring mode</td>
+<td style="text-align:left">Section 3.4.5, “Autowiring collaborators”</td>
+</tr>
+<tr>
+<td style="text-align:left">lazy-initialization mode</td>
+<td style="text-align:left">Section 3.4.4, “Lazy-initialized beans”</td>
+</tr>
+<tr>
+<td style="text-align:left">initialization method</td>
+<td style="text-align:left">the section called “Initialization callbacks”</td>
+</tr>
+<tr>
+<td style="text-align:left">destruction method</td>
+<td style="text-align:left">the section called “Destruction callbacks”</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除了bean定义中包含怎么创建一个指定的bean的信息之外，<code>ApplicationContext</code>实现也允许用户注册容器之外创建的现有对象。这是通过调用ApplicationContext’s BeanFactory的getBeanFactory()方法完成的，这个方法会返回BeanFactory的实现类<code>DefaultListableBeanFactory</code>。<code>DefaultListableBeanFactory</code>支持通过<code>registerSingleton(..)</code>和<code>registerBeanDefinition(..)</code>方法来注册。不管怎样，标准应用仅使用通过元数据bean定义定义的beans。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt; bean元数据和人工提供的单例需要尽可能早的进行注册，为了使容器在自动注入及其它的内省步骤时能恰当的推理它们。虽然在一定程度上是支持覆盖现有的元数据和单例的，但运行时新beans的注册（并发实时访问工厂）是不被正式支持的，可能会引起并发访问异常，在容器中的与/或状态不一致。</p>
+<p>&nbsp;</p>
+<h4 id="3-3-1-beans命名"><a href="#3-3-1-beans命名" class="headerlink" title="3.3.1 beans命名"></a>3.3.1 beans命名</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>每个bean都有一个或多个标识符。这些托管bean的标识符在容器中必须是唯一的。一个bean通常只有一个标识符，但如果一个bean需要不止一个标识符，其它的标识符会被当成别名。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在基于XML的配置元数据中，你可以使用<code>id</code>和/或<code>name</code>属性指定bean标识符。<code>id</code>属性允许你指定一个确定的id。按照惯例这些名字是字母数字的(‘myBean’, ‘fooService’等等)，但也可能包含指定字符。如果你想引入bean其它的别名，你可以在<code>name</code>属性中指定别名，用逗号 (<code>,</code>)，分号(<code>;</code>)，或空格分开。作为一个历史注解，在之前的Spring 3.1版本，<code>id</code>属性被定义为一种<code>xsd:ID</code>类型，可以通过合理字符来约束（XML控制<code>id</code>唯一性）。从Spring 3.1开始，它被定义为<code>xsd:string</code>类型。注意bean <code>id</code>的唯一性仍然是容器强制的，虽然不再通过XML解析器来控制（容器控制<code>id</code>唯一性）。</p>
+<blockquote>
+<p><strong>Bean命名规范</strong></p>
+<p>当命名bean时，采用的规范是标准Java实例字段命名规范。bean名称以小写字母开头，采用驼峰式的命名规则。这种命名方式的例子（不带引号）有’accountManager’， ‘accountService’， ‘userDao’， ‘loginController’等等。</p>
+<p>一致的命名beans可以使人更容易读懂和理解你的配置，如果你正在使用Spring AOP，使用一致性来命名一系列bean名称是非常有帮助的。</p>
+</blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<p>在classpath中进行组件扫描，Spring会根据上面的规则为未命名组件产生bean名称，本质上来说，是采用简单的类名并将其首字母改成小写。然而在特殊情况下（不平常的），当类名有不止一个字母且第一二个字母都是大写的情况下，会保留最初始的状态。与<code>java.beans.Introspector.decapitalize</code>定义中的规则是相同的（Spring也采用这个规则）。</p>
+</blockquote>
+<p><strong>为bean定义别名</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在定义bean时，通过与<code>id</code>属性指定的名称相结合，你可以为bean提供不止一个名字，在<code>name</code>属性中定义任何数量的其它名字。这些名字是同一个bean的等价别名，在一些情况下是非常有用的，例如允许应用中的每个组件通过bean名称引用一个共通的依赖，这个依赖为每个组件本身指定了一个名称。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;然而在bean实际定义的地方指定所有别名并不总是适当的。有时会要求引入一个在别的地方定义的bean的别名。这通常是在大的系统中而配置被分割在每个子系统中，每个子系统有它知道对象定义集合。在基于XML配置元数据中，你可以使用<code>&lt;alias/&gt;</code>来完成别名的定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;alias name=&quot;fromName&quot; alias=&quot;toName&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在这种情况下，在同一个容器中的bean被命名为<code>fromName</code>，也可能是在别名定义使用之后，被作为<code>toName</code>引用。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如，子系统A的配置元数据可能通过名称<code>subsystemA-dataSource</code>引用数据源。子系统B的配置元数据可能通过名称<code>subsystemB-dataSource</code>引用数据源。当构成主应用的时，主应用使用这些子系统并通过名称<code>myApp-dataSource</code>引用数据源。为了使这三个名称引用同一个对象，你可以将如下的别名定义添加到MyApp配置元数据中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;alias name=&quot;subsystemA-dataSource&quot; alias=&quot;subsystemB-dataSource&quot;/&gt;</span><br><span class="line">&lt;alias name=&quot;subsystemA-dataSource&quot; alias=&quot;myApp-dataSource&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现在主应用和每个组件都能通过名称引用数据源，这个名称是唯一的且能保证不与任何其它的定义相冲突（有效的创建了一个命名空间），但它们引用了同一个bean。</p>
+<blockquote>
+<p><strong>Java配置</strong></p>
+<p>如果你正在使用Java配置，<code>@Bean</code>注解可以用来提供别名，更多细节请看3.12.3小节， “使用@Bean注解”。</p>
+</blockquote>
+<h4 id="3-3-2-beans实例化"><a href="#3-3-2-beans实例化" class="headerlink" title="3.3.2 beans实例化"></a>3.3.2 beans实例化</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bean定义本质上来说是创建一个或多个对象的方法。当问及一个命名bean时，容器会查看这个方法并使用bean定义中封装的配置元数据创建（或取得）一个实际的对象。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你使用基于XML的配置元数据，你可以指定对象的类型（或类），它将在<code>&lt;bean/&gt;</code>元素中的<code>class</code>属性中进行实例化。<code>class</code>属性，在<code>BeanDefinition</code>实例的内部是<code>Class</code>性质，通常是必需的。（例外的情况，请看”使用实例工厂方法进行实例化”小节和3.7小节，”bean定义继承”）。你可以通过以下两种方式中的一种使用<code>Class</code>属性：</p>
+<ul>
+<li><p>通常情况下，指定要构造的bean类，容器本身通过反射调用bean的构造方法直接创建bean，这与Java代码中使用<code>new</code>操作符是等价的。</p>
+</li>
+<li><p>在不常见的情况下，指定包含静态工厂方法的实际类，调用静态工厂方法创建对象，容器在类上调用静态工厂方法创建bean。静态工厂方法调用返回的对象类型可能是同一个类，也可能完全是另一个类。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>内部类命名</strong> 如果你想为静态嵌套类配置bean定义，你必须使用嵌套类的二进制名字。</p>
+<p>例如，如果你在<code>com.example</code>包中有个类叫<code>Foo</code>，<code>Foo</code>类中有一个静态嵌套类叫<code>Bar</code>，<code>&#39;class&#39;</code>属性在bean定义中的值为</p>
+<p><code>com.example.Foo$Bar</code></p>
+<p>注意名字中<code>$</code>符号的使用是为了将外部类名与嵌套类名分隔开。</p>
+</blockquote>
+<p>&nbsp;<br><strong>使用构造函数实例化</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你使用构造方法创建bean时，所有的正常类都可以被Spring使用和兼容。也就是说，正在进行开发的类不需要实现任何特定的接口或以特定的方式进行编码。简单的指定bean类就足够了。然而，根据你为指定的bean所使用的IoC类型，你可能需要一个默认的（空的）构造函数。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事实上，Spring的IoC容器可以管理任何你想让它管理的类；它不受限于管理真实的JavaBeans。大多数Spring用户更喜欢实际的JavaBeans，在容器中它仅有一个默认（无参）的构造函数，并且属性之后有合适的setters，getters方法。在容器中你也可以有更多外来的非bean类型的类。例如，如果你需要使用遗留的连接池，这绝对不符合JavaBean规范，但Spring也可以管理它。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基于XML的配置元数据你可以用如下方式指定你的bean的类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean name=&quot;anotherExample&quot; class=&quot;examples.ExampleBeanTwo&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多关于为构造函数提供参数（如果有必要的话）的机制和构造对象之后设置对象实例属性的细节，请看依赖注入。</p>
+<p><strong>通过静态工厂方法进行实例化</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当定义的bean用静态工厂方法创建时，你可以使用<code>class</code>属性指定包含静态工厂方法的类，用<code>factory-method</code>属性指定工厂方法本身的名字。你应该能调用这个方法（用后面描述的可选参数）并且返回一个实时对象，随后对这个对象进行处理，就好像这个对象是通过构造函数创建的一样。这种bean定义的一个用法是在遗留代码（旧代码）中调用静态工厂方法。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的bean定义指定了一个通过调用工厂方法创建的bean。定义没有指定返回对象的类型只有包含工厂方法的类。在这个例子中，<code>createInstance()</code>必须是一个静态方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;clientService&quot;</span><br><span class="line">    class=&quot;examples.ClientService&quot;</span><br><span class="line">    factory-method=&quot;createInstance&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class ClientService &#123;</span><br><span class="line">    private static ClientService clientService = new ClientService();</span><br><span class="line">    private ClientService() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public static ClientService createInstance() &#123;</span><br><span class="line">        return clientService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多关于为工厂方法提供（可选）参数的原理和从工厂方法返回对象后设置对象实例属性的信息，请看”依赖和详细配置”。</p>
+<p><strong>通过实例工厂方法进行实例化</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与通过静态工厂方法进行实例化类似，通过实例化工厂方法进行实例化，要从容器中调用现有bean非静态方法创建一个新的bean。使用这种机制，要让<code>class</code>属性为空，在<code>factory-bean</code>属性中，在包含实例化方法的当前容器（或父/祖先）中指定bean的名字，通过调用实例化方法来创建对象。通过<code>factory-method</code>属性设置工厂方法本身的名字。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- the factory bean, which contains a method called createInstance() --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"serviceLocator"</span> <span class="attr">class</span>=<span class="string">"examples.DefaultServiceLocator"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- inject any dependencies required by this locator bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- the bean to be created via the factory bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"clientService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-bean</span>=<span class="string">"serviceLocator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createClientServiceInstance"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultServiceLocator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClientService clientService = <span class="keyword">new</span> ClientServiceImpl();</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">DefaultServiceLocator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClientService <span class="title">createClientServiceInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> clientService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个工厂类可以拥有多个工厂方法，如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"serviceLocator"</span> <span class="attr">class</span>=<span class="string">"examples.DefaultServiceLocator"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- inject any dependencies required by this locator bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"clientService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-bean</span>=<span class="string">"serviceLocator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createClientServiceInstance"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-bean</span>=<span class="string">"serviceLocator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createAccountServiceInstance"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultServiceLocator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClientService clientService = <span class="keyword">new</span> ClientServiceImpl();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AccountService accountService = <span class="keyword">new</span> AccountServiceImpl();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">DefaultServiceLocator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClientService <span class="title">createClientServiceInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> clientService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AccountService <span class="title">createAccountServiceInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个方法展示了工厂bean本身可以通过依赖注入（DI）来管理和配置。更多细节请看”依赖和配置”。</p>
+<blockquote>
+<p>在Spring文档中，工厂bean引用了配置在Spring容器中的bean，Spring容器将通过实例或静态工厂方法来创建对象。相比之下，<code>FactoryBean</code>（注意大写）引用了Spring特定的<code>FactoryBean</code>。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果有收获，可以请我喝杯咖啡！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://user-images.githubusercontent.com/21311442/54660728-7c650300-4b12-11e9-9b0a-1a5c09323afe.png" alt="Tyan WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://user-images.githubusercontent.com/21311442/54660740-87b82e80-4b12-11e9-96e4-911014779bdc.png" alt="Tyan Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/17/2016-09-17-Spring框架介绍_中英文对照_3.3_5.0.0版本/" rel="next" title="Spring 5.0.0框架介绍_中英文对照_3.3">
+                <i class="fa fa-chevron-left"></i> Spring 5.0.0框架介绍_中英文对照_3.3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/22/2016-09-21-Docker理论与实践1/" rel="prev" title="Docker理论与实践（一）">
+                Docker理论与实践（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tyan">
+          <p class="site-author-name" itemprop="name">Tyan</p>
+           
+              <p class="site-description motion-element" itemprop="description">工作中的技术总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">844</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Bean概述"><span class="nav-number">1.</span> <span class="nav-text">3.3 Bean概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-beans命名"><span class="nav-number">1.1.</span> <span class="nav-text">3.3.1 beans命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-beans实例化"><span class="nav-number">1.2.</span> <span class="nav-text">3.3.2 beans实例化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tyan</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+    <script id="dsq-count-scr" src="https://snailtyan.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://noahsnail.com/2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/';
+        this.page.identifier = '2016/09/17/2016-09-17-Spring框架介绍_中文版_3.3_5.0.0版本/';
+        this.page.title = 'Spring 5.0.0框架介绍_中文版_3.3';
+      };
+      var d = document, s = d.createElement('script');
+      s.src = 'https://snailtyan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    </script>
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
