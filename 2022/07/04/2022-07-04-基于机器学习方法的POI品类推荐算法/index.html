@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-56b13f2f.png">
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-523de841.png">
 <meta property="og:image" content="http://noahsnail.com/images/meituan/meituan-22bda81f.png">
-<meta property="og:updated_time" content="2022-10-28T05:12:43.806Z">
+<meta property="og:updated_time" content="2022-10-28T06:37:52.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于机器学习方法的POI品类推荐算法-笔记">
 <meta name="twitter:description" content="基于机器学习方法的POI品类推荐算法-笔记">
@@ -399,7 +399,6 @@
 <h2 id="4-分类模型"><a href="#4-分类模型" class="headerlink" title="4. 分类模型"></a>4. 分类模型</h2><h3 id="4-1-建模"><a href="#4-1-建模" class="headerlink" title="4.1 建模"></a>4.1 建模</h3><p>完成了特征表示、特征选择后，下一步就是训练分类模型了。机器学习分类模型可以分成两种：1）生成式模型；2）判别式模型。可以简单认为，两者区别生成式模型直接对样本的联合概率分布进行建模：生成式模型的难点在于如何去估计类概率密度分布$p(x|y)$。本文采用的朴素贝叶斯模型，其”Naive”在对类概率密度函数简化上，它假设了条件独立：$$p(y|x)=\frac {p(y)p(x|y)} {p(x)} \sim p(x|y)$$</p>
 <p>根据对p(x|y)不同建模形式，Naive Bayes模型主要分成：Muti-variate Bernoulli Model（多项伯努利模型）和Multinomial event model（多项事件模型）。一次伯努利事件相当于一次投硬币事件（0，1两种可能），一次多项事件则相当于投色子（1到6多种可能）。结合传统的文本分类解释这两类模型。</p>
 <h4 id="4-1-1-多项伯努利模型"><a href="#4-1-1-多项伯努利模型" class="headerlink" title="4.1.1 多项伯努利模型"></a>4.1.1 多项伯努利模型</h4><p>已知类别的条件下，多项伯努利对应样本生X成过程：遍历字典中的每个单词$(t_{1},t_{2},…,t_{|V|})$，判断这个词是否在样本中出现。每次遍历都是一次伯努利实验，$|V|$次遍历：</p>
-<p>123</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="https://tech.meituan.com/2014/12/18/poi-category-recommendation-algorithm-based-on-machine-learning.html" target="_blank" rel="noopener">基于机器学习方法的POI品类推荐算法</a></li>
 </ol>
